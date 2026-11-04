@@ -1,11 +1,9 @@
 // ============================================================================
-// BiblioTech — Aplicacion Principal (Sitio Web Publico + Servidor Local)
-// Creado por: Liam Duran / Caminante
+// BiblioTech — Aplicacion Principal (Sitio Web Publico)
+// Creador: Liam Duran - Provincia TLXH
 // ============================================================================
 
-const IS_LOCAL_SERVER =
-  window.location.hostname === "127.0.0.1" ||
-  window.location.hostname === "localhost";
+const IS_LOCAL_SERVER = false;
 
 const GITHUB_RELEASE_BASE =
   "https://github.com/ey-liam/bibliotech-scouts/releases/download/v1.0/";
@@ -26,9 +24,11 @@ const STATE = {
   webChunks: [], // [[doc_id, page_start, text], ...]
   activeAskSection: "all",
 
-  // Biblioteca interactiva (Lectura libre)
+  // Biblioteca Scout interactiva (Lectura libre + filtro por seccion y alcance)
   activeShelf: "featured",
   libraryQuery: "",
+  librarySection: "all",
+  libraryScope: "shelf",
   libraryVisibleCount: 12,
   currentShelfDocs: [],
   currentReadingIndex: -1,
@@ -45,7 +45,7 @@ const STATE = {
   sortOrder: "recent",
 
   // Correo de contacto para recibir aportes e issues de otros caminantes/scouts
-  contactEmail: localStorage.getItem("bibliotech_contact_email") || "rdc.tlxh@gmail.com"
+  contactEmail: "rdc.tlxh@gmail.com"
 };
 
 const STOPWORDS_ES = new Set([
@@ -267,6 +267,9 @@ function setupScrollAnimations() {
 // EXPLORADOR DINAMICO DE LAS 2,861 PREGUNTAS + AUTOCOMPLETADO EN VIVO
 // ============================================================================
 const DEFAULT_FEATURED_QUESTIONS = [
+  "¿Cómo se aplica el nuevo esquema PJOS y pueden combinarse las nuevas insignias con las antiguas?",
+  "¿Cuántas insignias hay en el nuevo esquema en Manada, Tropa, Comunidad y Clan?",
+  "¿Quién es el Jefe Scout Nacional, el Presidente Nacional, la Subcomisionada de Comunidad y quién dirige la Dirección Internacional?",
   "¿Qué son los Scouts y cómo iniciaron?",
   "¿Dónde encuentro a los Scouts y cómo me puedo integrar?",
   "¿Dónde compro el uniforme scout?",
@@ -279,7 +282,6 @@ const DEFAULT_FEATURED_QUESTIONS = [
   "¿Cómo hago un proyecto scout?",
   "¿Qué son los ejes temáticos?",
   "Explicación del nuevo esquema PJOS 2026",
-  "¿Cuáles son los 10 artículos de la Ley Scout en la ASMAC?",
   "¿Cómo puedo obtener la insignia mundial de Tribu de la Tierra?",
   "¿Cuántos nudos puedo portar en mi pañoleta?",
   "¿Qué es el EEAS?"
@@ -420,7 +422,7 @@ function populateCategoryDropdown() {
     counts[d.category] = (counts[d.category] || 0) + 1;
   }
   const orderedCats = [
-    "Colección Biblioteca del Centenario y Libros Históricos",
+    "Colección Biblioteca del Centenario",
     "Guías, Carnets y Programa de Jóvenes (PJOS)",
     "Manuales Oficiales y de Operación",
     "Reglamentos, Estatutos y Políticas",
@@ -466,16 +468,7 @@ function renderVersionChains() {
 // ============================================================================
 // APARTADO DE BIBLIOTECA INTERACTIVA POR LAS 8 CATEGORIAS OFICIALES
 // ============================================================================
-function getDocsForShelf(shelf, filterText = "") {
-  const q = normalizeStr(filterText.trim());
-  const readable = STATE.documents.filter((d) => {
-    if (q) {
-      const hay = normalizeStr(`${d.title} ${d.filename} ${d.category} ${d.section_label}`);
-      if (!hay.includes(q)) return false;
-    }
-    return true;
-  });
-
+function filterDocsByShelfName(list, shelf) {
   switch (shelf) {
     case "featured": {
       const priorityNames = [
@@ -499,7 +492,7 @@ function getDocsForShelf(shelf, filterText = "") {
 
       const featured = [];
       const rest = [];
-      for (const d of readable) {
+      for (const d of list) {
         const nf = normalizeStr(d.filename);
         const idx = priorityNames.findIndex((p) => nf.includes(p) || p.includes(nf));
         if (idx !== -1) {
@@ -512,26 +505,58 @@ function getDocsForShelf(shelf, filterText = "") {
       return [...featured.map((x) => x.d), ...rest];
     }
     case "centenario":
-      return readable
-        .filter((d) => d.category === "Colección Biblioteca del Centenario y Libros Históricos")
+      return list
+        .filter((d) => d.category === "Colección Biblioteca del Centenario")
         .sort((a, b) => a.filename.localeCompare(b.filename, "es", { numeric: true }));
     case "guias_pjos":
-      return readable.filter((d) => d.category === "Guías, Carnets y Programa de Jóvenes (PJOS)");
+      return list.filter((d) => d.category === "Guías, Carnets y Programa de Jóvenes (PJOS)");
     case "manuales":
-      return readable.filter((d) => d.category === "Manuales Oficiales y de Operación");
+      return list.filter((d) => d.category === "Manuales Oficiales y de Operación");
     case "reglamentos":
-      return readable.filter((d) => d.category === "Reglamentos, Estatutos y Políticas");
+      return list.filter((d) => d.category === "Reglamentos, Estatutos y Políticas");
     case "convocatorias":
-      return readable.filter((d) => d.category === "Convocatorias y Comunicados Nacionales");
+      return list.filter((d) => d.category === "Convocatorias y Comunicados Nacionales");
     case "revistas":
-      return readable.filter((d) => d.category === "Revistas Foro Joven y Boletines");
+      return list.filter((d) => d.category === "Revistas Foro Joven y Boletines");
     case "formatos":
-      return readable.filter((d) => d.category === "Formatos, Actas y Seguro Scout");
+      return list.filter((d) => d.category === "Formatos, Actas y Seguro Scout");
     case "identidad":
-      return readable.filter((d) => d.category === "Identidad Gráfica y Recursos Visuales");
+      return list.filter((d) => d.category === "Identidad Gráfica y Recursos Visuales");
     default:
-      return readable;
+      return list;
   }
+}
+
+function getDocsForShelf(shelf, filterText = "") {
+  const q = normalizeStr(filterText.trim());
+  const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
+  const secFilter = STATE.librarySection || "all";
+  const scope = STATE.libraryScope || "shelf";
+
+  const readable = STATE.documents.filter((d) => {
+    if (secFilter !== "all") {
+      const secs = d.applicable_sections || [d.section];
+      if (!secs.includes(secFilter)) return false;
+    }
+    if (tokens.length) {
+      const hay = normalizeStr(`${d.title} ${d.filename} ${d.category} ${d.section_label} ${d.summary || ""} ${d.code || ""}`);
+      for (const tk of tokens) {
+        if (!hay.includes(tk)) return false;
+      }
+    }
+    return true;
+  });
+
+  if (scope === "all") {
+    return readable;
+  }
+
+  const shelfDocs = filterDocsByShelfName(readable, shelf);
+  // Si el usuario escribio una busqueda y no hay coincidencias en el estante actual, mostrar coincidencias de todos los estantes
+  if (tokens.length && !shelfDocs.length && readable.length) {
+    return readable;
+  }
+  return shelfDocs;
 }
 
 function renderLibraryShelf() {
@@ -1254,6 +1279,24 @@ function bindEvents() {
     });
   }
 
+  const libSecSelect = document.getElementById("librarySectionFilter");
+  if (libSecSelect) {
+    libSecSelect.addEventListener("change", () => {
+      STATE.librarySection = libSecSelect.value || "all";
+      STATE.libraryVisibleCount = 12;
+      renderLibraryShelf();
+    });
+  }
+
+  const libScopeSelect = document.getElementById("libraryScopeSelect");
+  if (libScopeSelect) {
+    libScopeSelect.addEventListener("change", () => {
+      STATE.libraryScope = libScopeSelect.value || "shelf";
+      STATE.libraryVisibleCount = 12;
+      renderLibraryShelf();
+    });
+  }
+
   const libMoreBtn = document.getElementById("libraryShowMoreBtn");
   if (libMoreBtn) {
     libMoreBtn.addEventListener("click", () => {
@@ -1413,13 +1456,6 @@ function bindEvents() {
   });
 
   const copyMailBtn = document.getElementById("copyMailBtn");
-  const editMailBtn = document.getElementById("editMailBtn");
-  const openUploadBtn = document.getElementById("openUploadModalBtn");
-  const uploadModal = document.getElementById("uploadModal");
-  const closeUploadBtn = document.getElementById("closeUploadModalBtn");
-  const uploadInput = document.getElementById("uploadFileInput");
-  const reindexBtn = document.getElementById("reindexAllBtn");
-
   if (copyMailBtn) {
     copyMailBtn.addEventListener("click", () => {
       navigator.clipboard.writeText(STATE.contactEmail);
@@ -1427,68 +1463,6 @@ function bindEvents() {
       setTimeout(() => {
         copyMailBtn.textContent = "Copiar correo";
       }, 1800);
-    });
-  }
-
-  if (editMailBtn) {
-    editMailBtn.addEventListener("click", () => {
-      const nuevo = prompt("Ingresa el correo donde recibirás los documentos de otros caminantes/scouts:", STATE.contactEmail);
-      if (nuevo && nuevo.includes("@")) {
-        STATE.contactEmail = nuevo.trim();
-        localStorage.setItem("bibliotech_contact_email", STATE.contactEmail);
-        setupContactEmailUI();
-      }
-    });
-  }
-
-  if (openUploadBtn && uploadModal) {
-    openUploadBtn.addEventListener("click", () => uploadModal.classList.remove("hidden"));
-  }
-  if (closeUploadBtn && uploadModal) {
-    closeUploadBtn.addEventListener("click", () => uploadModal.classList.add("hidden"));
-  }
-
-  if (uploadInput) {
-    uploadInput.addEventListener("change", async () => {
-      const file = uploadInput.files[0];
-      if (!file) return;
-      const statusBox = document.getElementById("uploadStatusBox");
-      statusBox.classList.remove("hidden");
-      statusBox.textContent = `Subiendo e indexando «${file.name}»...`;
-
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const b64 = String(reader.result).split(",")[1] || "";
-        try {
-          const res = await fetch("/api/upload-file", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ filename: file.name, contentBase64: b64 })
-          });
-          const out = await res.json();
-          statusBox.textContent = out.message || out.error || "Listo";
-          if (out.ok) initApp();
-        } catch (err) {
-          statusBox.textContent = "Para subir archivos, ejecuta server.py o actualizar_bibliotech.bat.";
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  if (reindexBtn) {
-    reindexBtn.addEventListener("click", async () => {
-      const statusBox = document.getElementById("uploadStatusBox");
-      statusBox.classList.remove("hidden");
-      statusBox.textContent = "Re-indexando documentos...";
-      try {
-        const res = await fetch("/api/reindex", { method: "POST" });
-        const out = await res.json();
-        statusBox.textContent = out.message || "Índice actualizado";
-        if (out.ok) initApp();
-      } catch (_) {
-        statusBox.textContent = "Para re-indexar, ejecuta server.py localmente.";
-      }
     });
   }
 }

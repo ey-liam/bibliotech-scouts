@@ -63,33 +63,47 @@
           <div class="brand-title-row">
             <span class="brand-name">BiblioTech</span>
           </div>
-          <span class="brand-author">Creado por: <strong>Liam Durán / Caminante</strong></span>
+          <span class="brand-author">Creador: <strong>Liam Durán - Provincia TLXH</strong></span>
         </div>
       </a>
 
       <nav class="main-nav" aria-label="Navegación principal">
         <a href="#buscador" class="nav-link active">Preguntar</a>
         <a href="#biblioteca" class="nav-link">Biblioteca</a>
-        <a href="#secciones" class="nav-link">Secciones</a>
+        <a href="#acerca" class="nav-link">Propósito</a>
         <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
+        <a href="#secciones" class="nav-link">Secciones</a>
         <a href="#servicios" class="nav-link">Servicios Oficiales</a>
         <a href="#cambios" class="nav-link">Evolución</a>
         <a href="#explorar" class="nav-link">Catálogo</a>
-        <a href="#acerca" class="nav-link">Acerca</a>
       </nav>
     </div>
   </header>
 
+  <!-- FONDO ANIMADO GLOBAL DE LA PÁGINA (BURBUJAS DE COLOR, ONDAS Y FORMAS GEOMÉTRICAS EN MOVIMIENTO) -->
+  <div class="global-animated-bg" aria-hidden="true">
+    <span class="bg-orb orb-1"></span>
+    <span class="bg-orb orb-2"></span>
+    <span class="bg-orb orb-3"></span>
+    <span class="bg-orb orb-4"></span>
+    <span class="bg-hex-float hf-1"></span>
+    <span class="bg-hex-float hf-2"></span>
+    <span class="bg-hex-float hf-3"></span>
+    <span class="bg-hex-float hf-4"></span>
+  </div>
+
   <!-- HERO DINÁMICO INSPIRADO EN JAMBOREE POLONIA 2027 CON 3 HEXÁGONOS ROTATORIOS SUPERPUESTOS -->
   <section id="inicio" class="hero-section">
-    <!-- Ondas y destellos animados en el fondo -->
+    <!-- Ondas, auroras coloridas y destellos animados en el fondo -->
     <div class="hero-backdrop" aria-hidden="true">
       <div class="hero-glow glow-1"></div>
       <div class="hero-glow glow-2"></div>
       <div class="hero-glow glow-3"></div>
+      <div class="hero-glow glow-4"></div>
 
-      <!-- Cinta diagonal inspirada en el sitio del 26° Jamboree Scout Mundial -->
+      <!-- Cintas diagonales animadas -->
       <div class="jamboree-diagonal-ribbon"></div>
+      <div class="jamboree-diagonal-ribbon ribbon-secondary"></div>
 
       <!-- Destellos animados -->
       <svg class="sparkle-star sp-1"><use href="#icon-sparkle"/></svg>
@@ -107,22 +121,13 @@
       <svg class="jamboree-floating-svg jsvg-leaf"><use href="#icon-leaf"/></svg>
     </div>
 
-    <!-- Polaroids laterales flotantes en pantallas amplias (combinando formas dinámicas) -->
-    <div class="hero-floating-Layer" aria-hidden="true">
-      <div class="floating-polaroid polaroid-top-left">
-        <img src="img/photos/p01.jpg" alt="Comunidad Scout" />
-        <span>Siempre Adelante</span>
-      </div>
-      <div class="floating-polaroid polaroid-top-right">
-        <img src="img/photos/p04.jpg" alt="Hermandad Scout" />
-        <span>Hermandad Scout</span>
-      </div>
-      <img src="img/deco/escudo-colores.png" alt="" class="floating-sticker sticker-bottom-left" />
-      <img src="img/deco/foros2026.png" alt="" class="floating-sticker sticker-bottom-right" />
-    </div>
-
     <div class="container hero-container">
       <div class="hero-top-Copy">
+        <div class="hero-brand-display">
+          <span class="hero-big-bibliotech">BiblioTech</span>
+          <span class="hero-tiny-byliam">By Liam</span>
+        </div>
+
         <div class="hero-kicker-pill">
           <img src="img/logo-flor.png" alt="" class="kicker-icon" />
           <span>Asociación de Scouts de México ASMAC y World Scouting WOSM</span>
@@ -132,48 +137,45 @@
         </h1>
         <p class="hero-description">
           Plataforma de consulta y biblioteca digital abierta para niñas, niños, adolescentes, jóvenes y adultos.
-          Más de <strong>2,860 preguntas verificadas</strong> y <strong>498 documentos oficiales descargables</strong> basados en los manuales, reglamentos y comunicados vigentes.
+          Más de <strong>2,900 preguntas verificadas</strong> y <strong>498 documentos oficiales descargables</strong> basados en los manuales, reglamentos y comunicados vigentes.
         </p>
       </div>
 
-      <!-- TRÍO DE FOTOS EN HEXÁGONOS SUPERPUESTOS (EL HEXÁGONO ROTA LENTAMENTE, LA FOTO SE MANTIENE VERTICAL) -->
+      <!-- TRÍO DE FOTOS EN OCTÁGONOS/HEXÁGONOS SUPERPUESTOS (CON LAS MISMAS FOTOS QUE ESTABAN EN LAS POLAROIDS) -->
       <div class="hero-hex-trio" aria-label="Fotografías destacadas del Movimiento Scout en México">
-        <!-- Hexágono Izquierdo (Borde Verde) -->
+        <!-- Marco Izquierdo (Borde Verde - Foto p01.jpg) -->
         <div class="hex-cluster-item hex-pos-left hex-theme-green">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
-              <img src="assets/scouts/foto_todos_nac.png" alt="Secciones Scouts de México" class="hex-counter-img" />
+              <img src="img/photos/p01.jpg" alt="Siempre Adelante — Comunidad Scout" class="hex-counter-img" />
             </div>
           </div>
-          <span class="hex-floating-caption cap-green">Hermandad Nacional</span>
+          <span class="hex-floating-caption cap-green">Siempre Adelante</span>
         </div>
 
-        <!-- Hexágono Central (Borde Naranja-Rojo, superpuesto al frente) -->
+        <!-- Marco Central (Borde Naranja-Rojo, superpuesto al frente - Foto caminantes.jpg) -->
         <div class="hex-cluster-item hex-pos-center hex-theme-orange">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
               <img src="img/photos/caminantes.jpg" alt="Comunidad de Caminantes" class="hex-counter-img" />
             </div>
           </div>
-          <span class="hex-floating-caption cap-orange">Siempre Adelante</span>
+          <span class="hex-floating-caption cap-orange">Espíritu Scout</span>
         </div>
 
-        <!-- Hexágono Derecho (Borde Azul) -->
+        <!-- Marco Derecho (Borde Azul - Foto p04.jpg) -->
         <div class="hex-cluster-item hex-pos-right hex-theme-blue">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
-              <img src="assets/scouts/foto_lobatos_nac.png" alt="Manada y Juventud Scout" class="hex-counter-img" />
+              <img src="img/photos/p04.jpg" alt="Hermandad Scout" class="hex-counter-img" />
             </div>
           </div>
-          <span class="hex-floating-caption cap-blue">Siempre lo Mejor</span>
+          <span class="hex-floating-caption cap-blue">Hermandad Scout</span>
         </div>
       </div>
 
-      <!-- TARJETA DEL BUSCADOR INTUITIVO Y EXPLORADOR DE +2,860 PREGUNTAS -->
+      <!-- TARJETA DEL BUSCADOR INTUITIVO Y EXPLORADOR DE +2,900 PREGUNTAS -->
       <div id="buscador" class="search-hub-card">
-        <img src="img/deco/flor-centenario.png" alt="" class="hub-popout-badge" aria-hidden="true" />
-        <img src="img/deco/escudo-colores.png" alt="" class="hub-popout-badge-left" aria-hidden="true" />
-
         <div class="search-section-pills" role="tablist" aria-label="Filtrar por sección scout">
           <button type="button" class="sec-pill active" data-section="all">Todas las secciones</button>
           <button type="button" class="sec-pill pill-manada" data-section="manada">Manada (6 a &lt;10)</button>
@@ -223,7 +225,7 @@
               <button type="button" class="qcat-tab" data-qcat="Campismo, Nudos y Naturaleza">Nudos y Campismo</button>
             </div>
             <button type="button" id="shuffleQuestionsBtn" class="btn-shuffle-questions" title="Mostrar otras preguntas del banco verificado">
-              Mostrar más preguntas (<span id="totalQuestionsCount">2,861</span>)
+              Mostrar más preguntas (<span id="totalQuestionsCount">2,901</span>)
             </button>
           </div>
 
@@ -236,6 +238,15 @@
             </button>
             <button type="button" class="quick-chip chip-featured" data-query="¿Dónde compro el uniforme scout?">
               ¿Dónde compro el uniforme scout oficial?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo se puede aplicar el nuevo esquema (PJOS) en mi Grupo Scout?">
+              ¿Cómo aplicar el nuevo esquema PJOS y combinar insignias?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Cuántas insignias hay en el nuevo esquema (PJOS) en Comunidad de Caminantes?">
+              ¿Cuántas insignias hay en el nuevo esquema por sección?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Quién es el Jefe Scout Nacional de la ASMAC?">
+              ¿Quién es el Jefe Scout Nacional, Presidente y Subcomisionada?
             </button>
             <button type="button" class="quick-chip" data-query="¿Qué es la Manada de Lobatos?">
               ¿Qué es la Manada de Lobatos?
@@ -260,9 +271,6 @@
             </button>
             <button type="button" class="quick-chip" data-query="¿Qué especialidades hay en la Comunidad de Caminantes y demás secciones?">
               Especialidades y Aventuras en la Naturaleza
-            </button>
-            <button type="button" class="quick-chip chip-featured" data-query="Explicación del nuevo esquema PJOS 2026">
-              Explicación del nuevo esquema PJOS 2026
             </button>
             <button type="button" class="quick-chip chip-featured" data-query="¿Cómo funciona la resolución de problemas y conflictos en los Scouts?">
               Resolución de problemas y conflictos
@@ -325,20 +333,35 @@
     <div class="container">
       <div class="section-heading-row library-header-row">
         <div>
-          <span class="section-eyebrow">MODO BIBLIOTECA • LECTURA LIBRE</span>
-          <h2 class="section-title">Biblioteca Documental Scout</h2>
+          <h2 class="section-title">Biblioteca Scout</h2>
           <p class="section-subtitle">
-            Consulta y lee íntegros los 498 documentos oficiales organizados por colección literaria, guías de progresión, manuales, reglamentos, convocatorias, revistas y formatos.
+            Consulta, filtra por sección y lee íntegros los 498 documentos oficiales organizados en la Colección Biblioteca del Centenario, guías de progresión, manuales, reglamentos, convocatorias, revistas y formatos.
           </p>
         </div>
-        <div class="library-search-mini">
-          <input
-            type="text"
-            id="libraryFilterInput"
-            class="lib-search-input"
-            placeholder="Filtrar por título o número de libro..."
-            aria-label="Filtrar libros en la biblioteca"
-          />
+        <div class="library-controls-bar">
+          <div class="library-search-mini">
+            <input
+              type="text"
+              id="libraryFilterInput"
+              class="lib-search-input"
+              placeholder="Buscar documento por título, código o tema..."
+              aria-label="Buscar documentos en la Biblioteca Scout"
+            />
+          </div>
+          <select id="librarySectionFilter" class="lib-filter-select" aria-label="Filtrar por sección scout">
+            <option value="all">Todas las secciones</option>
+            <option value="manada">Manada de Lobatos</option>
+            <option value="tropa">Tropa de Scouts</option>
+            <option value="comunidad">Comunidad de Caminantes</option>
+            <option value="clan">Clan de Rovers</option>
+            <option value="adultos">Adultos y Dirigentes</option>
+            <option value="general">General / Nacional (ASMAC)</option>
+            <option value="internacional">World Scouting (WOSM)</option>
+          </select>
+          <select id="libraryScopeSelect" class="lib-filter-select" aria-label="Alcance de búsqueda en biblioteca">
+            <option value="shelf">Estante actual</option>
+            <option value="all">Todos los estantes (498)</option>
+          </select>
         </div>
       </div>
 
@@ -347,14 +370,14 @@
         <div class="centenario-banner-left">
           <img src="assets/scouts/logo_biblioteca_centenario.png" alt="Colección Biblioteca del Centenario" class="centenario-collection-logo" />
           <div class="centenario-banner-copy">
-            <span class="centenario-kicker">COLECCIÓN NUMERADA HISTÓRICA Y LITERARIA (1926 – 2026)</span>
-            <h3>Colección Biblioteca del Centenario y Libros Históricos</h3>
+            <span class="centenario-kicker">COLECCIÓN NUMERADA OFICIAL DEL CENTENARIO SCOUT EN MÉXICO (1926 – 2026)</span>
+            <h3>Colección Biblioteca del Centenario</h3>
             <p>
-              Explora los 42 volúmenes numerados e históricos: desde <em>Escultismo para Muchachos</em>, <em>Manual de Lobatos</em>,
+              Explora los 39 volúmenes oficiales de la Colección Biblioteca del Centenario: desde <em>Escultismo para Muchachos</em>, <em>Manual de Lobatos</em>,
               <em>Roverismo hacia el Éxito</em> y <em>Remando su Propia Canoa</em> hasta <em>Las Pioneras del Escultismo Mexicano</em> y <em>40 Años de Expresión y Arte Scout</em>.
             </p>
             <button type="button" class="btn-centenario-shelf" data-select-shelf="centenario">
-              Abrir los 42 libros de la Colección del Centenario
+              Abrir los 39 libros de la Colección Biblioteca del Centenario
             </button>
           </div>
         </div>
@@ -376,9 +399,9 @@
       <!-- ESTANTES DE LA BIBLIOTECA POR CATEGORÍA -->
       <div class="library-shelves-tabs" id="libraryShelfTabs" role="tablist">
         <button type="button" class="shelf-tab active" data-shelf="featured">Destacados Vigentes</button>
-        <button type="button" class="shelf-tab" data-shelf="centenario">Colección Biblioteca del Centenario (42)</button>
-        <button type="button" class="shelf-tab" data-shelf="guias_pjos">Guías, Carnets y PJOS (40)</button>
-        <button type="button" class="shelf-tab" data-shelf="manuales">Manuales Oficiales (69)</button>
+        <button type="button" class="shelf-tab" data-shelf="centenario">Colección Biblioteca del Centenario (39)</button>
+        <button type="button" class="shelf-tab" data-shelf="guias_pjos">Guías, Carnets y PJOS (42)</button>
+        <button type="button" class="shelf-tab" data-shelf="manuales">Manuales Oficiales (70)</button>
         <button type="button" class="shelf-tab" data-shelf="reglamentos">Reglamentos y Políticas (24)</button>
         <button type="button" class="shelf-tab" data-shelf="convocatorias">Convocatorias y Comunicados (187)</button>
         <button type="button" class="shelf-tab" data-shelf="revistas">Revistas Foro Joven y Boletines (44)</button>
@@ -393,6 +416,115 @@
         <button type="button" id="libraryShowMoreBtn" class="btn-outline-joy">
           Ver más documentos de este estante
         </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACERCA DEL PROYECTO Y AUTOR (JUSTO DESPUÉS DE BIBLIOTECA SCOUT Y ANTES DE AGENTES DE CAMBIO.MX) -->
+  <section id="acerca" class="about-section">
+    <div class="container">
+      <div class="about-card">
+        <div class="about-photo-col">
+          <!-- ESCENARIO CON PROFUNDIDAD 3D: FONDO ESTÁTICO + APNG ANIMADO SOBRESALIENDO POR ENCIMA -->
+          <div class="liam-depth-stage" title="Liam Durán — Animación sobre fondo estático">
+            <div class="liam-static-bg-box">
+              <img
+                src="assets/LiamFondo.jpg"
+                alt="Fondo estático"
+                class="liam-static-bg-img"
+              />
+            </div>
+            <img
+              src="assets/Liam.png"
+              alt="Liam Durán animado"
+              class="liam-animated-popout-apng"
+            />
+          </div>
+        </div>
+        <div class="about-text-col">
+          <span class="section-eyebrow">PROPÓSITO DEL PROYECTO</span>
+          <h2>Información verificada, accesible y clara para toda la membresía</h2>
+          <p>
+            <strong>BiblioTech</strong> fue creado con el objetivo de que niñas, niños, adolescentes, jóvenes y adultos
+            cuenten con un punto de acceso directo, comprensible y confiable a los manuales, guías, reglamentos, Colección Biblioteca del Centenario,
+            formatos y convocatorias oficiales, facilitando su lectura libre, descarga y consulta para actividades, proyectos o progresiones personales.
+          </p>
+          <div class="about-signature-box">
+            <p class="signature-main">Creador: <strong>Liam Durán - Provincia TLXH</strong></p>
+            <p class="signature-sub">Asociación de Scouts de México ASMAC y World Scouting WOSM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTO DESTACADO PARA CAMINANTES: AGENTES DE CAMBIO.MX -->
+  <section id="agentes" class="agentes-cambio-section">
+    <div class="container">
+      <div class="agentes-card">
+        <div class="agentes-content">
+          <!-- SOLO EL LOGO AZUL DE AGENTES DE CAMBIO -->
+          <div class="agentes-logos-row">
+            <img src="img/adc/logo.png" alt="Agentes de Cambio.MX" class="agentes-main-logo" />
+          </div>
+
+          <span class="agentes-eyebrow">PROYECTO DEL COMITÉ NACIONAL DE LA RED DE CAMINANTES (CNRC)</span>
+          <h2>Agentes de Cambio.MX</h2>
+          <p>
+            Elaborado por el <strong>Comité Nacional de la Red de Caminantes (CNRC)</strong>, <strong>Agentes de Cambio.MX</strong>
+            es la guía y plataforma creada para acompañar a las y los Caminantes de México en el diseño, planeación y ejecución de sus
+            <strong>proyectos</strong> de impacto comunitario dentro de los 4 Ejes Temáticos:
+          </p>
+
+          <!-- SOLO LOS 4 ICONOS DE FOROS 1-4 (1=PAZ, 2=SALUD, 3=HABILIDADES, 4=SUSTENTABILIDAD) SIN TEXTOS -->
+          <div class="agentes-icons-only-row" aria-label="4 Ejes Temáticos de Agentes de Cambio">
+            <div class="adc-icon-orb" title="Paz y Compromiso Comunitario (Foro 1)">
+              <img src="img/adc/paz.png" alt="Paz y Compromiso Comunitario" />
+            </div>
+            <div class="adc-icon-orb" title="Salud y Bienestar (Foro 2)">
+              <img src="img/adc/salud.png" alt="Salud y Bienestar" />
+            </div>
+            <div class="adc-icon-orb" title="Habilidades para la Vida (Foro 3)">
+              <img src="img/adc/habilidades.png" alt="Habilidades para la Vida" />
+            </div>
+            <div class="adc-icon-orb" title="Medio Ambiente y Sustentabilidad (Foro 4)">
+              <img src="img/adc/sustentabilidad.png" alt="Medio Ambiente y Sustentabilidad" />
+            </div>
+          </div>
+
+          <div class="agentes-actions">
+            <a
+              href="https://sites.google.com/scouts.org.mx/agentes-de-cambio-mx/Bienvenida?authuser=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-agentes-visit"
+            >
+              <span>Abrir Sitio Oficial Agentes de Cambio.MX</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <button type="button" class="btn-agentes-ask" data-query="¿Cómo hago un proyecto scout?">
+              Consultar guía de proyectos
+            </button>
+          </div>
+        </div>
+
+        <!-- COMPOSICIÓN MIXTA: FOTO DE AMIGOS + HEXÁGONO ROTATORIO SUPERPUESTO -->
+        <div class="agentes-visual">
+          <div class="agentes-photo-popout">
+            <img src="img/photos/agentes.jpg" alt="Comunidad de Caminantes — Agentes de Cambio.MX" class="agentes-hero-img" />
+            <div class="agentes-overlapping-hex hex-theme-blue" aria-hidden="true">
+              <div class="hex-rotator">
+                <div class="hex-inner-mask">
+                  <img src="assets/scouts/foros_evento_2.jpg" alt="Red de Caminantes" class="hex-counter-img" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -554,77 +686,6 @@
     </div>
   </section>
 
-  <!-- PROYECTO DESTACADO PARA CAMINANTES: AGENTES DE CAMBIO.MX -->
-  <section id="agentes" class="agentes-cambio-section">
-    <div class="container">
-      <div class="agentes-card">
-        <div class="agentes-content">
-          <!-- SOLO EL LOGO AZUL DE AGENTES DE CAMBIO -->
-          <div class="agentes-logos-row">
-            <img src="img/adc/logo.png" alt="Agentes de Cambio.MX" class="agentes-main-logo" />
-          </div>
-
-          <span class="agentes-eyebrow">PROYECTO DEL COMITÉ NACIONAL DE LA RED DE CAMINANTES (CNRC)</span>
-          <h2>Agentes de Cambio.MX</h2>
-          <p>
-            Elaborado por el <strong>Comité Nacional de la Red de Caminantes (CNRC)</strong>, <strong>Agentes de Cambio.MX</strong>
-            es la guía y plataforma creada para acompañar a las y los Caminantes de México en el diseño, planeación y ejecución de sus
-            <strong>proyectos</strong> de impacto comunitario dentro de los 4 Ejes Temáticos:
-          </p>
-
-          <!-- SOLO LOS 4 ICONOS DE FOROS 1-4 (1=PAZ, 2=SALUD, 3=HABILIDADES, 4=SUSTENTABILIDAD) SIN TEXTOS -->
-          <div class="agentes-icons-only-row" aria-label="4 Ejes Temáticos de Agentes de Cambio">
-            <div class="adc-icon-orb" title="Paz y Compromiso Comunitario (Foro 1)">
-              <img src="img/adc/paz.png" alt="Paz y Compromiso Comunitario" />
-            </div>
-            <div class="adc-icon-orb" title="Salud y Bienestar (Foro 2)">
-              <img src="img/adc/salud.png" alt="Salud y Bienestar" />
-            </div>
-            <div class="adc-icon-orb" title="Habilidades para la Vida (Foro 3)">
-              <img src="img/adc/habilidades.png" alt="Habilidades para la Vida" />
-            </div>
-            <div class="adc-icon-orb" title="Medio Ambiente y Sustentabilidad (Foro 4)">
-              <img src="img/adc/sustentabilidad.png" alt="Medio Ambiente y Sustentabilidad" />
-            </div>
-          </div>
-
-          <div class="agentes-actions">
-            <a
-              href="https://sites.google.com/scouts.org.mx/agentes-de-cambio-mx/Bienvenida?authuser=0"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-agentes-visit"
-            >
-              <span>Abrir Sitio Oficial Agentes de Cambio.MX</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
-            <button type="button" class="btn-agentes-ask" data-query="¿Cómo hago un proyecto scout?">
-              Consultar guía de proyectos
-            </button>
-          </div>
-        </div>
-
-        <!-- COMPOSICIÓN MIXTA: FOTO DE AMIGOS + HEXÁGONO ROTATORIO SUPERPUESTO -->
-        <div class="agentes-visual">
-          <div class="agentes-photo-popout">
-            <img src="img/photos/agentes.jpg" alt="Comunidad de Caminantes — Agentes de Cambio.MX" class="agentes-hero-img" />
-            <div class="agentes-overlapping-hex hex-theme-blue" aria-hidden="true">
-              <div class="hex-rotator">
-                <div class="hex-inner-mask">
-                  <img src="assets/scouts/foros_evento_2.jpg" alt="Red de Caminantes" class="hex-counter-img" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- SERVICIOS, PLATAFORMAS Y DIRECTORIO OFICIAL (INFORMACIÓN EXTRAÍDA DE LAS PÁGINAS WEB OFICIALES) -->
   <section id="servicios" class="official-services-section">
     <div class="container">
@@ -734,16 +795,15 @@
       <div class="changes-timeline-grid">
         <article class="change-card">
           <div class="change-years">
-            <span class="yr-old">Hasta Dic 2024 (ENPE)</span>
+            <span class="yr-old">Hasta Dic 2025 (ENPE)</span>
             <span class="yr-arrow">→</span>
             <span class="yr-new">2025–2026 (PJOS)</span>
           </div>
           <h3>Programa de Jóvenes, Progresiones e Insignias</h3>
           <p>
-            El <strong>31 de diciembre de 2024</strong> concluyó el antiguo <em>ENPE</em> (cerrando las insignias IDO, IT del ENPE e ISMMA).
-            El <strong>Modelo de Programa de Jóvenes Orientado a la Sustentabilidad (PJOS)</strong> estableció las progresiones por
-            <strong>Cazaderos, Rumbos, Senderos y Rutas</strong>, las Insignias Finales <strong>Alfa, Águila Real, Everest y Baden-Powell (Jade y Obsidiana)</strong>,
-            los cuadernillos de <strong>Tribu de la Tierra</strong> (<code>DNME-CNPJ 26.010</code>) y <strong>ExplorApp y CarpetApp</strong> (<code>DNME-CNPJ 26.014</code>).
+            El <strong>31 de diciembre de 2025</strong> concluyó definitivamente el antiguo <em>ENPE</em> (<code>JSN 25.051</code> y <code>DNME-CNPJ 25.024</code>), aunque las insignias obtenidas en el ENPE pueden seguir portándose junto con las nuevas (<em>Manual del Uniforme junio 2026</em>, págs. 44, 56 y 67).
+            El <strong>PJOS</strong> estableció las progresiones por <strong>Cazaderos, Rumbos, Senderos y Rutas</strong>, las Insignias Finales <strong>Alfa, Águila Real, Everest y Baden-Powell (Jade y Obsidiana)</strong>
+            y las aplicaciones <strong>ExplorApp y CarpetApp</strong> (<code>DNME-CNPJ 26.014</code>).
           </p>
         </article>
 
@@ -849,9 +909,9 @@
       <!-- BOTONES RÁPIDOS DE LAS 8 CATEGORÍAS DEL CATÁLOGO -->
       <div class="catalog-category-cards" id="catalogCategoryPills">
         <button type="button" class="cat-filter-pill active" data-cat-val="all">Todas las categorías (498)</button>
-        <button type="button" class="cat-filter-pill" data-cat-val="Colección Biblioteca del Centenario y Libros Históricos">Colección Biblioteca del Centenario y Libros (42)</button>
-        <button type="button" class="cat-filter-pill" data-cat-val="Guías, Carnets y Programa de Jóvenes (PJOS)">Guías, Carnets y PJOS (40)</button>
-        <button type="button" class="cat-filter-pill" data-cat-val="Manuales Oficiales y de Operación">Manuales Oficiales (69)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Colección Biblioteca del Centenario">Colección Biblioteca del Centenario (39)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Guías, Carnets y Programa de Jóvenes (PJOS)">Guías, Carnets y PJOS (42)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Manuales Oficiales y de Operación">Manuales Oficiales (70)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Reglamentos, Estatutos y Políticas">Reglamentos y Políticas (24)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Convocatorias y Comunicados Nacionales">Convocatorias y Comunicados (187)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Revistas Foro Joven y Boletines">Revistas Foro Joven y Boletines (44)</button>
@@ -927,44 +987,6 @@
     </div>
   </section>
 
-  <!-- ACERCA DEL PROYECTO Y AUTOR (CON APNG ANIMADO LIAM.PNG SOBRESALIENDO DEL FONDO ESTÁTICO LIAMFONDO.JPG) -->
-  <section id="acerca" class="about-section">
-    <div class="container">
-      <div class="about-card">
-        <div class="about-photo-col">
-          <!-- ESCENARIO CON PROFUNDIDAD 3D: FONDO ESTÁTICO + APNG ANIMADO SOBRESALIENDO POR ENCIMA -->
-          <div class="liam-depth-stage" title="Liam Durán — Animación sobre fondo estático">
-            <div class="liam-static-bg-box">
-              <img
-                src="assets/LiamFondo.jpg"
-                alt="Fondo estático"
-                class="liam-static-bg-img"
-              />
-            </div>
-            <img
-              src="assets/Liam.png"
-              alt="Liam Durán animado"
-              class="liam-animated-popout-apng"
-            />
-          </div>
-        </div>
-        <div class="about-text-col">
-          <span class="section-eyebrow">PROPÓSITO DEL PROYECTO</span>
-          <h2>Información verificada, accesible y clara para toda la Hermandad Scout</h2>
-          <p>
-            <strong>BiblioTech</strong> fue creado con el objetivo de que niñas, niños, adolescentes, jóvenes y adultos
-            cuenten con un punto de acceso directo, comprensible y confiable a los manuales, guías, reglamentos, colección de libros del Centenario,
-            formatos y convocatorias oficiales, facilitando su lectura libre, descarga y consulta para actividades, proyectos o progresiones personales.
-          </p>
-          <div class="about-signature-box">
-            <p class="signature-main">Creado por: <strong>Liam Durán / Caminante</strong></p>
-            <p class="signature-sub">Asociación de Scouts de México ASMAC y World Scouting WOSM</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- APARTADO DISCRETO PARA COMPARTIR NUEVOS DOCUMENTOS O REPORTAR TEMAS FALTANTES -->
   <section id="aportar" class="discreet-contribute-strip" aria-label="Compartir documentos con la comunidad">
     <div class="container discreet-contribute-inner">
@@ -975,10 +997,6 @@
           <a id="contributeMailLink" href="mailto:rdc.tlxh@gmail.com?subject=Aporte%20o%20Issue%20para%20BiblioTech%20Scout" class="discreet-mail-link">rdc.tlxh@gmail.com</a>
           <button type="button" id="copyMailBtn" class="discreet-mini-btn" title="Copiar correo">Copiar correo</button>
         </p>
-      </div>
-      <div class="discreet-admin-actions">
-        <button type="button" id="editMailBtn" class="discreet-gear-btn" title="Cambiar correo de contacto">Configurar correo</button>
-        <button type="button" id="openUploadModalBtn" class="discreet-gear-btn" title="Subir archivo directamente (Administrador)">+ Subir local</button>
       </div>
     </div>
   </section>
@@ -1020,47 +1038,42 @@
     </div>
   </div>
 
-  <!-- MODAL DISCRETO DE ADMINISTRACIÓN LOCAL -->
-  <div id="uploadModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="uploadModalTitle">
-    <div class="modal-container modal-small">
-      <div class="modal-header">
-        <div class="modal-title-group">
-          <h3 id="uploadModalTitle">Añadir Documento a BiblioTech</h3>
-          <span class="modal-filename">Herramienta de actualización para Liam Durán</span>
-        </div>
-        <button type="button" id="closeUploadModalBtn" class="btn-modal-close" aria-label="Cerrar">X</button>
-      </div>
-      <div class="modal-body upload-modal-body">
-        <div class="upload-dropzone" id="uploadDropzone">
-          <input type="file" id="uploadFileInput" accept=".pdf,.docx,.xlsx,.html,.png,.jpg,.jpeg,.webp" />
-          <div class="dropzone-content">
-            <strong>Haz clic para elegir un archivo o arrástralo aquí</strong>
-            <span>Soporta PDF, Word (.docx), Excel (.xlsx), HTML e imágenes</span>
-          </div>
-        </div>
-        <div id="uploadStatusBox" class="upload-status-box hidden"></div>
-        <div class="upload-divider">
-          <span>o si agregaste archivos directamente en tus carpetas</span>
-        </div>
-        <button type="button" id="reindexAllBtn" class="btn-reindex-all">
-          Re-escanear carpetas y actualizar índice
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- PIE DE PÁGINA -->
+  <!-- PIE DE PÁGINA CON LOGOS OFICIALES ASMAC Y WOSM Y VERSIÓN ACTUALIZADA -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div class="footer-brand-row">
-        <img src="img/logo-flor.png" alt="Flor de Lis Mundial" class="footer-logo" />
-        <div>
-          <strong>BiblioTech</strong> — Creado por: Liam Durán / Caminante
-          <p class="footer-sources">Asociación de Scouts de México ASMAC y World Scouting WOSM</p>
+      <div class="footer-top-bar">
+        <div class="footer-brand-row">
+          <img src="img/logo-flor.png" alt="Flor de Lis Mundial" class="footer-logo" />
+          <div>
+            <strong>BiblioTech</strong> — Creador: Liam Durán - Provincia TLXH
+            <p class="footer-sources">Asociación de Scouts de México ASMAC y World Scouting WOSM</p>
+          </div>
+        </div>
+
+        <div class="footer-official-logos" aria-label="Sitios oficiales ASMAC y World Scouting">
+          <a
+            href="https://scouts.org.mx/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-org-logo-link logo-asmac-pill"
+            title="Visitar sitio oficial de Scouts de México (scouts.org.mx)"
+          >
+            <img src="img/logo-asmac.png" alt="Scouts de México ASMAC" class="footer-org-logo" />
+          </a>
+          <a
+            href="https://www.scout.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-org-logo-link logo-wosm-pill"
+            title="Visitar sitio oficial de World Scouting (scout.org)"
+          >
+            <img src="img/logo-wosm.png" alt="World Scouting WOSM" class="footer-org-logo" />
+          </a>
         </div>
       </div>
+
       <div class="footer-Tiny-cutoff">
-        Información actualizada el 3 de noviembre del 2026
+        Información actualizada: v2 • 04/11/2026
       </div>
     </div>
   </footer>

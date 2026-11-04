@@ -2843,3 +2843,264 @@ h1, h2, h3, h4 {
     height: 220px;
   }
 }
+
+/* =====================================================
+   MEJORAS V2 (04/11/2026):
+   - FONDO GLOBAL ANIMADO Y COLORIDO EN TODO EL SITIO
+   - TITULO GIGANTE BIBLIOTECH + TINY BY LIAM EN HERO
+   - BARRA DE BUSQUEDA Y FILTRO DE SECCION EN BIBLIOTECA SCOUT
+   - LOGOS OFICIALES ASMAC Y WOSM EN EL PIE DE PAGINA
+   ===================================================== */
+
+/* Fondo animado global con orbes de color y octágonos flotantes */
+.global-animated-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(68px);
+  opacity: 0.22;
+  animation: floatOrbDrift 20s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #38bdf8, #6366f1);
+  top: 12%;
+  left: -120px;
+  animation-duration: 22s;
+}
+
+.orb-2 {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, #10b981, #facc15);
+  top: 46%;
+  right: -110px;
+  animation-duration: 26s;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle, #a855f7, #ec4899);
+  bottom: 10%;
+  left: 8%;
+  opacity: 0.16;
+  animation-duration: 28s;
+  animation-delay: -11s;
+}
+
+.orb-4 {
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, #f97316, #fbbf24);
+  bottom: 28%;
+  right: 12%;
+  opacity: 0.15;
+  animation-duration: 24s;
+  animation-delay: -7s;
+}
+
+.bg-floating-hex {
+  position: absolute;
+  clip-path: polygon(25% 5%, 75% 5%, 98% 50%, 75% 95%, 25% 95%, 2% 50%);
+  opacity: 0.08;
+  animation: slowSpinClockwise 42s linear infinite;
+}
+
+.fhex-1 {
+  width: 190px;
+  height: 190px;
+  top: 24%;
+  right: 6%;
+  background: linear-gradient(135deg, #00b4d8, #6d28d9);
+}
+
+.fhex-2 {
+  width: 240px;
+  height: 240px;
+  top: 62%;
+  left: 3%;
+  background: linear-gradient(135deg, #10b981, #0ea5e9);
+  animation-direction: reverse;
+  animation-duration: 54s;
+}
+
+.fhex-3 {
+  width: 170px;
+  height: 170px;
+  bottom: 14%;
+  right: 8%;
+  background: linear-gradient(135deg, #f97316, #eab308);
+  animation-duration: 48s;
+}
+
+@keyframes floatOrbDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(34px, -28px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-24px, 32px, 0) scale(0.95);
+  }
+}
+
+/* Asegurar que las secciones queden por encima del fondo animado */
+.site-header,
+.hero-section,
+.library-section,
+.about-section,
+.agentes-cambio-section,
+.sections-showcase,
+.official-services-section,
+.evolution-section,
+.catalog-section,
+.discreet-contribute-strip,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Titulo gigante BiblioTech + By Liam chiquito debajo en el Hero */
+.hero-brand-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0.25rem auto 0.65rem;
+  line-height: 1;
+}
+
+.hero-big-bibliotech {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(3.4rem, 7.5vw, 5.8rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 35%, #fde047 72%, #4ade80 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.36));
+  animation: heroTitleFloat 5.5s ease-in-out infinite alternate;
+}
+
+.hero-tiny-byliam {
+  display: inline-block;
+  margin-top: 0.28rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(224, 242, 254, 0.88);
+  background: rgba(15, 23, 42, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.18rem 0.72rem;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+@keyframes heroTitleFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-4px) scale(1.015);
+  }
+}
+
+/* Barra de busqueda y filtro por seccion dentro de Biblioteca Scout */
+.library-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.lib-filter-select {
+  border: 2px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 0.68rem 1.05rem;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--scout-navy);
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.22s, box-shadow 0.22s;
+}
+
+.lib-filter-select:focus,
+.lib-filter-select:hover {
+  border-color: var(--scout-purple);
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12);
+}
+
+/* Pie de pagina con logos oficiales ASMAC y WOSM a la derecha */
+.footer-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-official-logos {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.footer-org-logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 0.38rem 0.78rem;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  transition: transform 0.25s var(--spring), box-shadow 0.25s ease;
+  text-decoration: none;
+}
+
+.footer-org-logo-link:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 26px rgba(56, 189, 248, 0.32);
+}
+
+.footer-org-logo {
+  height: 28px;
+  width: auto;
+  max-width: 125px;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .library-controls-bar {
+    width: 100%;
+  }
+  .library-search-mini,
+  .lib-search-input,
+  .lib-filter-select {
+    width: 100%;
+  }
+  .footer-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

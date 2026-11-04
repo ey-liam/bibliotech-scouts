@@ -1128,6 +1128,202 @@
       "content": "### Colección «Biblioteca del Centenario» de la ASMAC\nPresentada en abril de 2024 por el Jefe Scout Nacional, **Pedro Díaz Maya**, y coordinada editorialmente por **Arturo Reyes Fragoso** (`BIBLIOTECA DEL CENTENARIO - Scouts de México.html`), la colección **Biblioteca del Centenario** reúne obras históricas, crónicas, manuales clásicos y testimonios de los primeros 100 años del escultismo en México y el mundo, disponibles de forma íntegra y gratuita en el apartado **Biblioteca** de BiblioTech:\n\n- **Obras y volúmenes disponibles en BiblioTech para lectura y descarga directa:**\n  - *Los inicios 1 y 2* (Luz María Coarasa de Toral y Javier Reyes Luján)\n  - *Agrupaciones Pioneras del Escultismo Mexicano*\n  - *Las Pioneras 1 y 2* (historia del ingreso de las mujeres al escultismo mexicano)\n  - *Acampar cerca de la Luna: Meztitla, origen e inicios* (Arturo Reyes Fragoso)\n  - *Carta de Meztitla* y *Aquel Curso Donde Llevaron la Huella de B-P a Meztitla*\n  - *San Jorge en Aztlán: Los inicios del roverismo en México* (Arturo Reyes Fragoso)\n  - *40 Años de Expresión y Arte Scout* (Ángel Martínez Herrera, coord.)\n  - *40 Años de Escultismo en Monterrey* y *La flor de lis y el henequén* (Juan Francisco Peón Ancona)\n  - *Guadalajara, un llamado al servicio* (testimonios scouts del 22 de abril de 1992) y *Rescate* (sismo de 1985)\n  - *Cartas a un guía de patrulla* (Roland E. Philipps), *Manual del Pie Tierno*, *Cómo se obtiene la insignia scout de 2a Clase*, *Brownsea*, *Semblanza de Baden-Powell*, *Los Días de Paxtu*, *Algo de Mí Mismo*, *Tres Aventuras Selváticas Rover*, *Las Rutas de la Precursora*, *Rock con Pañoleta*, *Falda con Charreteras*, *Retratos con Pañoleta*, *Crónicas de un Scouter*, *Narraciones Escultas*, *Diez películas que todo scout debe ver antes de morir*, *Letras Musicales Scouts Mexicanas* y *Antología Mínima del Boletín Tlatoani*."
     },
     {
+      "id": "transicion_enpe_pjos_y_combinacion_insignias",
+      "patterns": [
+        "\\bcombinar\\b.*\\binsignias\\b",
+        "\\bpueden combinarse\\b",
+        "\\bviejo esquema\\b",
+        "\\bantiguo esquema\\b",
+        "\\benpe\\b.*\\bpjos\\b",
+        "\\bcambian\\b.*\\binsignia\\b",
+        "\\bmejoran\\b.*\\binsignia\\b",
+        "\\baplicar el nuevo esquema\\b",
+        "\\bacreditacion\\b.*\\bpjos\\b",
+        "\\bsimultaneo\\b.*\\binsignia\\b",
+        "\\binsignias antiguas\\b",
+        "\\b25\\.024\\b",
+        "\\b26\\.003\\b",
+        "\\b26\\.005\\b",
+        "\\b26\\.007\\b"
+      ],
+      "keywords": [
+        "combinar",
+        "combinarse",
+        "viejo esquema",
+        "antiguo esquema",
+        "enpe",
+        "pjos",
+        "cambian",
+        "mejoran",
+        "equivalencia",
+        "simultaneo",
+        "acreditacion",
+        "25.024",
+        "26.003",
+        "26.005",
+        "26.007"
+      ],
+      "source_files": [
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+        "DNME 26.003 Procedimiento de acreditación de Grupos en la aplicación del PJOS.pdf",
+        "DNME 26.005 Modelo de Programa de Jóvenes Orientado a la Sustentabilidad.pdf",
+        "DNME 26.007 Procedimiento de acreditación de Grupos Scouts en el PJOS y requisitos para Insignias.pdf",
+        "DNME-CNPJ 25.024 Cierre de solicitudes de Insignias IDO e IT del ENPE y de la ISMMA.pdf",
+        "Comunicado ASMAC JSN 25.051 Edades en SISAS y conclusión del ENPE.pdf"
+      ],
+      "content": "### Reglas Oficiales de Aplicación del Nuevo Esquema (PJOS) y Transición desde el Viejo Esquema (ENPE)\n\n#### 1. ¿Cómo se aplica el nuevo esquema (PJOS) y cómo se acredita un Grupo Scout (`DNME 26.003`, `26.005` y `26.007`)?\n- **Vigencia obligatoria:** A partir del **1 de enero de 2026**, el **Programa de Jóvenes Orientado a la Sustentabilidad (PJOS)** es el único programa oficial vigente en la ASMAC, quedando el antiguo *Esquema Nacional de Programa Educativo (ENPE 2006–2025)* oficialmente en desuso (`JSN 25.051`).\n- **Aplicación práctica en las Secciones:** Se trabaja mediante los **Ciclos de Programa** determinados por los órganos de toma de decisiones juveniles de cada sección (Consejo de Roca, Corte de Honor, Congreso de Comunidad o Parlamento Rover), utilizando las Guías de Sección 2024, los Carnets de Aventuras en la Naturaleza y las plataformas **ExplorApp** (para jóvenes) y **CarpetApp** (para Scouters).\n- **Acreditación del Grupo Scout en la CDC (`DNME 26.003` y `26.007`):** El Grupo registra en la **Comunidad Digital de Conocimiento (`https://cdc.scouts.org.mx`)** las evidencias de sus Ciclos de Programa y la participación de sus Scouters en los Cursos Especializados del PJOS. **Importante:** Si un Grupo Scout aún está en proceso de acreditación, **no debe impedirse la aplicación del PJOS ni la entrega de progresiones a niñas, niños, adolescentes y jóvenes**. Para tramitar Puntas de Flecha o Insignias de Mundo Mejor, los grupos aún no acreditados solo deben adjuntar evidencia de haber iniciado su acreditación en la CDC (`DNME 26.007`).\n\n#### 2. ¿Se pueden combinar en el uniforme las nuevas insignias del PJOS con las antiguas del ENPE?\n- **SÍ, pueden portarse en simultáneo.** De acuerdo con la **Nota Importante** establecida expresamente en las **páginas 44, 56 y 67 del `01 Manual del Uniforme Actualizado Junio 2026.pdf`**:\n  > *«NOTA IMPORTANTE: Los NNAJ que recibieron insignias de Sección o IDOs en el Esquema Nacional de Programa Educativo (ENPE) (2006-2025) podrán seguir usándolas en simultáneo con las del Programa de Jóvenes Orientado a la Sustentabilidad (PJ.OS).»*\n\n#### 3. Si alguien trabajaba con el viejo esquema (ENPE), ¿pueden seguir dándole las insignias antiguas?\n- **NO.** Conforme a los comunicados **`JSN 25.051`** y **`DNME-CNPJ 25.024`**, el **15 de diciembre de 2025** fue la fecha límite nacional para solicitar Insignias de Desarrollo Óptimo (IDOs) e Insignias Terminales del ENPE, el **31 de diciembre de 2025** concluyó definitivamente el ENPE, y en la Reunión del Equipo Nacional (REN) de marzo de 2026 todas las Provincias devolvieron las IDOs físicas sobrantes. Desde el **1 de enero de 2026**, únicamente se otorgan y entregan las insignias del **PJOS**.\n\n#### 4. Si ya obtuve una insignia en el viejo esquema (ENPE), ¿me la cambian o mejoran automáticamente por la nueva del PJOS, o tengo que obtener la nueva?\n- **No existe cambio ni canje físico automático de una insignia del ENPE por una del PJOS.**\n- Las insignias y cintas que ya obtuviste en el ENPE (como progresiones anteriores o IDOs) **conservan su validez histórica y tienes derecho a seguir portándolas en tu uniforme simultáneamente con las del PJOS** (`Manual del Uniforme Junio 2026`, págs. 44, 56 y 67).\n- Para portar las nuevas insignias del PJOS (*Cazaderos, Rumbos, Senderos, Rutas, nuevas Especialidades, Aventuras en la Naturaleza o las Insignias Finales/Terminales Alfa, Águila Real, Everest y Baden-Powell en versión Jade u Obsidiana*), debes desarrollar los objetivos, proyectos y requisitos correspondientes del PJOS en tu sección actual (`DNME-CNPJ 26.011`)."
+    },
+    {
+      "id": "conteo_exacto_insignias_pjos_por_seccion",
+      "patterns": [
+        "\\bcuantas insignias hay\\b",
+        "\\bcuantas insignias tiene\\b",
+        "\\bcuantas insignias existen\\b",
+        "\\bcuantas especialidades hay\\b",
+        "\\binsignias del nuevo esquema\\b",
+        "\\binsignias en el nuevo esquema\\b",
+        "\\binsignias de manada\\b",
+        "\\binsignias de tropa\\b",
+        "\\binsignias de comunidad\\b",
+        "\\binsignias de clan\\b",
+        "\\btotal de insignias\\b"
+      ],
+      "keywords": [
+        "cuantas insignias",
+        "cuantas especialidades",
+        "insignias nuevo esquema",
+        "insignias manada",
+        "insignias tropa",
+        "insignias comunidad",
+        "insignias clan",
+        "jade",
+        "obsidiana"
+      ],
+      "source_files": [
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+        "Mis Rastros en la Selva 2024.pdf",
+        "Pistas de Aventura 2024.pdf",
+        "El desafio de ser Caminante 2024.pdf",
+        "Las Rutas del Rover.pdf"
+      ],
+      "content": "### Inventario y Conteo Oficial de Insignias del Nuevo Esquema (PJOS) por Sección (`01 Manual del Uniforme Actualizado Junio 2026.pdf`, Cap. 03, págs. 21–89)\n\n#### 1. Manada de Lobatos (6 a <10 años — Arts. 33 al 40, págs. 21–32)\n- **Identidad, Liderazgo y Enlace:** **1** insignia *Mi Primer Rastro* (con variantes de color de lobo), **1** cinta opcional de *Nombre de Selva*, **3** *Cintas de Liderazgo* (Lobato, Subseisenero/a, Seisenero/a) y **1** *Cinta de Enlace a Tropa*.\n- **Etapas de Progresión (4 Cazaderos):** **4** insignias ovaladas: *Raksha* (Salud y Bienestar), *Bagheera* (Medio Ambiente y Sustentabilidad), *Baloo* (Habilidades para la Vida) y *Hermano Gris* (Paz y Participación Comunitaria).\n- **Especialidades (Cuerpo de Kaa):** **1** insignia *Cabeza de Kaa* + **12** *Especialidades* temáticas, cada una con **4 niveles de borde secuencial** (amarillo, verde, azul y rojo; se porta un máximo de 12 escamas en la camisola).\n- **Aventuras en la Naturaleza (4 insignias modulares):** **4** insignias hexagonales arriba de la bolsa izquierda: *Mohwa* (Técnica inicial, siempre es la primera), *Dhak* (No dejar rastro), *Flor Roja* (Técnica avanzada) y *Tregua del Agua* (Protección y cuidado).\n- **Insignias Finales y Cintas (2 versiones + 3 cintas):** **2** versiones de Insignia Final (*Alfa Jade* en verde jade y *Alfa Obsidiana* en morado, que sustituyen a Mi Primer Rastro y Cazaderos) y **3** cintas para portar en las secciones siguientes (*Cinta de Participación en Manada*, *Cinta Alfa Jade* y *Cinta Alfa Obsidiana*).\n\n#### 2. Tropa de Scouts (10 a <14 años — Arts. 42 al 48, págs. 35–44)\n- **Liderazgo y Enlace:** **3** *Cintas de Liderazgo* (Scout, Subguía de Patrulla, Guía de Patrulla), *Cordón de Liderazgo* (verde para Subguía, blanco para Guía), *Cintas de Patrulla* y **1** *Cinta de Enlace a Comunidad*.\n- **Etapas de Progresión (4 Rumbos):** **4** insignias que juntas forman un octágono: *Murciélago Magueyero* (Salud y Bienestar, azul), *Margay / Tigrillo* (Medio Ambiente y Sustentabilidad, verde), *Venado Cola Blanca* (Habilidades para la Vida, naranja) y *Quetzal* (Paz y Participación Comunitaria, rosa).\n- **Especialidades (12 insignias de fauna mexicana):** **12** especialidades en forma de trapecio (*Perrito de la Pradera, Teporingo, Colibrí Coqueta de Guerrero, Abeja Melipona, Coralillo del Balsas, Pulpo Maya, Lobo Gris Mexicano, Halcón Pecho Canela, Mariposa Monarca, Hormiga Chicatana, Vaquita Marina y Makech*), cada una con **4 niveles de borde** (amarillo, verde, azul y rojo; máximo 12 en la camisola).\n- **Aventuras en la Naturaleza (4 insignias modulares):** **4** insignias arriba de la bolsa izquierda: *Ajolote de Xochimilco* (Técnica inicial, primera en obtenerse), *Jaguar* (No dejar rastro), *Mapache de Cozumel* (Técnica avanzada) y *Águila Solitaria* (Protección y cuidado).\n- **Liderazgo Juvenil:** **1** *Pin Punta de Flecha* (colocado en las Cintas de Patrulla).\n- **Insignias Finales y Cintas (2 versiones + 3 cintas):** **2** versiones de Insignia Final (*Águila Real Jade* y *Águila Real Obsidiana*, que sustituyen a los Rumbos) y **3** cintas para secciones siguientes (*Participación en Tropa*, *Águila Real Jade* y *Águila Real Obsidiana*).\n\n#### 3. Comunidad de Caminantes (14 a <18 años — Arts. 50 al 56, págs. 47–55)\n- **Liderazgo y Enlace:** **3** *Cintas de Liderazgo* (Caminante con Iztaccíhuatl, Subcoordinación de Equipo con Popocatépetl en plata, Coordinación de Equipo con Pico de Orizaba en dorado), *Cordón de Liderazgo azul claro*, *Emblema de Equipo* y **1** *Cinta de Enlace al Clan de Rovers*.\n- **Etapas de Progresión (4 Senderos):** **4** insignias cónicas que forman un círculo modular con una rosa de los vientos bordada: *Sendero Cenit* (Salud y Bienestar), *Sendero Cumbre* (Paz y Participación Comunitaria), *Sendero Cúspide* (Habilidades para la Vida) y *Sendero Cima* (Medio Ambiente y Sustentabilidad).\n- **Especialidades (4 insignias modulares por Eje Temático):** **4** diseños modulares conectables (*Habilidades para la Vida*, *Salud y Bienestar*, *Paz y Participación Comunitaria* y *Medio Ambiente y Sustentabilidad*), cada uno con **4 niveles de borde secuencial** (amarillo, verde, azul y rojo; se portan máximo **4** en la manga izquierda, sustituyendo la anterior al subir de color de borde).\n- **Aventuras en la Naturaleza (4 insignias modulares):** **4** insignias en la manga izquierda: *Terra Nova* (Técnica inicial, primera en obtenerse), *Kon-Tiki* (No dejar rastro), *Siete Cumbres* (Técnica avanzada) y *Discovery* (Protección y cuidado).\n- **Liderazgo Juvenil:** **1** *Pin Punta de Flecha* (en la solapa de la bolsa derecha).\n- **Insignias Finales y Cintas (2 versiones + 3 cintas):** **2** versiones de Insignia Final (*Everest Jade* y *Everest Obsidiana*, que sustituyen a los Senderos) y **3** cintas para portar en el Clan (*Participación en Comunidad*, *Everest Jade* y *Everest Obsidiana*).\n\n#### 4. Clan de Rovers (18 a <22 años — Arts. 58 al 64, págs. 58–68)\n- **Liderazgo, Identidad y Enlace:** **2** *Cintas de Liderazgo* (Rover Scout y Promotor/a Rover), *Escudo de Clan*, *Escudo de Unidad Rover*, *Pin Distintivo de Viaje Rover* y **1** *Cinta de Enlace a la Vida*.\n- **Etapas de Progresión (4 Rutas):** **4** insignias inspiradas en pueblos originarios: *Ruta Otomí* (Habilidades para la Vida, naranja), *Ruta Maya* (Medio Ambiente y Sustentabilidad, verde), *Ruta Wixárika* (Paz y Participación Comunitaria, chaquira multicolor) y *Ruta Rarámuri* (Salud y Bienestar, azul).\n- **Especialidades (4 insignias modulares por Eje Temático):** **4** diseños modulares (*Habilidades para la Vida*, *Salud y Bienestar*, *Paz y Participación Comunitaria* y *Medio Ambiente y Sustentabilidad*), cada uno con **4 niveles de borde** (amarillo, verde, azul y rojo; máximo **4** en la manga izquierda).\n- **Aventuras en la Naturaleza (4 insignias modulares):** **4** insignias en la manga izquierda: *Tierra* (Técnica inicial, cultura Yaqui), *Viento* (No dejar rastro, Ehécatl), *Fuego* (Técnica avanzada, glifo mexica) y *Agua* (Protección y cuidado, Cocijo).\n- **Liderazgo Juvenil:** **1** *Pin Punta de Flecha* (en la solapa de la bolsa derecha).\n- **Insignias Terminales y Cintas (2 versiones + 3 cintas):** **2** versiones de Insignia Terminal (*Baden-Powell Jade* y *Baden-Powell Obsidiana*, que sustituyen a las Rutas) y **3** cintas (*Participación en Clan*, *Baden-Powell Jade* y *Baden-Powell Obsidiana*).\n\n#### 5. Iniciativas Mundiales / Mundo Mejor (Arts. 65 al 71, págs. 83–89)\nDisponibles para las secciones con borde del color de la sección (amarillo en Manada, verde en Tropa, morado en Comunidad y Clan): *Mensajeros de la Paz* (anilla), *Diálogo por la Paz*, *Diálogo Interreligioso*, *Patrimonito*, *Pin Tribu de la Tierra*, *Champions for Nature* (*Defensor de mejores decisiones* y *Líder de naturaleza y biodiversidad* con festón turquesa al completar ambas), *Plastic Tide Turners*, *Scouts Go Solar*, *Life Leaders*, *Impact Innovators Challenge*, *EQ in Action Challenge*, *Health Allies*, *Challenge Nutrition*, *Mind Builders Challenge* y, para Caminantes y Rovers, el *Reconocimiento Scouts del Mundo (RSDM)* (insignia y pin)."
+    },
+    {
+      "id": "directorio_nacional_asmac_y_subcomisiones",
+      "patterns": [
+        "\\bjefe scout nacional\\b",
+        "\\bsubjefe scout nacional\\b",
+        "\\bpresidente nacional\\b",
+        "\\bsubcomisionad[oa]\\b",
+        "\\bcomisionad[oa] nacional\\b",
+        "\\bdireccion internacional\\b",
+        "\\bdirectora? internacional\\b",
+        "\\bquien dirige\\b",
+        "\\bquien es el jefe\\b",
+        "\\bquien es el presidente\\b",
+        "\\bquien es la subcomisionada\\b",
+        "\\bpedro diaz maya\\b",
+        "\\benrique moreno cardenas\\b",
+        "\\bjoaquin ramos guerra\\b",
+        "\\bhector vargas mancilla\\b",
+        "\\balejandra.*schiavon\\b",
+        "\\bkarla paulina venta\\b",
+        "\\bdirectorio nacional\\b",
+        "\\boficina scout nacional\\b"
+      ],
+      "keywords": [
+        "jefe scout nacional",
+        "presidente nacional",
+        "subcomisionada",
+        "subcomisionado",
+        "comisionado nacional",
+        "direccion internacional",
+        "directora internacional",
+        "pedro diaz maya",
+        "enrique moreno",
+        "joaquin ramos",
+        "hector vargas",
+        "alejandra schiavon",
+        "karla paulina venta",
+        "directorio"
+      ],
+      "source_files": [
+        "OFICINA SCOUT NACIONAL - Scouts de México.html",
+        "ORGANIGRAMA ÓRGANOS DE GOBIERNO - Scouts de México.html",
+        "Manual ExplorApp.pdf",
+        "JSN-DNME 26.011 Nombramiento del Comisionado Nacional de Programa de Jóvenes.pdf",
+        "JSN-DNME 26.015 Nombramientos en la Dirección Nacional de Métodos Educativos.pdf",
+        "DNME 26.016 Conclusión de la misión en la Subcomisión Nacional de Manada de Lobeznas y Lobatos.pdf",
+        "DNME 26.017 Conclusión de la misión en la Subcomisión Nacional de Clan de Rovers.pdf",
+        "ASMAC JSN 25.004 Nombramiento DI.pdf"
+      ],
+      "content": "### Directorio Oficial de la Asociación de Scouts de México, A.C. (ASMAC — Corte a Noviembre de 2026)\n\n#### 1. Presidencia y Órganos de Gobierno (`ORGANIGRAMA ÓRGANOS DE GOBIERNO - Scouts de México.html`)\n- **Presidente Nacional:** **Enrique Moreno Cárdenas** (`presidencia.nacional@scouts.org.mx`)\n- **Vicepresidente Nacional:** **Carlos Alberto Guerra Berumen** (`alberto.guerra@scouts.org.mx`)\n- **Secretario Nacional:** **Rodolfo Rojas Wens** (`rodolfo.rojas@scouts.org.mx`)\n- **Tesorero Nacional:** **José Antonio Hernández Gallegos** (`antonio.hernandez@scouts.org.mx`)\n- **Pro-Vicepresidente Nacional:** **Raúl Alfonso Rebolledo Alcocer** (`raul.rebolledo@scouts.org.mx`)\n- **Pro-Tesorero Nacional:** **Cuauhtémoc Olivera Gómez** (`cuauhtemoc.olivera@scouts.org.mx`)\n- **Pro-Secretaria Nacional:** **Norma Yolanda Esquivel Enríquez** (`norma.esquivel@scouts.org.mx`)\n- **Consejeros/as Nacionales:** Salvador Villalobos Gómez, María del Rocío Nava Saavedra, Juan Ramón Ramírez López, Mónica Stefanya Gutiérrez Navas, Pbro. Eduardo Corral Merino, León Arturo García Mohedano, Rosa María Rosas Paredes y Carlos Ruíz González.\n- **Corte Nacional de Honor (CNH):** Presidente: **Carlos Arturo Rivero Verano** (`carlos.rivero@scouts.org.mx`); Secretario: **Víctor Acuña Casillas** (`victor.acuna@scouts.org.mx`); Miembros: Víctor Raúl Blake Gómez, Héctor Rosales Zarco, Mauricio Javier Orduña González y Blanca Estela Hernández Zárate.\n- **Comisión de Vigilancia:** Comisario: **Enrique Acuña Vega** (`enrique.acuna@scouts.org.mx`); Miembro: **Carlos Guillermo Gordillo Zenteno** (`carlos.gordillo@scouts.org.mx`).\n\n#### 2. Jefatura Scout Nacional y Dirección Ejecutiva Nacional (`OFICINA SCOUT NACIONAL - Scouts de México.html`)\n- **Jefe Scout Nacional:** **Pedro Díaz Maya** (`jefatura.nacional@scouts.org.mx`, Ext. 120 / 121)\n- **Subjefe Scout Nacional:** **Ángel Martínez Herrera** (`subjefatura.nacional@scouts.org.mx`, Ext. 105)\n- **Director Nacional de Métodos Educativos (DNME):** **Joaquín Ramos Guerra** (`metodos.educativos@scouts.org.mx`, Ext. 139)\n- **Directora Internacional (Dirección Internacional):** **Alejandra Adriana Schiavon Osorio** (`internacional@scouts.org.mx`, en funciones desde el 1 de enero de 2025 conforme a `JSN 25.004` y `25.007`, sucediendo a Ilse Lorena Vargas Vargas)\n- **Directora Nacional de Gestión y Desarrollo Institucional:** **Najibe García Ledesma** (`gestion.institucional@scouts.org.mx`, Ext. 109)\n- **Director Nacional de Administración y Finanzas:** **Luis Fernando Segura** (`administracion.finanzas@scouts.org.mx`, Ext. 103)\n- **Director Nacional de Operación y Logística:** **Víctor Hugo García Ramírez** (`victor.garcia@scouts.org.mx`, Ext. 137)\n- **Directora Nacional de Protección a la Membresía:** **Ileana G. Mariott Mares** (`proteccion.membresia@scouts.org.mx`, Ext. 135)\n- **Director Nacional de Marca:** **Lev Alejandro de León Sánchez** (`direccion.marca@scouts.org.mx`)\n- **Director de Innovación Tecnológica y Servicios a la Membresía:** **Edgar Estrada López** (`innovacion.tecnologica@scouts.org.mx`, Ext. 110)\n\n#### 3. Comisión Nacional de Programa de Jóvenes (CNPJ), Subcomisiones de Sección y Adultos (`Manual ExplorApp.pdf` sept. 2026 y Comunicados `DNME 26.011` a `26.017`)\n- **Comisionado Nacional de Programa de Jóvenes (CNPJ):** **Héctor Vargas Mancilla** (`programa.jovenes@scouts.org.mx`, Ext. 122 / 139; nombrado a partir del 1 de julio de 2026 mediante `JSN-DNME 26.011`; anteriormente ocupó el cargo Iván Cortés Byron en 2025)\n- **Subcomisionado Nacional de Programa de Jóvenes:** **Javier Israel Ramírez Sánchez** (`actualizacion.programa@scouts.org.mx`)\n- **Subcomisionada Nacional de Comunidad de Caminantes (SCNCC):** **Karla Paulina Venta Alonso** (`comunidad.caminantes@scouts.org.mx` / `caminantes@scouts.org.mx`)\n- **Subcomisionada Nacional de Tropa de Scouts (SCNTS):** **María de los Ángeles de Luna García** (`tropa.scouts@scouts.org.mx`)\n- **Subcomisión Nacional de Manada de Lobeznas y Lobatos (SCNMLL):** **María del Sol Santos Islas** concluyó su misión el 31 de agosto de 2026 (`DNME 26.016`), quedando el despacho atendido directamente por el CNPJ **Héctor Vargas Mancilla** (`programa.jovenes@scouts.org.mx`).\n- **Subcomisión Nacional de Clan de Rovers (SCNCR):** **María Fernanda Palomino Gorgonio** concluyó su misión el 31 de agosto de 2026 (`DNME 26.017`), quedando el despacho atendido directamente por el CNPJ **Héctor Vargas Mancilla** (`programa.jovenes@scouts.org.mx`).\n- **Subcomisionado Nacional de Aventuras en la Naturaleza:** **Benjamín Sosa Acuña**\n- **Subcomisionado Nacional de Mundo Mejor:** **Alexis Aiheser Ramírez Cruz** (`mundo.mejor@scouts.org.mx`)\n- **Comisionado Nacional de Iniciativas Digitales / Conocimiento Digital:** **Manuel Mauricio Ruíz Delgado** (`JSN-DNME 26.015`, 19 de agosto de 2026)\n- **Comisionado Nacional de Adultos en el Movimiento Scout (CNAMS):** **Luis Daniel de la Torre Flores** (`adultos.movimiento@scouts.org.mx`, nombrado el 19 de agosto de 2026 en `JSN-DNME 26.015`, sucediendo a José Rafael Lozano Alvarado)\n- **Subcomisionada Nacional de Desarrollo Adulto:** **Marisol Cázares Zugasti** (`JSN-DNME 26.015`)\n- **Colaboradora Nacional de la DNME (Insignias Finales, Terminales, Mundo Mejor y Puntas de Flecha):** **Lourdes Samanta Ruíz Escalante** (`insignias.cnpj@scouts.org.mx`)\n- **Ejecutiva de la DNME (Soporte Adultos):** **Diana Monserrat Dávila Ávila** (`soporte.adultos@scouts.org.mx`)\n\n#### 4. Gerencias y Áreas de la Oficina Scout Nacional (Córdoba 57, Col. Roma Norte, CDMX, Tel. `(55) 5208-7122`)\n- **Comisión Nacional de Relaciones Públicas:** Laura Pasten Hernández (`relaciones.publicas@scouts.org.mx`, Ext. 140)\n- **Comisión Nacional de Vinculación:** Fernando Corona Chávez (`vinculacion.institucional@scouts.org.mx`, Ext. 141)\n- **Gerente de Tienda Scout:** Mario I. Varela Cravioto (`tienda.scout@scouts.org.mx`, Ext. 132)\n- **Gerencia de Eventos Nacionales:** Alejandro Hamed Ramírez (`gerencia.eventos@scouts.org.mx`, Ext. 144)\n- **Gerencia de Servicios a la Membresía:** Francisco Reyes Elivar (`servicios@scouts.org.mx`, Ext. 126) y Araceli López Morales (`atn_membresia@scouts.org.mx`, Ext. 114)\n- **Atención a Servicio Social y Prácticas Universitarias:** Paola Pérez Vázquez (`programas.universitarios@scouts.org.mx`, Ext. 186)\n- **Gerencia de Imagen y Comunicación:** Persé Alberto Cárdenas Irigoyen (`comms@scouts.org.mx`, Ext. 129)\n- **Gerente de CEDIS (Centro de Distribución Scout):** Felipe Santander Rico (`centro.distribucion.scout@scouts.org.mx`, Ext. 134)\n- **Gerencia de Compras:** Esther Castro Castillo (`compras@scouts.org.mx`, Ext. 122)\n- **Jefe de Campo Scout Meztitla:** Hans Vásquez Magaña (`meztitla@scouts.org.mx`, Ext. 147)"
+    },
+    {
+      "id": "presidentes_de_provincia_asmac",
+      "patterns": [
+        "\\bpresidentes? de provincia\\b",
+        "\\bquien es el presidente de la provincia\\b",
+        "\\btlahuac xochimilco\\b",
+        "\\btlxh\\b",
+        "\\bprovincias scouts\\b"
+      ],
+      "keywords": [
+        "presidente de provincia",
+        "presidentes de provincia",
+        "tlahuac xochimilco",
+        "tlxh",
+        "alfonso vazquez quiroz",
+        "provincias scouts"
+      ],
+      "source_files": [
+        "PRESIDENTES DE PROVINCIA - Scouts de México.html"
+      ],
+      "content": "### Directorio Oficial de Presidentes y Presidentas de Provincia de la ASMAC (`PRESIDENTES DE PROVINCIA - Scouts de México.html`)\n\n1. **Aguascalientes:** Isabel Cristina García Romo\n2. **Álvaro Obregón:** Juan Carlos Franco Sánchez\n3. **Azcapotzalco:** Luis Miguel Picazo\n4. **Baja California:** Claudia Margarita Delgadillo Becerra\n5. **Baja California Sur:** Jonathan Sánchez Guerrero\n6. **Benito Juárez:** Luis Enrique Palacio Rodríguez\n7. **Chalco-Ixtapaluca:** Raúl Josías Albarrán Ramírez\n8. **Chiapas:** Carlos Adrián Pérez Muñoz\n9. **Chihuahua Norte:** Adrián Emmanuel Gutiérrez Gutiérrez\n10. **Chihuahua Sur:** Alan Damián Anchondo del Villar\n11. **Coahuila:** Bertha Alicia Estrada Herrera\n12. **Colima:** Lorena Yasmín Ceballos Méndez\n13. **Coyoacán:** Emilia Ernestina Leticia Valladares\n14. **Cuauhtémoc:** Karla Cynthia Muñoz Alcántara\n15. **Cuautitlán:** Ulises Saúl Carreño Macías\n16. **Durango:** Jesús Jael Leyva de la Torre\n17. **Guanajuato I:** Wilfrido Ignacio Contreras Camarena\n18. **Guanajuato II:** Raúl Arrieta Medina\n19. **Guerrero:** María de los Ángeles Monroy Borja\n20. **Gustavo A. Madero:** Iván Fernando Rodríguez García\n21. **Hidalgo:** Mariana Aurora Camejo Quiroz\n22. **Iztacalco:** Esmeralda de Alfonso Gálvez\n23. **Iztapalapa:** Israel Araujo Martínez\n24. **Jalisco:** Ana Carolina Rentería García\n25. **La Laguna:** Ulises Lugo Guerrero\n26. **Michoacán:** Ana Martha Mora Ruano\n27. **Miguel Hidalgo:** Paulette Eurídice Robles\n28. **Morelos:** David Cortés Chan\n29. **Naucalpan:** Federico Alejandro Ortíz Baeza\n30. **Nuevo León:** Adrián Garza García\n31. **Oaxaca:** Karina Graciela Ortiz Cervantes\n32. **Puebla:** Guillermo Sabas Ramírez Luna\n33. **Querétaro:** Natzielli López Ramírez\n34. **Quintana Roo:** Gilberto Arias Pastor\n35. **San Luis Potosí:** Ana Lucía Rocha Pinot\n36. **Sinaloa:** Eleazar Pacheco Félix\n37. **Sonora:** Hilda Guadalupe Valenzuela Zamora\n38. **Tabasco:** Mariana Jiménez Pérez\n39. **Tamaulipas Norte:** José Ángel Cantú García\n40. **Tamaulipas Sur:** José Ignacio Anchondo Pérez\n41. **Tláhuac-Xochimilco (TLXH):** Alfonso Vázquez Quiroz\n42. **Tlalnepantla-Atizapán:** José Jaime Magallón Díaz\n43. **Tlalpan:** Horacio Guillermo Ponce Ulloa\n44. **Toluca:** Alicia Karina Rogel Bedolla\n45. **Valle Noreste:** Dannae Desirée Viveros Devars\n46. **Venustiano Carranza:** Alejandro Rivera Pozo\n47. **Veracruz:** Miguel González González\n48. **Yucatán:** Jorge Carlos Villamil Domínguez\n49. **Zacatecas:** María Guadalupe González Ramírez"
+    },
+    {
+      "id": "programas_servicios_y_beneficios_html_asmac",
+      "patterns": [
+        "\\bfondo scout nacional\\b",
+        "\\bservicio social\\b",
+        "\\bpracticas profesionales\\b",
+        "\\bdescuento scout\\b",
+        "\\bpago a plazos\\b",
+        "\\boffice 365\\b",
+        "\\bo365\\b",
+        "\\bcorreo institucional\\b",
+        "\\btlatoani\\b",
+        "\\bel gran salto\\b",
+        "\\bplan estrategico\\b",
+        "\\bproyecto educativo\\b"
+      ],
+      "keywords": [
+        "fondo scout nacional",
+        "servicio social",
+        "descuento scout",
+        "pago a plazos",
+        "office 365",
+        "o365",
+        "tlatoani",
+        "el gran salto",
+        "plan estrategico",
+        "proyecto educativo"
+      ],
+      "source_files": [
+        "FONDO SCOUT NACIONAL - Scouts de México.html",
+        "SERVICIO SOCIAL - Scouts de México.html",
+        "DESCUENTO SCOUT - Scouts de México.html",
+        "PAGO A PLAZOS - Scouts de México.html",
+        "Registro_O365 - Scouts de México.html",
+        "INSCRIPCION EVENTOS NACIONALES - Scouts de México.html",
+        "TLATOANI - Scouts de México.html",
+        "EL GRAN SALTO - Scouts de México.html",
+        "PLAN ESTRATÉGICO - Scouts de México.html",
+        "PROYECTO EDUCATIVO - Scouts de México.html"
+      ],
+      "content": "### Programas Institucionales, Servicios y Beneficios Oficiales del Portal ASMAC\n\n1. **Fondo Scout Nacional (`FONDO SCOUT NACIONAL - Scouts de México.html`):**\n   - Es un **fideicomiso irrevocable establecido en 1983** a través del Banco Nacional de México (Banamex), en el cual la ASMAC es fideicomitente y fideicomisaria.\n   - Su propósito es constituir un patrimonio cuyos rendimientos financien **proyectos, programas o actividades educativas** que consoliden el Método Scout (nunca puede destinarse a cubrir pasivos).\n   - Su **Comité Técnico** está integrado por 3 miembros vitalicios (*Antonio Pozzi Pardo, Ivo Stern Becka y Emilio Goicoechea Luna*) y 3 miembros temporales ex officio (*Presidente Nacional, Tesorero Nacional y Comisario de la ASMAC*). Toda solicitud requiere aprobación previa del Consejo Nacional.\n\n2. **Servicio Social y Programas Universitarios (`SERVICIO SOCIAL - Scouts de México.html`):**\n   - Permite a estudiantes y pasantes de instituciones de educación superior realizar su **Servicio Social o Prácticas Profesionales** en la ASMAC por un periodo no menor a **6 meses** ni mayor a **2 años**, colaborando en proyectos de impacto comunitario y desarrollo institucional.\n   - **Contacto oficial:** **Paola Pérez Vázquez** (`programas.universitarios@scouts.org.mx`, Tel. `(55) 5208-7122 Ext. 186`).\n\n3. **Descuento Scout, Pago a Plazos y Activación de Cuenta Office 365 (`DESCUENTO SCOUT`, `PAGO A PLAZOS` y `Registro_O365`):**\n   - **#DescuentoScout:** Convenios y beneficios comerciales para integrantes con membresía vigente y sus familias (además del 30% de descuento en Tienda Scout al registrarse bajo modalidad de Registro Familiar).\n   - **Pago a Plazos e Inscripción a Eventos Nacionales (`INSCRIPCION EVENTOS NACIONALES - Scouts de México.html`):** Desde el menú *«Mis eventos»* en **SISAS** se selecciona el botón *«Asistir»* y se realiza el pago mediante la pasarela **Conekta** (con tarjetas Visa, Mastercard y American Express, referencias bancarias o tiendas de conveniencia), contando también con promociones de pago a plazos con tarjetas participantes (como BBVA).\n   - **Cuenta Office 365 (`Registro_O365 - Scouts de México.html`):** Los miembros con registro activo pueden activar sus credenciales institucionales de Microsoft Office 365 (`office.com`) validando su **CUM y contraseña de SISAS** en el portal oficial.\n\n4. **Proyecto Educativo 2020–2030 y Plan Estratégico Nacional 2026–2028 (`PROYECTO EDUCATIVO` y `PLAN ESTRATÉGICO`):**\n   - El **Proyecto Educativo 2020–2030 Orientado a la Sustentabilidad** define la propuesta educativa e identidad de la ASMAC en el plano ideal, de la cual emana en el plano concreto el **Programa de Jóvenes (PJOS)**.\n   - El **Plan Estratégico Nacional (PEN) Trienal 2026–2028**, elaborado por la Oficina Scout Nacional y aprobado por el Consejo Nacional, establece las prioridades estratégicas alineadas con la Visión 2033 de la OMMS.\n\n5. **Revista Tlatoani y Misión El Gran Salto (`TLATOANI` y `EL GRAN SALTO`):**\n   - **Tlatoani:** Publicación y boletín histórico oficial de la dirigencia y membresía de la ASMAC (cuya antología también forma parte de la *Biblioteca del Centenario*).\n   - **El Gran Salto:** Estrategia e instructivo institucional de crecimiento, retención y fortalecimiento de Grupos Scouts y Provincias en todo el país."
+    },
+    {
       "id": "resolucion_de_problemas_y_conflictos",
       "category_tag": "convivencia",
       "patterns": [
