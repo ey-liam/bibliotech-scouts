@@ -1,0 +1,963 @@
+{
+  "topics": [
+    {
+      "id": "que_son_los_scouts",
+      "patterns": [
+        "\\bque son los scouts\\b",
+        "\\bque es el movimiento scout\\b",
+        "\\bque es el escultismo\\b",
+        "\\bque es ser scout\\b",
+        "\\bque hacen los scouts\\b",
+        "\\bde que tratan los scouts\\b",
+        "\\bque es la asmac\\b",
+        "\\bque es wosm\\b"
+      ],
+      "keywords": [
+        "movimiento scout",
+        "escultismo",
+        "que son los scouts",
+        "que hacen los scouts",
+        "mision scout"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Declaracion de Principios 2023.pdf",
+        "REGLAMENTO 2023.pdf",
+        "Escultismo para Muchachos.pdf"
+      ],
+      "content": "**El Movimiento Scout (o Escultismo) es el movimiento educativo no formal para niñas, niños, adolescentes y jóvenes más grande del mundo.**\n\n- **¿Cuál es su misión?**\n  Contribuir a la educación integral de las y los jóvenes a través de un sistema de valores basado en la **Promesa y la Ley Scout**, para ayudar a construir un **mundo mejor** donde las personas se desarrollen plenamente y jueguen un papel constructivo en la sociedad.\n- **¿Qué hacen los Scouts?**\n  Aprenden a través de la acción (*aprender haciendo*), la vida al aire libre, los campamentos, el juego, el trabajo en pequeños grupos, el servicio comunitario y el diseño de proyectos sobre medio ambiente, paz, salud y habilidades para la vida.\n- **En México y en el Mundo:**\n  - A nivel mundial está articulado por **World Scouting (OMMS / WOSM)**, con más de **57 millones de integrantes** en más de 170 países.\n  - En México la organización oficial reconocida por la OMMS es la **Asociación de Scouts de México, A.C. (ASMAC)**, fundada en **1926** y organizada en Grupos Scouts y Provincias en toda la República Mexicana.\n- **¿Quiénes pueden participar?**\n  Niñas, niños, adolescentes y jóvenes de **6 a 22 años** divididos en cuatro secciones por edad (**Manada, Tropa, Comunidad y Clan**), acompañados por **Adultos voluntarios (Scouters y Dirigentes)** de 22 años en adelante."
+    },
+    {
+      "id": "como_iniciaron_los_scouts_historia",
+      "patterns": [
+        "\\bcomo iniciaron los scouts\\b",
+        "\\bcomo empezo el movimiento scout\\b",
+        "\\bcomo surgieron los scouts\\b",
+        "\\bhistoria de los scouts\\b",
+        "\\bhistoria del escultismo\\b",
+        "\\bquien fundo los scouts\\b",
+        "\\bquien fue baden\\b",
+        "\\bbaden powell\\b",
+        "\\bbrownsea\\b",
+        "\\bcuando se fundaron los scouts\\b",
+        "\\bhistoria de la asmac\\b"
+      ],
+      "keywords": [
+        "iniciaron",
+        "historia",
+        "origen",
+        "fundacion",
+        "baden",
+        "powell",
+        "brownsea",
+        "1907",
+        "1926",
+        "pioneras"
+      ],
+      "source_files": [
+        "Escultismo para Muchachos.pdf",
+        "Manual del Pie Tierno.pdf",
+        "Pioneras del escultismo en Mexico.pdf",
+        "MANUAL DE IDENTIDAD DEL CENTENARIO.pdf"
+      ],
+      "content": "**El Movimiento Scout inició en 1907 en Inglaterra gracias a Robert Baden-Powell (B.P.) y llegó oficialmente a México en 1926.**\n\n### 1. El inicio en el mundo (1907–1908)\n- **Robert Stephenson Smyth Baden-Powell (1857–1941)** observó que los jóvenes en Inglaterra leían con entusiasmo sus manuales de exploración y rastreo.\n- Del **1 al 9 de agosto de 1907**, organizó el **primer campamento experimental en la Isla de Brownsea** (Inglaterra) con **20 jóvenes** de distintos orígenes sociales divididos en **4 patrullas** (*Lobos, Toros, Chorlitos y Cuervos*).\n- En **1908** publicó en fascículos el libro ***Escultismo para Muchachos (Scouting for Boys)***, que se convirtió en un fenómeno mundial espontáneo: miles de jóvenes formaron patrullas y tropas en todo el mundo.\n- En **1920** se celebró el **1° Jamboree Scout Mundial** en Olympia (Londres) y se fundó la **Oficina Mundial Scout (OMMS / WOSM)**.\n\n### 2. El inicio de los Scouts en México (1912–1926 → Centenario 2026)\n- Los primeros intentos de tropas scouts en México surgieron entre **1912 y 1917** en la Ciudad de México, Veracruz, Mérida y Tampico.\n- El **26 de agosto de 1926** se fundó oficialmente la organización nacional reconocida a nivel internacional, hoy **Asociación de Scouts de México, A.C. (ASMAC)**, que en **2026 celebra su Centenario («100 años Construyendo un Mundo Mejor»)**."
+    },
+    {
+      "id": "donde_encuentro_como_integrarme",
+      "patterns": [
+        "\\bdonde los encuentro\\b",
+        "\\bdonde encuentro\\b",
+        "\\bcomo me puedo integrar\\b",
+        "\\bcomo integrarme\\b",
+        "\\bcomo entrar a los scouts\\b",
+        "\\bcomo unirme\\b",
+        "\\bcomo inscribirme\\b",
+        "\\bcomo ser scout\\b",
+        "\\bdonde hay grupos scouts\\b",
+        "\\brequisitos para entrar\\b",
+        "\\bquiero entrar a los scouts\\b"
+      ],
+      "keywords": [
+        "donde los encuentro",
+        "integrar",
+        "integrarme",
+        "unirme",
+        "entrar",
+        "inscribirme",
+        "inscripcion",
+        "ubicacion",
+        "grupos scouts"
+      ],
+      "source_files": [
+        "Casa Scout Nacional – Scouts de México.html",
+        "Contáctanos – Scouts de México.html",
+        "Provincias Scouts – Scouts de México.html",
+        "Autorizacion de Ingreso al Movimiento para Menores de Edad.pdf",
+        "Comunicado ASMAC JSN 25.136 Cuotas 2026.pdf"
+      ],
+      "content": "**Puedes integrarte a los Scouts acercándote al Grupo Scout más cercano a tu domicilio en cualquiera de las Provincias Scouts de México.**\n\n### 1. ¿Dónde encuentro un Grupo Scout cerca de mí?\n- **En toda la República Mexicana:** La ASMAC está organizada en **Provincias Scouts** y cientos de **Grupos Scouts** que se reúnen normalmente los **sábados por la tarde** (o domingos) en parques, plazas o locales de grupo.\n- **Directorio y Contacto Nacional:**\n  - 📍 **Casa Scout Nacional:** Calle Córdoba #55, Col. Roma Norte, Alcaldía Cuauhtémoc, C.P. 06700, Ciudad de México.\n  - 📞 **Teléfono:** `55 5208 7122`\n  - 🌐 **Sitio oficial:** [scouts.org.mx](https://scouts.org.mx) (apartado de *Provincias Scouts / Encuentra tu Grupo*).\n\n### 2. ¿Cómo me puedo integrar paso a paso?\n1. **Visita el Grupo Scout:** Puedes asistir a una sesión de prueba en la sección que corresponda a tu edad:\n   - **6 a <10 años:** Manada de Lobatos • **10 a <14 años:** Tropa de Scouts • **14 a <18 años:** Comunidad de Caminantes • **18 a <22 años:** Clan de Rovers • **22+ años:** Adulto voluntario.\n2. **Llena tu formato de ingreso y Ficha de Salud:**\n   - Si eres menor de 18 años: `Autorizacion de Ingreso al Movimiento para Menores de Edad.pdf` firmada por madre, padre o tutor.\n   - Si eres mayor de 18 años: `Solicitud de ingreso, reingreso o continuidad para mayores de edad.pdf`.\n   - Entrega tu `FICHA SALUD 2026 EDITABLE.pdf`.\n3. **Cubre tu cuota anual de registro (`JSN 25.136`):**\n   - **Nuevo Ingreso 2026:** `$890.00 MXN` • **Reingreso 2026:** `$730.00 MXN` (incluye credencial digital, acceso a SISAS/ExplorApp y Seguro Scout contra Accidentes)."
+    },
+    {
+      "id": "donde_compro_el_uniforme_tienda_scout",
+      "patterns": [
+        "\\bdonde compro el uniforme\\b",
+        "\\bdonde comprar el uniforme\\b",
+        "\\bdonde consigo el uniforme\\b",
+        "\\bdonde venden el uniforme\\b",
+        "\\btienda scout\\b",
+        "\\bcomprar camisola\\b",
+        "\\bcomprar insignias\\b"
+      ],
+      "keywords": [
+        "donde compro",
+        "comprar uniforme",
+        "tienda scout",
+        "venden",
+        "conseguir uniforme",
+        "comprar camisola"
+      ],
+      "source_files": [
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+        "Casa Scout Nacional – Scouts de México.html",
+        "Contáctanos – Scouts de México.html"
+      ],
+      "content": "**El uniforme y las insignias oficiales se adquieren en la «Tienda Scout Nacional» de la ASMAC (en línea o presencial) y en las tiendas autorizadas de cada Provincia Scout.**\n\n### 1. ¿Dónde comprar tu uniforme oficial?\n- 🛒 **Tienda Scout Nacional (Física):** Ubicada dentro de la **Casa Scout Nacional** en **Calle Córdoba #55, Col. Roma Norte, Alcaldía Cuauhtémoc, C.P. 06700, CDMX** (Tel. `55 5208 7122`).\n- 💻 **Tienda Scout en Línea y Tiendas Provinciales:** A través del portal oficial de [scouts.org.mx](https://scouts.org.mx) y en las oficinas de tu **Provincia Scout** local.\n\n### 2. ¿Qué prendas debes comprar en la Tienda Scout y cuáles puedes conseguir por tu cuenta?\nDe acuerdo con el **Manual del Uniforme (Junio 2026, Cap. 01, Art. 1–6)**:\n- **Prendas oficiales de Tienda Scout:**\n  - **Camisola oficial** del color de tu sección (Amarilla en Manada, Verde en Tropa, Azul en Comunidad, Roja en Clan, Azul marino/Blanca/Gris en Adultos), que ya incluye el bordado de la Flor de Lis y «SCOUTS MÉXICO».\n  - **Cinturón oficial** con hebilla metálica de la Flor de Lis, **calcetas azul marino**, **motas** del color de tu sección e **insignias oficiales**.\n- **Pantalón, short o falda (Art. 2):** Puedes comprar el modelo oficial en Tienda Scout, o bien utilizar un **pantalón, short o falda azul marino de corte recto**, sin aplicaciones externas y con presillas para el cinturón.\n- **Pañoleta:** Te la entrega tu propio **Grupo Scout** con los colores de identidad de tu grupo."
+    },
+    {
+      "id": "que_es_la_manada",
+      "patterns": [
+        "\\bque es la manada\\b",
+        "\\bque son los lobatos\\b",
+        "\\bcomo funciona la manada\\b",
+        "\\bseccion manada\\b",
+        "\\bmanada de lobatos\\b"
+      ],
+      "keywords": [
+        "manada",
+        "lobatos",
+        "lobato",
+        "lobezna",
+        "akela",
+        "seisena",
+        "rastros en la selva"
+      ],
+      "source_files": [
+        "Mis Rastros en la Selva 2024.pdf",
+        "Guia de Scouter de Manada de Lobatos 2024.pdf",
+        "Carnet Aventuras en la Naturaleza para Manada 2024.pdf",
+        "REGLAMENTO 2023.pdf"
+      ],
+      "content": "**La Manada de Lobatos es la primera sección del Movimiento Scout, integrada por niñas y niños de 6 y hasta antes de cumplir los 10 años.**\n\n- **Lema:** *«Siempre lo Mejor»* • **Color de camisola y motas:** **Amarillo**.\n- **Marco Simbólico (*El Libro de las Tierras Vírgenes*):**\n  La Manada vive la fantasía del pueblo libre de los lobos de Seeonee (creado por Rudyard Kipling), donde aprenden de personajes como **Akela, Baloo, Bagheera, Kaa y Raksha**.\n- **Organización:**\n  Se dividen en pequeños grupos de 6 integrantes llamados **Seisenas** (identificadas por colores de pelaje de lobo: *Negro, Pardo, Gris, Blanco, Rojo, Leonado*), guiadas por un/a **Seisenero/a**. Su asamblea se llama **Consejo de Roca**.\n- **Etapas de Progresión Personal (`Mis Rastros en la Selva 2024`):**\n  1. **Lobo Pata Tierna**\n  2. **Lobo Saltador**\n  3. **Lobo Rastreador**\n  4. **Lobo Cazador**\n- **Insignia Terminal:** **Lobo Rampante** (y desarrollo de competencias en el `Carnet Aventuras en la Naturaleza para Manada 2024`)."
+    },
+    {
+      "id": "que_es_la_tropa",
+      "patterns": [
+        "\\bque es la tropa\\b",
+        "\\btropa de scouts\\b",
+        "\\bcomo funciona la tropa\\b",
+        "\\bque es una patrulla\\b",
+        "\\bseccion tropa\\b",
+        "\\bpistas de aventura\\b"
+      ],
+      "keywords": [
+        "tropa",
+        "patrulla",
+        "pistas de aventura",
+        "corte de honor",
+        "siempre listos"
+      ],
+      "source_files": [
+        "Pistas de Aventura 2024.pdf",
+        "Guia de Scouter de Tropa de Scouts 2024.pdf",
+        "Carnet Aventuras en la Naturaleza para Tropa 2024.pdf",
+        "Guía Punta de Flecha_2025 TS.pdf",
+        "Cartas a un guía de patrulla.pdf"
+      ],
+      "content": "**La Tropa de Scouts es la sección para niñas, niños y adolescentes de 10 y hasta antes de cumplir los 14 años.**\n\n- **Lema:** *«Siempre Listos»* • **Color de camisola y motas:** **Verde**.\n- **Marco Simbólico y Sistema de Patrullas:**\n  Su corazón es el **Sistema de Patrullas**: la Tropa se organiza en **Patrullas** de 6 a 8 integrantes que eligen el nombre de un animal, su grito, banderín, cintas de patrulla y su rincón o cueva. Cada patrulla es liderada por un/a **Guía de Patrulla** y un/a **Subguía**.\n- **Órganos de Gobernanza:**\n  - **Consejo de Patrulla:** Reunión de todos los integrantes de una misma patrulla.\n  - **Corte de Honor:** Órgano integrado por los Guías de Patrulla (y Subguías según acuerdo) junto con los Scouters de Tropa para evaluar progresiones, insignias y normas de convivencia.\n  - **Consejo de Tropa:** Espacio de planeación de las actividades del ciclo de programa.\n- **Etapas de Progresión Personal (`Pistas de Aventura 2024`):**\n  1. 🥾 **Pista de Sendas**\n  2. 🌲 **Pista de Veredas**\n  3. ⛰️ **Pista de Cumbres**\n  4. 🌅 **Pista de Horizontes**\n- **Liderazgo e Insignias:** Curso **Punta de Flecha para Tropa (`Guía 2025`)**, **Carnet de Aventuras en la Naturaleza 2024**, rutas de **Tribu de la Tierra** e **Insignia Terminal Caballero Águila / Flor de Lis**."
+    },
+    {
+      "id": "que_es_la_comunidad_caminantes",
+      "patterns": [
+        "\\bque es la comunidad\\b",
+        "\\bque son los caminantes\\b",
+        "\\bcomunidad de caminantes\\b",
+        "\\bcomo funciona la comunidad\\b",
+        "\\bel desafio de ser caminante\\b",
+        "\\bseccion comunidad\\b"
+      ],
+      "keywords": [
+        "comunidad",
+        "caminantes",
+        "caminante",
+        "desafio",
+        "congreso",
+        "bitacora",
+        "philia",
+        "shackleton"
+      ],
+      "source_files": [
+        "El desafio de ser Caminante 2024.pdf",
+        "Guia de Scouter de Comunidad 2024.pdf",
+        "010 Guia Red de Caminantes.pdf",
+        "Carnet Aventuras en la Naturaleza para Comunidad 2024.pdf",
+        "Guía Punta de Flecha_2025-COMUNIDAD.pdf"
+      ],
+      "content": "**La Comunidad de Caminantes es la sección integrada por adolescentes y jóvenes de 14 y hasta antes de cumplir los 18 años.**\n\n- **Lema:** *«Siempre Adelante»* • **Color de camisola y motas:** **Azul**.\n- **Marco Simbólico:**\n  Inspirado en la **Rosa de los Vientos** y el desafío de explorar nuevos rumbos, descubrir la propia vocación y transformar la realidad mediante **proyectos de impacto**.\n- **Organización y Gobernanza Juvenil:**\n  - Se organizan en **Equipos** de 4 a 6 caminantes (con un/a Coordinador/a de Equipo).\n  - **Congreso de Comunidad:** Es la asamblea máxima donde participan todas y todos los Caminantes con voz y voto para aprobar estatutos internos, proyectos, insignias y elegir al Comité.\n  - **Comité de Comunidad:** Órgano ejecutivo juvenil encargado de coordinar el ciclo de programa.\n- **Etapas de Progresión Personal (`El Desafío de ser Caminante 2024`):**\n  1. 🧭 **Búsqueda**\n  2. 🤝 **Encuentro**\n  3. 🚀 **Desafío**\n- **Red de Caminantes y Eventos 2026:**\n  Participan en los **Foros Provinciales y Nacionales (`JSN 25.137`)**, integran los Comités Provinciales (**CPRC**) y el Comité Nacional (**CNRC**, creador de **Agentes de Cambio.MX**), y viven eventos como **Philia Nacional 2026 (`JSN 26.015`)** y el **Desafío «Ernest Shackleton» 2026 (`JSN 26.018`)**."
+    },
+    {
+      "id": "que_es_el_clan_rovers",
+      "patterns": [
+        "\\bque es el clan\\b",
+        "\\bque son los rovers\\b",
+        "\\bclan de rovers\\b",
+        "\\bcomo funciona el clan\\b",
+        "\\bque es un rover\\b",
+        "\\brutas del rover\\b",
+        "\\brutas de la precursora\\b"
+      ],
+      "keywords": [
+        "clan",
+        "rover",
+        "rovers",
+        "parlamento",
+        "precursora",
+        "horquilla",
+        "servir"
+      ],
+      "source_files": [
+        "Las Rutas del Rover.pdf",
+        "Las Rutas de la Precursora.pdf",
+        "Guia de Scouter de Clan de Rovers 2024.pdf",
+        "Carnet Aventuras en la Naturaleza para Rovers 2024.pdf",
+        "Guía Punta de Flecha_2025-Clan.pdf"
+      ],
+      "content": "**El Clan de Rovers es la última sección juvenil del Movimiento Scout, integrada por jóvenes adultos de 18 y hasta antes de cumplir los 22 años.**\n\n- **Lema:** *«Servir»* • **Color de camisola y motas:** **Rojo**.\n- **Marco Simbólico:**\n  Significa **«remar su propia canoa»**: asumir con autonomía su proyecto de vida personal, ciudadano y profesional comprometido con el servicio a los demás. Su símbolo tradicional es la **Horquilla Rover**.\n- **Organización y Gobernanza:**\n  - **Parlamento Rover:** Es el máximo órgano de toma de decisiones del Clan, donde todas y todos los Rovers deliberan sobre la Carta del Clan, proyectos, progresiones e insignias.\n  - **Consejo de Clan:** Equipo coordinador electo por el Parlamento.\n- **Manuales y Progresión (`Las Rutas del Rover` y `Las Rutas de la Precursora`):**\n  Los Rovers trazan su **Plan Personal de Vida** y desarrollan proyectos de alto impacto comunitario, ambiental y de servicio, culminando con la **Insignia Terminal Rover (Baden-Powell)**."
+    },
+    {
+      "id": "como_hago_mi_desarrollo_personal_progresion",
+      "patterns": [
+        "\\bcomo hago mi desarrollo personal\\b",
+        "\\bcomo hacer mi desarrollo personal\\b",
+        "\\bcomo hago mi progresion\\b",
+        "\\bcomo funciona la progresion\\b",
+        "\\bcomo avanzo de etapa\\b",
+        "\\bque es la progresion personal\\b",
+        "\\bareas de crecimiento\\b",
+        "\\bdesarrollo personal\\b"
+      ],
+      "keywords": [
+        "desarrollo personal",
+        "progresion personal",
+        "areas de crecimiento",
+        "etapas",
+        "explorapp",
+        "objetivos educativos"
+      ],
+      "source_files": [
+        "Comunicado ASMAC DNME 26.005 Inicio de vigencia del Modelo de Programa de Jóvenes de la ASMAC.pdf",
+        "Comunicado ASMAC DNME-CNPJ 26.014 Lanzamiento de ExplorApp y CarpetApp.pdf",
+        "El desafio de ser Caminante 2024.pdf",
+        "Pistas de Aventura 2024.pdf",
+        "Mis Rastros en la Selva 2024.pdf"
+      ],
+      "content": "**Tu desarrollo o progresión personal en los Scouts se realiza trabajando tus objetivos educativos en las 6 Áreas de Crecimiento, de acuerdo con tu sección y edad.**\n\n### 1. Las 6 Áreas de Crecimiento que desarrollas\n1. 🏃 **Corporalidad:** Cuidado de tu cuerpo, salud, vida al aire libre y deporte.\n2. 🎨 **Creatividad:** Expresión artística, innovación, ciencia y resolución de problemas.\n3. 🧭 **Carácter:** Autonomía, voluntad, valores de la Ley Scout y proyecto de vida.\n4. ❤️ **Afectividad:** Manejo de emociones, autoestima, amistad y relaciones sanas.\n5. 🤝 **Sociabilidad:** Liderazgo, trabajo en equipo, ciudadanía, paz y servicio.\n6. ✨ **Espiritualidad:** Trascendencia, reflexión, respeto a la naturaleza y diálogo interreligioso.\n\n### 2. ¿Cómo llevar tu progresión paso a paso en 2026?\n1. **Período Introductorio:** Al ingresar a tu sección conoces a tu pequeño grupo (Seisena, Patrulla, Equipo o Clan), el marco simbólico y recibes tu insignia de etapa inicial.\n2. **Selecciona y vive tus retos en tu manual y en `ExplorApp` (`DNME-CNPJ 26.014`):**\n   - **Manada:** `Mis Rastros en la Selva 2024` (*Pata Tierna → Saltador → Rastreador → Cazador*).\n   - **Tropa:** `Pistas de Aventura 2024` (*Sendas → Veredas → Cumbres → Horizontes*).\n   - **Comunidad:** `El Desafío de ser Caminante 2024` + `Bitácora` (*Búsqueda → Encuentro → Desafío*).\n   - **Clan:** `Las Rutas del Rover` / `Las Rutas de la Precursora`.\n3. **Complementa con Aventuras en la Naturaleza y Proyectos:** Realiza las competencias de tu **Carnet de Aventuras en la Naturaleza 2024** y tus proyectos de **Mundo Mejor / Tribu de la Tierra**.\n4. **Autoevaluación, Pares y Scouter:** Registras tus avances en **ExplorApp**, dialogas con tu equipo/patrulla y tu Scouter valida tu progreso en **CarpetApp** para otorgarte tu siguiente insignia."
+    },
+    {
+      "id": "como_hago_un_proyecto_scout",
+      "patterns": [
+        "\\bcomo hago un proyecto\\b",
+        "\\bcomo hacer un proyecto\\b",
+        "\\bcomo diseno un proyecto\\b",
+        "\\bcomo estructurar un proyecto\\b",
+        "\\bpasos para hacer un proyecto\\b",
+        "\\bproyecto scout\\b",
+        "\\bmetodologia smart\\b"
+      ],
+      "keywords": [
+        "como hago un proyecto",
+        "hacer un proyecto",
+        "disenar un proyecto",
+        "smart",
+        "agentes de cambio"
+      ],
+      "source_files": [
+        "Comunicado ASMAC DNME-CNPJ 26.010 Implementación de Cuadernillos Tribu de la Tierra.pdf",
+        "05 Guía Insignia Mensajeros de la Paz.pdf",
+        "El desafio de ser Caminante 2024.pdf",
+        "02 Guía Tribu de la Tierra 2021.pdf"
+      ],
+      "content": "**Para hacer un proyecto scout exitoso (ya sea para tu sección, para Tribu de la Tierra, Mensajeros de la Paz o tu Insignia Terminal) sigue estas 4 etapas con metodología SMART:**\n\n### Paso 1: Identifica y Diagnostica (¿Qué problema quieres resolver?)\n- Observa tu escuela, colonia, parque o comunidad y elige uno de los **4 ejes temáticos**:\n  1. 🕊️ **Paz y Compromiso Comunitario** (Mensajeros de la Paz, inclusión, diálogo).\n  2. 💙 **Salud y Bienestar** (salud física, salud mental, prevención).\n  3. 🧡 **Habilidades para la Vida** (educación, liderazgo, tecnología, empleabilidad).\n  4. 💚 **Ambiente y Sustentabilidad** (Tribu de la Tierra: *Champions for Nature, Plastic Tide Turners, Scouts Go Solar*).\n\n### Paso 2: Planea con Objetivos SMART\nDefine tu objetivo asegurándote de que sea **SMART**:\n- **S (Specific / Específico):** ¿Qué vas a lograr exactamente y con quiénes?\n- **M (Measurable / Medible):** ¿Cuántas personas, árboles, kilos de plástico o talleres medirán tu impacto?\n- **A (Achievable / Alcanzable):** Que esté a tu alcance y acorde a tu edad y recursos.\n- **R (Relevant / Relevante):** Que genere un cambio real en tu comunidad.\n- **T (Time-bound / Con plazo definido):** En la ASMAC (`DNME-CNPJ 26.010`), un proyecto dura entre **1 y 2 ciclos de programa**.\n\n### Paso 3: Ejecuta y Documenta tus Evidencias\n- Lleva a cabo tu cronograma de actividades, toma **fotografías, listas de asistencia, bitácora de horas de servicio y métricas del antes y después**.\n\n### Paso 4: Evalúa, Comparte y Solicita tu Reconocimiento\n- Presenta los resultados ante tu sección (Consejo de Roca, Corte de Honor, Congreso de Comunidad o Parlamento Rover) y sube tu solicitud con apoyo de tu Scouter (máximo 6 meses después de concluirlo).\n- 💡 **Tip para Caminantes:** Puedes apoyarte paso a paso en la plataforma **[Agentes de Cambio.MX](https://sites.google.com/scouts.org.mx/agentes-de-cambio-mx/Bienvenida?authuser=0)** creada por el Comité Nacional de la Red de Caminantes."
+    },
+    {
+      "id": "que_son_los_ejes_tematicos",
+      "patterns": [
+        "\\bque son los ejes tematicos\\b",
+        "\\bejes tematicos\\b",
+        "\\b4 ejes\\b",
+        "\\bcuatro ejes\\b",
+        "\\besferas de accion\\b",
+        "\\b4 esferas\\b",
+        "\\bforos 1\\b"
+      ],
+      "keywords": [
+        "ejes tematicos",
+        "esferas",
+        "paz y compromiso",
+        "salud y bienestar",
+        "habilidades para la vida",
+        "ambiente y sustentabilidad"
+      ],
+      "source_files": [
+        "Comunicado ASMAC JSN 25.137 Convocatoria Foros Nacionales de Jóvenes 2025.pdf",
+        "Comunicado ASMAC DNME 26.005 Inicio de vigencia del Modelo de Programa de Jóvenes de la ASMAC.pdf",
+        "010 Guia Red de Caminantes.pdf"
+      ],
+      "content": "**Los Ejes Temáticos (también llamados Esferas de Acción del Marco Mundo Mejor) son las 4 grandes áreas en las que los Scouts diseñan sus proyectos, foros juveniles e iniciativas para los Objetivos de Desarrollo Sostenible (ODS):**\n\n1. 🕊️ **Eje 1 — Paz y Compromiso Comunitario:**\n   Fomenta la cultura de paz, el diálogo, los derechos humanos, la inclusión, el servicio comunitario y la iniciativa mundial **Mensajeros de la Paz**.\n2. 💙 **Eje 2 — Salud y Bienestar:**\n   Promueve la salud física, la salud mental y emocional, la nutrición, el deporte, la prevención de adicciones y los espacios seguros (*A Salvo del Peligro*).\n3. 🧡 **Eje 3 — Habilidades para la Vida:**\n   Impulsa el liderazgo juvenil, el emprendimiento, la alfabetización digital, la ciencia, el arte, la educación financiera y la preparación para la vida adulta.\n4. 💚 **Eje 4 — Ambiente y Sustentabilidad:**\n   Integra todas las acciones por el clima, biodiversidad, consumo responsable, mares limpios y energías renovables a través de **Tribu de la Tierra** (*Champions for Nature*, *Plastic Tide Turners* y *Scouts Go Solar*)."
+    },
+    {
+      "id": "especialidades_y_competencias_comunidad_y_secciones",
+      "patterns": [
+        "\\bque especialidades hay\\b",
+        "\\bespecialidades en la comunidad\\b",
+        "\\bespecialidades scout\\b",
+        "\\bque son las especialidades\\b",
+        "\\bque son las competencias\\b",
+        "\\bcarnet de aventuras\\b",
+        "\\baventuras en la naturaleza\\b"
+      ],
+      "keywords": [
+        "especialidades",
+        "competencias",
+        "carnet",
+        "aventuras en la naturaleza",
+        "vida al aire libre"
+      ],
+      "source_files": [
+        "Carnet Aventuras en la Naturaleza para Comunidad 2024.pdf",
+        "Carnet Aventuras en la Naturaleza para Tropa 2024.pdf",
+        "Carnet Aventuras en la Naturaleza para Manada 2024.pdf",
+        "Carnet Aventuras en la Naturaleza para Rovers 2024.pdf",
+        "El desafio de ser Caminante 2024.pdf",
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf"
+      ],
+      "content": "**En el Programa de Jóvenes vigente (2024–2026), las antiguas «especialidades» evolucionaron al sistema de «Competencias» y al «Carnet de Aventuras en la Naturaleza», además de las rutas de Mundo Mejor:**\n\n### 1. Competencias de Vida en la Naturaleza (`Carnet Aventuras en la Naturaleza 2024`)\nCada sección (Manada, Tropa, Comunidad de Caminantes y Clan de Rovers) cuenta con su propio **Carnet de Aventuras en la Naturaleza 2024**, donde desarrollas habilidades prácticas progresivas en:\n- ⛺ **Campismo y Pionerismo:** Armado de refugios, cabuyería (nudos y amarres), construcciones con madera y uso seguro de herramientas.\n- 🧭 **Exploración y Orientación:** Lectura de mapas topográficos, uso de brújula, orientación diurna y nocturna, excursionismo y senderismo.\n- 🔥 **Cocina sin Utensilios y Fogatas:** Tipos de fogatas seguras, mínima huella (*No Deje Rastro*) y nutrición en campamento.\n- 🩹 **Seguridad, Rescate y Primeros Auxilios:** Prevención de riesgos, atención de emergencias y supervivencia.\n- 🌿 **Conservación y Conocimiento de la Naturaleza:** Flora, fauna, meteorología y sustentabilidad.\n\n### 2. En la Comunidad de Caminantes (`El Desafío de ser Caminante 2024`)\nAdemás del Carnet de Naturaleza, las y los Caminantes desarrollan **competencias y proyectos** en los 4 campos de acción:\n- **Deportes y Vida al Aire Libre**\n- **Ciencia, Tecnología e Innovación**\n- **Arte, Cultura y Expresión**\n- **Servicio Comunitario, Paz y Sustentabilidad** (*Tribu de la Tierra, Mensajeros de la Paz, HeForShe*)."
+    },
+    {
+      "id": "explicacion_nuevo_esquema_pjos_2026",
+      "patterns": [
+        "\\bnuevo esquema\\b",
+        "\\bexplicacion del nuevo esquema\\b",
+        "\\bque es el pjos\\b",
+        "\\bpjos\\b",
+        "\\bmodelo de programa de jovenes\\b",
+        "\\bdiferencia entre enpe y pjos\\b",
+        "\\bcomo funciona el pjos\\b"
+      ],
+      "keywords": [
+        "nuevo esquema",
+        "pjos",
+        "enpe",
+        "26.005",
+        "26.007",
+        "26.011",
+        "26.014",
+        "explorapp",
+        "carpetapp"
+      ],
+      "source_files": [
+        "Comunicado ASMAC DNME 26.005 Inicio de vigencia del Modelo de Programa de Jóvenes de la ASMAC.pdf",
+        "Comunicado ASMAC DNME 26.007 Proceso de Acreditación de Grupos al PJOS.pdf",
+        "Comunicado ASMAC DNME-CNPJ 26.010 Implementación de Cuadernillos Tribu de la Tierra.pdf",
+        "Comunicado ASMAC DNME-CNPJ 26.011 Proceso de Obtención de la Insignia Final y Terminal.pdf",
+        "Comunicado ASMAC DNME-CNPJ 26.014 Lanzamiento de ExplorApp y CarpetApp.pdf"
+      ],
+      "content": "**El nuevo esquema oficial es el «Modelo de Programa de Jóvenes Orientado a la Sustentabilidad (PJOS)», vigente en todo México desde el 1° de enero de 2026 (`DNME 26.005`).**\n\n### ¿En qué consiste el nuevo esquema PJOS 2026?\n1. **Sustituye definitivamente al antiguo ENPE:**\n   El 31 de diciembre de 2025 cerró el antiguo *Esquema Nacional de Programa Educativo (ENPE)* y dejaron de emitirse las insignias *IDO, IT del ENPE e ISMMA*.\n2. **Cuatro pilares integrados para cada joven:**\n   - **A) Progresión Personal por Sección:** Basada en los manuales actualizados (*Mis Rastros en la Selva 2024*, *Pistas de Aventura 2024*, *El Desafío de ser Caminante 2024* y *Rutas del Rover*).\n   - **B) Aventuras en la Naturaleza:** Competencias de campismo y vida al aire libre con el *Carnet de Aventuras en la Naturaleza 2024*.\n   - **C) Iniciativas Mundiales / Mundo Mejor (`DNME-CNPJ 26.010`):** Proyectos individuales con metodología SMART en los cuadernillos de **Tribu de la Tierra** (*Champions for Nature, Plastic Tide Turners, Scouts Go Solar*) y **Mensajeros de la Paz**.\n   - **D) Liderazgo Juvenil (`DNME-CNPJ 26.012`):** Cursos **Puntas de Flecha 2025** para Tropa, Comunidad y Clan.\n3. **Nuevo proceso de Insignia Final y Terminal (`DNME-CNPJ 26.011`, agosto 2026):**\n   La máxima insignia de cada sección es avalada primero por el **Órgano de Gobernanza Juvenil** (Consejo de Roca, Corte de Honor, Congreso de Comunidad o Parlamento Rover), aprobada por el **Consejo de Grupo** y validada con el reporte de progresión.\n4. **Herramientas digitales oficiales (`DNME-CNPJ 26.014`, septiembre 2026):**\n   - 📱 **ExplorApp:** Para que cada joven consulte y registre su avance personal.\n   - 💻 **CarpetApp:** Para que los Scouters den seguimiento y validen la progresión de su sección."
+    },
+    {
+      "id": "que_eventos_existen",
+      "patterns": [
+        "\\bque eventos existen\\b",
+        "\\bque eventos hay\\b",
+        "\\beventos nacionales\\b",
+        "\\beventos scouts\\b",
+        "\\bproximos eventos\\b",
+        "\\bcampamentos nacionales\\b",
+        "\\bcalendario de eventos\\b"
+      ],
+      "keywords": [
+        "eventos",
+        "eeas",
+        "philia",
+        "shackleton",
+        "jamboree",
+        "foros",
+        "moot",
+        "centenario"
+      ],
+      "source_files": [
+        "Comunicado ASMAC JSN 26.133 Convocatoria EEAS 2026.pdf",
+        "Comunicado ASMAC JSN 26.015 Philia 2026.pdf",
+        "Comunicado ASMAC JSN 26.018 Convocatoria Desafío Ernest shackleton 2026.pdf",
+        "Comunicado ASMAC JSN 25.137 Convocatoria Foros Nacionales de Jóvenes 2025.pdf",
+        "ES Boletín_3.pdf"
+      ],
+      "content": "**En la ASMAC y en World Scouting existen eventos locales, provinciales, nacionales y mundiales para todas las secciones:**\n\n### 🇲🇽 Eventos Nacionales en México (2025–2026)\n1. 🎨 **EEAS (Encuentro de Expresión y Arte Scout) — Edición XLVII 2026 (`JSN 26.133`):**\n   - **Para quiénes:** Todas las secciones (Manada, Tropa, Comunidad, Clan y Adultos).\n   - **Cuándo y dónde:** **14, 15 y 16 de noviembre de 2026** en el Parque Ecológico Revolución Mexicana, **Puebla, Pue.**\n2. 🧭 **Philia Nacional 2026 «100 años, 100 desafíos» (`JSN 26.015`):**\n   - **Para quiénes:** Comunidad de Caminantes (coordinadores/as, subcoordinadores/as y líderes de proyecto).\n   - **Cuándo y dónde:** **2 al 5 de abril de 2026** en el Campo Escuela **Meztitla**, Tepoztlán, Morelos.\n3. 🏔️ **Desafío «Ernest Shackleton» 2026 (`JSN 26.018`):**\n   - **Para quiénes:** Equipos de Comunidad de Caminantes en reto de expedición, liderazgo y naturaleza.\n4. 🗣️ **Foros Provinciales y Foros Nacionales de Jóvenes (`JSN 25.137`):**\n   - Espacios anuales de participación juvenil y elección de los Comités de la Red de Caminantes (CPRC / CNRC) y Red Rover.\n5. 🎉 **Eventos Conmemorativos del Centenario Scout en México (1926–2026):**\n   - Actividades nacionales por los *«100 años Construyendo un Mundo Mejor»*, Flor de Lis Gigante y campamentos de aniversario.\n\n### 🌍 Eventos Mundiales (WOSM)\n1. 🏕️ **26° Jamboree Scout Mundial — Gdańsk, Polonia 2027:** Del **30 de julio al 8 de agosto de 2027** (para jóvenes nacidos entre el 30 de julio de 2009 y el 30 de julio de 2013, más adultos voluntarios IST).\n2. 🎒 **17° World Scout Moot — Taiwán 2029:** El evento mundial para **Rovers (18 a 25 años)**.\n3. 📻 **JOTA-JOTI (Jamboree en el Aire y en Internet):** Se celebra cada mes de octubre conectando a millones de scouts por radio e internet."
+    },
+    {
+      "id": "falda_short_pantalon_uniforme",
+      "patterns": [
+        "\\bfalda\\b",
+        "\\bshort y pantalon\\b",
+        "\\bpantalon o falda\\b"
+      ],
+      "keywords": [
+        "falda",
+        "short",
+        "pantalon",
+        "chico",
+        "genero",
+        "uniforme"
+      ],
+      "source_files": [
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+        "Política Diversidad, Equidad e Inclusion 2024.pdf"
+      ],
+      "content": "**Sí, cualquier integrante puede usar pantalón, short o falda oficial dentro del uniforme scout, sin distinción de género.**\n\nEsto se fundamenta directamente en dos documentos oficiales vigentes de la ASMAC:\n\n1. **Sin restricción por género en el Manual del Uniforme (Junio 2026, Cap. 01, Art. 2, pág. 16):**\n   - El apartado **«Pantalón, short o falda»** establece que la prenda inferior oficial es de **color azul marino** (con etiqueta en la parte superior del bolsillo trasero derecho y la flor de lis bordada), ya sea en corte de pantalón, short, bermuda desmontable o falda.\n   - **Ningún artículo del Manual restringe el uso de falda, short o pantalón por sexo o género.** Además, desde la página 1 el Manual especifica que todas sus disposiciones se presentan **sin distinción alguna** para todas las personas que integran la Asociación.\n2. **Protección a la Expresión de Género (`Política Nacional de Diversidad, Equidad e Inclusión 2024`, págs. 6, 11 y 15):**\n   - La Política Nacional reconoce y protege expresamente la **expresión de género** (incluyendo el **modo de vestir**) y prohíbe cualquier trato discriminatorio, sexista o cissexista en todas las actividades y espacios scouts.\n\n**En resumen:** Lo único que exige la norma es que la prenda (pantalón, short o falda) sea **azul marino oficial** (o azul marino liso sin aplicaciones externas y con presillas para el cinturón oficial) y se porte con orgullo y apego al Manual del Uniforme."
+    },
+    {
+      "id": "insignia_tribu_de_la_tierra",
+      "patterns": [
+        "\\btribu de la tierra\\b",
+        "\\bearth tribe\\b",
+        "\\bchampions for nature\\b",
+        "\\bplastic tide turners\\b",
+        "\\bscouts go solar\\b",
+        "\\bgo solar\\b",
+        "\\bmAres limpios\\b"
+      ],
+      "keywords": [
+        "tribu de la tierra",
+        "champions for nature",
+        "plastic tide",
+        "go solar",
+        "26.010"
+      ],
+      "source_files": [
+        "Comunicado ASMAC DNME-CNPJ 26.010 Implementación de Cuadernillos Tribu de la Tierra.pdf",
+        "02 Guía Tribu de la Tierra 2021.pdf",
+        "Comunicado ASMAC DNME 26.007 Proceso de Acreditación de Grupos al PJOS.pdf",
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf"
+      ],
+      "content": "**Para obtener la insignia mundial de «Tribu de la Tierra» debes completar los 4 pasos de cualquiera de sus 4 rutas ambientales (`DNME-CNPJ 26.010`):**\n\n### 1. Elige una de las 4 Rutas Oficiales\n- 🌿 **Champions for Nature (Naturaleza y Biodiversidad):** Conservación de ecosistemas y especies.\n- 🍎 **Champions for Nature (Mejores Decisiones):** Hábitos de consumo responsable y huella ecológica.\n- 🌊 **Plastic Tide Turners (Reto Mares Limpios):** Reducción y acción frente a la contaminación por plásticos.\n- ☀️ **Scouts Go Solar:** Energía solar, energías limpias y acción climática.\n\n### 2. Sigue los 4 Pasos en tu Sección\n1. **Descubre:** Conoce la iniciativa Tribu de la Tierra y explora la problemática ambiental de tu ruta.\n2. **Comprométete:** Realiza las actividades de la **«Canasta de Actividades»** del cuadernillo correspondientes a tu sección (Manada, Tropa, Comunidad o Clan).\n3. **Actúa (Proyecto Individual SMART):** Diseña y ejecuta un **proyecto individual** aplicando la metodología **SMART**, con una duración de **1 a 2 ciclos de programa** y objetivos acordes a tu edad.\n4. **Celebra y Tramita tu Insignia:**\n   - Tu Grupo Scout debe estar **acreditado en el PJOS** en la plataforma CDC (`DNME 26.007`).\n   - Con apoyo de tu Scouter, registra tu solicitud y evidencias de revisión (máximo **6 meses** después de concluir tu proyecto).\n\n### ¿Qué recibes y dónde se porta?\n- Al completar tu **primera ruta**, recibes el **Pin de Tribu de la Tierra** (que podrás portar durante toda tu vida scout) más el reconocimiento de la ruta trabajada, colocado en el bloque de **Iniciativas Mundiales / Mundo Mejor** (arriba del bolsillo izquierdo, pág. 71 del Manual del Uniforme Junio 2026)."
+    },
+    {
+      "id": "nudos_en_la_panoleta",
+      "patterns": [
+        "\\bnudos?\\b.*\\bpanoleta\\b",
+        "\\bpanoleta\\b.*\\bnudos?\\b",
+        "\\bcuantos nudos\\b",
+        "\\bnudo de gilwell\\b",
+        "\\bnudo de la buena accion\\b"
+      ],
+      "keywords": [
+        "nudo",
+        "nudos",
+        "panoleta",
+        "buena accion",
+        "gilwell"
+      ],
+      "source_files": [
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "**En tu pañoleta se porta 1 nudo (anillo sujetador) al frente para unirla y 1 nudo en las puntas (el nudo de la Buena Acción).**\n\nDe acuerdo con el **Manual del Uniforme (Junio 2026, Cap. 02, Art. 26 «Pañoleta de Grupo Scout», pág. 28)**:\n\n1. **Un solo Nudo o Anillo Sujetador al frente:**\n   - La pañoleta se enrolla por sus lados iguales y se coloca alrededor del cuello sobre el cuello de la camisola, **sujetándose por delante con un nudo** elaborado con materiales resistentes y seguros, cuyo diseño es libre.\n   - **No es reglamentario** llenar la pañoleta con múltiples nudos o anillos simultáneos durante ceremonias o formaciones oficiales.\n2. **El Nudo de la Buena Acción en los extremos:**\n   - El Artículo 26 indica textualmente: *«En los extremos de la pañoleta lleva un nudo que recuerda la buena acción cotidiana»*.\n3. **Caso especial — Nudo de Gilwell (Art. 86, pág. 91):**\n   - Quienes han concluido su proceso formativo de **Insignia de Madera** portan el **Nudo de Gilwell**."
+    },
+    {
+      "id": "que_es_el_eeas",
+      "patterns": [
+        "\\beeas\\b",
+        "\\bexpresion y arte\\b"
+      ],
+      "keywords": [
+        "eeas",
+        "expresion y arte",
+        "26.133"
+      ],
+      "source_files": [
+        "Comunicado ASMAC JSN 26.133 Convocatoria EEAS 2026.pdf",
+        "40 Años de Expresión y Arte Scout.pdf"
+      ],
+      "content": "**El EEAS es el «Encuentro de Expresión y Arte Scout», el evento artístico, cultural y científico nacional más grande de los Scouts de México.**\n\n- **¿En qué consiste?**\n  Es un festival y campamento nacional anual (celebrado desde **1980**, cuando nació en Meztitla) donde **Lobatos, Scouts, Caminantes, Rovers y Adultos** participan en concursos, exposiciones y talleres de:\n  - 🎵 **Música y Canto** (canción inédita scout, interpretación individual y grupal)\n  - 🎭 **Teatro, Baile y Danza**\n  - 📸 **Fotografía, Pintura, Dibujo, Escultura y Artes Plásticas**\n  - ✍️ **Literatura, Oratoria, Poesía y Cortometraje**\n  - 🔬 **Ciencia, Tecnología e Innovación Scout**\n\n- **Edición Vigente — XLVII EEAS 2026 (`Comunicado ASMAC/JSN/26.133`):**\n  - **Fechas:** **14, 15 y 16 de noviembre de 2026**.\n  - **Sede:** Parque Ecológico Revolución Mexicana, en **Puebla, Puebla** (cupo para 8,000 asistentes).\n  - **Cuotas:** Participantes `$1,400 MXN` (hasta el 30 de septiembre) / `$1,500 MXN` (del 1 al 30 de octubre); Adultos responsables `$1,100 MXN`."
+    },
+    {
+      "id": "mensajeros_de_la_paz",
+      "patterns": [
+        "\\bmensajeros de la paz\\b",
+        "\\binsignia de la paz\\b"
+      ],
+      "keywords": [
+        "mensajeros de la paz",
+        "cultura de paz",
+        "horas de servicio"
+      ],
+      "source_files": [
+        "05 Guía Insignia Mensajeros de la Paz.pdf",
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf"
+      ],
+      "content": "**«Mensajeros de la Paz» es la iniciativa mundial de World Scouting que impulsa a las y los jóvenes a liderar proyectos de diálogo, cultura de paz, armonía e impacto social en sus comunidades.**\n\n- **¿Cómo obtener la insignia de Mensajeros de la Paz (`05 Guía Insignia Mensajeros de la Paz.pdf`)?**\n  1. **Inspírate y Aprende:** Conoce qué es la cultura de paz y detecta una necesidad social o comunitaria en tu entorno.\n  2. **Diseña y Ejecuta tu Proyecto:** Planea e implementa un proyecto que promueva el diálogo, la inclusión, el apoyo comunitario o la reconstrucción del tejido social.\n  3. **Comparte tu Historia:** Registra tu proyecto y sus horas de servicio en la red de **Scouts for SDGs / Mundo Mejor** y tramita tu insignia con tu Grupo acreditado en el PJOS.\n- **¿Dónde se porta?** En el bloque de **Iniciativas Mundiales / Mundo Mejor** arriba del bolsillo izquierdo de la camisola (pág. 71 del Manual del Uniforme Junio 2026)."
+    },
+    {
+      "id": "insignia_final_y_terminal",
+      "patterns": [
+        "\\binsignia final\\b",
+        "\\binsignia terminal\\b",
+        "\\blobo rampante\\b",
+        "\\bcaballero aguila\\b",
+        "\\binsignia baden powell\\b"
+      ],
+      "keywords": [
+        "insignia final",
+        "insignia terminal",
+        "26.011",
+        "lobo rampante",
+        "caballero aguila"
+      ],
+      "source_files": [
+        "Comunicado ASMAC DNME-CNPJ 26.011 Proceso de Obtención de la Insignia Final y Terminal.pdf",
+        "Comunicado ASMAC DNME 26.007 Proceso de Acreditación de Grupos al PJOS.pdf",
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf"
+      ],
+      "content": "**La Insignia Final y la Insignia Terminal reconocen la culminación del desarrollo personal y el compromiso scout en cada sección (`DNME-CNPJ 26.011`, 19 de agosto de 2026):**\n\n### Pasos Oficiales para Obtenerla:\n1. **Cumplir los objetivos y proyectos de tu sección** antes de cumplir la edad límite de pase a la siguiente sección.\n2. **Aval del Órgano de Gobernanza Juvenil de tu Sección:**\n   - **Manada:** Consejo de Roca\n   - **Tropa:** Corte de Honor\n   - **Comunidad de Caminantes:** Congreso de Comunidad\n   - **Clan de Rovers:** Parlamento Rover\n3. **Aprobación del Consejo de Grupo** de tu Grupo Scout (el cual debe estar acreditado en el **PJOS** según `DNME 26.007`).\n4. **Validación Digital:** Envío del expediente junto con el reporte de progresión generado desde **ExplorApp / CarpetApp**."
+    },
+    {
+      "id": "puntas_de_flecha",
+      "patterns": [
+        "\\bpuntas? de flecha\\b"
+      ],
+      "keywords": [
+        "punta de flecha",
+        "puntas de flecha",
+        "26.012",
+        "liderazgo juvenil"
+      ],
+      "source_files": [
+        "Guía Punta de Flecha_2025-COMUNIDAD.pdf",
+        "Guía Punta de Flecha_2025 TS.pdf",
+        "Guía Punta de Flecha_2025-Clan.pdf",
+        "Comunicado ASMAC DNME-CNPJ 26.012 Proceso de Solicitud del Curso Puntas de Flecha.pdf"
+      ],
+      "content": "**El curso «Puntas de Flecha» es la experiencia nacional y provincial de liderazgo juvenil para Tropa de Scouts, Comunidad de Caminantes y Clan de Rovers (`Guías 2025` y `DNME-CNPJ 26.012`).**\n\n- **¿Qué aprendes en Puntas de Flecha?**\n  Liderazgo en equipo, comunicación asertiva, planeación de proyectos, resolución de conflictos, gobernanza juvenil y técnicas avanzadas de vida al aire libre.\n- **Guías Oficiales 2025 por Sección:**\n  - **Tropa de Scouts:** `Guía Punta de Flecha_2025 TS.pdf`\n  - **Comunidad de Caminantes:** `Guía Punta de Flecha_2025-COMUNIDAD.pdf`\n  - **Clan de Rovers:** `Guía Punta de Flecha_2025-Clan.pdf`\n- **Requisitos para recibir la insignia (`DNME-CNPJ 26.012`, agosto 2026):**\n  El curso debe ser solicitado y autorizado a través de la Vicepresidencia de Métodos Educativos de Provincia (VPME) con al menos 2 coordinadores/as acreditados y tu Grupo Scout debe estar acreditado en el **PJOS** (`DNME 26.007`)."
+    },
+    {
+      "id": "promesa_y_ley_scout",
+      "patterns": [
+        "\\bpromesa scout\\b",
+        "\\bley scout\\b",
+        "\\b10 articulos\\b",
+        "\\bdiez articulos\\b",
+        "\\bvirtudes scout\\b",
+        "\\bprincipios scout\\b"
+      ],
+      "keywords": [
+        "promesa",
+        "ley scout",
+        "virtudes",
+        "principios",
+        "lealtad",
+        "abnegacion",
+        "pureza"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Declaracion de Principios 2023.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### Promesa y Ley Scout de la ASMAC (`Estatutos 2023`, Art. 4–5)\n\n**Promesa Scout:**\n> *«Yo prometo, por mi honor, hacer cuanto de mí dependa para cumplir mis deberes para con Dios y la Patria, ayudar al prójimo en toda circunstancia y cumplir fielmente la Ley Scout.»*\n\n**Ley Scout (10 artículos):**\n1. El Scout cifra su honor en ser digno de confianza.\n2. El Scout es leal con su Patria, sus padres, sus jefes y subordinados.\n3. El Scout es útil y ayuda a los demás sin pensar en recompensa.\n4. El Scout es amigo de todos y hermano de todo Scout sin distinción de credo, raza, nacionalidad o clase social.\n5. El Scout es cortés y actúa con nobleza.\n6. El Scout ve en la naturaleza la obra de Dios, protege a los animales y a las plantas.\n7. El Scout obedece sin réplica y hace las cosas en orden y completas.\n8. El Scout sonríe y canta en sus dificultades.\n9. El Scout es económico, trabajador y cuidadoso del bien ajeno.\n10. El Scout es limpio y sano; puros sus pensamientos, sus palabras y sus acciones.\n\n**Principios:** Dios, Patria y Hogar • **Virtudes:** Lealtad, Abnegación y Pureza."
+    },
+    {
+      "id": "uniforme_2026",
+      "patterns": [
+        "\\bmanual del uniforme\\b",
+        "\\bcomo es el uniforme\\b",
+        "\\bque lleva el uniforme\\b",
+        "\\bdonde van las insignias\\b",
+        "\\bcolores de camisola\\b",
+        "\\buniforme scout\\b"
+      ],
+      "keywords": [
+        "uniforme",
+        "camisola",
+        "motas",
+        "calcetas",
+        "cinturon",
+        "ubicacion de insignias"
+      ],
+      "source_files": [
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf"
+      ],
+      "content": "### Manual del Uniforme Scout (Actualizado a Junio de 2026)\nEl **Manual del Uniforme 2026** (`ASMAC/DEN/NM200/26.002`, 107 páginas) establece la conformación oficial del uniforme:\n\n1. **Camisola oficial (clásica, tipo polo o tipo *outdoor*):**\n   - **Amarilla:** Manada de Lobatos.\n   - **Verde:** Tropa de Scouts.\n   - **Azul:** Comunidad de Caminantes.\n   - **Roja:** Clan de Rovers.\n   - **Azul marino / Blanca / Gris:** Directivos, adultos y gala según cargo.\n2. **Prenda inferior (Art. 2, pág. 16):** Pantalón, short o falda en color **azul marino oficial** sin distinción de género.\n3. **Cinturón (Art. 3):** De tela azul marino con hebilla metálica oficial de la Flor de Lis.\n4. **Calcetas y Motas (Art. 4–5):** Calcetas altas azul marino y motas tejidas del color de tu sección (Amarillas en Manada, Verdes en Tropa, Azules en Comunidad, Rojas en Clan).\n5. **Pañoleta (Art. 26):** Con los colores autorizados de tu Grupo Scout, sujeta al frente con 1 nudo/anillo y con el nudo de la Buena Acción en las puntas.\n6. **Ubicación de Insignias:** Manga derecha (identidad de Grupo, Provincia y cintas), manga izquierda (progresión personal y competencias), frente izquierdo arriba del bolsillo (Iniciativas Mundiales / Mundo Mejor, pág. 71)."
+    },
+    {
+      "id": "edades_secciones_sisas",
+      "patterns": [
+        "\\bedades\\b",
+        "\\brango de edad\\b",
+        "\\bcuantos anos\\b",
+        "\\ba que edad\\b",
+        "\\bsecciones scouts\\b"
+      ],
+      "keywords": [
+        "edad",
+        "edades",
+        "sisas",
+        "25.051",
+        "secciones"
+      ],
+      "source_files": [
+        "Comunicado ASMAC JSN 25.051 Edades en las Secciones Scouts en el SISAS.pdf",
+        "REGLAMENTO 2023.pdf",
+        "Comunicado ASMAC JSN 24.004 Proceso de transición de edades en las secciones scouts.pdf"
+      ],
+      "content": "### Rangos de Edad Oficiales por Sección Scout (`Reglamento 2023` y `JSN 25.051`)\nDesde el **1° de julio de 2025** y durante todo **2026**, tras concluir el periodo de transición flexible de 2024, el sistema **SISAS** aplica de forma **estricta y definitiva** estas edades:\n\n- 🐺 **Manada de Lobatos:** De **6 años** y hasta antes de cumplir los **10 años** *(Lema: «Siempre lo Mejor»)*.\n- ⚜️ **Tropa de Scouts:** De **10 años** y hasta antes de cumplir los **14 años** *(Lema: «Siempre Listos»)*.\n- 🧭 **Comunidad de Caminantes:** De **14 años** y hasta antes de cumplir los **18 años** *(Lema: «Siempre Adelante»)*.\n- 🚣 **Clan de Rovers:** De **18 años** y hasta antes de cumplir los **22 años** *(Lema: «Servir»)*.\n- 🤝 **Adultos en el Movimiento Scout (Scouters y Dirigentes):** A partir de los **22 años** (o mayores de 18 años en cargos de apoyo conforme a la Política Nacional AMS 2024)."
+    },
+    {
+      "id": "cuotas_registro_2026",
+      "patterns": [
+        "\\bcuotas?\\b",
+        "\\bcuanto cuesta\\b",
+        "\\bprecio\\b.*\\bregistro\\b",
+        "\\bcosto\\b.*\\bregistro\\b",
+        "\\bregistro familiar\\b",
+        "\\b730\\b",
+        "\\b890\\b"
+      ],
+      "keywords": [
+        "cuota",
+        "cuotas",
+        "730",
+        "890",
+        "25.136",
+        "registro familiar",
+        "costo"
+      ],
+      "source_files": [
+        "Comunicado ASMAC JSN 25.136 Cuotas 2026.pdf",
+        "Comunicado ASMAC_JSN_25.009 Registro Familiar.pdf",
+        "formato_registro_familiar.pdf"
+      ],
+      "content": "### Cuotas Oficiales de Registro ASMAC 2026 (`Comunicado ASMAC/JSN/25.136`)\n- **Cuota de Reingreso 2026:** **`$730.00 MXN`** *(en 2025 fue de `$680.00 MXN`)_.\n- **Cuota de Nuevo Ingreso 2026:** **`$890.00 MXN`** *(en 2025 fue de `$840.00 MXN`)_.\n\n**¿Qué incluye tu registro anual?**\n- Membresía oficial ante la ASMAC y la OMMS / WOSM.\n- Credencial Scout digital y acceso al **SISAS / ExplorApp / CarpetApp**.\n- Cobertura de la **Póliza del Seguro Scout de Accidentes Personales**.\n- Si se inscriben varios integrantes directos de una misma familia, pueden aplicar el **Registro Familiar** (`JSN 25.009` y `formato_registro_familiar.pdf`)."
+    },
+    {
+      "id": "seguro_scout_salud",
+      "patterns": [
+        "\\bseguro scout\\b",
+        "\\baccidente\\b",
+        "\\bsiniestro\\b",
+        "\\bficha de salud\\b",
+        "\\breembolso medico\\b"
+      ],
+      "keywords": [
+        "seguro scout",
+        "accidente",
+        "siniestro",
+        "ficha de salud",
+        "poliza"
+      ],
+      "source_files": [
+        "SEGURO SCOUT - Scouts de México.html",
+        "seguro_aviso_accidente.pdf",
+        "seguro_Informe_medico.pdf",
+        "FICHA SALUD 2026 EDITABLE.pdf"
+      ],
+      "content": "### Seguro Scout contra Accidentes y Plazos Oficiales (`SEGURO SCOUT`)\nToda persona con registro vigente cuenta con el **Seguro de Accidentes Personales** durante actividades scouts oficiales y el traslado directo e ininterrumpido a ellas.\n\n- **Plazos indispensables que debes cuidar en caso de accidente:**\n  1. **15 días naturales** después del accidente para reportarlo a la Oficina Nacional (`seguro.scout@scouts.org.mx`).\n  2. **Máximo 90 días** después del accidente para que inicie la atención médica.\n  3. **Máximo 30 días** después del primer gasto médico para entregar la documentación física completa.\n- **Formatos obligatorios:** `seguro_aviso_accidente.pdf`, `seguro_Informe_medico.pdf` (firmado por el médico tratante) y para todo campamento llevar la **`FICHA SALUD 2026 EDITABLE.pdf`**."
+    },
+    {
+      "id": "a_salvo_del_peligro_safe_from_harm",
+      "patterns": [
+        "\\ba salvo del peligro\\b",
+        "\\bsafe from harm\\b",
+        "\\bsfh\\b",
+        "\\bbullying\\b",
+        "\\bacoso\\b",
+        "\\bdenuncia\\b",
+        "\\bconecta\\b"
+      ],
+      "keywords": [
+        "salvo del peligro",
+        "safe from harm",
+        "sfh",
+        "bullying",
+        "acoso",
+        "conecta",
+        "denuncia"
+      ],
+      "source_files": [
+        "Política SFH 2024.pdf",
+        "01 Política Nacional A Salvo del Peligro.pdf",
+        "04 Política Nacional sobre Bullying 2020.pdf",
+        "03 Política Nacional contra el Hostigamiento o acoso sexual.pdf",
+        "Denuncia – Conecta.html"
+      ],
+      "content": "### Política «A Salvo del Peligro» (Safe from Harm) y Canal de Denuncia CONECTA\nLa prioridad número uno de la ASMAC y de World Scouting es garantizar entornos **100% seguros, libres de violencia, bullying, discriminación o acoso** para niñas, niños, adolescentes, jóvenes y adultos:\n\n- **Políticas obligatorias vigentes:**\n  - `Política SFH 2024.pdf` y `01 Política Nacional A Salvo del Peligro.pdf`\n  - `04 Política Nacional sobre Bullying 2020.pdf`\n  - `03 Política Nacional contra el Hostigamiento o acoso sexual.pdf`\n  - `CODIGO DE CONDUCTA 2025.pdf`\n- **Certificación SFH obligatoria:** Todo adulto voluntario (y participante en eventos nacionales/internacionales) debe contar con su curso vigente de *Safe from Harm*.\n- **¿Cómo reportar cualquier incidente o situación de riesgo?**\n  A través de la plataforma oficial de atención y denuncia **CONECTA** (`Denuncia – Conecta.html` en [scouts.org.mx](https://scouts.org.mx))."
+    },
+    {
+      "id": "jamboree_internacional_wosm",
+      "patterns": [
+        "\\bjamboree\\b",
+        "\\bpolonia 2027\\b",
+        "\\bwsj\\b",
+        "\\bmoot\\b",
+        "\\btaiwan 2029\\b"
+      ],
+      "keywords": [
+        "jamboree",
+        "polonia",
+        "2027",
+        "wsj",
+        "moot",
+        "taiwan"
+      ],
+      "source_files": [
+        "ES Boletín_3.pdf",
+        "Preguntas Frecuentes.pdf",
+        "DINT 26.006 Agencias autorizadas y canales oficiales de atención Jamboree Scout Mundial 2027.pdf"
+      ],
+      "content": "### 26° Jamboree Scout Mundial — Gdańsk, Polonia 2027 (*«Bravely»*)\n- **Fechas oficiales:** Del **30 de julio al 8 de agosto de 2027** en la Isla Sobieszewska, Gdańsk, Polonia.\n- **¿Quiénes pueden ir como Participantes Juveniles?**\n  Jóvenes de **14 a 17 años** al inicio del evento, es decir, **nacidos entre el 30 de julio de 2009 y el 30 de julio de 2013**.\n- **¿Y si nací antes del 30 de julio de 2009 (18 años o más)?**\n  Puedes asistir como **Adulto Responsable de Patrulla (Unit Leader)** o como parte del **Equipo Internacional de Servicio (IST)**.\n- **Canales oficiales en México:** Verifica siempre las agencias y canales autorizados en el comunicado **`DINT 26.006`** y la guía de **`Preguntas Frecuentes.pdf`** del Contingente de México."
+    },
+    {
+      "id": "campo_escuela_meztitla",
+      "patterns": [
+        "\\bmeztitla\\b",
+        "\\bcampo escuela\\b"
+      ],
+      "keywords": [
+        "meztitla",
+        "campo escuela",
+        "tepoztlan"
+      ],
+      "source_files": [
+        "Meztitla – Scouts de México.html",
+        "Comunicado ASMAC JSN 26.015 Philia 2026.pdf",
+        "40 Años de Expresión y Arte Scout.pdf"
+      ],
+      "content": "**El Campo Escuela Scout «Meztitla» es el centro internacional de campismo y formación más emblemático de los Scouts de México, ubicado en Tepoztlán, Morelos.**\n\n- **Significado:** En náhuatl significa *«Lugar junto a la luna»* (al pie de los cerros del Tepozteco).\n- **Historia:** Adquirido en **1956** gracias al impulso de Paulino «El Zorro» Coto y donaciones de scouts de todo el país, ha sido sede de cursos de Insignia de Madera, Jamborees, el primer EEAS (1980), Philia Nacional 2026 y miles de campamentos de grupo.\n- **Servicios:** Áreas de acampado por subcampos, cabañas, alberca, capilla al aire libre, tienda scout, comedor y rutas de senderismo."
+    },
+    {
+      "id": "cambios_ano_con_ano",
+      "patterns": [
+        "\\bcambio\\b",
+        "\\bcambios\\b",
+        "\\bcambiaron\\b",
+        "\\bano con ano\\b",
+        "\\baño con año\\b",
+        "\\bevolucion\\b",
+        "\\bcomparacion\\b"
+      ],
+      "keywords": [
+        "cambio",
+        "cambios",
+        "cambiaron",
+        "ano con ano",
+        "evolucion",
+        "comparacion"
+      ],
+      "source_files": [
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+        "Comunicado ASMAC DNME 26.005 Inicio de vigencia del Modelo de Programa de Jóvenes de la ASMAC.pdf",
+        "Comunicado ASMAC JSN 25.051 Edades en las Secciones Scouts en el SISAS.pdf",
+        "Comunicado ASMAC JSN 25.136 Cuotas 2026.pdf"
+      ],
+      "content": "### ¿Qué cosas cambiaron año con año en los documentos oficiales? (2018 → 2026)\n\n1. **Programa de Jóvenes (ENPE 2020–2025 → PJOS 2026):**\n   - El **31 de diciembre de 2025** se cerró definitivamente el antiguo *ENPE* (y las insignias IDO, IT del ENPE e ISMMA).\n   - El **1° de enero de 2026** (`DNME 26.005`) entró en vigor el **PJOS (Programa de Jóvenes Orientado a la Sustentabilidad)**, junto con los cuadernillos de **Tribu de la Tierra** (`DNME-CNPJ 26.010`), el nuevo proceso de **Insignia Final y Terminal** (`DNME-CNPJ 26.011`) y las apps **ExplorApp y CarpetApp** (`DNME-CNPJ 26.014`).\n2. **Manual del Uniforme (Marzo 2019 vs. Junio 2026):**\n   - Creció de 80 a **107 páginas** (`01 Manual del Uniforme Actualizado Junio 2026.pdf`), incorporando la portación de insignias del PJOS/Mundo Mejor, camisolas *polo* y *outdoor*, uniforme de trabajo y accesorios oficiales.\n3. **Edades en el SISAS (2023 → 2024 → 2025/2026):**\n   - En 2024 (`JSN 24.004`) hubo un año de flexibilidad transitoria; desde el **1° de julio de 2025** (`JSN 25.051`) las edades del Reglamento 2023 (Manada 6–10, Tropa 10–14, Comunidad 14–18, Clan 18–22) son estrictas en SISAS.\n4. **Cuotas Nacionales (2025 vs. 2026):**\n   - Reingreso pasó de `$680` (2025, `JSN 24.117`) a **`$730 MXN`** (2026, `JSN 25.136`); Nuevo Ingreso pasó de `$840` a **`$890 MXN`**.\n5. **Ordenamientos y Justicia Asociativa (2018–2022 vs. 2023–2025):**\n   - Se actualizaron los **Estatutos y Declaración de Principios (2023)**, el **Reglamento (2023)**, la **Política de Diversidad, Equidad e Inclusión (2024)**, el **Código de Conducta (2025)** y el **Reglamento de la Corte Nacional de Honor (2025)**."
+    },
+    {
+      "id": "adultos_scouters_insignia_de_madera",
+      "patterns": [
+        "\\bque es un scouter\\b",
+        "\\badultos en el movimiento\\b",
+        "\\binsignia de madera\\b",
+        "\\bcomo ser dirigente\\b",
+        "\\bcomo ser scouter\\b",
+        "\\bformacion de adultos\\b",
+        "\\bgilwell\\b"
+      ],
+      "keywords": [
+        "scouter",
+        "scouters",
+        "dirigente",
+        "adultos",
+        "insignia de madera",
+        "ams",
+        "gilwell"
+      ],
+      "source_files": [
+        "Política AMS 2024.pdf",
+        "Modelo de Formación 2025.pdf",
+        "Modelo de Gestión de Adultos 2025.pdf",
+        "Modelo de Actualización Continua para Adultos (mayo 2025).pdf"
+      ],
+      "content": "**Los Adultos en el Movimiento Scout (AMS) son voluntarios mayores de 22 años (o jóvenes adultos de 18+ en funciones de apoyo) que facilitan el Programa de Jóvenes o la gestión institucional.**\n\n- **Dos grandes funciones (`Política AMS 2024` y `Reglamento 2023`):**\n  1. **Scouters:** Adultos que acompañan directamente la educación de las niñas, niños y jóvenes en una sección (Manada, Tropa, Comunidad o Clan).\n  2. **Dirigentes:** Adultos encargados de la gestión, administración y apoyo institucional en el Grupo, la Provincia o el Nivel Nacional.\n- **Formación e Insignia de Madera (`Modelo de Formación 2025`):**\n  Los adultos siguen una ruta formativa por competencias (nivel inicial, básico y avanzado) que culmina con la **Insignia de Madera** (símbolo mundial creado por Baden-Powell en el Parque Gilwell en 1919, conformado por la pañoleta color arena de MacLaren, el nudo de Gilwell y los maderos)."
+    },
+    {
+      "id": "que_es_un_grupo_scout_estructura",
+      "patterns": [
+        "\\bque es un grupo scout\\b",
+        "\\bcomo se organiza un grupo scout\\b",
+        "\\bconsejo de grupo\\b",
+        "\\bcomite de grupo\\b",
+        "\\bjefe de grupo\\b",
+        "\\bprovincia scout\\b"
+      ],
+      "keywords": [
+        "grupo scout",
+        "consejo de grupo",
+        "comite de grupo",
+        "jefe de grupo",
+        "provincia"
+      ],
+      "source_files": [
+        "REGLAMENTO 2023.pdf",
+        "Manual Operativo Nivel Grupo.pdf",
+        "Estatutos 2023.pdf"
+      ],
+      "content": "**El Grupo Scout es la célula básica donde niños, niñas, adolescentes, jóvenes y adultos viven el Movimiento Scout semana a semana (`Reglamento 2023`).**\n\n- **¿Cómo está integrado un Grupo Scout completo?**\n  1. **Manada de Lobatos** (6 a <10 años)\n  2. **Tropa de Scouts** (10 a <14 años)\n  3. **Comunidad de Caminantes** (14 a <18 años)\n  4. **Clan de Rovers** (18 a <22 años)\n  5. **Consejo de Grupo:** Órgano coordinador integrado por el/la Jefe/a de Grupo, Subjefes, Scouters de las secciones y el Comité de Grupo (padres y madres de familia).\n- **Identidad:** Cada Grupo Scout tiene un **nombre, un número dentro de su Provincia Scout y una pañoleta** con colores propios registrados."
+    },
+    {
+      "id": "foros_de_jovenes_y_red_de_caminantes",
+      "patterns": [
+        "\\bque son los foros\\b",
+        "\\bforos de jovenes\\b",
+        "\\bred de caminantes\\b",
+        "\\bcprc\\b",
+        "\\bcnrc\\b",
+        "\\bred rover\\b"
+      ],
+      "keywords": [
+        "foros de jovenes",
+        "red de caminantes",
+        "cprc",
+        "cnrc",
+        "red rover",
+        "25.137"
+      ],
+      "source_files": [
+        "010 Guia Red de Caminantes.pdf",
+        "Comunicado ASMAC JSN 25.137 Convocatoria Foros Nacionales de Jóvenes 2025.pdf",
+        "Foros-Caminantes-2020.1.pdf"
+      ],
+      "content": "**Los Foros de Jóvenes y la Red de Caminantes / Red Rover son los espacios oficiales de participación, voz juvenil y toma de decisiones dentro de la ASMAC.**\n\n- **¿Cómo funcionan (`010 Guía Red de Caminantes.pdf` y `JSN 25.137`)?**\n  1. **En tu Grupo:** A través del **Congreso de Comunidad** (Caminantes) o el **Parlamento Rover** (Clan).\n  2. **Nivel Provincial (Foro Provincial):** Representantes de todas las Comunidades o Clanes de una Provincia debaten ponencias, generan recomendaciones y eligen a su **Comité Provincial de la Red de Caminantes (CPRC)** o Red Rover.\n  3. **Nivel Nacional (Foro Nacional de Jóvenes):** Reúne a los delegados de todas las Provincias de México para elegir al **Comité Nacional de la Red de Caminantes (CNRC)** y al Comité Nacional Rover."
+    },
+    {
+      "id": "explorapp_y_carpetapp",
+      "patterns": [
+        "\\bexplorapp\\b",
+        "\\bcarpetapp\\b",
+        "\\baplicacion scout\\b",
+        "\\bapp scout\\b"
+      ],
+      "keywords": [
+        "explorapp",
+        "carpetapp",
+        "26.014",
+        "app"
+      ],
+      "source_files": [
+        "Comunicado ASMAC DNME-CNPJ 26.014 Lanzamiento de ExplorApp y CarpetApp.pdf",
+        "Comunicado ASMAC DNME 26.005 Inicio de vigencia del Modelo de Programa de Jóvenes de la ASMAC.pdf"
+      ],
+      "content": "**`ExplorApp` y `CarpetApp` son las dos aplicaciones digitales oficiales lanzadas por la ASMAC en septiembre de 2026 (`DNME-CNPJ 26.014`) para el seguimiento del Programa de Jóvenes (PJOS):**\n\n- 📱 **ExplorApp (Para niñas, niños, adolescentes y jóvenes):**\n  Permite consultar los retos de tu etapa de progresión personal, registrar tus avances, aventuras en la naturaleza y proyectos de Mundo Mejor.\n- 💻 **CarpetApp (Para Scouters y Dirigentes):**\n  Es el cuaderno digital de sección que permite a los Scouters acompañar, evaluar, validar progresiones y emitir los reportes necesarios para tramitar insignias finales y terminales (`DNME-CNPJ 26.011`)."
+    },
+    {
+      "id": "flor_de_lis_sena_y_simbolos",
+      "patterns": [
+        "\\bflor de lis\\b",
+        "\\bque significa la flor de lis\\b",
+        "\\bsena scout\\b",
+        "\\bsaludo scout\\b",
+        "\\bmano izquierda\\b",
+        "\\bbuena accion\\b"
+      ],
+      "keywords": [
+        "flor de lis",
+        "sena scout",
+        "saludo scout",
+        "mano izquierda",
+        "buena accion"
+      ],
+      "source_files": [
+        "Manual del Pie Tierno.pdf",
+        "03.FLOR DE LIS MUNDIAL.png",
+        "Manual de Flor de Lis del Centenario.pdf",
+        "Escultismo para Muchachos.pdf"
+      ],
+      "content": "### Símbolos Fundamentales del Escultismo (`Manual del Pie Tierno`)\n\n1. **La Flor de Lis Mundial:**\n   - **Sus 3 pétalos** representan los 3 puntos de la Promesa Scout (Deberes para con Dios y la Patria, Ayudar al prójimo y Cumplir la Ley Scout) y las 3 virtudes (*Lealtad, Abnegación y Pureza*).\n   - **La aguja al centro** marca el Norte en la brújula (el rumbo correcto).\n   - **Las 2 estrellas de 5 puntas** simbolizan la vida al aire libre y los **10 artículos de la Ley Scout**.\n   - **El lazo circular unido por un nudo rizo (llano)** representa la **Hermandad Mundial Scout** que no se desata jamás.\n2. **La Seña y el Saludo Scout:**\n   Se hace levantando los tres dedos medios de la mano derecha (los 3 puntos de la Promesa), mientras el pulgar protege al meñique (*el más fuerte protege al más débil*).\n3. **El Saludo con la Mano Izquierda:**\n   Tradición adoptada por Baden-Powell de los guerreros Ashanti, quienes soltaban su escudo (que llevaban en la mano izquierda) para estrechar la mano como símbolo de **confianza total y amistad** y porque está más cerca del corazón."
+    },
+    {
+      "id": "agentes_de_cambio_mx",
+      "patterns": [
+        "\\bagentes de cambio\\b",
+        "\\bagentesdecambio\\b"
+      ],
+      "keywords": [
+        "agentes de cambio",
+        "cnrc",
+        "proyectos caminantes"
+      ],
+      "source_files": [
+        "010 Guia Red de Caminantes.pdf",
+        "El desafio de ser Caminante 2024.pdf"
+      ],
+      "content": "**`Agentes de Cambio.MX` es una plataforma creada por el Comité Nacional de la Red de Caminantes (CNRC) para ayudar a las y los Caminantes de México a diseñar y ejecutar sus proyectos.**\n\n- **¿Qué encuentras en Agentes de Cambio.MX?**\n  Guías prácticas, inspiración y recursos organizados en los **4 ejes temáticos** (*Paz y Compromiso Comunitario, Salud y Bienestar, Habilidades para la Vida y Ambiente y Sustentabilidad*).\n- 🌐 **Enlace directo:** [Visitar Agentes de Cambio.MX](https://sites.google.com/scouts.org.mx/agentes-de-cambio-mx/Bienvenida?authuser=0)"
+    },
+    {
+      "id": "corte_nacional_de_honor_y_conducta",
+      "patterns": [
+        "\\bcorte nacional de honor\\b",
+        "\\bcnh\\b",
+        "\\bcodigo de conducta\\b",
+        "\\bcodigo de etica\\b",
+        "\\bmediacion\\b",
+        "\\barbitraje\\b"
+      ],
+      "keywords": [
+        "corte nacional de honor",
+        "cnh",
+        "codigo de conducta",
+        "etica",
+        "mediacion",
+        "arbitraje"
+      ],
+      "source_files": [
+        "CODIGO DE CONDUCTA 2025.pdf",
+        "Reglamento CNH 2025.pdf",
+        "Codigo de Ética ASMAC.pdf"
+      ],
+      "content": "### Código de Conducta 2025 y Corte Nacional de Honor (CNH)\n- **Código de Conducta (`CODIGO DE CONDUCTA 2025.pdf`) y Código de Ética:** Establecen las normas de respeto, integridad y sana convivencia para todos los miembros de la Asociación.\n- **Resolución Pacífica de Conflictos:** La ASMAC promueve el **Diálogo Directo**, la **Mediación** (`Formato Acta Mediacion.docx`) y el **Arbitraje** (`Formato-Arbitraje.docx`).\n- **Corte Nacional de Honor (`Reglamento CNH 2025.pdf`):** Es el órgano autónomo encargado de vigilar el cumplimiento de los Estatutos y Reglamentos, conocer recursos de revisión y garantizar el debido proceso."
+    },
+    {
+      "id": "campamentos_primeros_auxilios_y_emergencias",
+      "patterns": [
+        "\\bcomo acampar\\b",
+        "\\bprimeros auxilios\\b",
+        "\\bequipos scouts de emergencias\\b",
+        "\\bese\\b.*\\bemergencia\\b",
+        "\\bnudos y amarres\\b",
+        "\\bcabuyeria\\b"
+      ],
+      "keywords": [
+        "primeros auxilios",
+        "emergencias",
+        "acampar",
+        "campismo",
+        "cabuyeria",
+        "amarres"
+      ],
+      "source_files": [
+        "01 Manual Scout de Primeros Auxilios.pdf",
+        "01 Guía de los Equipos Scouts de Emergencias.pdf",
+        "Manual del Pie Tierno.pdf",
+        "Carnet Aventuras en la Naturaleza para Tropa 2024.pdf"
+      ],
+      "content": "### Vida al Aire Libre, Primeros Auxilios y Equipos Scouts de Emergencias\nEn la biblioteca de **BiblioTech** cuentas con los manuales técnicos oficiales para campamentos y atención de emergencias:\n\n1. 🩹 **Manual Scout de Primeros Auxilios (`01 Manual Scout de Primeros Auxilios.pdf`):** Evaluación primaria (PAS: Proteger, Avisar, Socorrer), RCP, atención de heridas, hemorragias, quemaduras, fracturas, insolación y botiquín de campamento.\n2. 🚨 **Guía de los Equipos Scouts de Emergencias (`01 Guía de los Equipos Scouts de Emergencias.pdf`):** Protocolos de protección civil, prevención de desastres y brigadas juveniles/adultas.\n3. ⛺ **Técnica Scout y Cabuyería (`Manual del Pie Tierno.pdf` y `Carnets de Aventuras en la Naturaleza 2024`):** Nudos básicos (rizo/llano, ballestrinque, as de guía, margarita, pescador, leñador), amarres (cuadrado, diagonal, redondo y trípode), orientación con brújula y reglas de seguridad en campamento."
+    }
+  ]
+}

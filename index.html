@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BiblioTech — Biblioteca y Buscador Scout</title>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN PRINCIPAL -->
+  <header class="main-header">
+    <div class="container header-inner">
+      <a href="#inicio" class="brand-logo" aria-label="Inicio BiblioTech">
+        <div class="brand-emblem-wrap">
+          <img src="img/logo-flor.png" alt="Flor de Lis Mundial" class="brand-emblem" />
+        </div>
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <span class="brand-name">BiblioTech</span>
+          </div>
+          <span class="brand-author">Creado por: <strong>Liam Durán / Caminante</strong></span>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a href="#buscador" class="nav-link active">Preguntar</a>
+        <a href="#biblioteca" class="nav-link">📖 Biblioteca</a>
+        <a href="#secciones" class="nav-link">Secciones</a>
+        <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
+        <a href="#cambios" class="nav-link">¿Qué cambió?</a>
+        <a href="#explorar" class="nav-link">Catálogo</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO DINÁMICO Y BUSCADOR INTUITIVO -->
+  <section id="inicio" class="hero-section">
+    <div class="hero-backdrop">
+      <div class="hero-glow glow-1"></div>
+      <div class="hero-glow glow-2"></div>
+      <div class="hero-glow glow-3"></div>
+    </div>
+
+    <!-- Elementos flotantes "salidos" para dar dinamismo y alegría -->
+    <div class="hero-floating-Layer" aria-hidden="true">
+      <div class="floating-polaroid polaroid-left">
+        <img src="img/photos/p01.jpg" alt="Comunidad Scout" />
+        <span>¡Siempre Adelante!</span>
+      </div>
+      <div class="floating-polaroid polaroid-right">
+        <img src="img/photos/p04.jpg" alt="Vida Scout" />
+        <span>Hermandad Scout</span>
+      </div>
+      <img src="img/deco/escudo-colores.png" alt="" class="floating-sticker sticker-top-left" />
+      <img src="img/deco/foros2026.png" alt="" class="floating-sticker sticker-bottom-left" />
+      <img src="img/deco/guerrero.png" alt="" class="floating-sticker sticker-bottom-right" />
+    </div>
+
+    <div class="container hero-container">
+      <div class="hero-top-Copy">
+        <div class="hero-kicker-pill">
+          <img src="img/logo-flor.png" alt="" class="kicker-icon" />
+          <span>Asociación de Scouts de México ASMAC y World Scouting WOSM</span>
+        </div>
+        <h1 class="hero-title">
+          Pregunta, descubre y lee toda la información <span class="text-gradient">Scout</span> en segundos
+        </h1>
+        <p class="hero-description">
+          Un espacio ágil, alegre y accesible para niñas, niños, adolescentes, jóvenes y adultos.
+          Pregunta cualquier duda o explora libremente manuales, reglamentos, insignias, historias y convocatorias.
+        </p>
+      </div>
+
+      <!-- TARJETA DEL BUSCADOR INTUITIVO -->
+      <div id="buscador" class="search-hub-card">
+        <img src="img/deco/flor-centenario.png" alt="" class="hub-popout-badge" aria-hidden="true" />
+
+        <div class="search-section-pills" role="tablist" aria-label="Filtrar por sección scout">
+          <button type="button" class="sec-pill active" data-section="all">✨ Todas las secciones</button>
+          <button type="button" class="sec-pill pill-manada" data-section="manada">🐺 Manada (6–10)</button>
+          <button type="button" class="sec-pill pill-tropa" data-section="tropa">⚜️ Tropa (10–14)</button>
+          <button type="button" class="sec-pill pill-comunidad" data-section="comunidad">🧭 Comunidad (14–18)</button>
+          <button type="button" class="sec-pill pill-clan" data-section="clan">🚣 Clan (18–22)</button>
+          <button type="button" class="sec-pill pill-adultos" data-section="adultos">🤝 Adultos / Dirigentes</button>
+          <button type="button" class="sec-pill pill-wosm" data-section="internacional">🌍 World Scouting</button>
+        </div>
+
+        <form id="askForm" class="ask-form" autocomplete="off">
+          <div class="ask-input-wrapper">
+            <span class="search-sparkle-icon" aria-hidden="true">🔎</span>
+            <input
+              type="text"
+              id="askInput"
+              class="ask-input"
+              placeholder="Pregunta lo que quieras... ej. ¿Qué son los Scouts? ¿Qué es la Tropa? ¿Cómo hago un proyecto? ¿Dónde compro el uniforme?"
+              aria-label="Escribe tu pregunta sobre los Scouts"
+            />
+            <button type="button" id="clearAskBtn" class="clear-input-btn hidden" title="Limpiar pregunta">✕</button>
+            <button type="submit" id="askSubmitBtn" class="ask-submit-btn">
+              <span>Preguntar</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <!-- PREGUNTAS FRECUENTES DE UN CLIC -->
+        <div class="quick-questions-row">
+          <span class="quick-label">Preguntas frecuentes:</span>
+          <div class="quick-chips">
+            <button type="button" class="quick-chip chip-featured" data-query="¿Qué son los Scouts y cómo iniciaron?">
+              ⚜️ ¿Qué son los Scouts y cómo iniciaron?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Dónde encuentro a los Scouts y cómo me puedo integrar?">
+              📍 ¿Dónde los encuentro y cómo me integro?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Dónde compro el uniforme scout?">
+              👕 ¿Dónde compro el uniforme?
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Qué es la Manada de Lobatos?">
+              🐺 ¿Qué es la Manada?
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Qué es la Tropa de Scouts?">
+              🏕️ ¿Qué es la Tropa?
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Qué es la Comunidad de Caminantes?">
+              🧭 ¿Qué es la Comunidad?
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Qué es el Clan de Rovers?">
+              🚣 ¿Qué es el Clan?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo hago mi desarrollo personal?">
+              📈 ¿Cómo hago mi desarrollo personal?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo hago un proyecto scout?">
+              🚀 ¿Cómo hago un proyecto?
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Qué son los ejes temáticos?">
+              🌐 ¿Qué son los ejes temáticos?
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Qué especialidades o competencias hay en la Comunidad?">
+              🏅 Especialidades y competencias
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="Explicación del nuevo esquema PJOS 2026">
+              🌱 Explicación del nuevo esquema
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Qué eventos scouts existen?">
+              🎪 ¿Qué eventos existen?
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Cómo puedo obtener la insignia mundial de Tribu de la Tierra?">
+              🌍 Insignia Tribu de la Tierra
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Cuántos nudos puedo portar en mi pañoleta?">
+              🧣 Nudos en la pañoleta
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Qué es el EEAS?">
+              🎨 ¿Qué es el EEAS?
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL DE RESPUESTA DIRECTA (CON FUENTES HASTA ABAJO) -->
+      <div id="answerContainer" class="answer-container hidden" aria-live="polite">
+        <div class="answer-card">
+          <div class="answer-header">
+            <div class="answer-badge">
+              <img src="img/logo-flor.png" alt="" class="answer-badge-icon" />
+              <span id="answerModeLabel">Respuesta directa</span>
+            </div>
+            <button type="button" id="closeAnswerBtn" class="btn-close-answer" title="Cerrar respuesta">✕ Cerrar</button>
+          </div>
+
+          <h2 id="answerQuestionTitle" class="answer-question-title"></h2>
+
+          <!-- CUERPO DE LA RESPUESTA (SOLO LA RESPUESTA CLARA Y DIRECTA) -->
+          <div id="answerBody" class="answer-markdown-body"></div>
+
+          <!-- HASTA ABAJO AL FINAL DE LA RESPUESTA: DE DÓNDE SALIÓ ESTA INFORMACIÓN -->
+          <div class="answer-sources-footer">
+            <div class="sources-footer-label">
+              <span>📌 ¿De dónde salió esta información?</span>
+              <small>Haz clic en cualquier documento para leerlo completo o descargarlo</small>
+            </div>
+            <div id="answerSourcesGrid" class="answer-sources-chips"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APARTADO DE BIBLIOTECA INTERACTIVA (LECTURA LIBRE DE DOCUMENTOS) -->
+  <section id="biblioteca" class="library-section">
+    <div class="container">
+      <div class="section-heading-row library-header-row">
+        <div>
+          <span class="section-eyebrow">📖 MODO BIBLIOTECA • LECTURA LIBRE</span>
+          <h2 class="section-title">Biblioteca Scout Interactiva</h2>
+          <p class="section-subtitle">
+            Hojea y lee libremente los manuales, libros, revistas, reglamentos y guías completas como en una estantería abierta.
+          </p>
+        </div>
+        <div class="library-search-mini">
+          <input
+            type="text"
+            id="libraryFilterInput"
+            class="lib-search-input"
+            placeholder="Filtrar libros en la estantería..."
+            aria-label="Filtrar libros en la biblioteca"
+          />
+        </div>
+      </div>
+
+      <!-- ESTANTES DE LA BIBLIOTECA -->
+      <div class="library-shelves-tabs" id="libraryShelfTabs" role="tablist">
+        <button type="button" class="shelf-tab active" data-shelf="featured">✨ Destacados para leer</button>
+        <button type="button" class="shelf-tab" data-shelf="secciones">🐺⚜️🧭🚣 Manuales de Sección</button>
+        <button type="button" class="shelf-tab" data-shelf="insignias">🌱 Insignias y Mundo Mejor</button>
+        <button type="button" class="shelf-tab" data-shelf="reglamentos">⚖️ Reglamentos y Políticas</button>
+        <button type="button" class="shelf-tab" data-shelf="libros">📚 Libros y Relatos Scouts</button>
+        <button type="button" class="shelf-tab" data-shelf="revistas">🗞️ Revistas Foro Joven</button>
+        <button type="button" class="shelf-tab" data-shelf="formatos">📝 Formatos y Plantillas</button>
+        <button type="button" class="shelf-tab" data-shelf="comunicados">📣 Comunicados 2025–2026</button>
+      </div>
+
+      <!-- ESTANTERÍA VISUAL CON PORTADAS -->
+      <div id="libraryBookshelfGrid" class="bookshelf-grid"></div>
+
+      <div class="bookshelf-more-row">
+        <button type="button" id="libraryShowMoreBtn" class="btn-outline-joy">
+          Ver más libros de este estante
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORACIÓN RÁPIDA POR SECCIÓN SCOUT (CON ELEMENTOS SALIDOS Y DINÁMICOS) -->
+  <section id="secciones" class="sections-showcase">
+    <div class="container">
+      <div class="section-heading-row">
+        <div>
+          <span class="section-eyebrow">RUTA POR EDADES Y MÉTODO SCOUT</span>
+          <h2 class="section-title">Explora por Sección Scout</h2>
+          <p class="section-subtitle">
+            Elige una sección para ver sus manuales de progresión, carnets de naturaleza, insignias y documentos vigentes.
+          </p>
+        </div>
+      </div>
+
+      <div class="scout-sections-grid">
+        <article class="scout-sec-card card-manada" data-sec-jump="manada">
+          <div class="sec-card-bg" style="background-image: url('img/bg/manada.webp');"></div>
+          <div class="sec-popout-photo">
+            <img src="img/photos/liam-manada.jpg" alt="Manada de Lobatos" />
+          </div>
+          <div class="sec-card-top">
+            <span class="sec-age-tag">6 a 10 años</span>
+            <span class="sec-motto">«Siempre lo Mejor»</span>
+          </div>
+          <h3>Manada de Lobatos</h3>
+          <p>Mis Rastros en la Selva 2024, Carnet de Aventuras en la Naturaleza, Seisenas y Guía de Scouter de Manada.</p>
+          <span class="sec-card-cta">Explorar Manada →</span>
+        </article>
+
+        <article class="scout-sec-card card-tropa" data-sec-jump="tropa">
+          <div class="sec-card-bg" style="background-image: url('img/bg/tropa.webp');"></div>
+          <div class="sec-popout-photo">
+            <img src="img/photos/p08.jpg" alt="Tropa de Scouts" />
+          </div>
+          <div class="sec-card-top">
+            <span class="sec-age-tag">10 a 14 años</span>
+            <span class="sec-motto">«Siempre Listos»</span>
+          </div>
+          <h3>Tropa de Scouts</h3>
+          <p>Pistas de Aventura 2024, Vida de Patrulla, Punta de Flecha 2025, Corte de Honor y campismo.</p>
+          <span class="sec-card-cta">Explorar Tropa →</span>
+        </article>
+
+        <article class="scout-sec-card card-comunidad featured-caminantes" data-sec-jump="comunidad">
+          <div class="sec-card-bg" style="background-image: url('img/bg/comunidad.webp');"></div>
+          <div class="sec-popout-photo">
+            <img src="img/photos/caminantes.jpg" alt="Comunidad de Caminantes" />
+          </div>
+          <div class="sec-card-top">
+            <span class="sec-age-tag">14 a 18 años</span>
+            <span class="sec-motto">«Siempre Adelante»</span>
+          </div>
+          <h3>Comunidad de Caminantes</h3>
+          <p>El Desafío de ser Caminante 2024, Red de Caminantes, Bitácora, Congreso, Punta de Flecha, Philia y Shackleton 2026.</p>
+          <span class="sec-card-cta">Explorar Comunidad →</span>
+        </article>
+
+        <article class="scout-sec-card card-clan" data-sec-jump="clan">
+          <div class="sec-card-bg" style="background-image: url('img/bg/clan.webp');"></div>
+          <div class="sec-popout-photo">
+            <img src="img/photos/p02.jpg" alt="Clan de Rovers" />
+          </div>
+          <div class="sec-card-top">
+            <span class="sec-age-tag">18 a 22 años</span>
+            <span class="sec-motto">«Servir»</span>
+          </div>
+          <h3>Clan de Rovers</h3>
+          <p>Las Rutas del Rover, Las Rutas de la Precursora, Punta de Flecha Clan, Parlamento Rover y World Scout Moot.</p>
+          <span class="sec-card-cta">Explorar Clan →</span>
+        </article>
+
+        <article class="scout-sec-card card-adultos" data-sec-jump="adultos">
+          <div class="sec-card-bg" style="background-image: url('img/bg/general.webp');"></div>
+          <div class="sec-popout-photo">
+            <img src="img/photos/bandera.jpg" alt="Adultos en el Movimiento" />
+          </div>
+          <div class="sec-card-top">
+            <span class="sec-age-tag">22+ años</span>
+            <span class="sec-motto">Formación y Gestión</span>
+          </div>
+          <h3>Adultos y Dirigentes</h3>
+          <p>Política AMS 2024, Modelo de Formación 2025, Insignia de Madera, Guías de Scouter y Corte de Honor.</p>
+          <span class="sec-card-cta">Explorar Adultos →</span>
+        </article>
+
+        <article class="scout-sec-card card-wosm" data-sec-jump="internacional">
+          <div class="sec-card-bg" style="background-image: url('img/bg/mundial.webp');"></div>
+          <div class="sec-popout-photo">
+            <img src="img/photos/wosm1.jpg" alt="World Scouting WOSM" />
+          </div>
+          <div class="sec-card-top">
+            <span class="sec-age-tag">OMMS / WOSM</span>
+            <span class="sec-motto">Hermandad Mundial</span>
+          </div>
+          <h3>World Scouting (WOSM)</h3>
+          <p>26° Jamboree Scout Mundial Polonia 2027, 17° World Scout Moot Taiwán 2029 y 44ª Conferencia Mundial.</p>
+          <span class="sec-card-cta">Explorar WOSM →</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTO DESTACADO PARA CAMINANTES: AGENTES DE CAMBIO.MX -->
+  <section id="agentes" class="agentes-cambio-section">
+    <div class="container">
+      <div class="agentes-card">
+        <div class="agentes-content">
+          <!-- SOLO EL LOGO AZUL DE AGENTES DE CAMBIO (SIN EL LETRERO EXTRA AL LADO) -->
+          <div class="agentes-logos-row">
+            <img src="img/adc/logo.png" alt="Agentes de Cambio.MX" class="agentes-main-logo" />
+          </div>
+
+          <span class="agentes-eyebrow">HERRAMIENTA RECOMENDADA PARA LA COMUNIDAD DE CAMINANTES</span>
+          <h2>Agentes de Cambio.MX</h2>
+          <p>
+            Creado por el <strong>Comité Nacional de la Red de Caminantes (CNRC)</strong>, <strong>Agentes de Cambio.MX</strong>
+            es un espacio diseñado para apoyar e inspirar a las y los Caminantes de México a diseñar, estructurar y llevar a la realidad
+            sus <strong>proyectos</strong> de impacto comunitario y desarrollo sostenible:
+          </p>
+
+          <!-- SOLO LOS 4 ICONOS DE FOROS 1-4 (1=PAZ, 2=SALUD, 3=HABILIDADES, 4=SUSTENTABILIDAD) SIN TEXTOS -->
+          <div class="agentes-icons-only-row" aria-label="4 Ejes Temáticos de Agentes de Cambio">
+            <div class="adc-icon-orb" title="Paz y Compromiso Comunitario (Foro 1)">
+              <img src="img/adc/paz.png" alt="Paz y Compromiso Comunitario" />
+            </div>
+            <div class="adc-icon-orb" title="Salud y Bienestar (Foro 2)">
+              <img src="img/adc/salud.png" alt="Salud y Bienestar" />
+            </div>
+            <div class="adc-icon-orb" title="Habilidades para la Vida (Foro 3)">
+              <img src="img/adc/habilidades.png" alt="Habilidades para la Vida" />
+            </div>
+            <div class="adc-icon-orb" title="Ambiente y Sustentabilidad (Foro 4)">
+              <img src="img/adc/sustentabilidad.png" alt="Ambiente y Sustentabilidad" />
+            </div>
+          </div>
+
+          <div class="agentes-actions">
+            <a
+              href="https://sites.google.com/scouts.org.mx/agentes-de-cambio-mx/Bienvenida?authuser=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-agentes-visit"
+            >
+              <span>Visitar Agentes de Cambio.MX</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <button type="button" class="btn-agentes-ask" data-query="¿Qué manuales, eventos y proyectos existen para la Comunidad de Caminantes?">
+              Ver guías y formatos de Caminantes
+            </button>
+          </div>
+        </div>
+
+        <!-- FOTO DE LIAM Y AMIGOS EN AGENTES DE CAMBIO CON ESTILO SALIDO/DINÁMICO -->
+        <div class="agentes-visual">
+          <div class="agentes-photo-popout">
+            <img src="img/photos/agentes.jpg" alt="Comunidad de Caminantes — Agentes de Cambio.MX" class="agentes-hero-img" />
+            <img src="img/deco/escudo-colores.png" alt="" class="agentes-floating-badge" aria-hidden="true" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ¿QUÉ COSAS CAMBIARON AÑO CON AÑO? -->
+  <section id="cambios" class="evolution-section">
+    <div class="container">
+      <div class="section-heading-row">
+        <div>
+          <span class="section-eyebrow">COMPARATIVA HISTÓRICA Y DOCUMENTAL (2018 – 2026)</span>
+          <h2 class="section-title">¿Qué cosas cambiaron año con año?</h2>
+          <p class="section-subtitle">
+            Revisa rápidamente qué se actualizó entre las versiones anteriores y los lineamientos actuales de 2025 y 2026.
+          </p>
+        </div>
+      </div>
+
+      <div class="changes-timeline-grid">
+        <article class="change-card">
+          <div class="change-years">
+            <span class="yr-old">2020–2025 (ENPE)</span>
+            <span class="yr-arrow">→</span>
+            <span class="yr-new">2026 (PJOS)</span>
+          </div>
+          <h3>Programa de Jóvenes e Insignias</h3>
+          <p>
+            El <strong>31 de diciembre de 2025</strong> concluyó el antiguo <em>ENPE</em> (cerrando las insignias IDO, IT del ENPE e ISMMA).
+            El <strong>1° de enero de 2026</strong> inició el <strong>Modelo de Programa de Jóvenes Orientado a la Sustentabilidad (PJOS)</strong>
+            con los cuadernillos de <strong>Tribu de la Tierra</strong> (<code>DNME-CNPJ 26.010</code>), el nuevo proceso de <strong>Insignia Final y Terminal</strong>
+            (<code>DNME-CNPJ 26.011</code>) y el lanzamiento de <strong>ExplorApp y CarpetApp</strong> (<code>DNME-CNPJ 26.014</code>).
+          </p>
+        </article>
+
+        <article class="change-card">
+          <div class="change-years">
+            <span class="yr-old">Marzo 2019 (80 págs.)</span>
+            <span class="yr-arrow">→</span>
+            <span class="yr-new">Junio 2026 (107 págs.)</span>
+          </div>
+          <h3>Manual del Uniforme Scout</h3>
+          <p>
+            El <strong>Manual del Uniforme aprobado el 10 de junio de 2026</strong> suma 27 páginas nuevas: actualiza la portación de las
+            insignias de <strong>Mundo Mejor / Tribu de la Tierra</strong> (pág. 71), incorpora camisolas tipo <em>polo</em> y <em>outdoor</em>,
+            uniforme de trabajo y accesorios oficiales como morral, bandana y cangurera.
+          </p>
+        </article>
+
+        <article class="change-card">
+          <div class="change-years">
+            <span class="yr-old">2024 (Transición)</span>
+            <span class="yr-arrow">→</span>
+            <span class="yr-new">2025–2026 (Definitivo)</span>
+          </div>
+          <h3>Edades de las Secciones en SISAS</h3>
+          <p>
+            Durante 2024 (<code>JSN 24.004</code>) existió flexibilidad transitoria para enlaces de sección. Desde el <strong>1° de julio de 2025</strong>
+            (<code>JSN 25.051</code>), el sistema <strong>SISAS</strong> aplica de forma estricta las edades del Reglamento 2023:
+            Manada (6 a &lt;10), Tropa (10 a &lt;14), Comunidad (14 a &lt;18) y Clan (18 a &lt;22).
+          </p>
+        </article>
+
+        <article class="change-card">
+          <div class="change-years">
+            <span class="yr-old">2025 ($680 / $840)</span>
+            <span class="yr-arrow">→</span>
+            <span class="yr-new">2026 ($730 / $890)</span>
+          </div>
+          <h3>Cuotas Anuales de Registro</h3>
+          <p>
+            En 2025 (<code>JSN 24.117</code>) la cuota nacional fue de $680 (reingreso) y $840 (nuevo ingreso). Para <strong>2026</strong>
+            (<code>JSN 25.136</code>), el Consejo Nacional aprobó <strong>$730.00 MXN para Reingreso</strong> y <strong>$890.00 MXN para Nuevo Ingreso</strong>,
+            manteniendo el beneficio de <strong>Registro Familiar</strong> (<code>JSN 25.009</code>).
+          </p>
+        </article>
+
+        <article class="change-card">
+          <div class="change-years">
+            <span class="yr-old">2018–2022</span>
+            <span class="yr-arrow">→</span>
+            <span class="yr-new">2023–2025</span>
+          </div>
+          <h3>Estatutos, Reglamento y Justicia Asociativa</h3>
+          <p>
+            Los Estatutos y Declaración de Principios de 2018 fueron renovados en <strong>2023</strong> junto con el <strong>Reglamento 2023</strong>.
+            Posteriormente entraron en vigor la <strong>Política de Diversidad, Equidad e Inclusión 2024</strong>, el <strong>Código de Conducta 2025</strong>
+            y el <strong>Reglamento de la Corte Nacional de Honor 2025</strong>.
+          </p>
+        </article>
+
+        <article class="change-card">
+          <div class="change-years">
+            <span class="yr-old">2016–2019</span>
+            <span class="yr-arrow">→</span>
+            <span class="yr-new">2024–2026</span>
+          </div>
+          <h3>Adultos en el Movimiento e Identidad Centenario</h3>
+          <p>
+            El Esquema de Adultos 2019 evolucionó a la <strong>Política Nacional AMS 2024</strong>, el <strong>Modelo de Formación 2025</strong> y
+            el <strong>Modelo de Gestión de Adultos 2025</strong>. Además, en 2026 se incorporó la identidad oficial del
+            <strong>Centenario Scout en México (1926–2026)</strong>.
+          </p>
+        </article>
+      </div>
+
+      <!-- Comparador automático de familias de documentos -->
+      <details class="version-chains-details">
+        <summary>Ver desglose detallado de documentos con ediciones anteriores y recientes</summary>
+        <div id="versionChainsGrid" class="version-chains-grid"></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO GENERAL Y DESCARGA DE ARCHIVOS -->
+  <section id="explorar" class="catalog-section">
+    <div class="container">
+      <div class="catalog-header-row">
+        <div>
+          <span class="section-eyebrow">ARCHIVO DOCUMENTAL COMPLETO</span>
+          <h2 class="section-title">Buscador y Descarga de Documentos</h2>
+          <p class="section-subtitle">
+            Filtra por categoría, sección, formato o año para previsualizar o descargar cualquier archivo al instante.
+          </p>
+        </div>
+
+        <div class="catalog-Quick-controls">
+          <label class="toggle-latest-label">
+            <input type="checkbox" id="onlyLatestCheckbox" />
+            <span>Ocultar ediciones antiguas reemplazadas</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- BARRA DE FILTROS DEL CATÁLOGO -->
+      <div class="catalog-filters-bar">
+        <div class="filter-group filter-search">
+          <label for="catalogSearchInput">Buscar por título, código o tema</label>
+          <input
+            type="text"
+            id="catalogSearchInput"
+            placeholder="Ej. Manual del Uniforme, 26.010, Bitácora, Congreso, Ficha de Salud..."
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="filterCategory">Categoría</label>
+          <select id="filterCategory">
+            <option value="all">Todas las categorías</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterSection">Sección</label>
+          <select id="filterSection">
+            <option value="all">Todas las secciones</option>
+            <option value="manada">Manada de Lobatos</option>
+            <option value="tropa">Tropa de Scouts</option>
+            <option value="comunidad">Comunidad de Caminantes</option>
+            <option value="clan">Clan de Rovers</option>
+            <option value="adultos">Adultos y Dirigentes</option>
+            <option value="general">General / Nacional (ASMAC)</option>
+            <option value="internacional">World Scouting (WOSM)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterExt">Formato</label>
+          <select id="filterExt">
+            <option value="all">Todos (PDF, HTML, DOCX...)</option>
+            <option value="PDF">PDF (Manuales, Guías, Comunicados)</option>
+            <option value="HTML">Páginas Oficiales (HTML)</option>
+            <option value="DOCX">Editables Word (DOCX)</option>
+            <option value="XLSX">Hojas de Cálculo (XLSX)</option>
+            <option value="IMAGE">Imágenes e Infografías</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="sortOrderSelect">Ordenar por</label>
+          <select id="sortOrderSelect">
+            <option value="recent">Más recientes primero (2026 →)</option>
+            <option value="title">Título (A – Z)</option>
+            <option value="size">Tamaño del archivo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="catalog-results-meta">
+        <span id="catalogCountLabel">Cargando catálogo...</span>
+        <button type="button" id="resetFiltersBtn" class="btn-text-reset hidden">Restablecer filtros</button>
+      </div>
+
+      <div id="catalogGrid" class="catalog-grid"></div>
+
+      <div class="load-more-container">
+        <button type="button" id="loadMoreBtn" class="btn-load-more hidden">
+          Mostrar más documentos
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACERCA DEL PROYECTO Y AUTOR -->
+  <section id="acerca" class="about-section">
+    <div class="container">
+      <div class="about-card">
+        <div class="about-photo-col">
+          <div class="author-photo-frame">
+            <img
+              src="img/photos/liam-manada.jpg"
+              alt="Liam Durán"
+              class="author-photo"
+            />
+          </div>
+        </div>
+        <div class="about-text-col">
+          <span class="section-eyebrow">PROPÓSITO DEL PROYECTO</span>
+          <h2>Información accesible y clara para toda la Hermandad Scout</h2>
+          <p>
+            <strong>BiblioTech</strong> nació con el objetivo de que niñas, niños, jóvenes, adolescentes y adultos
+            tengan acceso directo, rápido y comprensible a los manuales, reglamentos, libros, formatos y comunicados,
+            pudiendo consultar, leer libremente y descargar todo lo que necesiten para sus actividades, proyectos, progresiones o curiosidad.
+          </p>
+          <div class="about-signature-box">
+            <p class="signature-main">Creado por: <strong>Liam Durán / Caminante</strong></p>
+            <p class="signature-sub">Asociación de Scouts de México ASMAC y World Scouting WOSM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APARTADO DISCRETO PARA COMPARTIR NUEVOS DOCUMENTOS ENTRE CAMINANTES Y SCOUTS -->
+  <section id="aportar" class="discreet-contribute-strip" aria-label="Compartir documentos con la comunidad">
+    <div class="container discreet-contribute-inner">
+      <div class="discreet-contribute-text">
+        <span class="discreet-icon">✉️</span>
+        <p>
+          <strong>¿Tienes documentos, convocatorias, templates, eventos, progresiones o actividades propias?</strong>
+          Compártelos para ayudar a otros nuevos caminantes y scouts a crear los suyos enviándolos al correo:
+          <a id="contributeMailLink" href="mailto:rdc.tlxh@gmail.com?subject=Aporte%20de%20documento%20para%20BiblioTech%20Scout" class="discreet-mail-link">rdc.tlxh@gmail.com</a>
+          <button type="button" id="copyMailBtn" class="discreet-mini-btn" title="Copiar correo">Copiar correo</button>
+        </p>
+      </div>
+      <div class="discreet-admin-actions">
+        <button type="button" id="editMailBtn" class="discreet-gear-btn" title="Cambiar correo de contacto">✎ Correo</button>
+        <button type="button" id="openUploadModalBtn" class="discreet-gear-btn" title="Subir archivo directamente (Administrador)">+ Subir local</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL LECTOR INTERACTIVO (MODO LECTURA LIBRE Y VISTA PREVIA) -->
+  <div id="docModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalDocTitle">
+    <div id="docModalContainer" class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-badges" id="modalDocBadges"></div>
+          <h3 id="modalDocTitle">Título del documento</h3>
+          <span id="modalDocFilename" class="modal-filename"></span>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="modalPrevBookBtn" class="btn-modal-nav hidden" title="Documento anterior">← Anterior</button>
+          <button type="button" id="modalNextBookBtn" class="btn-modal-nav hidden" title="Siguiente documento">Siguiente →</button>
+          <button type="button" id="modalFullscreenBtn" class="btn-modal-secondary" title="Alternar pantalla completa">⛶ Pantalla completa</button>
+          <a id="modalOpenTabBtn" href="#" target="_blank" rel="noopener" class="btn-modal-secondary">
+            Abrir en pestaña ↗
+          </a>
+          <a id="modalDownloadBtn" href="#" download class="btn-modal-primary">
+            ⬇ Descargar
+          </a>
+          <button type="button" id="closeDocModalBtn" class="btn-modal-close" aria-label="Cerrar lector">✕</button>
+        </div>
+      </div>
+
+      <div class="modal-tabs-bar">
+        <button type="button" class="modal-tab active" data-tab="preview">📖 Lectura del Documento</button>
+        <button type="button" class="modal-tab" data-tab="text">📝 Texto Extraído / Lectura Rápida</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="modalPreviewPane" class="modal-pane active"></div>
+        <div id="modalTextPane" class="modal-pane hidden">
+          <div id="modalChunksContainer" class="modal-chunks-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DISCRETO DE ADMINISTRACIÓN LOCAL -->
+  <div id="uploadModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="uploadModalTitle">
+    <div class="modal-container modal-small">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 id="uploadModalTitle">Añadir Documento a BiblioTech</h3>
+          <span class="modal-filename">Herramienta de actualización para Liam Durán</span>
+        </div>
+        <button type="button" id="closeUploadModalBtn" class="btn-modal-close" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body upload-modal-body">
+        <div class="upload-dropzone" id="uploadDropzone">
+          <input type="file" id="uploadFileInput" accept=".pdf,.docx,.xlsx,.html,.png,.jpg,.jpeg,.webp" />
+          <div class="dropzone-content">
+            <span class="dropzone-icon">📄</span>
+            <strong>Haz clic para elegir un archivo o arrástralo aquí</strong>
+            <span>Soporta PDF, Word (.docx), Excel (.xlsx), HTML e imágenes</span>
+          </div>
+        </div>
+        <div id="uploadStatusBox" class="upload-status-box hidden"></div>
+        <div class="upload-divider">
+          <span>o si agregaste archivos directamente en tus carpetas</span>
+        </div>
+        <button type="button" id="reindexAllBtn" class="btn-reindex-all">
+          🔄 Re-escanear carpetas y actualizar índice
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand-row">
+        <img src="img/logo-flor.png" alt="Flor de Lis Mundial" class="footer-logo" />
+        <div>
+          <strong>BiblioTech</strong> — Creado por: Liam Durán / Caminante
+          <p class="footer-sources">Asociación de Scouts de México ASMAC y World Scouting WOSM</p>
+        </div>
+      </div>
+      <div class="footer-Tiny-cutoff">
+        Información actualizada el 3 de noviembre del 2026
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
