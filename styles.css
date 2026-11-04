@@ -2331,8 +2331,17 @@ h1, h2, h3, h4 {
   filter: contrast(1.04);
 }
 
+.liam-picture-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  z-index: 3;
+  pointer-events: none;
+}
+
 /* El APNG animado se superpone y sobresale hacia arriba (-24px) y con escala 1.11 para efecto de profundidad */
-.liam-animated-popout-apng {
+.liam-animated-popout-apng,
+.liam-picture-wrapper .liam-animated-popout-apng {
   position: absolute;
   left: -5.5%;
   bottom: 0;
@@ -2351,7 +2360,8 @@ h1, h2, h3, h4 {
   transform: translateY(-4px);
 }
 
-.liam-depth-stage:hover .liam-animated-popout-apng {
+.liam-depth-stage:hover .liam-animated-popout-apng,
+.liam-depth-stage:hover .liam-picture-wrapper .liam-animated-popout-apng {
   transform: translateY(-24px) scale(1.04);
 }
 
@@ -3883,6 +3893,7 @@ h1, h2, h3, h4 {
   background: linear-gradient(135deg, #10b981, #059669);
 }
 
+.btn-hero-jump,
 .btn-3d-hero-jump {
   display: inline-flex;
   align-items: center;
@@ -3900,19 +3911,124 @@ h1, h2, h3, h4 {
   transition: transform 0.22s var(--spring), box-shadow 0.22s ease;
 }
 
+.btn-hero-jump:hover,
 .btn-3d-hero-jump:hover {
   transform: translateY(-3px) scale(1.03);
   box-shadow: 0 7px 0 #b45309, 0 18px 34px rgba(249, 115, 22, 0.45);
 }
 
+.btn-hero-jump:active,
 .btn-3d-hero-jump:active {
   transform: translateY(2px);
   box-shadow: 0 2px 0 #b45309;
 }
 
 /* =====================================================
-   NUEVA SECCIÓN #guia-inicio (GUÍA RÁPIDA INTERACTIVA 3D)
+   BOTÓN DE CONTROL DE RENDIMIENTO:
+   VISTA COMPLETA (EFECTOS) vs VISTA RÁPIDA (MODO LIGERO)
    ===================================================== */
+.perf-mode-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: rgba(15, 23, 42, 0.55);
+  color: #f8fafc;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 0.34rem 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s var(--spring), background 0.2s ease, border-color 0.2s ease;
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+
+.perf-mode-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(15, 23, 42, 0.85);
+  border-color: #38bdf8;
+}
+
+.perf-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.perf-mode-pill.is-fast .perf-dot {
+  background: #facc15;
+  box-shadow: 0 0 8px #facc15;
+}
+
+.fab-perf {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #38bdf8;
+  padding: 0.68rem 1rem;
+}
+
+/* =====================================================
+   MODO VISTA RÁPIDA / MODO LIGERO (ALTO RENDIMIENTO):
+   DESACTIVA BLURS, FONDOS PESADOS, GIROS INFINITOS Y TILT
+   PARA EVITAR TRABAS EN CELULARES Y COMPUTADORAS
+   ===================================================== */
+body.vista-rapida .global-animated-bg,
+body.vista-rapida .hero-glow,
+body.vista-rapida .bg-3d-cube,
+body.vista-rapida .bg-3d-ring,
+body.vista-rapida .section-floating-layer,
+body.vista-rapida .section-floating-3d-layer,
+body.vista-rapida .starter-3d-glare,
+body.vista-rapida .jamboree-diagonal-ribbon,
+body.vista-rapida .liam-stage-glow {
+  display: none !important;
+}
+
+body.vista-rapida .hero-big-bibliotech,
+body.vista-rapida .hex-pos-left,
+body.vista-rapida .hex-pos-center,
+body.vista-rapida .hex-pos-right,
+body.vista-rapida .hex-rotator,
+body.vista-rapida .sparkle-star,
+body.vista-rapida .jamboree-floating-svg,
+body.vista-rapida .floating-3d-badge,
+body.vista-rapida .floating-3d-oct,
+body.vista-rapida .floating-oct,
+body.vista-rapida .bg-hex-float {
+  animation: none !important;
+  transform: none !important;
+}
+
+body.vista-rapida .starter-3d-card,
+body.vista-rapida .scout-sec-card,
+body.vista-rapida .service-info-card,
+body.vista-rapida .change-card,
+body.vista-rapida .about-card,
+body.vista-rapida .agentes-card,
+body.vista-rapida .liam-depth-stage {
+  transform: none !important;
+  transition: border-color 0.15s ease !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+}
+
+body.vista-rapida .starter-3d-card:hover,
+body.vista-rapida .scout-sec-card:hover,
+body.vista-rapida .service-info-card:hover,
+body.vista-rapida .change-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.14) !important;
+}
+
+/* =====================================================
+   SECCIÓN DE PRIMEROS PASOS (#guia-inicio)
+   ===================================================== */
+.quickstart-section,
 .quickstart-3d-section {
   position: relative;
   z-index: 1;
@@ -3925,6 +4041,7 @@ h1, h2, h3, h4 {
   overflow: hidden;
 }
 
+.section-floating-layer,
 .section-floating-3d-layer {
   position: absolute;
   inset: 0;
@@ -3932,27 +4049,7 @@ h1, h2, h3, h4 {
   overflow: hidden;
 }
 
-.floating-3d-badge {
-  position: absolute;
-  top: 34px;
-  right: 5%;
-  width: 64px;
-  height: 64px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #6d28d9, #00b4d8);
-  color: #ffffff;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 900;
-  font-size: 1.15rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 3px solid #ffffff;
-  box-shadow: 0 8px 0 #3b0764, 0 18px 34px rgba(109, 40, 217, 0.32);
-  transform: rotate(10deg);
-  animation: badge3DBob 5.5s ease-in-out infinite alternate;
-}
-
+.floating-oct,
 .floating-3d-oct {
   position: absolute;
   bottom: 64px;
@@ -3964,6 +4061,7 @@ h1, h2, h3, h4 {
   animation: hexSpinSlow 32s linear infinite;
 }
 
+.floating-ring-deco,
 .floating-3d-ring-deco {
   position: absolute;
   top: 48%;

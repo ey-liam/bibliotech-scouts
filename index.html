@@ -69,7 +69,7 @@
 
       <nav class="main-nav" aria-label="Navegación principal">
         <a href="#buscador" class="nav-link active">Preguntar</a>
-        <a href="#guia-inicio" class="nav-link">Guía Rápida 3D</a>
+        <a href="#guia-inicio" class="nav-link">Primeros Pasos</a>
         <a href="#biblioteca" class="nav-link">Biblioteca</a>
         <a href="#acerca" class="nav-link">Propósito</a>
         <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
@@ -78,6 +78,12 @@
         <a href="#cambios" class="nav-link">Evolución</a>
         <a href="#explorar" class="nav-link">Catálogo</a>
       </nav>
+
+      <!-- BOTÓN DE MODO DE RENDIMIENTO: VISTA COMPLETA / VISTA RÁPIDA LIGERA -->
+      <button type="button" id="perfToggleBtn" class="perf-mode-pill" title="Alternar entre Vista Completa (con animaciones) y Vista Rápida (modo ligero sin efectos pesados)" aria-label="Modo de rendimiento">
+        <span class="perf-dot" aria-hidden="true"></span>
+        <span id="perfModeLabel">Vista Completa</span>
+      </button>
     </div>
   </header>
 
@@ -154,8 +160,8 @@
               Copiar enlace
             </button>
           </div>
-          <a href="#guia-inicio" class="btn-3d-hero-jump">
-            Guía Rápida: Grupos, SISAS, Foros y Proyectos →
+          <a href="#guia-inicio" class="btn-hero-jump">
+            Primeros Pasos: Grupos, SISAS, Foros y Proyectos →
           </a>
         </div>
       </div>
@@ -340,22 +346,21 @@
     </div>
   </section>
 
-  <!-- GUÍA RÁPIDA INTERACTIVA 3D: PRIMEROS PASOS, APPS, MEZTITLA, EVENTOS, CPRC/CNRC Y PROYECTOS -->
-  <section id="guia-inicio" class="quickstart-3d-section">
-    <!-- Elementos 3D estéticos flotantes en la sección -->
-    <div class="section-floating-3d-layer" aria-hidden="true">
-      <span class="floating-3d-badge f3d-1">3D</span>
-      <span class="floating-3d-oct f3d-2"></span>
-      <span class="floating-3d-ring-deco f3d-3"></span>
+  <!-- APARTADO DE PRIMEROS PASOS: GRUPOS, PLATAFORMAS, MEZTITLA, EVENTOS, CPRC/CNRC Y PROYECTOS -->
+  <section id="guia-inicio" class="quickstart-section">
+    <!-- Formas geométricas sutiles de fondo -->
+    <div class="section-floating-layer" aria-hidden="true">
+      <span class="floating-oct f3d-2"></span>
+      <span class="floating-ring-deco f3d-3"></span>
     </div>
 
     <div class="container">
       <div class="section-heading-row">
         <div>
-          <span class="section-eyebrow">GUÍA INTERACTIVA DESDE CERO HASTA PROYECTOS Y COMITÉS NACIONALES</span>
+          <span class="section-eyebrow">PRIMEROS PASOS, PLATAFORMAS Y PROYECTOS</span>
           <h2 class="section-title">Todo lo que necesitas saber paso a paso</h2>
           <p class="section-subtitle">
-            Haz clic en cualquier tarjeta 3D o pregunta directa para conocer desde cómo encontrar un Grupo Scout e inscribirte, hasta qué son SISAS, ExplorApp, CarpetApp, Meztitla, Jamboree, Philia, Moot, CPRC, CNRC y cómo subir tus proyectos en Agentes de Cambio.MX.
+            Selecciona cualquier tarjeta o pregunta directa para conocer desde cómo encontrar un Grupo Scout e inscribirte, hasta el funcionamiento de SISAS, ExplorApp, CarpetApp, el Campo Escuela Meztitla, eventos nacionales y la participación en la Red de Caminantes y proyectos.
           </p>
         </div>
       </div>
@@ -639,11 +644,14 @@
                 class="liam-static-bg-img"
               />
             </div>
-            <img
-              src="assets/Liam.png"
-              alt="Liam Durán animado"
-              class="liam-animated-popout-apng"
-            />
+            <picture class="liam-picture-wrapper">
+              <source srcset="assets/Liam.webp" type="image/webp" />
+              <img
+                src="assets/Liam.png"
+                alt="Liam Durán animado"
+                class="liam-animated-popout-apng"
+              />
+            </picture>
           </div>
         </div>
         <div class="about-text-col">
@@ -1293,6 +1301,10 @@
 
   <!-- BARRA FLOTANTE DE ACCESO RÁPIDO (BUSCAR / VOLVER ARRIBA) -->
   <div id="floatingQuickBar" class="floating-quick-bar hidden" aria-label="Acciones rápidas">
+    <button type="button" id="floatingPerfBtn" class="fab-pill fab-perf" title="Alternar entre Vista Completa y Vista Rápida">
+      <span class="perf-dot mini" aria-hidden="true"></span>
+      <span id="floatingPerfLabel">Vista Completa</span>
+    </button>
     <button type="button" id="floatingAskBtn" class="fab-pill fab-ask" title="Ir al buscador de preguntas">
       <svg width="16" height="16" aria-hidden="true"><use href="#icon-search"/></svg>
       <span>Preguntar</span>
