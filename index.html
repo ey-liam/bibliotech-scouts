@@ -28,34 +28,49 @@
       </a>
 
       <nav class="main-nav" aria-label="Navegación principal">
-        <a href="#buscador" class="nav-link active">Preguntar</a>
+        <a href="#buscador" class="nav-link active">🔎 Preguntar</a>
         <a href="#biblioteca" class="nav-link">📖 Biblioteca</a>
-        <a href="#secciones" class="nav-link">Secciones</a>
-        <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
-        <a href="#cambios" class="nav-link">¿Qué cambió?</a>
-        <a href="#explorar" class="nav-link">Catálogo</a>
+        <a href="#secciones" class="nav-link">⚜️ Secciones</a>
+        <a href="#agentes" class="nav-link">🚀 Agentes de Cambio.MX</a>
+        <a href="#cambios" class="nav-link">🔄 ¿Qué cambió?</a>
+        <a href="#explorar" class="nav-link">📂 Catálogo</a>
       </nav>
     </div>
   </header>
 
-  <!-- HERO DINÁMICO Y BUSCADOR INTUITIVO -->
+  <!-- HERO DINÁMICO, ANIMADO Y CON IMÁGENES GRANDES SALIDAS -->
   <section id="inicio" class="hero-section">
     <div class="hero-backdrop">
       <div class="hero-glow glow-1"></div>
       <div class="hero-glow glow-2"></div>
       <div class="hero-glow glow-3"></div>
+      <div class="hero-firefly ff-1"></div>
+      <div class="hero-firefly ff-2"></div>
+      <div class="hero-firefly ff-3"></div>
+      <div class="hero-firefly ff-4"></div>
+      <div class="hero-firefly ff-5"></div>
+      <div class="hero-firefly ff-6"></div>
     </div>
 
-    <!-- Elementos flotantes "salidos" para dar dinamismo y alegría -->
+    <!-- Elementos flotantes grandes "salidos" para dar mucho dinamismo y alegría -->
     <div class="hero-floating-Layer" aria-hidden="true">
-      <div class="floating-polaroid polaroid-left">
+      <div class="floating-polaroid polaroid-top-left">
         <img src="img/photos/p01.jpg" alt="Comunidad Scout" />
-        <span>¡Siempre Adelante!</span>
+        <span>🧭 ¡Siempre Adelante!</span>
       </div>
-      <div class="floating-polaroid polaroid-right">
-        <img src="img/photos/p04.jpg" alt="Vida Scout" />
-        <span>Hermandad Scout</span>
+      <div class="floating-polaroid polaroid-bottom-left">
+        <img src="img/photos/caminantes.jpg" alt="Aventura Scout" />
+        <span>🏕️ Vida al Aire Libre</span>
       </div>
+      <div class="floating-polaroid polaroid-top-right">
+        <img src="img/photos/p04.jpg" alt="Hermandad Scout" />
+        <span>⚜️ Hermandad Scout</span>
+      </div>
+      <div class="floating-polaroid polaroid-bottom-right">
+        <img src="img/photos/p08.jpg" alt="Alegría Scout" />
+        <span>🌟 Construyendo un Mundo Mejor</span>
+      </div>
+
       <img src="img/deco/escudo-colores.png" alt="" class="floating-sticker sticker-top-left" />
       <img src="img/deco/foros2026.png" alt="" class="floating-sticker sticker-bottom-left" />
       <img src="img/deco/guerrero.png" alt="" class="floating-sticker sticker-bottom-right" />
@@ -71,14 +86,39 @@
           Pregunta, descubre y lee toda la información <span class="text-gradient">Scout</span> en segundos
         </h1>
         <p class="hero-description">
-          Un espacio ágil, alegre y accesible para niñas, niños, adolescentes, jóvenes y adultos.
-          Pregunta cualquier duda o explora libremente manuales, reglamentos, insignias, historias y convocatorias.
+          Un espacio dinámico, alegre y fácil de entender para niñas, niños, adolescentes, jóvenes y adultos.
+          Más de <strong>2,800 preguntas verificadas</strong> y <strong>650 documentos oficiales</strong> listos para responderte y leerse libremente.
         </p>
       </div>
 
-      <!-- TARJETA DEL BUSCADOR INTUITIVO -->
+      <!-- GALERÍA DINÁMICA ANIMADA DE PORTADA (IMÁGENES GRANDES E INTERACTIVAS) -->
+      <div class="hero-photo-reel" aria-label="Galería de momentos scouts">
+        <div class="reel-card tilt-left">
+          <img src="img/photos/liam-manada.jpg" alt="Manada de Lobatos" />
+          <span class="reel-tag tag-yellow">🐺 Siempre lo Mejor</span>
+        </div>
+        <div class="reel-card tilt-right">
+          <img src="img/photos/p02.jpg" alt="Tropa y Clan" />
+          <span class="reel-tag tag-green">⚜️ Siempre Listos</span>
+        </div>
+        <div class="reel-card tilt-center">
+          <img src="img/photos/agentes.jpg" alt="Comunidad de Caminantes" />
+          <span class="reel-tag tag-blue">🧭 Siempre Adelante</span>
+        </div>
+        <div class="reel-card tilt-left-2">
+          <img src="img/photos/p07.jpg" alt="Eventos Nacionales" />
+          <span class="reel-tag tag-red">🚣 Servir</span>
+        </div>
+        <div class="reel-card tilt-right-2">
+          <img src="img/photos/p10.jpg" alt="Hermandad Scout" />
+          <span class="reel-tag tag-purple">🌍 Hermandad Mundial</span>
+        </div>
+      </div>
+
+      <!-- TARJETA DEL BUSCADOR INTUITIVO Y EXPLORADOR DE +2,800 PREGUNTAS -->
       <div id="buscador" class="search-hub-card">
         <img src="img/deco/flor-centenario.png" alt="" class="hub-popout-badge" aria-hidden="true" />
+        <img src="img/deco/escudo-colores.png" alt="" class="hub-popout-badge-left" aria-hidden="true" />
 
         <div class="search-section-pills" role="tablist" aria-label="Filtrar por sección scout">
           <button type="button" class="sec-pill active" data-section="all">✨ Todas las secciones</button>
@@ -97,7 +137,7 @@
               type="text"
               id="askInput"
               class="ask-input"
-              placeholder="Pregunta lo que quieras... ej. ¿Qué son los Scouts? ¿Qué es la Tropa? ¿Cómo hago un proyecto? ¿Dónde compro el uniforme?"
+              placeholder="Escribe cualquier duda... ej. ¿Qué son los Scouts? ¿Qué es la Tropa? ¿Cómo resuelvo un conflicto? ¿Cómo hago un proyecto?"
               aria-label="Escribe tu pregunta sobre los Scouts"
             />
             <button type="button" id="clearAskBtn" class="clear-input-btn hidden" title="Limpiar pregunta">✕</button>
@@ -109,12 +149,27 @@
               </svg>
             </button>
           </div>
+          <!-- AUTOCOMPLETADO EN VIVO SOBRE LAS +2,800 PREGUNTAS -->
+          <div id="askAutocomplete" class="ask-autocomplete-dropdown hidden"></div>
         </form>
 
-        <!-- PREGUNTAS FRECUENTES DE UN CLIC -->
+        <!-- EXPLORADOR DINÁMICO DE +2,800 PREGUNTAS VERIFICADAS POR CATEGORÍA -->
         <div class="quick-questions-row">
-          <span class="quick-label">Preguntas frecuentes:</span>
-          <div class="quick-chips">
+          <div class="quick-header-bar">
+            <div class="quick-topic-tabs" id="questionCategoryTabs">
+              <button type="button" class="qcat-tab active" data-qcat="basicas">⭐ Básicas y Primeros Pasos</button>
+              <button type="button" class="qcat-tab" data-qcat="secciones">🐺⚜️🧭🚣 Secciones</button>
+              <button type="button" class="qcat-tab" data-qcat="progresion">📈 Progresión, Proyectos y PJOS</button>
+              <button type="button" class="qcat-tab" data-qcat="convivencia">🤝 Resolución de Problemas y Reglas</button>
+              <button type="button" class="qcat-tab" data-qcat="campismo">🪢 Ley Scout, Nudos y Campismo</button>
+              <button type="button" class="qcat-tab" data-qcat="documentos">📚 De los 650 Documentos</button>
+            </div>
+            <button type="button" id="shuffleQuestionsBtn" class="btn-shuffle-questions" title="Mostrar nuevas preguntas del banco de +2,800 preguntas">
+              🎲 Mostrar otras preguntas (<span id="totalQuestionsCount">2,874</span>)
+            </button>
+          </div>
+
+          <div id="dynamicQuestionsChips" class="quick-chips">
             <button type="button" class="quick-chip chip-featured" data-query="¿Qué son los Scouts y cómo iniciaron?">
               ⚜️ ¿Qué son los Scouts y cómo iniciaron?
             </button>
@@ -151,6 +206,9 @@
             <button type="button" class="quick-chip chip-featured" data-query="Explicación del nuevo esquema PJOS 2026">
               🌱 Explicación del nuevo esquema
             </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo funciona la resolución de problemas y conflictos en los Scouts?">
+              🤝 Resolución de problemas y conflictos
+            </button>
             <button type="button" class="quick-chip" data-query="¿Qué eventos scouts existen?">
               🎪 ¿Qué eventos existen?
             </button>
@@ -173,7 +231,7 @@
           <div class="answer-header">
             <div class="answer-badge">
               <img src="img/logo-flor.png" alt="" class="answer-badge-icon" />
-              <span id="answerModeLabel">Respuesta directa</span>
+              <span id="answerModeLabel">Respuesta verificada</span>
             </div>
             <button type="button" id="closeAnswerBtn" class="btn-close-answer" title="Cerrar respuesta">✕ Cerrar</button>
           </div>
@@ -347,7 +405,7 @@
     <div class="container">
       <div class="agentes-card">
         <div class="agentes-content">
-          <!-- SOLO EL LOGO AZUL DE AGENTES DE CAMBIO (SIN EL LETRERO EXTRA AL LADO) -->
+          <!-- SOLO EL LOGO AZUL DE AGENTES DE CAMBIO -->
           <div class="agentes-logos-row">
             <img src="img/adc/logo.png" alt="Agentes de Cambio.MX" class="agentes-main-logo" />
           </div>
@@ -390,7 +448,7 @@
                 <line x1="10" y1="14" x2="21" y2="3"></line>
               </svg>
             </a>
-            <button type="button" class="btn-agentes-ask" data-query="¿Qué manuales, eventos y proyectos existen para la Comunidad de Caminantes?">
+            <button type="button" class="btn-agentes-ask" data-query="¿Qué es la Comunidad de Caminantes?">
               Ver guías y formatos de Caminantes
             </button>
           </div>

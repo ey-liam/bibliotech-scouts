@@ -958,6 +958,316 @@
         "Carnet Aventuras en la Naturaleza para Tropa 2024.pdf"
       ],
       "content": "### Vida al Aire Libre, Primeros Auxilios y Equipos Scouts de Emergencias\nEn la biblioteca de **BiblioTech** cuentas con los manuales técnicos oficiales para campamentos y atención de emergencias:\n\n1. 🩹 **Manual Scout de Primeros Auxilios (`01 Manual Scout de Primeros Auxilios.pdf`):** Evaluación primaria (PAS: Proteger, Avisar, Socorrer), RCP, atención de heridas, hemorragias, quemaduras, fracturas, insolación y botiquín de campamento.\n2. 🚨 **Guía de los Equipos Scouts de Emergencias (`01 Guía de los Equipos Scouts de Emergencias.pdf`):** Protocolos de protección civil, prevención de desastres y brigadas juveniles/adultas.\n3. ⛺ **Técnica Scout y Cabuyería (`Manual del Pie Tierno.pdf` y `Carnets de Aventuras en la Naturaleza 2024`):** Nudos básicos (rizo/llano, ballestrinque, as de guía, margarita, pescador, leñador), amarres (cuadrado, diagonal, redondo y trípode), orientación con brújula y reglas de seguridad en campamento."
+    },
+    {
+      "id": "resolucion_de_problemas_y_conflictos",
+      "category_tag": " convivencia",
+      "patterns": [
+        "\\bresolucion de problemas\\b",
+        "\\bresolucion de conflictos\\b",
+        "\\bcomo resolver un problema\\b",
+        "\\bcomo resolver un conflicto\\b",
+        "\\bproblemas en mi patrulla\\b",
+        "\\bproblemas en mi equipo\\b",
+        "\\bproblemas en el grupo\\b",
+        "\\bdialogo directo\\b",
+        "\\bmediacion scout\\b",
+        "\\barbitraje scout\\b",
+        "\\bpelea\\b",
+        "\\bdesacuerdo\\b",
+        "\\bjusticia asociativa\\b"
+      ],
+      "keywords": [
+        "resolucion de problemas",
+        "conflictos",
+        "dialogo directo",
+        "mediacion",
+        "arbitraje",
+        "problema en patrulla",
+        "problema en comunidad"
+      ],
+      "source_files": [
+        "CODIGO DE CONDUCTA 2025.pdf",
+        "Reglamento CNH 2025.pdf",
+        "Dialogo-Directo-en-blanco.docx",
+        "Formato Acta Mediacion.docx",
+        "Formato-Arbitraje.docx",
+        "04 Política Nacional sobre Bullying 2020.pdf",
+        "Denuncia – Conecta.html"
+      ],
+      "content": "### 🤝 Cómo Resolver Problemas y Conflictos en los Scouts (Protocolo Oficial ASMAC)\nEn el Movimiento Scout los desacuerdos o problemas se resuelven siempre con apego a la **Ley Scout**, el **Código de Conducta 2025** y los **Mecanismos Alternativos de Solución de Controversias**:\n\n#### 1. En tu Patrulla, Seisena, Equipo de Caminantes o Clan (Nivel Juvenil)\n- **A) Hablar con empatía y escucha activa:** Antes de juzgar, escucha a todas las partes involucradas recordando el Art. 4 (*El Scout es amigo de todos y hermano de todo Scout*) y el Art. 5 (*El Scout es cortés y actúa con nobleza*).\n- **B) Órgano de Gobernanza de tu Sección:** Si el desacuerdo afecta al equipo o patrulla, se aborda con acompañamiento de tu Scouter en el **Consejo de Roca** (Manada), **Corte de Honor** (Tropa), **Congreso / Comité de Comunidad** (Caminantes) o **Parlamento Rover** (Clan) para llegar a acuerdos justos.\n\n#### 2. Los 3 Pasos Oficiales de Resolución Pacífica de Conflictos en la ASMAC\n1. 🗣️ **Paso 1 — Diálogo Directo (`Dialogo-Directo-en-blanco.docx`):**\n   Las personas involucradas conversan de manera voluntaria, respetuosa y horizontal para aclarar el malentendido y firmar compromisos mutuos.\n2. ⚖️ **Paso 2 — Mediación Asociativa (`Formato Acta Mediacion.docx`):**\n   Si el diálogo directo no basta, interviene un/a **Mediador/a imparcial** que facilita la comunicación para que las propias partes construyan un acuerdo.\n3. 📜 **Paso 3 — Arbitraje y Corte de Honor (`Formato-Arbitraje.docx` y `Reglamento CNH 2025.pdf`):**\n   En faltas estatutarias o cuando se requiere una resolución formal, interviene la **Comisión de Honor / Corte Nacional de Honor (CNH)** garantizando el derecho de audiencia y el debido proceso.\n\n#### 3. ⚠️ ¿Cuándo NO es mediable y debe reportarse de inmediato?\n- Si se trata de **bullying (acoso entre pares), violencia física o psicológica, discriminación, hostigamiento o cualquier riesgo a la integridad de niñas, niños o jóvenes**, **NO se sujeta a mediación**: se activa de inmediato el protocolo **«A Salvo del Peligro» (Safe from Harm)** y se reporta en el canal oficial **CONECTA** (`Denuncia – Conecta.html`)."
+    },
+    {
+      "id": "articulo_1_ley_scout_honor",
+      "patterns": [
+        "\\barticulo 1\\b",
+        "\\bprimer articulo\\b",
+        "\\bdigno de confianza\\b",
+        "\\bcifra su honor\\b"
+      ],
+      "keywords": [
+        "articulo 1",
+        "digno de confianza",
+        "cifra su honor"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### 1° Artículo de la Ley Scout: *«El Scout cifra su honor en ser digno de confianza»*\n\n- **¿Qué significa en tu vida diaria?**\n  Significa que tu palabra vale: dices siempre la verdad, cumples tus promesas y cuando tu patrulla, equipo, familia o amigos te confían una responsabilidad, saben que pueden contar contigo al 100% sin necesidad de vigilarte."
+    },
+    {
+      "id": "articulo_2_ley_scout_leal",
+      "patterns": [
+        "\\barticulo 2\\b",
+        "\\bsegundo articulo\\b",
+        "\\bel scout es leal\\b"
+      ],
+      "keywords": [
+        "articulo 2",
+        "scout es leal",
+        "lealtad"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### 2° Artículo de la Ley Scout: *«El Scout es leal con su Patria, sus padres, sus jefes y subordinados»*\n\n- **¿Qué significa en tu vida diaria?**\n  Ser fiel y comprometido en las buenas y en las malas con tu país, tu familia, tus Scouters y también con los integrantes de tu seisena, patrulla o equipo que dependen de tu ejemplo y apoyo."
+    },
+    {
+      "id": "articulo_3_ley_scout_util",
+      "patterns": [
+        "\\barticulo 3\\b",
+        "\\btercer articulo\\b",
+        "\\bel scout es util\\b",
+        "\\bsin pensar en recompensa\\b"
+      ],
+      "keywords": [
+        "articulo 3",
+        "scout es util",
+        "ayuda a los demas",
+        "buena accion"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### 3° Artículo de la Ley Scout: *«El Scout es útil y ayuda a los demás sin pensar en recompensa»*\n\n- **¿Qué significa en tu vida diaria?**\n  Estar siempre dispuesto a servir y realizar al menos una **Buena Acción diaria** (recordada por el nudo en las puntas de tu pañoleta) por el gusto de hacer el bien, sin esperar pago ni aplausos."
+    },
+    {
+      "id": "articulo_4_ley_scout_hermano",
+      "patterns": [
+        "\\barticulo 4\\b",
+        "\\bcuarto articulo\\b",
+        "\\bamigo de todos y hermano\\b"
+      ],
+      "keywords": [
+        "articulo 4",
+        "amigo de todos",
+        "hermano de todo scout"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Política Diversidad, Equidad e Inclusion 2024.pdf"
+      ],
+      "content": "### 4° Artículo de la Ley Scout: *«El Scout es amigo de todos y hermano de todo Scout sin distinción de credo, raza, nacionalidad o clase social»*\n\n- **¿Qué significa en tu vida diaria?**\n  Es la base de la **Hermandad Mundial Scout** y de la **Política de Diversidad, Equidad e Inclusión**: respetar, incluir y valorar a todas las personas por igual, rechazando cualquier prejuicio o discriminación."
+    },
+    {
+      "id": "articulo_5_ley_scout_cortes",
+      "patterns": [
+        "\\barticulo 5\\b",
+        "\\bquinto articulo\\b",
+        "\\bel scout es cortes\\b",
+        "\\bactua con nobleza\\b"
+      ],
+      "keywords": [
+        "articulo 5",
+        "cortes",
+        "nobleza"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### 5° Artículo de la Ley Scout: *«El Scout es cortés y actúa con nobleza»*\n\n- **¿Qué significa en tu vida diaria?**\n  Tratar a todas las personas con amabilidad, educación, empatía y grandeza de corazón, sabiendo pedir por favor, dar las gracias, disculparse cuando uno se equivoca y defender lo que es justo."
+    },
+    {
+      "id": "articulo_6_ley_scout_naturaleza",
+      "patterns": [
+        "\\barticulo 6\\b",
+        "\\bsexto articulo\\b",
+        "\\bve en la naturaleza\\b",
+        "\\bprotege a los animales\\b"
+      ],
+      "keywords": [
+        "articulo 6",
+        "protege a los animales",
+        "naturaleza"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "02 Guía Tribu de la Tierra 2021.pdf"
+      ],
+      "content": "### 6° Artículo de la Ley Scout: *«El Scout ve en la naturaleza la obra de Dios, protege a los animales y a las plantas»*\n\n- **¿Qué significa en tu vida diaria?**\n  Amar y cuidar la Tierra, acampar sin dejar rastro, respetar la flora y la fauna, y actuar activamente contra el cambio climático y la contaminación a través de iniciativas como **Tribu de la Tierra**."
+    },
+    {
+      "id": "articulo_7_ley_scout_orden",
+      "patterns": [
+        "\\barticulo 7\\b",
+        "\\bseptimo articulo\\b",
+        "\\bobedece sin replica\\b",
+        "\\bcosas en orden y completas\\b"
+      ],
+      "keywords": [
+        "articulo 7",
+        "cosas en orden y completas",
+        "obedece"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### 7° Artículo de la Ley Scout: *«El Scout obedece sin réplica y hace las cosas en orden y completas»*\n\n- **¿Qué significa en tu vida diaria?**\n  Tener autodisciplina, respetar los acuerdos tomados en equipo y no dejar las tareas ni los proyectos a medias, sino terminarlos bien y con excelencia."
+    },
+    {
+      "id": "articulo_8_ley_scout_sonrie",
+      "patterns": [
+        "\\barticulo 8\\b",
+        "\\boctavo articulo\\b",
+        "\\bsonrie y canta\\b",
+        "\\bdificultades\\b"
+      ],
+      "keywords": [
+        "articulo 8",
+        "sonrie y canta",
+        "dificultades"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### 8° Artículo de la Ley Scout: *«El Scout sonríe y canta en sus dificultades»*\n\n- **¿Qué significa en tu vida diaria?**\n  Tener **resiliencia y actitud positiva**: cuando llueve en el campamento, el camino es pesado o surge un obstáculo, en lugar de quejarte mantienes el buen ánimo, alientas a tu equipo y buscas soluciones."
+    },
+    {
+      "id": "articulo_9_ley_scout_economico",
+      "patterns": [
+        "\\barticulo 9\\b",
+        "\\bnoveno articulo\\b",
+        "\\bes economico\\b",
+        "\\bcuidadoso del bien ajeno\\b"
+      ],
+      "keywords": [
+        "articulo 9",
+        "economico",
+        "trabajador",
+        "bien ajeno"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### 9° Artículo de la Ley Scout: *«El Scout es económico, trabajador y cuidadoso del bien ajeno»*\n\n- **¿Qué significa en tu vida diaria?**\n  Valorar el esfuerzo del trabajo, administrar con responsabilidad el tiempo, el dinero y los recursos naturales (consumo responsable), y cuidar el equipo de tu patrulla/comunidad y las cosas de los demás mejor que las propias."
+    },
+    {
+      "id": "articulo_10_ley_scout_limpio",
+      "patterns": [
+        "\\barticulo 10\\b",
+        "\\bdecimo articulo\\b",
+        "\\blimpio y sano\\b",
+        "\\bpuros sus pensamientos\\b"
+      ],
+      "keywords": [
+        "articulo 10",
+        "limpio y sano",
+        "puros sus pensamientos"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### 10° Artículo de la Ley Scout: *«El Scout es limpio y sano; puros sus pensamientos, sus palabras y sus acciones»*\n\n- **¿Qué significa en tu vida diaria?**\n  Cuidar tu salud física y mental, hablar con respeto (sin ofender ni humillar a nadie) y actuar con honestidad y congruencia entre lo que piensas, lo que dices y lo que haces."
+    },
+    {
+      "id": "nudos_basicos_scouts_explicados",
+      "patterns": [
+        "\\bque nudos debo saber\\b",
+        "\\bnudo rizo\\b",
+        "\\bnudo llano\\b",
+        "\\bbAllestrinque\\b",
+        "\\bas de guia\\b",
+        "\\bnudo margarita\\b",
+        "\\bnudo pescador\\b",
+        "\\bvuelta de escota\\b",
+        "\\bnudo lenador\\b",
+        "\\bcomo hacer nudos\\b"
+      ],
+      "keywords": [
+        "nudo rizo",
+        "nudo llano",
+        "ballestrinque",
+        "as de guia",
+        "nudo margarita",
+        "nudo pescador",
+        "vuelta de escota",
+        "nudo lenador"
+      ],
+      "source_files": [
+        "Manual del Pie Tierno.pdf",
+        "Carnet Aventuras en la Naturaleza para Tropa 2024.pdf",
+        "Escultismo para Muchachos.pdf"
+      ],
+      "content": "### 🪢 Los 8 Nudos Básicos Scouts y Para Qué Sirve Cada Uno (`Manual del Pie Tierno`)\n\n1. **Nudo Rizo o Llano:** Para unir dos cuerdas del **mismo grosor** que no estén sujetas a gran tensión y para **finalizar vendajes de primeros auxilios** (porque es plano y no lastima). Es también el nudo que une el lazo de la Flor de Lis Mundial.\n2. **Vuelta de Escota:** Para unir dos cuerdas de **diferente grosor** o cuerdas mojadas.\n3. **Ballestrinque:** Para sujetar una cuerda a un poste o tronco; es el nudo con el que **inician y terminan la mayoría de los amarres** de pionerismo.\n4. **As de Guía (El rey de los nudos):** Forma una gaza fija que **no se corre ni se aprieta**, indispensable para **rescate y salvamento** de personas.\n5. **Margarita:** Sirve para **acortar una cuerda** sin cortarla o para reforzar un tramo desgastado.\n6. **Pescador:** Para unir dos cuerdas delgadas, resbaladizas o mojadas (como nylon).\n7. **Leñador (Vuelta de Braza):** Para arrastrar troncos o haces de leña y para iniciar el **amarre diagonal**.\n8. **Media Llave y Dos Cotes:** Para amarrar una cuerda en tensión a un poste o argolla (como los vientos de una tienda de campaña)."
+    },
+    {
+      "id": "amarres_pionerismo_scout",
+      "patterns": [
+        "\\bamarre cuadrado\\b",
+        "\\bamarre diagonal\\b",
+        "\\bamarre redondo\\b",
+        "\\bamarre tripode\\b",
+        "\\bque amarres existen\\b",
+        "\\bpionerismo\\b",
+        "\\bastucias de campamento\\b"
+      ],
+      "keywords": [
+        "amarre cuadrado",
+        "amarre diagonal",
+        "amarre redondo",
+        "amarre tripode",
+        "pionerismo",
+        "astucias"
+      ],
+      "source_files": [
+        "Manual del Pie Tierno.pdf",
+        "Carnet Aventuras en la Naturaleza para Tropa 2024.pdf",
+        "Carnet Aventuras en la Naturaleza para Comunidad 2024.pdf"
+      ],
+      "content": "### 🪵 Los 4 Amarres Fundamentales de Pionerismo Scout (`Manual del Pie Tierno`)\n\n1. **Amarre Cuadrado:** Une dos troncos o bordones que se cruzan en **ángulo recto (90°)** y soportan peso (inicia con ballestrinque, da 3–4 vueltas envolventes, 2–3 vueltas de ahorcado con fuerza y cierra con ballestrinque).\n2. **Amarre Diagonal:** Une dos troncos que se cruzan en **ángulo agudo u obtuso** (tipo X) o que tienden a separarse (inicia con **nudo leñador**, vueltas en ambos ejes, ahorcado y cierra con ballestrinque).\n3. **Amarre Redondo (Paralelo):** Une dos troncos colocados de forma **paralela** para alargar un mástil o construir una escalera.\n4. **Amarre Trípode (En Ocho):** Une **tres troncos** para levantar un trípode de cocina, lavamanos de campamento o torre de observación."
+    },
+    {
+      "id": "brujula_orientacion_y_pistas",
+      "patterns": [
+        "\\bcomo usar la brujula\\b",
+        "\\bbrujula\\b",
+        "\\brosa de los vientos\\b",
+        "\\brumbos\\b",
+        "\\bazimut\\b",
+        "\\bsignos de pista\\b",
+        "\\borientacion scout\\b"
+      ],
+      "keywords": [
+        "brujula",
+        "rosa de los vientos",
+        "azimut",
+        "signos de pista",
+        "orientacion"
+      ],
+      "source_files": [
+        "Manual del Pie Tierno.pdf",
+        "El desafio de ser Caminante 2024.pdf",
+        "Carnet Aventuras en la Naturaleza para Tropa 2024.pdf"
+      ],
+      "content": "### 🧭 Orientación, Brújula, Rosa de los Vientos y Signos de Pista\n\n- **La Rosa de los Vientos (16 rumbos):**\n  - **4 Puntos Cardinales:** Norte (`0° / 360°`), Este (`90°`), Sur (`180°`), Oeste (`270°`).\n  - **4 Rumbos Laterales:** Noreste (`NE, 45°`), Sureste (`SE, 135°`), Suroeste (`SO, 225°`), Noroeste (`NO, 315°`).\n  - **8 Rumbos Colaterales:** `NNE, ENE, ESE, SSE, SSO, OSO, ONO, NNO`.\n- **Signos de Pista tradicionales (`Manual del Pie Tierno`):**\n  Se trazan de forma discreta en el suelo con piedras o ramas naturales (nunca dañando árboles ni pintando rocas) para indicar: *Inicio de pista, Camino a seguir, Doblar a la derecha/izquierda, Peligro, Agua potable/no potable, Mensaje escondido a X pasos y «Misión cumplida / Regreso a casa» (círculo con un punto al centro, símbolo de Baden-Powell)*."
     }
   ]
 }
