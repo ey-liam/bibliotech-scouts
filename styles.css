@@ -555,36 +555,36 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 820px;
+  max-width: 860px;
   margin: 1.1rem auto 2.3rem;
   padding: 0.6rem 0;
   position: relative;
 }
 
 .hero-hex-trio .hex-cluster-item {
-  width: 252px;
-  height: 252px;
+  width: 228px;
+  height: 228px;
   flex-shrink: 0;
   cursor: pointer;
 }
 
 .hero-hex-trio .hex-pos-left {
-  margin-right: -46px;
+  margin-right: -42px;
   z-index: 2;
-  transform: translateY(6px);
+  transform: translateY(8px);
 }
 
 .hero-hex-trio .hex-pos-center {
-  width: 278px;
-  height: 278px;
+  width: 318px;
+  height: 318px;
   z-index: 4;
-  transform: translateY(-8px);
+  transform: translateY(-10px);
 }
 
 .hero-hex-trio .hex-pos-right {
-  margin-left: -46px;
+  margin-left: -42px;
   z-index: 3;
-  transform: translateY(8px);
+  transform: translateY(10px);
 }
 
 .hero-hex-trio .hex-cluster-item:hover {
@@ -2074,7 +2074,8 @@ h1, h2, h3, h4 {
 
 .catalog-filters-bar {
   display: grid;
-  grid-template-columns: 2fr 1.1fr 1.1fr 1fr 1fr;
+  grid-template-columns: minmax(0, 1.65fr) repeat(4, minmax(0, 1fr));
+  align-items: end;
   gap: 0.9rem;
   background: #ffffff;
   padding: 1.25rem;
@@ -2082,12 +2083,16 @@ h1, h2, h3, h4 {
   border: 1.5px solid #dbeafe;
   box-shadow: var(--shadow-sm);
   margin-bottom: 1.25rem;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  justify-content: flex-end;
+  gap: 0.38rem;
+  min-width: 0;
 }
 
 .filter-group label {
@@ -2095,19 +2100,31 @@ h1, h2, h3, h4 {
   font-weight: 800;
   text-transform: uppercase;
   color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
 .filter-group input,
 .filter-group select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 44px;
+  box-sizing: border-box;
   border: 1.5px solid #cbd5e1;
   border-radius: 12px;
-  padding: 0.62rem 0.85rem;
+  padding: 0 0.85rem;
   font-family: inherit;
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--text-main);
   background: #f8fafc;
   outline: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .filter-group input:focus,
@@ -3002,22 +3019,23 @@ h1, h2, h3, h4 {
 .adc-icon-orb::after {
   content: attr(data-orb-label);
   position: absolute;
-  bottom: -28px;
+  bottom: -32px;
   left: 50%;
   transform: translateX(-50%) translateY(4px) scale(0.92);
-  background: rgba(15, 23, 42, 0.92);
+  background: rgba(15, 23, 42, 0.96);
   color: #fde047;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.74rem;
   font-weight: 800;
   white-space: nowrap;
-  padding: 0.18rem 0.55rem;
+  padding: 0.24rem 0.72rem;
   border-radius: 999px;
-  border: 1px solid rgba(56, 189, 248, 0.45);
+  border: 1.5px solid rgba(56, 189, 248, 0.55);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.42);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.22s ease, transform 0.25s var(--spring);
-  z-index: 6;
+  z-index: 20;
 }
 
 .adc-icon-orb:hover::after,
@@ -3250,21 +3268,21 @@ h1, h2, h3, h4 {
   }
 
   .hero-hex-trio .hex-cluster-item {
-    width: 205px;
-    height: 205px;
+    width: 184px;
+    height: 184px;
   }
 
   .hero-hex-trio .hex-pos-center {
-    width: 230px;
-    height: 230px;
+    width: 256px;
+    height: 256px;
   }
 
   .hero-hex-trio .hex-pos-left {
-    margin-right: -34px;
+    margin-right: -32px;
   }
 
   .hero-hex-trio .hex-pos-right {
-    margin-left: -34px;
+    margin-left: -32px;
   }
 
   .centenario-collection-banner {
@@ -3365,21 +3383,21 @@ h1, h2, h3, h4 {
   }
 
   .hero-hex-trio .hex-cluster-item {
-    width: 144px;
-    height: 144px;
+    width: 128px;
+    height: 128px;
   }
 
   .hero-hex-trio .hex-pos-left {
-    margin-right: -24px;
+    margin-right: -22px;
   }
 
   .hero-hex-trio .hex-pos-center {
-    width: 164px;
-    height: 164px;
+    width: 182px;
+    height: 182px;
   }
 
   .hero-hex-trio .hex-pos-right {
-    margin-left: -24px;
+    margin-left: -22px;
   }
 
   .hex-rotator {
@@ -3616,21 +3634,21 @@ h1, h2, h3, h4 {
   }
 
   .hero-hex-trio .hex-cluster-item {
-    width: 108px;
-    height: 108px;
+    width: 96px;
+    height: 96px;
   }
 
   .hero-hex-trio .hex-pos-left {
-    margin-right: -18px;
+    margin-right: -16px;
   }
 
   .hero-hex-trio .hex-pos-center {
-    width: 126px;
-    height: 126px;
+    width: 138px;
+    height: 138px;
   }
 
   .hero-hex-trio .hex-pos-right {
-    margin-left: -18px;
+    margin-left: -16px;
   }
 
   .hero-hex-trio .hex-floating-caption {

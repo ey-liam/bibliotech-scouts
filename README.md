@@ -2,8 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Corte de la base de datos documental:** 3 de noviembre del 2026  
-**Información actualizada:** v2 • 04/11/2026  
+**Base de datos:** 03/11/2026 • **Versión del sitio web:** V2 04/11/2026  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -12,13 +11,13 @@
 
 **BiblioTech** es una plataforma web pública, personal y sin fines de lucro diseñada para que niñas, niños, adolescentes, jóvenes y adultos de toda la membresía cuenten con acceso directo, ágil y de fácil comprensión a la documentación oficial de la **Asociación de Scouts de México, A.C. (ASMAC)** y de **World Scouting (WOSM)**.
 
-Todas las respuestas y resúmenes se fundamentan exclusivamente en los documentos oficiales, manuales, reglamentos, libros de la Colección Biblioteca del Centenario, revistas, formatos editables, comunicados nacionales y portales institucionales respaldados en la base de datos local (con corte al **3 de noviembre del 2026**), priorizando siempre las ediciones vigentes (2024–2026).
+Todas las respuestas y resúmenes se fundamentan exclusivamente en los documentos oficiales, manuales, reglamentos, libros de la Colección Biblioteca del Centenario, revistas, formatos editables, comunicados nacionales y portales institucionales respaldados en la base de datos local (con corte al **03/11/2026**), priorizando siempre las ediciones vigentes (2024–2026).
 
 ---
 
 ## 2. Contenido del acervo documental
 
-El sistema integra **104 temas enciclopédicos y literarios verificados**, **5,301 preguntas y respuestas únicas de consulta directa** (desde preguntas básicas de iniciación hasta preguntas específicas por artículo, capítulo y página de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
+El sistema integra **104 temas enciclopédicos y literarios**, **5,301 preguntas y respuestas únicas de consulta directa** (desde preguntas básicas de iniciación hasta preguntas específicas por artículo, capítulo y página de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
 
 1. **Colección Biblioteca del Centenario (39 volúmenes):** Los 39 libros oficiales numerados de la Colección Biblioteca del Centenario, incluyendo las obras clásicas de Robert Baden-Powell (*Escultismo para Muchachos, Manual de Lobatos, Guía para el Jefe de Tropa, Roverismo hacia el Éxito, Tropiezos de la Vida, Juegos Scouts*), obras históricas de Gilcraft y César Macazaga Ordoño, y publicaciones formativas y literarias (*Cuentos de la Selva, Francisco de Asís y el Lobo de Gubbio*).
 2. **Guías, Carnets y Programa de Jóvenes — PJOS (42 documentos):** Guías de sección actualizadas (*Mis Rastros en la Selva 2024, Pistas de Aventura 2024, El Desafío de ser Caminante 2024, Las Rutas del Rover, Las Rutas de la Precursora*), Carnets de *Aventuras en la Naturaleza 2024*, Guías de *Punta de Flecha 2025*, *Tribu de la Tierra*, *Campeones de la Naturaleza*, *Mensajeros de la Paz*, *Go Solar*, *Plastic Tide Turners*, *De FOROS a CASA* y *Agentes de Cambio.MX*.

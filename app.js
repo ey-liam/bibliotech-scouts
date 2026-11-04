@@ -200,7 +200,7 @@ async function initApp() {
     renderLibraryShelf();
     applyCatalogFilters();
 
-    // Cargar Base de Conocimiento Enciclopedica (53 temas maestros verificados)
+    // Cargar Base de Conocimiento Enciclopedica (104 temas maestros)
     const kbRes = await fetch("data/knowledge_base.json").catch(() => null);
     if (kbRes && kbRes.ok) {
       const kbData = await kbRes.json();
@@ -211,7 +211,7 @@ async function initApp() {
       }
     }
 
-    // Cargar Banco de 2,861 Preguntas Verificadas
+    // Cargar Banco de Preguntas de Consulta
     const qbRes = await fetch("data/questions_bank.json").catch(() => null);
     if (qbRes && qbRes.ok) {
       const qbData = await qbRes.json();
@@ -679,7 +679,7 @@ function renderLibraryShelf() {
 }
 
 // ============================================================================
-// MOTOR DE RESPUESTAS VERIFICADAS (SERVIDOR LOCAL + NAVEGADOR WEB PUBLICO)
+// MOTOR DE RESPUESTAS DOCUMENTALES (SERVIDOR LOCAL + NAVEGADOR WEB PUBLICO)
 // ============================================================================
 async function submitQuestion(queryText) {
   const q = (queryText || "").trim();
