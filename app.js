@@ -1,6 +1,6 @@
 // ============================================================================
-// BiblioTech — Aplicación Principal (Sitio Web Público + Servidor Local)
-// Creado por: Liam Durán / Caminante
+// BiblioTech — Aplicacion Principal (Sitio Web Publico + Servidor Local)
+// Creado por: Liam Duran / Caminante
 // ============================================================================
 
 const IS_LOCAL_SERVER =
@@ -12,7 +12,8 @@ const GITHUB_RELEASE_BASE =
 
 const STATE = {
   catalog: null,
-  documents: [],
+  allDocuments: [],
+  documents: [], // 498 documentos oficiales descargables (excluye paginas .html)
   docsById: {},
   docsByFilename: {},
   versionChains: [],
@@ -32,7 +33,7 @@ const STATE = {
   currentShelfDocs: [],
   currentReadingIndex: -1,
 
-  // Catálogo general
+  // Catalogo general
   filteredDocs: [],
   visibleCount: 24,
   pageSize: 24,
@@ -43,7 +44,7 @@ const STATE = {
   onlyLatest: false,
   sortOrder: "recent",
 
-  // Correo de contacto para recibir aportes de otros caminantes/scouts
+  // Correo de contacto para recibir aportes e issues de otros caminantes/scouts
   contactEmail: localStorage.getItem("bibliotech_contact_email") || "rdc.tlxh@gmail.com"
 };
 
@@ -56,7 +57,8 @@ const STOPWORDS_ES = new Set([
   "nos", "ya", "muy", "tambien", "todo", "toda", "todos", "todas", "otro", "otra", "otros",
   "otras", "mismo", "misma", "puedo", "puede", "pueden", "tiene", "tienen", "hay", "dice",
   "segun", "acerca", "necesito", "quiero", "saber", "informacion", "archivo", "archivos",
-  "documento", "documentos", "oficial", "oficiales", "explica", "explicame", "dime", "consiste", "trata"
+  "documento", "documentos", "oficial", "oficiales", "explica", "explicame", "dime", "consiste", "trata",
+  "pregunta", "preguntas", "duda", "dudas", "consulta", "consultar", "tema", "respuesta"
 ]);
 
 function normalizeStr(s) {
@@ -130,7 +132,10 @@ function renderMarkdown(md) {
       continue;
     }
 
-    if (line.startsWith("### ")) {
+    if (line.startsWith("#### ")) {
+      if (inList) { html += "</ul>"; inList = false; }
+      html += `<h4>${formatInlineMd(line.slice(5))}</h4>`;
+    } else if (line.startsWith("### ")) {
       if (inList) { html += "</ul>"; inList = false; }
       html += `<h3>${formatInlineMd(line.slice(4))}</h3>`;
     } else if (line.startsWith("> ")) {
@@ -162,7 +167,7 @@ function formatInlineMd(text) {
 }
 
 // ============================================================================
-// CARGA INICIAL (CATÁLOGO + 52 TEMAS + 2,874 PREGUNTAS + FRAGMENTOS)
+// CARGA INICIAL (CATALOGO DE 498 DOCUMENTOS + 53 TEMAS + 2,861 PREGUNTAS)
 // ============================================================================
 async function initApp() {
   setupContactEmailUI();
@@ -179,11 +184,13 @@ async function initApp() {
     }
     const data = await catRes.json();
     STATE.catalog = data;
-    STATE.documents = data.documents || [];
+    STATE.allDocuments = data.documents || [];
+    // Excluir archivos .html de la Biblioteca y del Catalogo (su contenido ya vive estructurado en el sitio y en Q&A)
+    STATE.documents = STATE.allDocuments.filter((d) => String(d.ext || "").toUpperCase() !== "HTML");
     STATE.versionChains = data.version_chains || [];
     STATE.docsById = {};
     STATE.docsByFilename = {};
-    for (const d of STATE.documents) {
+    for (const d of STATE.allDocuments) {
       STATE.docsById[d.id] = d;
       STATE.docsByFilename[normalizeStr(d.filename)] = d;
     }
@@ -193,7 +200,7 @@ async function initApp() {
     renderLibraryShelf();
     applyCatalogFilters();
 
-    // Cargar Base de Conocimiento Enciclopédica (52 temas maestros)
+    // Cargar Base de Conocimiento Enciclopedica (53 temas maestros verificados)
     const kbRes = await fetch("data/knowledge_base.json").catch(() => null);
     if (kbRes && kbRes.ok) {
       const kbData = await kbRes.json();
@@ -204,7 +211,7 @@ async function initApp() {
       }
     }
 
-    // Cargar Banco de 2,874 Preguntas Verificadas
+    // Cargar Banco de 2,861 Preguntas Verificadas
     const qbRes = await fetch("data/questions_bank.json").catch(() => null);
     if (qbRes && qbRes.ok) {
       const qbData = await qbRes.json();
@@ -214,13 +221,13 @@ async function initApp() {
         const nk = normalizeQuestionKey(qObj.q || "");
         if (nk) STATE.qBankByNorm[nk] = qObj;
       }
-      const badge = document.getElementById("totalQuestionsBadge");
+      const badge = document.getElementById("totalQuestionsCount");
       if (badge && STATE.questionBank.length) {
         badge.textContent = STATE.questionBank.length.toLocaleString("es-MX");
       }
     }
 
-    // Cargar los 6,929 fragmentos en segundo plano para búsqueda profunda en el navegador
+    // Cargar fragmentos en segundo plano para busqueda profunda en el navegador
     fetch("data/chunks.json")
       .then((r) => (r.ok ? r.json() : []))
       .then((arr) => {
@@ -232,12 +239,9 @@ async function initApp() {
   }
 }
 
-// ============================================================================
-// ANIMACIONES DE SCROLL FLUIDAS (REVEAL-ON-SCROLL)
-// ============================================================================
 function setupScrollAnimations() {
   const targets = document.querySelectorAll(
-    ".section-block, .section-card-v2, .adc-Showcase, .contribute-discreet-strip"
+    ".scout-sec-card, .service-info-card, .change-card, .centenario-collection-banner, .agentes-card, .about-card"
   );
   if (!("IntersectionObserver" in window)) {
     targets.forEach((el) => el.classList.add("revealed"));
@@ -251,7 +255,7 @@ function setupScrollAnimations() {
         }
       });
     },
-    { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
+    { threshold: 0.08, rootMargin: "0px 0px -24px 0px" }
   );
   targets.forEach((el) => {
     el.classList.add("reveal-on-scroll");
@@ -260,23 +264,25 @@ function setupScrollAnimations() {
 }
 
 // ============================================================================
-// EXPLORADOR DINÁMICO DE LAS 2,874 PREGUNTAS + AUTOCOMPLETADO EN VIVO
+// EXPLORADOR DINAMICO DE LAS 2,861 PREGUNTAS + AUTOCOMPLETADO EN VIVO
 // ============================================================================
 const DEFAULT_FEATURED_QUESTIONS = [
-  { q: "¿Qué son los Scouts y cómo iniciaron?", icon: "⚜️" },
-  { q: "¿Dónde encuentro un grupo scout y cómo me integro?", icon: "📍" },
-  { q: "¿Dónde compro el uniforme scout oficial?", icon: "👕" },
-  { q: "¿Cómo se resuelven los problemas y conflictos en los Scouts?", icon: "🤝" },
-  { q: "¿Qué es la Manada de Lobatos?", icon: "🐺" },
-  { q: "¿Qué es la Tropa de Scouts?", icon: "⛺" },
-  { q: "¿Qué es la Comunidad de Caminantes?", icon: "🧭" },
-  { q: "¿Qué es el Clan de Rovers?", icon: "🚣" },
-  { q: "¿Cómo hago mi desarrollo y progresión personal?", icon: "📈" },
-  { q: "¿Cómo hago un proyecto scout paso a paso?", icon: "🚀" },
-  { q: "¿Qué son los ejes temáticos y los Foros 1 al 4?", icon: "🌍" },
-  { q: "Explicación del nuevo esquema PJOS 2026", icon: "✨" },
-  { q: "¿Cuáles son los 10 artículos de la Ley Scout explicados?", icon: "📜" },
-  { q: "¿Cómo obtener la insignia mundial Tribu de la Tierra?", icon: "🌱" }
+  "¿Qué son los Scouts y cómo iniciaron?",
+  "¿Dónde encuentro a los Scouts y cómo me puedo integrar?",
+  "¿Dónde compro el uniforme scout?",
+  "¿Cómo funciona la resolución de problemas y conflictos en los Scouts?",
+  "¿Qué es la Manada de Lobatos?",
+  "¿Qué es la Tropa de Scouts?",
+  "¿Qué es la Comunidad de Caminantes?",
+  "¿Qué es el Clan de Rovers?",
+  "¿Cómo hago mi desarrollo personal en los Scouts?",
+  "¿Cómo hago un proyecto scout?",
+  "¿Qué son los ejes temáticos?",
+  "Explicación del nuevo esquema PJOS 2026",
+  "¿Cuáles son los 10 artículos de la Ley Scout en la ASMAC?",
+  "¿Cómo puedo obtener la insignia mundial de Tribu de la Tierra?",
+  "¿Cuántos nudos puedo portar en mi pañoleta?",
+  "¿Qué es el EEAS?"
 ];
 
 function renderExplorerQuestions(cat, shuffle = false) {
@@ -285,19 +291,18 @@ function renderExplorerQuestions(cat, shuffle = false) {
 
   if (cat === "Destacadas" && !shuffle) {
     container.innerHTML = DEFAULT_FEATURED_QUESTIONS.map(
-      (item, idx) =>
-        `<button type="button" class="quick-q-chip chip-enter" style="animation-delay:${idx * 28}ms" data-query="${escapeHtml(item.q)}">${escapeHtml(item.icon)} ${escapeHtml(item.q)}</button>`
+      (qText, idx) =>
+        `<button type="button" class="quick-q-chip" style="animation-delay:${idx * 24}ms" data-query="${escapeHtml(qText)}">${escapeHtml(qText)}</button>`
     ).join("");
     return;
   }
 
   if (!STATE.questionBank.length) return;
 
-  // Filtrar preguntas (nunca mostrar la pregunta de falda como chip frecuente)
   let pool = STATE.questionBank.filter((item) => {
     const nq = normalizeStr(item.q || "");
     if (nq.includes("falda")) return false;
-    if (cat === "Destacadas") return !item.doc_id; // solo preguntas de temas generales/enciclopédicos
+    if (cat === "Destacadas") return !item.doc_id;
     return item.cat === cat;
   });
 
@@ -305,7 +310,6 @@ function renderExplorerQuestions(cat, shuffle = false) {
     pool = STATE.questionBank.filter((item) => !normalizeStr(item.q || "").includes("falda"));
   }
 
-  // Seleccionar 12 preguntas variadas
   const count = 12;
   const selected = [];
   if (shuffle) {
@@ -323,7 +327,7 @@ function renderExplorerQuestions(cat, shuffle = false) {
   container.innerHTML = selected
     .map(
       (item, idx) =>
-        `<button type="button" class="quick-q-chip chip-enter" style="animation-delay:${idx * 30}ms" data-query="${escapeHtml(item.q)}">${escapeHtml(item.icon || "⚜️")} ${escapeHtml(item.q)}</button>`
+        `<button type="button" class="quick-q-chip" style="animation-delay:${idx * 25}ms" data-query="${escapeHtml(item.q)}">${escapeHtml(item.q)}</button>`
     )
     .join("");
 }
@@ -365,7 +369,7 @@ function updateAutocompleteDropdown(rawInput) {
     }
     if (tokenHits === tokens.length) {
       score += 12;
-      if (!item.doc_id) score += 6; // priorizar preguntas generales/enciclopédicas primero
+      if (!item.doc_id) score += 6;
       matches.push({ score, item });
     }
   }
@@ -383,7 +387,6 @@ function updateAutocompleteDropdown(rawInput) {
     .map(
       (item) => `
       <div class="ask-ac-item" data-ac-query="${escapeHtml(item.q)}">
-        <span class="ask-ac-icon">${escapeHtml(item.icon || "⚜️")}</span>
         <span class="ask-ac-text">${escapeHtml(item.q)}</span>
         <span class="ask-ac-cat">${escapeHtml(item.cat || "General")}</span>
       </div>
@@ -406,7 +409,7 @@ function setupContactEmailUI() {
   const link = document.getElementById("contributeMailLink");
   if (!link) return;
   link.textContent = STATE.contactEmail;
-  link.href = `mailto:${encodeURIComponent(STATE.contactEmail)}?subject=${encodeURIComponent("Aporte de documento para BiblioTech Scout")}`;
+  link.href = `mailto:${encodeURIComponent(STATE.contactEmail)}?subject=${encodeURIComponent("Aporte o Issue para BiblioTech Scout")}`;
 }
 
 function populateCategoryDropdown() {
@@ -416,9 +419,19 @@ function populateCategoryDropdown() {
   for (const d of STATE.documents) {
     counts[d.category] = (counts[d.category] || 0) + 1;
   }
-  const sortedCats = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+  const orderedCats = [
+    "Colección Biblioteca del Centenario y Libros Históricos",
+    "Guías, Carnets y Programa de Jóvenes (PJOS)",
+    "Manuales Oficiales y de Operación",
+    "Reglamentos, Estatutos y Políticas",
+    "Convocatorias y Comunicados Nacionales",
+    "Revistas Foro Joven y Boletines",
+    "Formatos, Actas y Seguro Scout",
+    "Identidad Gráfica y Recursos Visuales"
+  ];
   select.innerHTML = `<option value="all">Todas las categorías (${STATE.documents.length})</option>`;
-  for (const cat of sortedCats) {
+  for (const cat of orderedCats) {
+    if (!counts[cat]) continue;
     const opt = document.createElement("option");
     opt.value = cat;
     opt.textContent = `${cat} (${counts[cat]})`;
@@ -439,7 +452,7 @@ function renderVersionChains() {
       <div class="vchain-item">
         <strong>${escapeHtml(vc.family_name)}</strong>
         <div style="margin-top:4px;color:#166534;font-weight:700;">
-          ✓ Vigente (${vc.latest_year}): ${escapeHtml(vc.latest_file)}
+          Vigente (${vc.latest_year}): ${escapeHtml(vc.latest_file)}
         </div>
         <div style="margin-top:2px;color:#64748b;font-size:0.78rem;">
           Anterior: ${escapeHtml((vc.older_files || []).join(", "))}
@@ -451,12 +464,11 @@ function renderVersionChains() {
 }
 
 // ============================================================================
-// APARTADO DE BIBLIOTECA INTERACTIVA (LECTURA LIBRE)
+// APARTADO DE BIBLIOTECA INTERACTIVA POR LAS 8 CATEGORIAS OFICIALES
 // ============================================================================
 function getDocsForShelf(shelf, filterText = "") {
   const q = normalizeStr(filterText.trim());
-  const pdfAndReadable = STATE.documents.filter((d) => {
-    if (!["PDF", "DOCX", "HTML"].includes(d.ext)) return false;
+  const readable = STATE.documents.filter((d) => {
     if (q) {
       const hay = normalizeStr(`${d.title} ${d.filename} ${d.category} ${d.section_label}`);
       if (!hay.includes(q)) return false;
@@ -464,7 +476,6 @@ function getDocsForShelf(shelf, filterText = "") {
     return true;
   });
 
-  let list = [];
   switch (shelf) {
     case "featured": {
       const priorityNames = [
@@ -488,7 +499,7 @@ function getDocsForShelf(shelf, filterText = "") {
 
       const featured = [];
       const rest = [];
-      for (const d of pdfAndReadable) {
+      for (const d of readable) {
         const nf = normalizeStr(d.filename);
         const idx = priorityNames.findIndex((p) => nf.includes(p) || p.includes(nf));
         if (idx !== -1) {
@@ -498,57 +509,29 @@ function getDocsForShelf(shelf, filterText = "") {
         }
       }
       featured.sort((a, b) => a.idx - b.idx);
-      list = [...featured.map((x) => x.d), ...rest];
-      break;
+      return [...featured.map((x) => x.d), ...rest];
     }
-    case "secciones":
-      list = pdfAndReadable.filter(
-        (d) =>
-          d.category.includes("Manuales") ||
-          ["manada", "tropa", "comunidad", "clan", "adultos"].includes(d.section)
-      );
-      break;
-    case "insignias":
-      list = pdfAndReadable.filter((d) => {
-        const t = normalizeStr(`${d.title} ${d.filename} ${d.category}`);
-        return (
-          t.includes("insignia") ||
-          t.includes("tribu") ||
-          t.includes("pjos") ||
-          t.includes("sustentabilidad") ||
-          t.includes("punta de flecha") ||
-          t.includes("explorapp") ||
-          t.includes("mundo mejor")
-        );
-      });
-      break;
+    case "centenario":
+      return readable
+        .filter((d) => d.category === "Colección Biblioteca del Centenario y Libros Históricos")
+        .sort((a, b) => a.filename.localeCompare(b.filename, "es", { numeric: true }));
+    case "guias_pjos":
+      return readable.filter((d) => d.category === "Guías, Carnets y Programa de Jóvenes (PJOS)");
+    case "manuales":
+      return readable.filter((d) => d.category === "Manuales Oficiales y de Operación");
     case "reglamentos":
-      list = pdfAndReadable.filter(
-        (d) =>
-          d.category.includes("Reglamentos") ||
-          d.category.includes("Salud, Seguridad") ||
-          normalizeStr(d.title).includes("politica") ||
-          normalizeStr(d.title).includes("reglamento") ||
-          normalizeStr(d.title).includes("uniforme")
-      );
-      break;
-    case "libros":
-      list = pdfAndReadable.filter((d) => d.category.includes("Libros"));
-      break;
+      return readable.filter((d) => d.category === "Reglamentos, Estatutos y Políticas");
+    case "convocatorias":
+      return readable.filter((d) => d.category === "Convocatorias y Comunicados Nacionales");
     case "revistas":
-      list = pdfAndReadable.filter((d) => d.category.includes("Revistas"));
-      break;
+      return readable.filter((d) => d.category === "Revistas Foro Joven y Boletines");
     case "formatos":
-      list = pdfAndReadable.filter((d) => d.category.includes("Formatos"));
-      break;
-    case "comunicados":
-      list = pdfAndReadable.filter((d) => d.category.includes("Comunicados"));
-      break;
+      return readable.filter((d) => d.category === "Formatos, Actas y Seguro Scout");
+    case "identidad":
+      return readable.filter((d) => d.category === "Identidad Gráfica y Recursos Visuales");
     default:
-      list = pdfAndReadable;
+      return readable;
   }
-
-  return list;
 }
 
 function renderLibraryShelf() {
@@ -561,7 +544,7 @@ function renderLibraryShelf() {
   const slice = docs.slice(0, STATE.libraryVisibleCount);
 
   if (!slice.length) {
-    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:2rem;color:#64748b;">No se encontraron libros con ese filtro en este estante.</p>`;
+    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:2rem;color:#64748b;">No se encontraron documentos con ese filtro en este estante.</p>`;
     if (moreBtn) moreBtn.classList.add("hidden");
     return;
   }
@@ -592,7 +575,7 @@ function renderLibraryShelf() {
           </div>
           <h3 class="book-title" title="${escapeHtml(d.title)}">${escapeHtml(d.title)}</h3>
           <span class="book-meta">${escapeHtml(d.section_label)}</span>
-          <button type="button" class="book-read-btn">📖 Leer libremente</button>
+          <button type="button" class="book-read-btn">Abrir lectura</button>
         </article>
       `;
     })
@@ -601,7 +584,7 @@ function renderLibraryShelf() {
   if (moreBtn) {
     if (docs.length > STATE.libraryVisibleCount) {
       moreBtn.classList.remove("hidden");
-      moreBtn.textContent = `Ver más libros en este estante (${docs.length - STATE.libraryVisibleCount} restantes)`;
+      moreBtn.textContent = `Ver más documentos de este estante (${docs.length - STATE.libraryVisibleCount} restantes)`;
     } else {
       moreBtn.classList.add("hidden");
     }
@@ -609,7 +592,7 @@ function renderLibraryShelf() {
 }
 
 // ============================================================================
-// MOTOR INTELIGENTE DE RESPUESTAS (SERVIDOR LOCAL + NAVEGADOR PARA SITIO PÚBLICO)
+// MOTOR DE RESPUESTAS VERIFICADAS (SERVIDOR LOCAL + NAVEGADOR WEB PUBLICO)
 // ============================================================================
 async function submitQuestion(queryText) {
   const q = (queryText || "").trim();
@@ -630,7 +613,7 @@ async function submitQuestion(queryText) {
 
   container.classList.remove("hidden");
   titleEl.textContent = q;
-  bodyEl.innerHTML = `<p style="color:#6d28d9;font-weight:700;">Consultando la base de datos oficial...</p>`;
+  bodyEl.innerHTML = `<p style="color:#6d28d9;font-weight:700;">Consultando los documentos oficiales...</p>`;
   sourcesEl.innerHTML = "";
 
   container.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -653,14 +636,13 @@ async function submitQuestion(queryText) {
     } catch (_) {}
   }
 
-  // Motor completo en navegador (para el sitio web público en GitHub Pages)
   const ans = answerLocallyInBrowser(q);
   displayAnswer(ans);
 }
 
 function buildDocSpecificAnswerInBrowser(doc) {
   const lines = [
-    `### 📄 ${doc.title} (${doc.year})`,
+    `### ${doc.title} (${doc.year})`,
     `- **Archivo oficial:** \`${doc.filename}\``,
     `- **Categoría:** ${doc.category} • **Sección:** ${doc.section_label}`,
     `- **Formato:** ${doc.ext}${doc.page_count > 1 ? ` (${doc.page_count} páginas)` : ""}${doc.code ? ` • **Código oficial:** \`${doc.code}\`` : ""}`,
@@ -694,7 +676,6 @@ function matchTopicsInBrowser(query) {
   const results = [];
   const seenTopicIds = new Set();
 
-  // 1) Coincidencia directa con el banco de 2,874 preguntas verificadas
   const exactQ = STATE.qBankByNorm[qClean];
   if (exactQ && exactQ.topic_id && STATE.topicsById[exactQ.topic_id]) {
     const t = STATE.topicsById[exactQ.topic_id];
@@ -702,7 +683,6 @@ function matchTopicsInBrowser(query) {
     seenTopicIds.add(t.id);
   }
 
-  // 2) Evaluación por patrones y palabras clave de los 52 temas maestros
   const scored = [];
   for (const topic of STATE.topics) {
     if (seenTopicIds.has(topic.id)) continue;
@@ -739,7 +719,6 @@ function answerLocallyInBrowser(query) {
   const qClean = normalizeQuestionKey(query);
   const exactQ = STATE.qBankByNorm[qClean];
 
-  // Si la pregunta del banco apunta directamente a uno de los 650 documentos específicos
   if (exactQ && exactQ.doc_id && STATE.docsById[exactQ.doc_id]) {
     const doc = STATE.docsById[exactQ.doc_id];
     return {
@@ -766,7 +745,7 @@ function answerLocallyInBrowser(query) {
   for (const t of matchedTopics) {
     for (const sf of t.source_files || []) {
       const d = findDocByFilename(sf);
-      if (d && !seenIds.has(d.id)) {
+      if (d && !seenIds.has(d.id) && String(d.ext || "").toUpperCase() !== "HTML") {
         seenIds.add(d.id);
         sources.push({
           doc_id: d.id,
@@ -780,13 +759,12 @@ function answerLocallyInBrowser(query) {
     }
   }
 
-  // Búsqueda en los 6,929 fragmentos si ya están cargados
   const chunkMatches = [];
   if (STATE.webChunks && STATE.webChunks.length && tokens.length) {
     for (const entry of STATE.webChunks) {
       const [docId, pageStart, rawText] = entry;
       const d = STATE.docsById[docId];
-      if (!d) continue;
+      if (!d || String(d.ext || "").toUpperCase() === "HTML") continue;
       if (STATE.activeAskSection !== "all") {
         const secs = d.applicable_sections || [d.section];
         if (!secs.includes(STATE.activeAskSection)) continue;
@@ -804,7 +782,7 @@ function answerLocallyInBrowser(query) {
           sc += 4;
         }
       }
-      if (sc > 0) {
+      if (sc >= 3 && (tokens.length < 2 || coreHits >= Math.min(2, tokens.length))) {
         if (coreHits > 1) sc *= 1 + 0.25 * coreHits;
         if (d.year >= 2026) sc *= 1.35;
         else if (d.year === 2025) sc *= 1.2;
@@ -829,17 +807,22 @@ function answerLocallyInBrowser(query) {
     }
   }
 
-  // Si no habían cargado chunks aún, buscar en el catálogo
   if (!sources.length && tokens.length) {
     const docScores = [];
     for (const d of STATE.documents) {
       const hay = normalizeStr(`${d.title} ${d.filename} ${d.summary || ""} ${d.category}`);
       let sc = 0;
+      let docHits = 0;
       for (const tk of tokens) {
-        if (hay.includes(tk)) sc += 2;
+        if (hay.includes(tk)) {
+          sc += 2;
+          docHits += 1;
+        }
         if (normalizeStr(d.title).includes(tk)) sc += 3;
       }
-      if (sc > 0) docScores.push({ sc, d });
+      if (sc >= 4 && (tokens.length < 2 || docHits >= Math.min(2, tokens.length))) {
+        docScores.push({ sc, d });
+      }
     }
     docScores.sort((a, b) => b.sc - a.sc);
     for (const item of docScores.slice(0, 5)) {
@@ -867,14 +850,10 @@ function answerLocallyInBrowser(query) {
     return {
       query,
       answer_markdown:
-        "No encontré coincidencias directas con esos términos exactos. Prueba preguntando por ejemplo:\n" +
-        "- *«¿Qué son los Scouts y cómo iniciaron?»*\n" +
-        "- *«¿Dónde encuentro a los Scouts y cómo me integro?»*\n" +
-        "- *«¿Dónde compro el uniforme scout?»*\n" +
-        "- *«¿Cómo se resuelven los problemas y conflictos en los Scouts?»*\n" +
-        "- *«¿Qué es la Manada, la Tropa, la Comunidad o el Clan?»*\n" +
-        "- *«¿Cómo hago mi desarrollo personal o cómo hago un proyecto?»*\n" +
-        "- *«¿Qué son los ejes temáticos o el nuevo esquema PJOS 2026?»*",
+        "### Información no disponible en el acervo actual\n" +
+        "No se encontró información suficiente sobre esta consulta específica dentro de los documentos oficiales respaldados en BiblioTech.\n\n" +
+        `- **Reporte o aporte de documentos:** Si deseas que se agregue información oficial sobre este tema próximamente o cuentas con el documento emitido por la ASMAC o WOSM, puedes dejar tu solicitud (issue) o enviar el archivo al correo \`${STATE.contactEmail}\`.\n` +
+        "- **Sugerencia:** También puedes explorar por sección o consultar temas como *«¿Dónde compro el uniforme scout?»*, *«Explicación del nuevo esquema PJOS 2026»*, *«¿Qué es la Comunidad de Caminantes?»* o *«¿Cómo funciona la resolución de problemas y conflictos?»*.",
       sources: []
     };
   }
@@ -889,10 +868,10 @@ function answerLocallyInBrowser(query) {
   }
 
   const lines = [
-    `**De acuerdo con «${sources[0].title}» (${sources[0].year}):**\n`,
+    `### Respuesta basada en «${sources[0].title}» (${sources[0].year})\n`,
     ...sources
       .slice(0, 3)
-      .map((s) => `- ${s.excerpt || STATE.docsById[s.doc_id]?.summary || s.title}`)
+      .map((s) => `- **${s.title} (${s.year}):** ${s.excerpt || STATE.docsById[s.doc_id]?.summary || s.title}`)
   ];
 
   return {
@@ -910,7 +889,7 @@ function displayAnswer(data) {
 
   const sources = data.sources || [];
   if (!sources.length) {
-    sourcesEl.innerHTML = `<span style="font-size:0.82rem;color:#64748b;">Síntesis general verificada de BiblioTech.</span>`;
+    sourcesEl.innerHTML = `<span style="font-size:0.82rem;color:#64748b;">Consulta directa en el índice de documentos oficiales de BiblioTech.</span>`;
     return;
   }
 
@@ -928,8 +907,15 @@ function displayAnswer(data) {
 }
 
 // ============================================================================
-// CATÁLOGO GENERAL Y FILTROS
+// CATALOGO GENERAL Y FILTROS (498 DOCUMENTOS DESCARGABLES)
 // ============================================================================
+function syncCategoryPillsUI() {
+  document.querySelectorAll("#catalogCategoryPills .cat-filter-pill").forEach((btn) => {
+    const val = btn.getAttribute("data-cat-val") || "all";
+    btn.classList.toggle("active", val === STATE.categoryFilter);
+  });
+}
+
 function applyCatalogFilters() {
   const q = normalizeStr(STATE.searchQuery.trim());
   const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
@@ -959,7 +945,7 @@ function applyCatalogFilters() {
 
   filtered.sort((a, b) => {
     if (STATE.sortOrder === "title") {
-      return a.title.localeCompare(b.title, "es");
+      return a.title.localeCompare(b.title, "es", { numeric: true });
     }
     if (STATE.sortOrder === "size") {
       return (b.size_bytes || 0) - (a.size_bytes || 0);
@@ -970,6 +956,7 @@ function applyCatalogFilters() {
 
   STATE.filteredDocs = filtered;
   STATE.visibleCount = STATE.pageSize;
+  syncCategoryPillsUI();
   renderCatalogGrid();
 }
 
@@ -982,7 +969,7 @@ function renderCatalogGrid() {
   if (!grid) return;
 
   const total = STATE.filteredDocs.length;
-  countLabel.textContent = `Mostrando ${Math.min(STATE.visibleCount, total)} de ${total} documentos`;
+  countLabel.textContent = `Mostrando ${Math.min(STATE.visibleCount, total)} de ${total} documentos oficiales`;
 
   const hasActiveFilter =
     STATE.searchQuery.trim() !== "" ||
@@ -1012,10 +999,10 @@ function renderCatalogGrid() {
             <p class="doc-summary">${escapeHtml(d.summary || d.filename)}</p>
           </div>
           <div class="doc-card-footer">
-            <span style="font-size:0.75rem;color:#64748b;">${escapeHtml(d.category)}</span>
+            <span style="font-size:0.74rem;color:#64748b;font-weight:600;">${escapeHtml(d.category)}</span>
             <div class="doc-actions">
-              <button type="button" class="btn-doc-view" data-open-doc="${escapeHtml(d.id)}">📖 Leer</button>
-              <a href="${dlUrl}" download class="btn-doc-dl">⬇ Descargar</a>
+              <button type="button" class="btn-doc-view" data-open-doc="${escapeHtml(d.id)}">Leer</button>
+              <a href="${dlUrl}" download class="btn-doc-dl">Descargar</a>
             </div>
           </div>
         </article>
@@ -1074,7 +1061,6 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     nextBtn.classList.add("hidden");
   }
 
-  // Cargar el texto completo de lectura (disponible para los 650 documentos)
   let fullTextContent = "";
   if (doc.sha12) {
     try {
@@ -1120,10 +1106,10 @@ function renderWebReaderView(doc, fullTextContent, dlUrl) {
               : ""
           }
           <div style="flex:1;min-width:220px;">
-            <span style="font-size:0.75rem;font-weight:800;color:#6d28d9;text-transform:uppercase;">📖 MODO LECTURA LIBRE • ${escapeHtml(doc.section_label)}</span>
+            <span style="font-size:0.75rem;font-weight:800;color:#6d28d9;text-transform:uppercase;">MODO LECTURA LIBRE • ${escapeHtml(doc.section_label)}</span>
             <h2 style="font-size:1.4rem;color:#0c1938;margin:0.3rem 0;">${escapeHtml(doc.title)}</h2>
             <p style="font-size:0.84rem;color:#64748b;margin-bottom:0.85rem;">Archivo original: <code>${escapeHtml(doc.filename)}</code> (${doc.year})</p>
-            <a href="${dlUrl}" download class="btn-modal-primary" style="display:inline-block;">⬇ Descargar archivo original (${escapeHtml(doc.ext)})</a>
+            <a href="${dlUrl}" download class="btn-modal-primary" style="display:inline-block;">Descargar archivo original (${escapeHtml(doc.ext)})</a>
           </div>
         </div>
         ${blocks
@@ -1193,7 +1179,6 @@ function bindEvents() {
     }
   });
 
-  // Pestañas del explorador de las 2,874 preguntas verificadas
   document.querySelectorAll(".qcat-tab").forEach((tab) => {
     tab.addEventListener("click", () => {
       document.querySelectorAll(".qcat-tab").forEach((t) => t.classList.remove("active"));
@@ -1218,7 +1203,6 @@ function bindEvents() {
     });
   });
 
-  // Delegación global para cualquier botón con [data-query] (incluidos chips dinámicos)
   document.body.addEventListener("click", (e) => {
     const qBtn = e.target.closest("[data-query]");
     if (qBtn) {
@@ -1229,6 +1213,18 @@ function bindEvents() {
     const openBtn = e.target.closest("[data-open-doc]");
     if (openBtn) {
       openDocumentModal(openBtn.getAttribute("data-open-doc"));
+      return;
+    }
+    const shelfBtn = e.target.closest("[data-select-shelf]");
+    if (shelfBtn) {
+      const targetShelf = shelfBtn.getAttribute("data-select-shelf");
+      document.querySelectorAll(".shelf-tab").forEach((t) => {
+        t.classList.toggle("active", t.dataset.shelf === targetShelf);
+      });
+      STATE.activeShelf = targetShelf;
+      STATE.libraryVisibleCount = 24;
+      renderLibraryShelf();
+      document.getElementById("libraryShelfTabs")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   });
 
@@ -1298,6 +1294,15 @@ function bindEvents() {
   const onlyLatestChk = document.getElementById("onlyLatestCheckbox");
   const resetBtn = document.getElementById("resetFiltersBtn");
   const loadMoreBtn = document.getElementById("loadMoreBtn");
+
+  document.querySelectorAll("#catalogCategoryPills .cat-filter-pill").forEach((pill) => {
+    pill.addEventListener("click", () => {
+      const val = pill.getAttribute("data-cat-val") || "all";
+      STATE.categoryFilter = val;
+      if (filterCat) filterCat.value = val;
+      applyCatalogFilters();
+    });
+  });
 
   if (catSearch) {
     catSearch.addEventListener("input", () => {
@@ -1418,7 +1423,7 @@ function bindEvents() {
   if (copyMailBtn) {
     copyMailBtn.addEventListener("click", () => {
       navigator.clipboard.writeText(STATE.contactEmail);
-      copyMailBtn.textContent = "¡Copiado!";
+      copyMailBtn.textContent = "Copiado";
       setTimeout(() => {
         copyMailBtn.textContent = "Copiar correo";
       }, 1800);
