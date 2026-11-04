@@ -241,7 +241,7 @@ async function initApp() {
 
 function setupScrollAnimations() {
   const targets = document.querySelectorAll(
-    ".scout-sec-card, .service-info-card, .change-card, .centenario-collection-banner, .agentes-card, .about-card, .mosaic-item"
+    ".starter-3d-card, .scout-sec-card, .service-info-card, .change-card, .centenario-collection-banner, .agentes-card, .about-card, .mosaic-item"
   );
   if (!("IntersectionObserver" in window)) {
     targets.forEach((el) => el.classList.add("revealed"));
@@ -263,12 +263,31 @@ function setupScrollAnimations() {
     });
   }
 
+  setup3DTiltInteractions();
+
+  // Boton para copiar el enlace directo del sitio web en el Hero
+  const copySiteUrlBtn = document.getElementById("copySiteUrlBtn");
+  if (copySiteUrlBtn) {
+    copySiteUrlBtn.addEventListener("click", () => {
+      const url = copySiteUrlBtn.getAttribute("data-url") || window.location.href;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).catch(() => {});
+      }
+      copySiteUrlBtn.textContent = "Enlace copiado";
+      copySiteUrlBtn.classList.add("copied");
+      setTimeout(() => {
+        copySiteUrlBtn.textContent = "Copiar enlace";
+        copySiteUrlBtn.classList.remove("copied");
+      }, 2000);
+    });
+  }
+
   // Barra flotante de acceso rapido + Scroll-Spy de navegacion
   const quickBar = document.getElementById("floatingQuickBar");
   const askFab = document.getElementById("floatingAskBtn");
   const topFab = document.getElementById("floatingTopBtn");
   const navLinks = Array.from(document.querySelectorAll(".main-nav .nav-link"));
-  const spyIds = ["buscador", "biblioteca", "acerca", "agentes", "secciones", "servicios", "cambios", "explorar"];
+  const spyIds = ["buscador", "guia-inicio", "biblioteca", "acerca", "agentes", "secciones", "servicios", "cambios", "explorar"];
 
   if (askFab) {
     askFab.addEventListener("click", () => {
@@ -325,28 +344,55 @@ function setupScrollAnimations() {
   });
 }
 
+function setup3DTiltInteractions() {
+  if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) return;
+  const tiltCards = document.querySelectorAll(
+    ".starter-3d-card, .scout-sec-card, .service-info-card, .change-card, .liam-depth-stage"
+  );
+  tiltCards.forEach((card) => {
+    card.addEventListener("pointermove", (e) => {
+      const rect = card.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const ry = ((x - 0.5) * 10).toFixed(2);
+      const rx = ((0.5 - y) * 9).toFixed(2);
+      card.style.setProperty("--rx", `${rx}deg`);
+      card.style.setProperty("--ry", `${ry}deg`);
+      card.style.setProperty("--glare-x", `${(x * 100).toFixed(1)}%`);
+      card.style.setProperty("--glare-y", `${(y * 100).toFixed(1)}%`);
+      card.classList.add("is-tilting-3d");
+    });
+    const resetTilt = () => {
+      card.classList.remove("is-tilting-3d");
+      card.style.setProperty("--rx", "0deg");
+      card.style.setProperty("--ry", "0deg");
+    };
+    card.addEventListener("pointerleave", resetTilt);
+    card.addEventListener("pointercancel", resetTilt);
+  });
+}
+
 // ============================================================================
-// EXPLORADOR DINAMICO DE LAS 2,861 PREGUNTAS + AUTOCOMPLETADO EN VIVO
+// EXPLORADOR DINAMICO DE LAS +5,356 PREGUNTAS + AUTOCOMPLETADO EN VIVO
 // ============================================================================
 const DEFAULT_FEATURED_QUESTIONS = [
+  "¿En dónde encuentro un Grupo Scout?",
+  "¿Cómo inscribo a mi hijo o hija en los Scouts, en dónde se registra y con quién tengo que hablar comúnmente del registro?",
+  "¿Qué permisos necesita mi hijo para inscribirse o ir de campamento y qué necesito llevar para asistir?",
+  "¿Qué es el SISAS, qué es ExplorApp y qué es CarpetApp?",
+  "¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?",
+  "¿Qué son el Jamboree Nacional, el World Scout Jamboree, el Philia y el World Scout Moot, dónde se hacen y cada cuánto?",
+  "¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?",
+  "¿Cómo se hace la elección del CPRC y del CNRC, en dónde se hace y cuál es el objetivo de los Foros?",
+  "¿Cómo se hace un Foro Provincial paso a paso y quiénes son los encargados de organizarlo?",
+  "¿Qué es el Asesor de la Red o Comité de Caminantes, cómo se elige, qué funciones y requisitos tiene y cómo se evalúa?",
+  "¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?",
+  "¿Qué especialidades, reconocimientos e insignias puedo obtener con mis proyectos de Caminante y cómo sé a qué Eje Temático pertenecen?",
   "¿Cómo se aplica el nuevo esquema PJOS y pueden combinarse las nuevas insignias con las antiguas?",
   "¿Cuántas insignias hay en el nuevo esquema en Manada, Tropa, Comunidad y Clan?",
   "¿Quién es el Jefe Scout Nacional, el Presidente Nacional, la Subcomisionada de Comunidad y quién dirige la Dirección Internacional?",
-  "¿Qué son los Scouts y cómo iniciaron?",
-  "¿Dónde encuentro a los Scouts y cómo me puedo integrar?",
-  "¿Dónde compro el uniforme scout?",
-  "¿Cómo funciona la resolución de problemas y conflictos en los Scouts?",
-  "¿Qué es la Manada de Lobatos?",
-  "¿Qué es la Tropa de Scouts?",
-  "¿Qué es la Comunidad de Caminantes?",
-  "¿Qué es el Clan de Rovers?",
-  "¿Cómo hago mi desarrollo personal en los Scouts?",
-  "¿Cómo hago un proyecto scout?",
-  "¿Qué son los ejes temáticos?",
-  "Explicación del nuevo esquema PJOS 2026",
-  "¿Cómo puedo obtener la insignia mundial de Tribu de la Tierra?",
-  "¿Cuántos nudos puedo portar en mi pañoleta?",
-  "¿Qué es el EEAS?"
+  "¿Dónde compro el uniforme scout?"
 ];
 
 function renderExplorerQuestions(cat, shuffle = false) {

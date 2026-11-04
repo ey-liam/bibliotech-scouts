@@ -69,6 +69,7 @@
 
       <nav class="main-nav" aria-label="Navegación principal">
         <a href="#buscador" class="nav-link active">Preguntar</a>
+        <a href="#guia-inicio" class="nav-link">Guía Rápida 3D</a>
         <a href="#biblioteca" class="nav-link">Biblioteca</a>
         <a href="#acerca" class="nav-link">Propósito</a>
         <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
@@ -80,7 +81,7 @@
     </div>
   </header>
 
-  <!-- FONDO ANIMADO GLOBAL DE LA PÁGINA (BURBUJAS DE COLOR, ONDAS Y FORMAS GEOMÉTRICAS EN MOVIMIENTO) -->
+  <!-- FONDO ANIMADO GLOBAL DE LA PÁGINA (BURBUJAS DE COLOR, ONDAS Y FORMAS GEOMÉTRICAS 3D EN MOVIMIENTO) -->
   <div class="global-animated-bg" aria-hidden="true">
     <span class="bg-orb orb-1"></span>
     <span class="bg-orb orb-2"></span>
@@ -90,6 +91,10 @@
     <span class="bg-hex-float hf-2"></span>
     <span class="bg-hex-float hf-3"></span>
     <span class="bg-hex-float hf-4"></span>
+    <span class="bg-3d-cube cube-1"></span>
+    <span class="bg-3d-cube cube-2"></span>
+    <span class="bg-3d-ring ring-1"></span>
+    <span class="bg-3d-ring ring-2"></span>
   </div>
 
   <!-- HERO DINÁMICO INSPIRADO EN JAMBOREE POLONIA 2027 CON 3 HEXÁGONOS ROTATORIOS SUPERPUESTOS -->
@@ -137,14 +142,28 @@
         </h1>
         <p class="hero-description">
           Biblioteca digital y buscador interactivo con información basada en los documentos oficiales vigentes, diseñada para una búsqueda ágil y de fácil comprensión para niñas, niños, adolescentes, jóvenes y adultos.
-          Consulta más de <strong>5,300 preguntas y respuestas</strong> y <strong>498 libros, manuales, guías, reglamentos y comunicados descargables</strong>.
+          Consulta más de <strong>5,356 preguntas y respuestas</strong> y <strong>498 libros, manuales, guías, reglamentos y comunicados descargables</strong>.
         </p>
+
+        <!-- BARRA 3D DE ENLACE DIRECTO Y PORTALES RÁPIDOS -->
+        <div class="hero-share-link-bar" aria-label="Enlace directo del sitio web y accesos rápidos">
+          <div class="share-url-pill">
+            <span class="share-url-tag">ENLACE WEB</span>
+            <a href="https://ey-liam.github.io/bibliotech-scouts/" target="_blank" rel="noopener noreferrer" class="share-url-link">ey-liam.github.io/bibliotech-scouts</a>
+            <button type="button" id="copySiteUrlBtn" class="btn-3d-copy-url" data-url="https://ey-liam.github.io/bibliotech-scouts/">
+              Copiar enlace
+            </button>
+          </div>
+          <a href="#guia-inicio" class="btn-3d-hero-jump">
+            Guía Rápida: Grupos, SISAS, Foros y Proyectos →
+          </a>
+        </div>
       </div>
 
       <!-- TRÍO DE FOTOS EN OCTÁGONOS/HEXÁGONOS SUPERPUESTOS CON TÍTULOS OFICIALES REALES -->
       <div class="hero-hex-trio" aria-label="Fotografías destacadas del Movimiento Scout en México">
         <!-- Marco Izquierdo (Borde Verde - Foto p01.jpg) -->
-        <div class="hex-cluster-item hex-pos-left hex-theme-green" data-query="¿Qué es la Comunidad de Caminantes?" role="button" tabindex="0" title="Consultar sobre la Comunidad de Caminantes">
+        <div class="hex-cluster-item hex-pos-left hex-theme-green tilt-3d" data-query="¿Qué es la Comunidad de Caminantes?" role="button" tabindex="0" title="Consultar sobre la Comunidad de Caminantes">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
               <img src="img/photos/p01.jpg" alt="Comunidad de Caminantes" class="hex-counter-img" />
@@ -154,7 +173,7 @@
         </div>
 
         <!-- Marco Central (Borde Naranja-Rojo, superpuesto al frente - Foto caminantes.jpg) -->
-        <div class="hex-cluster-item hex-pos-center hex-theme-orange" data-query="¿Cómo hago mi desarrollo personal en los Scouts?" role="button" tabindex="0" title="Consultar sobre progresión personal y Siempre Adelante">
+        <div class="hex-cluster-item hex-pos-center hex-theme-orange tilt-3d" data-query="¿Cómo hago mi desarrollo personal en los Scouts?" role="button" tabindex="0" title="Consultar sobre progresión personal y Siempre Adelante">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
               <img src="img/photos/caminantes.jpg" alt="Siempre Adelante — Comunidad de Caminantes" class="hex-counter-img" />
@@ -164,7 +183,7 @@
         </div>
 
         <!-- Marco Derecho (Borde Azul - Foto p04.jpg) -->
-        <div class="hex-cluster-item hex-pos-right hex-theme-blue" data-query="¿Qué son los Foros Nacionales de Jóvenes y cómo funciona la guía «De FOROS a CASA»?" role="button" tabindex="0" title="Consultar sobre los Foros Nacionales">
+        <div class="hex-cluster-item hex-pos-right hex-theme-blue tilt-3d" data-query="¿Qué son los Foros Nacionales de Jóvenes y cómo funciona la guía «De FOROS a CASA»?" role="button" tabindex="0" title="Consultar sobre los Foros Nacionales">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
               <img src="img/photos/p04.jpg" alt="Foros Nacionales" class="hex-counter-img" />
@@ -174,7 +193,7 @@
         </div>
       </div>
 
-      <!-- TARJETA DEL BUSCADOR INTUITIVO Y EXPLORADOR DE +2,900 PREGUNTAS -->
+      <!-- TARJETA DEL BUSCADOR INTUITIVO Y EXPLORADOR DE +5,350 PREGUNTAS -->
       <div id="buscador" class="search-hub-card">
         <div class="search-section-pills" role="tablist" aria-label="Filtrar por sección scout">
           <button type="button" class="sec-pill active" data-section="all">Todas las secciones</button>
@@ -193,7 +212,7 @@
               type="text"
               id="askInput"
               class="ask-input"
-              placeholder="Escribe tu pregunta... ej. ¿Dónde compro el uniforme? ¿Qué es la Tropa? ¿Cómo funciona el nuevo esquema PJOS?"
+              placeholder="Pregunta lo que quieras... ej. ¿Dónde encuentro un Grupo Scout? ¿Qué es SISAS o ExplorApp? ¿Qué es el CNRC? ¿Dónde subo mis proyectos?"
               aria-label="Escribe tu pregunta sobre los Scouts"
             />
             <button type="button" id="clearAskBtn" class="clear-input-btn hidden" title="Limpiar pregunta">X</button>
@@ -205,7 +224,7 @@
               </svg>
             </button>
           </div>
-          <!-- AUTOCOMPLETADO EN VIVO SOBRE LAS +5,300 PREGUNTAS -->
+          <!-- AUTOCOMPLETADO EN VIVO SOBRE LAS +5,356 PREGUNTAS -->
           <div id="askAutocomplete" class="ask-autocomplete-dropdown hidden"></div>
         </form>
 
@@ -214,80 +233,71 @@
           <div class="quick-header-bar">
             <div class="quick-topic-tabs" id="questionCategoryTabs">
               <button type="button" class="qcat-tab active" data-qcat="Destacadas">Preguntas Destacadas</button>
-              <button type="button" class="qcat-tab" data-qcat="Basicas y Secciones">Básicas y Uniforme</button>
+              <button type="button" class="qcat-tab" data-qcat="Basicas y Secciones">Primeros Pasos y Secciones</button>
+              <button type="button" class="qcat-tab" data-qcat="Comunidad de Caminantes">Comunidad, CPRC y CNRC</button>
+              <button type="button" class="qcat-tab" data-qcat="Progresion, Proyectos y PJOS">Proyectos, Insignias y PJOS</button>
               <button type="button" class="qcat-tab" data-qcat="Manada de Lobatos">Manada</button>
               <button type="button" class="qcat-tab" data-qcat="Tropa de Scouts">Tropa</button>
-              <button type="button" class="qcat-tab" data-qcat="Comunidad de Caminantes">Comunidad</button>
               <button type="button" class="qcat-tab" data-qcat="Clan de Rovers">Clan</button>
-              <button type="button" class="qcat-tab" data-qcat="Progresion, Proyectos y PJOS">Progresión y PJOS</button>
               <button type="button" class="qcat-tab" data-qcat="Colección Biblioteca del Centenario">Libros del Centenario</button>
-              <button type="button" class="qcat-tab" data-qcat="Manuales Oficiales y de Operación">Manuales y Operación</button>
+              <button type="button" class="qcat-tab" data-qcat="Manuales Oficiales y de Operación">Manuales, SISAS y Apps</button>
               <button type="button" class="qcat-tab" data-qcat="Resolucion de Problemas y Reglas">Reglamentos y Conflictos</button>
               <button type="button" class="qcat-tab" data-qcat="Promesa, Ley y Simbolos">Ley Scout y Símbolos</button>
-              <button type="button" class="qcat-tab" data-qcat="Campismo, Nudos y Naturaleza">Nudos y Campismo</button>
+              <button type="button" class="qcat-tab" data-qcat="Campismo, Nudos y Naturaleza">Meztitla, Eventos y Campismo</button>
             </div>
             <button type="button" id="shuffleQuestionsBtn" class="btn-shuffle-questions" title="Mostrar otras preguntas del banco de consulta">
-              Mostrar más preguntas (<span id="totalQuestionsCount">5,301</span>)
+              Mostrar más preguntas (<span id="totalQuestionsCount">5,356</span>)
             </button>
           </div>
 
           <div id="dynamicQuestionsChips" class="quick-chips">
-            <button type="button" class="quick-chip chip-featured" data-query="¿Qué son los Scouts y cómo iniciaron?">
-              ¿Qué son los Scouts y cómo iniciaron?
+            <button type="button" class="quick-chip chip-featured" data-query="¿En dónde encuentro un Grupo Scout?">
+              ¿En dónde encuentro un Grupo Scout?
             </button>
-            <button type="button" class="quick-chip chip-featured" data-query="¿Dónde encuentro a los Scouts y cómo me puedo integrar?">
-              ¿Dónde encuentro un Grupo Scout y cómo me integro?
+            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo inscribo a mi hijo o hija en los Scouts, en dónde se registra y con quién tengo que hablar comúnmente del registro?">
+              ¿Cómo inscribo a mi hijo, dónde se registra y con quién hablo?
             </button>
-            <button type="button" class="quick-chip chip-featured" data-query="¿Dónde compro el uniforme scout?">
+            <button type="button" class="quick-chip chip-featured" data-query="¿Qué permisos necesita mi hijo para inscribirse o ir de campamento y qué necesito llevar para asistir?">
+              ¿Qué permisos necesita y qué llevar para asistir?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Qué es el SISAS, qué es ExplorApp y qué es CarpetApp?">
+              ¿Qué son SISAS, ExplorApp y CarpetApp?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?">
+              ¿Qué es el Campo Escuela Scout Meztitla?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Qué son el Jamboree Nacional, el World Scout Jamboree, el Philia y el World Scout Moot, dónde se hacen y cada cuánto?">
+              ¿Qué son el Jamboree, World Scout Jamboree, Philia y Moot?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?">
+              ¿Qué son el CPRC y el CNRC y quiénes lo integran?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo se hace la elección del CPRC y del CNRC, en dónde se hace y cuál es el objetivo de los Foros?">
+              ¿Cómo se eligen el CPRC y CNRC y cómo se hace un Foro Provincial?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Qué es el Asesor de la Red o Comité de Caminantes, cómo se elige, qué funciones y requisitos tiene y cómo se evalúa?">
+              ¿Qué es el Asesor de la Red, cómo se elige y cómo se evalúa?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?">
+              ¿Dónde subo mis proyectos (Agentes de Cambio.MX) y qué formatos ocupo?
+            </button>
+            <button type="button" class="quick-chip chip-featured" data-query="¿Qué especialidades, reconocimientos e insignias puedo obtener con mis proyectos de Caminante y cómo sé a qué Eje Temático pertenecen?">
+              ¿Qué especialidades e insignias obtengo con mis proyectos y cómo sé su Eje?
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Cómo se aplica el nuevo esquema PJOS y pueden combinarse las nuevas insignias con las antiguas?">
+              ¿Cómo aplicar el PJOS y combinar insignias?
+            </button>
+            <button type="button" class="quick-chip" data-query="¿Dónde compro el uniforme scout?">
               ¿Dónde compro el uniforme scout oficial?
             </button>
-            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo se puede aplicar el nuevo esquema (PJOS) en mi Grupo Scout?">
-              ¿Cómo aplicar el nuevo esquema PJOS y combinar insignias?
-            </button>
-            <button type="button" class="quick-chip chip-featured" data-query="¿Cuántas insignias hay en el nuevo esquema (PJOS) en Comunidad de Caminantes?">
-              ¿Cuántas insignias hay en el nuevo esquema por sección?
-            </button>
-            <button type="button" class="quick-chip chip-featured" data-query="¿Quién es el Jefe Scout Nacional de la ASMAC?">
+            <button type="button" class="quick-chip" data-query="¿Quién es el Jefe Scout Nacional, el Presidente Nacional, la Subcomisionada de Comunidad y quién dirige la Dirección Internacional?">
               ¿Quién es el Jefe Scout Nacional, Presidente y Subcomisionada?
             </button>
-            <button type="button" class="quick-chip" data-query="¿Qué es la Manada de Lobatos?">
-              ¿Qué es la Manada de Lobatos?
+            <button type="button" class="quick-chip" data-query="¿Qué son los Foros Nacionales de Jóvenes y cómo funciona la guía «De FOROS a CASA»?">
+              ¿Qué son los Foros Nacionales y la guía «De FOROS a CASA»?
             </button>
-            <button type="button" class="quick-chip" data-query="¿Qué es la Tropa de Scouts?">
-              ¿Qué es la Tropa de Scouts?
-            </button>
-            <button type="button" class="quick-chip" data-query="¿Qué es la Comunidad de Caminantes?">
-              ¿Qué es la Comunidad de Caminantes?
-            </button>
-            <button type="button" class="quick-chip" data-query="¿Qué es el Clan de Rovers?">
-              ¿Qué es el Clan de Rovers?
-            </button>
-            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo hago mi desarrollo personal en los Scouts?">
-              ¿Cómo hago mi desarrollo y progresión personal?
-            </button>
-            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo hago un proyecto scout?">
-              ¿Cómo hago un proyecto scout paso a paso?
-            </button>
-            <button type="button" class="quick-chip" data-query="¿Qué son los ejes temáticos?">
-              ¿Qué son los 4 ejes temáticos?
-            </button>
-            <button type="button" class="quick-chip" data-query="¿Qué especialidades hay en la Comunidad de Caminantes y demás secciones?">
-              Especialidades y Aventuras en la Naturaleza
-            </button>
-            <button type="button" class="quick-chip chip-featured" data-query="¿Cómo funciona la resolución de problemas y conflictos en los Scouts?">
-              Resolución de problemas y conflictos
-            </button>
-            <button type="button" class="quick-chip" data-query="¿Qué eventos scouts existen?">
-              ¿Qué eventos nacionales e internacionales existen?
-            </button>
-            <button type="button" class="quick-chip" data-query="¿Cómo puedo obtener la insignia mundial de Tribu de la Tierra?">
-              Insignias de Marco Mundo Mejor y Tribu de la Tierra
-            </button>
-            <button type="button" class="quick-chip" data-query="¿Cuántos nudos puedo portar en mi pañoleta?">
-              Nudos en la pañoleta
-            </button>
-            <button type="button" class="quick-chip" data-query="¿Qué es el EEAS?">
-              ¿Qué es el EEAS?
+            <button type="button" class="quick-chip" data-query="¿Cuántas insignias hay en el nuevo esquema en Manada, Tropa, Comunidad y Clan?">
+              ¿Cuántas insignias hay en el nuevo esquema por sección?
             </button>
           </div>
         </div>
@@ -326,6 +336,191 @@
       <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
         <path class="wave-path-1" d="M0,40 C320,95 620,0 960,48 C1200,82 1350,30 1440,18 L1440,90 L0,90 Z" fill="rgba(255,255,255,0.22)"></path>
         <path class="wave-path-2" d="M0,58 C380,10 760,92 1140,42 C1300,22 1390,48 1440,56 L1440,90 L0,90 Z" fill="#ffffff"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- GUÍA RÁPIDA INTERACTIVA 3D: PRIMEROS PASOS, APPS, MEZTITLA, EVENTOS, CPRC/CNRC Y PROYECTOS -->
+  <section id="guia-inicio" class="quickstart-3d-section">
+    <!-- Elementos 3D estéticos flotantes en la sección -->
+    <div class="section-floating-3d-layer" aria-hidden="true">
+      <span class="floating-3d-badge f3d-1">3D</span>
+      <span class="floating-3d-oct f3d-2"></span>
+      <span class="floating-3d-ring-deco f3d-3"></span>
+    </div>
+
+    <div class="container">
+      <div class="section-heading-row">
+        <div>
+          <span class="section-eyebrow">GUÍA INTERACTIVA DESDE CERO HASTA PROYECTOS Y COMITÉS NACIONALES</span>
+          <h2 class="section-title">Todo lo que necesitas saber paso a paso</h2>
+          <p class="section-subtitle">
+            Haz clic en cualquier tarjeta 3D o pregunta directa para conocer desde cómo encontrar un Grupo Scout e inscribirte, hasta qué son SISAS, ExplorApp, CarpetApp, Meztitla, Jamboree, Philia, Moot, CPRC, CNRC y cómo subir tus proyectos en Agentes de Cambio.MX.
+          </p>
+        </div>
+      </div>
+
+      <div class="starter-3d-grid">
+        <!-- TARJETA 1: PRIMEROS PASOS E INSCRIPCIÓN -->
+        <article class="starter-3d-card theme-emerald tilt-3d">
+          <div class="starter-3d-glare" aria-hidden="true"></div>
+          <div class="starter-3d-top">
+            <span class="starter-step-pill">01 • PRIMEROS PASOS</span>
+            <span class="starter-3d-floating-icon">
+              <svg width="24" height="24"><use href="#icon-signpost"/></svg>
+            </span>
+          </div>
+          <h3>¿Nuevo en los Scouts? Grupos, Registro y Permisos</h3>
+          <p>
+            En México existen más de <strong>700 Grupos Scouts</strong>. Al visitar el grupo, habla con el <strong>Jefe o Jefa de Grupo</strong>. El registro oficial se realiza en <strong>SISAS</strong> donde obtienes tu <strong>CUM</strong> (Cuota 2026: <strong>$890 MXN</strong> Nuevo Ingreso / <strong>$730 MXN</strong> Reingreso, o <em>Registro Familiar</em>).
+          </p>
+          <div class="starter-3d-chips">
+            <button type="button" class="starter-q-btn" data-query="¿En dónde encuentro un Grupo Scout?">¿Dónde encuentro un Grupo Scout?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Cómo inscribo a mi hijo o hija en los Scouts, en dónde se registra y con quién tengo que hablar comúnmente del registro?">¿Cómo inscribo a mi hijo y con quién hablo?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué va a hacer mi hijo o hija en los Scouts según su edad?">¿Qué va a hacer según su edad?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué permisos necesita mi hijo para inscribirse o ir de campamento y qué necesito llevar para asistir?">Permisos (JL304 / Ficha Médica) y qué llevar</button>
+          </div>
+          <div class="starter-3d-footer">
+            <a href="https://scouts.org.mx/grupos-scouts-en-mexico/" target="_blank" rel="noopener noreferrer" class="starter-ext-link">
+              Mapa oficial de Grupos Scouts →
+            </a>
+          </div>
+        </article>
+
+        <!-- TARJETA 2: SISAS, EXPLORAPP Y CARPETAPP -->
+        <article class="starter-3d-card theme-cyan tilt-3d">
+          <div class="starter-3d-glare" aria-hidden="true"></div>
+          <div class="starter-3d-top">
+            <span class="starter-step-pill">02 • ECOSISTEMA DIGITAL</span>
+            <span class="starter-3d-floating-icon">
+              <svg width="24" height="24"><use href="#icon-fleur"/></svg>
+            </span>
+          </div>
+          <h3>¿Qué son SISAS, ExplorApp y CarpetApp?</h3>
+          <p>
+            <strong>SISAS</strong> administra tu membresía, CUM, credencial digital y pagos de eventos. <strong>ExplorApp</strong> (iOS/Android) es la app móvil para que NNAJ registren su progresión del PJOS, y <strong>CarpetApp</strong> es la plataforma web donde Scouters validan avances e insignias.
+          </p>
+          <div class="starter-3d-chips">
+            <button type="button" class="starter-q-btn" data-query="¿Qué es el SISAS y para qué sirve?">¿Qué es el SISAS?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué es ExplorApp y cómo funciona para los jóvenes?">¿Qué es ExplorApp?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué es CarpetApp y para qué sirve a los Scouters?">¿Qué es CarpetApp?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Cómo se vinculan SISAS, ExplorApp y CarpetApp?">¿Cómo se conectan las 3 plataformas?</button>
+          </div>
+          <div class="starter-3d-footer">
+            <a href="https://sisas.scouts.org.mx/" target="_blank" rel="noopener noreferrer" class="starter-ext-link">
+              Ir al portal SISAS →
+            </a>
+          </div>
+        </article>
+
+        <!-- TARJETA 3: CENTRO SCOUT MEZTITLA -->
+        <article class="starter-3d-card theme-amber tilt-3d">
+          <div class="starter-3d-glare" aria-hidden="true"></div>
+          <div class="starter-3d-top">
+            <span class="starter-step-pill">03 • CAMPO ESCUELA NACIONAL</span>
+            <span class="starter-3d-floating-icon">
+              <svg width="24" height="24"><use href="#icon-campfire"/></svg>
+            </span>
+          </div>
+          <h3>¿Qué es el Centro Scout / Campo Escuela Meztitla?</h3>
+          <p>
+            Ubicado en <strong>Tepoztlán, Morelos</strong> (en náhuatl <em>«lugar cerca de la luna»</em>), es el Campo Escuela Nacional de la ASMAC desde su primer campamento el <strong>1 y 2 de septiembre de 1956</strong> en los terrenos donados por <strong>Paul Loewe</strong>.
+          </p>
+          <div class="starter-3d-chips">
+            <button type="button" class="starter-q-btn" data-query="¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?">Historia y ubicación de Meztitla</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué necesito para acampar en el Campo Escuela Scout Meztitla y qué instalaciones tiene?">¿Qué tiene Meztitla y cómo acampar ahí?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué es el EEAS?">¿Qué es el EEAS en Meztitla?</button>
+          </div>
+          <div class="starter-3d-footer">
+            <button type="button" class="starter-inline-trigger" data-query="¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?">
+              Leer crónica completa de Meztitla →
+            </button>
+          </div>
+        </article>
+
+        <!-- TARJETA 4: JAMBOREE, WORLD SCOUT JAMBOREE, PHILIA Y MOOT -->
+        <article class="starter-3d-card theme-violet tilt-3d">
+          <div class="starter-3d-glare" aria-hidden="true"></div>
+          <div class="starter-3d-top">
+            <span class="starter-step-pill">04 • EVENTOS NACIONALES Y MUNDIALES</span>
+            <span class="starter-3d-floating-icon">
+              <svg width="24" height="24"><use href="#icon-globe"/></svg>
+            </span>
+          </div>
+          <h3>Jamboree Nacional, World Scout Jamboree, Philia y Moot</h3>
+          <p>
+            El <strong>World Scout Jamboree</strong> (14–17 años) y el <strong>World Scout Moot</strong> (18–25 años) se celebran cada <strong>4 años</strong> (26° WSJ en <strong>Gdańsk, Polonia 2027</strong>; 17° Moot en <strong>Taiwán 2029</strong>). En México destacan el <strong>Jamboree Nacional</strong>, el <strong>Philia</strong> (Caminantes) y los <strong>Foros Nacionales</strong>.
+          </p>
+          <div class="starter-3d-chips">
+            <button type="button" class="starter-q-btn" data-query="¿Qué es el Jamboree Nacional y qué es el World Scout Jamboree (Jamboree Scout Mundial), dónde se hacen y cada cuánto?">Jamboree Nacional y World Scout Jamboree</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué es el Philia Nacional en la Comunidad de Caminantes?">¿Qué es el Philia (Comunidad de Caminantes)?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué es el World Scout Moot, dónde se hace y cada cuánto?">¿Qué es el World Scout Moot?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué son los Foros Nacionales de Jóvenes y cuál es su objetivo?">¿Qué son los Foros Nacionales?</button>
+          </div>
+          <div class="starter-3d-footer">
+            <button type="button" class="starter-inline-trigger" data-query="¿Qué son el Jamboree Nacional, el World Scout Jamboree, el Philia y el World Scout Moot, dónde se hacen y cada cuánto?">
+              Comparar todos los eventos →
+            </button>
+          </div>
+        </article>
+
+        <!-- TARJETA 5: RED DE CAMINANTES, CPRC, CNRC, FOROS Y ASESORES -->
+        <article class="starter-3d-card theme-blue tilt-3d">
+          <div class="starter-3d-glare" aria-hidden="true"></div>
+          <div class="starter-3d-top">
+            <span class="starter-step-pill">05 • PARTICIPACIÓN JUVENIL Y FOROS</span>
+            <span class="starter-3d-floating-icon">
+              <svg width="24" height="24"><use href="#icon-fleur"/></svg>
+            </span>
+          </div>
+          <h3>CPRC, CNRC, Foros Provinciales y Asesor de la Red</h3>
+          <p>
+            El <strong>CPRC</strong> coordina la Red Provincial y el <strong>CNRC</strong> la Red Nacional (actualmente integrado por <strong>Anamari Hernández</strong> y <strong>Kevin Axel Cantero</strong> como Coordinadores Salientes, e <strong>Ivone Ramos</strong> y <strong>Mariana Villamil</strong> como Coordinadoras Entrantes).
+          </p>
+          <div class="starter-3d-chips">
+            <button type="button" class="starter-q-btn" data-query="¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?">¿Qué son el CPRC y el CNRC actual?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Cómo se hace la elección del CPRC y del CNRC y en dónde se eligen?">¿Cómo y dónde se eligen el CPRC y CNRC?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Cómo se hace un Foro Provincial paso a paso y quiénes son los encargados de organizarlo?">¿Cómo se hace un Foro Provincial y quién lo organiza?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué es el Asesor de la Red o Comité de Caminantes, cómo se elige, qué funciones y requisitos tiene y cómo se evalúa?">Asesor de la Red: elección, requisitos y evaluación</button>
+          </div>
+          <div class="starter-3d-footer">
+            <button type="button" class="starter-inline-trigger" data-query="¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?">
+              Ver Guía de la Red de Caminantes →
+            </button>
+          </div>
+        </article>
+
+        <!-- TARJETA 6: PROYECTOS DE CAMINANTES, AGENTES DE CAMBIO, FORMATOS Y ESPECIALIDADES -->
+        <article class="starter-3d-card theme-rose tilt-3d">
+          <div class="starter-3d-glare" aria-hidden="true"></div>
+          <div class="starter-3d-top">
+            <span class="starter-step-pill">06 • PROYECTOS E INSIGNIAS</span>
+            <span class="starter-3d-floating-icon">
+              <svg width="24" height="24"><use href="#icon-leaf"/></svg>
+            </span>
+          </div>
+          <h3>¿Dónde subo mis proyectos, qué formatos ocupo y qué insignias gano?</h3>
+          <p>
+            Registra tus proyectos en <strong>Agentes de Cambio.MX</strong>, <strong>ExplorApp</strong> y <strong>sdgs.scout.org</strong> utilizando tu <em>Cédula SMART, Bitácora/Hoja de Caminata y Portafolio de Evidencias</em> dentro de los 4 Ejes Temáticos.
+          </p>
+          <div class="starter-3d-chips">
+            <button type="button" class="starter-q-btn" data-query="¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?">¿Dónde subo mi proyecto y qué formatos necesito?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Cómo sé a qué Eje Temático pertenece mi proyecto de Caminantes?">¿Cómo sé a qué Eje Temático pertenece?</button>
+            <button type="button" class="starter-q-btn" data-query="¿Qué especialidades, reconocimientos e insignias puedo obtener con mis proyectos de Caminante?">Especialidades, Senderos, Everest y Mundo Mejor</button>
+          </div>
+          <div class="starter-3d-footer">
+            <a href="#agentes" class="starter-ext-link">
+              Ir al apartado Agentes de Cambio.MX →
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Separador ondulado animado hacia Biblioteca Scout -->
+    <div class="section-wave-separator" aria-hidden="true">
+      <svg viewBox="0 0 1440 54" preserveAspectRatio="none">
+        <path d="M0,18 C420,58 920,-6 1440,28 L1440,54 L0,54 Z" fill="#ffffff"></path>
       </svg>
     </div>
   </section>
@@ -482,9 +677,32 @@
           <h2>Agentes de Cambio.MX</h2>
           <p>
             Elaborado por el <strong>Comité Nacional de la Red de Caminantes (CNRC)</strong>, <strong>Agentes de Cambio.MX</strong>
-            es la guía y plataforma creada para acompañar a las y los Caminantes de México en el diseño, planeación y ejecución de sus
+            es la guía y plataforma creada para acompañar a las y los Caminantes de México en el diseño, planeación, registro y difusión de sus
             <strong>proyectos</strong> de impacto comunitario dentro de los 4 Ejes Temáticos:
           </p>
+
+          <!-- INTEGRANTES ACTUALES DEL CNRC -->
+          <div class="cnrc-leadership-box">
+            <span class="cnrc-box-title">Integrantes actuales del Comité Nacional de la Red de Caminantes (CNRC):</span>
+            <div class="cnrc-members-grid">
+              <div class="cnrc-member-pill pill-outgoing">
+                <strong>Anamari Hernández</strong>
+                <span>Coordinadora Saliente</span>
+              </div>
+              <div class="cnrc-member-pill pill-outgoing">
+                <strong>Kevin Axel Cantero</strong>
+                <span>Coordinador Saliente</span>
+              </div>
+              <div class="cnrc-member-pill pill-incoming">
+                <strong>Ivone Ramos</strong>
+                <span>Coordinadora Entrante</span>
+              </div>
+              <div class="cnrc-member-pill pill-incoming">
+                <strong>Mariana Villamil</strong>
+                <span>Coordinadora Entrante</span>
+              </div>
+            </div>
+          </div>
 
           <!-- LOS 4 ICONOS DE LOS EJES TEMÁTICOS CON SUS NOMBRES OFICIALES COMPLETOS -->
           <div class="agentes-icons-only-row" aria-label="4 Ejes Temáticos de Agentes de Cambio">
@@ -500,6 +718,22 @@
             <div class="adc-icon-orb" data-query="¿En qué consiste el eje temático de Medio Ambiente y Sustentabilidad?" data-orb-label="Medio Ambiente y Sustentabilidad" title="Medio Ambiente y Sustentabilidad" role="button" tabindex="0">
               <img src="img/adc/sustentabilidad.png" alt="Medio Ambiente y Sustentabilidad" />
             </div>
+          </div>
+
+          <!-- BOTONES DE CONSULTA RÁPIDA SOBRE PROYECTOS, CPRC, CNRC Y ASESORES -->
+          <div class="agentes-quick-topics">
+            <button type="button" class="adc-topic-chip" data-query="¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?">
+              ¿Dónde subo mi proyecto y qué formatos ocupo?
+            </button>
+            <button type="button" class="adc-topic-chip" data-query="¿Qué especialidades, reconocimientos e insignias puedo obtener con mis proyectos de Caminante y cómo sé a qué Eje Temático pertenecen?">
+              ¿Qué especialidades e insignias obtengo con mis proyectos?
+            </button>
+            <button type="button" class="adc-topic-chip" data-query="¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?">
+              ¿Qué son el CPRC y el CNRC y cómo se eligen?
+            </button>
+            <button type="button" class="adc-topic-chip" data-query="¿Qué es el Asesor de la Red o Comité de Caminantes, cómo se elige, qué funciones y requisitos tiene y cómo se evalúa?">
+              ¿Cómo se elige y evalúa al Asesor de la Red?
+            </button>
           </div>
 
           <div class="agentes-actions">

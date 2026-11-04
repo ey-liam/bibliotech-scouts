@@ -1836,6 +1836,228 @@
       "content": "### Participación Juvenil: Foros Nacionales, «De FOROS a CASA», Red de Caminantes y Red de Jóvenes\nCon base en **De FOROS a CASA** (`De FOROS a CASA.pdf`), la **Guía Red de Caminantes** (`010 Guia Red de Caminantes.pdf`) y la **Guía La Red de Jóvenes** (`09 Guia La Red de Jóvenes.pdf`):\n\n#### 1. ¿Qué son los Foros Nacionales y cómo se estructuran?\n- Son los espacios oficiales de participación democrática donde Scouts de Tropa, Caminantes y Rovers dialogan, proponen soluciones sobre los **4 Ejes Temáticos** (*Paz y Compromiso Comunitario, Salud y Bienestar, Habilidades para la Vida y Medio Ambiente y Sustentabilidad*) y eligen a sus comités juveniles.\n- Se desarrollan en tres etapas: **Foro de Grupo / Local**, **Foro de Provincia** y **Foro Nacional**.\n\n#### 2. ¿Qué es la guía «De FOROS a CASA»?\n- Es la metodología oficial para que las conclusiones, declaratorias y propuestas generadas en los **Foros Nacionales** no se queden solo en el evento, sino que regresen a cada Provincia, Grupo, Comunidad, Tropa y Clan convertidas en **proyectos locales concretos**.\n\n#### 3. Red de Caminantes y Red de Jóvenes\n- **Red de Caminantes (`010 Guia Red de Caminantes.pdf`):** Articula a las Comunidades de Caminantes a través de los Comités de Provincia (`CPRC`) y el **Comité Nacional de la Red de Caminantes (`CNRC`)**, creador de la plataforma **Agentes de Cambio.MX**.\n- **Red de Jóvenes (`09 Guia La Red de Jóvenes.pdf`):** Impulsa el liderazgo, la representación juvenil institucional y la incidencia comunitaria de los Rovers."
     },
     {
+      "id": "guia_basica_padres_inscripcion_permisos_y_asistencia",
+      "patterns": [
+        "\\bcomo inscribo a mi hijo\\b",
+        "\\binscribir a mi hijo\\b",
+        "\\binscribir a mi hija\\b",
+        "\\bque va a hacer mi hijo\\b",
+        "\\bpermisos que necesita\\b",
+        "\\bque permisos necesita\\b",
+        "\\bcon quien tengo que hablar\\b",
+        "\\bcon quien hablar del registro\\b",
+        "\\bque necesita mi hijo para asistir\\b",
+        "\\bque necesito para asistir\\b",
+        "\\ben donde se registra\\b",
+        "\\bdonde encuentro un grupo scout\\b"
+      ],
+      "keywords": [
+        "inscribir a mi hijo",
+        "inscribir a mi hija",
+        "permisos",
+        "jefe de grupo",
+        "autorizacion de ingreso",
+        "ficha medica",
+        "ficha de salud",
+        "asistir por primera vez",
+        "donde encuentro un grupo scout",
+        "donde se registra",
+        "con quien hablar"
+      ],
+      "source_files": [
+        "GRUPOS SCOUTS EN MÉXICO - Scouts de México.html",
+        "Autorizacion de Ingreso al Movimiento para Menores de Edad.pdf",
+        "Solicitud de ingreso, reingreso o continuidad para mayores de edad a la Asociación.pdf",
+        "FICHA MÉDICA EDITABLE.pdf",
+        "Comunicado ASMAC JSN 25.136 Cuotas 2026.pdf",
+        "Comunicado ASMAC JSN 25.051 Edades en las Secciones Scouts en el SISAS.pdf",
+        "REGISTRO FAMILIAR - Scouts de México.html",
+        "SEGURO SCOUT - Scouts de México.html"
+      ],
+      "content": "### Guía Básica de Inicio para Familias, Madres, Padres y Nuevos Integrantes\n\n#### 1. ¿En dónde encuentro un Grupo Scout?\n- En México existen **más de 700 Grupos Scouts** adscritos a la Asociación de Scouts de México, A.C. (`GRUPOS SCOUTS EN MÉXICO - Scouts de México.html`), ubicados comúnmente en parques, explanadas y espacios al aire libre.\n- Puedes localizar el Grupo más cercano en el mapa oficial por Estado/Provincia en `scouts.org.mx/grupos-scouts-en-mexico/` o comunicarte a la Oficina Scout Nacional al teléfono `(55) 5208 7122 Ext. 136`.\n\n#### 2. ¿Con quién tengo que hablar comúnmente del registro y cómo inscribo a mi hijo o hija?\n- Al acudir al Grupo Scout en su día y horario de reunión (habitualmente los sábados), debes dirigirte con la persona representante responsable del grupo, llamada **Jefe o Jefa de Grupo** (o con el Subjefe de Grupo y los Scouters de la sección correspondiente a su edad).\n- El **Jefe o Jefa de Grupo** resolverá tus dudas sobre horarios, calendario, uniforme y dará de alta al menor o joven en el sistema nacional.\n\n#### 3. ¿En dónde se registra oficialmente un Scout?\n- Todo registro oficial se realiza en la plataforma digital nacional **SISAS (`https://sisas.scouts.org.mx/`)**, donde se genera su **CUM (Clave Única de Membresía)** y la referencia de pago de membresía anual (`$890.00 MXN` Nuevo Ingreso y `$730.00 MXN` Reingreso en 2026 conforme al comunicado `JSN 25.136`, o tarifa de **Registro Familiar** cuando se inscriben 3 o más miembros directos de una familia).\n- **Nota importante del formato oficial (`JL304`):** El menor queda formalmente registrado y cubierto por el **Seguro contra Accidentes Scout** una vez que se entrega la documentación y se cubre la cuota en el SISAS.\n\n#### 4. ¿Qué permisos y documentos necesita para inscribirse y para salir de campamento?\nDe acuerdo con el formato oficial **`Autorizacion de Ingreso al Movimiento para Menores de Edad.pdf` (`ASMAC/DNGDI/CNAR/JL304`)** y la **`FICHA MÉDICA EDITABLE.pdf`**:\n1. **Autorización de los Padres o Tutores (`JL304`):** Llenada en original con tinta azul y firmada por madre, padre o tutor legal (autoriza el ingreso, actividades al aire libre y traslados).\n2. **Ficha Médica / Ficha de Salud vigente:** Con tipo de sangre y RH, alergias, medicamentos/tratamientos actuales, historial médico de los últimos 6 meses, esquema de vacunación, 2 contactos de emergencia, personas autorizadas para recoger al menor y firma de autorización de atención prehospitalaria.\n3. **Acta de nacimiento y CURP del menor**.\n4. **Copia de identificación oficial vigente y CURP de madre, padre o tutor**.\n5. **Código de Conducta para Adultos en el Movimiento Scout** firmado de conocimiento por madre, padre o tutor.\n6. **Para mayores de 18 años (Rovers y Adultos):** Formato `Solicitud de ingreso, reingreso o continuidad para mayores de edad`, firma del `CODIGO DE CONDUCTA 2025.pdf` y certificado vigente del curso internacional **Safe from Harm (A Salvo del Peligro)**.\n7. **Permisos para campamentos, excursiones o Eventos Nacionales:** Para cada salida o campamento se requiere permiso específico firmado por padre/madre/tutor, Ficha de Salud actualizada, receta médica en caso de tratamiento controlado y Pase/Pasaporte del evento emitido en SISAS.\n\n#### 5. ¿Qué necesita mi hijo (o qué necesito yo) para asistir a las primeras reuniones?\n- **Para las primeras sesiones de bienvenida:** Ropa cómoda y resistente para actividades al aire libre, calzado deportivo cerrado, gorra o sombrero para el sol, bloqueador solar, impermeable en temporada de lluvia y **cantimplora o termo reutilizable con agua** (en las actividades scouts está prohibido el uso de plásticos desechables de un solo uso).\n- **Una vez inscrito:** Su uniforme scout oficial (adquirible en `tiendaenlinea.scouts.org.mx`, en la Tienda Scout Nacional en Córdoba 73 CDMX o con Distribuidores Nacionales Autorizados; si se registró bajo **Registro Familiar**, cuenta con **30% de descuento** mostrando el correo de confirmación).\n\n#### 6. ¿Qué va a hacer en los Scouts según su edad (`Comunicado ASMAC JSN 25.051`)?\n- **Manada de Lobatos (`6 años cumplidos hasta antes de los 10 años`):** Aprende jugando en Seisenas bajo el marco simbólico de *El Libro de las Tierras Vírgenes*, desarrollando socialización, creatividad y hábitos saludables a través de los **4 Cazaderos** (*Raksha, Bagheera, Baloo y Hermano Gris*).\n- **Tropa de Scouts (`10 años cumplidos hasta antes de los 14 años`):** Vive la aventura y exploración en **Patrullas** de 6 a 8 integrantes, aprende campismo, pionerismo, brújula, primeros auxilios y recorre los **4 Rumbos** (*Tortuga lora, Ocelote, Venado cola blanca y Quetzal*).\n- **Comunidad de Caminantes (`14 años cumplidos hasta antes de los 18 años`):** Trabaja en **Equipos**, diseña y ejecuta **proyectos de impacto comunitario** (`Agentes de Cambio.MX`), participa en Foros Juveniles y Philia, y avanza por los **4 Senderos** (*Cenit, Cumbre, Cúspide y Cima*) hacia la insignia **Everest**.\n- **Clan de Rovers (`18 años cumplidos hasta antes de los 22 años`):** Jóvenes adultos que trabajan en su **Plan Personal de Vida**, realizan servicio comunitario de alto impacto, participan en el Moot y recorren las **4 Rutas** (*Otomí, Maya, Wixárika y Kikapú*) hacia la insignia **Baden-Powell**."
+    },
+    {
+      "id": "sisas_explorapp_y_carpetapp_explicacion_completa",
+      "patterns": [
+        "\\bque es sisas\\b",
+        "\\bque es el sisas\\b",
+        "\\bque es explorapp\\b",
+        "\\bque es exploapp\\b",
+        "\\bque es carpetapp\\b",
+        "\\bdiferencia entre sisas explorapp y carpetapp\\b"
+      ],
+      "keywords": [
+        "sisas",
+        "explorapp",
+        "exploapp",
+        "carpetapp",
+        "sistema de administracion scout",
+        "cum",
+        "progresion digital",
+        "26.014"
+      ],
+      "source_files": [
+        "SISAS - Scouts de México.html",
+        "DNITSM 25.01 Actualización Plataforma SISAS.pdf",
+        "DNME-CNPJ 26.014 Lanzamiento de ExplorApp y CarpetApp.pdf",
+        "Manual ExplorApp.pdf",
+        "Manual Scouters CarpetApp.pdf",
+        "ASMAC - CDC_ ExplorApp _ ASMAC - CDC.html"
+      ],
+      "content": "### ¿Qué son SISAS, ExplorApp y CarpetApp y para qué sirve cada una?\n\n#### 1. ¿Qué es el SISAS (`https://sisas.scouts.org.mx/`)?\nDe acuerdo con el portal oficial **`SISAS - Scouts de México.html`** y el comunicado **`DNITSM 25.01`**:\n- **Significado:** **Sistema de Administración Scout (SISAS)**. Es la plataforma web responsiva oficial de la ASMAC que sustituyó al antiguo sistema *RegNal*.\n- **¿Para qué sirve?**:\n  1. **Registro anual de membresía y generación del CUM** (Clave Única de Membresía).\n  2. **Descarga de la Credencial Scout digital** y gestión de **Registro Familiar**.\n  3. **Administración de Grupos y Provincias** (altas, bajas, cambios de sección y estructura orgánica).\n  4. **Inscripción, pago y permutas de Eventos Nacionales** (en el módulo *«Mis eventos»* -> botón *«Asistir»*), permitiendo pago en línea con tarjeta (pasarela Conekta) o pago referenciado en más de **15 corresponsales** (BBVA, Seven Eleven, Farmacias del Ahorro, entre otros).\n\n#### 2. ¿Qué es ExplorApp?\nDe acuerdo con el comunicado **`DNME-CNPJ 26.014 Lanzamiento de ExplorApp y CarpetApp.pdf`** y el **`Manual ExplorApp.pdf`** (30 páginas):\n- **¿Qué es y para quién es?**: Es la **aplicación móvil oficial para niñas, niños, adolescentes y jóvenes (NNAJ)** de todas las secciones (*Manada, Tropa, Comunidad y Clan*), disponible para dispositivos **Android e iOS** (con liberación general a partir del **1 de octubre de 2026**).\n- **¿Cómo funciona y qué puedes hacer en ExplorApp?**:\n  1. Ingresas con tu **CUM** y contraseña.\n  2. Consultas tu perfil, tu pequeño grupo (*Seisena, Patrulla, Equipo o Clan*), la fecha de tu Promesa/Compromiso y tus insignias obtenidas.\n  3. Registras y das seguimiento interactivo a tus **Etapas de Progresión Personal del PJOS** (*Cazaderos, Rumbos, Senderos y Rutas*).\n  4. Registras tus **Especialidades** por Eje Temático, tus retos del **Carnet de Aventuras en la Naturaleza**, tus **Proyectos** y tus **Iniciativas Mundiales** (*Tribu de la Tierra, Mensajeros de la Paz, Health Allies, Life Leaders*).\n  5. Accedes a la biblioteca de recursos educativos de tu sección.\n\n#### 3. ¿Qué es CarpetApp?\nDe acuerdo con el **`Manual Scouters CarpetApp.pdf`** (aprobado por la DEN el **9 de septiembre de 2026**) y el comunicado **`DNME-CNPJ 26.014`**:\n- **¿Qué es y quiénes la utilizan?**: Es la **plataforma web de acompañamiento, gestión y validación diseñada para los adultos responsables**: Scouters y Dirigentes de Grupo, Jefes y Subjefes de Grupo de Métodos Educativos, Comisionados Provinciales de Programa de Jóvenes y Vicepresidentes de Métodos Educativos.\n- **¿Qué funciones tiene CarpetApp?**:\n  1. **Panel de Indicadores Generales:** Muestra en tiempo real tarjetas con *Insignias sin entregar*, *Scouts sin compromiso* y *Enlaces próximos* (cambios de sección).\n  2. **Tabla y Detalle del Scout:** Permite buscar por nombre o CUM, filtrar por sección o pequeño grupo, actualizar datos de contacto y registrar la fecha de Promesa/Compromiso.\n  3. **Módulo de Aprobación y Validación:** Permite a los Scouters revisar y validar las competencias, etapas, especialidades y proyectos registrados por los jóvenes desde *ExplorApp*.\n  4. **Reportes para Insignias Finales y Terminales:** Genera e imprime los reportes oficiales requeridos para tramitar las insignias **Alfa, Águila Real, Everest y Baden-Powell**."
+    },
+    {
+      "id": "centro_scout_campo_escuela_meztitla",
+      "patterns": [
+        "\\bque es meztitla\\b",
+        "\\bcentro scout meztitla\\b",
+        "\\bcampo escuela meztitla\\b",
+        "\\bdonde esta meztitla\\b",
+        "\\bhistoria de meztitla\\b",
+        "\\bacampar cerca de la luna\\b"
+      ],
+      "keywords": [
+        "meztitla",
+        "campo escuela meztitla",
+        "centro scout meztitla",
+        "tepoztlan",
+        "morelos",
+        "paul loewe",
+        "acampar cerca de la luna"
+      ],
+      "source_files": [
+        "Acampar cerca de la Luna.pdf",
+        "Aquel Curso Donde Llevaron la Huella de B-P a Meztitla.pdf",
+        "40 Años de Expresión y Arte Scout.pdf"
+      ],
+      "content": "### Centro Scout y Campo Escuela Nacional Meztitla\nCon base en los libros históricos de la Colección Biblioteca del Centenario **`Acampar cerca de la Luna.pdf`** (de Arturo Reyes Fragoso), **`Aquel Curso Donde Llevaron la Huella de B-P a Meztitla.pdf`** y **`40 Años de Expresión y Arte Scout.pdf`**:\n\n#### 1. ¿Qué es el Centro Scout / Campo Escuela Meztitla y dónde se ubica?\n- Es el **Campo Escuela Nacional de la Asociación de Scouts de México, A.C. (ASMAC)** y el centro de campismo, formación e identidad scout más emblemático del país.\n- Se encuentra ubicado al pie de las montañas sagradas de **Tepoztlán, Estado de Morelos**. Su nombre en lengua náhuatl (*Meztitla*) significa **«Lugar cerca de la luna»**.\n\n#### 2. Origen e Historia de Meztitla (1956)\n- A mediados de la década de 1950, el scouter **Paul Loewe** donó los primeros terrenos en Tepoztlán y persuadió a otros integrantes y bienhechores —junto con el Jefe Scout Nacional **Manolo Durán** y **Jorge Toral Azuela**— para adquirir los predios contiguos que conformaron el Campo Escuela.\n- El **primer campamento oficial en Meztitla se llevó a cabo los días 1 y 2 de septiembre de 1956**.\n- Entre **1976 y 1996**, mediante el **«Proyecto Meztitla»** encabezado por **Jorge Toral Azuela** y **Gustavo Alcocer Mota**, se construyeron sus espacios simbólicos más representativos: el **Monumento a la Promesa en el Amate Amarillo**, la **Zona de las Provincias** (donde cada Provincia Scout colocó su placa grabada), las rotondas de fogatas, áreas de acampado, alberca y cabañas.\n\n#### 3. ¿Para qué sirve y qué actividades se realizan en Meztitla?\n- Es sede de **campamentos de Grupo, Provincia y Eventos Nacionales** (como ediciones históricas del **EEAS — Encuentro de Expresión y Arte Scout**).\n- Es la cuna de los cursos nacionales e internacionales de formación de adultos e **Insignia de Madera** (como el histórico curso documentado en *Aquel Curso Donde Llevaron la Huella de B-P a Meztitla*).\n- Cuenta además con artículos e insignias conmemorativas oficiales en la categoría **Meztitla** de `tiendaenlinea.scouts.org.mx`."
+    },
+    {
+      "id": "jamboree_nacional_world_scout_jamboree_philia_y_moot",
+      "patterns": [
+        "\\bque es el jamboree nacional\\b",
+        "\\bjamboree nacional\\b",
+        "\\bque es el world scout jamboree\\b",
+        "\\bworld scouting jamboree\\b",
+        "\\bjamboree scout mundial\\b",
+        "\\bque es el philia\\b",
+        "\\bque es el phillia\\b",
+        "\\bphilia nacional\\b",
+        "\\bque es el moot\\b",
+        "\\bworld scout moot\\b",
+        "\\bcada cuanto se hace el jamboree\\b",
+        "\\bcada cuanto se hace el moot\\b"
+      ],
+      "keywords": [
+        "jamboree nacional",
+        "world scout jamboree",
+        "jamboree mundial",
+        "philia",
+        "phillia",
+        "world scout moot",
+        "moot",
+        "polonia 2027",
+        "taiwan 2029",
+        "ocotal",
+        "zacatlan"
+      ],
+      "source_files": [
+        "ASMAC JSN 24.043 Convocatoria Jamboree 2024.pdf",
+        "World Scout Jamboree _ WOSM.html",
+        "26th World Scout Jamboree Poland 2027.html",
+        "DINT 26.006 Agencias autorizadas y canales oficiales de atención Jamboree Scout Mundial 2027.pdf",
+        "Comunicado ASMAC JSN 26.015 Philia 2026.pdf",
+        "World Scout Moot _ WOSM.html",
+        "About - 17th World Scout Moot Taiwan 2029.html",
+        "ASMAC JSN 24.014 Convocatoria Jefe de Delegación Moot 2025.pdf"
+      ],
+      "content": "### Guía Oficial de Grandes Eventos: Jamboree Nacional, World Scout Jamboree, Philia y World Scout Moot\n\n#### 1. ¿Qué significa «Jamboree» y qué es el Jamboree Nacional?\nDe acuerdo con la convocatoria oficial **`ASMAC JSN 24.043 Convocatoria Jamboree 2024.pdf`**:\n- **Origen del término:** La palabra *Jamboree* proviene del idioma **zulú** (de Sudáfrica) y significa **«Encuentro de Tribus»**. Fue adoptada por el fundador Robert Baden-Powell para nombrar los grandes encuentros scouts desde el primer Jamboree en Olympia, Londres, en **1920**.\n- **¿Qué es el Jamboree Nacional en México?:** Es el gran campamento nacional organizado por la ASMAC para que las y los jóvenes de todas las Provincias de la República Mexicana acampen, convivan, intercambien cultura y superen desafíos en equipo.\n- **Referencia oficial reciente (`JSN 24.043`):** El **Jamboree Nacional 2024 («Un mundo, una promesa, un desafío»)** se realizó del **29 de julio al 3 de agosto de 2024** en el *Rancho La Virgen del Río*, en **Zacatlán de las Manzanas, Puebla**, participando en equipos de 4 a 6 integrantes con un adulto responsable e inscribiéndose a través del módulo *«Mis eventos»* en **SISAS**.\n\n#### 2. ¿Qué es el World Scout Jamboree (Jamboree Scout Mundial), dónde se hace y cada cuánto?\nCon base en **`World Scout Jamboree _ WOSM.html`**, **`26th World Scout Jamboree Poland 2027.html`**, **`ES Boletín_3.pdf`** y **`DINT 26.006`**:\n- **¿Qué es?:** Su nombre oficial en inglés es **World Scout Jamboree** (en español **Jamboree Scout Mundial**). Es el campamento educativo al aire libre más grande del planeta organizado por **World Scouting (WOSM)**, donde decenas de miles de jóvenes de las **176 Organizaciones Scouts Nacionales** acampan juntos.\n- **¿Cada cuánto se realiza?:** Se celebra **cada 4 años** en un país anfitrión diferente (desde 1920 se han celebrado 25 ediciones en 17 países con más de 500,000 participantes).\n- **¿Quiénes pueden asistir?:** Jóvenes que tengan entre **14 y 17 años** al momento del evento. Los mayores de 18 años pueden asistir como *Unit Leaders* (Jefes de Patrulla/Tropa) o integrantes del **Equipo Internacional de Servicio (IST / EIS)**.\n- **¿Dónde y cuándo son los próximos World Scout Jamborees?:**\n  - **26° World Scout Jamboree — Gdańsk, Polonia 2027 (*«Bravely»*):** Del **30 de julio al 8 de agosto de 2027** en la Isla Sobieszewska, Gdańsk, Polonia (para jóvenes nacidos entre el **30 de julio de 2009 y el 30 de julio de 2013**; cuota oficial del Contingente de México en SISAS: `$2,050.00 USD` participantes y `$1,920.00 USD` EIS).\n  - **27° World Scout Jamboree — Dinamarca 2031:** Organizado por *The Danish Scout Council* en **2031**.\n\n#### 3. ¿Qué es el Philia Nacional?\nDe acuerdo con el comunicado oficial **`Comunicado ASMAC JSN 26.015 Philia 2026.pdf`**:\n- **¿Qué es y para quién es?:** El **Philia Nacional** es el evento nacional de liderazgo, aventura en la naturaleza y sana competencia dirigido a jóvenes de la **Comunidad de Caminantes (`14 a <18 años`)** con registro vigente en la ASMAC que desempeñen el rol de **Coordinadores/as, Subcoordinadores/as de Equipo o Líderes de Proyecto**, acompañados por sus adultos responsables.\n- **¿Qué se hace en un Philia?:** Incluye desafíos previos y desafíos en sitio alineados a las **4 áreas del Carnet de Aventuras en la Naturaleza**: *Técnica Inicial, Técnica Avanzada, No Dejar Rastro y Protección y Cuidado*.\n- **Sede, fechas y costos del Philia Nacional 2026 («100 años, 100 desafíos»):** Del **29 de marzo al 3 de abril de 2026** en el **Parque Estatal «El Ocotal»** (Carretera Atlacomulco Km 14, San Andrés Timilpan, Estado de México), con cupo para 1,200 asistentes e inscripción en **SISAS** (`$2,000.00 MXN` promoción Centenario para los primeros 200 registros y `$2,600.00 MXN` cuota general hasta el 2 de marzo de 2026).\n\n#### 4. ¿Qué es el World Scout Moot, dónde se hace y cada cuánto?\nDe acuerdo con **`World Scout Moot _ WOSM.html`**, **`About - 17th World Scout Moot Taiwan 2029.html`** y **`ASMAC JSN 24.014 Convocatoria Jefe de Delegación Moot 2025.pdf`**:\n- **¿Qué es?:** El **World Scout Moot** es el evento mundial oficial de **World Scouting (WOSM)** diseñado para jóvenes adultos de **18 a 25 años** (tradicionalmente la rama **Rover / Clan de Rovers**), mientras que las personas de **26 años en adelante** participan como voluntarios del **Equipo Internacional de Servicio (IST)**.\n- **¿Cada cuánto se realiza?:** Se celebra **cada 4 años** en un país distinto y reúne hasta **5,000 participantes** en una primera fase de rutas expedicionarias internacionales (*Paths*) y una segunda fase de campamento general.\n- **Sedes recientes y próximas del World Scout Moot:**\n  - **16° World Scout Moot:** Celebrado en **Portugal en 2025**.\n  - **17° World Scout Moot — Tainan, Taiwán 2029:** Se celebrará en **Tainan, Taiwán en 2029**, organizado por *The General Association of the Scouts of China (TGASC)*.\n  - **18° World Scout Moot:** Programado para **2033**."
+    },
+    {
+      "id": "cprc_cnrc_foros_asesores_y_evaluacion_red_caminantes",
+      "patterns": [
+        "\\bque es el cprc\\b",
+        "\\bque es cprc\\b",
+        "\\bcomite provincial de la red de caminantes\\b",
+        "\\bcomite de provincia de la red de caminantes\\b",
+        "\\bque es el cnrc\\b",
+        "\\bque es cnrc\\b",
+        "\\bcomite nacional de la red de caminantes\\b",
+        "\\banamari hernandez\\b",
+        "\\bkevin axel cantero\\b",
+        "\\bivone ramos\\b",
+        "\\bmariana villamil\\b",
+        "\\bcomo se hace un foro provincial\\b",
+        "\\bquienes son los encargados de hacer el foro\\b",
+        "\\bcual es el objetivo de los foros\\b",
+        "\\bque es el asesor de la red\\b",
+        "\\basesor del comite\\b",
+        "\\basesor del cprc\\b",
+        "\\bcomo se elige al asesor\\b",
+        "\\bcomo se evalua al comite\\b",
+        "\\bcomo se evalua al asesor\\b"
+      ],
+      "keywords": [
+        "cprc",
+        "cnrc",
+        "red de caminantes",
+        "comite provincial",
+        "comite nacional",
+        "anamari hernandez",
+        "kevin axel cantero",
+        "ivone ramos",
+        "mariana villamil",
+        "foro provincial",
+        "foro nacional",
+        "asesor de la red",
+        "evaluacion del comite",
+        "evaluacion del asesor"
+      ],
+      "source_files": [
+        "010 Guia Red de Caminantes.pdf",
+        "Comunicado ASMAC JSN 25.137 -Temas y Organización Foros 2026.pdf",
+        "ENERO-Taller Foros 2026 (1).pdf",
+        "ConvocatoriaCPRC.pdf",
+        "Convocatoria_CNPJ_CNRC_ASMAC.DNME.CNPJ.26.016.pdf",
+        "Convocatoria Encuentro de Comités de Caminantes 2025.pdf",
+        "De FOROS a CASA.pdf"
+      ],
+      "content": "### Red de Caminantes: CPRC, CNRC, Foros Provinciales y Nacionales, Asesores y Evaluación Oficial\nCon base en **`010 Guia Red de Caminantes.pdf`** (`ASMAC/DNME/CNPJ/NM300/LAREDDECAMINANTES/20.001`), el **`Comunicado ASMAC JSN 25.137 -Temas y Organización Foros 2026.pdf`**, el **`ENERO-Taller Foros 2026 (1).pdf`** y **`Convocatoria_CNPJ_CNRC_ASMAC.DNME.CNPJ.26.016.pdf`**:\n\n#### 1. ¿Qué es el CPRC (Comité Provincial de la Red de Caminantes)?\n- Es el comité juvenil integrado por **4 caminantes** que coordina, comunica y anima la **Red Provincial de Caminantes (RPC)** dentro de su Provincia Scout.\n- **Estructura y duración:** El periodo de cada integrante es de **2 años de forma escalonada (desfasada por 1 año)** para garantizar la continuidad del Plan Anual de Trabajo: se conforma por **2 Coordinadores/as Salientes** (en su segundo año) y **2 Coordinadores/as Entrantes** (electos en el Foro Provincial del año en curso; en la *Guía 2020* denominados 2 coordinadores y 2 comunicadores), además de **2 Suplentes**.\n- **Funciones principales del CPRC:** Elaborar y ejecutar el **Plan Anual de Trabajo** de la Red Provincial, mantener contacto con los portavoces de cada Comunidad de la Provincia, difundir e impulsar proyectos de los caminantes, organizar el **Foro Provincial de Caminantes**, dar seguimiento a las recomendaciones del Foro ante el Consejo de Provincia y representar a su Provincia en el **Foro Nacional de Caminantes**.\n\n#### 2. ¿Qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes lo integran actualmente?\n- Es el órgano juvenil de representación y coordinación de la **Red Nacional de Caminantes (RNC)** en México. Vincula directamente a todos los **CPRC** del país, lleva la voz y las recomendaciones de los caminantes ante la Comisión Nacional de Programa de Jóvenes (`CNPJ`), la Dirección Ejecutiva Nacional y el Consejo Nacional, coorganiza el **Foro Nacional de Caminantes** y el **Encuentro Nacional de Comités de Provincia y Asesores** (`DNME/CNPJ/26.016`), y desarrolla la plataforma nacional de proyectos **`Agentes de Cambio.MX`** (contacto oficial: `cnrc@scouts.org.mx` y `red.nacional.caminantes@scouts.org.mx`).\n- **Integración actual del CNRC (4 integrantes en esquema escalonado de 2 años):**\n  - **Anamari Hernández:** Coordinadora Saliente.\n  - **Kevin Axel Cantero:** Coordinador Saliente.\n  - **Ivone Ramos:** Coordinadora Entrante.\n  - **Mariana Villamil:** Coordinadora Entrante.\n\n#### 3. ¿Cómo y en dónde se elige al CPRC y al CNRC, y cuáles son los requisitos?\n- **¿Dónde y cómo se elige el CPRC? (`JSN 25.137`, págs. 18–21 y `Taller Foros 2026`, págs. 40–44):**\n  - Se elige anualmente dentro del **Foro Provincial de Caminantes** (realizado hasta el **14 de febrero de 2026**).\n  - **Mecánica de votación:** Cada **Equipo de Comunidad** participante (con mínimo 4 integrantes presentes) tiene derecho a emitir **dos votos diferenciados y no acumulativos** (uno por cada vacante entrante, sin poder dar dos votos a la misma persona; las abstenciones no se consideran válidas). El voto del equipo se decide por consenso y lo manifiesta su Coordinador/a de Equipo. Las dos siguientes candidaturas con mayor votación quedan asentadas como **Suplentes** en el **Acta de Instalación**.\n- **¿Dónde y cómo se elige el CNRC? (`010 Guia Red de Caminantes.pdf`, pág. 19 y `JSN 25.137`, pág. 21):**\n  - Se elige anualmente dentro del **Foro Nacional de Caminantes** (del **14 al 16 de marzo de 2026**, con etapa virtual previa), mediante el voto de las y los integrantes de los **Comités Provinciales (CPRC)** acreditados en las actas de instalación de sus Provincias.\n- **Requisitos para postularse como Coordinador/a del CPRC o CNRC (`Taller Foros 2026`, pág. 40 y `Guía 010`, págs. 8 y 15):**\n  1. Ser miembro activo de la Comunidad de Caminantes con **registro vigente en la ASMAC (SISAS)**.\n  2. Tener **máximo 15 años con 11 meses** al momento de la elección (entre 14 y <16 años) para poder cumplir los 2 años de gestión antes de cumplir 18 años.\n  3. Contar con al menos **dos ciclos de programa** en la sección y haber realizado su **Compromiso / Promesa** (y haber participado en un Foro Provincial).\n  4. Conocer el trabajo en redes y en equipo, manejo de grupos, herramientas digitales (Office, redes sociales, internet) y disponibilidad de tiempo (para el CNRC, preferentemente dominio de inglés o francés).\n\n#### 4. ¿Qué son los Foros Nacionales y Provinciales, cuál es su objetivo, quiénes los organizan y cómo se hace un Foro Provincial paso a paso?\n- **Objetivo de los Foros (`JSN 25.137`, págs. 1–3):** Son la herramienta educativa oficial de participación juvenil (en modalidad presencial, en línea o híbrida) donde Scouts de Tropa (`10 a <14 años`), Caminantes (`14 a <18 años`) y Rovers (`18 a <21/22 años`) desarrollan habilidades en la toma de decisiones, debaten **Temas de Consulta Nacional** y **Temas de Interés Local y Nacional** basados en los **4 Ejes Temáticos del PJOS**, aprueban **Recomendaciones** (integradas por *Encabezado, Preámbulo y Parte Operativa*) para los órganos de gobierno de Provincia y Nacional, y eligen a sus representantes juveniles. Con la guía **«De FOROS a CASA»** (`De FOROS a CASA.pdf`), las declaratorias se transforman en proyectos locales.\n- **¿Quiénes son los encargados de organizar el Foro Provincial? (`JSN 25.137`, págs. 12–13 y 19–20):**\n  - **Foro de Caminantes:** Lo organiza el **CPRC (Comité Provincial de la Red de Caminantes)** con el apoyo de su **Asesor/a del CPRC**, la **Comisión de Programa de Jóvenes de Provincia (`CPJP`)**, la **Subcomisión de Comunidad de Caminantes** y la **Vicepresidencia de Métodos Educativos (`VPME`)**. La **Vicepresidencia de Administración (`VPA`)** gestiona las instalaciones seguras con mínimo 3 meses de anticipación.\n  - **Foro de Scouts (Tropa):** Lo organiza la `CEP` a través de la `VPME`, `CPJP` y Subcomisión de Tropa.\n  - **Foro de Rovers (Clan):** Lo organiza el **CPRJ (Comité Provincial de la Red de Jóvenes)** con su Asesor/a, `VPME`, `CPJP` y Subcomisión de Clan.\n- **Cómo se hace un Foro Provincial de Caminantes en 15 pasos (`ENERO-Taller Foros 2026`, págs. 2, 23 y 32):**\n  1. Publicación previa de las **3 convocatorias oficiales**: Convocatoria al Foro, Convocatoria a candidatos/as del CPRC y Convocatoria a Asesor/a (mínimo 15 días antes).\n  2. Bienvenida, registro e introducción del Foro (Presidencia y Secretaría a cargo de los 2 coordinadores salientes del CPRC; los 2 coordinadores entrantes en funciones fungen como escrutadores).\n  3. Actividad de integración.\n  4. Explicación de qué es la Red de Caminantes y cómo trabaja.\n  5. Presentación del informe de actividades del CPRC y resultados de las recomendaciones del año anterior.\n  6. Votación de adiciones a la agenda y elección del **Comité de Redacción de Recomendaciones** (2 a 4 participantes electos por el pleno + los 2 coordinadores entrantes en turno + el Asesor/a como apoyo de estilo sin imponer ideas).\n  7. Presentación de ponencias y recursos sobre los temas.\n  8. Mesas de trabajo y discusión en grupos pequeños.\n  9. Clasificación de propuestas por nivel (Provincia o Nacional).\n  10. Dinámicas de participación y presentación de candidatos/as al CPRC.\n  11. Lectura, enmiendas y votación en pleno de las **Recomendaciones Finales** (1 voto individual por participante).\n  12. **Elección de las y los 2 Coordinadores/as Entrantes del CPRC** y designación de **2 Suplentes** (voto por Equipo de Comunidad).\n  13. Firma del **Acta de Instalación del Foro de Caminantes de Provincia 2026** y entrega de recomendaciones al Presidente/a de Provincia y `CEP`.\n\n#### 5. ¿Qué es el Asesor/a de la Red o Comité (CPRC y CNRC), qué requisitos tiene, cómo se elige, qué funciones cumple y cómo se evalúa?\n- **¿Qué es? (`010 Guia Red de Caminantes.pdf`, págs. 11 y 17; `Taller Foros 2026`, págs. 2 y 48):** Es el Scouter o Dirigente adulto que acompaña, orienta y facilita el trabajo del Comité (`CPRC` en Provincia o `CNRC` a nivel Nacional) bajo el principio de *apoyo sin interferencia*.\n- **Requisitos del Asesor/a:**\n  - **En Provincia (`Asesor del CPRC`):** Ser Scouter o Dirigente de Comunidad de la Provincia, Subcomisionado/a de Comunidad o Comisionado/a de Programa de Jóvenes de Provincia; tener **registro vigente en la ASMAC**, **Insignia de Madera vigente**, certificado **Safe from Harm**, empatía con los jóvenes, conocimiento de trabajo en redes y disponibilidad de tiempo.\n  - **A nivel Nacional (`Asesor del CNRC`):** Ser el/la **Subcomisionado/a Nacional de Comunidad de Caminantes** o un colaborador/a designado por la Subcomisión con registro e **Insignia de Madera vigente**.\n- **¿Cómo se elige al Asesor/a del CPRC? (`Taller Foros 2026`, págs. 2 y 48):**\n  1. La `CPJP` o `VPME` emite la convocatoria de postulación para candidatos a Asesor/a al menos **15 días antes del Foro de Provincia** (si el asesor actual desea continuar, también debe postularse).\n  2. Una vez concluido el Foro e instalado el nuevo `CPRC`, la `VPME`/`CPJP` entrega las postulaciones al Comité.\n  3. **El propio CPRC elige a su Asesor/a en un plazo máximo de 15 días**, debiendo contar de forma indiscutible con la **afinidad de al menos 3 de los 4 integrantes del Comité**, levantando un acta que se envía a `VPME`, `CPJP`, `CNRC` (`cnrc@scouts.org.mx`) y `SCNCC` (`caminantes@scouts.org.mx`).\n- **Funciones del Asesor/a (`Guía 010`, pág. 12 y `Taller Foros 2026`, pág. 56):** Apoyar al Comité en el diseño y desarrollo de su **Plan Anual de Trabajo** e informes, asegurar que las actividades cumplan los reglamentos de la ASMAC, servir de enlace con la `CPJP`, `VPME` y Consejo de Provincia, apoyar la vinculación con instituciones públicas y privadas, y mantener informados a los Scouters de los jóvenes.\n- **¿Cómo se evalúa a los Comités (CPRC / CNRC) y a los Asesores? (`Guía 010` Anexo 1 págs. 20–26 y `Taller Foros 2026` págs. 44–58):**\n  - **Escala oficial de calificación por criterio:** **Adecuado = 5 puntos**, **Suficiente = 3 puntos**, **Insuficiente = 1 punto**.\n  - **Evaluación de los Comités (CPRC y CNRC):**\n    - *Periodicidad y quién evalúa:* Se realiza **cada 4 meses contados a partir del Foro Nacional** (en la Guía 2020 cada 6 meses); al `CPRC` lo evalúa su propia Red Provincial de Caminantes mediante formulario.\n    - *Puntaje:* En la rúbrica actualizada de **38 criterios** (`Taller Foros 2026`, pág. 44), el puntaje **máximo es de 190 puntos y el mínimo aprobatorio es de 95 puntos** (en la rúbrica de 22 criterios del Anexo 1 de la Guía 2020: máximo 110 pts, mínimo 74 pts / calificación 8, alerta en <55 pts). Si un integrante no cumple sus funciones o reprueba las evaluaciones tras el acta de compromiso de mejora, es relevado por su **Suplente**.\n  - **Evaluación del Asesor/a (`Taller Foros 2026`, págs. 56–58):**\n    - *Periodicidad y quién evalúa:* Se realiza **cada 4 meses contados a partir del Foro Nacional** y **la aplica directamente el Comité (`CPRC`)** con el consenso de al menos 3 de sus 4 coordinadores.\n    - *Puntaje:* Consta de **28 criterios específicos** con un **máximo de 140 puntos** (mínimo base 47 pts; **puntaje mínimo requerido de 94 puntos** para aprobar sin observaciones). Si obtiene menos de **94 puntos**, se firma un acta de acuerdos de mejora; si en la siguiente evaluación no obtiene resultado favorable, procede su **destitución irrevocable** y en un plazo máximo de 1 mes (mientras la `CPJP` o `VPME` cubre la función temporalmente) se elige a un nuevo asesor."
+    },
+    {
+      "id": "proyectos_caminantes_agentes_de_cambio_formatos_y_especialidades",
+      "patterns": [
+        "\\bdonde puedo subir mis proyectos\\b",
+        "\\bdonde se suben los proyectos\\b",
+        "\\bque formatos o documentos se necesitan para un proyecto\\b",
+        "\\bformatos para un proyecto\\b",
+        "\\bque especialidades puedo obtener con mis proyectos\\b",
+        "\\bcomo se a que eje pertenecen\\b",
+        "\\ba que eje pertenece mi proyecto\\b",
+        "\\bque especialidades reconocimientos insignias puedo obtener\\b"
+      ],
+      "keywords": [
+        "subir mis proyectos",
+        "agentes de cambio",
+        "formatos proyecto",
+        "bitacora de proyecto",
+        "a que eje pertenece",
+        "especialidades caminantes",
+        "insignia everest",
+        "senderos caminantes"
+      ],
+      "source_files": [
+        "El desafio de ser Caminante 2024.pdf",
+        "Guia de Scouter de Comunidad 2024.pdf",
+        "Guía Punta de Flecha_2025-COMUNIDAD.pdf",
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+        "Manual ExplorApp.pdf",
+        "DNME-CNPJ 26.014 Lanzamiento de ExplorApp y CarpetApp.pdf",
+        "Carnet Aventuras en la Naturaleza para Caminantes 2024.pdf"
+      ],
+      "content": "### Proyectos en la Comunidad de Caminantes: Dónde Subirlos, Cómo Hacerlos, Formatos, Ejes Temáticos, Especialidades e Insignias\nCon base en **`El desafio de ser Caminante 2024.pdf`**, **`Guia de Scouter de Comunidad 2024.pdf`**, **`Guía Punta de Flecha_2025-COMUNIDAD.pdf`**, **`01 Manual del Uniforme Actualizado Junio 2026.pdf`** y **`Manual ExplorApp.pdf`**:\n\n#### 1. ¿En dónde puedo subir, registrar y difundir mis proyectos como Caminante?\nExisten **3 plataformas complementarias** dependiendo del objetivo de tu registro:\n1. **Portal Nacional `Agentes de Cambio.MX` (`https://sites.google.com/scouts.org.mx/agentes-de-cambio-mx/Bienvenida?authuser=0`):** Creado por el **Comité Nacional de la Red de Caminantes (CNRC)** para orientar a las y los Caminantes paso a paso y subir/compartir sus proyectos dentro de los **4 Ejes Temáticos** con toda la Red Nacional de Caminantes.\n2. **Aplicación Oficial `ExplorApp` (y validación en `CarpetApp`, `DNME-CNPJ 26.014`):** Donde registras tus proyectos, competencias, etapas de progresión (*Senderos*) y especialidades con tu **CUM** para que tu Scouter de Comunidad los valide oficialmente en tu expediente.\n3. **Plataforma Mundial `Scouts for SDGs` (`https://sdgs.scout.org/`):** Portal oficial de **World Scouting (WOSM)** donde registras tus proyectos y horas de servicio comunitario (por ejemplo, las 800 horas en equipo para *Mensajeros de la Paz* o los retos de *Tribu de la Tierra*) vinculados a los **17 Objetivos de Desarrollo Sostenible (ODS)**.\n\n#### 2. ¿Cómo se hace un proyecto Scout paso a paso y qué formatos o documentos se necesitan?\n- **Las 4 Fases para hacer un proyecto (`El desafio de ser Caminante 2024.pdf` y `Guía Punta de Flecha 2025`):**\n  1. **Diagnóstico / Identificación (Descubre):** Detecta una problemática o necesidad real de tu comunidad, identifica a qué **Eje Temático** y **ODS** se vincula, y organiza tu Equipo o Grupo de Trabajo designando al **Líder de Proyecto**.\n  2. **Planeación y Diseño (Metodología SMART):** Define objetivos **SMART** (*Específicos, Medibles, Alcanzables, Relevantes y con límite de Tiempo*), cronograma, presupuesto, materiales, protocolos de seguridad/emergencia y parámetros de evaluación.\n  3. **Ejecución / Desarrollo (Actúa):** Lleva a cabo el proyecto en campo o en tu comunidad documentando cada sesión y aplicando las reglas de *A Salvo del Peligro (Safe from Harm)*.\n  4. **Evaluación, Cierre y Presentación (Evalúa y Comparte):** Evalúa los resultados alcanzados frente a tu meta inicial ante tu **Consejo de Equipo / Congreso de Comunidad** y tu monitor/scouter, y comparte los resultados.\n- **¿Qué formatos o documentos necesitas integrar para tu proyecto?:**\n  1. **Formato / Cédula de Planeación del Proyecto** (con diagnóstico, objetivos SMART, Eje Temático, ODS, cronograma, presupuesto y gestión de riesgos).\n  2. **Bitácora de Proyecto / Hoja de Caminata** (con comentarios, acuerdos, ajustes, registro de horas y seguimiento de tu monitor o scouter).\n  3. **Portafolio de Evidencias** (introducción, resumen, fotografías, videos, listas de asistencia o entregables; *los carnets y guías oficiales 2024–2025 especifican que sin evidencias claras el proyecto no puede ser validado*).\n  4. **Permisos de padres/tutores y Fichas de Salud (`FICHA MÉDICA EDITABLE.pdf`)** para todas las salidas de campo.\n\n#### 3. ¿Cómo sé a qué Eje Temático pertenece mi proyecto (`El desafio de ser Caminante 2024.pdf`, págs. 61–64)?\nUbica la temática principal y las subáreas oficiales de tu proyecto:\n1. **Paz y Acción Comunitaria (*Paz y Participación Comunitaria* — Color Rosa / Morado):**\n   - *Subáreas oficiales:* **Consolidación de la paz, Diversidad e inclusión, Cultura y patrimonio, Acción humanitaria y Compromiso cívico**.\n2. **Salud y Bienestar (Color Azul):**\n   - *Subáreas oficiales:* **Estilos de vida saludables, Seguridad personal, Salud mental, Salud sexual y reproductiva, y Paz interior y espiritualidad**.\n3. **Habilidades para la Vida (Color Naranja):**\n   - *Subáreas oficiales:* **Habilidades interpersonales, Liderazgo, Alfabetización, STEAM (Ciencia, Tecnología, Ingeniería, Artes y Matemáticas) y Emprendimiento / Educación financiera**.\n4. **Medio Ambiente y Sustentabilidad (Color Verde):**\n   - *Subáreas oficiales:* **Consumo responsable, Gestión de recursos naturales, Energía limpia, Naturaleza y biodiversidad, y Prevención de la contaminación**.\n\n#### 4. ¿Qué especialidades, insignias y reconocimientos puedo obtener en Comunidad de Caminantes y con mis proyectos?\nDe acuerdo con el **`01 Manual del Uniforme Actualizado Junio 2026.pdf`** (Arts. 51–66) y **`El desafio de ser Caminante 2024.pdf`** (págs. 44–65):\n1. **Las 4 Insignias Modulares de Especialidades por Eje Temático (Art. 53, Manga Izquierda):**\n   - Cada especialidad se desarrolla en 3 etapas (**Conozco -> Aplico -> Comparto**, pág. 55) dentro de cualquiera de los 4 Ejes Temáticos: **Habilidades para la Vida** (*símbolo STEAM*), **Salud y Bienestar** (*corazón-cerebro*), **Paz y Participación Comunitaria** (*grulla de Sadako*) y **Medio Ambiente y Sustentabilidad** (*bombilla con planta*).\n   - Conforme completas más especialidades y proyectos en un mismo eje, el **borde de color** de tu insignia sube de nivel secuencialmente en **4 niveles: Amarillo (1) -> Verde (2) -> Azul (3) -> Rojo (4)**.\n2. **Las 4 Etapas de Progresión Personal — Los 4 Senderos (Art. 52, Manga Derecha):**\n   - **Sendero Cenit** (*Salud y Bienestar*), **Sendero Cumbre** (*Paz y Participación Comunitaria*), **Sendero Cúspide** (*Habilidades para la Vida*) y **Sendero Cima** (*Medio Ambiente y Sustentabilidad*). Juntas forman un círculo con la rosa de los vientos.\n3. **Las 4 Competencias de Aventuras en la Naturaleza (Art. 54):**\n   - **Técnica Inicial**, **No Dejar Rastro**, **Técnica Avanzada** y **Protección y Cuidado** (en niveles inicial, intermedio y avanzado).\n4. **Insignias del Marco Mundo Mejor e Iniciativas Mundiales por tus Proyectos (Arts. 59–66):**\n   - **Tribu de la Tierra (Earth Tribe):** *Campeones de la Naturaleza (Champions for Nature)*, *Marea de Plástico (Plastic Tide Turners)* y *Scouts Go Solar*.\n   - **Mensajeros de la Paz (Messengers of Peace):** Por proyectos de paz y desarrollo comunitario.\n   - **Life Leaders** (*Impact Innovators Challenge* y *EQ IN ACTION Challenge*) y **Health Allies** (*Challenge Nutrition* y *Mind Builders Challenge*).\n   - **Patrimonito, Diálogo por la Paz y Diálogo Interreligioso**.\n5. **Insignia del Curso de Liderazgo «Punta de Flecha»:** Al acreditar el curso y tu proyecto de liderazgo.\n6. **Insignia Final «Everest» (en versión Jade o versión Obsidiana, Art. 55):** Máxima insignia de la Comunidad de Caminantes al concluir tus desafíos de progresión personal, especialidades, aventuras en la naturaleza y proyectos."
+    },
+    {
       "id": "libro_centenario_doc_0133",
       "patterns": [
         "40\\ anos\\ de\\ expresion\\ y\\ arte\\ scout"
