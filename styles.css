@@ -2662,197 +2662,14 @@ h1, h2, h3, h4 {
 }
 
 /* =====================================================
-   ADAPTACION RESPONSIVA: PC, TABLET Y CELULAR (VERTICAL)
-   ===================================================== */
-@media (max-width: 1380px) {
-  .floating-polaroid,
-  .floating-sticker {
-    display: none;
-  }
-}
-
-@media (max-width: 1080px) {
-  .agentes-card {
-    grid-template-columns: 1fr;
-    padding: 2.2rem;
-  }
-  .centenario-collection-banner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .catalog-filters-bar {
-    grid-template-columns: 1fr 1fr;
-  }
-  .hero-hex-trio .hex-cluster-item {
-    width: 210px;
-    height: 210px;
-  }
-  .hero-hex-trio .hex-pos-center {
-    width: 234px;
-    height: 234px;
-  }
-}
-
-/* Vista en Tablet y Celular Vertical */
-@media (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
-  .header-inner {
-    flex-direction: column;
-    height: auto;
-    padding: 0.65rem 0.75rem;
-    gap: 0.55rem;
-  }
-  .main-nav {
-    width: 100%;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
-  }
-  .nav-link {
-    white-space: nowrap;
-    font-size: 0.8rem;
-    padding: 0.42rem 0.78rem;
-  }
-  .hero-section {
-    padding: 2rem 0 4.8rem;
-  }
-  .hero-hex-trio {
-    margin: 0.8rem auto 1.6rem;
-  }
-  .hero-hex-trio .hex-cluster-item {
-    width: 142px;
-    height: 142px;
-  }
-  .hero-hex-trio .hex-pos-left {
-    margin-right: -28px;
-  }
-  .hero-hex-trio .hex-pos-center {
-    width: 162px;
-    height: 162px;
-  }
-  .hero-hex-trio .hex-pos-right {
-    margin-left: -28px;
-  }
-  .hex-rotator {
-    padding: 6px;
-  }
-  .hex-floating-caption {
-    font-size: 0.62rem;
-    padding: 0.18rem 0.52rem;
-  }
-  .search-hub-card {
-    padding: 1.35rem 1.15rem;
-    border-radius: 24px;
-  }
-  .hub-popout-badge,
-  .hub-popout-badge-left {
-    display: none;
-  }
-  .ask-input-wrapper {
-    flex-wrap: wrap;
-    padding: 0.5rem 0.65rem;
-    gap: 0.4rem;
-  }
-  .ask-input {
-    width: 100%;
-    font-size: 0.96rem;
-    padding: 0.45rem 0;
-  }
-  .ask-submit-btn {
-    width: 100%;
-    justify-content: center;
-    padding: 0.78rem 1rem;
-  }
-  .centenario-banner-left {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .centenario-banner-photos,
-  .services-header-photos {
-    width: 100%;
-    justify-content: center;
-  }
-  .scout-sections-grid {
-    grid-template-columns: 1fr;
-    gap: 2.2rem;
-  }
-  .agentes-card {
-    padding: 1.65rem 1.25rem;
-  }
-  .adc-icon-orb {
-    width: 72px;
-    height: 72px;
-  }
-  .agentes-overlapping-hex {
-    width: 104px;
-    height: 104px;
-    bottom: -16px;
-    left: -10px;
-  }
-  .about-card {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding: 1.85rem 1.35rem;
-  }
-  .liam-depth-stage {
-    width: 245px;
-    height: 245px;
-    margin: 18px auto 0;
-  }
-  .about-signature-box {
-    text-align: left;
-  }
-  .catalog-filters-bar {
-    grid-template-columns: 1fr;
-  }
-  .bookshelf-grid {
-    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
-    gap: 1.1rem;
-  }
-  .modal-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-/* Vista en Celular Pequeño (<480px) */
-@media (max-width: 480px) {
-  .hero-hex-trio .hex-cluster-item {
-    width: 116px;
-    height: 116px;
-  }
-  .hero-hex-trio .hex-pos-left {
-    margin-right: -22px;
-  }
-  .hero-hex-trio .hex-pos-center {
-    width: 134px;
-    height: 134px;
-  }
-  .hero-hex-trio .hex-pos-right {
-    margin-left: -22px;
-  }
-  .hex-floating-caption {
-    display: none;
-  }
-  .liam-depth-stage {
-    width: 220px;
-    height: 220px;
-  }
-}
-
-/* =====================================================
-   MEJORAS V2 (04/11/2026):
-   - FONDO GLOBAL ANIMADO Y COLORIDO EN TODO EL SITIO
-   - TITULO GIGANTE BIBLIOTECH + TINY BY LIAM EN HERO
-   - BARRA DE BUSQUEDA Y FILTRO DE SECCION EN BIBLIOTECA SCOUT
-   - LOGOS OFICIALES ASMAC Y WOSM EN EL PIE DE PAGINA
+   SISTEMA VISUAL RENOVADO V2:
+   - AURORAS, ONDAS SEPARADORAS ENTRE SECCIONES Y ELEMENTOS FLOTANTES
+   - INTERACCION EN HEXAGONOS, ORBES DE FOROS 1-4 Y MOSAICO
+   - BARRA FLOTANTE DE ACCESO RAPIDO
+   - DISTRIBUCION DINAMICA Y RESPONSIVA SIN SOLAPAMIENTOS (PC, TABLET HORIZONTAL/VERTICAL Y MOVIL)
    ===================================================== */
 
-/* Fondo animado global con orbes de color y octágonos flotantes */
+/* Fondo animado global con orbes de color y hexágonos flotantes */
 .global-animated-bg {
   position: fixed;
   inset: 0;
@@ -2864,7 +2681,7 @@ h1, h2, h3, h4 {
 .bg-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(68px);
+  filter: blur(72px);
   opacity: 0.22;
   animation: floatOrbDrift 20s ease-in-out infinite alternate;
 }
@@ -2873,7 +2690,7 @@ h1, h2, h3, h4 {
   width: 420px;
   height: 420px;
   background: radial-gradient(circle, #38bdf8, #6366f1);
-  top: 12%;
+  top: 10%;
   left: -120px;
   animation-duration: 22s;
 }
@@ -2882,7 +2699,7 @@ h1, h2, h3, h4 {
   width: 380px;
   height: 380px;
   background: radial-gradient(circle, #10b981, #facc15);
-  top: 46%;
+  top: 44%;
   right: -110px;
   animation-duration: 26s;
   animation-delay: -5s;
@@ -2893,7 +2710,7 @@ h1, h2, h3, h4 {
   height: 440px;
   background: radial-gradient(circle, #a855f7, #ec4899);
   bottom: 10%;
-  left: 8%;
+  left: 6%;
   opacity: 0.16;
   animation-duration: 28s;
   animation-delay: -11s;
@@ -2903,61 +2720,111 @@ h1, h2, h3, h4 {
   width: 340px;
   height: 340px;
   background: radial-gradient(circle, #f97316, #fbbf24);
-  bottom: 28%;
-  right: 12%;
+  bottom: 26%;
+  right: 10%;
   opacity: 0.15;
   animation-duration: 24s;
   animation-delay: -7s;
 }
 
-.bg-floating-hex {
+.bg-hex-float {
   position: absolute;
-  clip-path: polygon(25% 5%, 75% 5%, 98% 50%, 75% 95%, 25% 95%, 2% 50%);
-  opacity: 0.08;
-  animation: slowSpinClockwise 42s linear infinite;
+  clip-path: var(--hex-clip);
+  opacity: 0.065;
+  animation: hexSpinSlow 46s linear infinite;
 }
 
-.fhex-1 {
+.hf-1 {
   width: 190px;
   height: 190px;
-  top: 24%;
-  right: 6%;
+  top: 22%;
+  right: 5%;
   background: linear-gradient(135deg, #00b4d8, #6d28d9);
 }
 
-.fhex-2 {
+.hf-2 {
   width: 240px;
   height: 240px;
-  top: 62%;
-  left: 3%;
+  top: 58%;
+  left: 2%;
   background: linear-gradient(135deg, #10b981, #0ea5e9);
   animation-direction: reverse;
-  animation-duration: 54s;
+  animation-duration: 56s;
 }
 
-.fhex-3 {
+.hf-3 {
   width: 170px;
   height: 170px;
   bottom: 14%;
-  right: 8%;
+  right: 7%;
   background: linear-gradient(135deg, #f97316, #eab308);
   animation-duration: 48s;
 }
 
-@keyframes floatOrbDrift {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(34px, -28px, 0) scale(1.08);
-  }
-  100% {
-    transform: translate3d(-24px, 32px, 0) scale(0.95);
-  }
+.hf-4 {
+  width: 150px;
+  height: 150px;
+  top: 78%;
+  left: 44%;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  animation-duration: 52s;
 }
 
-/* Asegurar que las secciones queden por encima del fondo animado */
-.site-header,
+@keyframes floatOrbDrift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(34px, -28px, 0) scale(1.08); }
+  100% { transform: translate3d(-24px, 32px, 0) scale(0.95); }
+}
+
+/* Auroras internas y segunda cinta diagonal del Hero */
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(64px);
+  pointer-events: none;
+}
+
+.glow-1 {
+  width: 360px;
+  height: 360px;
+  top: -80px;
+  left: -60px;
+  background: rgba(56, 189, 248, 0.28);
+}
+
+.glow-2 {
+  width: 320px;
+  height: 320px;
+  top: 12%;
+  right: -70px;
+  background: rgba(250, 204, 21, 0.22);
+}
+
+.glow-3 {
+  width: 420px;
+  height: 420px;
+  bottom: 4%;
+  left: 22%;
+  background: rgba(139, 92, 246, 0.25);
+}
+
+.glow-4 {
+  width: 280px;
+  height: 280px;
+  bottom: 14%;
+  right: 18%;
+  background: rgba(34, 197, 94, 0.18);
+}
+
+.jamboree-diagonal-ribbon.ribbon-secondary {
+  top: 62%;
+  transform: rotate(6deg);
+  height: 42px;
+  background: linear-gradient(90deg, rgba(250, 204, 21, 0.14), rgba(168, 85, 247, 0.18), rgba(56, 189, 248, 0.16));
+}
+
+/* Asegurar que todas las secciones queden por encima del fondo animado */
+.main-header,
 .hero-section,
 .library-section,
 .about-section,
@@ -2972,19 +2839,43 @@ h1, h2, h3, h4 {
   z-index: 1;
 }
 
+/* Separadores ondulados dinámicos entre secciones */
+.library-section,
+.sections-showcase {
+  position: relative;
+  padding-bottom: 5.4rem;
+}
+
+.section-wave-separator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  overflow: hidden;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.section-wave-separator svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 /* Titulo gigante BiblioTech + By Liam chiquito debajo en el Hero */
 .hero-brand-display {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0.25rem auto 0.65rem;
+  margin: 0.2rem auto 0.7rem;
   line-height: 1;
 }
 
 .hero-big-bibliotech {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(3.4rem, 7.5vw, 5.8rem);
+  font-size: clamp(3.1rem, 7.2vw, 5.6rem);
   font-weight: 900;
   letter-spacing: -0.03em;
   background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 35%, #fde047 72%, #4ade80 100%);
@@ -2997,30 +2888,167 @@ h1, h2, h3, h4 {
 
 .hero-tiny-byliam {
   display: inline-block;
-  margin-top: 0.28rem;
+  margin-top: 0.3rem;
   font-family: 'Outfit', sans-serif;
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(224, 242, 254, 0.88);
-  background: rgba(15, 23, 42, 0.38);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  padding: 0.18rem 0.72rem;
+  color: rgba(224, 242, 254, 0.94);
+  background: rgba(15, 23, 42, 0.44);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  padding: 0.2rem 0.78rem;
   border-radius: 999px;
   backdrop-filter: blur(6px);
 }
 
 @keyframes heroTitleFloat {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  100% {
-    transform: translateY(-4px) scale(1.015);
-  }
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-4px) scale(1.015); }
 }
 
-/* Barra de busqueda y filtro por seccion dentro de Biblioteca Scout */
+/* Flotación independiente de los 3 octágonos del Hero + subtítulos escalonados sin colisión */
+@keyframes hexBobLeft {
+  0%, 100% { transform: translateY(8px); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes hexBobCenter {
+  0%, 100% { transform: translateY(-8px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes hexBobRight {
+  0%, 100% { transform: translateY(10px); }
+  50% { transform: translateY(-3px); }
+}
+
+.hero-hex-trio .hex-pos-left {
+  animation: hexBobLeft 5.8s ease-in-out infinite;
+}
+
+.hero-hex-trio .hex-pos-center {
+  animation: hexBobCenter 6.4s ease-in-out infinite;
+}
+
+.hero-hex-trio .hex-pos-right {
+  animation: hexBobRight 6.1s ease-in-out infinite 0.4s;
+}
+
+.hero-hex-trio .hex-cluster-item:hover {
+  animation-play-state: paused;
+}
+
+.hex-floating-caption {
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.01em;
+  transition: transform 0.25s var(--spring), box-shadow 0.25s ease;
+}
+
+.hero-hex-trio .hex-pos-left .hex-floating-caption {
+  bottom: 10px;
+}
+
+.hero-hex-trio .hex-pos-center .hex-floating-caption {
+  bottom: -6px;
+}
+
+.hero-hex-trio .hex-pos-right .hex-floating-caption {
+  bottom: 10px;
+}
+
+.hex-cluster-item:hover .hex-floating-caption,
+.mosaic-hex:hover .hex-floating-caption {
+  transform: translateX(-50%) scale(1.07);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+}
+
+/* Resplandor 3D detrás del escenario de Liam Durán */
+.liam-stage-glow {
+  position: absolute;
+  inset: -14px;
+  border-radius: 34px;
+  background: linear-gradient(135deg, rgba(0, 180, 216, 0.45), rgba(109, 40, 217, 0.45), rgba(250, 204, 21, 0.38));
+  filter: blur(22px);
+  z-index: 0;
+  animation: sparklePulse 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Orbes de los 4 Ejes Temáticos en Agentes de Cambio con etiqueta flotante al pasar el cursor */
+.adc-icon-orb {
+  position: relative;
+}
+
+.adc-icon-orb::after {
+  content: attr(data-orb-label);
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px) scale(0.92);
+  background: rgba(15, 23, 42, 0.92);
+  color: #fde047;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  white-space: nowrap;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.25s var(--spring);
+  z-index: 6;
+}
+
+.adc-icon-orb:hover::after,
+.adc-icon-orb:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.agentes-visual {
+  padding: 12px 14px 32px 28px;
+}
+
+/* Prevención de solapamiento en tarjetas de sección (.scout-sec-card) */
+.scout-sec-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.sec-card-top {
+  flex-wrap: wrap;
+  padding-right: 108px;
+  min-height: 44px;
+  align-content: flex-start;
+}
+
+.scout-sec-card h3 {
+  padding-right: 76px;
+}
+
+.scout-sec-card .sec-card-cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Mosaico interactivo de 4 elementos */
+.mosaic-item {
+  cursor: pointer;
+}
+
+.mosaic-hex {
+  position: relative;
+}
+
+.mosaic-hex .hex-floating-caption {
+  bottom: -6px;
+}
+
+/* Controles de búsqueda y filtros en Biblioteca Scout */
 .library-controls-bar {
   display: flex;
   align-items: center;
@@ -3048,7 +3076,54 @@ h1, h2, h3, h4 {
   box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12);
 }
 
-/* Pie de pagina con logos oficiales ASMAC y WOSM a la derecha */
+/* Barra flotante de acceso rápido (Preguntar / Subir) */
+.floating-quick-bar {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 145;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: popInCard 0.3s var(--spring);
+}
+
+.fab-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.86rem;
+  cursor: pointer;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.32);
+  transition: transform 0.25s var(--spring), box-shadow 0.25s ease;
+}
+
+.fab-ask {
+  background: linear-gradient(135deg, var(--scout-purple), var(--scout-blue));
+  color: #ffffff;
+  padding: 0.68rem 1.15rem;
+}
+
+.fab-top {
+  background: #ffffff;
+  color: var(--scout-navy);
+  border-color: #cbd5e1;
+  width: 42px;
+  height: 42px;
+  font-size: 1.05rem;
+}
+
+.fab-pill:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 18px 36px rgba(109, 40, 217, 0.38);
+}
+
+/* Pie de página con logos oficiales ASMAC y WOSM y aviso de corte 03/11/2026 */
 .footer-top-bar {
   display: flex;
   align-items: center;
@@ -3122,17 +3197,497 @@ h1, h2, h3, h4 {
   color: #94a3b8;
 }
 
+/* =====================================================
+   ADAPTACIÓN RESPONSIVA MULTIDISPOSITIVO:
+   1) TABLET HORIZONTAL / LAPTOP COMPACTA (<= 1120px)
+   ===================================================== */
+@media (max-width: 1120px) {
+  .header-inner {
+    height: auto;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .main-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .main-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .hero-hex-trio .hex-cluster-item {
+    width: 205px;
+    height: 205px;
+  }
+
+  .hero-hex-trio .hex-pos-center {
+    width: 230px;
+    height: 230px;
+  }
+
+  .hero-hex-trio .hex-pos-left {
+    margin-right: -34px;
+  }
+
+  .hero-hex-trio .hex-pos-right {
+    margin-left: -34px;
+  }
+
+  .centenario-collection-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.6rem;
+  }
+
+  .centenario-banner-photos {
+    align-self: center;
+    margin-top: 0.35rem;
+  }
+
+  .about-card {
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+    padding: 2.2rem;
+  }
+
+  .liam-depth-stage {
+    width: 250px;
+    height: 250px;
+  }
+
+  .agentes-card {
+    grid-template-columns: 1fr;
+    padding: 2.3rem;
+    gap: 2rem;
+  }
+
+  .agentes-visual {
+    padding: 14px 18px 34px 28px;
+  }
+
+  .scout-sections-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.3rem 1.4rem;
+  }
+
+  .catalog-filters-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-group.filter-search {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =====================================================
+   2) TABLET VERTICAL Y CELULAR GRANDE (<= 768px)
+   ===================================================== */
 @media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .brand-emblem-wrap {
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand-name {
+    font-size: 1.42rem;
+  }
+
+  .brand-author {
+    font-size: 0.73rem;
+  }
+
+  .hero-section {
+    padding: 1.9rem 0 4.8rem;
+  }
+
+  .jamboree-floating-svg {
+    opacity: 0.45;
+    transform: scale(0.75);
+  }
+
+  .hero-kicker-pill {
+    font-size: 0.76rem;
+    padding: 0.38rem 0.9rem;
+    text-align: center;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+  }
+
+  .hero-hex-trio {
+    margin: 0.85rem auto 1.75rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .hero-hex-trio .hex-cluster-item {
+    width: 144px;
+    height: 144px;
+  }
+
+  .hero-hex-trio .hex-pos-left {
+    margin-right: -24px;
+  }
+
+  .hero-hex-trio .hex-pos-center {
+    width: 164px;
+    height: 164px;
+  }
+
+  .hero-hex-trio .hex-pos-right {
+    margin-left: -24px;
+  }
+
+  .hex-rotator {
+    padding: 6px;
+  }
+
+  .hex-floating-caption {
+    font-size: 0.62rem;
+    padding: 0.16rem 0.54rem;
+  }
+
+  .hero-hex-trio .hex-pos-left .hex-floating-caption {
+    bottom: 6px;
+  }
+
+  .hero-hex-trio .hex-pos-center .hex-floating-caption {
+    bottom: -10px;
+  }
+
+  .hero-hex-trio .hex-pos-right .hex-floating-caption {
+    bottom: 6px;
+  }
+
+  .search-hub-card {
+    padding: 1.3rem 1.1rem;
+    border-radius: 24px;
+  }
+
+  /* Barra deslizable horizontal táctil para pastillas de sección y categorías */
+  .search-section-pills,
+  .quick-topic-tabs,
+  .library-shelves-tabs,
+  .catalog-category-cards {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .search-section-pills::-webkit-scrollbar,
+  .quick-topic-tabs::-webkit-scrollbar,
+  .library-shelves-tabs::-webkit-scrollbar,
+  .catalog-category-cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sec-pill,
+  .qcat-tab,
+  .shelf-tab,
+  .cat-filter-pill {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ask-input-wrapper {
+    flex-wrap: wrap;
+    padding: 0.5rem 0.65rem;
+    gap: 0.4rem;
+  }
+
+  .ask-input {
+    width: calc(100% - 68px);
+    font-size: 1rem;
+    padding: 0.45rem 0;
+  }
+
+  .ask-submit-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.78rem 1rem;
+  }
+
+  .answer-card {
+    padding: 1.4rem;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .answer-sources-footer {
+    margin-left: -1.4rem;
+    margin-right: -1.4rem;
+    margin-bottom: -1.4rem;
+    padding: 1.15rem 1.4rem;
+  }
+
   .library-controls-bar {
     width: 100%;
   }
+
   .library-search-mini,
   .lib-search-input,
   .lib-filter-select {
     width: 100%;
+    font-size: 1rem;
   }
+
+  .centenario-banner-left {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .centenario-banner-photos,
+  .services-header-photos {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .bookshelf-grid {
+    grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+    gap: 1.1rem;
+  }
+
+  .about-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 1.9rem 1.35rem;
+    gap: 1.6rem;
+  }
+
+  .liam-depth-stage {
+    width: 246px;
+    height: 246px;
+    margin: 20px auto 0;
+  }
+
+  .about-signature-box {
+    text-align: left;
+  }
+
+  .agentes-card {
+    padding: 1.7rem 1.25rem;
+  }
+
+  .agentes-icons-only-row {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .adc-icon-orb {
+    width: 74px;
+    height: 74px;
+  }
+
+  .agentes-overlapping-hex {
+    width: 106px;
+    height: 106px;
+    bottom: -18px;
+    left: -14px;
+  }
+
+  .scout-sections-grid {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+  }
+
+  .distributed-photo-mosaic {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    place-items: center;
+    gap: 1.35rem 1rem;
+  }
+
+  .mosaic-polaroid {
+    width: 100%;
+    max-width: 210px;
+  }
+
+  .mosaic-hex {
+    width: 164px;
+    height: 164px;
+  }
+
+  .changes-timeline-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-filters-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-group input,
+  .filter-group select {
+    font-size: 1rem;
+  }
+
+  .modal-overlay {
+    padding: 0.5rem;
+  }
+
+  .modal-container {
+    height: 94vh;
+    border-radius: 18px;
+  }
+
+  .modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.85rem 1rem;
+    gap: 0.65rem;
+  }
+
+  .modal-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .footer-top-bar {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .floating-quick-bar {
+    bottom: 14px;
+    right: 14px;
+  }
+}
+
+/* =====================================================
+   3) CELULAR VERTICAL COMPACTO (<= 480px)
+   ===================================================== */
+@media (max-width: 480px) {
+  .hero-big-bibliotech {
+    font-size: clamp(2.55rem, 11vw, 3.3rem);
+  }
+
+  .hero-title {
+    font-size: 1.68rem;
+  }
+
+  .hero-hex-trio {
+    margin: 0.65rem auto 1.65rem;
+    padding-bottom: 0.9rem;
+  }
+
+  .hero-hex-trio .hex-cluster-item {
+    width: 108px;
+    height: 108px;
+  }
+
+  .hero-hex-trio .hex-pos-left {
+    margin-right: -18px;
+  }
+
+  .hero-hex-trio .hex-pos-center {
+    width: 126px;
+    height: 126px;
+  }
+
+  .hero-hex-trio .hex-pos-right {
+    margin-left: -18px;
+  }
+
+  .hero-hex-trio .hex-floating-caption {
+    font-size: 0.54rem;
+    padding: 0.13rem 0.42rem;
+    border-width: 1.5px;
+  }
+
+  .hero-hex-trio .hex-pos-left .hex-floating-caption {
+    bottom: 4px;
+  }
+
+  .hero-hex-trio .hex-pos-center .hex-floating-caption {
+    bottom: -11px;
+  }
+
+  .hero-hex-trio .hex-pos-right .hex-floating-caption {
+    bottom: 4px;
+  }
+
+  .scout-sec-card {
+    padding: 1.45rem 1.25rem;
+  }
+
+  .sec-popout-hex {
+    width: 86px;
+    height: 86px;
+    top: -24px;
+    right: 10px;
+  }
+
+  .sec-popout-photo {
+    width: 80px;
+    height: 80px;
+    top: -20px;
+    right: 12px;
+  }
+
+  .sec-card-top {
+    padding-right: 86px;
+  }
+
+  .scout-sec-card h3 {
+    padding-right: 64px;
+    font-size: 1.22rem;
+  }
+
+  .distributed-photo-mosaic {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .mosaic-polaroid {
+    max-width: 235px;
+  }
+
+  .mosaic-hex {
+    width: 176px;
+    height: 176px;
+  }
+
+  .liam-depth-stage {
+    width: 218px;
+    height: 218px;
+  }
+
+  .bookshelf-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+
+  .book-card {
+    padding: 0.68rem;
+  }
+
+  .book-title {
+    font-size: 0.84rem;
   }
 }

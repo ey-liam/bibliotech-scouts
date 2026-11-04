@@ -241,25 +241,87 @@ async function initApp() {
 
 function setupScrollAnimations() {
   const targets = document.querySelectorAll(
-    ".scout-sec-card, .service-info-card, .change-card, .centenario-collection-banner, .agentes-card, .about-card"
+    ".scout-sec-card, .service-info-card, .change-card, .centenario-collection-banner, .agentes-card, .about-card, .mosaic-item"
   );
   if (!("IntersectionObserver" in window)) {
     targets.forEach((el) => el.classList.add("revealed"));
-    return;
+  } else {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -24px 0px" }
+    );
+    targets.forEach((el, idx) => {
+      el.classList.add("reveal-on-scroll");
+      el.style.transitionDelay = `${(idx % 6) * 45}ms`;
+      obs.observe(el);
+    });
   }
-  const obs = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("revealed");
+
+  // Barra flotante de acceso rapido + Scroll-Spy de navegacion
+  const quickBar = document.getElementById("floatingQuickBar");
+  const askFab = document.getElementById("floatingAskBtn");
+  const topFab = document.getElementById("floatingTopBtn");
+  const navLinks = Array.from(document.querySelectorAll(".main-nav .nav-link"));
+  const spyIds = ["buscador", "biblioteca", "acerca", "agentes", "secciones", "servicios", "cambios", "explorar"];
+
+  if (askFab) {
+    askFab.addEventListener("click", () => {
+      const searchCard = document.getElementById("buscador");
+      const input = document.getElementById("askInput");
+      if (searchCard) searchCard.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (input) setTimeout(() => input.focus(), 380);
+    });
+  }
+  if (topFab) {
+    topFab.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  let ticking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const sy = window.scrollY || document.documentElement.scrollTop || 0;
+        if (quickBar) {
+          quickBar.classList.toggle("hidden", sy < 460);
         }
+        let currentId = "buscador";
+        for (const id of spyIds) {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= 165) {
+              currentId = id;
+            }
+          }
+        }
+        for (const link of navLinks) {
+          const href = link.getAttribute("href") || "";
+          link.classList.toggle("active", href === `#${currentId}`);
+        }
+        ticking = false;
       });
     },
-    { threshold: 0.08, rootMargin: "0px 0px -24px 0px" }
+    { passive: true }
   );
-  targets.forEach((el) => {
-    el.classList.add("reveal-on-scroll");
-    obs.observe(el);
+
+  // Soporte de teclado (Enter / Espacio) en elementos interactivos con data-query
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const target = e.target.closest('[data-query][role="button"]');
+    if (!target) return;
+    e.preventDefault();
+    submitQuestion(target.getAttribute("data-query"));
   });
 }
 

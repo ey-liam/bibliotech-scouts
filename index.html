@@ -144,7 +144,7 @@
       <!-- TRÍO DE FOTOS EN OCTÁGONOS/HEXÁGONOS SUPERPUESTOS CON TÍTULOS OFICIALES REALES -->
       <div class="hero-hex-trio" aria-label="Fotografías destacadas del Movimiento Scout en México">
         <!-- Marco Izquierdo (Borde Verde - Foto p01.jpg) -->
-        <div class="hex-cluster-item hex-pos-left hex-theme-green">
+        <div class="hex-cluster-item hex-pos-left hex-theme-green" data-query="¿Qué es la Comunidad de Caminantes?" role="button" tabindex="0" title="Consultar sobre la Comunidad de Caminantes">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
               <img src="img/photos/p01.jpg" alt="Comunidad de Caminantes" class="hex-counter-img" />
@@ -154,7 +154,7 @@
         </div>
 
         <!-- Marco Central (Borde Naranja-Rojo, superpuesto al frente - Foto caminantes.jpg) -->
-        <div class="hex-cluster-item hex-pos-center hex-theme-orange">
+        <div class="hex-cluster-item hex-pos-center hex-theme-orange" data-query="¿Cómo hago mi desarrollo personal en los Scouts?" role="button" tabindex="0" title="Consultar sobre progresión personal y Siempre Adelante">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
               <img src="img/photos/caminantes.jpg" alt="Siempre Adelante — Comunidad de Caminantes" class="hex-counter-img" />
@@ -164,7 +164,7 @@
         </div>
 
         <!-- Marco Derecho (Borde Azul - Foto p04.jpg) -->
-        <div class="hex-cluster-item hex-pos-right hex-theme-blue">
+        <div class="hex-cluster-item hex-pos-right hex-theme-blue" data-query="¿Qué son los Foros Nacionales de Jóvenes y cómo funciona la guía «De FOROS a CASA»?" role="button" tabindex="0" title="Consultar sobre los Foros Nacionales">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
               <img src="img/photos/p04.jpg" alt="Foros Nacionales" class="hex-counter-img" />
@@ -420,6 +420,13 @@
         </button>
       </div>
     </div>
+
+    <!-- Separador dinámico entre Biblioteca y Propósito -->
+    <div class="section-wave-separator" aria-hidden="true">
+      <svg viewBox="0 0 1440 54" preserveAspectRatio="none">
+        <path d="M0,24 C360,56 720,0 1080,32 C1260,48 1380,18 1440,12 L1440,54 L0,54 Z" fill="#f4f8ff"></path>
+      </svg>
+    </div>
   </section>
 
   <!-- ACERCA DEL PROYECTO Y AUTOR (JUSTO DESPUÉS DE BIBLIOTECA SCOUT Y ANTES DE AGENTES DE CAMBIO.MX) -->
@@ -429,6 +436,7 @@
         <div class="about-photo-col">
           <!-- ESCENARIO CON PROFUNDIDAD 3D: FONDO ESTÁTICO + APNG ANIMADO SOBRESALIENDO POR ENCIMA -->
           <div class="liam-depth-stage" title="Liam Durán — Animación sobre fondo estático">
+            <span class="liam-stage-glow" aria-hidden="true"></span>
             <div class="liam-static-bg-box">
               <img
                 src="assets/LiamFondo.jpg"
@@ -478,18 +486,18 @@
             <strong>proyectos</strong> de impacto comunitario dentro de los 4 Ejes Temáticos:
           </p>
 
-          <!-- SOLO LOS 4 ICONOS DE FOROS 1-4 (1=PAZ, 2=SALUD, 3=HABILIDADES, 4=SUSTENTABILIDAD) SIN TEXTOS -->
+          <!-- SOLO LOS 4 ICONOS DE FOROS 1-4 (1=PAZ, 2=SALUD, 3=HABILIDADES, 4=SUSTENTABILIDAD) SIN TEXTOS FIJOS -->
           <div class="agentes-icons-only-row" aria-label="4 Ejes Temáticos de Agentes de Cambio">
-            <div class="adc-icon-orb" title="Paz y Compromiso Comunitario (Foro 1)">
+            <div class="adc-icon-orb" data-query="¿En qué consiste el eje de Paz y Compromiso Comunitario (Foro 1)?" data-orb-label="Foro 1: Paz" title="Paz y Compromiso Comunitario (Foro 1)" role="button" tabindex="0">
               <img src="img/adc/paz.png" alt="Paz y Compromiso Comunitario" />
             </div>
-            <div class="adc-icon-orb" title="Salud y Bienestar (Foro 2)">
+            <div class="adc-icon-orb" data-query="¿En qué consiste el eje de Salud y Bienestar (Foro 2)?" data-orb-label="Foro 2: Salud" title="Salud y Bienestar (Foro 2)" role="button" tabindex="0">
               <img src="img/adc/salud.png" alt="Salud y Bienestar" />
             </div>
-            <div class="adc-icon-orb" title="Habilidades para la Vida (Foro 3)">
+            <div class="adc-icon-orb" data-query="¿En qué consiste el eje de Habilidades para la Vida (Foro 3)?" data-orb-label="Foro 3: Habilidades" title="Habilidades para la Vida (Foro 3)" role="button" tabindex="0">
               <img src="img/adc/habilidades.png" alt="Habilidades para la Vida" />
             </div>
-            <div class="adc-icon-orb" title="Medio Ambiente y Sustentabilidad (Foro 4)">
+            <div class="adc-icon-orb" data-query="¿En qué consiste el eje de Medio Ambiente y Sustentabilidad (Foro 4)?" data-orb-label="Foro 4: Sustentabilidad" title="Medio Ambiente y Sustentabilidad (Foro 4)" role="button" tabindex="0">
               <img src="img/adc/sustentabilidad.png" alt="Medio Ambiente y Sustentabilidad" />
             </div>
           </div>
@@ -660,31 +668,40 @@
         </article>
       </div>
 
-      <!-- FRANJA VISUAL DISTRIBUIDA (MEZCLA DE HEXÁGONOS ROTATORIOS Y POLAROIDS CON TÍTULOS OFICIALES) -->
+      <!-- FRANJA VISUAL DISTRIBUIDA (MEZCLA DE HEXÁGONOS ROTATORIOS Y POLAROIDS INTERACTIVOS CON TÍTULOS OFICIALES) -->
       <div class="distributed-photo-mosaic" aria-label="Galería de actividades scouts nacionales">
-        <div class="mosaic-item mosaic-polaroid tilt-left">
+        <div class="mosaic-item mosaic-polaroid tilt-left" data-query="¿Cuáles son las secciones de un Grupo Scout y qué edades tienen?" role="button" tabindex="0" title="Consultar sobre las Secciones Scouts">
           <img src="assets/scouts/foto_secciones_nac.png" alt="Secciones de la ASMAC" />
           <span>Secciones Scouts</span>
         </div>
-        <div class="mosaic-item mosaic-hex hex-theme-green">
+        <div class="mosaic-item mosaic-hex hex-theme-green" data-query="¿Qué eventos scouts existen?" role="button" tabindex="0" title="Consultar sobre eventos y Campo Escuela Scout Meztitla">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
               <img src="img/photos/p07.jpg" alt="Campo Escuela Scout Meztitla" class="hex-counter-img" />
             </div>
           </div>
+          <span class="hex-floating-caption cap-green">Campo Escuela Meztitla</span>
         </div>
-        <div class="mosaic-item mosaic-polaroid tilt-right">
+        <div class="mosaic-item mosaic-polaroid tilt-right" data-query="¿Qué son los Foros Nacionales de Jóvenes y cómo funciona la guía «De FOROS a CASA»?" role="button" tabindex="0" title="Consultar sobre los Foros Nacionales">
           <img src="assets/scouts/foros_extra_2.jpg" alt="Foros Nacionales" />
           <span>Foros Nacionales</span>
         </div>
-        <div class="mosaic-item mosaic-hex hex-theme-orange">
+        <div class="mosaic-item mosaic-hex hex-theme-orange" data-query="¿Qué es el EEAS?" role="button" tabindex="0" title="Consultar sobre el Encuentro de Expresión y Arte Scout (EEAS)">
           <div class="hex-rotator">
             <div class="hex-inner-mask">
               <img src="img/photos/p03.jpg" alt="Encuentro de Expresión y Arte Scout (EEAS)" class="hex-counter-img" />
             </div>
           </div>
+          <span class="hex-floating-caption cap-orange">EEAS Nacional</span>
         </div>
       </div>
+    </div>
+
+    <!-- Separador dinámico entre Secciones y Servicios Oficiales -->
+    <div class="section-wave-separator" aria-hidden="true">
+      <svg viewBox="0 0 1440 54" preserveAspectRatio="none">
+        <path d="M0,36 C420,4 840,52 1440,16 L1440,54 L0,54 Z" fill="#f0f7ff"></path>
+      </svg>
     </div>
   </section>
 
@@ -1038,6 +1055,17 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- BARRA FLOTANTE DE ACCESO RÁPIDO (BUSCAR / VOLVER ARRIBA) -->
+  <div id="floatingQuickBar" class="floating-quick-bar hidden" aria-label="Acciones rápidas">
+    <button type="button" id="floatingAskBtn" class="fab-pill fab-ask" title="Ir al buscador de preguntas">
+      <svg width="16" height="16" aria-hidden="true"><use href="#icon-search"/></svg>
+      <span>Preguntar</span>
+    </button>
+    <button type="button" id="floatingTopBtn" class="fab-pill fab-top" title="Volver al inicio" aria-label="Volver al inicio">
+      <span>↑</span>
+    </button>
   </div>
 
   <!-- PIE DE PÁGINA CON LOGOS OFICIALES ASMAC Y WOSM Y VERSIÓN ACTUALIZADA -->
