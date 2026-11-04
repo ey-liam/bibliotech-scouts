@@ -171,7 +171,6 @@ function formatInlineMd(text) {
 // ============================================================================
 async function initApp() {
   setupContactEmailUI();
-  setupPerformanceMode();
   bindEvents();
   setupScrollAnimations();
 
@@ -266,23 +265,6 @@ function setupScrollAnimations() {
 
   setup3DTiltInteractions();
 
-  // Boton para copiar el enlace directo del sitio web en el Hero
-  const copySiteUrlBtn = document.getElementById("copySiteUrlBtn");
-  if (copySiteUrlBtn) {
-    copySiteUrlBtn.addEventListener("click", () => {
-      const url = copySiteUrlBtn.getAttribute("data-url") || window.location.href;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).catch(() => {});
-      }
-      copySiteUrlBtn.textContent = "Enlace copiado";
-      copySiteUrlBtn.classList.add("copied");
-      setTimeout(() => {
-        copySiteUrlBtn.textContent = "Copiar enlace";
-        copySiteUrlBtn.classList.remove("copied");
-      }, 2000);
-    });
-  }
-
   // Barra flotante de acceso rapido + Scroll-Spy de navegacion
   const quickBar = document.getElementById("floatingQuickBar");
   const askFab = document.getElementById("floatingAskBtn");
@@ -345,38 +327,6 @@ function setupScrollAnimations() {
   });
 }
 
-function setupPerformanceMode() {
-  const perfBtn = document.getElementById("perfToggleBtn");
-  const perfLabel = document.getElementById("perfModeLabel");
-  const floatingPerfBtn = document.getElementById("floatingPerfBtn");
-  const floatingPerfLabel = document.getElementById("floatingPerfLabel");
-
-  const savedMode = localStorage.getItem("bibliotech_performance_mode");
-  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let isFast = savedMode === "rapida" || (savedMode === null && prefersReduced);
-
-  function applyMode(fast) {
-    document.body.classList.toggle("vista-rapida", fast);
-    if (perfBtn) {
-      perfBtn.classList.toggle("is-fast", fast);
-    }
-    const labelText = fast ? "Vista Rápida" : "Vista Completa";
-    if (perfLabel) perfLabel.textContent = labelText;
-    if (floatingPerfLabel) floatingPerfLabel.textContent = labelText;
-    localStorage.setItem("bibliotech_performance_mode", fast ? "rapida" : "completa");
-  }
-
-  applyMode(isFast);
-
-  function toggle() {
-    isFast = !isFast;
-    applyMode(isFast);
-  }
-
-  if (perfBtn) perfBtn.addEventListener("click", toggle);
-  if (floatingPerfBtn) floatingPerfBtn.addEventListener("click", toggle);
-}
-
 function setup3DTiltInteractions() {
   if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) return;
   const tiltCards = document.querySelectorAll(
@@ -384,7 +334,6 @@ function setup3DTiltInteractions() {
   );
   tiltCards.forEach((card) => {
     card.addEventListener("pointermove", (e) => {
-      if (document.body.classList.contains("vista-rapida")) return;
       const rect = card.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
       const x = (e.clientX - rect.left) / rect.width;

@@ -52,7 +52,7 @@
     </defs>
   </svg>
 
-  <!-- BARRA DE NAVEGACIÓN PRINCIPAL -->
+  <!-- BARRA DE NAVEGACIÓN PRINCIPAL (FIJA, SIEMPRE VISIBLE AL DESPLAZARSE) -->
   <header class="main-header">
     <div class="container header-inner">
       <a href="#inicio" class="brand-logo" aria-label="Inicio BiblioTech">
@@ -78,12 +78,6 @@
         <a href="#cambios" class="nav-link">Evolución</a>
         <a href="#explorar" class="nav-link">Catálogo</a>
       </nav>
-
-      <!-- BOTÓN DE MODO DE RENDIMIENTO: VISTA COMPLETA / VISTA RÁPIDA LIGERA -->
-      <button type="button" id="perfToggleBtn" class="perf-mode-pill" title="Alternar entre Vista Completa (con animaciones) y Vista Rápida (modo ligero sin efectos pesados)" aria-label="Modo de rendimiento">
-        <span class="perf-dot" aria-hidden="true"></span>
-        <span id="perfModeLabel">Vista Completa</span>
-      </button>
     </div>
   </header>
 
@@ -133,69 +127,57 @@
     </div>
 
     <div class="container hero-container">
-      <div class="hero-top-Copy">
-        <div class="hero-brand-display">
-          <span class="hero-big-bibliotech">BiblioTech</span>
-          <span class="hero-tiny-byliam">By Liam</span>
-        </div>
-
-        <div class="hero-kicker-pill">
-          <img src="img/logo-flor.png" alt="" class="kicker-icon" />
-          <span>Asociación de Scouts de México ASMAC y World Scouting WOSM</span>
-        </div>
-        <h1 class="hero-title">
-          Explora, consulta y lee toda la información <span class="text-gradient">Scout</span> en un solo lugar
-        </h1>
-        <p class="hero-description">
-          Biblioteca digital y buscador interactivo con información basada en los documentos oficiales vigentes, diseñada para una búsqueda ágil y de fácil comprensión para niñas, niños, adolescentes, jóvenes y adultos.
-          Consulta más de <strong>5,356 preguntas y respuestas</strong> y <strong>498 libros, manuales, guías, reglamentos y comunicados descargables</strong>.
-        </p>
-
-        <!-- BARRA 3D DE ENLACE DIRECTO Y PORTALES RÁPIDOS -->
-        <div class="hero-share-link-bar" aria-label="Enlace directo del sitio web y accesos rápidos">
-          <div class="share-url-pill">
-            <span class="share-url-tag">ENLACE WEB</span>
-            <a href="https://ey-liam.github.io/bibliotech-scouts/" target="_blank" rel="noopener noreferrer" class="share-url-link">ey-liam.github.io/bibliotech-scouts</a>
-            <button type="button" id="copySiteUrlBtn" class="btn-3d-copy-url" data-url="https://ey-liam.github.io/bibliotech-scouts/">
-              Copiar enlace
-            </button>
+      <div class="hero-showcase-grid">
+        <div class="hero-top-copy">
+          <div class="hero-brand-display">
+            <span class="hero-big-bibliotech">BiblioTech</span>
+            <span class="hero-tiny-byliam">By Liam - Provincia TLXH</span>
           </div>
-          <a href="#guia-inicio" class="btn-hero-jump">
-            Primeros Pasos: Grupos, SISAS, Foros y Proyectos →
-          </a>
-        </div>
-      </div>
 
-      <!-- TRÍO DE FOTOS EN OCTÁGONOS/HEXÁGONOS SUPERPUESTOS CON TÍTULOS OFICIALES REALES -->
-      <div class="hero-hex-trio" aria-label="Fotografías destacadas del Movimiento Scout en México">
-        <!-- Marco Izquierdo (Borde Verde - Foto p01.jpg) -->
-        <div class="hex-cluster-item hex-pos-left hex-theme-green tilt-3d" data-query="¿Qué es la Comunidad de Caminantes?" role="button" tabindex="0" title="Consultar sobre la Comunidad de Caminantes">
-          <div class="hex-rotator">
-            <div class="hex-inner-mask">
-              <img src="img/photos/p01.jpg" alt="Comunidad de Caminantes" class="hex-counter-img" />
+          <div class="hero-kicker-pill">
+            <img src="img/logo-flor.png" alt="" class="kicker-icon" />
+            <span>Asociación de Scouts de México ASMAC y World Scouting WOSM</span>
+          </div>
+          <h1 class="hero-title">
+            Explora, consulta y lee toda la información <span class="text-gradient">Scout</span> en un solo lugar
+          </h1>
+          <p class="hero-description">
+            Biblioteca digital y buscador interactivo con información basada en los documentos oficiales vigentes, diseñada para una búsqueda ágil y de fácil comprensión para niñas, niños, adolescentes, jóvenes y adultos.
+            Consulta más de <strong>5,356 preguntas y respuestas</strong> y <strong>498 libros, manuales, guías, reglamentos y comunicados descargables</strong>.
+          </p>
+        </div>
+
+        <!-- TRÍO DE FOTOS EN OCTÁGONOS/HEXÁGONOS SUPERPUESTOS CON TÍTULOS OFICIALES REALES -->
+        <div class="hero-hex-trio" aria-label="Fotografías destacadas del Movimiento Scout en México">
+          <!-- Marco Izquierdo (Borde Verde - Foto p01.jpg) -->
+          <div class="hex-cluster-item hex-pos-left hex-theme-green tilt-3d" data-query="¿Qué es la Comunidad de Caminantes?" role="button" tabindex="0" title="Consultar sobre la Comunidad de Caminantes">
+            <div class="hex-rotator">
+              <div class="hex-inner-mask">
+                <img src="img/photos/p01.jpg" alt="Comunidad de Caminantes" class="hex-counter-img" />
+              </div>
             </div>
+            <span class="hex-floating-caption cap-green">Comunidad de Caminantes</span>
           </div>
-          <span class="hex-floating-caption cap-green">Comunidad de Caminantes</span>
-        </div>
 
-        <!-- Marco Central (Borde Naranja-Rojo, superpuesto al frente - Foto caminantes.jpg) -->
-        <div class="hex-cluster-item hex-pos-center hex-theme-orange tilt-3d" data-query="¿Cómo hago mi desarrollo personal en los Scouts?" role="button" tabindex="0" title="Consultar sobre progresión personal y Siempre Adelante">
-          <div class="hex-rotator">
-            <div class="hex-inner-mask">
-              <img src="img/photos/caminantes.jpg" alt="Siempre Adelante — Comunidad de Caminantes" class="hex-counter-img" />
+          <!-- Marco Central (Borde Naranja-Rojo, superpuesto al frente - Foto caminantes.jpg) -->
+          <div class="hex-cluster-item hex-pos-center hex-theme-orange tilt-3d" data-query="¿Cómo hago mi desarrollo personal en los Scouts?" role="button" tabindex="0" title="Consultar sobre progresión personal y Siempre Adelante">
+            <div class="hex-rotator">
+              <div class="hex-inner-mask">
+                <img src="img/photos/caminantes.jpg" alt="Siempre Adelante — Comunidad de Caminantes" class="hex-counter-img" />
+              </div>
             </div>
+            <span class="hex-floating-caption cap-orange">Siempre Adelante</span>
           </div>
-          <span class="hex-floating-caption cap-orange">Siempre Adelante</span>
-        </div>
 
-        <!-- Marco Derecho (Borde Azul - Foto p04.jpg) -->
-        <div class="hex-cluster-item hex-pos-right hex-theme-blue tilt-3d" data-query="¿Qué son los Foros Nacionales de Jóvenes y cómo funciona la guía «De FOROS a CASA»?" role="button" tabindex="0" title="Consultar sobre los Foros Nacionales">
-          <div class="hex-rotator">
-            <div class="hex-inner-mask">
-              <img src="img/photos/p04.jpg" alt="Foros Nacionales" class="hex-counter-img" />
+          <!-- Marco Derecho (Borde Azul - Foto p04.jpg) -->
+          <div class="hex-cluster-item hex-pos-right hex-theme-blue tilt-3d" data-query="¿Qué son los Foros Nacionales de Jóvenes y cómo funciona la guía «De FOROS a CASA»?" role="button" tabindex="0" title="Consultar sobre los Foros Nacionales">
+            <div class="hex-rotator">
+              <div class="hex-inner-mask">
+                <img src="img/photos/p04.jpg" alt="Foros Nacionales" class="hex-counter-img" />
+              </div>
             </div>
+            <span class="hex-floating-caption cap-blue">Foros Nacionales</span>
           </div>
-          <span class="hex-floating-caption cap-blue">Foros Nacionales</span>
         </div>
       </div>
 
@@ -1301,10 +1283,6 @@
 
   <!-- BARRA FLOTANTE DE ACCESO RÁPIDO (BUSCAR / VOLVER ARRIBA) -->
   <div id="floatingQuickBar" class="floating-quick-bar hidden" aria-label="Acciones rápidas">
-    <button type="button" id="floatingPerfBtn" class="fab-pill fab-perf" title="Alternar entre Vista Completa y Vista Rápida">
-      <span class="perf-dot mini" aria-hidden="true"></span>
-      <span id="floatingPerfLabel">Vista Completa</span>
-    </button>
     <button type="button" id="floatingAskBtn" class="fab-pill fab-ask" title="Ir al buscador de preguntas">
       <svg width="16" height="16" aria-hidden="true"><use href="#icon-search"/></svg>
       <span>Preguntar</span>
