@@ -3090,6 +3090,38 @@ h1, h2, h3, h4 {
   display: block;
 }
 
+.footer-legal-disclaimer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+  text-align: center;
+}
+
+.footer-db-cutoff {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.footer-db-cutoff strong {
+  color: #e2e8f0;
+}
+
+.footer-non-affiliation {
+  font-size: 0.72rem;
+  color: #64748b;
+  max-width: 980px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+.footer-non-affiliation strong {
+  color: #94a3b8;
+}
+
 @media (max-width: 768px) {
   .library-controls-bar {
     width: 100%;

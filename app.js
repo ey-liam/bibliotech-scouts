@@ -740,11 +740,60 @@ function matchTopicsInBrowser(query) {
   return results.slice(0, 2);
 }
 
+function findBestQuestionBankAnswer(query, tokens) {
+  if (!tokens || tokens.length < 2 || !STATE.questionBank.length) return null;
+  const qNorm = normalizeQuestionKey(query);
+  let best = null;
+  let bestScore = 0;
+
+  for (const item of STATE.questionBank) {
+    if (!item.ans) continue;
+    const nq = normalizeQuestionKey(item.q || "");
+    if (!nq) continue;
+    let hits = 0;
+    let score = 0;
+    for (const tk of tokens) {
+      if (nq.includes(tk)) {
+        hits += 1;
+        score += tk.length >= 5 ? 4 : 2;
+      }
+    }
+    if (hits === tokens.length || (tokens.length >= 3 && hits >= tokens.length - 1)) {
+      if (nq.includes(qNorm)) score += 15;
+      if (score > bestScore) {
+        bestScore = score;
+        best = item;
+      }
+    }
+  }
+  return bestScore >= 6 ? best : null;
+}
+
 function answerLocallyInBrowser(query) {
   const qClean = normalizeQuestionKey(query);
   const exactQ = STATE.qBankByNorm[qClean];
 
-  if (exactQ && exactQ.doc_id && STATE.docsById[exactQ.doc_id]) {
+  if (exactQ && exactQ.ans) {
+    const qSources = [];
+    if (exactQ.doc_id && STATE.docsById[exactQ.doc_id]) {
+      const doc = STATE.docsById[exactQ.doc_id];
+      qSources.push({
+        doc_id: doc.id,
+        title: doc.title,
+        filename: doc.filename,
+        ext: doc.ext,
+        year: doc.year,
+        page_start: exactQ.page || 1
+      });
+    }
+    return {
+      query,
+      answer_markdown: exactQ.ans,
+      sources: qSources
+    };
+  }
+
+  if (exactQ && exactQ.doc_id && STATE.docsById[exactQ.doc_id] && !exactQ.topic_id) {
     const doc = STATE.docsById[exactQ.doc_id];
     return {
       query,
@@ -756,7 +805,7 @@ function answerLocallyInBrowser(query) {
           filename: doc.filename,
           ext: doc.ext,
           year: doc.year,
-          page_start: 1
+          page_start: exactQ.page || 1
         }
       ]
     };
@@ -764,6 +813,29 @@ function answerLocallyInBrowser(query) {
 
   const matchedTopics = matchTopicsInBrowser(query);
   const tokens = tokenizeQuery(query);
+
+  if (!matchedTopics.length) {
+    const bestQA = findBestQuestionBankAnswer(query, tokens);
+    if (bestQA && bestQA.ans) {
+      const qSources = [];
+      if (bestQA.doc_id && STATE.docsById[bestQA.doc_id]) {
+        const doc = STATE.docsById[bestQA.doc_id];
+        qSources.push({
+          doc_id: doc.id,
+          title: doc.title,
+          filename: doc.filename,
+          ext: doc.ext,
+          year: doc.year,
+          page_start: bestQA.page || 1
+        });
+      }
+      return {
+        query,
+        answer_markdown: bestQA.ans,
+        sources: qSources
+      };
+    }
+  }
   const sources = [];
   const seenIds = new Set();
 

@@ -1632,6 +1632,746 @@
         "Carnet Aventuras en la Naturaleza para Tropa 2024.pdf"
       ],
       "content": "### Orientacion, Brujula, Rosa de los Vientos y Signos de Pista (`Manual del Pie Tierno`)\n\n- **La Rosa de los Vientos (16 rumbos):**\n  - **4 Puntos Cardinales:** Norte (`0 / 360 grados`), Este (`90 grados`), Sur (`180 grados`), Oeste (`270 grados`).\n  - **4 Rumbos Laterales:** Noreste (`NE, 45 grados`), Sureste (`SE, 135 grados`), Suroeste (`SO, 225 grados`), Noroeste (`NO, 315 grados`).\n  - **8 Rumbos Colaterales:** `NNE, ENE, ESE, SSE, SSO, OSO, ONO, NNO`.\n- **Signos de Pista tradicionales:**\n  Se trazan de manera discreta con elementos naturales en el suelo sin danar arboles ni rocas para indicar: *Inicio de pista, Camino a seguir, Doblar a la derecha o izquierda, Peligro, Agua potable o no potable, Mensaje oculto a X pasos y Fin de pista / Regreso a casa (circulo con un punto central, simbolo empleado por Baden-Powell)*."
+    },
+    {
+      "id": "estatutos_2023_estructura_y_articulos",
+      "patterns": [
+        "\\bestatutos 2023\\b",
+        "\\bestatutos de la asmac\\b",
+        "\\bcategorias de miembros\\b",
+        "\\bmiembros activos\\b",
+        "\\bmiembros asociados\\b",
+        "\\basamblea nacional de asociados\\b",
+        "\\bcomision de vigilancia\\b"
+      ],
+      "keywords": [
+        "estatutos 2023",
+        "estatutos asmac",
+        "asamblea nacional",
+        "consejo nacional",
+        "comision de vigilancia",
+        "miembros activos",
+        "miembros asociados",
+        "miembros honorarios"
+      ],
+      "source_files": [
+        "Estatutos 2023.pdf",
+        "Declaracion de Principios 2023.pdf",
+        "REGLAMENTO 2023.pdf"
+      ],
+      "content": "### Estatutos Vigentes de la ASMAC (Aprobados el 29 de abril de 2023)\nLos **Estatutos 2023** (`Estatutos 2023.pdf`, 42 páginas) rigen la vida jurídica e institucional de la **Asociación de Scouts de México, A.C.**:\n\n#### 1. Objeto Social y Principios Fundamentales\n- La ASMAC es una asociación civil sin fines de lucro cuyo objeto es contribuir a la educación integral de niñas, niños, adolescentes y jóvenes mediante el **Método Scout** y el sistema de valores basado en la **Promesa y la Ley Scout**.\n- Se rige por la **Declaración de Principios 2023** (*Deberes para con Dios, Deberes para con los demás y Deberes para consigo mismo*).\n\n#### 2. Categorías de Miembros en la ASMAC\n- **Miembros Activos:** Las niñas, niños, adolescentes, jóvenes y adultos registrados anualmente con membresía vigente que participan en las Secciones, Grupos, Provincias o nivel Nacional.\n- **Miembros Asociados:**Integrantes con derecho a voz y voto en la Asamblea Nacional conforme a los requisitos de antigüedad, cargo y mérito estatutario.\n- **Miembros Benefactores y Miembros Honorarios:** Personas físicas o morales que brindan apoyo patrimonial o reciben distinción especial del Consejo Nacional.\n\n#### 3. Órganos de Gobierno Nacional\n- **Asamblea Nacional de Asociados:** Órgano supremo de la Asociación.\n- **Consejo Nacional:** Órgano colegiado de dirección estratégica presidido por el **Presidente Nacional**.\n- **Corte Nacional de Honor (CNH):** Órgano autónomo de justicia asociativa y condecoraciones.\n- **Comisión de Vigilancia:** Órgano de fiscalización y supervisión estatutaria.\n- **Jefatura Scout Nacional (JSN):** Órgano ejecutivo encabezado por el **Jefe Scout Nacional**."
+    },
+    {
+      "id": "reglamento_2023_niveles_grupo_provincia_nacional",
+      "patterns": [
+        "\\breglamento 2023\\b",
+        "\\bconsejo de grupo\\b",
+        "\\bcomite de grupo\\b",
+        "\\bjefe de grupo\\b",
+        "\\bconsejo de provincia\\b",
+        "\\bcomo se organiza un grupo scout\\b"
+      ],
+      "keywords": [
+        "reglamento 2023",
+        "consejo de grupo",
+        "comite de grupo",
+        "jefe de grupo",
+        "subjefe de grupo",
+        "consejo de provincia",
+        "apertura de grupo"
+      ],
+      "source_files": [
+        "REGLAMENTO 2023.pdf",
+        "Manual Apertura y Cierre de Grupo 2023.pdf",
+        "02 Manual de Operación Nivel Grupo 2018.pdf",
+        "01 Manual de Operación Nivel Provincia.pdf"
+      ],
+      "content": "### Reglamento 2023 de la ASMAC y Operación de Grupo y Provincia\nEl **Reglamento 2023** (`REGLAMENTO 2023.pdf`, 72 páginas) y el **Manual de Apertura y Cierre de Grupo 2023** (`Manual Apertura y Cierre de Grupo 2023.pdf`) establecen la operación en los tres niveles de la Asociación:\n\n#### 1. Nivel Grupo Scout\n- **Consejo de Grupo:** Máximo órgano de coordinación del Grupo Scout; lo integran el Jefe de Grupo, Subjefes de Grupo, Scouters de todas las secciones y el Comité de Grupo (padres/madres de familia y adultos de apoyo).\n- **Jefe o Jefa de Grupo:** Responsable de dirigir la operación educativa y administrativa del Grupo, elegido conforme a la *Guía de Elección de Jefe de Grupo*.\n- **Secciones del Grupo:** Manada de Lobatos (`6 a <10 años`), Tropa de Scouts (`10 a <14 años`), Comunidad de Caminantes (`14 a <18 años`) y Clan de Rovers (`18 a <22 años`).\n\n#### 2. Nivel Provincia Scout\n- **Consejo de Provincia:** Integrado por el Presidente de Provincia, Vicepresidente, Secretario, Tesorero, Comisionados Provinciales (Programa de Jóvenes, Adultos en el Movimiento Scout, Administración/Gestión) y los Jefes de Grupo de la jurisdicción.\n\n#### 3. Requisitos de Registro y Actividades al Aire Libre\n- Todo miembro participante debe contar con **registro vigente en el SISAS** (lo cual activa la cobertura del **Seguro contra Accidentes Scout**).\n- Toda salida, acantonamiento o campamento requiere la autorización del Consejo de Grupo y las fichas médicas y permisos firmados de madres, padres o tutores."
+    },
+    {
+      "id": "cnh_2025_condecoraciones_y_disciplina",
+      "patterns": [
+        "\\breglamento cnh\\b",
+        "\\bcorte nacional de honor\\b",
+        "\\bbellota de plata\\b",
+        "\\bcarita sonriente\\b",
+        "\\bcaballo de plata\\b",
+        "\\bberrendo de plata\\b",
+        "\\bmedalla del aguila\\b",
+        "\\bcondecoraciones scouts\\b"
+      ],
+      "keywords": [
+        "reglamento cnh 2025",
+        "corte nacional de honor",
+        "bellota de plata",
+        "carita sonriente de oro",
+        "caballo de plata",
+        "berrendo de plata",
+        "condecoraciones"
+      ],
+      "source_files": [
+        "Reglamento CNH 2025.pdf",
+        "Estatutos 2023.pdf",
+        "Codigo de Ética ASMAC.pdf",
+        "CODIGO DE CONDUCTA 2025.pdf"
+      ],
+      "content": "### Corte Nacional de Honor (CNH) 2025, Justicia Asociativa y Condecoraciones\nDe acuerdo con el **Reglamento de la Corte Nacional de Honor 2025** (`Reglamento CNH 2025.pdf`, 24 páginas) y los **Estatutos 2023**:\n\n#### 1. Integración y Requisitos de la CNH\n- Está integrada por **6 miembros electos por la Asamblea Nacional de Asociados**.\n- Para ser integrante de la CNH se requiere tener al menos **35 años cumplidos**, mínimo **5 años de antigüedad ininterrumpida** en la ASMAC, solvencia moral reconocida y no desempeñar simultáneamente otro cargo directivo ejecutivo.\n\n#### 2. Atribuciones Disciplinarias y Debido Proceso\n- Conoce en **primera instancia** de las quejas contra miembros de órganos nacionales y en **segunda instancia (apelación)** de las resoluciones emitidas por los Consejos de Provincia o Grupo.\n- Garantiza el derecho de audiencia, presunción de inocencia y debido proceso. Las sanciones estatutarias pueden consistir en **amonestación escrita, suspensión temporal de derechos o expulsión definitiva**.\n\n#### 3. Condecoraciones y Reconocimientos Oficiales\nLa Corte Nacional de Honor dictamina y otorga las máximas condecoraciones de la ASMAC:\n- **Bellota de Plata:** Máxima condecoración por servicios eminentes y extraordinarios al Movimiento Scout en México.\n- **Berrendo de Plata y Caballo de Plata:** Reconocimientos por servicios distinguidos a nivel nacional y provincial.\n- **Carita Sonriente de Oro:** Reconocimiento al servicio meritorio en la rama de Manada de Lobatos.\n- **Medalla del Valor / Heroísmo y Medalla del Águila:** Otorgadas por actos heroicos de salvamento de vida o mérito excepcional."
+    },
+    {
+      "id": "politica_a_salvo_del_peligro_sfh_bullying_acoso",
+      "patterns": [
+        "\\ba salvo del peligro\\b",
+        "\\bsafe from harm\\b",
+        "\\bpolitica sfh\\b",
+        "\\bbullying\\b",
+        "\\bacoso\\b",
+        "\\bproteccion juvenil\\b",
+        "\\bregla de los dos adultos\\b"
+      ],
+      "keywords": [
+        "a salvo del peligro",
+        "safe from harm",
+        "politica sfh 2024",
+        "bullying",
+        "hostigamiento",
+        "acoso",
+        "proteccion juvenil",
+        "conecta"
+      ],
+      "source_files": [
+        "Política SFH 2024.pdf",
+        "01 Política Nacional A Salvo del Peligro.pdf",
+        "04 Política Nacional sobre Bullying 2020.pdf",
+        "03 Política Nacional contra el Hostigamiento o acoso sexual.pdf",
+        "CODIGO DE CONDUCTA 2025.pdf",
+        "Denuncia – Conecta.html"
+      ],
+      "content": "### Política Nacional A Salvo del Peligro (Safe from Harm 2024), Bullying y Código de Conducta 2025\nCon base en la **Política SFH 2024** (`Política SFH 2024.pdf`), la **Política Nacional A Salvo del Peligro** (`01 Política Nacional A Salvo del Peligro.pdf`), la **Política sobre Bullying** (`04 Política Nacional sobre Bullying 2020.pdf`) y el **Código de Conducta 2025** (`CODIGO DE CONDUCTA 2025.pdf`):\n\n#### 1. Principios de Protección Infantil y Juvenil\n- **Cero tolerancia** a cualquier forma de abuso físico, psicológico, emocional, verbal, sexual, negligencia, explotación o *bullying* (acoso escolar o entre pares, presencial o cibernético).\n- **Regla de visibilidad y acompañamiento (Dos adultos):** Ningún adulto puede sostener reuniones cerradas a solas ni compartir tienda de campaña o habitación privada con niñas, niños, adolescentes o jóvenes; las áreas de descanso y sanitarios de jóvenes y adultos deben estar separadas.\n- **Comunicación digital responsable:** Toda comunicación digital con menores de edad debe realizarse en canales grupales abiertos y con conocimiento de madres, padres o tutores.\n\n#### 2. Certificación Obligatoria SFH para Adultos\n- Todo adulto voluntario o profesional en la ASMAC debe mantener vigente su curso internacional **Safe from Harm (A Salvo del Peligro)** y firmar anualmente el **Código de Conducta 2025**.\n\n#### 3. Protocolo de Actuación y Reporte en CONECTA\n1. **Priorizar la seguridad inmediata** de la niña, niño, adolescente o joven y escuchar sin revictimizar.\n2. **No intentar mediar** situaciones de violencia, acoso o abuso.\n3. **Reportar de inmediato** a través del canal oficial confidencial **CONECTA** (`Denuncia – Conecta.html` en `scouts.org.mx`) y dar aviso a las autoridades competentes y a los padres o tutores."
+    },
+    {
+      "id": "manual_honores_a_la_bandera_y_escolta_scout",
+      "patterns": [
+        "\\bhonores a la bandera\\b",
+        "\\bescolta scout\\b",
+        "\\bcomo saludar a la bandera\\b",
+        "\\bguardia de honor\\b",
+        "\\bdoblado de la bandera\\b"
+      ],
+      "keywords": [
+        "honores a la bandera",
+        "escolta scout",
+        "abanderado",
+        "comandante de escolta",
+        "guardia de honor 2026",
+        "saludo a la bandera"
+      ],
+      "source_files": [
+        "03 Manual Scout de Honores a la Bandera Nacional.pdf",
+        "Protocolo de seguridad Guardia de Honor 2026.pdf"
+      ],
+      "content": "### Manual Scout de Honores a la Bandera Nacional y Guardia de Honor 2026\nDe acuerdo con el **Manual Scout de Honores a la Bandera Nacional** (`03 Manual Scout de Honores a la Bandera Nacional.pdf`, 63 páginas) y el **Protocolo de Seguridad Guardia de Honor 2026** (`Protocolo de seguridad Guardia de Honor 2026.pdf`):\n\n#### 1. Integración de la Escolta Scout (6 elementos)\n- **En primera fila (Frente):** Guardia Izquierdo (`GI`), **Abanderado (`AB`)** al centro, y **Comandante de la Escolta (`CM`)** a la derecha (quien da las voces de mando).\n- **En segunda fila (Retaguardia):** Retaguardia Izquierdo (`RI`) detrás del `GI`, y Retaguardia Derecho (`RD`) detrás del `CM`.\n\n#### 2. Saludo Scout a la Bandera Nacional\n- Cuando el miembro porta **uniforme scout o pañoleta**, realiza el saludo a la Bandera Nacional llevando la **Seña Scout a la altura de la sien derecha** (o al borde del sombrero cuatro pedradas / boina si porta tocado).\n- Cuando no porta uniforme ni pañoleta, realiza el saludo civil con la mano derecha extendida sobre el pecho.\n\n#### 3. Cuidado, Doblado e Incineración de la Bandera\n- La Bandera Nacional **nunca debe tocar el suelo ni el agua**.\n- Al finalizar los honores, se dobla longitudinalmente y después en triángulos sucesivos hasta quedar visible el Escudo Nacional.\n- Cuando una Bandera Nacional se deteriora por el uso, se despide mediante una **Ceremonia Solemne de Incineración** conforme a la Ley sobre el Escudo, la Bandera y el Himno Nacionales."
+    },
+    {
+      "id": "go_solar_plastic_tide_turners_champions_acciones_humanitarias",
+      "patterns": [
+        "\\bgo solar\\b",
+        "\\bplastic tide turners\\b",
+        "\\bmarea de plastico\\b",
+        "\\bchampions for nature\\b",
+        "\\bcampeones de la naturaleza\\b",
+        "\\bacciones humanitarias\\b",
+        "\\bequipos scouts de emergencias\\b"
+      ],
+      "keywords": [
+        "go solar",
+        "plastic tide turners",
+        "marea de plastico",
+        "champions for nature",
+        "campeones de la naturaleza",
+        "acciones humanitarias",
+        "equipos scouts de emergencias"
+      ],
+      "source_files": [
+        "Guia Nacional para la Obtención de la Insignia Go Solar.pdf",
+        "Manual Plastic Tide Turners.pdf",
+        "Guia Champions for nature.pdf",
+        "Guia - Acciones Humanitarias.pdf",
+        "03 Guía para Scouts en Acciones Humanitarias.pdf",
+        "01 Guía de los Equipos Scouts de Emergencias.pdf"
+      ],
+      "content": "### Insignias y Programas del Marco Mundo Mejor: Go Solar, Plastic Tide Turners, Campeones de la Naturaleza y Acciones Humanitarias\n\n#### 1. Insignia Go Solar (`Guia Nacional para la Obtención de la Insignia Go Solar.pdf`, 80 págs.)\n- Iniciativa educativa orientada al aprovechamiento de la **energía solar y las energías limpias**.\n- Comprende experimentos y retos prácticos por sección (hornos y cocinas solares, deshidratadores solares, calentadores de agua y concientización energética comunitaria).\n\n#### 2. Reto Marea de Plástico — Plastic Tide Turners (`Manual Plastic Tide Turners.pdf`, 36 págs.)\n- Desarrollado junto con el Programa de las Naciones Unidas para el Medio Ambiente (**PNUMA / UNEP**) dentro de **Tribu de la Tierra**.\n- Se estructura en **3 niveles progresivos** (*Inicial, Líder y Campeón*) enfocados en auditar y eliminar plásticos de un solo uso en la vida personal, en el Grupo Scout y en la comunidad.\n\n#### 3. Campeones de la Naturaleza — Champions for Nature (`Guia Champions for nature.pdf`, 36 págs.)\n- Desarrollada junto con **WWF**, promueve hábitos sustentables, protección de especies endémicas y restauración de biodiversidad.\n\n#### 4. Scouts en Acciones Humanitarias y Equipos Scouts de Emergencias (`Guia - Acciones Humanitarias.pdf` y `01 Guía de los Equipos Scouts de Emergencias.pdf`)\n- Organiza la respuesta scout ante desastres y contingencias en fases de **Prevención, Mitigación, Preparación, Respuesta (Centros de Acopio conforme al `02 Manual Operativo para los Centros de Acopio.pdf`) y Rehabilitación**, priorizando siempre la integridad de la membresía."
+    },
+    {
+      "id": "de_foros_a_casa_y_redes_juveniles",
+      "patterns": [
+        "\\bde foros a casa\\b",
+        "\\bred de jovenes\\b",
+        "\\bred de caminantes\\b",
+        "\\bforos nacionales\\b",
+        "\\bcnrc\\b",
+        "\\bcprc\\b"
+      ],
+      "keywords": [
+        "de foros a casa",
+        "red de caminantes",
+        "red de jovenes",
+        "foros nacionales",
+        "comite nacional de la red de caminantes",
+        "participacion juvenil"
+      ],
+      "source_files": [
+        "De FOROS a CASA.pdf",
+        "010 Guia Red de Caminantes.pdf",
+        "09 Guia La Red de Jóvenes.pdf",
+        "ENERO-Taller Foros 2026 (1).pdf"
+      ],
+      "content": "### Participación Juvenil: Foros Nacionales, «De FOROS a CASA», Red de Caminantes y Red de Jóvenes\nCon base en **De FOROS a CASA** (`De FOROS a CASA.pdf`), la **Guía Red de Caminantes** (`010 Guia Red de Caminantes.pdf`) y la **Guía La Red de Jóvenes** (`09 Guia La Red de Jóvenes.pdf`):\n\n#### 1. ¿Qué son los Foros Nacionales y cómo se estructuran?\n- Son los espacios oficiales de participación democrática donde Scouts de Tropa, Caminantes y Rovers dialogan, proponen soluciones sobre los **4 Ejes Temáticos** (*Paz y Compromiso Comunitario, Salud y Bienestar, Habilidades para la Vida y Medio Ambiente y Sustentabilidad*) y eligen a sus comités juveniles.\n- Se desarrollan en tres etapas: **Foro de Grupo / Local**, **Foro de Provincia** y **Foro Nacional**.\n\n#### 2. ¿Qué es la guía «De FOROS a CASA»?\n- Es la metodología oficial para que las conclusiones, declaratorias y propuestas generadas en los **Foros Nacionales** no se queden solo en el evento, sino que regresen a cada Provincia, Grupo, Comunidad, Tropa y Clan convertidas en **proyectos locales concretos**.\n\n#### 3. Red de Caminantes y Red de Jóvenes\n- **Red de Caminantes (`010 Guia Red de Caminantes.pdf`):** Articula a las Comunidades de Caminantes a través de los Comités de Provincia (`CPRC`) y el **Comité Nacional de la Red de Caminantes (`CNRC`)**, creador de la plataforma **Agentes de Cambio.MX**.\n- **Red de Jóvenes (`09 Guia La Red de Jóvenes.pdf`):** Impulsa el liderazgo, la representación juvenil institucional y la incidencia comunitaria de los Rovers."
+    },
+    {
+      "id": "libro_centenario_doc_0133",
+      "patterns": [
+        "40\\ anos\\ de\\ expresion\\ y\\ arte\\ scout"
+      ],
+      "keywords": [
+        "40 anos de expresion y arte scout",
+        "40 años de expresión y arte scout.pdf"
+      ],
+      "source_files": [
+        "40 Años de Expresión y Arte Scout.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «40 Años de Expresión y Arte Scout»\n- **Archivo oficial:** `40 Años de Expresión y Arte Scout.pdf` (50 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** 40 Años de Expresión y Arte Scout Ángel Martínez Herrera (coordinador) 40 años de Expresión y Arte Scout Memorias y anécdotas de ganadores, creadores y organizadores del EEAS Primera edición con el título Encuentro de Expresión y Arte Scout, 40 años de memorias y anécdotas de ganadores, creadores y organizadores: 2019 Primera edición digital:\n- **(Pág. 16):** 14 fuera propia y sirviera a las necesidades del campo escuela, y, al mismo tiempo, incluir actividades que ayudaran a reforzar aspectos detectados que requerían innovación y cambios en la aplicación del programa scout, como resultado del diagnósti\u0002co de la recién creada Comisión Nacional de Programa, cuyos miembros eran Víctor Manuel Ortiz González,...\n- **(Pág. 24):** 22 Plástica. Fue así como me convertí de participante a parte de la organización del eeas. Para llevar a cabo este concurso, era necesario armar un equipo de trabajo al que le gustara desvelarse para montar la exposición de dibujos, pinturas, fotografías, esculturas y dise\u0002ños presentados;\n- **(Pág. 33):** 31 informaron que sería el coordinador general de los próximos tres eventos. Sentí sobre mí el peso de una gran responsabili\u0002dad, pero, a su vez, la enorme alegría colaborar aún más con un evento al que ya le había tomado un gran cariño. Una nueva aventura comenzó para mí.\n- **(Pág. 40):** 38 Seguro escribí ambos textos en el comedor de la casa fa\u0002miliar, aporreando con furia las teclas, redondas como corcho\u0002latas, de la máquina de escribir mecánica Smith-Corona color negro, que mi fallecido padre adquirió para los trabajos escola\u0002res de sus hijos, y hoy exhibo orgulloso en la sala de mi depar\u0002tamento."
+    },
+    {
+      "id": "libro_centenario_doc_0136",
+      "patterns": [
+        "acampar\\ cerca\\ de\\ la\\ luna"
+      ],
+      "keywords": [
+        "acampar cerca de la luna",
+        "acampar cerca de la luna.pdf"
+      ],
+      "source_files": [
+        "Acampar cerca de la Luna.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Acampar cerca de la Luna»\n- **Archivo oficial:** `Acampar cerca de la Luna.pdf` (38 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** Acampar cerca de la Luna Arturo Reyes Fragoso Acampar cerca de la Luna Meztitla, origen e inicios Primera edición conmemorativa del 60 aniversario del Centro Scout Meztitla: 2016 Primera edición digital: 2026 Biblioteca del Centenario Coordinador de la colección: Arturo Reyes Fragoso Coordinador de diseño editorial:\n- **(Pág. 13):** 11 Vista aérea del valle de Tepoztlán a mediados de los años cincuenta del siglo pasado, Aerotécnica de México (archivo de Arsenio Espinoza Salazar/ Abraham Millán Madrid). 2 Meztitla se encuentra llena de placas y monumentos, quizá demasiados:\n- **(Pág. 17):** 15 Paul Loewe Seeber en 1944 (cortesía de Ricardo Othón Loewe Reiss). 4 Ignacio González Siller, radicado en Querétaro desde hace rato, presume ser de los primeros acampadores en Meztitla; esto, durante el fin de semana del 1 y 2 de septiembre de 1956.\n- **(Pág. 21):** 19 caciones del campo escuela, que abarcaron la Cabaña Scout, la cabaña de intendencia, la glorieta de acceso para automóviles y otras instalaciones terminadas de habilitar para un curso de directores de adiestramiento impartido por John Thurman, jefe del campo Gilwell, en 1962.\n- **(Pág. 25):** 23 cía un achaparrado bosque mixto. “Mi papá nos llevó a ver los terrenos que acababa de comprar: en uno había un enorme ci\u0002ruelo con ramas muy horizontales, que daban mucha sombra”, recuerda aquel niño que terminaría encaramado en una de sus ramas, acompañado de su hermano Juan Pablo. “Luego que le agarramos el gusto, nos anunció:"
+    },
+    {
+      "id": "libro_centenario_doc_0140",
+      "patterns": [
+        "cartas\\ a\\ un\\ guia\\ de\\ patrulla"
+      ],
+      "keywords": [
+        "cartas a un guia de patrulla",
+        "cartas a un guía de patrulla.pdf"
+      ],
+      "source_files": [
+        "Cartas a un guía de patrulla.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Cartas a un guía de patrulla»\n- **Archivo oficial:** `Cartas a un guía de patrulla.pdf` (78 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** Cartas a un guía de patrulla Roland E. Philipps Cartas a un guía de patrulla Semblanza de Iván Guerra Villasana Ilustraciones Luis Armida Bauche Primera edición conmemorativa del centenario luctuoso de su autor: 2016 Primera reimpresión: 2016 Primera edición digital: 2026 Biblioteca del Centenario Coordinador de la colección:\n- **(Pág. 23):** 21 La respuesta en este caso, y en muchos otros similares, es que si no dices nada cuando encuentras a un chico de tu pa\u0002trulla fumando, no se trata de una lealtad, sino de un liderazgo cobarde. Si un muchacho se porta mal y tú te das cuenta, tu trabajo como guía de patrulla y como hermano scout, es encauzarlo por el buen camino;\n- **(Pág. 39):** 37 Si siempre tratamos de cumplir con el cuarto artículo de la ley scout, siendo amables con las personas, nos daremos cuenta de que lo cortés surge de manera natural. Cuando vamos a reunirnos con alguien, un buen hábito es decir: —Pronto voy a estar en compañía de otra persona; des\u0002pués de haber estado conmigo, puede sentirse mejor o peor.\n- **(Pág. 51):** 49 ellos mismos pongan el ejemplo de obedecer inmediatamen\u0002te; de esa manera, muy probablemente transmitirán una especie de tradición a su patrulla sobre cómo obedecer las órdenes de manera vivaz e irrefutable, que ningún muchacho quebrantará a la ligera. Esta es la mejor forma como puedes lograr que tu patrulla te obedezca:\n- **(Pág. 65):** 63 —No me gusta la forma como me tratan los muchachos, señor —dijo el chico—, me hacen a un lado. No me han dirigido la palabra en todo el día. —Me sorprende lo que dices —respondió del scouter—, porque los muchachos estaban especialmente decididos a lograr que la pasaras bien. Y de repente el scouter tuvo una idea, y le preguntó:"
+    },
+    {
+      "id": "libro_centenario_doc_0144",
+      "patterns": [
+        "como\\ se\\ obtiene\\ la\\ insignia\\ scout\\ de\\ 2a\\ clase"
+      ],
+      "keywords": [
+        "como se obtiene la insignia scout de 2a clase",
+        "cómo se obtiene la insignia scout de 2a clase.pdf"
+      ],
+      "source_files": [
+        "Cómo se obtiene la insignia scout de 2a Clase.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Cómo se obtiene la insignia scout de 2a Clase»\n- **Archivo oficial:** `Cómo se obtiene la insignia scout de 2a Clase.pdf` (58 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** Cómo se obtiene la insignia scout de 2a Clase Búho Blanco • Mowgli Cómo se obtiene la insignia scout de 2a Clase Publicación oficial del Consejo Nal. de los “Scouts de México” Primera edición: s.p.e. (circa mediados de los años cuarenta del siglo 20) Primera edición en versión digital: 2026 Biblioteca del Centenario Coordinador de la colección:\n- **(Pág. 16):** 14 1. Colóquese al paciente sentado, en una corriente de aire como una ventana abierta, con la cabeza echada hacia atrás y los brazos levantados, arriba de la cabeza. 2. Aflójese toda la ropa en rededor de cuello y pecho. 3. Aplíquesele compresas frías sobre la nariz, así como en la columna vertebral al nivel del cuello;\n- **(Pág. 23):** 21 empeine, llevando las puntas para envolver, en diagonal, has\u0002ta la garganta del pie; crúcense por lo tanto sobre el vértice que estará abajo, y anúdense las puntas en el frente del pie. El vértice se dobla hacia abajo para cubrir el nudo y se fija con seguro. x. Perdida del conocimiento:\n- **(Pág. 34):** 32 Lo primero que debes hacer es aprenderte perfecta\u0002mente los signos anteriores y saber hacerlos. Los signos de la primera serie (i) se hacen con la punta del regatón del bastón scout sobre el suelo, o bien con gis sobre las piedras; los signos de la segunda serie (ii) se hacen con los elementos naturales especificados en la Figura 6.\n- **(Pág. 46):** 44 ganchar y causarte una herida o por lo menos una contusión al caer sobre ti. Acuérdate siempre de estas reglas y obsérvalas. El ha\u0002cha es un buen amigo, útil y servicial, pero también puede ser un enemigo terrible. Los cuchillos deben afilarse periódicamente, y cuando no estén en uso continuo se guardarán perfectamente engra\u0002sados."
+    },
+    {
+      "id": "libro_centenario_doc_0146",
+      "patterns": [
+        "diez\\ peliculas\\ que\\ todo\\ scout\\ debe\\ ver\\ antes\\ de\\ morir"
+      ],
+      "keywords": [
+        "diez peliculas que todo scout debe ver antes de morir",
+        "diez películas que todo scout debe ver antes de morir.pdf"
+      ],
+      "source_files": [
+        "Diez películas que todo scout debe ver antes de morir.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Diez películas que todo scout debe ver antes de morir»\n- **Archivo oficial:** `Diez películas que todo scout debe ver antes de morir.pdf` (58 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** Diez películas que todo scout debe ver antes de morir García Díaz • Pérez • Reyes Fragoso Diez películas que todo scout debe ver antes de morir Primera edición digital: 2026 Biblioteca del Centenario Coordinador de la colección: Arturo Reyes Fragoso Coordinador de diseño editorial: Alberto Rodríguez Luna Diseño de interiores: Rodríguez Hnos.\n- **(Pág. 15):** 13 de contrabandistas, que disponen para sus fechorías de un he\u0002licóptero, sin duda el elemento más oneroso de la producción, que, por supuesto, terminará aprendida por la policía. En un final por demás sacado de la manga y bastante autoritario, el jefe de tropa anuncia la expulsión de Chabelo y Pepito “por irresponsables e indisciplinados”, lo que anuló...\n- **(Pág. 25):** 23 Adiós, muchachos Goodbye Boys (Bernard Chauly, Malasia, 2006). Muchas veces las personas ajenas al movimiento scout se pre\u0002guntan cómo serán las vivencias de los jóvenes integrados en las diversas secciones que lo conforman, y la mayoría de las veces, desconcertados, terminan comparándolo con actividades como el futbol americano, soccer, hermandades de...\n- **(Pág. 35):** 33 Lejos de las atroces muertes que se sucederán poco des\u0002pués, incluidas estrujantes escenas de crueldad animal e infan\u0002til, impensables de filmar en los actuales tiempos de corrección política existentes, resulta ilustrativo ver cómo son los campa\u0002mentos scouts en todas las latitudes del planeta, con la escena de la cena en el comedor, interrumpida por un...\n- **(Pág. 46):** 44 y el afable Burt Fabelman (Paul Dano), desarrolla su incipien\u0002te vocación en una tropa de Phoenix, a donde se mudara con su familia de origen judío desde Nueva Jersey, realizando un cortometraje en 8 mm para obtener la anhelada especialidad de fotógrafo —“fotografías en movimiento”, como él mismo lo explica a sus compañeros mientras pedalean sus..."
+    },
+    {
+      "id": "libro_centenario_doc_0157",
+      "patterns": [
+        "guadalajara\\ un\\ llamado\\ al\\ servicio"
+      ],
+      "keywords": [
+        "guadalajara un llamado al servicio",
+        "guadalajara, un llamado al servicio.pdf"
+      ],
+      "source_files": [
+        "Guadalajara, un llamado al servicio.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Guadalajara, un llamado al servicio»\n- **Archivo oficial:** `Guadalajara, un llamado al servicio.pdf` (94 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** Guadalajara, un llamado al servicio Volumen colectivo Guadalajara, un llamado al servicio Testimonios scouts de las explosiones del 22 de abril de 1992 Primera edición digital conmemorativa de los 30 años del servicio scout prestado durante las explosiones de Guadalajara, 1992: 2022 Segunda edición digital:\n- **(Pág. 21):** 19 inmediatamente. Me dieron la indicación de acudir a las insta\u0002laciones del Tecnológico de la Universidad de Guadalajara, a un auditorio muy grande que tenían allá; ahí ya estaba José Gutié\u0002rrez, mi director de la Facultad de Psicología, de donde acababa de salir.\n- **(Pág. 35):** 33 Nos llevó a la puerta trasera de la Cruz Roja, por donde salimos a cruzar la calle de San Felipe y entrar al Centro Escolar Basilio Vadillo, al tiempo de decirnos que éste lo habían habili\u0002tado como centro de acopio y albergue, a donde estaban llegan\u0002do muchas donaciones de ropa, material y equipo, que a su vez debían canalizarse al lugar de la explosión...\n- **(Pág. 49):** 47 heridos y cadáveres. Lo más impactante fue cuando nos pidie\u0002ron apoyo para ir a identificar cadáveres al Crea-Jalisco, hoy conocido como code [Consejo Estatal del Deporte]: su domo era una inmensa morgue, y nuestra función fue completar cuerpos para entregarlos a familiares, al tiempo de buscar lu\u0002nares, marcas o alguna otra señal que ayudara a...\n- **(Pág. 65):** 63 Conforme a las más de 650 querellas presentadas hasta el momento y a los dictámenes de evaluación que obran en las indagatorias, se estima que 1,148 inmuebles fueron dañados como consecuencia de las explosiones. Por la limpieza, demolición y construcción, se estima un monto de 33 mil millones 873 mil 920 pesos;"
+    },
+    {
+      "id": "libro_centenario_doc_0163",
+      "patterns": [
+        "la\\ flor\\ de\\ lis\\ y\\ el\\ henequen"
+      ],
+      "keywords": [
+        "la flor de lis y el henequen",
+        "la flor de lis y el henequén.pdf"
+      ],
+      "source_files": [
+        "La flor de lis y el henequén.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «La flor de lis y el henequén»\n- **Archivo oficial:** `La flor de lis y el henequén.pdf` (36 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** La flor de lis y el henequén Juan Francisco Peón Ancona La flor de lis y el henequén Los primeros años del escultismo yucateco Primera edición Colección Papeles Escultas: 2006 Primera edición digital: 2026 Biblioteca del Centenario Coordinador de la colección: Arturo Reyes Fragoso Coordinador de diseño editorial: Alberto Rodríguez Luna Diseño de interiores:\n- **(Pág. 11):** 9 I A comienzos del siglo xx, Yucatán disfrutaba de una era de prosperidad sin precedente. La industria henequenera, base de su economía, atravesaba por su mejor periodo, gracias al alto precio que la fibra del agave había alcanzado en los mer\u0002cados internacionales.\n- **(Pág. 14):** 12 ciada con gasolina. Provocado el siniestro, formase una cadena humana para llevar de mano en mano numerosas cubetas de agua, hasta apagar las llamas, demostración que fue premiada con las hurras y aplausos del numeroso público allí reunido.\n- **(Pág. 20):** 18 El resto del festival incluyó diversas demostraciones escultistas, señales con banderas, salvamento de un ahogado, etc., y un simpático número teatral en que un niño (Rafael Santana) re\u0002presentó el papel de scout extranjero, dirigiendo a sus colegas mexicanos una arenga elogiosa de la vida scoutista al aire libre, al estilo de Baden-Powell.\n- **(Pág. 25):** 23 de Distrito. Ambos, conjuntamente con sus firmes colaborado\u0002res, profesor Víctor Laviada y Miguel Civeira Taboada, integra\u0002ron el primer Consejo Directivo de la naciente asociación, que pronto gozó del apoyo moral de la sociedad de Mérida y la ayu\u0002da económica de diversas personas, entre ellas la del banquero don Avelino Montes Linaje y la del propio..."
+    },
+    {
+      "id": "libro_centenario_doc_0164",
+      "patterns": [
+        "los\\ inicios\\ 1"
+      ],
+      "keywords": [
+        "los inicios 1",
+        "los inicios 1.pdf"
+      ],
+      "source_files": [
+        "Los inicios 1.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Los inicios 1»\n- **Archivo oficial:** `Los inicios 1.pdf` (84 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** Los inicios 1 Luz María Coarasa de Toral • Javier Reyes Luján Los inicios 1 Testimonios de la fundación de la Asociación de Scouts de México Curadoría editorial de Arturo Reyes Fragoso Primera edición digital: 2026 Biblioteca del Centenario Coordinador de la colección: Arturo Reyes Fragoso Coordinador de diseño editorial:\n- **(Pág. 24):** 22 de México, redactado y repartido por Jesús González Labastida, en\u0002cargado de prensa del evento, también presente en dicha reunión. Raz Guzmán admiraba la generosidad de Gómez Oreján, al desembolsar de su bolsillo lo necesario para adquirir uniformes y equipo de campismo para los muchachos de recursos limitados, sin ofrecerlo como una dádiva puesto que...\n- **(Pág. 38):** 36 el padre Escontría nos daba una plática después. También iba de vez en cuando el Chino Raz Guzmán, porque también era Caballero de Colón: era un individuo corpulento, con una forta\u0002leza bárbara, y me parece que hasta organizó una excursión an\u0002tes de la ceremonia de Promesa; creo que había otra persona, pero no me acuerdo.\n- **(Pág. 51):** 49 e instituciones de carácter internacional que, de alguna manera, las ampararán ante las acciones gubernamentales. Al concluir la reunión, Lainé le solicitará al padre Escontría atender lo concerniente a la incorporación de Scouts de México a Acción Católica Mexicana —la cual dependía de las juntas diocesa\u0002nas, a las que solicitarían en cada localidad...\n- **(Pág. 64):** 62 Los Exploradores de México se convierten en Scouts de México Edelmiro Traslosheros acudiría en mayo de 1932 a las oficinas de la Secretaría de Educación Pública, citado por Moisés Saénz Gar\u0002za, quien entonces fungía como subsecretario de Educación, para abordar el tema de los Exploradores de México."
+    },
+    {
+      "id": "libro_centenario_doc_0165",
+      "patterns": [
+        "los\\ inicios\\ 2"
+      ],
+      "keywords": [
+        "los inicios 2",
+        "los inicios 2.pdf"
+      ],
+      "source_files": [
+        "Los inicios 2.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Los inicios 2»\n- **Archivo oficial:** `Los inicios 2.pdf` (88 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** Los inicios 2 Luz María Coarasa de Toral • Javier Reyes Luján Los inicios 2 Testimonios de la fundación de la Asociación de Scouts de México Curadoría editorial de Arturo Reyes Fragoso Primera edición digital: 2026 Biblioteca del Centenario Coordinador de la colección: Arturo Reyes Fragoso Coordinador de diseño editorial:\n- **(Pág. 20):** 18 morativos del 20 de noviembre realizados en la ciudad de México, día que sus integrantes estrenaban uniformes proporcionados por la Secretaría de Educación Pública, como también que al interior del gobierno aparecerían, periódicamente, avisos en el boletín de la Secretaría de Educación, aparte de incluir reportes de sus acti\u0002vidades en los propios...\n- **(Pág. 37):** 35 de su primer número, en marzo de 1936, al que le seguirían en los siguientes años de aquella década, artículos como “El espíritu scout”, “El escultismo en la formación del carácter”, “San Jorge, guía de los scouts” y “Urge propagar el escultismo”.\n- **(Pág. 51):** 49 al grado de prestarle dinero anotándolo simplemente en el libro de cuentas. —Julio tenía una oficina de negocios en la calle de Guate\u0002mala, muy cerca de la sede de los Caballeros de Colón, donde una de sus secretarias guardaba el libro de cuentas y una caja con las insignias y distintivos de nuestra agrupación:\n- **(Pág. 68):** 66 esfuerzo ajeno, y ciegos y sordos antes las bellezas del arte o la naturaleza”. Es posible que haya quienes encuentren exageradas las an\u0002teriores líneas. No polemizaremos, diremos que sí, que quienes hayan aspirado alguna vez al ideal a que debe tender el deporte, verán con claridad el camino que para conseguirlo siguen los her\u0002manos maristas:"
+    },
+    {
+      "id": "libro_centenario_doc_0177",
+      "patterns": [
+        "san\\ jorge\\ en\\ aztlan"
+      ],
+      "keywords": [
+        "san jorge en aztlan",
+        "san jorge en aztlán.pdf"
+      ],
+      "source_files": [
+        "San jorge en aztlán.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «San jorge en aztlán»\n- **Archivo oficial:** `San jorge en aztlán.pdf` (66 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 3):** San jorge en aztlán Arturo Reyes Fragoso San Jorge en Aztlán Los inicios del roverismo en México Primera edición Cuadernos del Centro de Estudios del Escultismo: 2005 Primera edición digital: 2026 Biblioteca del Centenario Coordinador de la colección: Arturo Reyes Fragoso Coordinador de diseño editorial: Alberto Rodríguez Luna Diseño de interiores:\n- **(Pág. 22):** 20 En lo que todas las fuentes coinciden es en la efímera vida de este clan pionero —donde la mayoría de sus integrantes “dobleteaba” funciones como dirigentes en alguna sección—, así como en las fuertes críticas recibidas de otros miembros de la Asociación, motivo de lamentación por escrito de parte del mismo Ulibarri:\n- **(Pág. 33):** 31 El hecho de cursar la preparatoria en el Colegio Francés Morelos, debe haberlo influido a pasarse al grupo scout auspi\u0002ciado en esta institución por sus profesores maristas. Hace su promesa en El Chico, Hidalgo, el 14 de abril de 1933, justo el día de su cumpleaños.\n- **(Pág. 44):** 42 Yendo para Campeche tenemos la Sierra Baja de Muna, una “inmensa” cordillera como de trescientos metros de altura por la que pasa la carretera; ahí hicimos un campamento como escuderos, donde tendimos un puente de lado a lado por enci\u0002ma de donde pasan los carros.\n- **(Pág. 52):** 50 do se pone pensar que daño o provecho se puede hacer por los demás en los ejemplos que se les pone. Así es que como rover o hermano mayor, tienes una respon\u0002sabilidad sobre tus hombros que quizás al principio no realices. Tal vez estés guiando a un muchacho al bien o al mal, según lo que dices y haces personalmente."
+    },
+    {
+      "id": "libro_centenario_doc_0301",
+      "patterns": [
+        "40\\ anos\\ de\\ escultismo\\ en\\ monterrey"
+      ],
+      "keywords": [
+        "40 anos de escultismo en monterrey",
+        "40 años de escultismo en monterrey.pdf"
+      ],
+      "source_files": [
+        "40 Años de Escultismo en Monterrey.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «40 Años de Escultismo en Monterrey»\n- **Archivo oficial:** `40 Años de Escultismo en Monterrey.pdf` (56 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: 40 Años de Escultismo en Monterrey (40 Años de Escultismo en Monterrey.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0302",
+      "patterns": [
+        "algo\\ de\\ mi\\ mismo"
+      ],
+      "keywords": [
+        "algo de mi mismo",
+        "algo de mí mismo.pdf"
+      ],
+      "source_files": [
+        "Algo de Mí Mismo.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Algo de Mí Mismo»\n- **Archivo oficial:** `Algo de Mí Mismo.pdf` (64 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Algo de Mí Mismo (Algo de Mí Mismo.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0308",
+      "patterns": [
+        "carta\\ de\\ meztitla"
+      ],
+      "keywords": [
+        "carta de meztitla",
+        "carta de meztitla.pdf"
+      ],
+      "source_files": [
+        "Carta de Meztitla.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Carta de Meztitla»\n- **Archivo oficial:** `Carta de Meztitla.pdf` (76 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Carta de Meztitla (Carta de Meztitla.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0312",
+      "patterns": [
+        "consejos\\ y\\ advertencias\\ para\\ jefes\\ y\\ exploradores"
+      ],
+      "keywords": [
+        "consejos y advertencias para jefes y exploradores",
+        "consejos y advertencias para jefes y exploradores.pdf"
+      ],
+      "source_files": [
+        "Consejos y Advertencias para Jefes y Exploradores.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Consejos y Advertencias para Jefes y Exploradores»\n- **Archivo oficial:** `Consejos y Advertencias para Jefes y Exploradores.pdf` (42 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Consejos y Advertencias para Jefes y Exploradores (Consejos y Advertencias para Jefes y Exploradores.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0313",
+      "patterns": [
+        "cronicas\\ de\\ un\\ scouter"
+      ],
+      "keywords": [
+        "cronicas de un scouter",
+        "crónicas de un scouter.pdf"
+      ],
+      "source_files": [
+        "Crónicas de un Scouter.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Crónicas de un Scouter»\n- **Archivo oficial:** `Crónicas de un Scouter.pdf` (76 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Crónicas de un Scouter (Crónicas de un Scouter.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0324",
+      "patterns": [
+        "falda\\ con\\ charreteras"
+      ],
+      "keywords": [
+        "falda con charreteras",
+        "falda con charreteras.pdf"
+      ],
+      "source_files": [
+        "Falda con Charreteras.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Falda con Charreteras»\n- **Archivo oficial:** `Falda con Charreteras.pdf` (76 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Falda con Charreteras (Falda con Charreteras.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0341",
+      "patterns": [
+        "las\\ rutas\\ de\\ la\\ precursora"
+      ],
+      "keywords": [
+        "las rutas de la precursora",
+        "las rutas de la precursora.pdf"
+      ],
+      "source_files": [
+        "Las Rutas de la Precursora.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Las Rutas de la Precursora»\n- **Archivo oficial:** `Las Rutas de la Precursora.pdf` (78 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Las Rutas de la Precursora (Las Rutas de la Precursora.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0342",
+      "patterns": [
+        "letras\\ musicales\\ scouts\\ mexicanas"
+      ],
+      "keywords": [
+        "letras musicales scouts mexicanas",
+        "letras musicales scouts mexicanas.pdf"
+      ],
+      "source_files": [
+        "Letras Musicales Scouts Mexicanas.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Letras Musicales Scouts Mexicanas»\n- **Archivo oficial:** `Letras Musicales Scouts Mexicanas.pdf` (76 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 7):** 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 Otra vez estoy aquí en el camino, 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 55 56 57 58 59 60 61 62 63 65 66 67 68 69 70 71"
+    },
+    {
+      "id": "libro_centenario_doc_0343",
+      "patterns": [
+        "los\\ primeros\\ anos\\ del\\ consejo\\ interamericano\\ de\\ escultismo"
+      ],
+      "keywords": [
+        "los primeros anos del consejo interamericano de escultismo",
+        "los primeros años del consejo interamericano de escultismo.pdf"
+      ],
+      "source_files": [
+        "Los Primeros Años del Consejo Interamericano de Escultismo.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Los Primeros Años del Consejo Interamericano de Escultismo»\n- **Archivo oficial:** `Los Primeros Años del Consejo Interamericano de Escultismo.pdf` (36 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 7):** 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 Ahí van pues, estas líneas con lo que vi y sentí en este VII Jamboree Mundial, en Bad-Ischl, Austria. 31"
+    },
+    {
+      "id": "libro_centenario_doc_0345",
+      "patterns": [
+        "manual\\ del\\ pie\\ tierno"
+      ],
+      "keywords": [
+        "manual del pie tierno",
+        "manual del pie tierno.pdf"
+      ],
+      "source_files": [
+        "Manual del Pie Tierno.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Manual del Pie Tierno»\n- **Archivo oficial:** `Manual del Pie Tierno.pdf` (32 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 7):** 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 3. Señales 25 26 27"
+    },
+    {
+      "id": "libro_centenario_doc_0347",
+      "patterns": [
+        "mas\\ scouts\\ para\\ un\\ mundo\\ mejor"
+      ],
+      "keywords": [
+        "mas scouts para un mundo mejor",
+        "más scouts para un mundo mejor.pdf"
+      ],
+      "source_files": [
+        "Más Scouts para un Mundo Mejor.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Más Scouts para un Mundo Mejor»\n- **Archivo oficial:** `Más Scouts para un Mundo Mejor.pdf` (76 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Más Scouts para un Mundo Mejor (Más Scouts para un Mundo Mejor.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0375",
+      "patterns": [
+        "regresamos\\ mas\\ fuertes"
+      ],
+      "keywords": [
+        "regresamos mas fuertes",
+        "regresamos más fuertes.pdf"
+      ],
+      "source_files": [
+        "Regresamos más Fuertes.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Regresamos más Fuertes»\n- **Archivo oficial:** `Regresamos más Fuertes.pdf` (56 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Regresamos más Fuertes (Regresamos más Fuertes.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0378",
+      "patterns": [
+        "rescate"
+      ],
+      "keywords": [
+        "rescate",
+        "rescate.pdf"
+      ],
+      "source_files": [
+        "Rescate.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Rescate»\n- **Archivo oficial:** `Rescate.pdf` (42 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Rescate (Rescate.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0379",
+      "patterns": [
+        "rock\\ con\\ panoleta"
+      ],
+      "keywords": [
+        "rock con panoleta",
+        "rock con pañoleta.pdf"
+      ],
+      "source_files": [
+        "Rock con Pañoleta.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Rock con Pañoleta»\n- **Archivo oficial:** `Rock con Pañoleta.pdf` (50 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 7):** 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 31 32 33 34 35 36 37 38 39 40 41 42 43 45"
+    },
+    {
+      "id": "libro_centenario_doc_0392",
+      "patterns": [
+        "tres\\ aventuras\\ selvaticas\\ rover"
+      ],
+      "keywords": [
+        "tres aventuras selvaticas rover",
+        "tres aventuras selváticas rover.pdf"
+      ],
+      "source_files": [
+        "Tres Aventuras Selváticas Rover.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Tres Aventuras Selváticas Rover»\n- **Archivo oficial:** `Tres Aventuras Selváticas Rover.pdf` (76 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Tres Aventuras Selváticas Rover (Tres Aventuras Selváticas Rover.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0396",
+      "patterns": [
+        "xxv\\ campamentos\\ nacionales"
+      ],
+      "keywords": [
+        "xxv campamentos nacionales",
+        "xxv campamentos nacionales.pdf"
+      ],
+      "source_files": [
+        "XXV Campamentos Nacionales.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «XXV Campamentos Nacionales»\n- **Archivo oficial:** `XXV Campamentos Nacionales.pdf` (76 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: XXV Campamentos Nacionales (XXV Campamentos Nacionales.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0488",
+      "patterns": [
+        "aquel\\ curso\\ donde\\ llevaron\\ la\\ huella\\ de\\ b\\ p\\ a\\ meztitla"
+      ],
+      "keywords": [
+        "aquel curso donde llevaron la huella de b p a meztitla",
+        "aquel curso donde llevaron la huella de b-p a meztitla.pdf"
+      ],
+      "source_files": [
+        "Aquel Curso Donde Llevaron la Huella de B-P a Meztitla.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Aquel Curso Donde Llevaron la Huella de B-P a Meztitla»\n- **Archivo oficial:** `Aquel Curso Donde Llevaron la Huella de B-P a Meztitla.pdf` (54 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 7):** 7 Llamada de reunión El curso Adiestrando al Equipo, celebrado en Meztitla en 1962, fue un parteaguas en la historia de la capacitación de dirigentes scouts en México, aunque con el tiempo sólo era recordado por algunos y las imágenes del evento reposaban en los álbumes de recuerdos.\n- **(Pág. 16):** 16 respectivos grupos. Paul Loewe sería el diputado jefe de campo, nombre con que entonces se designaba al director de curso, al ser el único con Insignia de Madera, obtenida años atrás en el respectivo curso tomado en Gilwell, Inglaterra.\n- **(Pág. 25):** 25 Consejo Nacional de los Boy Scouts de los Estados Unidos; James A. Ridell, subcomisionado ejecutivo de adiestramiento de la Asociación de Boy Scouts de Canadá; licenciado Hurley Whitehorne, comisio\u0002nado de adiestramiento de Jamaica; Leslie R. Mordecal, miembro del Consejo Interamericano de Escultismo;\n- **(Pág. 33):** 33 Project Book, explicándonos cómo utilizarlos para adaptar las sesiones de los cursos a las necesidades locales y sus partici\u0002pantes. Thurman inició la revolución en el adiestramiento con esos dos folletitos que nadie conocía en México, donde plan\u0002teaban adaptar el silabus a las necesidades locales, cosas que hacían en Inglaterra desde 1940.\n- **(Pág. 42):** 42 cambiaron las prioridades. Ya únicamente fui a dar una charla de ambiente de selva, embarazada de mi primer hijo. —Ahí conocí a compañeros de otras nacionalidades que, posteriormente, volvería a encontrar cuando estuve en el Consejo Interamericano, al que me jaló Salvador Fernández cuando estaba como ejecutivo de provincia con Roberto Casas Hernández;"
+    },
+    {
+      "id": "libro_centenario_doc_0491",
+      "patterns": [
+        "documentos\\ historicos\\ de\\ adiestramiento"
+      ],
+      "keywords": [
+        "documentos historicos de adiestramiento",
+        "documentos históricos de adiestramiento.pdf"
+      ],
+      "source_files": [
+        "Documentos Históricos de Adiestramiento.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Documentos Históricos de Adiestramiento»\n- **Archivo oficial:** `Documentos Históricos de Adiestramiento.pdf` (60 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 7):** 5 Llamada de reunión Describir la evolución de la formación de adultos en la Asociación de Scouts de México resulta imposible sin esta concisa y sustanciosa antología que ofrece un recorrido por las raíces del “adiestramiento” en México, las cuales fundamentan nuestro actual esquema de forma\u0002ción:\n- **(Pág. 19):** 17 Recuerdo que le envié a Fernando el escrito como un mes antes del curso, porque él quería reproducir todos los docu\u0002mentos con anticipación. Me lo devolvió con una nota: “No me gustó”. Le hablé por teléfono para preguntarle la razón, respon\u0002diéndome: “Te pedí que hablaras de la realidad”.\n- **(Pág. 28):** 26 el mundo de los pieles rojas, por lo que el encargado de Gilwell consideró conveniente comunicar su recámara a su oficina a tra\u0002vés de un agujero, en lugar de bajar por las escaleras. Hasta la fecha no hemos podido taparlo.\n- **(Pág. 36):** 34 1.—Lealtad a nuestros Principios. 2.—Lealtad a los reglamentos del Movimiento en nuestra nación. 3.—Y lealtad a los hombres que han brindado su tiempo para aprender un poco más sobre su trabajo. 7.—ENTUSIASMO Nosotros ofrecemos todo nuestro Adiestramiento con enorme entusiasmo.\n- **(Pág. 45):** 43 Me permito llamar la atención también sobre la necesidad de brindar una mejor utilización a nuestros centros de Adiestra\u0002miento. A las tareas normales de dar cursos en sus terrenos, tene\u0002mos que agregar las de convertirlos también en lugar centros de campismo y actividades para los muchachos, y en laboratorios de nuevas experiencias."
+    },
+    {
+      "id": "libro_centenario_doc_0494",
+      "patterns": [
+        "retratos\\ con\\ panoleta"
+      ],
+      "keywords": [
+        "retratos con panoleta",
+        "retratos con pañoleta.pdf"
+      ],
+      "source_files": [
+        "Retratos con Pañoleta.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Retratos con Pañoleta»\n- **Archivo oficial:** `Retratos con Pañoleta.pdf` (44 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 7):** 5 Llamada de reunión Aunque un retrato atrapa un momento efímero, Arturo Reyes Fragoso —cronista, escritor y compilador de los grandes momentos y personali\u0002dades del escultismo nacional—, hace más que eso para ofrecernos un zoom de los protagonistas descritos en su obra que, como todas las sur\u0002gidas de su pluma, delinean los rasgos más significativos que...\n- **(Pág. 12):** 10 No me gustaban las ilustraciones que se publicaban enton\u0002ces en la revista Escultismo, porque estaban tomadas de publi\u0002caciones extranjeras sin un carácter nacional en los personajes que aparecían, lo que me hizo pensar en porqué no retratarnos nosotros mismos.\n- **(Pág. 18):** 16 Antes de enrolarse al ejército, concluiría el manuscrito de Estrella en la inmensidad, dado a conocer póstumamente y consi\u0002derado como el testamento espiritual de quien fuera uno de los más populares escritores scouts del mundo. De la edición también publicada por la Asociación, repro\u0002ducimos su parte final:\n- **(Pág. 24):** 22 ganado, que usted ya había intentado atacar y devastar», ver\u0002sión sostenida cínicamente a lo largo del asedio, cuando en rea\u0002lidad reclutó a casi setecientos cincuenta combatientes —más otro número indeterminado de mestizos— que participaron en diversas acciones bélicas, como la lucha por el control de una cantera de arcilla aledaña a la ciudad utilizada...\n- **(Pág. 29):** 27 De John Thurman Aquel extraño adiestrador en Meztitla* Acabado el Tercer Curso «Adiestrando al Equipo» para el Hemis\u0002ferio Occidental, realizado del 17 al 23 de septiembre de 1962, John Thurman, encargado de impartirlo en el campo escuela Meztitla, permanecería algunos días en la ciudad de México, entre otras cosas para impartir la conferencia «La..."
+    },
+    {
+      "id": "libro_centenario_doc_0517",
+      "patterns": [
+        "agrupaciones\\ pioneras\\ del\\ escultismo\\ mexicano"
+      ],
+      "keywords": [
+        "agrupaciones pioneras del escultismo mexicano",
+        "agrupaciones pioneras del escultismo mexicano.pdf"
+      ],
+      "source_files": [
+        "Agrupaciones Pioneras del Escultismo Mexicano.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Agrupaciones Pioneras del Escultismo Mexicano»\n- **Archivo oficial:** `Agrupaciones Pioneras del Escultismo Mexicano.pdf` (34 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Agrupaciones Pioneras del Escultismo Mexicano (Agrupaciones Pioneras del Escultismo Mexicano.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0518",
+      "patterns": [
+        "antologia\\ minima\\ del\\ boletin\\ tlatoani\\ 1"
+      ],
+      "keywords": [
+        "antologia minima del boletin tlatoani 1",
+        "antología mínima del boletín tlatoani 1.pdf"
+      ],
+      "source_files": [
+        "Antología Mínima del Boletín Tlatoani 1.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Antología Mínima del Boletín Tlatoani 1»\n- **Archivo oficial:** `Antología Mínima del Boletín Tlatoani 1.pdf` (70 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Antología Mínima del Boletín Tlatoani 1 (Antología Mínima del Boletín Tlatoani 1.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0520",
+      "patterns": [
+        "brownsea"
+      ],
+      "keywords": [
+        "brownsea",
+        "brownsea.pdf"
+      ],
+      "source_files": [
+        "Brownsea.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Brownsea»\n- **Archivo oficial:** `Brownsea.pdf` (48 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Brownsea (Brownsea.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0521",
+      "patterns": [
+        "la\\ jamboree\\ de\\ holanda"
+      ],
+      "keywords": [
+        "la jamboree de holanda",
+        "la jamboree de holanda.pdf"
+      ],
+      "source_files": [
+        "La Jamboree de Holanda.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «La Jamboree de Holanda»\n- **Archivo oficial:** `La Jamboree de Holanda.pdf` (64 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: La Jamboree de Holanda (La Jamboree de Holanda.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0522",
+      "patterns": [
+        "las\\ pioneras\\ 1"
+      ],
+      "keywords": [
+        "las pioneras 1",
+        "las pioneras 1.pdf"
+      ],
+      "source_files": [
+        "las Pioneras 1.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «las Pioneras 1»\n- **Archivo oficial:** `las Pioneras 1.pdf` (88 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: las Pioneras 1 (las Pioneras 1.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0523",
+      "patterns": [
+        "las\\ pioneras\\ 2"
+      ],
+      "keywords": [
+        "las pioneras 2",
+        "las pioneras 2.pdf"
+      ],
+      "source_files": [
+        "Las Pioneras 2.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Las Pioneras 2»\n- **Archivo oficial:** `Las Pioneras 2.pdf` (84 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Las Pioneras 2 (Las Pioneras 2.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0524",
+      "patterns": [
+        "los\\ dias\\ de\\ paxtu"
+      ],
+      "keywords": [
+        "los dias de paxtu",
+        "los días de paxtu.pdf"
+      ],
+      "source_files": [
+        "Los Días de Paxtu.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Los Días de Paxtu»\n- **Archivo oficial:** `Los Días de Paxtu.pdf` (38 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 7):** 5 6 9 10 11 12 13 14 15 16 17 Postal del matrimonio Baden-Powell. 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33"
+    },
+    {
+      "id": "libro_centenario_doc_0525",
+      "patterns": [
+        "narraciones\\ escultas"
+      ],
+      "keywords": [
+        "narraciones escultas",
+        "narraciones escultas.pdf"
+      ],
+      "source_files": [
+        "Narraciones Escultas.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Narraciones Escultas»\n- **Archivo oficial:** `Narraciones Escultas.pdf` (36 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Narraciones Escultas (Narraciones Escultas.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0526",
+      "patterns": [
+        "semblanza\\ de\\ baden\\ powell"
+      ],
+      "keywords": [
+        "semblanza de baden powell",
+        "semblanza de baden-powell.pdf"
+      ],
+      "source_files": [
+        "Semblanza de Baden-Powell.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Semblanza de Baden-Powell»\n- **Archivo oficial:** `Semblanza de Baden-Powell.pdf` (76 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Semblanza de Baden-Powell (Semblanza de Baden-Powell.pdf). Disponible para visualización y descarga directa en BiblioTech."
+    },
+    {
+      "id": "libro_centenario_doc_0527",
+      "patterns": [
+        "zulues\\ matabeles\\ y\\ boers"
+      ],
+      "keywords": [
+        "zulues matabeles y boers",
+        "zulúes, matabeles y bóers.pdf"
+      ],
+      "source_files": [
+        "Zulúes, Matabeles y Bóers.pdf"
+      ],
+      "content": "### Libro de la Colección Biblioteca del Centenario: «Zulúes, Matabeles y Bóers»\n- **Archivo oficial:** `Zulúes, Matabeles y Bóers.pdf` (52 páginas)\n- **Colección:** Colección Biblioteca del Centenario (1926–2026) — ASMAC\n\n#### Extractos verificados de la obra:\n- **(Pág. 1):** Documento oficial Scout: Zulúes, Matabeles y Bóers (Zulúes, Matabeles y Bóers.pdf). Disponible para visualización y descarga directa en BiblioTech."
     }
   ]
 }
