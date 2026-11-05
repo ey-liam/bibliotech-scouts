@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiblioTech Scout — Video Promocional 1080x1920 (Motion Graphics 60 FPS)</title>
+  
+  <!-- Tipografías oficiales de BiblioTech Scout -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;700;800&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="promo.css">
+</head>
+<body class="studio-body">
+  
+  <!-- BARRA DE CONTROL DEL ESTUDIO MOTION GRAPHICS -->
+  <header class="studio-header">
+    <div class="studio-brand">
+      <img src="img/logo-flor.png" alt="Flor de Lis" class="studio-logo">
+      <div>
+        <h1 class="studio-title">BiblioTech Scout <span>Motion Studio</span></h1>
+        <p class="studio-subtitle">Video Promocional Vertical 1080x1920 • 60 FPS • Ritmo 160 BPM (4/4)</p>
+      </div>
+    </div>
+    
+    <div class="studio-metrics">
+      <div class="metric-box">
+        <span class="metric-label">TIEMPO</span>
+        <span class="metric-value" id="timecodeDisplay">00:00.00 / 00:49.50</span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label">COMPÁS / BEAT</span>
+        <span class="metric-value highlight" id="beatDisplay">Compás 01 • Beat 1</span>
+      </div>
+      <div class="metric-box beat-led-box">
+        <span class="metric-label">RITMO</span>
+        <div class="beat-led" id="beatLed" title="Pulso a 160 BPM"></div>
+      </div>
+    </div>
+    
+    <div class="studio-actions">
+      <button type="button" class="studio-btn btn-secondary" id="btnReset" title="Reiniciar (Tecla R)">
+        ↺ Reiniciar
+      </button>
+      <button type="button" class="studio-btn btn-primary" id="btnPlay" title="Reproducir / Pausa (Barra Espaciadora)">
+        ▶ Reproducir
+      </button>
+      <button type="button" class="studio-btn btn-record" id="btnRecord" title="Grabar Video en Vivo (60 FPS)">
+        ⏺ Grabar Video
+      </button>
+    </div>
+  </header>
+
+  <!-- ESCENARIO PRINCIPAL (CANVAS 1080x1920 ESCALADO PROPORCIONALMENTE) -->
+  <main class="studio-stage-wrap">
+    <div class="stage-scaler" id="stageScaler">
+      <!-- CANVAS NATIVO DE RENDERIZADO 1080 x 1920 -->
+      <canvas id="promoCanvas" width="1080" height="1920"></canvas>
+      
+      <!-- CAPA DE INDICADOR DE CARGA / INTRO INICIAL -->
+      <div class="stage-overlay" id="stageOverlay">
+        <div class="overlay-card">
+          <img src="img/logo-flor.png" alt="Logo" class="overlay-logo">
+          <h2>Video Promocional Oficial</h2>
+          <p class="overlay-track">Audio: <strong>Happy (FL Studio 2025 Cut)</strong> • 160 BPM • 4/4</p>
+          <div class="overlay-badges">
+            <span class="pill-badge">1080 x 1920 Vertical</span>
+            <span class="pill-badge">60 FPS Suave</span>
+            <span class="pill-badge">Sincronización al Beat</span>
+          </div>
+          <button type="button" class="big-start-btn" id="btnBigStart">
+            ▶ Iniciar Coreografía y Música
+          </button>
+          <p class="overlay-tip">Tip: Puedes usar la barra espaciadora para pausar o el botón "Grabar Video" para exportar en MP4/WebM.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- BARRA DE TIEMPO INTERACTIVA INFERIOR -->
+  <footer class="studio-footer">
+    <div class="timeline-container">
+      <div class="timeline-track" id="timelineTrack">
+        <div class="timeline-progress" id="timelineProgress"></div>
+        <div class="timeline-thumb" id="timelineThumb"></div>
+        
+        <!-- MARCADORES DE ACTOS Y COROS -->
+        <div class="timeline-marker" style="left: 0%;" data-label="Inicio"></div>
+        <div class="timeline-marker" style="left: 12.1%;" data-label="Buscador"></div>
+        <div class="timeline-marker marker-drop" style="left: 39.4%;" data-label="¡CORO / DROP!"></div>
+        <div class="timeline-marker" style="left: 45.4%;" data-label="Libros"></div>
+        <div class="timeline-marker" style="left: 54.5%;" data-label="Agentes"></div>
+        <div class="timeline-marker" style="left: 63.6%;" data-label="Lector"></div>
+        <div class="timeline-marker marker-final" style="left: 87.8%;" data-label="Final CTA"></div>
+      </div>
+      
+      <div class="timeline-info">
+        <span id="sceneNameDisplay">Acto 1: Despertar y Estadísticas</span>
+        <span class="bpm-tag">160 BPM • 1 Beat = 375 ms</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ELEMENTO DE AUDIO DE LA CANCIÓN -->
+  <audio id="promoAudio" preload="auto">
+    <source src="assets/audio/promo-audio.mp3" type="audio/mpeg">
+    <source src="assets/audio/promo-audio.wav" type="audio/wav">
+  </audio>
+
+  <script src="promo.js"></script>
+</body>
+</html>
