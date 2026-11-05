@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiblioTech Scout - Promo 160 BPM Motion Graphics</title>
+  
+  <!-- Tipografías oficiales de BiblioTech Scout -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;700;800&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #7c3aed;
+      --primary-dark: #5b21b6;
+      --accent: #0284c7;
+      --cyan: #06b6d4;
+      --gold: #f59e0b;
+      --green: #10b981;
+      --bg-dark: #07090e;
+      --card-bg: rgba(30, 41, 59, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #07090e 75%);
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      perspective: 1500px;
+      user-select: none;
+    }
+
+    /* BARRA SUPERIOR DE CONTROL DEL ESTUDIO */
+    .studio-bar {
+      position: fixed;
+      top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 8px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 200;
+    }
+
+    .studio-bar-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .studio-bar-logo {
+      width: 26px;
+      height: 26px;
+      filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.7));
+    }
+
+    .studio-bar-metrics {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+      padding-left: 12px;
+    }
+
+    .metric-highlight {
+      color: var(--cyan);
+      font-weight: 800;
+    }
+
+    .beat-led {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #334155;
+      transition: transform 0.05s ease, background 0.05s ease, box-shadow 0.05s ease;
+    }
+
+    .beat-led.active {
+      background: #22c55e;
+      transform: scale(1.4);
+      box-shadow: 0 0 14px #22c55e;
+    }
+
+    .beat-led.clap {
+      background: var(--gold);
+      transform: scale(1.6);
+      box-shadow: 0 0 18px var(--gold);
+    }
+
+    .studio-btn-record {
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .studio-btn-record:hover {
+      background: rgba(239, 68, 68, 0.3);
+      color: #ffffff;
+    }
+
+    .studio-btn-record.recording {
+      background: #dc2626;
+      color: #ffffff;
+      animation: pulse-red 1s infinite alternate;
+    }
+
+    @keyframes pulse-red {
+      from { box-shadow: 0 0 6px rgba(220, 38, 38, 0.6); }
+      to { box-shadow: 0 0 20px rgba(220, 38, 38, 1); }
+    }
+
+    /* CONTENEDOR VERTICAL 9:16 (MOCKUP CELULAR FLOTANTE) */
+    .promo-viewport {
+      width: 420px;
+      height: 746px; /* Proporción 9:16 exacta */
+      background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #0b0f19 100%);
+      border: 5px solid #334155;
+      border-radius: 46px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 255, 255, 0.15), 0 0 50px rgba(124, 58, 237, 0.3);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      margin-top: 40px;
+    }
+
+    /* Dynamic Island / Barra superior de celular */
+    .phone-notch {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 28px;
+      background: #020617;
+      border-radius: 20px;
+      z-index: 150;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .phone-status-bar {
+      position: absolute;
+      top: 14px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      z-index: 140;
+    }
+
+    /* Fondo de Aurora Boreal dinámico dentro del teléfono */
+    .phone-aurora-bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.35) 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.3) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+      transition: transform 0.5s ease;
+    }
+
+    /* ESCENAS INDIVIDUALES */
+    .scene {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 34px 28px 24px 28px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.82) translateZ(-80px);
+      transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 10;
+    }
+
+    .scene.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1) translateZ(0);
+    }
+
+    /* Estilos dinámicos de UI Scout */
+    .badge {
+      background: rgba(124, 58, 237, 0.25);
+      color: #c084fc;
+      padding: 6px 16px;
+      border-radius: 99px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(124, 58, 237, 0.45);
+      display: inline-block;
+    }
+
+    .badge-gold {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fde047;
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+
+    .badge-green {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 900;
+      line-height: 1.18;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 30%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      font-size: 0.92rem;
+      color: #94a3b8;
+      margin-bottom: 22px;
+      line-height: 1.42;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px 12px;
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+
+    .stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: #38bdf8;
+    }
+
+    .stat-label {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-top: 4px;
+    }
+
+    /* Buscador animado */
+    .search-mockup {
+      background: #1e293b;
+      border: 2px solid #38bdf8;
+      padding: 12px 18px;
+      border-radius: 18px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.25);
+      margin-bottom: 18px;
+    }
+
+    .search-input-text {
+      color: #f8fafc;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #38bdf8;
+      width: 0;
+    }
+
+    .search-mockup.typing .search-input-text {
+      animation: typing 2.4s steps(30, end) forwards, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #38bdf8; }
+    }
+
+    /* Chips de Secciones */
+    .sections-pills-row {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .sec-pill {
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .pill-manada { background: #eab308; }
+    .pill-tropa { background: #10b981; }
+    .pill-comunidad { background: #0284c7; }
+    .pill-clan { background: #ef4444; }
+
+    /* Tarjeta de libro */
+    .book-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+      border: 1.5px solid rgba(124, 58, 237, 0.5);
+      border-radius: 24px;
+      padding: 22px;
+      width: 100%;
+      text-align: left;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 30px rgba(124, 58, 237, 0.2);
+    }
+
+    .book-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f1f5f9;
+      margin-bottom: 6px;
+    }
+
+    .book-meta {
+      font-size: 0.8rem;
+      color: #c084fc;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    /* Botón Call to Action */
+    .cta-button {
+      background: linear-gradient(135deg, #7c3aed, #0284c7, #f59e0b);
+      background-size: 200% 200%;
+      animation: gradient-shift 4s ease infinite;
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      padding: 14px 28px;
+      border-radius: 99px;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 10px 28px rgba(124, 58, 237, 0.5);
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* PANTALLA DE INICIO OVERLAY */
+    #start-screen {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 180;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      text-align: center;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    #start-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .logo-img {
+      width: 76px;
+      height: 76px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.8));
+      animation: float-logo 3s ease-in-out infinite;
+    }
+
+    @keyframes float-logo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* FÍSICA ANTIGRAVITY Y BEAT PULSE */
+    .beat-pulse {
+      transform: scale(1.045) translateY(-8px) rotateZ(0.8deg) !important;
+      box-shadow: 0 35px 90px rgba(124, 58, 237, 0.4), 0 0 40px rgba(2, 132, 199, 0.4) !important;
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
+    }
+
+    .clap-pulse {
+      transform: scale(1.07) translateY(-14px) rotateZ(-1.2deg) !important;
+      box-shadow: 0 45px 110px rgba(245, 158, 11, 0.5), 0 0 50px rgba(124, 58, 237, 0.6) !important;
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
+    }
+
+    .url-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #fde047;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE CONTROL DEL ESTUDIO -->
+  <header class="studio-bar">
+    <div class="studio-bar-brand">
+      <img src="img/logo-flor.png" alt="Logo" class="studio-bar-logo">
+      <span>BiblioTech Scout</span>
+    </div>
+    <div class="studio-bar-metrics">
+      <span id="timecode">00:00.00 / 00:46.50</span>
+      <span class="metric-highlight" id="barBeatText">Compás 01 • Beat 1</span>
+      <div class="beat-led" id="beatLed" title="Pulso a 160 BPM"></div>
+    </div>
+    <button type="button" class="studio-btn-record" id="btnRecord">
+      ⏺ Grabar Video
+    </button>
+  </header>
+
+  <!-- CELULAR / VIEWPORT 9:16 -->
+  <div class="promo-viewport" id="viewport">
+    
+    <!-- Barra superior del teléfono -->
+    <div class="phone-notch"></div>
+    <div class="phone-status-bar">
+      <span>9:41</span>
+      <span>SCOUT 5G  100%</span>
+    </div>
+
+    <!-- Fondo de Aurora Boreal dinámico -->
+    <div class="phone-aurora-bg" id="auroraBg"></div>
+
+    <!-- Pantalla Inicial para habilitar audio -->
+    <div id="start-screen">
+      <img src="img/logo-flor.png" alt="Flor de Lis" class="logo-img">
+      <h1>BiblioTech Scout</h1>
+      <p>Generador de Video Promocional en Formato Móvil sincronizado exactamente a 160 BPM (Happy).</p>
+      <button type="button" class="cta-button" onclick="iniciarPromo()">▶ REPRODUCIR PROMO</button>
+    </div>
+
+    <!-- Escena 1: Gancho (0.0s - 3.0s | Compases 1-2) -->
+    <div class="scene" id="scene-1">
+      <img src="img/logo-flor.png" alt="Flor" style="width: 52px; height: 52px; margin-bottom: 12px;">
+      <div class="badge">Provincia TLXH</div>
+      <h1>¿Perdido entre tantos manuales Scouts?</h1>
+      <p>Encuentra reglamentos, guías de progresión y respuestas oficiales en segundos.</p>
+    </div>
+
+    <!-- Escena 2: Contadores Clave (3.0s - 12.0s | Compases 3-8) -->
+    <div class="scene" id="scene-2">
+      <div class="badge badge-gold">Base de Datos Vigente</div>
+      <h1>Todo en un solo lugar</h1>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="statQuestions">5,412+</div>
+          <div class="stat-label">Preguntas y Respuestas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">498</div>
+          <div class="stat-label">Documentos Oficiales</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">104</div>
+          <div class="stat-label">Temas Actualizados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">39</div>
+          <div class="stat-label">Libros Centenario</div>
+        </div>
+      </div>
+      <p style="margin-bottom:0; font-size: 0.8rem; color: #94a3b8;">100 Años de Escultismo en México (1926-2026)</p>
+    </div>
+
+    <!-- Escena 3: Buscador Interactivo (12.0s - 21.0s | Compases 9-14) -->
+    <div class="scene" id="scene-3">
+      <div class="badge badge-green">Buscador Inteligente</div>
+      <h1>Consulta Inmediata</h1>
+      <div class="search-mockup" id="searchBox">
+        <span style="font-size: 1.2rem;">🔍</span>
+        <div class="search-input-text">¿Qué son ExplorApp y CarpetApp?</div>
+      </div>
+      <div class="sections-pills-row">
+        <span class="sec-pill pill-manada">Manada</span>
+        <span class="sec-pill pill-tropa">Tropa</span>
+        <span class="sec-pill pill-comunidad">Comunidad</span>
+        <span class="sec-pill pill-clan">Clan</span>
+      </div>
+      <p>Respuestas extraídas directamente de los manuales y estatutos oficiales de ASMAC y WOSM.</p>
+    </div>
+
+    <!-- Escena 4: Biblioteca del Centenario (21.0s - 30.0s | Compases 15-20) -->
+    <div class="scene" id="scene-4">
+      <div class="badge badge-gold">Colección Centenario</div>
+      <h1>Lectura y Descarga</h1>
+      <div class="book-card">
+        <div class="book-title">El desafío de ser Caminante</div>
+        <div class="book-meta">Comunidad de Caminantes (14 a 18 años)</div>
+        <p style="margin-bottom:0; font-size: 0.82rem; color: #cbd5e1;">Consulta íntegra en PDF oficial de lineamientos, adelanto y especialidades.</p>
+      </div>
+      <div style="margin-top: 14px; font-size: 0.78rem; color: #38bdf8; font-weight: 700;">
+        498 Libros, Manuales y Formatos Descargables
+      </div>
+    </div>
+
+    <!-- Escena 5: Llamado a la Acción / CTA (30.0s - 46.5s | Compases 21-31) -->
+    <div class="scene" id="scene-5">
+      <img src="img/logo-flor.png" alt="Flor" style="width: 58px; height: 58px; margin-bottom: 12px; filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.8));">
+      <div class="badge">¡Siempre Listos!</div>
+      <h1>BiblioTech Scout</h1>
+      <p style="margin-bottom: 14px;">Creado por Liam Durán — Provincia TLXH</p>
+      <div class="url-chip">ey-liam.github.io/bibliotech-scouts</div>
+      <a href="https://ey-liam.github.io/bibliotech-scouts/" target="_blank" class="cta-button">¡Entrar al Sitio Web Oficial!</a>
+      <p style="margin-top: 18px; margin-bottom: 0; font-size: 0.76rem; color: #64748b;">
+        Construir un Mundo Mejor • ASMAC & WOSM
+      </p>
+    </div>
+  </div>
+
+  <!-- Audio en Loop a 160 BPM -->
+  <audio id="promo-audio" preload="auto">
+    <source src="assets/audio/promo-audio.mp3" type="audio/mpeg">
+    <source src="assets/audio/promo-audio.wav" type="audio/wav">
+    <source src="Happy 160 Bpm Loop.wav" type="audio/wav">
+  </audio>
+
+  <script>
+    const BPM = 160;
+    const BEAT_DURATION = 60 / BPM; // 0.375s exactos por beat
+    const BAR_DURATION = BEAT_DURATION * 4; // 1.5s por compás
+    const TOTAL_DURATION = 46.5; // Duración recomendada para loop perfecto
+
+    const audio = document.getElementById('promo-audio');
+    const viewport = document.getElementById('viewport');
+    const startScreen = document.getElementById('start-screen');
+    const scenes = document.querySelectorAll('.scene');
+    const timecode = document.getElementById('timecode');
+    const barBeatText = document.getElementById('barBeatText');
+    const beatLed = document.getElementById('beatLed');
+    const searchBox = document.getElementById('searchBox');
+    const btnRecord = document.getElementById('btnRecord');
+
+    let currentActiveScene = -1;
+    let animationInterval = null;
+    let lastBeat = -1;
+
+    // Grabación
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+
+    function iniciarPromo() {
+      startScreen.classList.add('hidden');
+      audio.currentTime = 0;
+      audio.play().catch(e => console.log('Audio autoplay bloqueado o archivo no encontrado.'));
+      
+      const startTime = performance.now();
+
+      function updateLoop() {
+        const elapsedTime = audio.paused ? (performance.now() - startTime) / 1000 : audio.currentTime;
+        
+        // Loop a los 46.5 segundos para TikTok / Reels infinito
+        if (elapsedTime >= TOTAL_DURATION) {
+          audio.currentTime = 0;
+        }
+
+        const currentBeat = Math.floor(elapsedTime / BEAT_DURATION);
+        const currentBar = Math.floor(elapsedTime / BAR_DURATION) + 1;
+        const beatInBar = (currentBeat % 4) + 1;
+
+        // Actualizar HUD
+        const mins = Math.floor(elapsedTime / 60);
+        const secs = Math.floor(elapsedTime % 60);
+        const ms = Math.floor((elapsedTime % 1) * 100);
+        timecode.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(ms).padStart(2, '0')} / 00:46.50`;
+        barBeatText.textContent = `Compás ${String(currentBar).padStart(2, '0')} • Beat ${beatInBar}`;
+
+        // Pulso en cada Beat (375ms)
+        const subBeat = (elapsedTime % BEAT_DURATION) / BEAT_DURATION;
+        if (subBeat < 0.25) {
+          const isClap = (beatInBar === 2 || beatInBar === 4); // Claps en 2 y 4
+          beatLed.className = isClap ? 'beat-led clap' : 'beat-led active';
+          viewport.className = isClap ? 'promo-viewport clap-pulse' : 'promo-viewport beat-pulse';
+        } else {
+          beatLed.className = 'beat-led';
+          viewport.className = 'promo-viewport';
+        }
+
+        // Mapeo exacto de escenas por compases a 160 BPM
+        let activeSceneIndex = 0;
+        if (elapsedTime >= 3.0 && elapsedTime < 12.0) {
+          activeSceneIndex = 1; // Compases 3 a 8: Contadores
+        } else if (elapsedTime >= 12.0 && elapsedTime < 21.0) {
+          activeSceneIndex = 2; // Compases 9 a 14: Buscador
+          if (searchBox) searchBox.classList.add('typing');
+        } else if (elapsedTime >= 21.0 && elapsedTime < 30.0) {
+          activeSceneIndex = 3; // Compases 15 a 20: Libros
+        } else if (elapsedTime >= 30.0) {
+          activeSceneIndex = 4; // Compases 21 a 31: Cierre y CTA
+        }
+
+        if (activeSceneIndex !== currentActiveScene) {
+          scenes.forEach(s => s.classList.remove('active'));
+          scenes[activeSceneIndex].classList.add('active');
+          currentActiveScene = activeSceneIndex;
+        }
+
+        // Coreografía de rotación de cámara en 3D
+        if (currentBar <= 2) {
+          viewport.style.transform = `perspective(1200px) rotateX(10deg) rotateY(${currentBeat % 2 === 0 ? -6 : 6}deg) scale(0.95)`;
+        } else if (currentBar >= 3 && currentBar <= 8) {
+          viewport.style.transform = `perspective(1200px) rotateX(4deg) rotateY(${currentBeat % 2 === 0 ? -3 : 3}deg) scale(1.02)`;
+        } else if (currentBar >= 9 && currentBar <= 14) {
+          viewport.style.transform = `perspective(1200px) rotateX(6deg) rotateY(4deg) scale(1.04)`;
+        } else if (currentBar >= 15 && currentBar <= 20) {
+          viewport.style.transform = `perspective(1200px) rotateX(8deg) rotateY(-5deg) scale(0.98)`;
+        } else {
+          const tiltY = (currentBar % 2 === 0) ? 8 : -8;
+          viewport.style.transform = `perspective(1200px) rotateX(6deg) rotateY(${tiltY}deg) scale(1.01)`;
+        }
+
+        animationInterval = requestAnimationFrame(updateLoop);
+      }
+
+      animationInterval = requestAnimationFrame(updateLoop);
+    }
+
+    // Atajos de teclado: Espacio = Play, R = Reset
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (audio.paused) {
+          iniciarPromo();
+        } else {
+          audio.pause();
+        }
+      } else if (e.code === 'KeyR') {
+        audio.currentTime = 0;
+      }
+    });
+
+    // Grabación en vivo mediante Screen Capture / MediaRecorder
+    btnRecord.addEventListener('click', async () => {
+      if (isRecording) {
+        if (mediaRecorder) mediaRecorder.stop();
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getDisplayMedia({
+          video: { frameRate: 60, displaySurface: 'browser' },
+          audio: true
+        });
+
+        recordedChunks = [];
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) recordedChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(recordedChunks, { type: 'video/webm' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'bibliotech-scout-promo-mobile.webm';
+          a.click();
+
+          btnRecord.classList.remove('recording');
+          btnRecord.textContent = '⏺ Grabar Video';
+          isRecording = false;
+          stream.getTracks().forEach(t => t.stop());
+        };
+
+        mediaRecorder.start();
+        isRecording = true;
+        btnRecord.classList.add('recording');
+        btnRecord.textContent = '⏹ Grabando...';
+
+        iniciarPromo();
+      } catch (err) {
+        alert('Para grabar en vivo selecciona la pestaña de este navegador cuando aparezca el diálogo.');
+      }
+    });
+  </script>
+</body>
+</html>
