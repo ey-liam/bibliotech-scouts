@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>BiblioTech Scout — Video Promocional Oficial</title>
   
   <!-- Tipografías oficiales de BiblioTech Scout -->
@@ -40,44 +43,40 @@
       user-select: none;
     }
 
-    /* BOTÓN FLOTANTE DISCRETO DE GRABACIÓN (NO ESTORBA LA PANTALLA) */
+    /* BOTÓN ULTRA DISCRETO EN LA ESQUINA INFERIOR DERECHA (AUTO-OCULTO AL GRABAR) */
     .studio-record-btn {
       position: fixed;
-      top: 18px;
-      right: 24px;
-      background: rgba(15, 23, 42, 0.88);
+      bottom: 20px;
+      right: 20px;
+      background: rgba(15, 23, 42, 0.92);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border: 1.5px solid rgba(239, 68, 68, 0.45);
-      color: #fca5a5;
-      padding: 8px 18px;
+      border: 1.5px solid rgba(239, 68, 68, 0.55);
+      color: #ffffff;
+      padding: 7px 16px;
       border-radius: 999px;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       z-index: 1000;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(220, 38, 38, 0.25);
-      transition: all 0.2s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(220, 38, 38, 0.3);
+      transition: opacity 0.3s ease, transform 0.2s ease, background 0.2s ease;
     }
 
     .studio-record-btn:hover {
       background: #dc2626;
-      color: #ffffff;
       box-shadow: 0 0 25px rgba(220, 38, 38, 0.7);
     }
 
-    .studio-record-btn.recording {
-      background: #dc2626;
-      color: #ffffff;
-      animation: pulse-red 1s infinite alternate;
-    }
-
-    @keyframes pulse-red {
-      from { box-shadow: 0 0 6px rgba(220, 38, 38, 0.6); }
-      to { box-shadow: 0 0 24px rgba(220, 38, 38, 1); }
+    .rec-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
     }
 
     /* CONTENEDOR 9:16 (SMARTPHONE DE LUJO CON CÁMARA CINEMÁTICA LERP 60 FPS) */
@@ -91,7 +90,6 @@
       position: relative;
       overflow: hidden;
       transform-style: preserve-3d;
-      /* Sin CSS transition para evitar tirones con el motor de Lerp a 60 FPS */
       transition: none;
       will-change: transform;
     }
@@ -111,7 +109,7 @@
       pointer-events: none;
     }
 
-    /* Barra de Estado Limpia y Fina */
+    /* Barra de Estado Limpia y Realista (Sin textos invasivos) */
     .phone-status-bar {
       position: absolute;
       top: 12px;
@@ -874,9 +872,10 @@
 </head>
 <body>
 
-  <!-- BOTÓN FLOTANTE LIMPIO DE GRABACIÓN (SE OCULTA AUTOMÁTICAMENTE AL GRABAR SI SE DESEA) -->
+  <!-- BOTÓN DISCRETO EN LA ESQUINA INFERIOR DERECHA (SE AUTO-OCULTA AL GRABAR) -->
   <button type="button" class="studio-record-btn" id="btnRecord">
-    <span>⏺</span> Grabar Video (49.5s)
+    <span class="rec-dot"></span>
+    <span id="btnRecordText">Grabar</span>
   </button>
 
   <!-- SMARTPHONE 9:16 CON PERSPECTIVA CINEMÁTICA Y MOVIMIENTOS CONTINUOS SUAVES -->
@@ -1173,6 +1172,7 @@
     const phoneContainer = document.getElementById('phoneContainer');
     const phoneScreen = document.getElementById('phoneScreen');
     const btnRecord = document.getElementById('btnRecord');
+    const btnRecordText = document.getElementById('btnRecordText');
 
     // Secciones DOM
     const secHero = document.getElementById('secHero');
@@ -1344,7 +1344,7 @@
       }
 
       // ----------------------------------------------------
-      // 21.0s – 28.5s (Compases 15 a 19): ¡DROP! Biblioteca Oficial
+      // 21.0s – 28.5s (Compases 15 a 19): Biblioteca Oficial
       // ----------------------------------------------------
       else if (t < 28.5) {
         targetScrollY = secBooks.offsetTop - 55;
@@ -1446,7 +1446,7 @@
     }
 
     // =========================================================================
-    // GRABADOR DE VIDEO 60 FPS (SIN TEXTOS DE DESARROLLADOR)
+    // GRABADOR DE VIDEO (AUTO-OCULTABLE EN LA ESQUINA)
     // =========================================================================
     let mediaRecorder = null;
     let recordedChunks = [];
@@ -1458,7 +1458,9 @@
         }
         isRecordingActive = false;
         btnRecord.classList.remove('recording');
-        btnRecord.innerHTML = '<span>⏺</span> Grabar Video (49.5s)';
+        btnRecordText.textContent = 'Grabar';
+        btnRecord.style.opacity = '1';
+        btnRecord.style.pointerEvents = 'auto';
         return;
       }
 
@@ -1487,7 +1489,9 @@
         mediaRecorder.onstop = () => {
           isRecordingActive = false;
           btnRecord.classList.remove('recording');
-          btnRecord.innerHTML = '<span>⏺</span> Grabar Video (49.5s)';
+          btnRecordText.textContent = 'Grabar';
+          btnRecord.style.opacity = '1';
+          btnRecord.style.pointerEvents = 'auto';
 
           const blob = new Blob(recordedChunks, { type: 'video/webm' });
           const url = URL.createObjectURL(blob);
@@ -1507,7 +1511,14 @@
         mediaRecorder.start();
         isRecordingActive = true;
         btnRecord.classList.add('recording');
-        btnRecord.innerHTML = '<span>⏹</span> Grabando (Auto-stop)';
+        btnRecordText.textContent = 'Grabando';
+        
+        // Auto-ocultar el botón durante la grabación para que la toma sea 100% limpia
+        setTimeout(() => {
+          if (isRecordingActive) {
+            btnRecord.style.opacity = '0.15'; // Ultra sutil en la esquina para no estorbar
+          }
+        }, 1000);
 
         // Reinicio exacto a 0
         audio.currentTime = 0;

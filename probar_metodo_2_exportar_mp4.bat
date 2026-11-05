@@ -31,7 +31,7 @@ if %errorlevel% neq 0 (
 
 :: 3. Abrir la aplicacion de grabacion vertical en Google Chrome
 echo [+] Abriendo Estudio de Grabacion 1080x1920 en Google Chrome...
-start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --app="http://127.0.0.1:8765/promo-app.html" --window-size=500,980
+start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --app="http://127.0.0.1:8765/promo-app.html?t=%RANDOM%" --window-size=520,960
 
 echo.
 echo ========================================================
