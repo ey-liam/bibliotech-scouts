@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ey-liam.github.io/bibliotech-scouts/sitemap.xml

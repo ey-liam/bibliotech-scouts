@@ -17,7 +17,7 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ## 2. Contenido del acervo documental
 
-El sistema integra **104 temas enciclopédicos y literarios**, **5,301 preguntas y respuestas únicas de consulta directa** (desde preguntas básicas de iniciación hasta preguntas específicas por artículo, capítulo y página de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
+El sistema integra **104 temas enciclopédicos y literarios**, **5,356 preguntas y respuestas únicas de consulta directa** (desde preguntas básicas de iniciación hasta preguntas específicas por artículo, capítulo y página de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
 
 1. **Colección Biblioteca del Centenario (39 volúmenes):** Los 39 libros oficiales numerados de la Colección Biblioteca del Centenario, incluyendo las obras clásicas de Robert Baden-Powell (*Escultismo para Muchachos, Manual de Lobatos, Guía para el Jefe de Tropa, Roverismo hacia el Éxito, Tropiezos de la Vida, Juegos Scouts*), obras históricas de Gilcraft y César Macazaga Ordoño, y publicaciones formativas y literarias (*Cuentos de la Selva, Francisco de Asís y el Lobo de Gubbio*).
 2. **Guías, Carnets y Programa de Jóvenes — PJOS (42 documentos):** Guías de sección actualizadas (*Mis Rastros en la Selva 2024, Pistas de Aventura 2024, El Desafío de ser Caminante 2024, Las Rutas del Rover, Las Rutas de la Precursora*), Carnets de *Aventuras en la Naturaleza 2024*, Guías de *Punta de Flecha 2025*, *Tribu de la Tierra*, *Campeones de la Naturaleza*, *Mensajeros de la Paz*, *Go Solar*, *Plastic Tide Turners*, *De FOROS a CASA* y *Agentes de Cambio.MX*.
@@ -55,3 +55,17 @@ Para aportar nuevos documentos, convocatorias, plantillas, actividades de progre
 ## 5. Aviso de proyecto independiente y propiedad intelectual
 
 **BiblioTech** es un proyecto personal independiente y sin fines de lucro desarrollado con fines exclusivamente educativos, informativos y de consulta para la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la **Asociación de Scouts de México, A.C. (ASMAC)** ni de la **Organización Mundial del Movimiento Scout (WOSM / World Scouting)**. Todos los manuales, reglamentos, libros, logotipos, insignias, comunicados y documentos oficiales citados o recopilados pertenecen a sus respectivos titulares oficiales.
+
+---
+
+## 6. Cómo colaborar y trabajar con agentes de IA
+
+El repositorio está preparado para que varias personas y agentes trabajen sin pisarse:
+
+- **`AGENTS.md`**: protocolo completo de ramas, validación, publicación y reparto de trabajo.
+- **`GEMINI.md`**: instrucciones específicas para Antigravity / Gemini.
+- **`.github/copilot-instructions.md`**: instrucciones que lee GitHub Copilot.
+- **`.github/ISSUE_TEMPLATE/`**: plantillas para reportar errores, proponer mejoras o pedir una tarea a un agente.
+- **`.github/PULL_REQUEST_TEMPLATE.md`**: lista de comprobación para cada pull request.
+
+Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/` se generan con scripts y no se editan a mano. Antes de volver a publicar desde Antigravity, hay que sincronizar `public/` con los archivos actuales de `main` para no revertir mejoras del sitio.

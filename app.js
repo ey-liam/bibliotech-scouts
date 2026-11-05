@@ -167,7 +167,74 @@ function formatInlineMd(text) {
 }
 
 // ============================================================================
-// CARGA INICIAL (CATALOGO DE 498 DOCUMENTOS + 53 TEMAS + 2,861 PREGUNTAS)
+// CARGA DIFERIDA DE DATOS PESADOS
+// El banco de preguntas (4.5 MB) y los fragmentos (13 MB) no son necesarios
+// para pintar la primera pantalla. Se cargan al usarlos y se guardan en caché.
+// ============================================================================
+let questionBankPromise = null;
+let webChunksPromise = null;
+
+function loadQuestionBank() {
+  if (STATE.questionBank.length) return Promise.resolve(STATE.questionBank);
+  if (questionBankPromise) return questionBankPromise;
+
+  questionBankPromise = fetch("data/questions_bank.json")
+    .then((r) => (r.ok ? r.json() : { questions: [] }))
+    .then((data) => {
+      STATE.questionBank = data.questions || [];
+      STATE.qBankByNorm = {};
+      for (const qObj of STATE.questionBank) {
+        const nk = normalizeQuestionKey(qObj.q || "");
+        if (nk) STATE.qBankByNorm[nk] = qObj;
+      }
+      const badge = document.getElementById("totalQuestionsCount");
+      if (badge && STATE.questionBank.length) {
+        badge.textContent = STATE.questionBank.length.toLocaleString("es-MX");
+      }
+      return STATE.questionBank;
+    })
+    .catch((error) => {
+      console.warn("BiblioTech: no se pudo cargar el banco de preguntas.", error);
+      questionBankPromise = null;
+      return [];
+    });
+
+  return questionBankPromise;
+}
+
+function loadWebChunks() {
+  if (STATE.webChunks.length) return Promise.resolve(STATE.webChunks);
+  if (webChunksPromise) return webChunksPromise;
+
+  webChunksPromise = fetch("data/chunks.json")
+    .then((r) => (r.ok ? r.json() : []))
+    .then((arr) => {
+      STATE.webChunks = arr || [];
+      return STATE.webChunks;
+    })
+    .catch((error) => {
+      console.warn("BiblioTech: no se pudieron cargar los fragmentos.", error);
+      webChunksPromise = null;
+      return [];
+    });
+
+  return webChunksPromise;
+}
+
+function setupLazyDataWarmup() {
+  // El banco de preguntas se descarga en cuanto la persona interactúa con la
+  // página (tocar, hacer clic, escribir o desplazarse), nunca durante la carga
+  // inicial que mide Lighthouse.
+  const events = ["pointerdown", "keydown", "touchstart", "scroll"];
+  const run = () => {
+    loadQuestionBank();
+    events.forEach((event) => window.removeEventListener(event, run));
+  };
+  events.forEach((event) => window.addEventListener(event, run, { once: true, passive: true }));
+}
+
+// ============================================================================
+// CARGA INICIAL (CATALOGO DE 498 DOCUMENTOS + 104 TEMAS)
 // ============================================================================
 async function initApp() {
   setupContactEmailUI();
@@ -211,29 +278,9 @@ async function initApp() {
       }
     }
 
-    // Cargar Banco de Preguntas de Consulta
-    const qbRes = await fetch("data/questions_bank.json").catch(() => null);
-    if (qbRes && qbRes.ok) {
-      const qbData = await qbRes.json();
-      STATE.questionBank = qbData.questions || [];
-      STATE.qBankByNorm = {};
-      for (const qObj of STATE.questionBank) {
-        const nk = normalizeQuestionKey(qObj.q || "");
-        if (nk) STATE.qBankByNorm[nk] = qObj;
-      }
-      const badge = document.getElementById("totalQuestionsCount");
-      if (badge && STATE.questionBank.length) {
-        badge.textContent = STATE.questionBank.length.toLocaleString("es-MX");
-      }
-    }
-
-    // Cargar fragmentos en segundo plano para busqueda profunda en el navegador
-    fetch("data/chunks.json")
-      .then((r) => (r.ok ? r.json() : []))
-      .then((arr) => {
-        STATE.webChunks = arr || [];
-      })
-      .catch(() => {});
+    // El banco de preguntas y los fragmentos se cargan de forma diferida:
+    // primero la página, después los datos pesados cuando se usan.
+    setupLazyDataWarmup();
   } catch (err) {
     console.error("Error cargando datos de BiblioTech:", err);
   }
@@ -674,7 +721,7 @@ function renderLibraryShelf() {
           <div class="book-cover-wrap">
             ${
               coverUrl
-                ? `<img src="${coverUrl}" alt="${escapeHtml(d.title)}" class="book-cover-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden');" />
+                ? `<img src="${coverUrl}" alt="${escapeHtml(d.title)}" class="book-cover-img" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.classList.remove('hidden');" />
                    <div class="book-cover-fallback hidden">
                      <span style="font-size:0.75rem;font-weight:800;opacity:0.8;">${escapeHtml(d.section_label)}</span>
                      <strong style="font-size:0.95rem;line-height:1.3;">${escapeHtml(d.title)}</strong>
@@ -713,6 +760,9 @@ function renderLibraryShelf() {
 async function submitQuestion(queryText) {
   const q = (queryText || "").trim();
   if (!q) return;
+
+  // Los fragmentos se necesitan para enriquecer respuestas, no para cargar la página.
+  loadWebChunks();
 
   const acBox = document.getElementById("askAutocomplete");
   if (acBox) acBox.classList.add("hidden");
@@ -1266,7 +1316,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   } else if (canEmbedNative && ["PNG", "JPG", "JPEG", "WEBP", "AVIF"].includes(doc.ext)) {
     previewPane.innerHTML = `
       <div style="display:flex;align-items:center;justify-content:center;height:100%;padding:1.5rem;">
-        <img src="${viewUrl}" alt="${escapeHtml(doc.title)}" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;" />
+        <img src="${viewUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;" />
       </div>
     `;
   } else {
@@ -1290,7 +1340,7 @@ function renderWebReaderView(doc, fullTextContent, dlUrl) {
         <div style="display:flex;gap:1.5rem;align-items:center;background:#ffffff;padding:1.5rem;border-radius:20px;border:1.5px solid #dbeafe;margin-bottom:1.5rem;flex-wrap:wrap;">
           ${
             coverUrl
-              ? `<img src="${coverUrl}" alt="${escapeHtml(doc.title)}" style="width:110px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,0.15);" onerror="this.style.display='none'" />`
+              ? `<img src="${coverUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" style="width:110px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,0.15);" onerror="this.style.display='none'" />`
               : ""
           }
           <div style="flex:1;min-width:220px;">
@@ -1328,11 +1378,18 @@ function bindEvents() {
   if (askForm) {
     askForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      loadQuestionBank();
       submitQuestion(askInput.value);
     });
   }
 
   if (askInput && clearAskBtn) {
+    askInput.addEventListener("focus", () => {
+      loadQuestionBank().then(() => {
+        const val = askInput.value.trim();
+        if (val.length >= 2) updateAutocompleteDropdown(val);
+      });
+    });
     askInput.addEventListener("input", () => {
       const val = askInput.value.trim();
       clearAskBtn.classList.toggle("hidden", !val);
@@ -1368,17 +1425,19 @@ function bindEvents() {
   });
 
   document.querySelectorAll(".qcat-tab").forEach((tab) => {
-    tab.addEventListener("click", () => {
+    tab.addEventListener("click", async () => {
       document.querySelectorAll(".qcat-tab").forEach((t) => t.classList.remove("active"));
       tab.classList.add("active");
       STATE.activeQCat = tab.getAttribute("data-qcat") || "Destacadas";
+      await loadQuestionBank();
       renderExplorerQuestions(STATE.activeQCat, false);
     });
   });
 
   const shuffleBtn = document.getElementById("shuffleQuestionsBtn");
   if (shuffleBtn) {
-    shuffleBtn.addEventListener("click", () => {
+    shuffleBtn.addEventListener("click", async () => {
+      await loadQuestionBank();
       renderExplorerQuestions(STATE.activeQCat, true);
     });
   }

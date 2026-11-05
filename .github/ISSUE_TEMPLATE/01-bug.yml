@@ -1,0 +1,79 @@
+name: "🐞 Reportar un error"
+description: "Algo del sitio no funciona o muestra información incorrecta."
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por reportar. Antes de continuar, revisa que el error no esté ya reportado.
+        No incluyas contraseñas, tokens ni datos personales sensibles.
+
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: "¿Qué pasó?"
+      description: "Describe el error de forma concreta."
+      placeholder: "Al abrir un documento PDF, el lector muestra una página en blanco."
+    validations:
+      required: true
+
+  - type: textarea
+    id: pasos
+    attributes:
+      label: "Pasos para reproducirlo"
+      description: "Escribe los pasos en orden."
+      placeholder: |
+        1. Abrir https://ey-liam.github.io/bibliotech-scouts/
+        2. Ir a Biblioteca
+        3. Seleccionar un documento
+        4. Ver el resultado
+    validations:
+      required: true
+
+  - type: textarea
+    id: esperado
+    attributes:
+      label: "Resultado esperado"
+      description: "¿Qué debería haber pasado?"
+    validations:
+      required: true
+
+  - type: input
+    id: navegador
+    attributes:
+      label: "Navegador y versión"
+      placeholder: "Chrome 142, Edge 142, Firefox 145, Safari 18..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: dispositivo
+    attributes:
+      label: "Dispositivo"
+      options:
+        - Computadora de escritorio
+        - Laptop
+        - Tableta
+        - Teléfono
+        - Varios
+    validations:
+      required: false
+
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: "Capturas o mensajes de consola"
+      description: "Puedes arrastrar imágenes aquí. Si hay errores en consola, pégalos."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: comprobaciones
+    attributes:
+      label: "Comprobaciones"
+      options:
+        - label: "Revisé que el error no esté ya reportado."
+          required: true
+        - label: "Probé recargando la página sin caché."
+          required: false
