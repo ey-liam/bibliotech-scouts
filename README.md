@@ -1,21 +1,31 @@
-# BiblioTech — Biblioteca Digital y Buscador Documental Scout
+# BiblioTech Scout — Biblioteca Digital y Buscador Documental Scout
 
 **Creador:** Liam Durán - Provincia TLXH  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 03/11/2026 • **Versión del sitio web:** V2 04/11/2026  
+**Base de datos:** 03/11/2026 • **Versión del sitio web:** V3 04/11/2026  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
 
 ## 1. Propósito del proyecto
 
-**BiblioTech** es una plataforma web pública, personal y sin fines de lucro diseñada para que niñas, niños, adolescentes, jóvenes y adultos de toda la membresía cuenten con acceso directo, ágil y de fácil comprensión a la documentación oficial de la **Asociación de Scouts de México, A.C. (ASMAC)** y de **World Scouting (WOSM)**.
+**BiblioTech Scout** es una plataforma web pública, personal y sin fines de lucro diseñada para que niñas, niños, adolescentes, jóvenes y adultos de toda la membresía cuenten con acceso directo, ágil y de fácil comprensión a la documentación oficial de la **Asociación de Scouts de México, A.C. (ASMAC)** y de **World Scouting (WOSM)**.
 
 Todas las respuestas y resúmenes se fundamentan exclusivamente en los documentos oficiales, manuales, reglamentos, libros de la Colección Biblioteca del Centenario, revistas, formatos editables, comunicados nacionales y portales institucionales respaldados en la base de datos local (con corte al **03/11/2026**), priorizando siempre las ediciones vigentes (2024–2026).
 
 ---
 
-## 2. Contenido del acervo documental
+## 2. Identidad e interfaz
+
+- **Nombre del sitio:** BiblioTech Scout: By Liam.
+- **Menú superior:** sigue el orden real de las secciones de la página: *Preguntar → Biblioteca → Propósito → Agentes de Cambio → Secciones → Evolución → Catálogo*.
+- **Fondo animado:** una capa viva con malla de auras de color, orbes flotantes, haz de luz diagonal, hexágonos, cubos, anillos y destellos. Solo anima `transform` y `opacity` para no alterar el diseño ni el rendimiento.
+- **Secciones translúcidas:** dejan ver la aurora de fondo sin sacrificar la legibilidad; las tarjetas de contenido permanecen blancas.
+- **Accesibilidad:** con `prefers-reduced-motion` activo, todas las animaciones se detienen. El sitio conserva navegación por teclado, enlace para saltar al contenido y etiquetas ARIA.
+
+---
+
+## 3. Contenido del acervo documental
 
 El sistema integra **104 temas enciclopédicos y literarios**, **5,356 preguntas y respuestas únicas de consulta directa** (desde preguntas básicas de iniciación hasta preguntas específicas por artículo, capítulo y página de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
 
@@ -32,17 +42,18 @@ Adicionalmente, el portal incorpora la información estructurada de las páginas
 
 ---
 
-## 3. Cómo utilizar BiblioTech en el sitio web público
+## 4. Cómo utilizar BiblioTech Scout en el sitio web público
 
 1. Ingresa a `https://ey-liam.github.io/bibliotech-scouts/`.
 2. En el **Buscador Principal**, escribe cualquier pregunta en lenguaje natural o selecciona una sección específica (*Manada, Tropa, Comunidad, Clan, Adultos o World Scouting*).
 3. Revisa la respuesta obtenida de los documentos oficiales y, en la parte inferior del recuadro (`Documentos oficiales de donde se obtuvo esta información`), haz clic sobre cualquiera de las fuentes citadas para abrir el lector en la página correspondiente o descargar el archivo original.
 4. En el apartado **Biblioteca Scout**, utiliza la barra de búsqueda y el selector de sección (*Manada, Tropa, Comunidad, Clan, Adultos, Nacional o World Scouting*) o selecciona cualquiera de los estantes temáticos (incluyendo los **39 libros de la Colección Biblioteca del Centenario**) para leer los documentos página por página dentro del navegador.
 5. En el apartado **Catálogo Organizado por Categorías**, filtra por categoría, sección, formato (`PDF`, `DOCX`, `XLSX`, `IMAGE`) o año de publicación.
+6. Usa el menú superior para saltar entre secciones; el enlace activo se resalta automáticamente según el punto de la página en el que te encuentres.
 
 ---
 
-## 4. Aportes de documentos y reporte de temas faltantes
+## 5. Aportes de documentos y reporte de temas faltantes
 
 Cuando una consulta no cuenta con información suficiente dentro de los archivos respaldados, el sistema lo indica de manera transparente sin inventar datos.
 
@@ -52,13 +63,13 @@ Para aportar nuevos documentos, convocatorias, plantillas, actividades de progre
 
 ---
 
-## 5. Aviso de proyecto independiente y propiedad intelectual
+## 6. Aviso de proyecto independiente y propiedad intelectual
 
-**BiblioTech** es un proyecto personal independiente y sin fines de lucro desarrollado con fines exclusivamente educativos, informativos y de consulta para la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la **Asociación de Scouts de México, A.C. (ASMAC)** ni de la **Organización Mundial del Movimiento Scout (WOSM / World Scouting)**. Todos los manuales, reglamentos, libros, logotipos, insignias, comunicados y documentos oficiales citados o recopilados pertenecen a sus respectivos titulares oficiales.
+**BiblioTech Scout** es un proyecto personal independiente y sin fines de lucro desarrollado con fines exclusivamente educativos, informativos y de consulta para la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la **Asociación de Scouts de México, A.C. (ASMAC)** ni de la **Organización Mundial del Movimiento Scout (WOSM / World Scouting)**. Todos los manuales, reglamentos, libros, logotipos, insignias, comunicados y documentos oficiales citados o recopilados pertenecen a sus respectivos titulares oficiales.
 
 ---
 
-## 6. Cómo colaborar y trabajar con agentes de IA
+## 7. Cómo colaborar y trabajar con agentes de IA
 
 El repositorio está preparado para que varias personas y agentes trabajen sin pisarse:
 
@@ -69,3 +80,13 @@ El repositorio está preparado para que varias personas y agentes trabajen sin p
 - **`.github/PULL_REQUEST_TEMPLATE.md`**: lista de comprobación para cada pull request.
 
 Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/` se generan con scripts y no se editan a mano. Antes de volver a publicar desde Antigravity, hay que sincronizar `public/` con los archivos actuales de `main` para no revertir mejoras del sitio.
+
+---
+
+## 8. Novedades de la versión V3 (04/11/2026)
+
+- Menú superior reordenado según el recorrido real de la página.
+- Nuevo fondo aurora animado con auras, orbes, haz de luz, hexágonos, cubos, anillos y destellos.
+- Secciones translúcidas para integrar el fondo sin perder legibilidad.
+- Corrección del desplazamiento acumulado (CLS) al cargar: el fondo ahora no mueve el contenido.
+- Validado sin errores de consola, sin desbordes en móvil y con accesibilidad y SEO en 100.
