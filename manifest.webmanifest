@@ -1,6 +1,6 @@
 {
-  "name": "BiblioTech — Biblioteca y Buscador Scout",
-  "short_name": "BiblioTech",
+  "name": "BiblioTech Scout: By Liam",
+  "short_name": "BiblioTech Scout",
   "description": "Biblioteca digital y buscador documental scout con documentos oficiales ASMAC y WOSM.",
   "lang": "es-MX",
   "start_url": "./",
