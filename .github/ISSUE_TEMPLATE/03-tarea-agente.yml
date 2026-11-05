@@ -1,0 +1,107 @@
+name: "🤖 Tarea para un agente"
+description: "Trabajo acotado para OpenCode, Antigravity/Gemini o GitHub Copilot."
+title: "[Agente]: "
+labels: ["tarea-agente"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Usa esta plantilla para que un agente pueda trabajar sin ambigüedad.
+        Una tarea debe caber en un PR pequeño.
+
+  - type: dropdown
+    id: agente
+    attributes:
+      label: "Agente sugerido"
+      options:
+        - OpenCode
+        - Antigravity / Gemini
+        - GitHub Copilot
+        - Cualquiera disponible
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: "Área"
+      options:
+        - Interfaz y diseño
+        - Accesibilidad
+        - Rendimiento
+        - SEO y metadatos
+        - Buscador y respuestas
+        - Biblioteca y lector
+        - Catálogo
+        - Datos y generación
+        - Documentación y repositorio
+    validations:
+      required: true
+
+  - type: textarea
+    id: objetivo
+    attributes:
+      label: "Objetivo"
+      description: "Una oración clara de lo que debe quedar hecho."
+      placeholder: "Reducir el peso inicial del sitio difiriendo questions_bank.json y chunks.json."
+    validations:
+      required: true
+
+  - type: textarea
+    id: contexto
+    attributes:
+      label: "Contexto y archivos"
+      description: "Archivos probables, comportamiento actual, enlaces o capturas."
+      placeholder: |
+        - app.js: initApp carga los dos JSON al inicio.
+        - data/questions_bank.json pesa 4.5 MB.
+        - data/chunks.json pesa 13 MB.
+    validations:
+      required: true
+
+  - type: textarea
+    id: criterios
+    attributes:
+      label: "Criterios de aceptación"
+      description: "Lista verificable de lo que debe cumplirse."
+      placeholder: |
+        - [ ] La primera pantalla no descarga questions_bank.json ni chunks.json.
+        - [ ] El autocompletado sigue funcionando al enfocar el buscador.
+        - [ ] Las pestañas de categorías siguen funcionando.
+        - [ ] No hay errores en consola.
+    validations:
+      required: true
+
+  - type: textarea
+    id: validacion
+    attributes:
+      label: "Cómo validar"
+      description: "Comandos, pasos o resultados esperados."
+      placeholder: |
+        1. python -m http.server 8765 --bind 127.0.0.1
+        2. Abrir http://127.0.0.1:8765/
+        3. Revisar la pestaña Network y la consola.
+    validations:
+      required: true
+
+  - type: textarea
+    id: fuera
+    attributes:
+      label: "Fuera de alcance"
+      description: "Lo que este issue NO debe cambiar."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: reglas
+    attributes:
+      label: "Reglas del protocolo"
+      options:
+        - label: "Trabajar en una rama agent/<agente>/<tema>."
+          required: true
+        - label: "No editar a mano los JSON de data/."
+          required: true
+        - label: "No ejecutar prepare_public_site.py ni los .bat de publicación."
+          required: true
+        - label: "Abrir un PR con el resumen y la validación."
+          required: true

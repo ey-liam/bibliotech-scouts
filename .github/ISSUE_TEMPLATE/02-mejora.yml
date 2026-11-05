@@ -1,0 +1,76 @@
+name: "✨ Proponer una mejora"
+description: "Nueva función, mejor contenido, accesibilidad, rendimiento o diseño."
+title: "[Mejora]: "
+labels: ["mejora"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe la mejora pensando en quien usa el sitio. Si es un cambio grande,
+        primero acordamos el alcance aquí antes de abrir un PR.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: "Área"
+      options:
+        - Interfaz y diseño
+        - Accesibilidad
+        - Rendimiento
+        - SEO y metadatos
+        - Buscador y respuestas
+        - Biblioteca y lector
+        - Catálogo
+        - Contenido y redacción
+        - Documentación del repositorio
+    validations:
+      required: true
+
+  - type: textarea
+    id: problema
+    attributes:
+      label: "¿Qué problema resuelve?"
+      description: "Explica la situación actual y a quién afecta."
+      placeholder: "En móvil, los botones de categoría se salen de la pantalla."
+    validations:
+      required: true
+
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: "Propuesta"
+      description: "¿Qué te gustaría que pasara?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: "Alternativas consideradas"
+      description: "Opcional. Otras formas de resolverlo."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: prioridad
+    attributes:
+      label: "Prioridad"
+      options:
+        - Baja
+        - Media
+        - Alta
+        - Urgente
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: alcance
+    attributes:
+      label: "Alcance"
+      options:
+        - label: "Esto cambia el contenido oficial o los datos generados."
+          required: false
+        - label: "Esto puede afectar la publicación del sitio."
+          required: false
+        - label: "Estoy dispuesto a probarlo cuando esté listo."
+          required: false
