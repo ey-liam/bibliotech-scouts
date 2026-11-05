@@ -40,7 +40,7 @@ echo ========================================================
 echo 1. En la ventana de Chrome que se acaba de abrir, pulsa
 echo    el boton rojo "Grabar Video (60 FPS)".
 echo 2. Selecciona la pestana "BiblioTech Scout" y dale Compartir.
-echo 3. La animacion correra durante 46.5 segundos con la musica.
+echo 3. La animacion correra durante 49.5 segundos exactos (33 compases) con la musica.
 echo 4. Al terminar, el archivo se descargara automaticamente en:
 echo    %DOWNLOADS%\bibliotech-scout-promo-1080x1920.webm
 echo.
