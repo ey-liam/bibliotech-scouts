@@ -1446,13 +1446,36 @@
 
   <script src="app.js"></script>
   <script>
-    // Activacion del Modo Promocional Antigravity 160 BPM via parametro ?promo=1
-    if (new URLSearchParams(window.location.search).has('promo')) {
+    // Activacion del Modo Director / Promo via parametro ?director=1 o ?promo=1
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('director') || urlParams.has('promo')) {
       const s = document.createElement('script');
-      s.src = 'antigravity-beat-engine.js';
+      s.src = 'director-engine.js';
       s.defer = true;
       document.body.appendChild(s);
     }
+    // Boton interactivo para lanzar el Modo Director con 1 clic
+    window.addEventListener('DOMContentLoaded', () => {
+      const bar = document.getElementById('floatingQuickBar');
+      if (bar) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.id = 'btnLaunchDirector';
+        btn.className = 'fab-pill fab-director';
+        btn.title = 'Iniciar coreografia musical a 160 BPM (Happy)';
+        btn.innerHTML = '<span>Modo Director 160 BPM</span>';
+        btn.style.cssText = 'background:linear-gradient(135deg, #7c3aed, #0284c7);color:#fff;border:1.5px solid rgba(255,255,255,0.35);font-weight:800;display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:999px;cursor:pointer;box-shadow:0 6px 20px rgba(124,58,237,0.5);font-size:0.82rem;';
+        btn.onclick = () => {
+          if (!window.__BIBLIOTECH_DIRECTOR_ACTIVE__) {
+            const s = document.createElement('script');
+            s.src = 'director-engine.js';
+            document.body.appendChild(s);
+          }
+        };
+        bar.prepend(btn);
+        bar.classList.remove('hidden');
+      }
+    });
   </script>
 </body>
 </html>

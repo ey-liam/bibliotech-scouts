@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BiblioTech Scout - Promo 160 BPM Motion Graphics</title>
+  <title>BiblioTech Scout — Motion Graphics Studio Pro (160 BPM • 1080x1920)</title>
   
   <!-- Tipografías oficiales de BiblioTech Scout -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,10 +14,11 @@
     :root {
       --primary: #7c3aed;
       --primary-dark: #5b21b6;
-      --accent: #0284c7;
+      --blue: #0284c7;
       --cyan: #06b6d4;
       --gold: #f59e0b;
       --green: #10b981;
+      --red: #ef4444;
       --bg-dark: #07090e;
       --card-bg: rgba(30, 41, 59, 0.75);
     }
@@ -30,7 +31,7 @@
     }
 
     body {
-      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #07090e 75%);
+      background: radial-gradient(circle at 50% 15%, #1e1b4b 0%, #07090e 75%);
       color: #f8fafc;
       min-height: 100vh;
       display: flex;
@@ -38,7 +39,7 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      perspective: 1500px;
+      perspective: 1600px;
       user-select: none;
     }
 
@@ -49,40 +50,40 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.88);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 8px 20px;
+      padding: 8px 22px;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      z-index: 200;
+      border: 1.5px solid rgba(124, 58, 237, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(124, 58, 237, 0.25);
+      z-index: 500;
     }
 
     .studio-bar-brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-family: 'Outfit', sans-serif;
       font-weight: 800;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
     .studio-bar-logo {
-      width: 26px;
-      height: 26px;
-      filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.7));
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.8));
     }
 
     .studio-bar-metrics {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: #94a3b8;
       border-left: 1px solid rgba(255, 255, 255, 0.15);
-      padding-left: 12px;
+      padding-left: 14px;
     }
 
     .metric-highlight {
@@ -91,8 +92,8 @@
     }
 
     .beat-led {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: #334155;
       transition: transform 0.05s ease, background 0.05s ease, box-shadow 0.05s ease;
@@ -106,18 +107,18 @@
 
     .beat-led.clap {
       background: var(--gold);
-      transform: scale(1.6);
-      box-shadow: 0 0 18px var(--gold);
+      transform: scale(1.65);
+      box-shadow: 0 0 20px var(--gold);
     }
 
     .studio-btn-record {
       background: rgba(239, 68, 68, 0.15);
       color: #fca5a5;
-      border: 1px solid rgba(239, 68, 68, 0.35);
-      padding: 6px 14px;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      padding: 6px 16px;
       border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 700;
+      font-size: 0.82rem;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -126,8 +127,9 @@
     }
 
     .studio-btn-record:hover {
-      background: rgba(239, 68, 68, 0.3);
+      background: #dc2626;
       color: #ffffff;
+      box-shadow: 0 0 20px rgba(220, 38, 38, 0.7);
     }
 
     .studio-btn-record.recording {
@@ -138,17 +140,17 @@
 
     @keyframes pulse-red {
       from { box-shadow: 0 0 6px rgba(220, 38, 38, 0.6); }
-      to { box-shadow: 0 0 20px rgba(220, 38, 38, 1); }
+      to { box-shadow: 0 0 24px rgba(220, 38, 38, 1); }
     }
 
-    /* CONTENEDOR VERTICAL 9:16 (MOCKUP CELULAR FLOTANTE) */
-    .promo-viewport {
+    /* CONTENEDOR 9:16 (SMARTPHONE DE LUJO) */
+    .phone-container {
       width: 420px;
-      height: 746px; /* Proporción 9:16 exacta */
-      background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 50%, #0b0f19 100%);
+      height: 760px;
+      background: #0b0f19;
       border: 5px solid #334155;
       border-radius: 46px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 255, 255, 0.15), 0 0 50px rgba(124, 58, 237, 0.3);
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.85), 0 0 0 2px rgba(255, 255, 255, 0.14), 0 0 60px rgba(124, 58, 237, 0.35);
       position: relative;
       overflow: hidden;
       transform-style: preserve-3d;
@@ -156,18 +158,19 @@
       margin-top: 40px;
     }
 
-    /* Dynamic Island / Barra superior de celular */
+    /* Dynamic Island / Bocina */
     .phone-notch {
       position: absolute;
-      top: 14px;
+      top: 12px;
       left: 50%;
       transform: translateX(-50%);
       width: 120px;
       height: 28px;
       background: #020617;
       border-radius: 20px;
-      z-index: 150;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      z-index: 400;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      pointer-events: none;
     }
 
     .phone-status-bar {
@@ -181,251 +184,550 @@
       font-size: 0.72rem;
       font-weight: 700;
       color: #cbd5e1;
-      z-index: 140;
-    }
-
-    /* Fondo de Aurora Boreal dinámico dentro del teléfono */
-    .phone-aurora-bg {
-      position: absolute;
-      inset: 0;
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(124, 58, 237, 0.35) 0%, transparent 60%),
-        radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.3) 0%, transparent 60%);
+      z-index: 390;
       pointer-events: none;
-      z-index: 1;
-      transition: transform 0.5s ease;
     }
 
-    /* ESCENAS INDIVIDUALES */
-    .scene {
+    /* PANTALLA VIRTUAL CON SCROLL CINEMÁTICO CONTROLADO */
+    .phone-screen {
       position: absolute;
       inset: 0;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding-top: 50px;
+      padding-bottom: 60px;
+      background: linear-gradient(180deg, #090d16 0%, #0f172a 30%, #1e1b4b 70%, #07090e 100%);
+    }
+
+    .phone-screen::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* ========================================================
+       COMPONENTES REALES DE BIBLIOTECH SCOUT DENTRO DEL CELULAR
+       ======================================================== */
+    
+    /* 1. Header Oficial */
+    .mobile-header {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      padding: 34px 28px 24px 28px;
-      text-align: center;
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.82) translateZ(-80px);
-      transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-      z-index: 10;
+      gap: 12px;
+      padding: 14px 20px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1.5px solid rgba(124, 58, 237, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 300;
     }
 
-    .scene.active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: scale(1) translateZ(0);
+    .mobile-header-logo {
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.8));
     }
 
-    /* Estilos dinámicos de UI Scout */
-    .badge {
-      background: rgba(124, 58, 237, 0.25);
-      color: #c084fc;
-      padding: 6px 16px;
-      border-radius: 99px;
-      font-size: 0.76rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 14px;
-      border: 1px solid rgba(124, 58, 237, 0.45);
-      display: inline-block;
-    }
-
-    .badge-gold {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fde047;
-      border-color: rgba(245, 158, 11, 0.4);
-    }
-
-    .badge-green {
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
-      border-color: rgba(16, 185, 129, 0.4);
-    }
-
-    h1 {
+    .mobile-header-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.85rem;
+      font-size: 1.15rem;
+      font-weight: 900;
+      line-height: 1.1;
+      color: #ffffff;
+    }
+
+    .mobile-header-sub {
+      font-size: 0.74rem;
+      color: #c084fc;
+      font-weight: 800;
+    }
+
+    /* 2. Banner Centenario */
+    .centenario-ribbon {
+      background: linear-gradient(90deg, #7c3aed, #0284c7, #f59e0b);
+      padding: 8px 16px;
+      text-align: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+    }
+
+    /* 3. Hero Section */
+    .mobile-hero-section {
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(124, 58, 237, 0.2);
+      border: 1px solid rgba(124, 58, 237, 0.45);
+      color: #c084fc;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .hero-h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.65rem;
       font-weight: 900;
       line-height: 1.18;
       margin-bottom: 12px;
-      background: linear-gradient(135deg, #ffffff 30%, #c4b5fd 100%);
+      background: linear-gradient(135deg, #ffffff, #c4b5fd);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    p {
-      font-size: 0.92rem;
+    .hero-desc {
+      font-size: 0.85rem;
       color: #94a3b8;
-      margin-bottom: 22px;
-      line-height: 1.42;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      width: 100%;
+      line-height: 1.4;
       margin-bottom: 18px;
     }
 
-    .stat-card {
-      background: var(--card-bg);
+    /* TRÍO DE FOTOS HEXAGONALES REAL */
+    .hero-trio-wrap {
+      position: relative;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+
+    .hex-photo {
+      width: 110px;
+      height: 110px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: absolute;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      transition: transform 0.25s ease;
+    }
+
+    .hex-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hex-left {
+      left: 35px;
+      transform: rotate(-8deg) scale(0.9);
+      border: 3px solid #10b981;
+      z-index: 10;
+    }
+
+    .hex-center {
+      left: 145px;
+      width: 130px;
+      height: 130px;
+      transform: scale(1.08);
+      border: 4px solid #f59e0b;
+      z-index: 30;
+      box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4);
+    }
+
+    .hex-center-tag {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f59e0b;
+      color: #000;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 900;
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .hex-right {
+      right: 35px;
+      transform: rotate(8deg) scale(0.9);
+      border: 3px solid #0284c7;
+      z-index: 10;
+    }
+
+    /* Contadores de Impacto */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .stat-box {
+      background: rgba(30, 41, 59, 0.7);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 16px 12px;
-      border-radius: 18px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+      padding: 12px 6px;
+      text-align: center;
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .stat-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--primary);
-    }
-
-    .stat-num {
+    .stat-number {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.65rem;
+      font-size: 1.35rem;
       font-weight: 900;
       color: #38bdf8;
     }
 
-    .stat-label {
-      font-size: 0.74rem;
+    .stat-lbl {
+      font-size: 0.68rem;
       font-weight: 700;
-      color: #cbd5e1;
-      margin-top: 4px;
+      color: #94a3b8;
+      margin-top: 2px;
     }
 
-    /* Buscador animado */
-    .search-mockup {
-      background: #1e293b;
-      border: 2px solid #38bdf8;
-      padding: 12px 18px;
-      border-radius: 18px;
-      width: 100%;
+    /* 4. Buscador Interactivo */
+    .search-container {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(124, 58, 237, 0.5);
+      border-radius: 26px;
+      padding: 20px 16px;
+      margin: 0 20px 24px 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #ffffff;
       display: flex;
       align-items: center;
-      gap: 10px;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.25);
-      margin-bottom: 18px;
+      gap: 8px;
     }
 
-    .search-input-text {
-      color: #f8fafc;
-      font-size: 0.88rem;
+    .search-input-box {
+      background: #1e293b;
+      border: 2px solid #38bdf8;
+      padding: 10px 14px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    }
+
+    .search-text {
+      font-size: 0.82rem;
       font-weight: 600;
-      text-align: left;
+      color: #ffffff;
       white-space: nowrap;
       overflow: hidden;
       border-right: 2px solid #38bdf8;
       width: 0;
     }
 
-    .search-mockup.typing .search-input-text {
-      animation: typing 2.4s steps(30, end) forwards, blink 0.75s step-end infinite;
+    .search-text.typing {
+      animation: type-query 2.2s steps(28, end) forwards, blink-caret 0.75s step-end infinite;
     }
 
-    @keyframes typing {
+    @keyframes type-query {
       from { width: 0; }
       to { width: 100%; }
     }
 
-    @keyframes blink {
+    @keyframes blink-caret {
       from, to { border-color: transparent; }
       50% { border-color: #38bdf8; }
     }
 
-    /* Chips de Secciones */
-    .sections-pills-row {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
-
-    .sec-pill {
-      padding: 5px 12px;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: #ffffff;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-    .pill-manada { background: #eab308; }
-    .pill-tropa { background: #10b981; }
-    .pill-comunidad { background: #0284c7; }
-    .pill-clan { background: #ef4444; }
-
-    /* Tarjeta de libro */
-    .book-card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-      border: 1.5px solid rgba(124, 58, 237, 0.5);
-      border-radius: 24px;
-      padding: 22px;
-      width: 100%;
+    /* Tarjeta de respuesta real */
+    .answer-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+      border: 1.5px solid rgba(124, 58, 237, 0.6);
+      border-radius: 18px;
+      padding: 14px;
       text-align: left;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 30px rgba(124, 58, 237, 0.2);
+      opacity: 0;
+      transform: translateY(12px) scale(0.96);
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .book-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
+    .answer-card.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .answer-tag {
+      font-size: 0.66rem;
       font-weight: 800;
-      color: #f1f5f9;
+      color: #c084fc;
+      background: rgba(124, 58, 237, 0.2);
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: inline-block;
       margin-bottom: 6px;
     }
 
-    .book-meta {
-      font-size: 0.8rem;
-      color: #c084fc;
-      font-weight: 700;
-      margin-bottom: 12px;
+    .answer-h {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
     }
 
-    /* Botón Call to Action */
-    .cta-button {
+    .answer-body {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    /* 5. Las 4 Secciones Scouts */
+    .sections-block {
+      padding: 20px;
+    }
+
+    .section-h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 14px;
+      color: #ffffff;
+    }
+
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .sec-card {
+      background: rgba(30, 41, 59, 0.85);
+      border-radius: 20px;
+      padding: 14px 10px;
+      text-align: center;
+      border: 2px solid transparent;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .sec-card.manada { border-color: rgba(234, 179, 8, 0.4); }
+    .sec-card.tropa { border-color: rgba(16, 185, 129, 0.4); }
+    .sec-card.comunidad { border-color: rgba(2, 132, 199, 0.4); }
+    .sec-card.clan { border-color: rgba(239, 68, 68, 0.4); }
+
+    .sec-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin: 0 auto 8px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    .sec-dot.manada { background: #eab308; }
+    .sec-dot.tropa { background: #10b981; }
+    .sec-dot.comunidad { background: #0284c7; }
+    .sec-dot.clan { background: #ef4444; }
+
+    .sec-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .sec-sub {
+      font-size: 0.68rem;
+      color: #94a3b8;
+    }
+
+    .sec-lema {
+      font-size: 0.72rem;
+      font-weight: 800;
+      margin-top: 6px;
+    }
+    .sec-lema.manada { color: #eab308; }
+    .sec-lema.tropa { color: #10b981; }
+    .sec-lema.comunidad { color: #0284c7; }
+    .sec-lema.clan { color: #ef4444; }
+
+    /* Efectos de pulso en el coro */
+    .sec-card.pulse-highlight {
+      transform: scale(1.1) translateY(-6px) !important;
+      box-shadow: 0 16px 36px rgba(245, 158, 11, 0.6) !important;
+    }
+
+    /* 6. Agentes de Cambio.MX */
+    .agentes-block {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(2, 132, 199, 0.5);
+      border-radius: 26px;
+      padding: 20px 16px;
+      margin: 10px 20px 24px 20px;
+      text-align: center;
+    }
+
+    .agentes-logo-img {
+      width: 140px;
+      height: auto;
+      margin: 0 auto 10px auto;
+    }
+
+    .agentes-axes-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .axis-orb {
+      background: rgba(30, 41, 59, 0.9);
+      border-radius: 16px;
+      padding: 10px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .axis-orb img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      margin-bottom: 4px;
+    }
+
+    .axis-orb span {
+      font-size: 0.58rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .axis-orb.active {
+      transform: scale(1.15) translateY(-4px);
+      border-color: #f59e0b;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.5);
+    }
+
+    /* 7. Biblioteca del Centenario */
+    .books-block {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .book-card-item {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+      border: 1.5px solid rgba(124, 58, 237, 0.5);
+      border-radius: 20px;
+      padding: 18px 14px;
+      text-align: left;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .book-thumb {
+      width: 60px;
+      height: 85px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #7c3aed, #0284c7);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .book-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .book-info p {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+
+    .book-btn {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    /* 8. Call to Action Finale */
+    .cta-block {
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .cta-flor {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 12px auto;
+      filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.8));
+    }
+
+    .cta-url-box {
+      background: rgba(0, 0, 0, 0.45);
+      border: 2px solid var(--gold);
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #fde047;
+      margin-bottom: 16px;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
+    }
+
+    .cta-main-btn {
       background: linear-gradient(135deg, #7c3aed, #0284c7, #f59e0b);
       background-size: 200% 200%;
-      animation: gradient-shift 4s ease infinite;
-      color: white;
+      color: #ffffff;
       font-family: 'Outfit', sans-serif;
-      font-weight: 800;
+      font-size: 1.05rem;
+      font-weight: 900;
       padding: 14px 28px;
-      border-radius: 99px;
-      text-decoration: none;
+      border-radius: 999px;
       display: inline-block;
-      box-shadow: 0 10px 28px rgba(124, 58, 237, 0.5);
-      font-size: 1rem;
-      letter-spacing: 0.5px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.6);
     }
 
-    .cta-button:hover {
-      transform: scale(1.05);
-    }
-
-    @keyframes gradient-shift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* PANTALLA DE INICIO OVERLAY */
-    #start-screen {
+    /* PANTALLA INICIAL DE REPRODUCCIÓN */
+    #startOverlay {
       position: absolute;
       inset: 0;
       background: rgba(15, 23, 42, 0.96);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 180;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 500;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -435,49 +737,29 @@
       transition: opacity 0.35s ease, visibility 0.35s ease;
     }
 
-    #start-screen.hidden {
+    #startOverlay.hidden {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
 
-    .logo-img {
-      width: 76px;
-      height: 76px;
-      margin-bottom: 16px;
-      filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.8));
-      animation: float-logo 3s ease-in-out infinite;
-    }
-
-    @keyframes float-logo {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    /* FÍSICA ANTIGRAVITY Y BEAT PULSE */
-    .beat-pulse {
-      transform: scale(1.045) translateY(-8px) rotateZ(0.8deg) !important;
-      box-shadow: 0 35px 90px rgba(124, 58, 237, 0.4), 0 0 40px rgba(2, 132, 199, 0.4) !important;
-      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
-    }
-
-    .clap-pulse {
-      transform: scale(1.07) translateY(-14px) rotateZ(-1.2deg) !important;
-      box-shadow: 0 45px 110px rgba(245, 158, 11, 0.5), 0 0 50px rgba(124, 58, 237, 0.6) !important;
-      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
-    }
-
-    .url-chip {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
+    .overlay-start-btn {
+      background: linear-gradient(135deg, #7c3aed, #0284c7, #f59e0b);
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
       font-weight: 800;
-      color: #fde047;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 10px 18px;
-      border-radius: 12px;
-      border: 1px solid rgba(245, 158, 11, 0.4);
-      margin-bottom: 20px;
-      display: inline-block;
+      padding: 16px 32px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(124, 58, 237, 0.6);
+      margin-top: 20px;
+      transition: transform 0.2s ease;
+    }
+
+    .overlay-start-btn:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -486,282 +768,445 @@
   <!-- BARRA DE CONTROL DEL ESTUDIO -->
   <header class="studio-bar">
     <div class="studio-bar-brand">
-      <img src="img/logo-flor.png" alt="Logo" class="studio-bar-logo">
-      <span>BiblioTech Scout</span>
+      <img src="img/logo-flor.png" alt="Flor de Lis" class="studio-bar-logo">
+      <span>BiblioTech Scout Studio Pro</span>
     </div>
     <div class="studio-bar-metrics">
       <span id="timecode">00:00.00 / 00:46.50</span>
-      <span class="metric-highlight" id="barBeatText">Compás 01 • Beat 1</span>
-      <div class="beat-led" id="beatLed" title="Pulso a 160 BPM"></div>
+      <span class="metric-highlight" id="hudCompas">Compás 01 [Beat 1]</span>
+      <div class="beat-led" id="hudLed" title="Pulso a 160 BPM"></div>
     </div>
     <button type="button" class="studio-btn-record" id="btnRecord">
-      ⏺ Grabar Video
+      ⏺ Grabar Video (60 FPS)
     </button>
   </header>
 
-  <!-- CELULAR / VIEWPORT 9:16 -->
-  <div class="promo-viewport" id="viewport">
+  <!-- SMARTPHONE 9:16 CON LA PÁGINA REAL EN VIVO -->
+  <div class="phone-container" id="phoneContainer">
     
-    <!-- Barra superior del teléfono -->
+    <!-- Notch y Barra de Estado -->
     <div class="phone-notch"></div>
     <div class="phone-status-bar">
       <span>9:41</span>
       <span>SCOUT 5G  100%</span>
     </div>
 
-    <!-- Fondo de Aurora Boreal dinámico -->
-    <div class="phone-aurora-bg" id="auroraBg"></div>
-
-    <!-- Pantalla Inicial para habilitar audio -->
-    <div id="start-screen">
-      <img src="img/logo-flor.png" alt="Flor de Lis" class="logo-img">
-      <h1>BiblioTech Scout</h1>
-      <p>Generador de Video Promocional en Formato Móvil sincronizado exactamente a 160 BPM (Happy).</p>
-      <button type="button" class="cta-button" onclick="iniciarPromo()">▶ REPRODUCIR PROMO</button>
-    </div>
-
-    <!-- Escena 1: Gancho (0.0s - 3.0s | Compases 1-2) -->
-    <div class="scene" id="scene-1">
-      <img src="img/logo-flor.png" alt="Flor" style="width: 52px; height: 52px; margin-bottom: 12px;">
-      <div class="badge">Provincia TLXH</div>
-      <h1>¿Perdido entre tantos manuales Scouts?</h1>
-      <p>Encuentra reglamentos, guías de progresión y respuestas oficiales en segundos.</p>
-    </div>
-
-    <!-- Escena 2: Contadores Clave (3.0s - 12.0s | Compases 3-8) -->
-    <div class="scene" id="scene-2">
-      <div class="badge badge-gold">Base de Datos Vigente</div>
-      <h1>Todo en un solo lugar</h1>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-num" id="statQuestions">5,412+</div>
-          <div class="stat-label">Preguntas y Respuestas</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">498</div>
-          <div class="stat-label">Documentos Oficiales</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">104</div>
-          <div class="stat-label">Temas Actualizados</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">39</div>
-          <div class="stat-label">Libros Centenario</div>
+    <!-- PANTALLA VIRTUAL DEL CELULAR CON SCROLL CINEMÁTICO -->
+    <div class="phone-screen" id="phoneScreen">
+      
+      <!-- 1. Header Oficial -->
+      <div class="mobile-header">
+        <img src="img/logo-flor.png" alt="Flor de Lis" class="mobile-header-logo">
+        <div>
+          <div class="mobile-header-title">BiblioTech Scout</div>
+          <div class="mobile-header-sub">By Liam • Provincia TLXH</div>
         </div>
       </div>
-      <p style="margin-bottom:0; font-size: 0.8rem; color: #94a3b8;">100 Años de Escultismo en México (1926-2026)</p>
-    </div>
 
-    <!-- Escena 3: Buscador Interactivo (12.0s - 21.0s | Compases 9-14) -->
-    <div class="scene" id="scene-3">
-      <div class="badge badge-green">Buscador Inteligente</div>
-      <h1>Consulta Inmediata</h1>
-      <div class="search-mockup" id="searchBox">
-        <span style="font-size: 1.2rem;">🔍</span>
-        <div class="search-input-text">¿Qué son ExplorApp y CarpetApp?</div>
+      <!-- 2. Ribbon Centenario -->
+      <div class="centenario-ribbon">
+        100 AÑOS DE ESCULTISMO EN MÉXICO (1926 — 2026)
       </div>
-      <div class="sections-pills-row">
-        <span class="sec-pill pill-manada">Manada</span>
-        <span class="sec-pill pill-tropa">Tropa</span>
-        <span class="sec-pill pill-comunidad">Comunidad</span>
-        <span class="sec-pill pill-clan">Clan</span>
-      </div>
-      <p>Respuestas extraídas directamente de los manuales y estatutos oficiales de ASMAC y WOSM.</p>
-    </div>
 
-    <!-- Escena 4: Biblioteca del Centenario (21.0s - 30.0s | Compases 15-20) -->
-    <div class="scene" id="scene-4">
-      <div class="badge badge-gold">Colección Centenario</div>
-      <h1>Lectura y Descarga</h1>
-      <div class="book-card">
-        <div class="book-title">El desafío de ser Caminante</div>
-        <div class="book-meta">Comunidad de Caminantes (14 a 18 años)</div>
-        <p style="margin-bottom:0; font-size: 0.82rem; color: #cbd5e1;">Consulta íntegra en PDF oficial de lineamientos, adelanto y especialidades.</p>
-      </div>
-      <div style="margin-top: 14px; font-size: 0.78rem; color: #38bdf8; font-weight: 700;">
-        498 Libros, Manuales y Formatos Descargables
-      </div>
-    </div>
+      <!-- 3. Hero con Trío de Fotos y Contadores -->
+      <section class="mobile-hero-section" id="secHero">
+        <div class="hero-badge">Biblioteca Digital Abierta</div>
+        <h1 class="hero-h1">Pregunta, descubre y lee la información Scout</h1>
+        <p class="hero-desc">Toda la documentación oficial de ASMAC y WOSM en un solo lugar.</p>
 
-    <!-- Escena 5: Llamado a la Acción / CTA (30.0s - 46.5s | Compases 21-31) -->
-    <div class="scene" id="scene-5">
-      <img src="img/logo-flor.png" alt="Flor" style="width: 58px; height: 58px; margin-bottom: 12px; filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.8));">
-      <div class="badge">¡Siempre Listos!</div>
-      <h1>BiblioTech Scout</h1>
-      <p style="margin-bottom: 14px;">Creado por Liam Durán — Provincia TLXH</p>
-      <div class="url-chip">ey-liam.github.io/bibliotech-scouts</div>
-      <a href="https://ey-liam.github.io/bibliotech-scouts/" target="_blank" class="cta-button">¡Entrar al Sitio Web Oficial!</a>
-      <p style="margin-top: 18px; margin-bottom: 0; font-size: 0.76rem; color: #64748b;">
-        Construir un Mundo Mejor • ASMAC & WOSM
-      </p>
+        <!-- Trío de fotos con hexágonos superpuestos -->
+        <div class="hero-trio-wrap" id="heroTrio">
+          <div class="hex-photo hex-left">
+            <img src="img/photos/p01.jpg" alt="Scouts">
+          </div>
+          <div class="hex-photo hex-center">
+            <img src="img/photos/caminantes.jpg" alt="Caminantes">
+            <div class="hex-center-tag">Siempre Adelante</div>
+          </div>
+          <div class="hex-photo hex-right">
+            <img src="img/photos/p02.jpg" alt="Manada">
+          </div>
+        </div>
+
+        <!-- Contadores numéricos -->
+        <div class="stats-row" id="statsRow">
+          <div class="stat-box">
+            <div class="stat-number">5,412+</div>
+            <div class="stat-lbl">Preguntas</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">498</div>
+            <div class="stat-lbl">Documentos</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">104</div>
+            <div class="stat-lbl">Temas</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Buscador Interactivo -->
+      <section class="search-container" id="secSearch">
+        <div class="search-title">
+          <span>🔍</span> Buscador Inteligente
+        </div>
+        <div class="search-input-box">
+          <div class="search-text" id="searchText">¿Qué son ExplorApp y CarpetApp?</div>
+        </div>
+        <div class="answer-card" id="answerCard">
+          <span class="answer-tag">Red de Caminantes • ASMAC</span>
+          <div class="answer-h">ExplorApp y CarpetApp Oficiales</div>
+          <p class="answer-body">
+            • <strong>ExplorApp:</strong> Registro y seguimiento de proyectos comunitarios dentro de los 4 Ejes Temáticos.<br>
+            • <strong>CarpetApp:</strong> Carpeta digital para el control de progresión personal y especialidades.
+          </p>
+        </div>
+      </section>
+
+      <!-- 5. Secciones Scouts -->
+      <section class="sections-block" id="secSections">
+        <h2 class="section-h2">Las 4 Secciones Scouts</h2>
+        <div class="sections-grid">
+          <div class="sec-card manada" id="cardManada">
+            <div class="sec-dot manada">🐺</div>
+            <div class="sec-title">Manada</div>
+            <div class="sec-sub">Lobatos y Lobeznas</div>
+            <div class="sec-lema manada">¡Siempre lo Mejor!</div>
+          </div>
+          <div class="sec-card tropa" id="cardTropa">
+            <div class="sec-dot tropa">⚜️</div>
+            <div class="sec-title">Tropa</div>
+            <div class="sec-sub">Scouts</div>
+            <div class="sec-lema tropa">¡Siempre Listos!</div>
+          </div>
+          <div class="sec-card comunidad" id="cardComunidad">
+            <div class="sec-dot comunidad">🧭</div>
+            <div class="sec-title">Comunidad</div>
+            <div class="sec-sub">Caminantes</div>
+            <div class="sec-lema comunidad">¡Siempre Adelante!</div>
+          </div>
+          <div class="sec-card clan" id="cardClan">
+            <div class="sec-dot clan">🛡️</div>
+            <div class="sec-title">Clan</div>
+            <div class="sec-sub">Rovers</div>
+            <div class="sec-lema clan">¡Servir!</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Agentes de Cambio.MX -->
+      <section class="agentes-block" id="secAgentes">
+        <img src="img/adc/logo.png" alt="Agentes de Cambio" class="agentes-logo-img">
+        <div style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.05rem; color:#fff; margin-bottom:4px;">
+          4 Ejes Temáticos del CNRC
+        </div>
+        <div class="agentes-axes-row">
+          <div class="axis-orb" id="axisPaz">
+            <img src="img/adc/paz.png" alt="Paz">
+            <span>Paz y Acción</span>
+          </div>
+          <div class="axis-orb" id="axisSalud">
+            <img src="img/adc/salud.png" alt="Salud">
+            <span>Salud y Bienestar</span>
+          </div>
+          <div class="axis-orb" id="axisHab">
+            <img src="img/adc/habilidades.png" alt="Habilidades">
+            <span>Habilidades</span>
+          </div>
+          <div class="axis-orb" id="axisSust">
+            <img src="img/adc/sustentabilidad.png" alt="Sustentabilidad">
+            <span>Medio Ambiente</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Biblioteca del Centenario -->
+      <section class="books-block" id="secBooks">
+        <h2 class="section-h2">Biblioteca Scout Oficial</h2>
+        <div class="book-card-item">
+          <div class="book-thumb">📖</div>
+          <div class="book-info">
+            <h4>El desafío de ser Caminante</h4>
+            <p>Guía de Progresión y Aventura para Jóvenes</p>
+            <span class="book-btn">PDF Descargable • 240 págs</span>
+          </div>
+        </div>
+        <div class="book-card-item">
+          <div class="book-thumb" style="background: linear-gradient(135deg, #10b981, #0284c7);">🏕️</div>
+          <div class="book-info">
+            <h4>Manual de Supervivencia</h4>
+            <p>Técnicas de Campismo y Primeros Auxilios</p>
+            <span class="book-btn">Colección Biblioteca del Centenario</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. Call to Action Final -->
+      <section class="cta-block" id="secCta">
+        <img src="img/logo-flor.png" alt="Flor" class="cta-flor">
+        <div style="font-family:'Outfit',sans-serif; font-size:1.45rem; font-weight:900; color:#fff; margin-bottom:4px;">
+          BiblioTech Scout
+        </div>
+        <div style="font-size:0.82rem; color:#c084fc; font-weight:800; margin-bottom:14px;">
+          Creador: Liam Durán • Provincia TLXH
+        </div>
+        <div class="cta-url-box">
+          ey-liam.github.io/bibliotech-scouts
+        </div>
+        <a href="https://ey-liam.github.io/bibliotech-scouts/" target="_blank" class="cta-main-btn">
+          ¡Entra Gratis desde tu Celular!
+        </a>
+        <p style="font-size:0.72rem; color:#64748b; margin-top:16px;">
+          Construir un Mundo Mejor • ASMAC & WOSM
+        </p>
+      </section>
+
     </div>
   </div>
 
-  <!-- Audio en Loop a 160 BPM -->
-  <audio id="promo-audio" preload="auto">
+  <!-- OVERLAY DE INICIO -->
+  <div id="startOverlay">
+    <img src="img/logo-flor.png" alt="Flor" style="width: 78px; height: 78px; margin-bottom: 14px; filter: drop-shadow(0 0 20px rgba(124,58,237,0.8));">
+    <h1 style="font-family:'Outfit',sans-serif; font-size:2.2rem; font-weight:900; color:#fff; margin-bottom:8px;">
+      BiblioTech Scout Studio Pro
+    </h1>
+    <p style="color:#93c5fd; font-size:1rem; max-width:540px; margin-bottom:16px;">
+      Animación vertical 9:16 sincronizada con <strong>Happy (160 BPM)</strong> mostrando la interfaz real de BiblioTech Scout.
+    </p>
+    <button type="button" class="overlay-start-btn" onclick="startStudio()">
+      ▶ Iniciar Coreografía y Música
+    </button>
+  </div>
+
+  <!-- PISTA DE AUDIO -->
+  <audio id="promoAudio" preload="auto">
     <source src="assets/audio/promo-audio.mp3" type="audio/mpeg">
     <source src="assets/audio/promo-audio.wav" type="audio/wav">
-    <source src="Happy 160 Bpm Loop.wav" type="audio/wav">
   </audio>
 
   <script>
     const BPM = 160;
-    const BEAT_DURATION = 60 / BPM; // 0.375s exactos por beat
-    const BAR_DURATION = BEAT_DURATION * 4; // 1.5s por compás
-    const TOTAL_DURATION = 46.5; // Duración recomendada para loop perfecto
+    const BEAT_DURATION = 60 / BPM; // 0.375s
+    const BAR_DURATION = BEAT_DURATION * 4; // 1.50s
+    const TOTAL_DURATION = 46.5; // Loop perfecto a 31 compases
 
-    const audio = document.getElementById('promo-audio');
-    const viewport = document.getElementById('viewport');
-    const startScreen = document.getElementById('start-screen');
-    const scenes = document.querySelectorAll('.scene');
+    const audio = document.getElementById('promoAudio');
+    const phoneContainer = document.getElementById('phoneContainer');
+    const phoneScreen = document.getElementById('phoneScreen');
+    const startOverlay = document.getElementById('startOverlay');
     const timecode = document.getElementById('timecode');
-    const barBeatText = document.getElementById('barBeatText');
-    const beatLed = document.getElementById('beatLed');
-    const searchBox = document.getElementById('searchBox');
+    const hudCompas = document.getElementById('hudCompas');
+    const hudLed = document.getElementById('hudLed');
     const btnRecord = document.getElementById('btnRecord');
 
-    let currentActiveScene = -1;
-    let animationInterval = null;
+    // Secciones dentro de la pantalla
+    const secHero = document.getElementById('secHero');
+    const secSearch = document.getElementById('secSearch');
+    const secSections = document.getElementById('secSections');
+    const secAgentes = document.getElementById('secAgentes');
+    const secBooks = document.getElementById('secBooks');
+    const secCta = document.getElementById('secCta');
+
+    const searchText = document.getElementById('searchText');
+    const answerCard = document.getElementById('answerCard');
+    const cardManada = document.getElementById('cardManada');
+    const cardTropa = document.getElementById('cardTropa');
+    const cardComunidad = document.getElementById('cardComunidad');
+    const cardClan = document.getElementById('cardClan');
+
+    const axisPaz = document.getElementById('axisPaz');
+    const axisSalud = document.getElementById('axisSalud');
+    const axisHab = document.getElementById('axisHab');
+    const axisSust = document.getElementById('axisSust');
+
+    let animId = null;
     let lastBeat = -1;
 
-    // Grabación
-    let mediaRecorder = null;
-    let recordedChunks = [];
-    let isRecording = false;
-
-    function iniciarPromo() {
-      startScreen.classList.add('hidden');
+    function startStudio() {
+      startOverlay.classList.add('hidden');
       audio.currentTime = 0;
-      audio.play().catch(e => console.log('Audio autoplay bloqueado o archivo no encontrado.'));
-      
-      const startTime = performance.now();
-
-      function updateLoop() {
-        const elapsedTime = audio.paused ? (performance.now() - startTime) / 1000 : audio.currentTime;
-        
-        // Loop a los 46.5 segundos para TikTok / Reels infinito
-        if (elapsedTime >= TOTAL_DURATION) {
-          audio.currentTime = 0;
-        }
-
-        const currentBeat = Math.floor(elapsedTime / BEAT_DURATION);
-        const currentBar = Math.floor(elapsedTime / BAR_DURATION) + 1;
-        const beatInBar = (currentBeat % 4) + 1;
-
-        // Actualizar HUD
-        const mins = Math.floor(elapsedTime / 60);
-        const secs = Math.floor(elapsedTime % 60);
-        const ms = Math.floor((elapsedTime % 1) * 100);
-        timecode.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(ms).padStart(2, '0')} / 00:46.50`;
-        barBeatText.textContent = `Compás ${String(currentBar).padStart(2, '0')} • Beat ${beatInBar}`;
-
-        // Pulso en cada Beat (375ms)
-        const subBeat = (elapsedTime % BEAT_DURATION) / BEAT_DURATION;
-        if (subBeat < 0.25) {
-          const isClap = (beatInBar === 2 || beatInBar === 4); // Claps en 2 y 4
-          beatLed.className = isClap ? 'beat-led clap' : 'beat-led active';
-          viewport.className = isClap ? 'promo-viewport clap-pulse' : 'promo-viewport beat-pulse';
-        } else {
-          beatLed.className = 'beat-led';
-          viewport.className = 'promo-viewport';
-        }
-
-        // Mapeo exacto de escenas por compases a 160 BPM
-        let activeSceneIndex = 0;
-        if (elapsedTime >= 3.0 && elapsedTime < 12.0) {
-          activeSceneIndex = 1; // Compases 3 a 8: Contadores
-        } else if (elapsedTime >= 12.0 && elapsedTime < 21.0) {
-          activeSceneIndex = 2; // Compases 9 a 14: Buscador
-          if (searchBox) searchBox.classList.add('typing');
-        } else if (elapsedTime >= 21.0 && elapsedTime < 30.0) {
-          activeSceneIndex = 3; // Compases 15 a 20: Libros
-        } else if (elapsedTime >= 30.0) {
-          activeSceneIndex = 4; // Compases 21 a 31: Cierre y CTA
-        }
-
-        if (activeSceneIndex !== currentActiveScene) {
-          scenes.forEach(s => s.classList.remove('active'));
-          scenes[activeSceneIndex].classList.add('active');
-          currentActiveScene = activeSceneIndex;
-        }
-
-        // Coreografía de rotación de cámara en 3D
-        if (currentBar <= 2) {
-          viewport.style.transform = `perspective(1200px) rotateX(10deg) rotateY(${currentBeat % 2 === 0 ? -6 : 6}deg) scale(0.95)`;
-        } else if (currentBar >= 3 && currentBar <= 8) {
-          viewport.style.transform = `perspective(1200px) rotateX(4deg) rotateY(${currentBeat % 2 === 0 ? -3 : 3}deg) scale(1.02)`;
-        } else if (currentBar >= 9 && currentBar <= 14) {
-          viewport.style.transform = `perspective(1200px) rotateX(6deg) rotateY(4deg) scale(1.04)`;
-        } else if (currentBar >= 15 && currentBar <= 20) {
-          viewport.style.transform = `perspective(1200px) rotateX(8deg) rotateY(-5deg) scale(0.98)`;
-        } else {
-          const tiltY = (currentBar % 2 === 0) ? 8 : -8;
-          viewport.style.transform = `perspective(1200px) rotateX(6deg) rotateY(${tiltY}deg) scale(1.01)`;
-        }
-
-        animationInterval = requestAnimationFrame(updateLoop);
-      }
-
-      animationInterval = requestAnimationFrame(updateLoop);
+      audio.play().catch(e => console.log('Autoplay bloqueado.'));
+      renderLoop();
     }
 
-    // Atajos de teclado: Espacio = Play, R = Reset
+    function renderLoop() {
+      if (!audio.paused) {
+        const t = audio.currentTime;
+
+        // Loop sin costuras a los 46.5 segundos
+        if (t >= TOTAL_DURATION) {
+          audio.currentTime = 0;
+          phoneScreen.scrollTo({ top: 0, behavior: 'instant' });
+        }
+
+        const beat = Math.floor(t / BEAT_DURATION);
+        const bar = Math.floor(t / BAR_DURATION) + 1;
+        const beatInBar = (beat % 4) + 1;
+        const isClap = (beatInBar === 2 || beatInBar === 4);
+
+        // Actualizar HUD
+        const mins = Math.floor(t / 60);
+        const secs = Math.floor(t % 60);
+        const ms = Math.floor((t % 1) * 100);
+        timecode.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(ms).padStart(2, '0')} / 00:46.50`;
+        hudCompas.textContent = `Compás ${String(bar).padStart(2, '0')} [Beat ${beatInBar}]`;
+
+        // Pulso LED
+        const subBeat = (t % BEAT_DURATION) / BEAT_DURATION;
+        if (subBeat < 0.28) {
+          hudLed.className = isClap ? 'beat-led clap' : 'beat-led active';
+        } else {
+          hudLed.className = 'beat-led';
+        }
+
+        // Ejecutar en cada beat
+        if (beat !== lastBeat) {
+          lastBeat = beat;
+          onBeat(beat, bar, beatInBar, isClap, t);
+        }
+      }
+
+      animId = requestAnimationFrame(renderLoop);
+    }
+
+    function onBeat(beat, bar, beatInBar, isClap, t) {
+      // Ángulo 3D del teléfono sincronizado con el bajo
+      const tiltX = 6;
+      const tiltY = (beat % 2 === 0) ? -5 : 5;
+      const scaleKick = isClap ? 1.025 : 1.0;
+      phoneContainer.style.transform = `perspective(1200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${scaleKick})`;
+
+      // ----------------------------------------------------
+      // COMPASES 1–3 (0.0s – 4.5s): HERO & TRÍO DE FOTOS
+      // ----------------------------------------------------
+      if (bar <= 3) {
+        if (bar === 1 && beatInBar === 1) {
+          phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+
+      // ----------------------------------------------------
+      // COMPASES 4–8 (4.5s – 12.0s): BUSCADOR INTELIGENTE
+      // ----------------------------------------------------
+      else if (bar >= 4 && bar <= 8) {
+        if (bar === 4 && beatInBar === 1) {
+          phoneScreen.scrollTo({ top: secSearch.offsetTop - 70, behavior: 'smooth' });
+          searchText.classList.add('typing');
+        }
+        if (bar >= 6) {
+          answerCard.classList.add('visible');
+        }
+      }
+
+      // ----------------------------------------------------
+      // COMPASES 9–13 (12.0s – 19.5s): SECCIONES SCOUTS
+      // ----------------------------------------------------
+      else if (bar >= 9 && bar <= 13) {
+        if (bar === 9 && beatInBar === 1) {
+          phoneScreen.scrollTo({ top: secSections.offsetTop - 70, behavior: 'smooth' });
+        }
+      }
+
+      // ----------------------------------------------------
+      // COMPASES 14–17 (19.5s – 25.5s): ¡DROP DEL CORO!
+      // "BECAUSE I'M HAPPY! Clap along..."
+      // Las 4 Secciones saltan en cada palmada (beats 2 y 4)
+      // ----------------------------------------------------
+      else if (bar >= 14 && bar <= 17) {
+        if (bar === 14 && beatInBar === 1) {
+          phoneScreen.scrollTo({ top: secSections.offsetTop - 70, behavior: 'smooth' });
+        }
+
+        // Limpiar
+        [cardManada, cardTropa, cardComunidad, cardClan].forEach(c => c.classList.remove('pulse-highlight'));
+
+        if (isClap) {
+          const cards = [cardManada, cardTropa, cardComunidad, cardClan];
+          const activeCard = cards[(beat % 4)];
+          if (activeCard) activeCard.classList.add('pulse-highlight');
+        }
+      }
+
+      // ----------------------------------------------------
+      // COMPASES 18–22 (25.5s – 33.0s): AGENTES DE CAMBIO.MX
+      // ----------------------------------------------------
+      else if (bar >= 18 && bar <= 22) {
+        if (bar === 18 && beatInBar === 1) {
+          phoneScreen.scrollTo({ top: secAgentes.offsetTop - 70, behavior: 'smooth' });
+        }
+
+        [axisPaz, axisSalud, axisHab, axisSust].forEach(a => a.classList.remove('active'));
+        const orbs = [axisPaz, axisSalud, axisHab, axisSust];
+        orbs[(beat % 4)].classList.add('active');
+      }
+
+      // ----------------------------------------------------
+      // COMPASES 23–27 (33.0s – 40.5s): BIBLIOTECA DEL CENTENARIO
+      // ----------------------------------------------------
+      else if (bar >= 23 && bar <= 27) {
+        if (bar === 23 && beatInBar === 1) {
+          phoneScreen.scrollTo({ top: secBooks.offsetTop - 70, behavior: 'smooth' });
+        }
+      }
+
+      // ----------------------------------------------------
+      // COMPASES 28–31 (40.5s – 46.5s): LLAMADO A LA ACCIÓN Y CIERRE
+      // ----------------------------------------------------
+      else if (bar >= 28) {
+        if (bar === 28 && beatInBar === 1) {
+          phoneScreen.scrollTo({ top: secCta.offsetTop - 70, behavior: 'smooth' });
+        }
+        if (bar === 31 && beatInBar === 4) {
+          phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    }
+
+    // Atajos de teclado: Espacio = Play/Pausa
     window.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
         e.preventDefault();
         if (audio.paused) {
-          iniciarPromo();
+          startStudio();
         } else {
           audio.pause();
         }
-      } else if (e.code === 'KeyR') {
-        audio.currentTime = 0;
       }
     });
 
-    // Grabación en vivo mediante Screen Capture / MediaRecorder
+    // Grabación en vivo (MediaRecorder)
     btnRecord.addEventListener('click', async () => {
-      if (isRecording) {
-        if (mediaRecorder) mediaRecorder.stop();
-        return;
-      }
-
       try {
         const stream = await navigator.mediaDevices.getDisplayMedia({
           video: { frameRate: 60, displaySurface: 'browser' },
           audio: true
         });
 
-        recordedChunks = [];
-        mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
+        const chunks = [];
+        const recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
 
-        mediaRecorder.ondataavailable = (e) => {
-          if (e.data.size > 0) recordedChunks.push(e.data);
+        recorder.ondataavailable = (e) => {
+          if (e.data.size > 0) chunks.push(e.data);
         };
 
-        mediaRecorder.onstop = () => {
-          const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        recorder.onstop = () => {
+          const blob = new Blob(chunks, { type: 'video/webm' });
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = 'bibliotech-scout-promo-mobile.webm';
+          a.download = 'bibliotech-scout-promo-1080x1920.webm';
           a.click();
-
           btnRecord.classList.remove('recording');
-          btnRecord.textContent = '⏺ Grabar Video';
-          isRecording = false;
+          btnRecord.textContent = '⏺ Grabar Video (60 FPS)';
           stream.getTracks().forEach(t => t.stop());
         };
 
-        mediaRecorder.start();
-        isRecording = true;
+        recorder.start();
         btnRecord.classList.add('recording');
         btnRecord.textContent = '⏹ Grabando...';
-
-        iniciarPromo();
+        startStudio();
       } catch (err) {
-        alert('Para grabar en vivo selecciona la pestaña de este navegador cuando aparezca el diálogo.');
+        alert('Para grabar en vivo selecciona esta pestaña en el diálogo del navegador.');
       }
     });
   </script>
