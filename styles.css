@@ -53,6 +53,32 @@ body {
     radial-gradient(circle at 80% 65%, rgba(109, 40, 217, 0.09), transparent 35%);
 }
 
+/* Accesibilidad: permite saltar la navegación con Tab */
+.skip-link {
+  position: fixed;
+  top: -120px;
+  left: 1rem;
+  z-index: 3000;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0 0 12px 12px;
+  background: #4c1d95;
+  color: #ffffff;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.28);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+#contenido-principal:focus {
+  outline: none;
+}
+
 h1, h2, h3, h4 {
   font-family: 'Outfit', sans-serif;
   line-height: 1.2;
@@ -641,9 +667,9 @@ h1, h2, h3, h4 {
   z-index: 5;
 }
 
-.cap-green { background: #16a34a; color: #ffffff; }
-.cap-orange { background: #ea580c; color: #ffffff; }
-.cap-blue { background: #0284c7; color: #ffffff; }
+.cap-green { background: #15803d; color: #ffffff; }
+.cap-orange { background: #c2410c; color: #ffffff; }
+.cap-blue { background: #0369a1; color: #ffffff; }
 
 /* =====================================================
    TARJETA DEL BUSCADOR Y EXPLORADOR DE +2,860 PREGUNTAS
@@ -3267,14 +3293,14 @@ h1, h2, h3, h4 {
 
 .footer-non-affiliation {
   font-size: 0.72rem;
-  color: #64748b;
+  color: #94a3b8;
   max-width: 980px;
   margin: 0 auto;
   line-height: 1.55;
 }
 
 .footer-non-affiliation strong {
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 /* =====================================================
