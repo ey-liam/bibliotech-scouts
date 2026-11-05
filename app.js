@@ -237,6 +237,7 @@ function setupLazyDataWarmup() {
 // CARGA INICIAL (CATALOGO DE 498 DOCUMENTOS + 104 TEMAS)
 // ============================================================================
 async function initApp() {
+  setupHeaderUI();
   setupContactEmailUI();
   bindEvents();
   setupScrollAnimations();
@@ -286,6 +287,88 @@ async function initApp() {
   }
 }
 
+// ============================================================================
+// BARRA SUPERIOR: MENÚ MÓVIL, ESTADO AL DESPLAZAR Y PROGRESO DE LECTURA
+// ============================================================================
+function setupHeaderUI() {
+  const header = document.querySelector(".main-header");
+  if (!header) return;
+
+  const toggle = document.getElementById("navToggle");
+  const nav = document.getElementById("navegacion-principal");
+  const backdrop = document.getElementById("navBackdrop");
+  const progress = document.getElementById("scrollProgressBar");
+  const firstNavLink = nav ? nav.querySelector(".nav-link") : null;
+
+  const closeNav = (returnFocus = false) => {
+    header.classList.remove("nav-open");
+    document.body.classList.remove("nav-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+    if (backdrop) backdrop.hidden = true;
+    if (returnFocus && toggle) toggle.focus();
+  };
+
+  const openNav = () => {
+    header.classList.add("nav-open");
+    document.body.classList.add("nav-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
+    if (backdrop) backdrop.hidden = false;
+    if (firstNavLink) firstNavLink.focus();
+  };
+
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      if (header.classList.contains("nav-open")) closeNav(true);
+      else openNav();
+    });
+  }
+
+  if (nav) {
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => closeNav());
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener("click", () => closeNav(true));
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && header.classList.contains("nav-open")) {
+      closeNav(true);
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1024 && header.classList.contains("nav-open")) {
+      closeNav();
+    }
+  });
+
+  let ticking = false;
+  const updateScrollUI = () => {
+    const sy = window.scrollY || document.documentElement.scrollTop || 0;
+    header.classList.toggle("is-scrolled", sy > 16);
+    if (progress) {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = max > 0 ? Math.min(sy / max, 1) : 0;
+      progress.style.transform = `scaleX(${ratio})`;
+    }
+    ticking = false;
+  };
+
+  updateScrollUI();
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateScrollUI);
+    },
+    { passive: true }
+  );
+}
+
 function setupScrollAnimations() {
   const targets = document.querySelectorAll(
     ".starter-3d-card, .scout-sec-card, .service-info-card, .change-card, .centenario-collection-banner, .agentes-card, .about-card, .mosaic-item"
@@ -317,7 +400,7 @@ function setupScrollAnimations() {
   const askFab = document.getElementById("floatingAskBtn");
   const topFab = document.getElementById("floatingTopBtn");
   const navLinks = Array.from(document.querySelectorAll(".main-nav .nav-link"));
-  const spyIds = ["buscador", "guia-inicio", "biblioteca", "acerca", "agentes", "secciones", "servicios", "cambios", "explorar"];
+  const spyIds = ["buscador", "biblioteca", "acerca", "agentes", "secciones", "cambios", "explorar"];
 
   if (askFab) {
     askFab.addEventListener("click", () => {
