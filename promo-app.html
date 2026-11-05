@@ -20,7 +20,6 @@
       --green: #10b981;
       --red: #ef4444;
       --bg-dark: #07090e;
-      --card-bg: rgba(30, 41, 59, 0.75);
     }
 
     * {
@@ -46,16 +45,16 @@
     /* BARRA SUPERIOR DE CONTROL DEL ESTUDIO */
     .studio-bar {
       position: fixed;
-      top: 16px;
+      top: 14px;
       display: flex;
       align-items: center;
       gap: 16px;
-      background: rgba(15, 23, 42, 0.88);
+      background: rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       padding: 8px 22px;
       border-radius: 999px;
-      border: 1.5px solid rgba(124, 58, 237, 0.4);
+      border: 1.5px solid rgba(124, 58, 237, 0.45);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(124, 58, 237, 0.25);
       z-index: 500;
     }
@@ -143,7 +142,7 @@
       to { box-shadow: 0 0 24px rgba(220, 38, 38, 1); }
     }
 
-    /* CONTENEDOR 9:16 (SMARTPHONE DE LUJO) */
+    /* CONTENEDOR 9:16 (SMARTPHONE DE LUJO CON CÁMARA CINEMÁTICA) */
     .phone-container {
       width: 420px;
       height: 760px;
@@ -154,7 +153,7 @@
       position: relative;
       overflow: hidden;
       transform-style: preserve-3d;
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
       margin-top: 40px;
     }
 
@@ -188,7 +187,7 @@
       pointer-events: none;
     }
 
-    /* PANTALLA VIRTUAL CON SCROLL CINEMÁTICO CONTROLADO */
+    /* PANTALLA VIRTUAL DEL CELULAR CON SCROLL CINEMÁTICO CONTROLADO */
     .phone-screen {
       position: absolute;
       inset: 0;
@@ -197,7 +196,7 @@
       scroll-behavior: smooth;
       scrollbar-width: none;
       padding-top: 50px;
-      padding-bottom: 60px;
+      padding-bottom: 70px;
       background: linear-gradient(180deg, #090d16 0%, #0f172a 30%, #1e1b4b 70%, #07090e 100%);
     }
 
@@ -206,7 +205,7 @@
     }
 
     /* ========================================================
-       COMPONENTES REALES DE BIBLIOTECH SCOUT DENTRO DEL CELULAR
+       COMPONENTES REALES EXTRAÍDOS TAL CUAL DE INDEX.HTML
        ======================================================== */
     
     /* 1. Header Oficial */
@@ -215,10 +214,10 @@
       align-items: center;
       gap: 12px;
       padding: 14px 20px;
-      background: rgba(15, 23, 42, 0.92);
+      background: rgba(15, 23, 42, 0.94);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1.5px solid rgba(124, 58, 237, 0.3);
+      border-bottom: 1.5px solid rgba(124, 58, 237, 0.35);
       position: sticky;
       top: 0;
       z-index: 300;
@@ -239,49 +238,35 @@
     }
 
     .mobile-header-sub {
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       color: #c084fc;
       font-weight: 800;
     }
 
-    /* 2. Banner Centenario */
+    /* 2. Banner Centenario Oficial */
     .centenario-ribbon {
       background: linear-gradient(90deg, #7c3aed, #0284c7, #f59e0b);
       padding: 8px 16px;
       text-align: center;
       font-family: 'Outfit', sans-serif;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 900;
       color: #ffffff;
       letter-spacing: 0.5px;
       box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
     }
 
-    /* 3. Hero Section */
+    /* 3. Hero Section Oficial */
     .mobile-hero-section {
-      padding: 24px 20px;
+      padding: 24px 20px 16px 20px;
       text-align: center;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: rgba(124, 58, 237, 0.2);
-      border: 1px solid rgba(124, 58, 237, 0.45);
-      color: #c084fc;
-      font-size: 0.72rem;
-      font-weight: 800;
-      padding: 4px 12px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
     }
 
     .hero-h1 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.65rem;
+      font-size: 1.55rem;
       font-weight: 900;
-      line-height: 1.18;
+      line-height: 1.2;
       margin-bottom: 12px;
       background: linear-gradient(135deg, #ffffff, #c4b5fd);
       -webkit-background-clip: text;
@@ -289,13 +274,13 @@
     }
 
     .hero-desc {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: #94a3b8;
-      line-height: 1.4;
+      line-height: 1.45;
       margin-bottom: 18px;
     }
 
-    /* TRÍO DE FOTOS HEXAGONALES REAL */
+    /* TRÍO DE FOTOS HEXAGONALES EXACTO DE INDEX.HTML */
     .hero-trio-wrap {
       position: relative;
       height: 180px;
@@ -312,7 +297,7 @@
       overflow: hidden;
       position: absolute;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-      transition: transform 0.25s ease;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .hex-photo img {
@@ -323,9 +308,24 @@
 
     .hex-left {
       left: 35px;
-      transform: rotate(-8deg) scale(0.9);
+      transform: rotate(-6deg) scale(0.92);
       border: 3px solid #10b981;
       z-index: 10;
+    }
+
+    .hex-left-tag {
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #10b981;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.64rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
     }
 
     .hex-center {
@@ -344,7 +344,7 @@
       left: 50%;
       transform: translateX(-50%);
       background: #f59e0b;
-      color: #000;
+      color: #000000;
       font-family: 'Outfit', sans-serif;
       font-size: 0.68rem;
       font-weight: 900;
@@ -356,12 +356,27 @@
 
     .hex-right {
       right: 35px;
-      transform: rotate(8deg) scale(0.9);
+      transform: rotate(6deg) scale(0.92);
       border: 3px solid #0284c7;
       z-index: 10;
     }
 
-    /* Contadores de Impacto */
+    .hex-right-tag {
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0284c7;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.64rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    /* Contadores numéricos exactos */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -375,7 +390,7 @@
       border-radius: 16px;
       padding: 12px 6px;
       text-align: center;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
     .stat-number {
@@ -386,20 +401,30 @@
     }
 
     .stat-lbl {
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       font-weight: 700;
       color: #94a3b8;
       margin-top: 2px;
     }
 
-    /* 4. Buscador Interactivo */
+    /* 4. Buscador Interactivo Real */
     .search-container {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.88);
       border: 1.5px solid rgba(124, 58, 237, 0.5);
       border-radius: 26px;
       padding: 20px 16px;
       margin: 0 20px 24px 20px;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-kicker {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #c084fc;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+      display: block;
     }
 
     .search-title {
@@ -422,11 +447,11 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 14px;
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
     }
 
     .search-text {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: #ffffff;
       white-space: nowrap;
@@ -449,9 +474,9 @@
       50% { border-color: #38bdf8; }
     }
 
-    /* Tarjeta de respuesta real */
+    /* Tarjeta de respuesta real de ExplorApp y CarpetApp */
     .answer-card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
       border: 1.5px solid rgba(124, 58, 237, 0.6);
       border-radius: 18px;
       padding: 14px;
@@ -479,26 +504,26 @@
 
     .answer-h {
       font-family: 'Outfit', sans-serif;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       font-weight: 800;
       color: #ffffff;
       margin-bottom: 6px;
     }
 
     .answer-body {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: #cbd5e1;
-      line-height: 1.4;
+      line-height: 1.42;
     }
 
-    /* 5. Las 4 Secciones Scouts */
+    /* 5. Las 4 Secciones Scouts Oficiales con sus Lemas y Textos Exactos */
     .sections-block {
       padding: 20px;
     }
 
     .section-h2 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 900;
       text-align: center;
       margin-bottom: 14px;
@@ -518,40 +543,26 @@
       text-align: center;
       border: 2px solid transparent;
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
-      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
     }
 
-    .sec-card.manada { border-color: rgba(234, 179, 8, 0.4); }
-    .sec-card.tropa { border-color: rgba(16, 185, 129, 0.4); }
-    .sec-card.comunidad { border-color: rgba(2, 132, 199, 0.4); }
-    .sec-card.clan { border-color: rgba(239, 68, 68, 0.4); }
+    .sec-card.manada { border-color: rgba(234, 179, 8, 0.45); }
+    .sec-card.tropa { border-color: rgba(16, 185, 129, 0.45); }
+    .sec-card.comunidad { border-color: rgba(2, 132, 199, 0.45); }
+    .sec-card.clan { border-color: rgba(239, 68, 68, 0.45); }
 
-    .sec-dot {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      margin: 0 auto 8px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      color: #fff;
+    .sec-age {
+      font-size: 0.64rem;
+      font-weight: 800;
+      color: #94a3b8;
+      margin-bottom: 4px;
     }
-    .sec-dot.manada { background: #eab308; }
-    .sec-dot.tropa { background: #10b981; }
-    .sec-dot.comunidad { background: #0284c7; }
-    .sec-dot.clan { background: #ef4444; }
 
     .sec-title {
       font-family: 'Outfit', sans-serif;
       font-size: 0.95rem;
-      font-weight: 800;
+      font-weight: 900;
       color: #ffffff;
-    }
-
-    .sec-sub {
-      font-size: 0.68rem;
-      color: #94a3b8;
     }
 
     .sec-lema {
@@ -564,15 +575,16 @@
     .sec-lema.comunidad { color: #0284c7; }
     .sec-lema.clan { color: #ef4444; }
 
-    /* Efectos de pulso en el coro */
+    /* Pulso en el coro */
     .sec-card.pulse-highlight {
-      transform: scale(1.1) translateY(-6px) !important;
+      transform: scale(1.12) translateY(-6px) !important;
       box-shadow: 0 16px 36px rgba(245, 158, 11, 0.6) !important;
+      border-color: #f59e0b !important;
     }
 
-    /* 6. Agentes de Cambio.MX */
+    /* 6. Agentes de Cambio.MX Oficial */
     .agentes-block {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.88);
       border: 1.5px solid rgba(2, 132, 199, 0.5);
       border-radius: 26px;
       padding: 20px 16px;
@@ -583,7 +595,17 @@
     .agentes-logo-img {
       width: 140px;
       height: auto;
-      margin: 0 auto 10px auto;
+      margin: 0 auto 8px auto;
+    }
+
+    .agentes-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 6px;
     }
 
     .agentes-axes-row {
@@ -601,7 +623,7 @@
       flex-direction: column;
       align-items: center;
       border: 1.5px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
     .axis-orb img {
@@ -615,16 +637,16 @@
       font-size: 0.58rem;
       font-weight: 800;
       color: #ffffff;
-      line-height: 1.1;
+      line-height: 1.15;
     }
 
     .axis-orb.active {
-      transform: scale(1.15) translateY(-4px);
+      transform: scale(1.16) translateY(-4px);
       border-color: #f59e0b;
       box-shadow: 0 8px 20px rgba(245, 158, 11, 0.5);
     }
 
-    /* 7. Biblioteca del Centenario */
+    /* 7. Colección Biblioteca del Centenario Oficial */
     .books-block {
       padding: 20px;
       text-align: center;
@@ -671,7 +693,7 @@
     }
 
     .book-btn {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 800;
       color: #38bdf8;
       background: rgba(56, 189, 248, 0.15);
@@ -680,26 +702,41 @@
       display: inline-block;
     }
 
-    /* 8. Call to Action Finale */
+    /* 8. Call to Action Finale Oficial */
     .cta-block {
-      padding: 30px 20px;
+      padding: 28px 20px;
       text-align: center;
     }
 
     .cta-flor {
       width: 64px;
       height: 64px;
-      margin: 0 auto 12px auto;
+      margin: 0 auto 10px auto;
       filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.8));
     }
 
+    .cta-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .cta-author {
+      font-size: 0.8rem;
+      color: #c084fc;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
     .cta-url-box {
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.5);
       border: 2px solid var(--gold);
       padding: 12px 18px;
       border-radius: 14px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 800;
       color: #fde047;
       margin-bottom: 16px;
@@ -765,7 +802,7 @@
 </head>
 <body>
 
-  <!-- BARRA DE CONTROL DEL ESTUDIO -->
+  <!-- BARRA SUPERIOR DE CONTROL -->
   <header class="studio-bar">
     <div class="studio-bar-brand">
       <img src="img/logo-flor.png" alt="Flor de Lis" class="studio-bar-logo">
@@ -781,7 +818,7 @@
     </button>
   </header>
 
-  <!-- SMARTPHONE 9:16 CON LA PÁGINA REAL EN VIVO -->
+  <!-- SMARTPHONE 9:16 CON CÁMARA CINEMÁTICA Y CONTENIDO OFICIAL -->
   <div class="phone-container" id="phoneContainer">
     
     <!-- Notch y Barra de Estado -->
@@ -791,114 +828,113 @@
       <span>SCOUT 5G  100%</span>
     </div>
 
-    <!-- PANTALLA VIRTUAL DEL CELULAR CON SCROLL CINEMÁTICO -->
+    <!-- PANTALLA VIRTUAL CON SCROLL CINEMÁTICO -->
     <div class="phone-screen" id="phoneScreen">
       
-      <!-- 1. Header Oficial -->
+      <!-- 1. Header Oficial de index.html -->
       <div class="mobile-header">
         <img src="img/logo-flor.png" alt="Flor de Lis" class="mobile-header-logo">
         <div>
           <div class="mobile-header-title">BiblioTech Scout</div>
-          <div class="mobile-header-sub">By Liam • Provincia TLXH</div>
+          <div class="mobile-header-sub">Creador: Liam Durán · Provincia TLXH</div>
         </div>
       </div>
 
-      <!-- 2. Ribbon Centenario -->
+      <!-- 2. Ribbon Centenario Oficial de index.html -->
       <div class="centenario-ribbon">
-        100 AÑOS DE ESCULTISMO EN MÉXICO (1926 — 2026)
+        COLECCIÓN NUMERADA OFICIAL DEL CENTENARIO SCOUT EN MÉXICO (1926 – 2026)
       </div>
 
-      <!-- 3. Hero con Trío de Fotos y Contadores -->
+      <!-- 3. Hero con Trío de Fotos Oficial y Contadores -->
       <section class="mobile-hero-section" id="secHero">
-        <div class="hero-badge">Biblioteca Digital Abierta</div>
-        <h1 class="hero-h1">Pregunta, descubre y lee la información Scout</h1>
-        <p class="hero-desc">Toda la documentación oficial de ASMAC y WOSM en un solo lugar.</p>
+        <h1 class="hero-h1">Explora, consulta y lee toda la información Scout en un solo lugar</h1>
+        <p class="hero-desc">Biblioteca digital y buscador interactivo con información basada en los documentos oficiales vigentes de ASMAC y WOSM.</p>
 
-        <!-- Trío de fotos con hexágonos superpuestos -->
+        <!-- Trío de fotos con hexágonos superpuestos exacto de index.html -->
         <div class="hero-trio-wrap" id="heroTrio">
-          <div class="hex-photo hex-left">
-            <img src="img/photos/p01.jpg" alt="Scouts">
+          <div class="hex-photo hex-left" id="hexLeft">
+            <img src="img/photos/p01.jpg" alt="Comunidad de Caminantes">
+            <div class="hex-left-tag">Comunidad</div>
           </div>
-          <div class="hex-photo hex-center">
-            <img src="img/photos/caminantes.jpg" alt="Caminantes">
+          <div class="hex-photo hex-center" id="hexCenter">
+            <img src="img/photos/caminantes.jpg" alt="Siempre Adelante">
             <div class="hex-center-tag">Siempre Adelante</div>
           </div>
-          <div class="hex-photo hex-right">
-            <img src="img/photos/p02.jpg" alt="Manada">
+          <div class="hex-photo hex-right" id="hexRight">
+            <img src="img/photos/p02.jpg" alt="Foros Nacionales">
+            <div class="hex-right-tag">Foros Nac.</div>
           </div>
         </div>
 
-        <!-- Contadores numéricos -->
+        <!-- Contadores numéricos exactos -->
         <div class="stats-row" id="statsRow">
-          <div class="stat-box">
+          <div class="stat-box" id="boxStat1">
             <div class="stat-number">5,412+</div>
-            <div class="stat-lbl">Preguntas</div>
+            <div class="stat-lbl">Preguntas Oficiales</div>
           </div>
-          <div class="stat-box">
+          <div class="stat-box" id="boxStat2">
             <div class="stat-number">498</div>
-            <div class="stat-lbl">Documentos</div>
+            <div class="stat-lbl">Documentos Descargables</div>
           </div>
-          <div class="stat-box">
+          <div class="stat-box" id="boxStat3">
             <div class="stat-number">104</div>
-            <div class="stat-lbl">Temas</div>
+            <div class="stat-lbl">Temas Estructurados</div>
           </div>
         </div>
       </section>
 
-      <!-- 4. Buscador Interactivo -->
+      <!-- 4. Buscador Interactivo Oficial -->
       <section class="search-container" id="secSearch">
+        <span class="search-kicker">Buscador con fuentes oficiales</span>
         <div class="search-title">
-          <span>🔍</span> Buscador Inteligente
+          <span>🔍</span> ¿Qué quieres descubrir hoy?
         </div>
-        <div class="search-input-box">
+        <div class="search-input-box" id="searchInputBox">
           <div class="search-text" id="searchText">¿Qué son ExplorApp y CarpetApp?</div>
         </div>
         <div class="answer-card" id="answerCard">
-          <span class="answer-tag">Red de Caminantes • ASMAC</span>
+          <span class="answer-tag">Red de Caminantes • Manuales Oficiales ASMAC</span>
           <div class="answer-h">ExplorApp y CarpetApp Oficiales</div>
           <p class="answer-body">
-            • <strong>ExplorApp:</strong> Registro y seguimiento de proyectos comunitarios dentro de los 4 Ejes Temáticos.<br>
-            • <strong>CarpetApp:</strong> Carpeta digital para el control de progresión personal y especialidades.
+            • <strong>ExplorApp:</strong> Plataforma para registro y seguimiento de proyectos comunitarios dentro de los 4 Ejes Temáticos.<br>
+            • <strong>CarpetApp:</strong> Herramienta digital para el seguimiento de la progresión personal, especialidades y adelanto scout.
           </p>
         </div>
       </section>
 
-      <!-- 5. Secciones Scouts -->
+      <!-- 5. Las 4 Secciones Scouts Oficiales con sus Lemas y Textos Exactos -->
       <section class="sections-block" id="secSections">
-        <h2 class="section-h2">Las 4 Secciones Scouts</h2>
+        <h2 class="section-h2">Secciones del Movimiento Scout</h2>
         <div class="sections-grid">
           <div class="sec-card manada" id="cardManada">
-            <div class="sec-dot manada">🐺</div>
-            <div class="sec-title">Manada</div>
-            <div class="sec-sub">Lobatos y Lobeznas</div>
-            <div class="sec-lema manada">¡Siempre lo Mejor!</div>
+            <div class="sec-age">6 a &lt;10 años</div>
+            <div class="sec-title">Manada de Lobatos</div>
+            <div class="sec-lema manada">«Siempre lo Mejor»</div>
           </div>
           <div class="sec-card tropa" id="cardTropa">
-            <div class="sec-dot tropa">⚜️</div>
-            <div class="sec-title">Tropa</div>
-            <div class="sec-sub">Scouts</div>
-            <div class="sec-lema tropa">¡Siempre Listos!</div>
+            <div class="sec-age">10 a &lt;14 años</div>
+            <div class="sec-title">Tropa de Scouts</div>
+            <div class="sec-lema tropa">«Siempre Listos»</div>
           </div>
           <div class="sec-card comunidad" id="cardComunidad">
-            <div class="sec-dot comunidad">🧭</div>
-            <div class="sec-title">Comunidad</div>
-            <div class="sec-sub">Caminantes</div>
-            <div class="sec-lema comunidad">¡Siempre Adelante!</div>
+            <div class="sec-age">14 a &lt;18 años</div>
+            <div class="sec-title">Comunidad de Caminantes</div>
+            <div class="sec-lema comunidad">«Siempre Adelante»</div>
           </div>
           <div class="sec-card clan" id="cardClan">
-            <div class="sec-dot clan">🛡️</div>
-            <div class="sec-title">Clan</div>
-            <div class="sec-sub">Rovers</div>
-            <div class="sec-lema clan">¡Servir!</div>
+            <div class="sec-age">18 a &lt;22 años</div>
+            <div class="sec-title">Clan de Rovers</div>
+            <div class="sec-lema clan">«Servir»</div>
           </div>
         </div>
       </section>
 
-      <!-- 6. Agentes de Cambio.MX -->
+      <!-- 6. Agentes de Cambio.MX Oficial -->
       <section class="agentes-block" id="secAgentes">
+        <span class="agentes-eyebrow">PROYECTO DEL COMITÉ NACIONAL DE LA RED DE CAMINANTES (CNRC)</span>
         <img src="img/adc/logo.png" alt="Agentes de Cambio" class="agentes-logo-img">
-        <div style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.05rem; color:#fff; margin-bottom:4px;">
-          4 Ejes Temáticos del CNRC
+        <div style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.02rem; color:#fff; margin-bottom:4px;">
+          Los 4 Ejes Temáticos Oficiales
         </div>
         <div class="agentes-axes-row">
           <div class="axis-orb" id="axisPaz">
@@ -920,36 +956,32 @@
         </div>
       </section>
 
-      <!-- 7. Biblioteca del Centenario -->
+      <!-- 7. Colección Biblioteca del Centenario Oficial -->
       <section class="books-block" id="secBooks">
-        <h2 class="section-h2">Biblioteca Scout Oficial</h2>
+        <h2 class="section-h2">Colección Biblioteca del Centenario</h2>
         <div class="book-card-item">
           <div class="book-thumb">📖</div>
           <div class="book-info">
             <h4>El desafío de ser Caminante</h4>
-            <p>Guía de Progresión y Aventura para Jóvenes</p>
-            <span class="book-btn">PDF Descargable • 240 págs</span>
+            <p>Comunidad de Caminantes (14 a 18 años)</p>
+            <span class="book-btn">Volumen Oficial • 240 págs</span>
           </div>
         </div>
         <div class="book-card-item">
           <div class="book-thumb" style="background: linear-gradient(135deg, #10b981, #0284c7);">🏕️</div>
           <div class="book-info">
-            <h4>Manual de Supervivencia</h4>
-            <p>Técnicas de Campismo y Primeros Auxilios</p>
+            <h4>Manual de Supervivencia y Campismo</h4>
+            <p>Técnicas de campismo, pionerismo y seguridad</p>
             <span class="book-btn">Colección Biblioteca del Centenario</span>
           </div>
         </div>
       </section>
 
-      <!-- 8. Call to Action Final -->
+      <!-- 8. Call to Action Final Oficial -->
       <section class="cta-block" id="secCta">
         <img src="img/logo-flor.png" alt="Flor" class="cta-flor">
-        <div style="font-family:'Outfit',sans-serif; font-size:1.45rem; font-weight:900; color:#fff; margin-bottom:4px;">
-          BiblioTech Scout
-        </div>
-        <div style="font-size:0.82rem; color:#c084fc; font-weight:800; margin-bottom:14px;">
-          Creador: Liam Durán • Provincia TLXH
-        </div>
+        <div class="cta-title">BiblioTech Scout</div>
+        <div class="cta-author">Creador: Liam Durán · Provincia TLXH</div>
         <div class="cta-url-box">
           ey-liam.github.io/bibliotech-scouts
         </div>
@@ -957,7 +989,7 @@
           ¡Entra Gratis desde tu Celular!
         </a>
         <p style="font-size:0.72rem; color:#64748b; margin-top:16px;">
-          Construir un Mundo Mejor • ASMAC & WOSM
+          Asociación de Scouts de México ASMAC y World Scouting WOSM
         </p>
       </section>
 
@@ -971,7 +1003,7 @@
       BiblioTech Scout Studio Pro
     </h1>
     <p style="color:#93c5fd; font-size:1rem; max-width:540px; margin-bottom:16px;">
-      Animación vertical 9:16 sincronizada con <strong>Happy (160 BPM)</strong> mostrando la interfaz real de BiblioTech Scout.
+      Animación cinemática vertical con <strong>Happy (160 BPM)</strong> mostrando los textos y componentes exactos de BiblioTech Scout.
     </p>
     <button type="button" class="overlay-start-btn" onclick="startStudio()">
       ▶ Iniciar Coreografía y Música
@@ -999,7 +1031,7 @@
     const hudLed = document.getElementById('hudLed');
     const btnRecord = document.getElementById('btnRecord');
 
-    // Secciones dentro de la pantalla
+    // Secciones
     const secHero = document.getElementById('secHero');
     const secSearch = document.getElementById('secSearch');
     const secSections = document.getElementById('secSections');
@@ -1007,6 +1039,7 @@
     const secBooks = document.getElementById('secBooks');
     const secCta = document.getElementById('secCta');
 
+    const hexCenter = document.getElementById('hexCenter');
     const searchText = document.getElementById('searchText');
     const answerCard = document.getElementById('answerCard');
     const cardManada = document.getElementById('cardManada');
@@ -1070,52 +1103,73 @@
     }
 
     function onBeat(beat, bar, beatInBar, isClap, t) {
-      // Ángulo 3D del teléfono sincronizado con el bajo
-      const tiltX = 6;
-      const tiltY = (beat % 2 === 0) ? -5 : 5;
-      const scaleKick = isClap ? 1.025 : 1.0;
-      phoneContainer.style.transform = `perspective(1200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${scaleKick})`;
-
+      // ========================================================
+      // CÁMARA CINEMÁTICA CON ZOOMS DRAMÁTICOS (SIN PANDEO CONSTANTE)
+      // ========================================================
+      
       // ----------------------------------------------------
-      // COMPASES 1–3 (0.0s – 4.5s): HERO & TRÍO DE FOTOS
+      // COMPASES 1–3 (0.0s – 4.5s): VISTA HERO EN ÁNGULO ELEGANTE
       // ----------------------------------------------------
       if (bar <= 3) {
         if (bar === 1 && beatInBar === 1) {
           phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
         }
+        // Vista general estable, ángulo 3D sutil
+        phoneContainer.style.transform = `perspective(1400px) rotateX(4deg) rotateY(-2deg) scale(1.0)`;
+
+        // Pulso en la foto central "Siempre Adelante"
+        if (hexCenter) {
+          hexCenter.style.transform = isClap ? 'scale(1.18)' : 'scale(1.08)';
+        }
       }
 
       // ----------------------------------------------------
-      // COMPASES 4–8 (4.5s – 12.0s): BUSCADOR INTELIGENTE
+      // COMPASES 4–8 (4.5s – 12.0s): ¡PUNCH ZOOM IN AL BUSCADOR!
       // ----------------------------------------------------
       else if (bar >= 4 && bar <= 8) {
         if (bar === 4 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secSearch.offsetTop - 70, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secSearch.offsetTop - 60, behavior: 'smooth' });
           searchText.classList.add('typing');
         }
+
+        // ZOOM DRAMÁTICO HACIA LA PANTALLA (1.28x)
+        const punch = isClap ? 1.32 : 1.28;
+        phoneContainer.style.transform = `perspective(1200px) rotateX(2deg) rotateY(0deg) scale(${punch})`;
+
         if (bar >= 6) {
           answerCard.classList.add('visible');
         }
       }
 
       // ----------------------------------------------------
-      // COMPASES 9–13 (12.0s – 19.5s): SECCIONES SCOUTS
+      // COMPASES 9–13 (12.0s – 19.5s): DESLIZAMIENTO A SECCIONES
       // ----------------------------------------------------
       else if (bar >= 9 && bar <= 13) {
         if (bar === 9 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secSections.offsetTop - 70, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secSections.offsetTop - 60, behavior: 'smooth' });
+        }
+
+        // Vista media inclinada a la izquierda
+        phoneContainer.style.transform = `perspective(1200px) rotateX(5deg) rotateY(4deg) scale(1.05)`;
+
+        // Pre-drop (Compás 13: HUH!) -> Mini zoom out de tensión
+        if (bar === 13) {
+          phoneContainer.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) scale(0.92)`;
         }
       }
 
       // ----------------------------------------------------
       // COMPASES 14–17 (19.5s – 25.5s): ¡DROP DEL CORO!
-      // "BECAUSE I'M HAPPY! Clap along..."
-      // Las 4 Secciones saltan en cada palmada (beats 2 y 4)
+      // "BECAUSE I'M HAPPY!" -> ¡PUNCH ZOOM A LAS SECCIONES!
       // ----------------------------------------------------
       else if (bar >= 14 && bar <= 17) {
         if (bar === 14 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secSections.offsetTop - 70, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secSections.offsetTop - 60, behavior: 'smooth' });
         }
+
+        // ZOOM POTENTE A LAS 4 SECCIONES (1.30x)
+        const zoomDrop = isClap ? 1.34 : 1.28;
+        phoneContainer.style.transform = `perspective(1200px) rotateX(4deg) rotateY(-3deg) scale(${zoomDrop})`;
 
         // Limpiar
         [cardManada, cardTropa, cardComunidad, cardClan].forEach(c => c.classList.remove('pulse-highlight'));
@@ -1128,12 +1182,15 @@
       }
 
       // ----------------------------------------------------
-      // COMPASES 18–22 (25.5s – 33.0s): AGENTES DE CAMBIO.MX
+      // COMPASES 18–22 (25.5s – 33.0s): ZOOM A AGENTES DE CAMBIO
       // ----------------------------------------------------
       else if (bar >= 18 && bar <= 22) {
         if (bar === 18 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secAgentes.offsetTop - 70, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secAgentes.offsetTop - 60, behavior: 'smooth' });
         }
+
+        // Zoom en los 4 Ejes Temáticos
+        phoneContainer.style.transform = `perspective(1200px) rotateX(3deg) rotateY(2deg) scale(1.22)`;
 
         [axisPaz, axisSalud, axisHab, axisSust].forEach(a => a.classList.remove('active'));
         const orbs = [axisPaz, axisSalud, axisHab, axisSust];
@@ -1145,17 +1202,23 @@
       // ----------------------------------------------------
       else if (bar >= 23 && bar <= 27) {
         if (bar === 23 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secBooks.offsetTop - 70, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secBooks.offsetTop - 60, behavior: 'smooth' });
         }
+
+        phoneContainer.style.transform = `perspective(1200px) rotateX(5deg) rotateY(-4deg) scale(1.12)`;
       }
 
       // ----------------------------------------------------
-      // COMPASES 28–31 (40.5s – 46.5s): LLAMADO A LA ACCIÓN Y CIERRE
+      // COMPASES 28–31 (40.5s – 46.5s): PULL-BACK Y CIERRE CTA
       // ----------------------------------------------------
       else if (bar >= 28) {
         if (bar === 28 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secCta.offsetTop - 70, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secCta.offsetTop - 60, behavior: 'smooth' });
         }
+
+        // Cámara se aleja para encuadre completo heroico
+        phoneContainer.style.transform = `perspective(1400px) rotateX(2deg) rotateY(0deg) scale(1.0)`;
+
         if (bar === 31 && beatInBar === 4) {
           phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
         }
