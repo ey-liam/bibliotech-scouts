@@ -178,10 +178,37 @@ function loadQuestionBank() {
   if (STATE.questionBank.length) return Promise.resolve(STATE.questionBank);
   if (questionBankPromise) return questionBankPromise;
 
-  questionBankPromise = fetch("data/questions_bank.json")
-    .then((r) => (r.ok ? r.json() : { questions: [] }))
-    .then((data) => {
-      STATE.questionBank = data.questions || [];
+  // El banco base y el banco ampliado V3 se descargan en paralelo. Si el V3
+  // falla, la página sigue funcionando con el banco base.
+  const loadJsonBank = (url) =>
+    fetch(url)
+      .then((r) => (r.ok ? r.json() : null))
+      .catch((error) => {
+        console.warn(`BiblioTech: no se pudo cargar ${url}.`, error);
+        return null;
+      });
+
+  questionBankPromise = Promise.all([
+    loadJsonBank("data/questions_bank.json"),
+    loadJsonBank("data/faq_v3.json"),
+  ])
+    .then(([baseData, v3Data]) => {
+      const base = (baseData && baseData.questions) || [];
+      const extra = (v3Data && v3Data.questions) || [];
+      const seen = new Set();
+      for (const item of base) {
+        const key = normalizeQuestionKey(item.q || "");
+        if (key) seen.add(key);
+      }
+      const merged = base.slice();
+      for (const item of extra) {
+        const key = normalizeQuestionKey(item.q || "");
+        if (!key || seen.has(key)) continue;
+        seen.add(key);
+        merged.push(item);
+      }
+
+      STATE.questionBank = merged;
       STATE.qBankByNorm = {};
       for (const qObj of STATE.questionBank) {
         const nk = normalizeQuestionKey(qObj.q || "");
@@ -487,7 +514,7 @@ function setup3DTiltInteractions() {
 }
 
 // ============================================================================
-// EXPLORADOR DINAMICO DE LAS +5,356 PREGUNTAS + AUTOCOMPLETADO EN VIVO
+// EXPLORADOR DINAMICO DE LAS +5,412 PREGUNTAS + AUTOCOMPLETADO EN VIVO
 // ============================================================================
 const DEFAULT_FEATURED_QUESTIONS = [
   "¿En dónde encuentro un Grupo Scout?",
@@ -505,7 +532,10 @@ const DEFAULT_FEATURED_QUESTIONS = [
   "¿Cómo se aplica el nuevo esquema PJOS y pueden combinarse las nuevas insignias con las antiguas?",
   "¿Cuántas insignias hay en el nuevo esquema en Manada, Tropa, Comunidad y Clan?",
   "¿Quién es el Jefe Scout Nacional, el Presidente Nacional, la Subcomisionada de Comunidad y quién dirige la Dirección Internacional?",
-  "¿Dónde compro el uniforme scout?"
+  "¿Dónde compro el uniforme scout?",
+  "¿Cómo se atiende a una persona que se está atragantando?",
+  "¿Cómo se purifica el agua en campamento?",
+  "¿Qué es la Política Nacional A Salvo del Peligro?"
 ];
 
 function renderExplorerQuestions(cat, shuffle = false) {

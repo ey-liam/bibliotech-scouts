@@ -1228,12 +1228,14 @@ h1, h2, h3, h4 {
 }
 
 .centenario-collection-logo {
-  width: 118px;
-  height: 118px;
+  /* El logo original mide 320x131 px: el marco debe conservar esa
+     proporcion rectangular en lugar de forzar un cuadrado con aire. */
+  width: clamp(158px, 19vw, 224px);
+  height: auto;
   object-fit: contain;
   background: #ffffff;
-  padding: 8px;
-  border-radius: 18px;
+  padding: 5px;
+  border-radius: 14px;
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
 }
@@ -1250,6 +1252,9 @@ h1, h2, h3, h4 {
 .centenario-banner-copy h3 {
   font-size: 1.4rem;
   margin-bottom: 0.4rem;
+  /* El h3 global usa var(--ink); sobre el banner oscuro quedaba casi invisible. */
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(2, 6, 23, 0.45);
 }
 
 .centenario-banner-copy p {
