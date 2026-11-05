@@ -53,7 +53,7 @@ body {
     radial-gradient(circle at 80% 65%, rgba(109, 40, 217, 0.09), transparent 35%);
 }
 
-/* Accesibilidad: permite saltar la navegaciÃ³n con Tab */
+/* Accesibilidad: permite saltar la navegación con Tab */
 .skip-link {
   position: fixed;
   top: -120px;
@@ -1971,7 +1971,7 @@ h1, h2, h3, h4 {
 }
 
 /* =====================================================
-   Â¿QUE COSAS CAMBIARON AÃ‘O CON AÃ‘O?
+   ¿QUE COSAS CAMBIARON AÑO CON AÑO?
    ===================================================== */
 .evolution-section {
   padding: 4rem 0;
@@ -2726,7 +2726,7 @@ h1, h2, h3, h4 {
 }
 
 /* =====================================================
-   PIE DE PAGINA CON LETRA PEQUEÃ‘A HASTA ABAJO
+   PIE DE PAGINA CON LETRA PEQUEÑA HASTA ABAJO
    ===================================================== */
 .site-footer {
   background: #081026;
@@ -2774,7 +2774,7 @@ h1, h2, h3, h4 {
    - DISTRIBUCION DINAMICA Y RESPONSIVA SIN SOLAPAMIENTOS (PC, TABLET HORIZONTAL/VERTICAL Y MOVIL)
    ===================================================== */
 
-/* Fondo animado global con orbes de color y hexÃ¡gonos flotantes */
+/* Fondo animado global con orbes de color y hexágonos flotantes */
 .global-animated-bg {
   position: fixed;
   inset: 0;
@@ -2931,7 +2931,7 @@ h1, h2, h3, h4 {
 }
 
 /* Asegurar que todas las secciones queden por encima del fondo animado.
-   La barra superior se excluye a propÃ³sito: debe conservar position: fixed. */
+   La barra superior se excluye a propósito: debe conservar position: fixed. */
 .hero-section,
 .library-section,
 .about-section,
@@ -2946,7 +2946,7 @@ h1, h2, h3, h4 {
   z-index: 1;
 }
 
-/* Separadores ondulados dinÃ¡micos entre secciones */
+/* Separadores ondulados dinámicos entre secciones */
 .library-section,
 .sections-showcase {
   position: relative;
@@ -3014,7 +3014,7 @@ h1, h2, h3, h4 {
   100% { transform: translateY(-4px) scale(1.015); }
 }
 
-/* FlotaciÃ³n independiente de los 3 octÃ¡gonos del Hero + subtÃ­tulos escalonados sin colisiÃ³n */
+/* Flotación independiente de los 3 octágonos del Hero + subtítulos escalonados sin colisión */
 @keyframes hexBobLeft {
   0%, 100% { transform: translateY(8px); }
   50% { transform: translateY(-4px); }
@@ -3070,7 +3070,7 @@ h1, h2, h3, h4 {
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
 }
 
-/* Resplandor 3D detrÃ¡s del escenario de Liam DurÃ¡n */
+/* Resplandor 3D detrás del escenario de Liam Durán */
 .liam-stage-glow {
   position: absolute;
   inset: -14px;
@@ -3082,7 +3082,7 @@ h1, h2, h3, h4 {
   pointer-events: none;
 }
 
-/* Orbes de los 4 Ejes TemÃ¡ticos en Agentes de Cambio con etiqueta flotante al pasar el cursor */
+/* Orbes de los 4 Ejes Temáticos en Agentes de Cambio con etiqueta flotante al pasar el cursor */
 .adc-icon-orb {
   position: relative;
 }
@@ -3119,7 +3119,7 @@ h1, h2, h3, h4 {
   padding: 12px 14px 32px 28px;
 }
 
-/* PrevenciÃ³n de solapamiento en tarjetas de secciÃ³n (.scout-sec-card) */
+/* Prevención de solapamiento en tarjetas de sección (.scout-sec-card) */
 .scout-sec-card {
   display: flex;
   flex-direction: column;
@@ -3156,7 +3156,7 @@ h1, h2, h3, h4 {
   bottom: -6px;
 }
 
-/* Controles de bÃºsqueda y filtros en Biblioteca Scout */
+/* Controles de búsqueda y filtros en Biblioteca Scout */
 .library-controls-bar {
   display: flex;
   align-items: center;
@@ -3184,7 +3184,7 @@ h1, h2, h3, h4 {
   box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12);
 }
 
-/* Barra flotante de acceso rÃ¡pido (Preguntar / Subir) */
+/* Barra flotante de acceso rápido (Preguntar / Subir) */
 .floating-quick-bar {
   position: fixed;
   bottom: 22px;
@@ -3231,7 +3231,7 @@ h1, h2, h3, h4 {
   box-shadow: 0 18px 36px rgba(109, 40, 217, 0.38);
 }
 
-/* Pie de pÃ¡gina con logos oficiales ASMAC y WOSM y aviso de corte 03/11/2026 */
+/* Pie de página con logos oficiales ASMAC y WOSM y aviso de corte 03/11/2026 */
 .footer-top-bar {
   display: flex;
   align-items: center;
@@ -3306,7 +3306,7 @@ h1, h2, h3, h4 {
 }
 
 /* =====================================================
-   ADAPTACIÃ“N RESPONSIVA MULTIDISPOSITIVO:
+   ADAPTACIÓN RESPONSIVA MULTIDISPOSITIVO:
    1) TABLET HORIZONTAL / LAPTOP COMPACTA (<= 1120px)
    ===================================================== */
 @media (max-width: 1120px) {
@@ -3531,7 +3531,7 @@ h1, h2, h3, h4 {
     border-radius: 24px;
   }
 
-  /* Barra deslizable horizontal tÃ¡ctil para pastillas de secciÃ³n y categorÃ­as */
+  /* Barra deslizable horizontal táctil para pastillas de sección y categorías */
   .search-section-pills,
   .quick-topic-tabs,
   .library-shelves-tabs,
@@ -3835,12 +3835,12 @@ h1, h2, h3, h4 {
 }
 
 /* =====================================================
-   RENOVACIÃ“N 3D COMPLETA, ESTILO JUVENIL ATREVIDO Y DIVERTIDO
+   RENOVACIÓN 3D COMPLETA, ESTILO JUVENIL ATREVIDO Y DIVERTIDO
    - ENLACE WEB COMPARTIBLE Y ACCESOS 3D EN EL HERO
-   - GUÃA RÃPIDA INTERACTIVA 3D (#guia-inicio) CON 6 TARJETAS 3D
-   - ELEMENTOS GEOMÃ‰TRICOS 3D FLOTANTES EN FONDO Y ENTRE SECCIONES
-   - INCLINACIÃ“N 3D CON PERSPECTIVA REAL (pointermove)
-   - LIDERAZGO ACTUAL DEL CNRC Y CHIPS RÃPIDOS EN AGENTES DE CAMBIO.MX
+   - GUÍA RÁPIDA INTERACTIVA 3D (#guia-inicio) CON 6 TARJETAS 3D
+   - ELEMENTOS GEOMÉTRICOS 3D FLOTANTES EN FONDO Y ENTRE SECCIONES
+   - INCLINACIÓN 3D CON PERSPECTIVA REAL (pointermove)
+   - LIDERAZGO ACTUAL DEL CNRC Y CHIPS RÁPIDOS EN AGENTES DE CAMBIO.MX
    ===================================================== */
 
 /* Figuras 3D flotantes en el fondo global */
@@ -3914,7 +3914,7 @@ h1, h2, h3, h4 {
   }
 }
 
-/* Barra 3D de enlace directo compartible y botÃ³n de salto en el Hero */
+/* Barra 3D de enlace directo compartible y botón de salto en el Hero */
 .hero-share-link-bar {
   display: flex;
   align-items: center;
@@ -3925,7 +3925,7 @@ h1, h2, h3, h4 {
 }
 
 /* =====================================================
-   SECCIÃ“N DE PRIMEROS PASOS (#guia-inicio)
+   SECCIÓN DE PRIMEROS PASOS (#guia-inicio)
    ===================================================== */
 .quickstart-section,
 .quickstart-3d-section {
@@ -4042,7 +4042,7 @@ h1, h2, h3, h4 {
   opacity: 0.55;
 }
 
-/* Variantes cromÃ¡ticas atrevidas para las 6 tarjetas 3D */
+/* Variantes cromáticas atrevidas para las 6 tarjetas 3D */
 .starter-3d-card.theme-emerald {
   --card-accent: #10b981;
   --card-shadow-3d: #047857;
@@ -4300,7 +4300,7 @@ h1, h2, h3, h4 {
   color: #fde047;
 }
 
-/* AdaptaciÃ³n responsiva de las nuevas tarjetas 3D y barras */
+/* Adaptación responsiva de las nuevas tarjetas 3D y barras */
 @media (max-width: 1120px) {
   .starter-3d-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4319,10 +4319,10 @@ h1, h2, h3, h4 {
 }
 
 /* ============================================================
-   REDISEÃ‘O V3 â€” Â«SCOUT ZINEÂ»
-   Sistema tipogrÃ¡fico, retÃ­cula, barra fija, hero editorial y
+   REDISEÑO V3 — «SCOUT ZINE»
+   Sistema tipográfico, retícula, barra fija, hero editorial y
    componentes consistentes. Esta capa va al final para ordenar
-   las reglas anteriores sin tocar la lÃ³gica de app.js.
+   las reglas anteriores sin tocar la lógica de app.js.
    ============================================================ */
 
 :root {
@@ -5403,7 +5403,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
 }
 
 /* ------------------------------------------------------------
-   6) PROPÃ“SITO Y AGENTES DE CAMBIO
+   6) PROPÓSITO Y AGENTES DE CAMBIO
    ------------------------------------------------------------ */
 .about-card {
   grid-template-columns: 340px minmax(0, 1fr);
@@ -5616,7 +5616,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
 }
 
 /* ------------------------------------------------------------
-   8) SERVICIOS, EVOLUCIÃ“N Y CATÃLOGO
+   8) SERVICIOS, EVOLUCIÓN Y CATÁLOGO
    ------------------------------------------------------------ */
 .services-header-photos {
   flex-shrink: 0;
@@ -6331,5 +6331,433 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
   .reveal-on-scroll {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ============================================================
+   FONDO AURORA DINÁMICO — CAPA VIVA
+   Malla de color en movimiento, orbes, haces de luz, hexágonos,
+   cubos, anillos y destellos. Solo anima transform/opacity para
+   no generar cambios de layout ni costosos repintados.
+   ============================================================ */
+
+/* 1) Secciones translúcidas: dejan ver la aurora sin perder lectura */
+.quickstart-section {
+  background: linear-gradient(180deg, rgba(251, 250, 247, 0.64) 0%, rgba(244, 242, 236, 0.56) 100%);
+}
+
+.library-section {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.58) 100%);
+}
+
+.about-section {
+  background: rgba(251, 250, 247, 0.64);
+}
+
+.agentes-cambio-section {
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.sections-showcase {
+  background: rgba(244, 242, 236, 0.58);
+}
+
+.official-services-section {
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.evolution-section {
+  background: rgba(251, 250, 247, 0.64);
+}
+
+.catalog-section {
+  background: rgba(255, 255, 255, 0.64);
+}
+
+/* 2) Capa fija que contiene toda la vida del fondo */
+.global-animated-bg {
+  display: block;
+  z-index: 0;
+  contain: layout paint style;
+  background: transparent;
+}
+
+/* Malla de auras que se desplaza y respira */
+.global-animated-bg::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  background:
+    radial-gradient(38% 42% at 16% 22%, rgba(109, 40, 217, 0.5) 0%, rgba(109, 40, 217, 0.24) 34%, rgba(109, 40, 217, 0) 72%),
+    radial-gradient(34% 38% at 82% 14%, rgba(14, 165, 233, 0.48) 0%, rgba(14, 165, 233, 0.22) 34%, rgba(14, 165, 233, 0) 72%),
+    radial-gradient(36% 40% at 78% 80%, rgba(236, 72, 153, 0.36) 0%, rgba(236, 72, 153, 0.16) 36%, rgba(236, 72, 153, 0) 72%),
+    radial-gradient(42% 44% at 18% 86%, rgba(250, 204, 21, 0.4) 0%, rgba(250, 204, 21, 0.18) 36%, rgba(250, 204, 21, 0) 74%),
+    radial-gradient(32% 36% at 52% 50%, rgba(22, 163, 74, 0.3) 0%, rgba(22, 163, 74, 0.14) 38%, rgba(22, 163, 74, 0) 74%);
+  opacity: 0.86;
+  transform: translate3d(0, 0, 0);
+  animation: auroraMeshDrift 34s ease-in-out infinite alternate;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Haz de luz diagonal que barre la página */
+.global-animated-bg::after {
+  content: "";
+  position: absolute;
+  inset: -30% -20%;
+  background: linear-gradient(
+    114deg,
+    transparent 18%,
+    rgba(109, 40, 217, 0.1) 34%,
+    rgba(14, 165, 233, 0.13) 48%,
+    rgba(250, 204, 21, 0.1) 62%,
+    transparent 82%
+  );
+  opacity: 0.8;
+  animation: auroraSweep 21s ease-in-out infinite alternate;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* 3) Orbes de color que flotan y cambian de tamaño */
+.bg-orb {
+  opacity: 0.42;
+  animation: orbFloatA 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.orb-1 {
+  width: 46vmax;
+  height: 46vmax;
+  top: -10%;
+  left: -14%;
+  background: radial-gradient(circle at 35% 35%, rgba(167, 139, 250, 0.95), rgba(109, 40, 217, 0.72) 46%, rgba(109, 40, 217, 0) 72%);
+  animation-name: orbFloatA;
+  animation-duration: 29s;
+}
+
+.orb-2 {
+  width: 40vmax;
+  height: 40vmax;
+  top: 6%;
+  right: -12%;
+  background: radial-gradient(circle at 40% 40%, rgba(103, 232, 249, 0.95), rgba(14, 165, 233, 0.68) 48%, rgba(14, 165, 233, 0) 72%);
+  animation-name: orbFloatB;
+  animation-duration: 37s;
+}
+
+.orb-3 {
+  width: 46vmax;
+  height: 46vmax;
+  bottom: -12%;
+  left: 0%;
+  opacity: 0.36;
+  background: radial-gradient(circle at 45% 45%, rgba(249, 168, 212, 0.92), rgba(236, 72, 153, 0.6) 50%, rgba(236, 72, 153, 0) 72%);
+  animation-name: orbFloatC;
+  animation-duration: 31s;
+}
+
+.orb-4 {
+  width: 38vmax;
+  height: 38vmax;
+  bottom: 4%;
+  right: 2%;
+  opacity: 0.38;
+  background: radial-gradient(circle at 40% 40%, rgba(253, 224, 71, 0.92), rgba(249, 115, 22, 0.62) 50%, rgba(249, 115, 22, 0) 72%);
+  animation-name: orbFloatB;
+  animation-duration: 23s;
+}
+
+/* 4) Hexágonos: brillo suave sin rotación.
+   La rotación de un elemento con clip-path dentro de la capa fija
+   provocaba un reflujo inicial (CLS). El pulso de opacidad mantiene
+   la vida visual sin tocar geometría. */
+.bg-hex-float {
+  opacity: 0.12;
+  animation: hexPulse 18s ease-in-out infinite alternate;
+  will-change: opacity;
+}
+
+.hf-1 {
+  width: 200px;
+  height: 200px;
+  top: 18%;
+  right: 4%;
+}
+
+.hf-2 {
+  width: 250px;
+  height: 250px;
+  top: 54%;
+  left: 1%;
+}
+
+.hf-3 {
+  width: 180px;
+  height: 180px;
+  bottom: 16%;
+  right: 6%;
+}
+
+.hf-4 {
+  width: 160px;
+  height: 160px;
+  top: 74%;
+  left: 42%;
+}
+
+/* 5) Cubos y anillos con más presencia */
+.bg-3d-cube {
+  opacity: 0.85;
+  will-change: transform;
+}
+
+.bg-3d-ring {
+  opacity: 0.9;
+  will-change: transform;
+}
+
+/* 6) Destellos que titilan por la página */
+.bg-spark {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: currentColor;
+  clip-path: polygon(50% 0%, 61% 38%, 100% 50%, 61% 62%, 50% 100%, 39% 62%, 0% 50%, 39% 38%);
+  filter: drop-shadow(0 0 8px currentColor);
+  opacity: 0;
+  animation: sparkTwinkle 5.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.spark-1 {
+  top: 15%;
+  left: 11%;
+  width: 13px;
+  height: 13px;
+  color: #a78bfa;
+}
+
+.spark-2 {
+  top: 27%;
+  right: 9%;
+  color: #38bdf8;
+  animation-delay: 1.1s;
+  animation-duration: 6.4s;
+}
+
+.spark-3 {
+  top: 45%;
+  left: 6%;
+  width: 8px;
+  height: 8px;
+  color: #f472b6;
+  animation-delay: 2.3s;
+  animation-duration: 4.8s;
+}
+
+.spark-4 {
+  top: 61%;
+  right: 13%;
+  width: 14px;
+  height: 14px;
+  color: #facc15;
+  animation-delay: 0.7s;
+  animation-duration: 7.1s;
+}
+
+.spark-5 {
+  top: 76%;
+  left: 19%;
+  color: #34d399;
+  animation-delay: 3s;
+  animation-duration: 5.9s;
+}
+
+.spark-6 {
+  top: 89%;
+  right: 7%;
+  width: 12px;
+  height: 12px;
+  color: #fb923c;
+  animation-delay: 1.8s;
+  animation-duration: 6.7s;
+}
+
+/* 7) El hero recupera sus auroras, ahora sí en movimiento */
+.hero-glow {
+  display: block;
+  animation: heroGlowFloat 15s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.glow-1 {
+  animation-duration: 13s;
+}
+
+.glow-2 {
+  animation-duration: 17s;
+  animation-delay: 0.8s;
+}
+
+.glow-3 {
+  top: 56%;
+  bottom: auto;
+  animation-name: heroGlowFloatAlt;
+  animation-duration: 19s;
+  animation-delay: 1.4s;
+}
+
+.glow-4 {
+  top: 72%;
+  bottom: auto;
+  animation-name: heroGlowFloatAlt;
+  animation-duration: 15s;
+  animation-delay: 0.4s;
+}
+
+/* 8) Movimiento del fondo */
+@keyframes auroraMeshDrift {
+  0% {
+    transform: translate3d(-2%, 0, 0) scale(1.03) rotate(-1.5deg);
+  }
+  50% {
+    transform: translate3d(2%, -2.5%, 0) scale(1.1) rotate(1deg);
+  }
+  100% {
+    transform: translate3d(-1%, 2%, 0) scale(1.05) rotate(-2deg);
+  }
+}
+
+@keyframes auroraSweep {
+  0% {
+    transform: translate3d(-12%, 0, 0) rotate(-2deg);
+  }
+  100% {
+    transform: translate3d(12%, 0, 0) rotate(2deg);
+  }
+}
+
+@keyframes orbFloatA {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6vw, -5vh, 0) scale(1.14);
+  }
+  100% {
+    transform: translate3d(-5vw, 4vh, 0) scale(0.94);
+  }
+}
+
+@keyframes orbFloatB {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-7vw, 5vh, 0) scale(1.1);
+  }
+  100% {
+    transform: translate3d(4vw, -6vh, 0) scale(0.96);
+  }
+}
+
+@keyframes orbFloatC {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(5vw, 6vh, 0) scale(1.16);
+  }
+  100% {
+    transform: translate3d(-6vw, -4vh, 0) scale(0.92);
+  }
+}
+
+@keyframes hexPulse {
+  0% {
+    opacity: 0.08;
+  }
+  100% {
+    opacity: 0.17;
+  }
+}
+
+@keyframes sparkTwinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.35) rotate(0deg);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1) rotate(22deg);
+  }
+}
+
+@keyframes heroGlowFloat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate3d(24px, -20px, 0) scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-18px, 22px, 0) scale(0.94);
+    opacity: 0.85;
+  }
+}
+
+@keyframes heroGlowFloatAlt {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate3d(-26px, 18px, 0) scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(20px, -24px, 0) scale(0.92);
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 768px) {
+  .bg-spark {
+    width: 8px;
+    height: 8px;
+  }
+
+  .spark-4,
+  .spark-6 {
+    display: none;
+  }
+
+  /* En móvil el haz diagonal se oculta: es la capa más cara de pintar
+     y la aurora ya aporta movimiento con la malla y los orbes. */
+  .global-animated-bg::after {
+    display: none;
+  }
+
+  .global-animated-bg::before {
+    opacity: 0.62;
+  }
+
+  .bg-orb {
+    opacity: 0.3;
+  }
+
+  .bg-hex-float {
+    opacity: 0.09;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .global-animated-bg::before,
+  .global-animated-bg::after {
+    animation: none;
   }
 }
