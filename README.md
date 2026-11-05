@@ -27,7 +27,7 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ## 3. Contenido del acervo documental
 
-El sistema integra **104 temas enciclopédicos y literarios**, **5,356 preguntas y respuestas únicas de consulta directa** (desde preguntas básicas de iniciación hasta preguntas específicas por artículo, capítulo y página de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
+El sistema integra **104 temas enciclopédicos y literarios**, **5,412 preguntas y respuestas únicas de consulta directa** (desde preguntas básicas de iniciación hasta preguntas específicas por artículo, capítulo y página de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
 
 1. **Colección Biblioteca del Centenario (39 volúmenes):** Los 39 libros oficiales numerados de la Colección Biblioteca del Centenario, incluyendo las obras clásicas de Robert Baden-Powell (*Escultismo para Muchachos, Manual de Lobatos, Guía para el Jefe de Tropa, Roverismo hacia el Éxito, Tropiezos de la Vida, Juegos Scouts*), obras históricas de Gilcraft y César Macazaga Ordoño, y publicaciones formativas y literarias (*Cuentos de la Selva, Francisco de Asís y el Lobo de Gubbio*).
 2. **Guías, Carnets y Programa de Jóvenes — PJOS (42 documentos):** Guías de sección actualizadas (*Mis Rastros en la Selva 2024, Pistas de Aventura 2024, El Desafío de ser Caminante 2024, Las Rutas del Rover, Las Rutas de la Precursora*), Carnets de *Aventuras en la Naturaleza 2024*, Guías de *Punta de Flecha 2025*, *Tribu de la Tierra*, *Campeones de la Naturaleza*, *Mensajeros de la Paz*, *Go Solar*, *Plastic Tide Turners*, *De FOROS a CASA* y *Agentes de Cambio.MX*.
@@ -90,3 +90,7 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 - Secciones translúcidas para integrar el fondo sin perder legibilidad.
 - Corrección del desplazamiento acumulado (CLS) al cargar: el fondo ahora no mueve el contenido.
 - Validado sin errores de consola, sin desbordes en móvil y con accesibilidad y SEO en 100.
+- **Banner de la Colección Biblioteca del Centenario:** el título ahora usa texto blanco con sombra suave para garantizar contraste sobre el fondo oscuro, y el logo conserva su proporción real (320×131 px) en un marco rectangular, sin espacios blancos desperdiciados.
+- **Banco ampliado de preguntas frecuentes:** 56 nuevas respuestas fundamentadas, generadas con `scripts/build_faq_v3.js` a partir de `scripts/faq_v3_source.js` y publicadas en `data/faq_v3.json`. Cubren primeros auxilios y seguridad (16), campismo y naturaleza (18), ceremonial y símbolos (10), historia del escultismo mexicano (5), uniforme (4) y protección juvenil (3). El buscador carga ambos bancos en paralelo y elimina duplicados.
+- **Nueva pestaña «Primeros Auxilios y Seguridad»** en el explorador de preguntas, con chips destacados para atragantamiento, purificación de agua y la Política Nacional A Salvo del Peligro.
+- El contador del sitio y el README se actualizaron a **5,412 preguntas y respuestas**.
