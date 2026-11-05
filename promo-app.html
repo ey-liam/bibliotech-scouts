@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BiblioTech Scout — Video Promocional Oficial (160 BPM • 49.5s Loop)</title>
+  <title>BiblioTech Scout — Video Promocional Oficial</title>
   
   <!-- Tipografías oficiales de BiblioTech Scout -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,6 @@
   <style>
     :root {
       --primary: #7c3aed;
-      --primary-dark: #5b21b6;
       --blue: #0284c7;
       --cyan: #06b6d4;
       --gold: #f59e0b;
@@ -30,11 +29,10 @@
     }
 
     body {
-      background: radial-gradient(circle at 50% 15%, #1e1b4b 0%, #07090e 75%);
+      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #07090e 75%);
       color: #f8fafc;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       overflow: hidden;
@@ -42,110 +40,36 @@
       user-select: none;
     }
 
-    /* BARRA SUPERIOR DE CONTROL DEL ESTUDIO (FUERA DEL CELULAR) */
-    .studio-bar {
+    /* BOTÓN FLOTANTE DISCRETO DE GRABACIÓN (NO ESTORBA LA PANTALLA) */
+    .studio-record-btn {
       position: fixed;
-      top: 14px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: rgba(15, 23, 42, 0.94);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      padding: 8px 20px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(124, 58, 237, 0.45);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(124, 58, 237, 0.25);
-      z-index: 500;
-    }
-
-    .studio-bar-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Outfit', sans-serif;
-      font-weight: 800;
-      font-size: 0.95rem;
-    }
-
-    .studio-bar-logo {
-      width: 26px;
-      height: 26px;
-      filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.8));
-    }
-
-    .studio-bar-metrics {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.80rem;
-      color: #94a3b8;
-      border-left: 1px solid rgba(255, 255, 255, 0.15);
-      padding-left: 12px;
-    }
-
-    .metric-highlight {
-      color: var(--cyan);
-      font-weight: 800;
-    }
-
-    .studio-chapter-badge {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: #e2e8f0;
-      background: rgba(124, 58, 237, 0.25);
-      border: 1px solid rgba(124, 58, 237, 0.5);
-      padding: 4px 12px;
-      border-radius: 999px;
-      letter-spacing: 0.4px;
-      transition: all 0.25s ease;
-      white-space: nowrap;
-    }
-
-    .beat-led {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #334155;
-      transition: transform 0.05s ease, background 0.05s ease, box-shadow 0.05s ease;
-    }
-
-    .beat-led.active {
-      background: #22c55e;
-      transform: scale(1.4);
-      box-shadow: 0 0 14px #22c55e;
-    }
-
-    .beat-led.clap {
-      background: var(--gold);
-      transform: scale(1.65);
-      box-shadow: 0 0 20px var(--gold);
-    }
-
-    .studio-btn-record {
-      background: rgba(239, 68, 68, 0.15);
+      top: 18px;
+      right: 24px;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(239, 68, 68, 0.45);
       color: #fca5a5;
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      padding: 6px 16px;
+      padding: 8px 18px;
       border-radius: 999px;
-      font-size: 0.80rem;
+      font-size: 0.82rem;
       font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      z-index: 1000;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(220, 38, 38, 0.25);
       transition: all 0.2s ease;
     }
 
-    .studio-btn-record:hover {
+    .studio-record-btn:hover {
       background: #dc2626;
       color: #ffffff;
-      box-shadow: 0 0 20px rgba(220, 38, 38, 0.7);
+      box-shadow: 0 0 25px rgba(220, 38, 38, 0.7);
     }
 
-    .studio-btn-record.recording {
+    .studio-record-btn.recording {
       background: #dc2626;
       color: #ffffff;
       animation: pulse-red 1s infinite alternate;
@@ -156,7 +80,7 @@
       to { box-shadow: 0 0 24px rgba(220, 38, 38, 1); }
     }
 
-    /* CONTENEDOR 9:16 (SMARTPHONE DE LUJO CON CÁMARA CINEMÁTICA) */
+    /* CONTENEDOR 9:16 (SMARTPHONE DE LUJO CON CÁMARA CINEMÁTICA LERP 60 FPS) */
     .phone-container {
       width: 420px;
       height: 760px;
@@ -167,11 +91,12 @@
       position: relative;
       overflow: hidden;
       transform-style: preserve-3d;
-      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      margin-top: 42px;
+      /* Sin CSS transition para evitar tirones con el motor de Lerp a 60 FPS */
+      transition: none;
+      will-change: transform;
     }
 
-    /* Dynamic Island / Bocina Realista */
+    /* Notch Realista */
     .phone-notch {
       position: absolute;
       top: 10px;
@@ -186,7 +111,7 @@
       pointer-events: none;
     }
 
-    /* Barra de Estado Realista y Limpia (Sin etiquetas invasivas) */
+    /* Barra de Estado Limpia y Fina */
     .phone-status-bar {
       position: absolute;
       top: 12px;
@@ -216,7 +141,6 @@
       inset: 0;
       overflow-y: scroll;
       overflow-x: hidden;
-      scroll-behavior: smooth;
       scrollbar-width: none;
       padding-top: 46px;
       padding-bottom: 70px;
@@ -326,7 +250,7 @@
       overflow: hidden;
       position: absolute;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.25s ease;
     }
 
     .hex-photo img {
@@ -388,7 +312,7 @@
       padding: 10px 6px;
       border-radius: 16px;
       backdrop-filter: blur(10px);
-      transition: all 0.2s ease;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
     .stat-box.pulse {
@@ -462,19 +386,8 @@
       font-size: 0.85rem;
       color: #e2e8f0;
       font-weight: 700;
-      width: 0;
-      overflow: hidden;
       white-space: nowrap;
-      border-right: 2px solid #38bdf8;
-    }
-
-    .search-text.typing {
-      animation: type-real 2.5s steps(35, end) forwards;
-    }
-
-    @keyframes type-real {
-      from { width: 0; }
-      to { width: 100%; border-right-color: transparent; }
+      overflow: hidden;
     }
 
     .answer-card {
@@ -482,17 +395,16 @@
       border: 1.5px solid rgba(56, 189, 248, 0.4);
       border-radius: 18px;
       padding: 14px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
       display: none;
-      animation: fadeUp 0.4s ease forwards;
     }
 
     .answer-card.visible {
       display: block;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .answer-tag {
@@ -558,7 +470,7 @@
       padding: 12px 14px;
       border: 1.5px solid rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
     }
 
     .quick-3d-card.theme-emerald { border-left: 5px solid #10b981; }
@@ -603,7 +515,7 @@
     }
 
     /* ========================================================
-       SECCIÓN 4: BIBLIOTECA DEL CENTENARIO (¡DROP DEL CORO!)
+       SECCIÓN 4: BIBLIOTECA DEL CENTENARIO
        ======================================================== */
     .books-block {
       padding: 20px 18px;
@@ -622,7 +534,7 @@
       padding: 12px;
       border-radius: 18px;
       margin-bottom: 10px;
-      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
     .book-card-item.bounce-drop {
@@ -734,16 +646,10 @@
       width: 110%;
       height: 110%;
       object-fit: contain;
-      transform: translateY(-16px);
       transform-origin: bottom center;
       filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.7));
       z-index: 3;
-      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .liam-animated-popout.bounce-creator {
-      transform: translateY(-26px) scale(1.08);
-      filter: drop-shadow(0 18px 26px rgba(124, 58, 237, 0.8));
+      will-change: transform;
     }
 
     .creator-desc {
@@ -818,7 +724,7 @@
       flex-direction: column;
       align-items: center;
       gap: 5px;
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .axis-orb img {
@@ -861,7 +767,7 @@
       padding: 12px;
       border: 2px solid transparent;
       backdrop-filter: blur(10px);
-      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
     .sec-card.manada { border-color: rgba(234, 179, 8, 0.4); }
@@ -968,28 +874,16 @@
 </head>
 <body>
 
-  <!-- BARRA DE CONTROL DEL ESTUDIO (EXTERIOR AL TELÉFONO) -->
-  <div class="studio-bar">
-    <div class="studio-bar-brand">
-      <img src="img/logo-flor.png" alt="BiblioTech" class="studio-bar-logo">
-      <span>Studio 160 BPM</span>
-    </div>
-    <div class="studio-bar-metrics">
-      <span>BEAT: <span class="metric-highlight" id="lblBeat">0</span>/132</span>
-      <span>COMPÁS: <span class="metric-highlight" id="lblBar">01</span>/33</span>
-      <div class="beat-led" id="beatLed"></div>
-    </div>
-    <div class="studio-chapter-badge" id="lblChapter">[CONTEO RÍTMICO] 1 • 2 • 3 • 4</div>
-    <button type="button" class="studio-btn-record" id="btnRecord">
-      <span>⏺</span> Grabar Video (49.5s)
-    </button>
-  </div>
+  <!-- BOTÓN FLOTANTE LIMPIO DE GRABACIÓN (SE OCULTA AUTOMÁTICAMENTE AL GRABAR SI SE DESEA) -->
+  <button type="button" class="studio-record-btn" id="btnRecord">
+    <span>⏺</span> Grabar Video (49.5s)
+  </button>
 
-  <!-- SMARTPHONE 9:16 CON PERSPECTIVA CINEMÁTICA -->
+  <!-- SMARTPHONE 9:16 CON PERSPECTIVA CINEMÁTICA Y MOVIMIENTOS CONTINUOS SUAVES -->
   <div class="phone-container" id="phoneContainer">
     <div class="phone-notch"></div>
     
-    <!-- Barra de Estado Limpia (Sin textos invasivos) -->
+    <!-- Barra de Estado Limpia y Realista -->
     <div class="phone-status-bar">
       <span>9:41</span>
       <div class="status-icons">
@@ -1065,7 +959,7 @@
           <span>🔍</span> ¿Qué quieres descubrir hoy?
         </div>
         <div class="search-input-box" id="searchInputBox">
-          <div class="search-text" id="searchText">¿Qué son ExplorApp y CarpetApp?</div>
+          <div class="search-text" id="searchText"></div>
         </div>
         <div class="answer-card" id="answerCard">
           <span class="answer-tag">Red de Caminantes • Manuales Oficiales ASMAC</span>
@@ -1121,7 +1015,7 @@
       </section>
 
       <!-- ========================================================
-           SECCIÓN 4: ¡DROP DEL CORO! BIBLIOTECA DEL CENTENARIO
+           SECCIÓN 4: BIBLIOTECA DEL CENTENARIO
            ======================================================== -->
       <section class="books-block" id="secBooks">
         <span class="section-eyebrow">COLECCIÓN DIGITAL 1926–2026</span>
@@ -1165,7 +1059,7 @@
         <!-- ESCENARIO CON PROFUNDIDAD 3D: FONDO ESTÁTICO + APNG ANIMADO FLOTANTE -->
         <div class="liam-stage-container" id="liamStageContainer" title="Liam Durán — Creador de BiblioTech Scout">
           <div class="liam-static-box">
-            <img src="assets/LiamFondo.jpg" alt="Fondo estático" class="liam-static-img">
+            <img src="assets/LiamFondo.jpg" alt="Fondo" class="liam-static-img">
           </div>
           <picture>
             <source srcset="assets/Liam.webp" type="image/webp">
@@ -1269,20 +1163,15 @@
   <script>
     'use strict';
 
+    // Constantes matemáticas del audio (160 BPM)
     const BPM = 160;
     const BEAT_DURATION = 60 / BPM; // 0.375s (375ms)
     const BAR_DURATION = BEAT_DURATION * 4; // 1.50s (1500ms)
-    const TOTAL_BARS = 33; // Exactamente 33 compases
-    const TOTAL_DURATION = 49.50; // Exactamente 49.50 segundos de la pista de audio
+    const TOTAL_DURATION = 49.50; // Exactamente 49.50 segundos
 
     const audio = document.getElementById('promoAudio');
     const phoneContainer = document.getElementById('phoneContainer');
     const phoneScreen = document.getElementById('phoneScreen');
-
-    const lblBeat = document.getElementById('lblBeat');
-    const lblBar = document.getElementById('lblBar');
-    const beatLed = document.getElementById('beatLed');
-    const lblChapter = document.getElementById('lblChapter');
     const btnRecord = document.getElementById('btnRecord');
 
     // Secciones DOM
@@ -1330,235 +1219,234 @@
       document.getElementById('cardClan')
     ];
 
+    // Variables del Motor Físico Continuo (Lerp) a 60 FPS
+    let smoothScrollY = 0;
+    let targetScrollY = 0;
+
+    let smoothScale = 1.0;
+    let targetScale = 1.0;
+
+    let smoothRotX = 0;
+    let targetRotX = 0;
+
+    let smoothRotY = 0;
+    let targetRotY = 0;
+
     let lastBeat = -1;
     let isRecordingActive = false;
 
-    function setStudioChapter(text) {
-      if (lblChapter.textContent !== text) {
-        lblChapter.textContent = text;
-        lblChapter.style.transform = 'scale(1.06)';
-        setTimeout(() => {
-          lblChapter.style.transform = 'scale(1.0)';
-        }, 150);
-      }
-    }
+    const fullQuery = '¿Qué son ExplorApp y CarpetApp?';
 
-    // Bucle sincronizado al reloj real del audio
-    function tick() {
+    // Bucle continuo a 60 FPS con interpolación exponencial (Lerp)
+    function frameLoop() {
       if (!audio.paused) {
         const t = audio.currentTime;
 
-        // FINAL DE LA PISTA (49.5 SEGUNDOS EXACTOS)
+        // Fin de la pista a los 49.5s
         if (t >= TOTAL_DURATION) {
           if (isRecordingActive && mediaRecorder && mediaRecorder.state === 'recording') {
             mediaRecorder.stop();
           }
           audio.currentTime = 0;
-          phoneScreen.scrollTo({ top: 0, behavior: 'instant' });
+          smoothScrollY = 0;
+          targetScrollY = 0;
+          phoneScreen.scrollTop = 0;
         }
 
         const currentBeat = Math.floor(t / BEAT_DURATION);
-        const currentBar = Math.floor(t / BAR_DURATION) + 1;
         const beatInBar = (currentBeat % 4) + 1;
         const isClap = (beatInBar === 2 || beatInBar === 4);
 
-        lblBeat.textContent = currentBeat;
-        lblBar.textContent = String(Math.min(TOTAL_BARS, currentBar)).padStart(2, '0');
+        // Coreografía cinemática continua según el tiempo exacto t
+        updateCinematicTargets(t, currentBeat, beatInBar, isClap);
 
-        // LED
-        const subBeat = (t % BEAT_DURATION) / BEAT_DURATION;
-        if (subBeat < 0.28) {
-          beatLed.className = isClap ? 'beat-led clap' : 'beat-led active';
-        } else {
-          beatLed.className = 'beat-led';
-        }
-
+        // Actualización en cada pulso de beat
         if (currentBeat !== lastBeat) {
           lastBeat = currentBeat;
-          onBeat(currentBeat, currentBar, beatInBar, isClap, t);
+          onBeatPulse(currentBeat, beatInBar, isClap, t);
+        }
+
+        // FÍSICA LERP SUAVE A 60 FPS (Zero saltos, zero tirones)
+        smoothScrollY += (targetScrollY - smoothScrollY) * 0.075;
+        phoneScreen.scrollTop = smoothScrollY;
+
+        smoothScale += (targetScale - smoothScale) * 0.085;
+        smoothRotX += (targetRotX - smoothRotX) * 0.085;
+        smoothRotY += (targetRotY - smoothRotY) * 0.085;
+
+        phoneContainer.style.transform = `perspective(1400px) rotateX(${smoothRotX}deg) rotateY(${smoothRotY}deg) scale(${smoothScale})`;
+      }
+
+      requestAnimationFrame(frameLoop);
+    }
+
+    // Calcula los objetivos cinemáticos en cada milisegundo de audio
+    function updateCinematicTargets(t, beat, beatInBar, isClap) {
+
+      // ----------------------------------------------------
+      // 0.0s – 1.5s (Compás 1 / Beats 1 a 4): Conteo de 4 beats
+      // ----------------------------------------------------
+      if (t < 1.5) {
+        targetScrollY = 0;
+        targetScale = 1.0;
+        targetRotX = 0;
+        targetRotY = 0;
+      }
+
+      // ----------------------------------------------------
+      // 1.5s – 6.0s (Compases 2 a 4): Hero Oficial y Trío
+      // ----------------------------------------------------
+      else if (t < 6.0) {
+        targetScrollY = 0;
+        targetScale = 1.04;
+        targetRotX = 3.0;
+        targetRotY = 0;
+      }
+
+      // ----------------------------------------------------
+      // 6.0s – 13.5s (Compases 5 a 9): Buscador Oficial
+      // ----------------------------------------------------
+      else if (t < 13.5) {
+        targetScrollY = secSearch.offsetTop - 55;
+        
+        // Zoom suave al buscador para leer con nitidez
+        targetScale = isClap ? 1.32 : 1.28;
+        targetRotX = 1.5;
+        targetRotY = 0;
+
+        // Escritura progresiva letra por letra (6.5s a 9.5s)
+        if (t >= 6.5 && t <= 9.8) {
+          const progress = Math.min(1, (t - 6.5) / 3.0);
+          const chars = Math.floor(progress * fullQuery.length);
+          searchText.textContent = fullQuery.substring(0, chars);
+        } else if (t > 9.8) {
+          searchText.textContent = fullQuery;
+          answerCard.classList.add('visible');
         }
       }
 
-      requestAnimationFrame(tick);
-    }
+      // ----------------------------------------------------
+      // 13.5s – 21.0s (Compases 10 a 14): Guía Paso a Paso
+      // ----------------------------------------------------
+      else if (t < 21.0) {
+        targetScrollY = secQuickstart.offsetTop - 55;
 
-    // =========================================================================
-    // COREOGRAFÍA CINEMÁTICA EXACTA A 160 BPM EN 33 COMPASES (49.5s)
-    // =========================================================================
-    function onBeat(beat, bar, beatInBar, isClap, t) {
-
-      // -----------------------------------------------------------------------
-      // COMPÁS 1: BEATS 1–4 (0.0s – 1.5s) -> CONTEO RÍTMICO INICIAL
-      // Los primeros 4 beats marcan el tiempo antes de iniciar la música
-      // -----------------------------------------------------------------------
-      if (bar === 1) {
-        setStudioChapter(`[CONTEO RÍTMICO] BEAT ${beatInBar} DE 4`);
-        phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
-        phoneContainer.style.transform = 'perspective(1200px) rotateX(4deg) rotateY(0deg) scale(1.02)';
-        
-        // Destello en el primer compás
-        [boxStat1, boxStat2, boxStat3].forEach(b => b.classList.remove('pulse'));
+        // Pre-drop en compás 14 (19.5s a 21.0s): zoom out de anticipación
+        if (t >= 19.5) {
+          targetScale = 0.94;
+          targetRotX = 0;
+          targetRotY = 0;
+        } else {
+          targetScale = 1.22;
+          targetRotX = 2.5;
+          targetRotY = 1.0;
+        }
       }
 
-      // -----------------------------------------------------------------------
-      // COMPASES 2–4: BEATS 5–16 (1.5s – 6.0s) -> HERO & COLECCIÓN CENTENARIO
-      // Inicia la música a 160 BPM con el trío de fotos y contadores oficiales
-      // -----------------------------------------------------------------------
-      else if (bar >= 2 && bar <= 4) {
-        setStudioChapter('[1/7] HERO & COLECCIÓN CENTENARIO');
-        phoneContainer.style.transform = 'perspective(1200px) rotateX(4deg) rotateY(0deg) scale(1.05)';
+      // ----------------------------------------------------
+      // 21.0s – 28.5s (Compases 15 a 19): ¡DROP! Biblioteca Oficial
+      // ----------------------------------------------------
+      else if (t < 28.5) {
+        targetScrollY = secBooks.offsetTop - 55;
+        // Punch zoom rítmico en cada clap
+        targetScale = isClap ? 1.35 : 1.26;
+        targetRotX = 3.0;
+        targetRotY = -2.0;
+      }
 
-        // Contadores numéricos pulsando rítmicamente
+      // ----------------------------------------------------
+      // 28.5s – 34.5s (Compases 20 a 23): Creador Liam Durán en 3D
+      // ----------------------------------------------------
+      else if (t < 34.5) {
+        targetScrollY = secAcerca.offsetTop - 55;
+        targetScale = isClap ? 1.30 : 1.24;
+        targetRotX = 2.0;
+        targetRotY = 1.5;
+
+        // Flotación suave y orgánica del avatar de Liam
+        const floatY = -18 + Math.sin(t * 4.5) * 6;
+        const popScale = isClap ? 1.06 : 1.0;
+        liamPopout.style.transform = `translateY(${floatY}px) scale(${popScale})`;
+      }
+
+      // ----------------------------------------------------
+      // 34.5s – 40.5s (Compases 24 a 27): Agentes de Cambio CNRC
+      // ----------------------------------------------------
+      else if (t < 40.5) {
+        targetScrollY = secAgentes.offsetTop - 55;
+        targetScale = 1.22;
+        targetRotX = 2.5;
+        targetRotY = 2.0;
+      }
+
+      // ----------------------------------------------------
+      // 40.5s – 47.0s (Compases 28 a 32): Secciones Scouts & CTA
+      // ----------------------------------------------------
+      else if (t < 47.0) {
+        if (t < 44.5) {
+          targetScrollY = secSections.offsetTop - 55;
+          targetScale = isClap ? 1.28 : 1.22;
+          targetRotX = 3.5;
+          targetRotY = -2.0;
+        } else {
+          targetScrollY = secCta.offsetTop - 55;
+          targetScale = 1.08;
+          targetRotX = 2.0;
+          targetRotY = 0;
+        }
+      }
+
+      // ----------------------------------------------------
+      // 47.0s – 49.5s (Compás 33 / Últimos 4 beats): Retorno Suave al Inicio
+      // ----------------------------------------------------
+      else {
+        // Scroll continuo suave de regreso a la cima para el loop
+        targetScrollY = 0;
+        targetScale = 1.0;
+        targetRotX = 0;
+        targetRotY = 0;
+      }
+    }
+
+    // Micro-interacciones sutiles en los beats de la música
+    function onBeatPulse(beat, beatInBar, isClap, t) {
+
+      // Contadores en Hero (1.5s a 6.0s)
+      if (t >= 1.5 && t < 6.0) {
         [boxStat1, boxStat2, boxStat3].forEach(b => b.classList.remove('pulse'));
         const stats = [boxStat1, boxStat2, boxStat3];
         stats[(beat % 3)].classList.add('pulse');
       }
 
-      // -----------------------------------------------------------------------
-      // COMPASES 5–9: BEATS 17–36 (6.0s – 13.5s) -> BUSCADOR INTELIGENTE OFICIAL
-      // Escritura letra por letra de "¿Qué son ExplorApp y CarpetApp?" y respuesta
-      // -----------------------------------------------------------------------
-      else if (bar >= 5 && bar <= 9) {
-        setStudioChapter('[2/7] BUSCADOR OFICIAL INTELIGENTE');
-
-        if (bar === 5 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secSearch.offsetTop - 55, behavior: 'smooth' });
-          searchText.classList.add('typing');
-        }
-
-        // Punch zoom profundo al buscador para leer con nitidez
-        const punch = isClap ? 1.34 : 1.30;
-        phoneContainer.style.transform = `perspective(1200px) rotateX(2deg) rotateY(0deg) scale(${punch})`;
-
-        // Mostrar la tarjeta oficial con las fuentes
-        if (bar >= 7 && beatInBar >= 2) {
-          answerCard.classList.add('visible');
-        }
-      }
-
-      // -----------------------------------------------------------------------
-      // COMPASES 10–14: BEATS 37–56 (13.5s – 21.0s) -> GUÍA PASO A PASO
-      // 4 tarjetas: Grupos/SISAS, Plataformas/Meztitla, Eventos, Comités CPRC/CNRC
-      // -----------------------------------------------------------------------
-      else if (bar >= 10 && bar <= 14) {
-        setStudioChapter('[3/7] GUÍA PASO A PASO Y PLATAFORMAS');
-
-        if (bar === 10 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secQuickstart.offsetTop - 55, behavior: 'smooth' });
-        }
-
-        // Resaltar una tarjeta por compás
-        phoneContainer.style.transform = 'perspective(1200px) rotateX(3deg) rotateY(1deg) scale(1.24)';
+      // Tarjetas de Guía (13.5s a 19.5s)
+      if (t >= 13.5 && t < 19.5) {
+        const barIndex = Math.floor(t / BAR_DURATION);
+        const cardIndex = Math.max(0, Math.min(qCards.length - 1, barIndex - 9));
         qCards.forEach(c => c.classList.remove('active-pulse'));
-        const qIdx = Math.min(qCards.length - 1, bar - 10);
-        qCards[qIdx].classList.add('active-pulse');
-
-        // Pre-drop (Compás 14: HUH!): Corte de anticipación previo al coro
-        if (bar === 14) {
-          phoneContainer.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale(0.94)';
-        }
+        qCards[cardIndex].classList.add('active-pulse');
       }
 
-      // -----------------------------------------------------------------------
-      // COMPASES 15–19: BEATS 57–76 (21.0s – 28.5s) -> ¡EL DROP DEL CORO!
-      // "BECAUSE I'M HAPPY! Clap along if you feel like a room without a roof..."
-      // -----------------------------------------------------------------------
-      else if (bar >= 15 && bar <= 19) {
-        setStudioChapter('[4/7] ¡DROP! BIBLIOTECA DEL CENTENARIO');
-
-        if (bar === 15 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secBooks.offsetTop - 55, behavior: 'smooth' });
-        }
-
-        // PUNCH ZOOM EXPLOSIVO EN LAS PALMADAS (BEATS 2 Y 4)
-        const dropZoom = isClap ? 1.36 : 1.28;
-        phoneContainer.style.transform = `perspective(1200px) rotateX(3deg) rotateY(-2deg) scale(${dropZoom})`;
-
-        // Rebote y brillo en los libros oficiales
+      // Libros en Biblioteca (21.0s a 28.5s)
+      if (t >= 21.0 && t < 28.5) {
         bookCards.forEach(b => b.classList.remove('bounce-drop'));
-        const activeBook = (beat % bookCards.length);
-        bookCards[activeBook].classList.add('bounce-drop');
+        bookCards[(beat % bookCards.length)].classList.add('bounce-drop');
       }
 
-      // -----------------------------------------------------------------------
-      // COMPASES 20–23: BEATS 77–92 (28.5s – 34.5s) -> CREADOR DEL PROYECTO
-      // Liam Durán con su foto animada flotando en profundidad sobre el fondo
-      // -----------------------------------------------------------------------
-      else if (bar >= 20 && bar <= 23) {
-        setStudioChapter('[5/7] CREADOR: LIAM DURÁN (PROVINCIA TLXH)');
-
-        if (bar === 20 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secAcerca.offsetTop - 55, behavior: 'smooth' });
-        }
-
-        // Zoom enfocado en el creador
-        const liamZoom = isClap ? 1.32 : 1.25;
-        phoneContainer.style.transform = `perspective(1200px) rotateX(2deg) rotateY(1deg) scale(${liamZoom})`;
-
-        // Animación de popout flotante al ritmo de la música
-        if (isClap) {
-          liamPopout.classList.add('bounce-creator');
-        } else {
-          liamPopout.classList.remove('bounce-creator');
-        }
-      }
-
-      // -----------------------------------------------------------------------
-      // COMPASES 24–27: BEATS 93–108 (34.5s – 40.5s) -> AGENTES DE CAMBIO CNRC
-      // Los 4 Ejes Temáticos rotan al compás
-      // -----------------------------------------------------------------------
-      else if (bar >= 24 && bar <= 27) {
-        setStudioChapter('[6/7] AGENTES DE CAMBIO CNRC (4 EJES)');
-
-        if (bar === 24 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secAgentes.offsetTop - 55, behavior: 'smooth' });
-        }
-
-        phoneContainer.style.transform = 'perspective(1200px) rotateX(3deg) rotateY(2deg) scale(1.24)';
-
+      // Orbes en Agentes de Cambio (34.5s a 40.5s)
+      if (t >= 34.5 && t < 40.5) {
         orbs.forEach(a => a.classList.remove('active'));
         orbs[(beat % 4)].classList.add('active');
       }
 
-      // -----------------------------------------------------------------------
-      // COMPASES 28–32: BEATS 109–128 (40.5s – 48.0s) -> SECCIONES SCOUTS Y CTA
-      // Manada, Tropa, Comunidad, Clan y Banner Oficial
-      // -----------------------------------------------------------------------
-      else if (bar >= 28 && bar <= 32) {
-        setStudioChapter('[7/7] SECCIONES SCOUTS Y ENLACE OFICIAL');
-
-        if (bar === 28 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secSections.offsetTop - 55, behavior: 'smooth' });
-        }
-
-        const secZoom = isClap ? 1.30 : 1.25;
-        phoneContainer.style.transform = `perspective(1200px) rotateX(4deg) rotateY(-2deg) scale(${secZoom})`;
-
+      // Secciones Scouts (40.5s a 44.5s)
+      if (t >= 40.5 && t < 44.5) {
         secCards.forEach(c => c.classList.remove('pulse-highlight'));
         secCards[(beat % 4)].classList.add('pulse-highlight');
-
-        if (bar >= 31) {
-          phoneScreen.scrollTo({ top: secCta.offsetTop - 55, behavior: 'smooth' });
-        }
-      }
-
-      // -----------------------------------------------------------------------
-      // COMPÁS 33: BEATS 129–132 (48.0s – 49.5s) -> REGRESO AL INICIO (LOOP)
-      // En los últimos 4 beats regresa al inicio haciendo scroll suave
-      // -----------------------------------------------------------------------
-      else if (bar === 33) {
-        setStudioChapter('[SEAMLESS LOOP] REGRESO AL INICIO');
-
-        // Inicia el scroll suave continuo hacia el tope
-        if (beatInBar === 1) {
-          phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
-          phoneContainer.style.transform = 'perspective(1200px) rotateX(4deg) rotateY(0deg) scale(1.05)';
-        }
       }
     }
 
     // =========================================================================
-    // GRABADOR DE VIDEO 60 FPS (SINCRONIZADO A LOS 49.5s EXACTOS)
+    // GRABADOR DE VIDEO 60 FPS (SIN TEXTOS DE DESARROLLADOR)
     // =========================================================================
     let mediaRecorder = null;
     let recordedChunks = [];
@@ -1619,11 +1507,13 @@
         mediaRecorder.start();
         isRecordingActive = true;
         btnRecord.classList.add('recording');
-        btnRecord.innerHTML = '<span>⏹</span> Grabando (Auto-stop a 49.5s)';
+        btnRecord.innerHTML = '<span>⏹</span> Grabando (Auto-stop)';
 
-        // Reiniciar audio desde 0
+        // Reinicio exacto a 0
         audio.currentTime = 0;
-        phoneScreen.scrollTo({ top: 0, behavior: 'instant' });
+        smoothScrollY = 0;
+        targetScrollY = 0;
+        phoneScreen.scrollTop = 0;
         audio.play();
 
       } catch (err) {
@@ -1631,7 +1521,7 @@
       }
     });
 
-    // Iniciar audio y bucle
+    // Iniciar con un clic en cualquier parte de la ventana
     window.addEventListener('click', () => {
       if (audio.paused) {
         audio.play().catch(() => {});
@@ -1639,12 +1529,12 @@
     }, { once: true });
 
     audio.play().then(() => {
-      console.log('Audio iniciado a 160 BPM en 33 compases exactos (49.5s).');
+      console.log('Video Promocional iniciado con motor Lerp a 60 FPS.');
     }).catch(() => {
-      console.log('Esperando interacción del usuario para reproducir audio...');
+      console.log('Haz clic en la ventana para reproducir.');
     });
 
-    tick();
+    frameLoop();
   </script>
 </body>
 </html>
