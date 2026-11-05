@@ -95,33 +95,46 @@
   </svg>
 
   <!-- BARRA DE NAVEGACIÓN PRINCIPAL (FIJA, SIEMPRE VISIBLE AL DESPLAZARSE) -->
-  <header class="main-header">
+  <header class="main-header" id="barra-principal">
     <div class="container header-inner">
       <a href="#inicio" class="brand-logo" title="Ir al inicio">
-        <div class="brand-emblem-wrap">
+        <span class="brand-emblem-wrap">
           <img decoding="async" src="img/logo-flor.png" alt="Flor de Lis Mundial" class="brand-emblem" />
-        </div>
-        <div class="brand-text">
-          <div class="brand-title-row">
+        </span>
+        <span class="brand-text">
+          <span class="brand-title-row">
             <span class="brand-name">BiblioTech</span>
-          </div>
-          <span class="brand-author">Creador: <strong>Liam Durán - Provincia TLXH</strong></span>
-        </div>
+            <span class="brand-badge">Scout</span>
+          </span>
+          <span class="brand-author">Creador: <strong>Liam Durán</strong> · Provincia TLXH</span>
+        </span>
       </a>
 
-      <nav class="main-nav" aria-label="Navegación principal">
+      <nav class="main-nav" id="navegacion-principal" aria-label="Navegación principal">
         <a href="#buscador" class="nav-link active">Preguntar</a>
-        <a href="#guia-inicio" class="nav-link">Primeros Pasos</a>
         <a href="#biblioteca" class="nav-link">Biblioteca</a>
-        <a href="#acerca" class="nav-link">Propósito</a>
-        <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
         <a href="#secciones" class="nav-link">Secciones</a>
-        <a href="#servicios" class="nav-link">Servicios Oficiales</a>
-        <a href="#cambios" class="nav-link">Evolución</a>
         <a href="#explorar" class="nav-link">Catálogo</a>
+        <a href="#acerca" class="nav-link">Propósito</a>
+        <a href="#agentes" class="nav-link">Agentes de Cambio</a>
+        <a href="#cambios" class="nav-link">Evolución</a>
       </nav>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="navToggle"
+        aria-expanded="false"
+        aria-controls="navegacion-principal"
+        aria-label="Abrir menú de navegación"
+      >
+        <span class="nav-toggle-label">Menú</span>
+        <span class="nav-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
     </div>
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
   </header>
+  <div class="nav-backdrop" id="navBackdrop" hidden></div>
 
   <!-- FONDO ANIMADO GLOBAL DE LA PÁGINA (BURBUJAS DE COLOR, ONDAS Y FORMAS GEOMÉTRICAS 3D EN MOVIMIENTO) -->
   <div class="global-animated-bg" aria-hidden="true">
@@ -188,6 +201,29 @@
             Biblioteca digital y buscador interactivo con información basada en los documentos oficiales vigentes, diseñada para una búsqueda ágil y de fácil comprensión para niñas, niños, adolescentes, jóvenes y adultos.
             Consulta más de <strong>5,356 preguntas y respuestas</strong> y <strong>498 libros, manuales, guías, reglamentos y comunicados descargables</strong>.
           </p>
+
+          <div class="hero-actions">
+            <a href="#buscador" class="btn-hero-primary">
+              <svg width="18" height="18" aria-hidden="true"><use href="#icon-search"/></svg>
+              Hacer una pregunta
+            </a>
+            <a href="#biblioteca" class="btn-hero-ghost">Explorar la biblioteca</a>
+          </div>
+
+          <dl class="hero-stats-row" aria-label="Contenido disponible en BiblioTech">
+            <div class="hero-stat">
+              <dt>Preguntas</dt>
+              <dd>5,356</dd>
+            </div>
+            <div class="hero-stat">
+              <dt>Documentos</dt>
+              <dd>498</dd>
+            </div>
+            <div class="hero-stat">
+              <dt>Temas</dt>
+              <dd>104</dd>
+            </div>
+          </dl>
         </div>
 
         <!-- TRÍO DE FOTOS EN OCTÁGONOS/HEXÁGONOS SUPERPUESTOS CON TÍTULOS OFICIALES REALES -->
@@ -221,11 +257,22 @@
             </div>
             <span class="hex-floating-caption cap-blue">Foros Nacionales</span>
           </div>
+
+          <span class="hero-sticker hero-sticker-a" aria-hidden="true">26° Jamboree · Polonia 2027</span>
+          <span class="hero-sticker hero-sticker-b" aria-hidden="true">Centenario Scout 1926–2026</span>
         </div>
       </div>
 
       <!-- TARJETA DEL BUSCADOR INTUITIVO Y EXPLORADOR DE +5,350 PREGUNTAS -->
       <div id="buscador" class="search-hub-card">
+        <div class="search-hub-head">
+          <div>
+            <span class="search-hub-kicker">Buscador con fuentes oficiales</span>
+            <h2 class="search-hub-title">¿Qué quieres descubrir hoy?</h2>
+          </div>
+          <p class="search-hub-note">Escribe tu duda o elige una pregunta para ver la respuesta y el documento exacto de donde sale.</p>
+        </div>
+
         <div class="search-section-pills" role="group" aria-label="Filtrar por sección scout">
           <button type="button" class="sec-pill active" data-section="all">Todas las secciones</button>
           <button type="button" class="sec-pill pill-manada" data-section="manada">Manada (6 a &lt;10)</button>
