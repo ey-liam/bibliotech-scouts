@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BiblioTech Scout — Motion Graphics Studio Pro (160 BPM • 1080x1920)</title>
+  <title>BiblioTech Scout — Video Promocional Oficial (160 BPM • 49.5s Loop)</title>
   
   <!-- Tipografías oficiales de BiblioTech Scout -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,17 +42,17 @@
       user-select: none;
     }
 
-    /* BARRA SUPERIOR DE CONTROL DEL ESTUDIO */
+    /* BARRA SUPERIOR DE CONTROL DEL ESTUDIO (FUERA DEL CELULAR) */
     .studio-bar {
       position: fixed;
       top: 14px;
       display: flex;
       align-items: center;
-      gap: 16px;
-      background: rgba(15, 23, 42, 0.92);
+      gap: 14px;
+      background: rgba(15, 23, 42, 0.94);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 8px 22px;
+      padding: 8px 20px;
       border-radius: 999px;
       border: 1.5px solid rgba(124, 58, 237, 0.45);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(124, 58, 237, 0.25);
@@ -62,32 +62,46 @@
     .studio-bar-brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       font-family: 'Outfit', sans-serif;
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     .studio-bar-logo {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.8));
     }
 
     .studio-bar-metrics {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
+      font-size: 0.80rem;
       color: #94a3b8;
       border-left: 1px solid rgba(255, 255, 255, 0.15);
-      padding-left: 14px;
+      padding-left: 12px;
     }
 
     .metric-highlight {
       color: var(--cyan);
       font-weight: 800;
+    }
+
+    .studio-chapter-badge {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #e2e8f0;
+      background: rgba(124, 58, 237, 0.25);
+      border: 1px solid rgba(124, 58, 237, 0.5);
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.4px;
+      transition: all 0.25s ease;
+      white-space: nowrap;
     }
 
     .beat-led {
@@ -116,7 +130,7 @@
       border: 1px solid rgba(239, 68, 68, 0.4);
       padding: 6px 16px;
       border-radius: 999px;
-      font-size: 0.82rem;
+      font-size: 0.80rem;
       font-weight: 800;
       cursor: pointer;
       display: flex;
@@ -154,77 +168,49 @@
       overflow: hidden;
       transform-style: preserve-3d;
       transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      margin-top: 40px;
+      margin-top: 42px;
     }
 
-    /* Dynamic Island / Bocina */
+    /* Dynamic Island / Bocina Realista */
     .phone-notch {
       position: absolute;
-      top: 12px;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      width: 120px;
-      height: 28px;
+      width: 110px;
+      height: 24px;
       background: #020617;
       border-radius: 20px;
-      z-index: 400;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      z-index: 450;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
       pointer-events: none;
     }
 
+    /* Barra de Estado Realista y Limpia (Sin etiquetas invasivas) */
     .phone-status-bar {
       position: absolute;
-      top: 14px;
-      left: 24px;
-      right: 24px;
+      top: 12px;
+      left: 22px;
+      right: 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 800;
-      color: #cbd5e1;
-      z-index: 410;
+      color: #e2e8f0;
+      z-index: 440;
       pointer-events: none;
     }
 
-    /* Píldora de Capítulo Flotante en la Pantalla del Celular */
-    .phone-chapter-pill {
-      position: sticky;
-      top: 56px;
-      margin: 0 auto 12px auto;
-      z-index: 350;
-      background: rgba(15, 23, 42, 0.94);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(124, 58, 237, 0.4);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(124, 58, 237, 0.3);
-      padding: 5px 14px;
-      border-radius: 999px;
-      display: inline-flex;
+    .status-icons {
+      display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.72rem;
-      color: #ffffff;
-      width: fit-content;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      gap: 6px;
+      font-size: 0.70rem;
+      color: #cbd5e1;
     }
 
-    .ch-badge {
-      background: linear-gradient(135deg, #7c3aed, #0284c7);
-      color: #ffffff;
-      font-weight: 900;
-      font-size: 0.66rem;
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-
-    .ch-title {
-      font-weight: 800;
-      color: #e2e8f0;
-      letter-spacing: 0.3px;
-    }
-
-    /* PANTALLA VIRTUAL DEL CELULAR CON SCROLL CINEMÁTICO CONTROLADO */
+    /* PANTALLA VIRTUAL DEL CELULAR */
     .phone-screen {
       position: absolute;
       inset: 0;
@@ -232,7 +218,7 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
       scrollbar-width: none;
-      padding-top: 48px;
+      padding-top: 46px;
       padding-bottom: 70px;
       background: linear-gradient(180deg, #090d16 0%, #0f172a 25%, #1e1b4b 60%, #07090e 100%);
       text-align: center;
@@ -298,7 +284,7 @@
     }
 
     /* ========================================================
-       CAPÍTULO 1: HERO & COLECCIÓN CENTENARIO
+       SECCIÓN 1: HERO & COLECCIÓN CENTENARIO
        ======================================================== */
     .mobile-hero-section {
       padding: 22px 18px 16px 18px;
@@ -429,7 +415,7 @@
     }
 
     /* ========================================================
-       CAPÍTULO 2: BUSCADOR OFICIAL INTELIGENTE
+       SECCIÓN 2: BUSCADOR OFICIAL INTELIGENTE
        ======================================================== */
     .search-container {
       padding: 20px 18px;
@@ -535,7 +521,7 @@
     }
 
     /* ========================================================
-       CAPÍTULO 3: GUÍA PASO A PASO (PRIMEROS PASOS Y PLATAFORMAS)
+       SECCIÓN 3: GUÍA PASO A PASO (PRIMEROS PASOS Y PLATAFORMAS)
        ======================================================== */
     .quickstart-block {
       padding: 20px 18px;
@@ -617,7 +603,7 @@
     }
 
     /* ========================================================
-       CAPÍTULO 4: BIBLIOTECA DEL CENTENARIO (¡DROP DEL CORO!)
+       SECCIÓN 4: BIBLIOTECA DEL CENTENARIO (¡DROP DEL CORO!)
        ======================================================== */
     .books-block {
       padding: 20px 18px;
@@ -684,7 +670,115 @@
     }
 
     /* ========================================================
-       CAPÍTULO 5: AGENTES DE CAMBIO CNRC (4 EJES)
+       SECCIÓN 5: CREADOR DEL PROYECTO (LIAM DURÁN EN 3D)
+       ======================================================== */
+    .creator-section-block {
+      padding: 24px 18px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
+      border-top: 1px solid rgba(124, 58, 237, 0.25);
+      border-bottom: 1px solid rgba(124, 58, 237, 0.25);
+    }
+
+    .creator-eyebrow {
+      font-size: 0.68rem;
+      color: #c084fc;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .creator-h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+
+    /* ESCENARIO DE PROFUNDIDAD 3D DE LIAM DURÁN */
+    .liam-stage-container {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin: 0 auto 16px auto;
+      perspective: 1000px;
+    }
+
+    .liam-static-box {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 3.5px solid #ffffff;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(124, 58, 237, 0.4);
+      background: #0f172a;
+      z-index: 1;
+    }
+
+    .liam-static-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* FOTO DE LIAM ANIMADA SOBRESALIENDO POR ENCIMA DEL FONDO */
+    .liam-animated-popout {
+      position: absolute;
+      left: -5%;
+      bottom: 0;
+      width: 110%;
+      height: 110%;
+      object-fit: contain;
+      transform: translateY(-16px);
+      transform-origin: bottom center;
+      filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.7));
+      z-index: 3;
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .liam-animated-popout.bounce-creator {
+      transform: translateY(-26px) scale(1.08);
+      filter: drop-shadow(0 18px 26px rgba(124, 58, 237, 0.8));
+    }
+
+    .creator-desc {
+      font-size: 0.73rem;
+      color: #cbd5e1;
+      line-height: 1.42;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .creator-signature {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      border-radius: 14px;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    .creator-signature .main-sig {
+      font-size: 0.76rem;
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .creator-signature .main-sig strong {
+      color: #38bdf8;
+    }
+
+    .creator-signature .sub-sig {
+      font-size: 0.66rem;
+      color: #94a3b8;
+    }
+
+    /* ========================================================
+       SECCIÓN 6: AGENTES DE CAMBIO CNRC (4 EJES)
        ======================================================== */
     .agentes-block {
       padding: 20px 18px;
@@ -748,7 +842,7 @@
     }
 
     /* ========================================================
-       CAPÍTULO 6: LAS 4 SECCIONES SCOUTS
+       SECCIÓN 7: LAS 4 SECCIONES SCOUTS
        ======================================================== */
     .sections-block {
       padding: 20px 18px;
@@ -814,10 +908,10 @@
     .sec-lema.clan { color: #f87171; }
 
     /* ========================================================
-       CAPÍTULO 7: ENLACE OFICIAL, CRÉDITOS Y CIERRE
+       SECCIÓN 8: ENLACE OFICIAL, CRÉDITOS Y CIERRE
        ======================================================== */
     .cta-block {
-      padding: 30px 20px 40px 20px;
+      padding: 26px 20px 36px 20px;
       text-align: center;
       background: radial-gradient(circle at center, rgba(124, 58, 237, 0.25) 0%, transparent 70%);
     }
@@ -874,40 +968,40 @@
 </head>
 <body>
 
-  <!-- BARRA DE CONTROL DEL ESTUDIO -->
+  <!-- BARRA DE CONTROL DEL ESTUDIO (EXTERIOR AL TELÉFONO) -->
   <div class="studio-bar">
     <div class="studio-bar-brand">
       <img src="img/logo-flor.png" alt="BiblioTech" class="studio-bar-logo">
       <span>Studio 160 BPM</span>
     </div>
     <div class="studio-bar-metrics">
-      <span>BEAT: <span class="metric-highlight" id="lblBeat">0</span></span>
-      <span>COMPÁS: <span class="metric-highlight" id="lblBar">01</span></span>
+      <span>BEAT: <span class="metric-highlight" id="lblBeat">0</span>/132</span>
+      <span>COMPÁS: <span class="metric-highlight" id="lblBar">01</span>/33</span>
       <div class="beat-led" id="beatLed"></div>
     </div>
+    <div class="studio-chapter-badge" id="lblChapter">[CONTEO RÍTMICO] 1 • 2 • 3 • 4</div>
     <button type="button" class="studio-btn-record" id="btnRecord">
-      <span>⏺</span> Grabar Video (60 FPS)
+      <span>⏺</span> Grabar Video (49.5s)
     </button>
   </div>
 
   <!-- SMARTPHONE 9:16 CON PERSPECTIVA CINEMÁTICA -->
   <div class="phone-container" id="phoneContainer">
     <div class="phone-notch"></div>
+    
+    <!-- Barra de Estado Limpia (Sin textos invasivos) -->
     <div class="phone-status-bar">
       <span>9:41</span>
-      <span>1080x1920 • 60 FPS</span>
-      <span>100% ⚡</span>
+      <div class="status-icons">
+        <span>●●●●</span>
+        <span>5G</span>
+        <span>100% 🔋</span>
+      </div>
     </div>
 
     <!-- PANTALLA INTERIOR VIRTUAL -->
     <div class="phone-screen" id="phoneScreen">
       
-      <!-- Píldora de Capítulo Dinámica -->
-      <div class="phone-chapter-pill" id="phoneChapterPill">
-        <span class="ch-badge" id="chBadge">CAPÍTULO 1/7</span>
-        <span class="ch-title" id="chTitle">HERO & CENTENARIO</span>
-      </div>
-
       <!-- 1. Header Oficial de index.html -->
       <div class="mobile-header">
         <img src="img/logo-flor.png" alt="Flor de Lis" class="mobile-header-logo">
@@ -923,7 +1017,7 @@
       </div>
 
       <!-- ========================================================
-           CAPÍTULO 1: HERO & COLECCIÓN CENTENARIO
+           SECCIÓN 1: HERO & COLECCIÓN CENTENARIO
            ======================================================== -->
       <section class="mobile-hero-section" id="secHero">
         <h1 class="hero-h1">Explora, consulta y lee toda la información Scout en un solo lugar</h1>
@@ -963,7 +1057,7 @@
       </section>
 
       <!-- ========================================================
-           CAPÍTULO 2: BUSCADOR OFICIAL INTELIGENTE
+           SECCIÓN 2: BUSCADOR OFICIAL INTELIGENTE
            ======================================================== -->
       <section class="search-container" id="secSearch">
         <span class="search-kicker">Buscador con fuentes oficiales</span>
@@ -984,7 +1078,7 @@
       </section>
 
       <!-- ========================================================
-           CAPÍTULO 3: GUÍA PASO A PASO (PRIMEROS PASOS Y PLATAFORMAS)
+           SECCIÓN 3: GUÍA PASO A PASO (PRIMEROS PASOS Y PLATAFORMAS)
            ======================================================== -->
       <section class="quickstart-block" id="secQuickstart">
         <span class="section-eyebrow">GUÍA PASO A PASO DESDE CERO</span>
@@ -1027,7 +1121,7 @@
       </section>
 
       <!-- ========================================================
-           CAPÍTULO 4: ¡DROP DEL CORO! BIBLIOTECA DEL CENTENARIO
+           SECCIÓN 4: ¡DROP DEL CORO! BIBLIOTECA DEL CENTENARIO
            ======================================================== -->
       <section class="books-block" id="secBooks">
         <span class="section-eyebrow">COLECCIÓN DIGITAL 1926–2026</span>
@@ -1062,7 +1156,35 @@
       </section>
 
       <!-- ========================================================
-           CAPÍTULO 5: AGENTES DE CAMBIO CNRC (4 EJES)
+           SECCIÓN 5: CREADOR DEL PROYECTO (LIAM DURÁN EN 3D)
+           ======================================================== -->
+      <section class="creator-section-block" id="secAcerca">
+        <span class="creator-eyebrow">BiblioTech es un proyecto personal</span>
+        <h2 class="creator-h2">Un sitio web creado para resolver las dudas que puedan surgir, con información accesible y clara para toda la membresía</h2>
+
+        <!-- ESCENARIO CON PROFUNDIDAD 3D: FONDO ESTÁTICO + APNG ANIMADO FLOTANTE -->
+        <div class="liam-stage-container" id="liamStageContainer" title="Liam Durán — Creador de BiblioTech Scout">
+          <div class="liam-static-box">
+            <img src="assets/LiamFondo.jpg" alt="Fondo estático" class="liam-static-img">
+          </div>
+          <picture>
+            <source srcset="assets/Liam.webp" type="image/webp">
+            <img src="assets/Liam.png" alt="Liam Durán animado" class="liam-animated-popout" id="liamPopout">
+          </picture>
+        </div>
+
+        <p class="creator-desc">
+          En este espacio niñas, niños, adolescentes, jóvenes y adultos pueden consultar, leer en línea y descargar en un solo lugar los manuales, guías de progresión, libros de la Colección Biblioteca del Centenario, reglamentos, formatos y comunicados vigentes para apoyar sus actividades, proyectos y desarrollo en el Movimiento Scout.
+        </p>
+
+        <div class="creator-signature">
+          <div class="main-sig">Creador: <strong>Liam Durán - Provincia TLXH</strong></div>
+          <div class="sub-sig">Asociación de Scouts de México ASMAC y World Scouting WOSM</div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECCIÓN 6: AGENTES DE CAMBIO CNRC (4 EJES)
            ======================================================== -->
       <section class="agentes-block" id="secAgentes">
         <span class="agentes-eyebrow">PROYECTO DEL COMITÉ NACIONAL DE LA RED DE CAMINANTES (CNRC)</span>
@@ -1091,7 +1213,7 @@
       </section>
 
       <!-- ========================================================
-           CAPÍTULO 6: LAS 4 SECCIONES SCOUTS
+           SECCIÓN 7: LAS 4 SECCIONES SCOUTS
            ======================================================== -->
       <section class="sections-block" id="secSections">
         <span class="section-eyebrow">PROGRESIÓN SCOUT EN MÉXICO</span>
@@ -1121,7 +1243,7 @@
       </section>
 
       <!-- ========================================================
-           CAPÍTULO 7: ENLACE OFICIAL, CRÉDITOS Y CIERRE
+           SECCIÓN 8: ENLACE OFICIAL, CRÉDITOS Y CIERRE
            ======================================================== -->
       <section class="cta-block" id="secCta">
         <img src="img/logo-flor.png" alt="Flor" class="cta-flor">
@@ -1148,27 +1270,27 @@
     'use strict';
 
     const BPM = 160;
-    const BEAT_DURATION = 60 / BPM; // 0.375s
-    const BAR_DURATION = BEAT_DURATION * 4; // 1.50s
-    const TOTAL_DURATION = 46.5; // 31 compases exactos de 'Happy'
+    const BEAT_DURATION = 60 / BPM; // 0.375s (375ms)
+    const BAR_DURATION = BEAT_DURATION * 4; // 1.50s (1500ms)
+    const TOTAL_BARS = 33; // Exactamente 33 compases
+    const TOTAL_DURATION = 49.50; // Exactamente 49.50 segundos de la pista de audio
 
     const audio = document.getElementById('promoAudio');
     const phoneContainer = document.getElementById('phoneContainer');
     const phoneScreen = document.getElementById('phoneScreen');
-    const phoneChapterPill = document.getElementById('phoneChapterPill');
-    const chBadge = document.getElementById('chBadge');
-    const chTitle = document.getElementById('chTitle');
 
     const lblBeat = document.getElementById('lblBeat');
     const lblBar = document.getElementById('lblBar');
     const beatLed = document.getElementById('beatLed');
+    const lblChapter = document.getElementById('lblChapter');
     const btnRecord = document.getElementById('btnRecord');
 
-    // Secciones
+    // Secciones DOM
     const secHero = document.getElementById('secHero');
     const secSearch = document.getElementById('secSearch');
     const secQuickstart = document.getElementById('secQuickstart');
     const secBooks = document.getElementById('secBooks');
+    const secAcerca = document.getElementById('secAcerca');
     const secAgentes = document.getElementById('secAgentes');
     const secSections = document.getElementById('secSections');
     const secCta = document.getElementById('secCta');
@@ -1179,6 +1301,7 @@
     const boxStat1 = document.getElementById('boxStat1');
     const boxStat2 = document.getElementById('boxStat2');
     const boxStat3 = document.getElementById('boxStat3');
+    const liamPopout = document.getElementById('liamPopout');
 
     const qCards = [
       document.getElementById('qCard1'),
@@ -1208,29 +1331,30 @@
     ];
 
     let lastBeat = -1;
-    let currentCh = 0;
+    let isRecordingActive = false;
 
-    function setPhoneChapter(num, badge, title) {
-      if (currentCh !== num) {
-        currentCh = num;
-        chBadge.textContent = badge;
-        chTitle.textContent = title;
-        phoneChapterPill.style.transform = 'scale(1.1)';
+    function setStudioChapter(text) {
+      if (lblChapter.textContent !== text) {
+        lblChapter.textContent = text;
+        lblChapter.style.transform = 'scale(1.06)';
         setTimeout(() => {
-          phoneChapterPill.style.transform = 'scale(1.0)';
-        }, 180);
+          lblChapter.style.transform = 'scale(1.0)';
+        }, 150);
       }
     }
 
-    // Loop sincronizado al reloj del audio
+    // Bucle sincronizado al reloj real del audio
     function tick() {
       if (!audio.paused) {
         const t = audio.currentTime;
 
-        // Loop sin costuras en compás 31 (46.5s)
+        // FINAL DE LA PISTA (49.5 SEGUNDOS EXACTOS)
         if (t >= TOTAL_DURATION) {
+          if (isRecordingActive && mediaRecorder && mediaRecorder.state === 'recording') {
+            mediaRecorder.stop();
+          }
           audio.currentTime = 0;
-          phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: 0, behavior: 'instant' });
         }
 
         const currentBeat = Math.floor(t / BEAT_DURATION);
@@ -1239,7 +1363,7 @@
         const isClap = (beatInBar === 2 || beatInBar === 4);
 
         lblBeat.textContent = currentBeat;
-        lblBar.textContent = String(currentBar).padStart(2, '0');
+        lblBar.textContent = String(Math.min(TOTAL_BARS, currentBar)).padStart(2, '0');
 
         // LED
         const subBeat = (t % BEAT_DURATION) / BEAT_DURATION;
@@ -1259,101 +1383,134 @@
     }
 
     // =========================================================================
-    // COREOGRAFÍA CINEMÁTICA EN 7 CAPÍTULOS ESTRICTAMENTE DESCENDENTES
+    // COREOGRAFÍA CINEMÁTICA EXACTA A 160 BPM EN 33 COMPASES (49.5s)
     // =========================================================================
     function onBeat(beat, bar, beatInBar, isClap, t) {
 
-      // ----------------------------------------------------
-      // CAPÍTULO 1: COMPASES 1–3 (0.0s – 4.5s) -> HERO & CENTENARIO
-      // ----------------------------------------------------
-      if (bar <= 3) {
-        setPhoneChapter(1, 'CAPÍTULO 1/7', 'HERO & COLECCIÓN CENTENARIO');
+      // -----------------------------------------------------------------------
+      // COMPÁS 1: BEATS 1–4 (0.0s – 1.5s) -> CONTEO RÍTMICO INICIAL
+      // Los primeros 4 beats marcan el tiempo antes de iniciar la música
+      // -----------------------------------------------------------------------
+      if (bar === 1) {
+        setStudioChapter(`[CONTEO RÍTMICO] BEAT ${beatInBar} DE 4`);
+        phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
+        phoneContainer.style.transform = 'perspective(1200px) rotateX(4deg) rotateY(0deg) scale(1.02)';
+        
+        // Destello en el primer compás
+        [boxStat1, boxStat2, boxStat3].forEach(b => b.classList.remove('pulse'));
+      }
 
-        if (bar === 1 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Cámara encuadre heroico
+      // -----------------------------------------------------------------------
+      // COMPASES 2–4: BEATS 5–16 (1.5s – 6.0s) -> HERO & COLECCIÓN CENTENARIO
+      // Inicia la música a 160 BPM con el trío de fotos y contadores oficiales
+      // -----------------------------------------------------------------------
+      else if (bar >= 2 && bar <= 4) {
+        setStudioChapter('[1/7] HERO & COLECCIÓN CENTENARIO');
         phoneContainer.style.transform = 'perspective(1200px) rotateX(4deg) rotateY(0deg) scale(1.05)';
 
-        // Contadores numéricos al pulso
+        // Contadores numéricos pulsando rítmicamente
         [boxStat1, boxStat2, boxStat3].forEach(b => b.classList.remove('pulse'));
         const stats = [boxStat1, boxStat2, boxStat3];
         stats[(beat % 3)].classList.add('pulse');
       }
 
-      // ----------------------------------------------------
-      // CAPÍTULO 2: COMPASES 4–8 (4.5s – 12.0s) -> BUSCADOR INTELIGENTE
-      // ----------------------------------------------------
-      else if (bar >= 4 && bar <= 8) {
-        setPhoneChapter(2, 'CAPÍTULO 2/7', 'BUSCADOR INTELIGENTE OFICIAL');
+      // -----------------------------------------------------------------------
+      // COMPASES 5–9: BEATS 17–36 (6.0s – 13.5s) -> BUSCADOR INTELIGENTE OFICIAL
+      // Escritura letra por letra de "¿Qué son ExplorApp y CarpetApp?" y respuesta
+      // -----------------------------------------------------------------------
+      else if (bar >= 5 && bar <= 9) {
+        setStudioChapter('[2/7] BUSCADOR OFICIAL INTELIGENTE');
 
-        if (bar === 4 && beatInBar === 1) {
+        if (bar === 5 && beatInBar === 1) {
           phoneScreen.scrollTo({ top: secSearch.offsetTop - 55, behavior: 'smooth' });
           searchText.classList.add('typing');
         }
 
-        // Punch zoom profundo hacia la pantalla del celular para leer
+        // Punch zoom profundo al buscador para leer con nitidez
         const punch = isClap ? 1.34 : 1.30;
         phoneContainer.style.transform = `perspective(1200px) rotateX(2deg) rotateY(0deg) scale(${punch})`;
 
-        if (bar >= 6) {
+        // Mostrar la tarjeta oficial con las fuentes
+        if (bar >= 7 && beatInBar >= 2) {
           answerCard.classList.add('visible');
         }
       }
 
-      // ----------------------------------------------------
-      // CAPÍTULO 3: COMPASES 9–13 (12.0s – 19.5s) -> GUÍA PASO A PASO
-      // ----------------------------------------------------
-      else if (bar >= 9 && bar <= 13) {
-        setPhoneChapter(3, 'CAPÍTULO 3/7', 'GUÍA PASO A PASO Y PLATAFORMAS');
+      // -----------------------------------------------------------------------
+      // COMPASES 10–14: BEATS 37–56 (13.5s – 21.0s) -> GUÍA PASO A PASO
+      // 4 tarjetas: Grupos/SISAS, Plataformas/Meztitla, Eventos, Comités CPRC/CNRC
+      // -----------------------------------------------------------------------
+      else if (bar >= 10 && bar <= 14) {
+        setStudioChapter('[3/7] GUÍA PASO A PASO Y PLATAFORMAS');
 
-        if (bar === 9 && beatInBar === 1) {
+        if (bar === 10 && beatInBar === 1) {
           phoneScreen.scrollTo({ top: secQuickstart.offsetTop - 55, behavior: 'smooth' });
         }
 
-        // Zoom a las 4 tarjetas
-        phoneContainer.style.transform = 'perspective(1200px) rotateX(3deg) rotateY(1deg) scale(1.24)';
-
         // Resaltar una tarjeta por compás
+        phoneContainer.style.transform = 'perspective(1200px) rotateX(3deg) rotateY(1deg) scale(1.24)';
         qCards.forEach(c => c.classList.remove('active-pulse'));
-        const qIdx = Math.min(qCards.length - 1, bar - 9);
+        const qIdx = Math.min(qCards.length - 1, bar - 10);
         qCards[qIdx].classList.add('active-pulse');
 
-        // Pre-drop (Compás 13: HUH!) -> Anticipación alejando la cámara
-        if (bar === 13) {
-          phoneContainer.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale(0.96)';
+        // Pre-drop (Compás 14: HUH!): Corte de anticipación previo al coro
+        if (bar === 14) {
+          phoneContainer.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale(0.94)';
         }
       }
 
-      // ----------------------------------------------------
-      // CAPÍTULO 4: COMPASES 14–18 (19.5s – 27.0s) -> ¡DROP DEL CORO! BIBLIOTECA
-      // "BECAUSE I'M HAPPY! Clap along if you feel..."
-      // ----------------------------------------------------
-      else if (bar >= 14 && bar <= 18) {
-        setPhoneChapter(4, 'CAPÍTULO 4/7', '¡DROP DEL CORO! • BIBLIOTECA OFICIAL');
+      // -----------------------------------------------------------------------
+      // COMPASES 15–19: BEATS 57–76 (21.0s – 28.5s) -> ¡EL DROP DEL CORO!
+      // "BECAUSE I'M HAPPY! Clap along if you feel like a room without a roof..."
+      // -----------------------------------------------------------------------
+      else if (bar >= 15 && bar <= 19) {
+        setStudioChapter('[4/7] ¡DROP! BIBLIOTECA DEL CENTENARIO');
 
-        if (bar === 14 && beatInBar === 1) {
+        if (bar === 15 && beatInBar === 1) {
           phoneScreen.scrollTo({ top: secBooks.offsetTop - 55, behavior: 'smooth' });
         }
 
-        // ¡PUNCH ZOOM ENÉRGICO EN LAS PALMADAS (BEATS 2 Y 4)!
+        // PUNCH ZOOM EXPLOSIVO EN LAS PALMADAS (BEATS 2 Y 4)
         const dropZoom = isClap ? 1.36 : 1.28;
         phoneContainer.style.transform = `perspective(1200px) rotateX(3deg) rotateY(-2deg) scale(${dropZoom})`;
 
-        // Rebote y brillo dorado en los libros
+        // Rebote y brillo en los libros oficiales
         bookCards.forEach(b => b.classList.remove('bounce-drop'));
         const activeBook = (beat % bookCards.length);
         bookCards[activeBook].classList.add('bounce-drop');
       }
 
-      // ----------------------------------------------------
-      // CAPÍTULO 5: COMPASES 19–22 (27.0s – 33.0s) -> AGENTES DE CAMBIO CNRC
-      // ----------------------------------------------------
-      else if (bar >= 19 && bar <= 22) {
-        setPhoneChapter(5, 'CAPÍTULO 5/7', 'AGENTES DE CAMBIO CNRC (4 EJES)');
+      // -----------------------------------------------------------------------
+      // COMPASES 20–23: BEATS 77–92 (28.5s – 34.5s) -> CREADOR DEL PROYECTO
+      // Liam Durán con su foto animada flotando en profundidad sobre el fondo
+      // -----------------------------------------------------------------------
+      else if (bar >= 20 && bar <= 23) {
+        setStudioChapter('[5/7] CREADOR: LIAM DURÁN (PROVINCIA TLXH)');
 
-        if (bar === 19 && beatInBar === 1) {
+        if (bar === 20 && beatInBar === 1) {
+          phoneScreen.scrollTo({ top: secAcerca.offsetTop - 55, behavior: 'smooth' });
+        }
+
+        // Zoom enfocado en el creador
+        const liamZoom = isClap ? 1.32 : 1.25;
+        phoneContainer.style.transform = `perspective(1200px) rotateX(2deg) rotateY(1deg) scale(${liamZoom})`;
+
+        // Animación de popout flotante al ritmo de la música
+        if (isClap) {
+          liamPopout.classList.add('bounce-creator');
+        } else {
+          liamPopout.classList.remove('bounce-creator');
+        }
+      }
+
+      // -----------------------------------------------------------------------
+      // COMPASES 24–27: BEATS 93–108 (34.5s – 40.5s) -> AGENTES DE CAMBIO CNRC
+      // Los 4 Ejes Temáticos rotan al compás
+      // -----------------------------------------------------------------------
+      else if (bar >= 24 && bar <= 27) {
+        setStudioChapter('[6/7] AGENTES DE CAMBIO CNRC (4 EJES)');
+
+        if (bar === 24 && beatInBar === 1) {
           phoneScreen.scrollTo({ top: secAgentes.offsetTop - 55, behavior: 'smooth' });
         }
 
@@ -1363,45 +1520,45 @@
         orbs[(beat % 4)].classList.add('active');
       }
 
-      // ----------------------------------------------------
-      // CAPÍTULO 6: COMPASES 23–27 (33.0s – 40.5s) -> LAS 4 SECCIONES SCOUTS
-      // ----------------------------------------------------
-      else if (bar >= 23 && bar <= 27) {
-        setPhoneChapter(6, 'CAPÍTULO 6/7', 'LAS 4 SECCIONES DEL ESCULTISMO');
+      // -----------------------------------------------------------------------
+      // COMPASES 28–32: BEATS 109–128 (40.5s – 48.0s) -> SECCIONES SCOUTS Y CTA
+      // Manada, Tropa, Comunidad, Clan y Banner Oficial
+      // -----------------------------------------------------------------------
+      else if (bar >= 28 && bar <= 32) {
+        setStudioChapter('[7/7] SECCIONES SCOUTS Y ENLACE OFICIAL');
 
-        if (bar === 23 && beatInBar === 1) {
+        if (bar === 28 && beatInBar === 1) {
           phoneScreen.scrollTo({ top: secSections.offsetTop - 55, behavior: 'smooth' });
         }
 
-        const secZoom = isClap ? 1.32 : 1.26;
+        const secZoom = isClap ? 1.30 : 1.25;
         phoneContainer.style.transform = `perspective(1200px) rotateX(4deg) rotateY(-2deg) scale(${secZoom})`;
 
         secCards.forEach(c => c.classList.remove('pulse-highlight'));
         secCards[(beat % 4)].classList.add('pulse-highlight');
-      }
 
-      // ----------------------------------------------------
-      // CAPÍTULO 7: COMPASES 28–31 (40.5s – 46.5s) -> CIERRE Y SEAMLESS LOOP
-      // ----------------------------------------------------
-      else if (bar >= 28) {
-        setPhoneChapter(7, 'CAPÍTULO 7/7', 'ENLACE OFICIAL Y LOOP INFINITO');
-
-        if (bar === 28 && beatInBar === 1) {
+        if (bar >= 31) {
           phoneScreen.scrollTo({ top: secCta.offsetTop - 55, behavior: 'smooth' });
         }
+      }
 
-        // Cámara se aleja para encuadre completo heroico
-        phoneContainer.style.transform = 'perspective(1400px) rotateX(2deg) rotateY(0deg) scale(1.0)';
+      // -----------------------------------------------------------------------
+      // COMPÁS 33: BEATS 129–132 (48.0s – 49.5s) -> REGRESO AL INICIO (LOOP)
+      // En los últimos 4 beats regresa al inicio haciendo scroll suave
+      // -----------------------------------------------------------------------
+      else if (bar === 33) {
+        setStudioChapter('[SEAMLESS LOOP] REGRESO AL INICIO');
 
-        // Al finalizar el compás 31 (46.5s), regreso suave a la cima para el loop
-        if (bar === 31 && beatInBar >= 3) {
+        // Inicia el scroll suave continuo hacia el tope
+        if (beatInBar === 1) {
           phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
+          phoneContainer.style.transform = 'perspective(1200px) rotateX(4deg) rotateY(0deg) scale(1.05)';
         }
       }
     }
 
     // =========================================================================
-    // GRABADOR DE VIDEO 60 FPS (MÉTODO 2 COMPATIBLE)
+    // GRABADOR DE VIDEO 60 FPS (SINCRONIZADO A LOS 49.5s EXACTOS)
     // =========================================================================
     let mediaRecorder = null;
     let recordedChunks = [];
@@ -1411,8 +1568,9 @@
         if (mediaRecorder && mediaRecorder.state !== 'inactive') {
           mediaRecorder.stop();
         }
+        isRecordingActive = false;
         btnRecord.classList.remove('recording');
-        btnRecord.innerHTML = '<span>⏺</span> Grabar Video (60 FPS)';
+        btnRecord.innerHTML = '<span>⏺</span> Grabar Video (49.5s)';
         return;
       }
 
@@ -1432,13 +1590,17 @@
           ? 'video/webm;codecs=vp9'
           : 'video/webm';
 
-        mediaRecorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 15000000 });
+        mediaRecorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 16000000 });
 
         mediaRecorder.ondataavailable = (e) => {
           if (e.data.size > 0) recordedChunks.push(e.data);
         };
 
         mediaRecorder.onstop = () => {
+          isRecordingActive = false;
+          btnRecord.classList.remove('recording');
+          btnRecord.innerHTML = '<span>⏺</span> Grabar Video (49.5s)';
+
           const blob = new Blob(recordedChunks, { type: 'video/webm' });
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
@@ -1455,8 +1617,9 @@
         };
 
         mediaRecorder.start();
+        isRecordingActive = true;
         btnRecord.classList.add('recording');
-        btnRecord.innerHTML = '<span>⏹</span> Detener Grabación';
+        btnRecord.innerHTML = '<span>⏹</span> Grabando (Auto-stop a 49.5s)';
 
         // Reiniciar audio desde 0
         audio.currentTime = 0;
@@ -1476,7 +1639,7 @@
     }, { once: true });
 
     audio.play().then(() => {
-      console.log('Audio iniciado a 160 BPM en 7 capítulos oficiales.');
+      console.log('Audio iniciado a 160 BPM en 33 compases exactos (49.5s).');
     }).catch(() => {
       console.log('Esperando interacción del usuario para reproducir audio...');
     });
