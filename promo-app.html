@@ -49,7 +49,7 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       padding: 8px 22px;
@@ -181,10 +181,47 @@
       justify-content: space-between;
       align-items: center;
       font-size: 0.72rem;
-      font-weight: 700;
+      font-weight: 800;
       color: #cbd5e1;
-      z-index: 390;
+      z-index: 410;
       pointer-events: none;
+    }
+
+    /* Píldora de Capítulo Flotante en la Pantalla del Celular */
+    .phone-chapter-pill {
+      position: sticky;
+      top: 56px;
+      margin: 0 auto 12px auto;
+      z-index: 350;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 15px rgba(124, 58, 237, 0.3);
+      padding: 5px 14px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: #ffffff;
+      width: fit-content;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .ch-badge {
+      background: linear-gradient(135deg, #7c3aed, #0284c7);
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 0.66rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .ch-title {
+      font-weight: 800;
+      color: #e2e8f0;
+      letter-spacing: 0.3px;
     }
 
     /* PANTALLA VIRTUAL DEL CELULAR CON SCROLL CINEMÁTICO CONTROLADO */
@@ -195,9 +232,10 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
       scrollbar-width: none;
-      padding-top: 50px;
+      padding-top: 48px;
       padding-bottom: 70px;
-      background: linear-gradient(180deg, #090d16 0%, #0f172a 30%, #1e1b4b 70%, #07090e 100%);
+      background: linear-gradient(180deg, #090d16 0%, #0f172a 25%, #1e1b4b 60%, #07090e 100%);
+      text-align: center;
     }
 
     .phone-screen::-webkit-scrollbar {
@@ -213,7 +251,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 14px 20px;
+      padding: 12px 18px;
       background: rgba(15, 23, 42, 0.94);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -224,17 +262,20 @@
     }
 
     .mobile-header-logo {
-      width: 42px;
-      height: 42px;
-      filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.8));
+      width: 32px;
+      height: 32px;
+    }
+
+    .mobile-header-text {
+      text-align: left;
     }
 
     .mobile-header-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.15rem;
       font-weight: 900;
-      line-height: 1.1;
+      font-size: 1.05rem;
       color: #ffffff;
+      line-height: 1.1;
     }
 
     .mobile-header-sub {
@@ -249,16 +290,18 @@
       padding: 8px 16px;
       text-align: center;
       font-family: 'Outfit', sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.70rem;
       font-weight: 900;
       color: #ffffff;
       letter-spacing: 0.5px;
       box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
     }
 
-    /* 3. Hero Section Oficial */
+    /* ========================================================
+       CAPÍTULO 1: HERO & COLECCIÓN CENTENARIO
+       ======================================================== */
     .mobile-hero-section {
-      padding: 24px 20px 16px 20px;
+      padding: 22px 18px 16px 18px;
       text-align: center;
     }
 
@@ -267,37 +310,37 @@
       font-size: 1.55rem;
       font-weight: 900;
       line-height: 1.2;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       background: linear-gradient(135deg, #ffffff, #c4b5fd);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .hero-desc {
-      font-size: 0.82rem;
+      font-size: 0.80rem;
       color: #94a3b8;
       line-height: 1.45;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     /* TRÍO DE FOTOS HEXAGONALES EXACTO DE INDEX.HTML */
     .hero-trio-wrap {
       position: relative;
-      height: 180px;
+      height: 175px;
+      margin: 12px 0 18px 0;
       display: flex;
-      align-items: center;
       justify-content: center;
-      margin-bottom: 22px;
+      align-items: center;
     }
 
     .hex-photo {
       width: 110px;
-      height: 110px;
-      border-radius: 24px;
+      height: 125px;
+      border-radius: 20px;
       overflow: hidden;
       position: absolute;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .hex-photo img {
@@ -308,195 +351,170 @@
 
     .hex-left {
       left: 35px;
-      transform: rotate(-6deg) scale(0.92);
+      top: 15px;
       border: 3px solid #10b981;
+      transform: rotate(-10deg) scale(0.92);
       z-index: 10;
-    }
-
-    .hex-left-tag {
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #10b981;
-      color: #ffffff;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.64rem;
-      font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 999px;
-      white-space: nowrap;
     }
 
     .hex-center {
       left: 145px;
-      width: 130px;
-      height: 130px;
+      top: 0px;
+      border: 3.5px solid #f59e0b;
       transform: scale(1.08);
-      border: 4px solid #f59e0b;
       z-index: 30;
-      box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4);
-    }
-
-    .hex-center-tag {
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #f59e0b;
-      color: #000000;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.68rem;
-      font-weight: 900;
-      padding: 3px 10px;
-      border-radius: 999px;
-      white-space: nowrap;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 15px 35px rgba(245, 158, 11, 0.35);
     }
 
     .hex-right {
       right: 35px;
-      transform: rotate(6deg) scale(0.92);
+      top: 15px;
       border: 3px solid #0284c7;
-      z-index: 10;
+      transform: rotate(10deg) scale(0.92);
+      z-index: 20;
     }
 
-    .hex-right-tag {
+    .hex-left-tag, .hex-center-tag, .hex-right-tag {
       position: absolute;
-      bottom: -8px;
+      bottom: 6px;
       left: 50%;
       transform: translateX(-50%);
-      background: #0284c7;
-      color: #ffffff;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.64rem;
+      background: rgba(15, 23, 42, 0.9);
+      color: #fff;
+      font-size: 0.62rem;
       font-weight: 800;
-      padding: 2px 8px;
+      padding: 2px 6px;
       border-radius: 999px;
       white-space: nowrap;
     }
 
-    /* Contadores numéricos exactos */
+    /* CONTADORES NUMÉRICOS OFICIALES */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-bottom: 24px;
+      margin-top: 12px;
     }
 
     .stat-box {
-      background: rgba(30, 41, 59, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      padding: 10px 6px;
       border-radius: 16px;
-      padding: 12px 6px;
-      text-align: center;
-      transition: transform 0.25s ease, border-color 0.25s ease;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+
+    .stat-box.pulse {
+      transform: scale(1.08);
+      border-color: #38bdf8;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+      background: rgba(14, 165, 233, 0.2);
     }
 
     .stat-number {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.35rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.12rem;
       font-weight: 900;
-      color: #38bdf8;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 3px;
     }
 
     .stat-lbl {
-      font-size: 0.66rem;
-      font-weight: 700;
+      font-size: 0.62rem;
       color: #94a3b8;
-      margin-top: 2px;
+      font-weight: 700;
+      line-height: 1.2;
     }
 
-    /* 4. Buscador Interactivo Real */
+    /* ========================================================
+       CAPÍTULO 2: BUSCADOR OFICIAL INTELIGENTE
+       ======================================================== */
     .search-container {
-      background: rgba(15, 23, 42, 0.88);
-      border: 1.5px solid rgba(124, 58, 237, 0.5);
-      border-radius: 26px;
-      padding: 20px 16px;
-      margin: 0 20px 24px 20px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      padding: 20px 18px;
+      background: rgba(15, 23, 42, 0.7);
+      border-top: 1px solid rgba(124, 58, 237, 0.2);
+      border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+      text-align: left;
     }
 
     .search-kicker {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
+      color: #38bdf8;
       font-weight: 800;
-      color: #c084fc;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 4px;
       display: block;
+      margin-bottom: 4px;
     }
 
     .search-title {
       font-family: 'Outfit', sans-serif;
       font-size: 1.15rem;
-      font-weight: 800;
-      margin-bottom: 12px;
+      font-weight: 900;
       color: #ffffff;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .search-input-box {
-      background: #1e293b;
-      border: 2px solid #38bdf8;
-      padding: 10px 14px;
-      border-radius: 14px;
+      background: rgba(2, 6, 23, 0.85);
+      border: 2px solid #7c3aed;
+      padding: 12px 14px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+      margin-bottom: 12px;
     }
 
     .search-text {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #38bdf8;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      font-weight: 700;
       width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid #38bdf8;
     }
 
     .search-text.typing {
-      animation: type-query 2.2s steps(28, end) forwards, blink-caret 0.75s step-end infinite;
+      animation: type-real 2.5s steps(35, end) forwards;
     }
 
-    @keyframes type-query {
+    @keyframes type-real {
       from { width: 0; }
-      to { width: 100%; }
+      to { width: 100%; border-right-color: transparent; }
     }
 
-    @keyframes blink-caret {
-      from, to { border-color: transparent; }
-      50% { border-color: #38bdf8; }
-    }
-
-    /* Tarjeta de respuesta real de ExplorApp y CarpetApp */
     .answer-card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-      border: 1.5px solid rgba(124, 58, 237, 0.6);
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
+      border: 1.5px solid rgba(56, 189, 248, 0.4);
       border-radius: 18px;
       padding: 14px;
-      text-align: left;
-      opacity: 0;
-      transform: translateY(12px) scale(0.96);
-      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: none;
+      animation: fadeUp 0.4s ease forwards;
     }
 
     .answer-card.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .answer-tag {
-      font-size: 0.66rem;
+      background: rgba(14, 165, 233, 0.2);
+      color: #38bdf8;
+      font-size: 0.65rem;
       font-weight: 800;
-      color: #c084fc;
-      background: rgba(124, 58, 237, 0.2);
-      padding: 3px 8px;
+      padding: 2px 8px;
       border-radius: 999px;
       display: inline-block;
       margin-bottom: 6px;
@@ -504,337 +522,396 @@
 
     .answer-h {
       font-family: 'Outfit', sans-serif;
-      font-size: 0.96rem;
+      font-size: 0.92rem;
       font-weight: 800;
       color: #ffffff;
       margin-bottom: 6px;
     }
 
     .answer-body {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: #cbd5e1;
-      line-height: 1.42;
+      line-height: 1.45;
     }
 
-    /* 5. Las 4 Secciones Scouts Oficiales con sus Lemas y Textos Exactos */
-    .sections-block {
-      padding: 20px;
+    /* ========================================================
+       CAPÍTULO 3: GUÍA PASO A PASO (PRIMEROS PASOS Y PLATAFORMAS)
+       ======================================================== */
+    .quickstart-block {
+      padding: 20px 18px;
+      text-align: left;
+    }
+
+    .section-eyebrow {
+      font-size: 0.68rem;
+      color: #f59e0b;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      display: block;
+      margin-bottom: 4px;
     }
 
     .section-h2 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.18rem;
       font-weight: 900;
-      text-align: center;
-      margin-bottom: 14px;
       color: #ffffff;
+      margin-bottom: 12px;
     }
 
-    .sections-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+    .quickstart-cards-col {
+      display: flex;
+      flex-direction: column;
       gap: 10px;
     }
 
-    .sec-card {
-      background: rgba(30, 41, 59, 0.85);
-      border-radius: 20px;
-      padding: 14px 10px;
-      text-align: center;
-      border: 2px solid transparent;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+    .quick-3d-card {
+      background: rgba(30, 41, 59, 0.7);
+      border-radius: 18px;
+      padding: 12px 14px;
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .sec-card.manada { border-color: rgba(234, 179, 8, 0.45); }
-    .sec-card.tropa { border-color: rgba(16, 185, 129, 0.45); }
-    .sec-card.comunidad { border-color: rgba(2, 132, 199, 0.45); }
-    .sec-card.clan { border-color: rgba(239, 68, 68, 0.45); }
+    .quick-3d-card.theme-emerald { border-left: 5px solid #10b981; }
+    .quick-3d-card.theme-cyan { border-left: 5px solid #06b6d4; }
+    .quick-3d-card.theme-amber { border-left: 5px solid #f59e0b; }
+    .quick-3d-card.theme-purple { border-left: 5px solid #a855f7; }
 
-    .sec-age {
+    .quick-3d-card.active-pulse {
+      transform: scale(1.04) translateY(-3px);
+      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4);
+      background: rgba(124, 58, 237, 0.22);
+      border-color: #c084fc;
+    }
+
+    .quick-step-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .quick-pill {
       font-size: 0.64rem;
+      font-weight: 900;
+      color: #ffffff;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .quick-card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
       font-weight: 800;
+      color: #ffffff;
+    }
+
+    .quick-card-desc {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      line-height: 1.35;
+    }
+
+    /* ========================================================
+       CAPÍTULO 4: BIBLIOTECA DEL CENTENARIO (¡DROP DEL CORO!)
+       ======================================================== */
+    .books-block {
+      padding: 20px 18px;
+      background: rgba(15, 23, 42, 0.8);
+      border-top: 1px solid rgba(124, 58, 237, 0.2);
+      border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+      text-align: left;
+    }
+
+    .book-card-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(30, 41, 59, 0.65);
+      border: 1.5px solid rgba(124, 58, 237, 0.25);
+      padding: 12px;
+      border-radius: 18px;
+      margin-bottom: 10px;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .book-card-item.bounce-drop {
+      transform: scale(1.06) translateY(-4px);
+      border-color: #f59e0b;
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.5);
+      background: rgba(245, 158, 11, 0.15);
+    }
+
+    .book-thumb {
+      width: 44px;
+      height: 58px;
+      background: linear-gradient(135deg, #7c3aed, #0284c7);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .book-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+
+    .book-info p {
+      font-size: 0.70rem;
       color: #94a3b8;
       margin-bottom: 4px;
     }
 
-    .sec-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 900;
-      color: #ffffff;
-    }
-
-    .sec-lema {
-      font-size: 0.72rem;
+    .book-btn {
+      font-size: 0.62rem;
       font-weight: 800;
-      margin-top: 6px;
-    }
-    .sec-lema.manada { color: #eab308; }
-    .sec-lema.tropa { color: #10b981; }
-    .sec-lema.comunidad { color: #0284c7; }
-    .sec-lema.clan { color: #ef4444; }
-
-    /* Pulso en el coro */
-    .sec-card.pulse-highlight {
-      transform: scale(1.12) translateY(-6px) !important;
-      box-shadow: 0 16px 36px rgba(245, 158, 11, 0.6) !important;
-      border-color: #f59e0b !important;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      padding: 2px 8px;
+      border-radius: 999px;
+      display: inline-block;
     }
 
-    /* 6. Agentes de Cambio.MX Oficial */
+    /* ========================================================
+       CAPÍTULO 5: AGENTES DE CAMBIO CNRC (4 EJES)
+       ======================================================== */
     .agentes-block {
-      background: rgba(15, 23, 42, 0.88);
-      border: 1.5px solid rgba(2, 132, 199, 0.5);
-      border-radius: 26px;
-      padding: 20px 16px;
-      margin: 10px 20px 24px 20px;
+      padding: 20px 18px;
       text-align: center;
+    }
+
+    .agentes-eyebrow {
+      font-size: 0.66rem;
+      color: #c084fc;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      display: block;
+      margin-bottom: 6px;
     }
 
     .agentes-logo-img {
       width: 140px;
       height: auto;
-      margin: 0 auto 8px auto;
-    }
-
-    .agentes-eyebrow {
-      font-size: 0.65rem;
-      font-weight: 800;
-      color: #38bdf8;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: block;
-      margin-bottom: 6px;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 6px 14px rgba(124, 58, 237, 0.4));
     }
 
     .agentes-axes-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 6px;
-      margin-top: 14px;
+      margin-top: 10px;
     }
 
     .axis-orb {
-      background: rgba(30, 41, 59, 0.9);
+      background: rgba(30, 41, 59, 0.6);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      padding: 10px 4px;
+      padding: 8px 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 1.5px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.25s ease, border-color 0.25s ease;
+      gap: 5px;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .axis-orb img {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       object-fit: contain;
-      margin-bottom: 4px;
     }
 
     .axis-orb span {
       font-size: 0.58rem;
       font-weight: 800;
-      color: #ffffff;
-      line-height: 1.15;
+      color: #cbd5e1;
+      line-height: 1.1;
     }
 
     .axis-orb.active {
-      transform: scale(1.16) translateY(-4px);
+      transform: scale(1.14) translateY(-3px);
       border-color: #f59e0b;
-      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.5);
+      box-shadow: 0 8px 22px rgba(245, 158, 11, 0.6);
+      background: rgba(245, 158, 11, 0.2);
     }
 
-    /* 7. Colección Biblioteca del Centenario Oficial */
-    .books-block {
-      padding: 20px;
-      text-align: center;
-    }
-
-    .book-card-item {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-      border: 1.5px solid rgba(124, 58, 237, 0.5);
-      border-radius: 20px;
-      padding: 18px 14px;
+    /* ========================================================
+       CAPÍTULO 6: LAS 4 SECCIONES SCOUTS
+       ======================================================== */
+    .sections-block {
+      padding: 20px 18px;
       text-align: left;
-      margin-bottom: 12px;
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
-    .book-thumb {
-      width: 60px;
-      height: 85px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #7c3aed, #0284c7);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      border: 1.5px solid rgba(255, 255, 255, 0.2);
+    .sections-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
-    .book-info h4 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
+    .sec-card {
+      background: rgba(30, 41, 59, 0.65);
+      border-radius: 18px;
+      padding: 12px;
+      border: 2px solid transparent;
+      backdrop-filter: blur(10px);
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .sec-card.manada { border-color: rgba(234, 179, 8, 0.4); }
+    .sec-card.tropa { border-color: rgba(16, 185, 129, 0.4); }
+    .sec-card.comunidad { border-color: rgba(14, 165, 233, 0.4); }
+    .sec-card.clan { border-color: rgba(239, 68, 68, 0.4); }
+
+    .sec-card.pulse-highlight {
+      transform: scale(1.08) translateY(-4px);
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.6);
+    }
+
+    .sec-card.manada.pulse-highlight { border-color: #eab308; background: rgba(234, 179, 8, 0.25); }
+    .sec-card.tropa.pulse-highlight { border-color: #10b981; background: rgba(16, 185, 129, 0.25); }
+    .sec-card.comunidad.pulse-highlight { border-color: #0ea5e9; background: rgba(14, 165, 233, 0.25); }
+    .sec-card.clan.pulse-highlight { border-color: #ef4444; background: rgba(239, 68, 68, 0.25); }
+
+    .sec-age {
+      font-size: 0.62rem;
       font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .sec-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.90rem;
+      font-weight: 900;
       color: #ffffff;
+      line-height: 1.15;
       margin-bottom: 4px;
     }
 
-    .book-info p {
-      font-size: 0.72rem;
-      color: #94a3b8;
-      margin-bottom: 6px;
-    }
-
-    .book-btn {
+    .sec-lema {
       font-size: 0.68rem;
       font-weight: 800;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.15);
-      padding: 4px 10px;
-      border-radius: 999px;
-      display: inline-block;
+      font-style: italic;
     }
 
-    /* 8. Call to Action Finale Oficial */
+    .sec-lema.manada { color: #facc15; }
+    .sec-lema.tropa { color: #34d399; }
+    .sec-lema.comunidad { color: #38bdf8; }
+    .sec-lema.clan { color: #f87171; }
+
+    /* ========================================================
+       CAPÍTULO 7: ENLACE OFICIAL, CRÉDITOS Y CIERRE
+       ======================================================== */
     .cta-block {
-      padding: 28px 20px;
+      padding: 30px 20px 40px 20px;
       text-align: center;
+      background: radial-gradient(circle at center, rgba(124, 58, 237, 0.25) 0%, transparent 70%);
     }
 
     .cta-flor {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 10px auto;
-      filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.8));
+      width: 48px;
+      height: 48px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.8));
     }
 
     .cta-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       font-weight: 900;
       color: #ffffff;
       margin-bottom: 4px;
     }
 
     .cta-author {
-      font-size: 0.8rem;
+      font-size: 0.74rem;
       color: #c084fc;
       font-weight: 800;
       margin-bottom: 14px;
     }
 
     .cta-url-box {
-      background: rgba(0, 0, 0, 0.5);
-      border: 2px solid var(--gold);
-      padding: 12px 18px;
-      border-radius: 14px;
+      display: inline-block;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid #0284c7;
+      color: #38bdf8;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
+      font-size: 0.78rem;
       font-weight: 800;
-      color: #fde047;
+      padding: 8px 18px;
+      border-radius: 999px;
+      box-shadow: 0 4px 18px rgba(2, 132, 199, 0.35);
       margin-bottom: 16px;
-      box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
     }
 
     .cta-main-btn {
-      background: linear-gradient(135deg, #7c3aed, #0284c7, #f59e0b);
-      background-size: 200% 200%;
+      display: block;
+      background: linear-gradient(135deg, #7c3aed, #0284c7);
       color: #ffffff;
       font-family: 'Outfit', sans-serif;
-      font-size: 1.05rem;
+      font-size: 0.92rem;
       font-weight: 900;
-      padding: 14px 28px;
+      padding: 12px 24px;
       border-radius: 999px;
-      display: inline-block;
       text-decoration: none;
-      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.6);
-    }
-
-    /* PANTALLA INICIAL DE REPRODUCCIÓN */
-    #startOverlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.96);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      z-index: 500;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 30px;
-      text-align: center;
-      transition: opacity 0.35s ease, visibility 0.35s ease;
-    }
-
-    #startOverlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .overlay-start-btn {
-      background: linear-gradient(135deg, #7c3aed, #0284c7, #f59e0b);
-      color: #ffffff;
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 800;
-      padding: 16px 32px;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 12px 30px rgba(124, 58, 237, 0.6);
-      margin-top: 20px;
-      transition: transform 0.2s ease;
-    }
-
-    .overlay-start-btn:hover {
-      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.5);
     }
   </style>
 </head>
 <body>
 
-  <!-- BARRA SUPERIOR DE CONTROL -->
-  <header class="studio-bar">
+  <!-- BARRA DE CONTROL DEL ESTUDIO -->
+  <div class="studio-bar">
     <div class="studio-bar-brand">
-      <img src="img/logo-flor.png" alt="Flor de Lis" class="studio-bar-logo">
-      <span>BiblioTech Scout Studio Pro</span>
+      <img src="img/logo-flor.png" alt="BiblioTech" class="studio-bar-logo">
+      <span>Studio 160 BPM</span>
     </div>
     <div class="studio-bar-metrics">
-      <span id="timecode">00:00.00 / 00:46.50</span>
-      <span class="metric-highlight" id="hudCompas">Compás 01 [Beat 1]</span>
-      <div class="beat-led" id="hudLed" title="Pulso a 160 BPM"></div>
+      <span>BEAT: <span class="metric-highlight" id="lblBeat">0</span></span>
+      <span>COMPÁS: <span class="metric-highlight" id="lblBar">01</span></span>
+      <div class="beat-led" id="beatLed"></div>
     </div>
     <button type="button" class="studio-btn-record" id="btnRecord">
-      ⏺ Grabar Video (60 FPS)
+      <span>⏺</span> Grabar Video (60 FPS)
     </button>
-  </header>
+  </div>
 
-  <!-- SMARTPHONE 9:16 CON CÁMARA CINEMÁTICA Y CONTENIDO OFICIAL -->
+  <!-- SMARTPHONE 9:16 CON PERSPECTIVA CINEMÁTICA -->
   <div class="phone-container" id="phoneContainer">
-    
-    <!-- Notch y Barra de Estado -->
     <div class="phone-notch"></div>
     <div class="phone-status-bar">
       <span>9:41</span>
-      <span>SCOUT 5G  100%</span>
+      <span>1080x1920 • 60 FPS</span>
+      <span>100% ⚡</span>
     </div>
 
-    <!-- PANTALLA VIRTUAL CON SCROLL CINEMÁTICO -->
+    <!-- PANTALLA INTERIOR VIRTUAL -->
     <div class="phone-screen" id="phoneScreen">
       
+      <!-- Píldora de Capítulo Dinámica -->
+      <div class="phone-chapter-pill" id="phoneChapterPill">
+        <span class="ch-badge" id="chBadge">CAPÍTULO 1/7</span>
+        <span class="ch-title" id="chTitle">HERO & CENTENARIO</span>
+      </div>
+
       <!-- 1. Header Oficial de index.html -->
       <div class="mobile-header">
         <img src="img/logo-flor.png" alt="Flor de Lis" class="mobile-header-logo">
-        <div>
+        <div class="mobile-header-text">
           <div class="mobile-header-title">BiblioTech Scout</div>
           <div class="mobile-header-sub">Creador: Liam Durán · Provincia TLXH</div>
         </div>
@@ -845,7 +922,9 @@
         COLECCIÓN NUMERADA OFICIAL DEL CENTENARIO SCOUT EN MÉXICO (1926 – 2026)
       </div>
 
-      <!-- 3. Hero con Trío de Fotos Oficial y Contadores -->
+      <!-- ========================================================
+           CAPÍTULO 1: HERO & COLECCIÓN CENTENARIO
+           ======================================================== -->
       <section class="mobile-hero-section" id="secHero">
         <h1 class="hero-h1">Explora, consulta y lee toda la información Scout en un solo lugar</h1>
         <p class="hero-desc">Biblioteca digital y buscador interactivo con información basada en los documentos oficiales vigentes de ASMAC y WOSM.</p>
@@ -861,12 +940,12 @@
             <div class="hex-center-tag">Siempre Adelante</div>
           </div>
           <div class="hex-photo hex-right" id="hexRight">
-            <img src="img/photos/p02.jpg" alt="Foros Nacionales">
+            <img src="img/photos/p04.jpg" alt="Foros Nacionales">
             <div class="hex-right-tag">Foros Nac.</div>
           </div>
         </div>
 
-        <!-- Contadores numéricos exactos -->
+        <!-- Contadores numéricos exactos de index.html -->
         <div class="stats-row" id="statsRow">
           <div class="stat-box" id="boxStat1">
             <div class="stat-number">5,412+</div>
@@ -883,7 +962,9 @@
         </div>
       </section>
 
-      <!-- 4. Buscador Interactivo Oficial -->
+      <!-- ========================================================
+           CAPÍTULO 2: BUSCADOR OFICIAL INTELIGENTE
+           ======================================================== -->
       <section class="search-container" id="secSearch">
         <span class="search-kicker">Buscador con fuentes oficiales</span>
         <div class="search-title">
@@ -902,8 +983,118 @@
         </div>
       </section>
 
-      <!-- 5. Las 4 Secciones Scouts Oficiales con sus Lemas y Textos Exactos -->
+      <!-- ========================================================
+           CAPÍTULO 3: GUÍA PASO A PASO (PRIMEROS PASOS Y PLATAFORMAS)
+           ======================================================== -->
+      <section class="quickstart-block" id="secQuickstart">
+        <span class="section-eyebrow">GUÍA PASO A PASO DESDE CERO</span>
+        <h2 class="section-h2">Primeros Pasos y Plataformas</h2>
+        <div class="quickstart-cards-col">
+          
+          <div class="quick-3d-card theme-emerald" id="qCard1">
+            <div class="quick-step-header">
+              <span class="quick-pill">01</span>
+              <div class="quick-card-title">Primeros Pasos e Inscripción</div>
+            </div>
+            <p class="quick-card-desc">Cómo encontrar un Grupo Scout, registro en SISAS, permisos oficiales y cuotas.</p>
+          </div>
+
+          <div class="quick-3d-card theme-cyan" id="qCard2">
+            <div class="quick-step-header">
+              <span class="quick-pill">02</span>
+              <div class="quick-card-title">Plataformas y Centros Scouts</div>
+            </div>
+            <p class="quick-card-desc">ExplorApp, CarpetApp y el Centro Scout Meztitla en Tepoztlán, Morelos.</p>
+          </div>
+
+          <div class="quick-3d-card theme-amber" id="qCard3">
+            <div class="quick-step-header">
+              <span class="quick-pill">03</span>
+              <div class="quick-card-title">Eventos Nacionales y Mundiales</div>
+            </div>
+            <p class="quick-card-desc">Foros Nacionales, Jamboree de México, World Scout Jamboree, Philia y Moot.</p>
+          </div>
+
+          <div class="quick-3d-card theme-purple" id="qCard4">
+            <div class="quick-step-header">
+              <span class="quick-pill">04</span>
+              <div class="quick-card-title">Red de Caminantes y Proyectos</div>
+            </div>
+            <p class="quick-card-desc">Comités CPRC y CNRC, asesores de red y proyectos en AgentesdeCambio.mx.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CAPÍTULO 4: ¡DROP DEL CORO! BIBLIOTECA DEL CENTENARIO
+           ======================================================== -->
+      <section class="books-block" id="secBooks">
+        <span class="section-eyebrow">COLECCIÓN DIGITAL 1926–2026</span>
+        <h2 class="section-h2">Biblioteca Oficial del Centenario</h2>
+        
+        <div class="book-card-item" id="bookCard1">
+          <div class="book-thumb">📖</div>
+          <div class="book-info">
+            <h4>El desafío de ser Caminante</h4>
+            <p>Comunidad de Caminantes (14 a 18 años)</p>
+            <span class="book-btn">Volumen Oficial • 240 págs</span>
+          </div>
+        </div>
+
+        <div class="book-card-item" id="bookCard2">
+          <div class="book-thumb" style="background: linear-gradient(135deg, #10b981, #0284c7);">🏕️</div>
+          <div class="book-info">
+            <h4>Pistas de Aventura</h4>
+            <p>Tropa Scout (10 a 14 años)</p>
+            <span class="book-btn">Técnicas de Campismo y Progresión</span>
+          </div>
+        </div>
+
+        <div class="book-card-item" id="bookCard3">
+          <div class="book-thumb" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">📜</div>
+          <div class="book-info">
+            <h4>Manual del Uniforme e Insignias</h4>
+            <p>Reglamento Oficial de Vestimenta ASMAC</p>
+            <span class="book-btn">Normativa Vigente Oficial</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CAPÍTULO 5: AGENTES DE CAMBIO CNRC (4 EJES)
+           ======================================================== -->
+      <section class="agentes-block" id="secAgentes">
+        <span class="agentes-eyebrow">PROYECTO DEL COMITÉ NACIONAL DE LA RED DE CAMINANTES (CNRC)</span>
+        <img src="img/adc/logo.png" alt="Agentes de Cambio" class="agentes-logo-img">
+        <div style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.02rem; color:#fff; margin-bottom:4px;">
+          Los 4 Ejes Temáticos Oficiales
+        </div>
+        <div class="agentes-axes-row">
+          <div class="axis-orb" id="axisPaz">
+            <img src="img/adc/paz.png" alt="Paz">
+            <span>Paz y Acción</span>
+          </div>
+          <div class="axis-orb" id="axisSalud">
+            <img src="img/adc/salud.png" alt="Salud">
+            <span>Salud</span>
+          </div>
+          <div class="axis-orb" id="axisHab">
+            <img src="img/adc/habilidades.png" alt="Habilidades">
+            <span>Habilidades</span>
+          </div>
+          <div class="axis-orb" id="axisSust">
+            <img src="img/adc/sustentabilidad.png" alt="Sustentabilidad">
+            <span>Ambiente</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           CAPÍTULO 6: LAS 4 SECCIONES SCOUTS
+           ======================================================== -->
       <section class="sections-block" id="secSections">
+        <span class="section-eyebrow">PROGRESIÓN SCOUT EN MÉXICO</span>
         <h2 class="section-h2">Secciones del Movimiento Scout</h2>
         <div class="sections-grid">
           <div class="sec-card manada" id="cardManada">
@@ -929,55 +1120,9 @@
         </div>
       </section>
 
-      <!-- 6. Agentes de Cambio.MX Oficial -->
-      <section class="agentes-block" id="secAgentes">
-        <span class="agentes-eyebrow">PROYECTO DEL COMITÉ NACIONAL DE LA RED DE CAMINANTES (CNRC)</span>
-        <img src="img/adc/logo.png" alt="Agentes de Cambio" class="agentes-logo-img">
-        <div style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.02rem; color:#fff; margin-bottom:4px;">
-          Los 4 Ejes Temáticos Oficiales
-        </div>
-        <div class="agentes-axes-row">
-          <div class="axis-orb" id="axisPaz">
-            <img src="img/adc/paz.png" alt="Paz">
-            <span>Paz y Acción</span>
-          </div>
-          <div class="axis-orb" id="axisSalud">
-            <img src="img/adc/salud.png" alt="Salud">
-            <span>Salud y Bienestar</span>
-          </div>
-          <div class="axis-orb" id="axisHab">
-            <img src="img/adc/habilidades.png" alt="Habilidades">
-            <span>Habilidades</span>
-          </div>
-          <div class="axis-orb" id="axisSust">
-            <img src="img/adc/sustentabilidad.png" alt="Sustentabilidad">
-            <span>Medio Ambiente</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 7. Colección Biblioteca del Centenario Oficial -->
-      <section class="books-block" id="secBooks">
-        <h2 class="section-h2">Colección Biblioteca del Centenario</h2>
-        <div class="book-card-item">
-          <div class="book-thumb">📖</div>
-          <div class="book-info">
-            <h4>El desafío de ser Caminante</h4>
-            <p>Comunidad de Caminantes (14 a 18 años)</p>
-            <span class="book-btn">Volumen Oficial • 240 págs</span>
-          </div>
-        </div>
-        <div class="book-card-item">
-          <div class="book-thumb" style="background: linear-gradient(135deg, #10b981, #0284c7);">🏕️</div>
-          <div class="book-info">
-            <h4>Manual de Supervivencia y Campismo</h4>
-            <p>Técnicas de campismo, pionerismo y seguridad</p>
-            <span class="book-btn">Colección Biblioteca del Centenario</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 8. Call to Action Final Oficial -->
+      <!-- ========================================================
+           CAPÍTULO 7: ENLACE OFICIAL, CRÉDITOS Y CIERRE
+           ======================================================== -->
       <section class="cta-block" id="secCta">
         <img src="img/logo-flor.png" alt="Flor" class="cta-flor">
         <div class="cta-title">BiblioTech Scout</div>
@@ -988,152 +1133,168 @@
         <a href="https://ey-liam.github.io/bibliotech-scouts/" target="_blank" class="cta-main-btn">
           ¡Entra Gratis desde tu Celular!
         </a>
-        <p style="font-size:0.72rem; color:#64748b; margin-top:16px;">
-          Asociación de Scouts de México ASMAC y World Scouting WOSM
-        </p>
       </section>
 
     </div>
   </div>
 
-  <!-- OVERLAY DE INICIO -->
-  <div id="startOverlay">
-    <img src="img/logo-flor.png" alt="Flor" style="width: 78px; height: 78px; margin-bottom: 14px; filter: drop-shadow(0 0 20px rgba(124,58,237,0.8));">
-    <h1 style="font-family:'Outfit',sans-serif; font-size:2.2rem; font-weight:900; color:#fff; margin-bottom:8px;">
-      BiblioTech Scout Studio Pro
-    </h1>
-    <p style="color:#93c5fd; font-size:1rem; max-width:540px; margin-bottom:16px;">
-      Animación cinemática vertical con <strong>Happy (160 BPM)</strong> mostrando los textos y componentes exactos de BiblioTech Scout.
-    </p>
-    <button type="button" class="overlay-start-btn" onclick="startStudio()">
-      ▶ Iniciar Coreografía y Música
-    </button>
-  </div>
-
-  <!-- PISTA DE AUDIO -->
+  <!-- ELEMENTO DE AUDIO ANCLADO -->
   <audio id="promoAudio" preload="auto">
     <source src="assets/audio/promo-audio.mp3" type="audio/mpeg">
     <source src="assets/audio/promo-audio.wav" type="audio/wav">
   </audio>
 
   <script>
+    'use strict';
+
     const BPM = 160;
     const BEAT_DURATION = 60 / BPM; // 0.375s
     const BAR_DURATION = BEAT_DURATION * 4; // 1.50s
-    const TOTAL_DURATION = 46.5; // Loop perfecto a 31 compases
+    const TOTAL_DURATION = 46.5; // 31 compases exactos de 'Happy'
 
     const audio = document.getElementById('promoAudio');
     const phoneContainer = document.getElementById('phoneContainer');
     const phoneScreen = document.getElementById('phoneScreen');
-    const startOverlay = document.getElementById('startOverlay');
-    const timecode = document.getElementById('timecode');
-    const hudCompas = document.getElementById('hudCompas');
-    const hudLed = document.getElementById('hudLed');
+    const phoneChapterPill = document.getElementById('phoneChapterPill');
+    const chBadge = document.getElementById('chBadge');
+    const chTitle = document.getElementById('chTitle');
+
+    const lblBeat = document.getElementById('lblBeat');
+    const lblBar = document.getElementById('lblBar');
+    const beatLed = document.getElementById('beatLed');
     const btnRecord = document.getElementById('btnRecord');
 
     // Secciones
     const secHero = document.getElementById('secHero');
     const secSearch = document.getElementById('secSearch');
-    const secSections = document.getElementById('secSections');
-    const secAgentes = document.getElementById('secAgentes');
+    const secQuickstart = document.getElementById('secQuickstart');
     const secBooks = document.getElementById('secBooks');
+    const secAgentes = document.getElementById('secAgentes');
+    const secSections = document.getElementById('secSections');
     const secCta = document.getElementById('secCta');
 
-    const hexCenter = document.getElementById('hexCenter');
+    // Elementos dinámicos
     const searchText = document.getElementById('searchText');
     const answerCard = document.getElementById('answerCard');
-    const cardManada = document.getElementById('cardManada');
-    const cardTropa = document.getElementById('cardTropa');
-    const cardComunidad = document.getElementById('cardComunidad');
-    const cardClan = document.getElementById('cardClan');
+    const boxStat1 = document.getElementById('boxStat1');
+    const boxStat2 = document.getElementById('boxStat2');
+    const boxStat3 = document.getElementById('boxStat3');
 
-    const axisPaz = document.getElementById('axisPaz');
-    const axisSalud = document.getElementById('axisSalud');
-    const axisHab = document.getElementById('axisHab');
-    const axisSust = document.getElementById('axisSust');
+    const qCards = [
+      document.getElementById('qCard1'),
+      document.getElementById('qCard2'),
+      document.getElementById('qCard3'),
+      document.getElementById('qCard4')
+    ];
 
-    let animId = null;
+    const bookCards = [
+      document.getElementById('bookCard1'),
+      document.getElementById('bookCard2'),
+      document.getElementById('bookCard3')
+    ];
+
+    const orbs = [
+      document.getElementById('axisPaz'),
+      document.getElementById('axisSalud'),
+      document.getElementById('axisHab'),
+      document.getElementById('axisSust')
+    ];
+
+    const secCards = [
+      document.getElementById('cardManada'),
+      document.getElementById('cardTropa'),
+      document.getElementById('cardComunidad'),
+      document.getElementById('cardClan')
+    ];
+
     let lastBeat = -1;
+    let currentCh = 0;
 
-    function startStudio() {
-      startOverlay.classList.add('hidden');
-      audio.currentTime = 0;
-      audio.play().catch(e => console.log('Autoplay bloqueado.'));
-      renderLoop();
+    function setPhoneChapter(num, badge, title) {
+      if (currentCh !== num) {
+        currentCh = num;
+        chBadge.textContent = badge;
+        chTitle.textContent = title;
+        phoneChapterPill.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+          phoneChapterPill.style.transform = 'scale(1.0)';
+        }, 180);
+      }
     }
 
-    function renderLoop() {
+    // Loop sincronizado al reloj del audio
+    function tick() {
       if (!audio.paused) {
         const t = audio.currentTime;
 
-        // Loop sin costuras a los 46.5 segundos
+        // Loop sin costuras en compás 31 (46.5s)
         if (t >= TOTAL_DURATION) {
           audio.currentTime = 0;
-          phoneScreen.scrollTo({ top: 0, behavior: 'instant' });
+          phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        const beat = Math.floor(t / BEAT_DURATION);
-        const bar = Math.floor(t / BAR_DURATION) + 1;
-        const beatInBar = (beat % 4) + 1;
+        const currentBeat = Math.floor(t / BEAT_DURATION);
+        const currentBar = Math.floor(t / BAR_DURATION) + 1;
+        const beatInBar = (currentBeat % 4) + 1;
         const isClap = (beatInBar === 2 || beatInBar === 4);
 
-        // Actualizar HUD
-        const mins = Math.floor(t / 60);
-        const secs = Math.floor(t % 60);
-        const ms = Math.floor((t % 1) * 100);
-        timecode.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${String(ms).padStart(2, '0')} / 00:46.50`;
-        hudCompas.textContent = `Compás ${String(bar).padStart(2, '0')} [Beat ${beatInBar}]`;
+        lblBeat.textContent = currentBeat;
+        lblBar.textContent = String(currentBar).padStart(2, '0');
 
-        // Pulso LED
+        // LED
         const subBeat = (t % BEAT_DURATION) / BEAT_DURATION;
         if (subBeat < 0.28) {
-          hudLed.className = isClap ? 'beat-led clap' : 'beat-led active';
+          beatLed.className = isClap ? 'beat-led clap' : 'beat-led active';
         } else {
-          hudLed.className = 'beat-led';
+          beatLed.className = 'beat-led';
         }
 
-        // Ejecutar en cada beat
-        if (beat !== lastBeat) {
-          lastBeat = beat;
-          onBeat(beat, bar, beatInBar, isClap, t);
+        if (currentBeat !== lastBeat) {
+          lastBeat = currentBeat;
+          onBeat(currentBeat, currentBar, beatInBar, isClap, t);
         }
       }
 
-      animId = requestAnimationFrame(renderLoop);
+      requestAnimationFrame(tick);
     }
 
+    // =========================================================================
+    // COREOGRAFÍA CINEMÁTICA EN 7 CAPÍTULOS ESTRICTAMENTE DESCENDENTES
+    // =========================================================================
     function onBeat(beat, bar, beatInBar, isClap, t) {
-      // ========================================================
-      // CÁMARA CINEMÁTICA CON ZOOMS DRAMÁTICOS (SIN PANDEO CONSTANTE)
-      // ========================================================
-      
+
       // ----------------------------------------------------
-      // COMPASES 1–3 (0.0s – 4.5s): VISTA HERO EN ÁNGULO ELEGANTE
+      // CAPÍTULO 1: COMPASES 1–3 (0.0s – 4.5s) -> HERO & CENTENARIO
       // ----------------------------------------------------
       if (bar <= 3) {
+        setPhoneChapter(1, 'CAPÍTULO 1/7', 'HERO & COLECCIÓN CENTENARIO');
+
         if (bar === 1 && beatInBar === 1) {
           phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        // Vista general estable, ángulo 3D sutil
-        phoneContainer.style.transform = `perspective(1400px) rotateX(4deg) rotateY(-2deg) scale(1.0)`;
 
-        // Pulso en la foto central "Siempre Adelante"
-        if (hexCenter) {
-          hexCenter.style.transform = isClap ? 'scale(1.18)' : 'scale(1.08)';
-        }
+        // Cámara encuadre heroico
+        phoneContainer.style.transform = 'perspective(1200px) rotateX(4deg) rotateY(0deg) scale(1.05)';
+
+        // Contadores numéricos al pulso
+        [boxStat1, boxStat2, boxStat3].forEach(b => b.classList.remove('pulse'));
+        const stats = [boxStat1, boxStat2, boxStat3];
+        stats[(beat % 3)].classList.add('pulse');
       }
 
       // ----------------------------------------------------
-      // COMPASES 4–8 (4.5s – 12.0s): ¡PUNCH ZOOM IN AL BUSCADOR!
+      // CAPÍTULO 2: COMPASES 4–8 (4.5s – 12.0s) -> BUSCADOR INTELIGENTE
       // ----------------------------------------------------
       else if (bar >= 4 && bar <= 8) {
+        setPhoneChapter(2, 'CAPÍTULO 2/7', 'BUSCADOR INTELIGENTE OFICIAL');
+
         if (bar === 4 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secSearch.offsetTop - 60, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secSearch.offsetTop - 55, behavior: 'smooth' });
           searchText.classList.add('typing');
         }
 
-        // ZOOM DRAMÁTICO HACIA LA PANTALLA (1.28x)
-        const punch = isClap ? 1.32 : 1.28;
+        // Punch zoom profundo hacia la pantalla del celular para leer
+        const punch = isClap ? 1.34 : 1.30;
         phoneContainer.style.transform = `perspective(1200px) rotateX(2deg) rotateY(0deg) scale(${punch})`;
 
         if (bar >= 6) {
@@ -1142,136 +1303,185 @@
       }
 
       // ----------------------------------------------------
-      // COMPASES 9–13 (12.0s – 19.5s): DESLIZAMIENTO A SECCIONES
+      // CAPÍTULO 3: COMPASES 9–13 (12.0s – 19.5s) -> GUÍA PASO A PASO
       // ----------------------------------------------------
       else if (bar >= 9 && bar <= 13) {
+        setPhoneChapter(3, 'CAPÍTULO 3/7', 'GUÍA PASO A PASO Y PLATAFORMAS');
+
         if (bar === 9 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secSections.offsetTop - 60, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secQuickstart.offsetTop - 55, behavior: 'smooth' });
         }
 
-        // Vista media inclinada a la izquierda
-        phoneContainer.style.transform = `perspective(1200px) rotateX(5deg) rotateY(4deg) scale(1.05)`;
+        // Zoom a las 4 tarjetas
+        phoneContainer.style.transform = 'perspective(1200px) rotateX(3deg) rotateY(1deg) scale(1.24)';
 
-        // Pre-drop (Compás 13: HUH!) -> Mini zoom out de tensión
+        // Resaltar una tarjeta por compás
+        qCards.forEach(c => c.classList.remove('active-pulse'));
+        const qIdx = Math.min(qCards.length - 1, bar - 9);
+        qCards[qIdx].classList.add('active-pulse');
+
+        // Pre-drop (Compás 13: HUH!) -> Anticipación alejando la cámara
         if (bar === 13) {
-          phoneContainer.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) scale(0.92)`;
+          phoneContainer.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale(0.96)';
         }
       }
 
       // ----------------------------------------------------
-      // COMPASES 14–17 (19.5s – 25.5s): ¡DROP DEL CORO!
-      // "BECAUSE I'M HAPPY!" -> ¡PUNCH ZOOM A LAS SECCIONES!
+      // CAPÍTULO 4: COMPASES 14–18 (19.5s – 27.0s) -> ¡DROP DEL CORO! BIBLIOTECA
+      // "BECAUSE I'M HAPPY! Clap along if you feel..."
       // ----------------------------------------------------
-      else if (bar >= 14 && bar <= 17) {
+      else if (bar >= 14 && bar <= 18) {
+        setPhoneChapter(4, 'CAPÍTULO 4/7', '¡DROP DEL CORO! • BIBLIOTECA OFICIAL');
+
         if (bar === 14 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secSections.offsetTop - 60, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secBooks.offsetTop - 55, behavior: 'smooth' });
         }
 
-        // ZOOM POTENTE A LAS 4 SECCIONES (1.30x)
-        const zoomDrop = isClap ? 1.34 : 1.28;
-        phoneContainer.style.transform = `perspective(1200px) rotateX(4deg) rotateY(-3deg) scale(${zoomDrop})`;
+        // ¡PUNCH ZOOM ENÉRGICO EN LAS PALMADAS (BEATS 2 Y 4)!
+        const dropZoom = isClap ? 1.36 : 1.28;
+        phoneContainer.style.transform = `perspective(1200px) rotateX(3deg) rotateY(-2deg) scale(${dropZoom})`;
 
-        // Limpiar
-        [cardManada, cardTropa, cardComunidad, cardClan].forEach(c => c.classList.remove('pulse-highlight'));
-
-        if (isClap) {
-          const cards = [cardManada, cardTropa, cardComunidad, cardClan];
-          const activeCard = cards[(beat % 4)];
-          if (activeCard) activeCard.classList.add('pulse-highlight');
-        }
+        // Rebote y brillo dorado en los libros
+        bookCards.forEach(b => b.classList.remove('bounce-drop'));
+        const activeBook = (beat % bookCards.length);
+        bookCards[activeBook].classList.add('bounce-drop');
       }
 
       // ----------------------------------------------------
-      // COMPASES 18–22 (25.5s – 33.0s): ZOOM A AGENTES DE CAMBIO
+      // CAPÍTULO 5: COMPASES 19–22 (27.0s – 33.0s) -> AGENTES DE CAMBIO CNRC
       // ----------------------------------------------------
-      else if (bar >= 18 && bar <= 22) {
-        if (bar === 18 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secAgentes.offsetTop - 60, behavior: 'smooth' });
+      else if (bar >= 19 && bar <= 22) {
+        setPhoneChapter(5, 'CAPÍTULO 5/7', 'AGENTES DE CAMBIO CNRC (4 EJES)');
+
+        if (bar === 19 && beatInBar === 1) {
+          phoneScreen.scrollTo({ top: secAgentes.offsetTop - 55, behavior: 'smooth' });
         }
 
-        // Zoom en los 4 Ejes Temáticos
-        phoneContainer.style.transform = `perspective(1200px) rotateX(3deg) rotateY(2deg) scale(1.22)`;
+        phoneContainer.style.transform = 'perspective(1200px) rotateX(3deg) rotateY(2deg) scale(1.24)';
 
-        [axisPaz, axisSalud, axisHab, axisSust].forEach(a => a.classList.remove('active'));
-        const orbs = [axisPaz, axisSalud, axisHab, axisSust];
+        orbs.forEach(a => a.classList.remove('active'));
         orbs[(beat % 4)].classList.add('active');
       }
 
       // ----------------------------------------------------
-      // COMPASES 23–27 (33.0s – 40.5s): BIBLIOTECA DEL CENTENARIO
+      // CAPÍTULO 6: COMPASES 23–27 (33.0s – 40.5s) -> LAS 4 SECCIONES SCOUTS
       // ----------------------------------------------------
       else if (bar >= 23 && bar <= 27) {
+        setPhoneChapter(6, 'CAPÍTULO 6/7', 'LAS 4 SECCIONES DEL ESCULTISMO');
+
         if (bar === 23 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secBooks.offsetTop - 60, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secSections.offsetTop - 55, behavior: 'smooth' });
         }
 
-        phoneContainer.style.transform = `perspective(1200px) rotateX(5deg) rotateY(-4deg) scale(1.12)`;
+        const secZoom = isClap ? 1.32 : 1.26;
+        phoneContainer.style.transform = `perspective(1200px) rotateX(4deg) rotateY(-2deg) scale(${secZoom})`;
+
+        secCards.forEach(c => c.classList.remove('pulse-highlight'));
+        secCards[(beat % 4)].classList.add('pulse-highlight');
       }
 
       // ----------------------------------------------------
-      // COMPASES 28–31 (40.5s – 46.5s): PULL-BACK Y CIERRE CTA
+      // CAPÍTULO 7: COMPASES 28–31 (40.5s – 46.5s) -> CIERRE Y SEAMLESS LOOP
       // ----------------------------------------------------
       else if (bar >= 28) {
+        setPhoneChapter(7, 'CAPÍTULO 7/7', 'ENLACE OFICIAL Y LOOP INFINITO');
+
         if (bar === 28 && beatInBar === 1) {
-          phoneScreen.scrollTo({ top: secCta.offsetTop - 60, behavior: 'smooth' });
+          phoneScreen.scrollTo({ top: secCta.offsetTop - 55, behavior: 'smooth' });
         }
 
         // Cámara se aleja para encuadre completo heroico
-        phoneContainer.style.transform = `perspective(1400px) rotateX(2deg) rotateY(0deg) scale(1.0)`;
+        phoneContainer.style.transform = 'perspective(1400px) rotateX(2deg) rotateY(0deg) scale(1.0)';
 
-        if (bar === 31 && beatInBar === 4) {
+        // Al finalizar el compás 31 (46.5s), regreso suave a la cima para el loop
+        if (bar === 31 && beatInBar >= 3) {
           phoneScreen.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
     }
 
-    // Atajos de teclado: Espacio = Play/Pausa
-    window.addEventListener('keydown', (e) => {
-      if (e.code === 'Space') {
-        e.preventDefault();
-        if (audio.paused) {
-          startStudio();
-        } else {
-          audio.pause();
-        }
-      }
-    });
+    // =========================================================================
+    // GRABADOR DE VIDEO 60 FPS (MÉTODO 2 COMPATIBLE)
+    // =========================================================================
+    let mediaRecorder = null;
+    let recordedChunks = [];
 
-    // Grabación en vivo (MediaRecorder)
     btnRecord.addEventListener('click', async () => {
+      if (btnRecord.classList.contains('recording')) {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+          mediaRecorder.stop();
+        }
+        btnRecord.classList.remove('recording');
+        btnRecord.innerHTML = '<span>⏺</span> Grabar Video (60 FPS)';
+        return;
+      }
+
       try {
         const stream = await navigator.mediaDevices.getDisplayMedia({
-          video: { frameRate: 60, displaySurface: 'browser' },
+          video: {
+            displaySurface: 'browser',
+            frameRate: { ideal: 60, max: 60 },
+            width: { ideal: 1080 },
+            height: { ideal: 1920 }
+          },
           audio: true
         });
 
-        const chunks = [];
-        const recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
+        recordedChunks = [];
+        const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
+          ? 'video/webm;codecs=vp9'
+          : 'video/webm';
 
-        recorder.ondataavailable = (e) => {
-          if (e.data.size > 0) chunks.push(e.data);
+        mediaRecorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 15000000 });
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) recordedChunks.push(e.data);
         };
 
-        recorder.onstop = () => {
-          const blob = new Blob(chunks, { type: 'video/webm' });
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(recordedChunks, { type: 'video/webm' });
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
+          a.style.display = 'none';
           a.href = url;
           a.download = 'bibliotech-scout-promo-1080x1920.webm';
+          document.body.appendChild(a);
           a.click();
-          btnRecord.classList.remove('recording');
-          btnRecord.textContent = '⏺ Grabar Video (60 FPS)';
-          stream.getTracks().forEach(t => t.stop());
+          setTimeout(() => {
+            URL.revokeObjectURL(url);
+            a.remove();
+          }, 1000);
+          stream.getTracks().forEach(track => track.stop());
         };
 
-        recorder.start();
+        mediaRecorder.start();
         btnRecord.classList.add('recording');
-        btnRecord.textContent = '⏹ Grabando...';
-        startStudio();
+        btnRecord.innerHTML = '<span>⏹</span> Detener Grabación';
+
+        // Reiniciar audio desde 0
+        audio.currentTime = 0;
+        phoneScreen.scrollTo({ top: 0, behavior: 'instant' });
+        audio.play();
+
       } catch (err) {
-        alert('Para grabar en vivo selecciona esta pestaña en el diálogo del navegador.');
+        console.error('Error al iniciar grabación:', err);
       }
     });
+
+    // Iniciar audio y bucle
+    window.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play().catch(() => {});
+      }
+    }, { once: true });
+
+    audio.play().then(() => {
+      console.log('Audio iniciado a 160 BPM en 7 capítulos oficiales.');
+    }).catch(() => {
+      console.log('Esperando interacción del usuario para reproducir audio...');
+    });
+
+    tick();
   </script>
 </body>
 </html>
