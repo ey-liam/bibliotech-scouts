@@ -1544,6 +1544,10 @@ async function openDocumentModal(docId, shelfIndex = -1) {
 
   chunksContainer.innerHTML = `<div class="chunk-block" style="white-space:pre-wrap;">${escapeHtml(fullTextContent || doc.summary || doc.title)}</div>`;
   modal.classList.remove("hidden");
+  // Mientras el lector está abierto, la página de fondo no debe desplazarse.
+  // Esto aplica también al modo normal, no solo a pantalla completa.
+  document.documentElement.classList.add("reader-open");
+  document.body.classList.add("reader-open");
   const modalBody = modal.querySelector(".modal-body");
   if (modalBody) modalBody.scrollTop = 0;
 }
@@ -1899,6 +1903,8 @@ function bindEvents() {
   const closeReader = () => {
     setReaderFullscreen(false);
     docModal.classList.add("hidden");
+    document.documentElement.classList.remove("reader-open");
+    document.body.classList.remove("reader-open");
     document.getElementById("modalPreviewPane").innerHTML = "";
   };
 

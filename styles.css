@@ -2585,6 +2585,8 @@ h1, h2, h3, h4 {
   padding: 0;
 }
 
+html.reader-open,
+body.reader-open,
 html.reader-fullscreen,
 body.reader-fullscreen {
   overflow: hidden;
