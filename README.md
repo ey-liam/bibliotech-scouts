@@ -99,3 +99,4 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 - **Autocompletado más útil:** al escribir un título completo ahora también sugiere preguntas del mismo tema, no solo coincidencias exactas.
 - **Botón «Nueva búsqueda»** en el panel de respuesta para limpiar la barra, cerrar la respuesta y volver al buscador.
 - **Filtros de la biblioteca juntos:** los estantes por categoría ahora están junto al buscador y los selectores, antes del banner del Centenario. Al elegir un estante, la vista baja a los resultados.
+- **Vista previa de imágenes:** el lector muestra las imágenes remotas (PNG, JPG, WEBP y AVIF) en la pestaña de vista previa, aunque el archivo original se sirva como descarga.
