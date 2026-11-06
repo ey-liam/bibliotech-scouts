@@ -1585,6 +1585,15 @@ function renderWebReaderView(doc, fullTextContent, dlUrl) {
 // ============================================================================
 // EVENTOS DE INTERFAZ
 // ============================================================================
+// Lleva el foco y la vista a los resultados cuando se elige un estante.
+// Así el cambio se nota aunque el banner del Centenario quede en medio.
+function revealLibraryResults() {
+  const grid = document.getElementById("libraryBookshelfGrid");
+  if (!grid) return;
+  grid.focus({ preventScroll: true });
+  grid.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function bindEvents() {
   const askForm = document.getElementById("askForm");
   const askInput = document.getElementById("askInput");
@@ -1687,7 +1696,7 @@ function bindEvents() {
       STATE.activeShelf = targetShelf;
       STATE.libraryVisibleCount = 24;
       renderLibraryShelf();
-      document.getElementById("libraryShelfTabs")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      revealLibraryResults();
     }
   });
 
@@ -1721,6 +1730,7 @@ function bindEvents() {
       STATE.activeShelf = tab.dataset.shelf || "featured";
       STATE.libraryVisibleCount = 12;
       renderLibraryShelf();
+      revealLibraryResults();
     });
   });
 
