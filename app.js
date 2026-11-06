@@ -1879,18 +1879,45 @@ function bindEvents() {
   const prevBookBtn = document.getElementById("modalPrevBookBtn");
   const nextBookBtn = document.getElementById("modalNextBookBtn");
 
+  // La pantalla completa debe conservar el encabezado y sus acciones.
+  // Se quita el relleno del overlay para que la barra no quede fuera de vista.
+  const setReaderFullscreen = (on) => {
+    docModal.classList.toggle("fullscreen-open", on);
+    docModalContainer.classList.toggle("fullscreen-reader", on);
+    document.body.classList.toggle("reader-fullscreen", on);
+    if (fullscreenBtn) {
+      fullscreenBtn.setAttribute("aria-pressed", String(on));
+      fullscreenBtn.textContent = on ? "Salir de pantalla completa" : "Pantalla completa";
+      fullscreenBtn.title = on ? "Salir de pantalla completa" : "Alternar pantalla completa";
+    }
+  };
+
+  const closeReader = () => {
+    setReaderFullscreen(false);
+    docModal.classList.add("hidden");
+    document.getElementById("modalPreviewPane").innerHTML = "";
+  };
+
   if (closeDocModalBtn) {
-    closeDocModalBtn.addEventListener("click", () => {
-      docModal.classList.add("hidden");
-      document.getElementById("modalPreviewPane").innerHTML = "";
-    });
+    closeDocModalBtn.addEventListener("click", closeReader);
   }
 
   if (fullscreenBtn && docModalContainer) {
     fullscreenBtn.addEventListener("click", () => {
-      docModalContainer.classList.toggle("fullscreen-reader");
+      setReaderFullscreen(!docModalContainer.classList.contains("fullscreen-reader"));
     });
   }
+
+  // Escape sale de pantalla completa o cierra el lector. Sin esto, en
+  // pantalla completa no había forma de cerrar si la X quedaba oculta.
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || docModal.classList.contains("hidden")) return;
+    if (docModalContainer.classList.contains("fullscreen-reader")) {
+      setReaderFullscreen(false);
+    } else {
+      closeReader();
+    }
+  });
 
   if (prevBookBtn) {
     prevBookBtn.addEventListener("click", () => {

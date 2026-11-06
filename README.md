@@ -100,3 +100,4 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 - **Botón «Nueva búsqueda»** en el panel de respuesta para limpiar la barra, cerrar la respuesta y volver al buscador.
 - **Filtros de la biblioteca juntos:** los estantes por categoría ahora están junto al buscador y los selectores, antes del banner del Centenario. Al elegir un estante, la vista baja a los resultados.
 - **Vista previa de imágenes:** el lector muestra las imágenes remotas (PNG, JPG, WEBP y AVIF) en la pestaña de vista previa, aunque el archivo original se sirva como descarga.
+- **Pantalla completa del lector:** la barra de acciones (anterior, siguiente, abrir en pestaña, descargar y cerrar) permanece visible, el fondo deja de desplazarse y Escape sale del modo o cierra el lector.
