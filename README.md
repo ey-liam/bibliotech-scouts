@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 03/11/2026 • **Versión del sitio web:** V3 04/11/2026  
+**Base de datos:** 03/11/2026 • **Versión del sitio web:** V4 05/11/2026  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -83,21 +83,32 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 
 ---
 
-## 8. Novedades de la versión V3 (04/11/2026)
+## 8. Novedades de la versión V4 (05/11/2026)
+
+- **Buscador más claro:** al elegir una pregunta sugerida, la barra de búsqueda ya no se llena automáticamente. La pregunta se muestra en el panel de respuesta y la barra queda libre para una nueva consulta.
+- **Preguntas relacionadas por tema:** cada respuesta incluye hasta 5 preguntas del mismo tema o documento, calculadas con `topic_id`, `doc_id`, categoría y palabras clave. Así se puede seguir explorando aunque los títulos no se parezcan (por ejemplo, todos los nudos o todos los amarres).
+- **Autocompletado más útil:** al escribir un título completo ahora también sugiere preguntas del mismo tema, no solo coincidencias exactas.
+- **Botón «Nueva búsqueda»** en el panel de respuesta para limpiar la barra, cerrar la respuesta y volver al buscador.
+- **Filtros de la biblioteca juntos:** los estantes por categoría están junto al buscador y los selectores, antes del banner del Centenario. Al elegir un estante, el foco y la vista pasan a los resultados.
+- **Vista previa de imágenes:** el lector muestra las imágenes remotas (PNG, JPG, WEBP y AVIF) en la pestaña de vista previa, aunque el archivo original se sirva como descarga.
+- **Pantalla completa del lector:** la barra de acciones (anterior, siguiente, abrir en pestaña, descargar y cerrar) permanece visible. Escape sale del modo o cierra el lector, y el fondo no se desplaza.
+- **Rueda del mouse:** siempre desplaza el documento abierto, incluso con el cursor sobre el encabezado, las pestañas o el fondo del modal, y también sin pantalla completa.
+- **Cambio de lectura:** al alternar entre «Lectura del Documento» y «Texto Extraído / Lectura Rápida», la vista empieza arriba y la rueda funciona de inmediato.
+- **Accesibilidad y rendimiento:** Lighthouse en 100 de accesibilidad, buenas prácticas y SEO; sin errores propios en consola.
+- El contador del sitio se mantiene en **5,412 preguntas y respuestas**.
+
+### Versión V3 (04/11/2026)
 
 - Menú superior reordenado según el recorrido real de la página.
 - Nuevo fondo aurora animado con auras, orbes, haz de luz, hexágonos, cubos, anillos y destellos.
 - Secciones translúcidas para integrar el fondo sin perder legibilidad.
 - Corrección del desplazamiento acumulado (CLS) al cargar: el fondo ahora no mueve el contenido.
-- Validado sin errores de consola, sin desbordes en móvil y con accesibilidad y SEO en 100.
-- **Banner de la Colección Biblioteca del Centenario:** el título ahora usa texto blanco con sombra suave para garantizar contraste sobre el fondo oscuro, y el logo conserva su proporción real (320×131 px) en un marco rectangular, sin espacios blancos desperdiciados.
+- **Banner de la Colección Biblioteca del Centenario:** el título usa texto blanco con sombra suave para garantizar contraste sobre el fondo oscuro, y el logo conserva su proporción real (320×131 px) en un marco rectangular, sin espacios blancos desperdiciados.
 - **Banco ampliado de preguntas frecuentes:** 56 nuevas respuestas fundamentadas, generadas con `scripts/build_faq_v3.js` a partir de `scripts/faq_v3_source.js` y publicadas en `data/faq_v3.json`. Cubren primeros auxilios y seguridad (16), campismo y naturaleza (18), ceremonial y símbolos (10), historia del escultismo mexicano (5), uniforme (4) y protección juvenil (3). El buscador carga ambos bancos en paralelo y elimina duplicados.
 - **Nueva pestaña «Primeros Auxilios y Seguridad»** en el explorador de preguntas, con chips destacados para atragantamiento, purificación de agua y la Política Nacional A Salvo del Peligro.
 - El contador del sitio y el README se actualizaron a **5,412 preguntas y respuestas**.
-- **Navegación del buscador:** al elegir una pregunta sugerida, la barra de búsqueda ya no se llena automáticamente. La pregunta se muestra en el panel de respuesta y la barra queda libre para una nueva consulta.
-- **Preguntas relacionadas:** cada respuesta incluye hasta 5 preguntas del mismo tema o documento, calculadas con `topic_id`, `doc_id`, categoría y palabras clave. Así se puede seguir explorando aunque los títulos no se parezcan (por ejemplo, todos los nudos o todos los amarres).
-- **Autocompletado más útil:** al escribir un título completo ahora también sugiere preguntas del mismo tema, no solo coincidencias exactas.
-- **Botón «Nueva búsqueda»** en el panel de respuesta para limpiar la barra, cerrar la respuesta y volver al buscador.
-- **Filtros de la biblioteca juntos:** los estantes por categoría ahora están junto al buscador y los selectores, antes del banner del Centenario. Al elegir un estante, la vista baja a los resultados.
-- **Vista previa de imágenes:** el lector muestra las imágenes remotas (PNG, JPG, WEBP y AVIF) en la pestaña de vista previa, aunque el archivo original se sirva como descarga.
-- **Pantalla completa del lector:** la barra de acciones (anterior, siguiente, abrir en pestaña, descargar y cerrar) permanece visible, la rueda del mouse desplaza siempre el documento abierto aunque el cursor esté sobre el encabezado o las pestañas, y Escape sale del modo o cierra el lector. Mientras el lector está abierto, incluso sin pantalla completa, la página de fondo queda bloqueada.
+
+### Pendientes conocidos
+
+- **«Abrir en pestaña» en archivos alojados solo en el release:** el servidor entrega esos archivos con `Content-Disposition: attachment`, por lo que el navegador los descarga en lugar de mostrarlos. La solución definitiva es publicar copias web en `files/`; se sigue en el issue #12.
+- **Portadas `WhatsApp-Image` de Identidad Gráfica:** 7 registros siguen pendientes de reemplazo por contenido documental útil; también se siguen en el issue #12.
