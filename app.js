@@ -1492,6 +1492,14 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   const previewPane = document.getElementById("modalPreviewPane");
   const chunksContainer = document.getElementById("modalChunksContainer");
 
+  // Cada documento abre en «Lectura del Documento». Antes se conservaba la
+  // pestaña anterior y, si era «Texto Extraído», las imágenes no se veían.
+  document.querySelectorAll(".modal-tab").forEach((tab) => {
+    tab.classList.toggle("active", tab.dataset.tab === "preview");
+  });
+  previewPane.classList.remove("hidden");
+  document.getElementById("modalTextPane").classList.add("hidden");
+
   titleEl.textContent = doc.title;
   fnameEl.textContent = `${doc.filename} • ${doc.category}`;
   badgesEl.innerHTML = `
@@ -1533,10 +1541,14 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     // Las imágenes se previsualizan aunque no tengan copia web: <img> ignora
     // el Content-Disposition del archivo remoto y muestra la imagen igual.
     previewPane.innerHTML = `
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;height:100%;padding:1.5rem;">
-        <img src="${viewUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;" onerror="this.alt='No se pudo cargar la vista previa. Usa el botón Descargar.'; this.style.minHeight='120px';" />
-        <p style="font-size:0.82rem;color:#64748b;text-align:center;">Vista previa de <strong>${escapeHtml(doc.filename)}</strong></p>
-      </div>
+      <figure style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;height:100%;margin:0;padding:1.5rem;box-sizing:border-box;">
+        <figcaption style="flex:0 0 auto;text-align:center;">
+          <span style="display:block;font-size:0.72rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#6d28d9;">Vista previa de imagen</span>
+          <span style="display:block;font-size:1.05rem;font-weight:800;color:#0c1938;line-height:1.3;">${escapeHtml(doc.title)}</span>
+        </figcaption>
+        <img src="${viewUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" style="flex:1 1 auto;min-height:0;max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;" onerror="this.alt='No se pudo cargar la vista previa. Usa el botón Descargar.'; this.style.minHeight='120px';" />
+        <p style="flex:0 0 auto;margin:0;font-size:0.82rem;color:#64748b;text-align:center;">Archivo: <strong>${escapeHtml(doc.filename)}</strong></p>
+      </figure>
     `;
   } else {
     previewPane.innerHTML = renderWebReaderView(doc, fullTextContent, dlUrl);
