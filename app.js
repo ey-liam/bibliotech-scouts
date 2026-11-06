@@ -1544,6 +1544,8 @@ async function openDocumentModal(docId, shelfIndex = -1) {
 
   chunksContainer.innerHTML = `<div class="chunk-block" style="white-space:pre-wrap;">${escapeHtml(fullTextContent || doc.summary || doc.title)}</div>`;
   modal.classList.remove("hidden");
+  const modalBody = modal.querySelector(".modal-body");
+  if (modalBody) modalBody.scrollTop = 0;
 }
 
 function renderWebReaderView(doc, fullTextContent, dlUrl) {
@@ -1874,6 +1876,7 @@ function bindEvents() {
 
   const docModal = document.getElementById("docModal");
   const docModalContainer = document.getElementById("docModalContainer");
+  const docModalBody = docModal ? docModal.querySelector(".modal-body") : null;
   const closeDocModalBtn = document.getElementById("closeDocModalBtn");
   const fullscreenBtn = document.getElementById("modalFullscreenBtn");
   const prevBookBtn = document.getElementById("modalPrevBookBtn");
@@ -1884,6 +1887,7 @@ function bindEvents() {
   const setReaderFullscreen = (on) => {
     docModal.classList.toggle("fullscreen-open", on);
     docModalContainer.classList.toggle("fullscreen-reader", on);
+    document.documentElement.classList.toggle("reader-fullscreen", on);
     document.body.classList.toggle("reader-fullscreen", on);
     if (fullscreenBtn) {
       fullscreenBtn.setAttribute("aria-pressed", String(on));
@@ -1919,6 +1923,24 @@ function bindEvents() {
     }
   });
 
+  // La rueda debe mover el documento abierto aunque el cursor esté sobre el
+  // encabezado, las pestañas o el fondo del modal. Si el cursor ya está en el
+  // cuerpo, se deja el scroll nativo y el `overscroll-behavior` evita que la
+  // página de fondo se mueva al llegar al final.
+  if (docModal && docModalBody) {
+    docModal.addEventListener(
+      "wheel",
+      (event) => {
+        if (docModal.classList.contains("hidden")) return;
+        if (docModalBody.contains(event.target)) return;
+        event.preventDefault();
+        const factor = event.deltaMode === 1 ? 24 : event.deltaMode === 2 ? docModalBody.clientHeight : 1;
+        docModalBody.scrollTop += event.deltaY * factor;
+      },
+      { passive: false }
+    );
+  }
+
   if (prevBookBtn) {
     prevBookBtn.addEventListener("click", () => {
       if (STATE.currentReadingIndex > 0) {
@@ -1946,6 +1968,9 @@ function bindEvents() {
       const target = tab.dataset.tab;
       document.getElementById("modalPreviewPane").classList.toggle("hidden", target !== "preview");
       document.getElementById("modalTextPane").classList.toggle("hidden", target !== "text");
+      // Cada lectura empieza desde arriba; así la rueda no hereda la posición
+      // de la pestaña anterior.
+      if (docModalBody) docModalBody.scrollTop = 0;
     });
   });
 
