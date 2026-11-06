@@ -405,13 +405,23 @@
               <img loading="lazy" decoding="async" src="img/logo-flor.png" alt="" class="answer-badge-icon" />
               <span id="answerModeLabel">Información basada en documentos oficiales</span>
             </div>
-            <button type="button" id="closeAnswerBtn" class="btn-close-answer" title="Cerrar respuesta">Cerrar</button>
+            <div class="answer-header-actions">
+              <button type="button" id="newSearchBtn" class="btn-close-answer btn-new-search" title="Empezar otra búsqueda">Nueva búsqueda</button>
+              <button type="button" id="closeAnswerBtn" class="btn-close-answer" title="Cerrar respuesta">Cerrar</button>
+            </div>
           </div>
 
           <h2 id="answerQuestionTitle" class="answer-question-title"></h2>
 
           <!-- CUERPO DE LA RESPUESTA -->
           <div id="answerBody" class="answer-markdown-body"></div>
+
+          <!-- PREGUNTAS RELACIONADAS PARA SEGUIR EXPLORANDO -->
+          <div id="answerRelated" class="answer-related hidden">
+            <h3>Preguntas relacionadas</h3>
+            <p>Sigue explorando este tema sin volver a escribir.</p>
+            <div id="answerRelatedChips" class="quick-chips"></div>
+          </div>
 
           <!-- HASTA ABAJO AL FINAL DE LA RESPUESTA: DE DÓNDE SALIÓ ESTA INFORMACIÓN -->
           <div class="answer-sources-footer">

@@ -983,6 +983,7 @@ h1, h2, h3, h4 {
 .answer-container {
   max-width: 1030px;
   margin: 1.75rem auto 0;
+  scroll-margin-top: 90px;
   animation: popInCard 0.38s var(--spring);
 }
 
@@ -999,7 +1000,17 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin-bottom: 1rem;
+}
+
+.answer-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .answer-badge {
@@ -1029,6 +1040,16 @@ h1, h2, h3, h4 {
   padding: 0.4rem 0.85rem;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.btn-new-search {
+  background: linear-gradient(135deg, var(--scout-purple), var(--scout-blue));
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.btn-new-search:hover {
+  filter: brightness(1.07);
 }
 
 .answer-question-title {
@@ -1082,6 +1103,24 @@ h1, h2, h3, h4 {
   border-radius: 6px;
   font-size: 0.88em;
   font-weight: 700;
+}
+
+.answer-related {
+  margin-top: 1.6rem;
+  padding-top: 1.35rem;
+  border-top: 2px dashed #e2e8f0;
+}
+
+.answer-related h3 {
+  font-size: 1.05rem;
+  color: var(--scout-navy);
+  margin-bottom: 0.2rem;
+}
+
+.answer-related > p {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 0.8rem;
 }
 
 .answer-sources-footer {
