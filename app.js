@@ -518,23 +518,24 @@ function setup3DTiltInteractions() {
 // ============================================================================
 const DEFAULT_FEATURED_QUESTIONS = [
   "¿En dónde encuentro un Grupo Scout?",
+  "¿Qué son las Insignias Mundiales y cómo funciona el Marco Mundo Mejor (Better World Framework) de la OMMS?",
+  "¿Qué simbolizan los tres pétalos, la línea central, las dos estrellas de cinco puntas, la cuerda y el nudo llano de la Flor de Lis Mundial?",
+  "¿Qué es la iniciativa Mensajeros de la Paz (Messengers of Peace) de la Organización Mundial Scout?",
+  "¿Qué es la iniciativa Tribu de la Tierra (Earth Tribe) y cuál es su objetivo dentro de la OMMS y ASMAC?",
+  "¿Qué es el Pin de la Tribu de la Tierra, cómo se obtiene, dónde se coloca y cuánto tiempo se puede portar?",
+  "¿Qué es el Reconocimiento Scouts del Mundo (Scouts of the World Award - SWA) y quiénes pueden aspirar a él?",
+  "¿Qué es la Insignia de Madera (Wood Badge), cuándo fue creada por Baden-Powell y cuál es su significado mundial?",
+  "¿Qué es el Lobo de Bronce (Bronze Wolf Award) y por qué es la máxima y única condecoración del Comité Scout Mundial?",
   "¿Cómo inscribo a mi hijo o hija en los Scouts, en dónde se registra y con quién tengo que hablar comúnmente del registro?",
-  "¿Qué permisos necesita mi hijo para inscribirse o ir de campamento y qué necesito llevar para asistir?",
   "¿Qué es el SISAS, qué es ExplorApp y qué es CarpetApp?",
   "¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?",
   "¿Qué son el Jamboree Nacional, el World Scout Jamboree, el Philia y el World Scout Moot, dónde se hacen y cada cuánto?",
   "¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?",
-  "¿Cómo se hace la elección del CPRC y del CNRC, en dónde se hace y cuál es el objetivo de los Foros?",
   "¿Cómo se hace un Foro Provincial paso a paso y quiénes son los encargados de organizarlo?",
-  "¿Qué es el Asesor de la Red o Comité de Caminantes, cómo se elige, qué funciones y requisitos tiene y cómo se evalúa?",
   "¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?",
   "¿Qué especialidades, reconocimientos e insignias puedo obtener con mis proyectos de Caminante y cómo sé a qué Eje Temático pertenecen?",
   "¿Cómo se aplica el nuevo esquema PJOS y pueden combinarse las nuevas insignias con las antiguas?",
-  "¿Cuántas insignias hay en el nuevo esquema en Manada, Tropa, Comunidad y Clan?",
-  "¿Quién es el Jefe Scout Nacional, el Presidente Nacional, la Subcomisionada de Comunidad y quién dirige la Dirección Internacional?",
   "¿Dónde compro el uniforme scout?",
-  "¿Cómo se atiende a una persona que se está atragantando?",
-  "¿Cómo se purifica el agua en campamento?",
   "¿Qué es la Política Nacional A Salvo del Peligro?"
 ];
 
@@ -606,7 +607,8 @@ function isQuestionMatchingAskSection(item, targetSection) {
     "Manada de Lobatos": "manada",
     "Clan de Rovers": "clan",
     "Adultos y Scouters": "adultos",
-    "World Scouting": "internacional"
+    "World Scouting": "internacional",
+    "Insignias Mundiales (WOSM)": "internacional"
   };
   if (catMap[cat]) {
     return catMap[cat] === targetSection;
@@ -677,7 +679,8 @@ function updateAutocompleteDropdown(rawInput) {
         "Comunidad de Caminantes": "comunidad",
         "Tropa de Scouts": "tropa",
         "Manada de Lobatos": "manada",
-        "Clan de Rovers": "clan"
+        "Clan de Rovers": "clan",
+        "Insignias Mundiales (WOSM)": "internacional"
       }[item.cat];
       if (catSec === STATE.activeAskSection) score += 20;
     }
@@ -1876,7 +1879,7 @@ function bindEvents() {
         manada: "Manada de Lobatos",
         clan: "Clan de Rovers",
         adultos: "Manuales Oficiales y de Operación",
-        internacional: "Campismo, Nudos y Naturaleza",
+        internacional: "Insignias Mundiales (WOSM)",
         all: "Destacadas"
       };
       const targetCat = secToCat[sec] || "Destacadas";
