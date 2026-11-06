@@ -665,6 +665,19 @@
         </div>
       </div>
 
+      <!-- ESTANTES DE LA BIBLIOTECA POR CATEGORÍA: JUNTO A LOS FILTROS DE BÚSQUEDA -->
+      <div class="library-shelves-tabs" id="libraryShelfTabs" role="group" aria-label="Estantes de la biblioteca">
+        <button type="button" class="shelf-tab active" data-shelf="featured">Destacados Vigentes</button>
+        <button type="button" class="shelf-tab" data-shelf="centenario">Colección Biblioteca del Centenario (39)</button>
+        <button type="button" class="shelf-tab" data-shelf="guias_pjos">Guías, Carnets y PJOS (42)</button>
+        <button type="button" class="shelf-tab" data-shelf="manuales">Manuales Oficiales (70)</button>
+        <button type="button" class="shelf-tab" data-shelf="reglamentos">Reglamentos y Políticas (24)</button>
+        <button type="button" class="shelf-tab" data-shelf="convocatorias">Convocatorias y Comunicados (187)</button>
+        <button type="button" class="shelf-tab" data-shelf="revistas">Revistas Foro Joven y Boletines (44)</button>
+        <button type="button" class="shelf-tab" data-shelf="formatos">Formatos, Actas y Seguro (66)</button>
+        <button type="button" class="shelf-tab" data-shelf="identidad">Identidad Gráfica (26)</button>
+      </div>
+
       <!-- BANNER DESTACADO DE LA COLECCIÓN BIBLIOTECA DEL CENTENARIO CON FOTOS EN HEXÁGONO Y POLAROID -->
       <div class="centenario-collection-banner">
         <div class="centenario-banner-left">
@@ -696,21 +709,8 @@
         </div>
       </div>
 
-      <!-- ESTANTES DE LA BIBLIOTECA POR CATEGORÍA -->
-      <div class="library-shelves-tabs" id="libraryShelfTabs" role="group" aria-label="Estantes de la biblioteca">
-        <button type="button" class="shelf-tab active" data-shelf="featured">Destacados Vigentes</button>
-        <button type="button" class="shelf-tab" data-shelf="centenario">Colección Biblioteca del Centenario (39)</button>
-        <button type="button" class="shelf-tab" data-shelf="guias_pjos">Guías, Carnets y PJOS (42)</button>
-        <button type="button" class="shelf-tab" data-shelf="manuales">Manuales Oficiales (70)</button>
-        <button type="button" class="shelf-tab" data-shelf="reglamentos">Reglamentos y Políticas (24)</button>
-        <button type="button" class="shelf-tab" data-shelf="convocatorias">Convocatorias y Comunicados (187)</button>
-        <button type="button" class="shelf-tab" data-shelf="revistas">Revistas Foro Joven y Boletines (44)</button>
-        <button type="button" class="shelf-tab" data-shelf="formatos">Formatos, Actas y Seguro (66)</button>
-        <button type="button" class="shelf-tab" data-shelf="identidad">Identidad Gráfica (26)</button>
-      </div>
-
       <!-- ESTANTERÍA VISUAL CON PORTADAS -->
-      <div id="libraryBookshelfGrid" class="bookshelf-grid"></div>
+      <div id="libraryBookshelfGrid" class="bookshelf-grid" role="region" aria-label="Resultados de la biblioteca" tabindex="-1"></div>
 
       <div class="bookshelf-more-row">
         <button type="button" id="libraryShowMoreBtn" class="btn-outline-joy">
