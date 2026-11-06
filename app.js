@@ -1529,10 +1529,13 @@ async function openDocumentModal(docId, shelfIndex = -1) {
 
   if (canEmbedNative && (doc.ext === "PDF" || (IS_LOCAL_SERVER && doc.ext === "HTML"))) {
     previewPane.innerHTML = `<iframe src="${viewUrl}" title="${escapeHtml(doc.title)}"></iframe>`;
-  } else if (canEmbedNative && ["PNG", "JPG", "JPEG", "WEBP", "AVIF"].includes(doc.ext)) {
+  } else if (["PNG", "JPG", "JPEG", "WEBP", "AVIF"].includes(doc.ext)) {
+    // Las imágenes se previsualizan aunque no tengan copia web: <img> ignora
+    // el Content-Disposition del archivo remoto y muestra la imagen igual.
     previewPane.innerHTML = `
-      <div style="display:flex;align-items:center;justify-content:center;height:100%;padding:1.5rem;">
-        <img src="${viewUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;" />
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;height:100%;padding:1.5rem;">
+        <img src="${viewUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;" onerror="this.alt='No se pudo cargar la vista previa. Usa el botón Descargar.'; this.style.minHeight='120px';" />
+        <p style="font-size:0.82rem;color:#64748b;text-align:center;">Vista previa de <strong>${escapeHtml(doc.filename)}</strong></p>
       </div>
     `;
   } else {
