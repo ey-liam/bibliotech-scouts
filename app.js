@@ -585,6 +585,56 @@ function renderExplorerQuestions(cat, shuffle = false) {
     .join("");
 }
 
+function isQuestionMatchingAskSection(item, targetSection) {
+  if (!targetSection || targetSection === "all") return true;
+
+  // 1. Si la pregunta tiene doc_id y el documento existe en catálogo
+  if (item.doc_id && STATE.docsById[item.doc_id]) {
+    const doc = STATE.docsById[item.doc_id];
+    const applicable = doc.applicable_sections || (doc.section ? [doc.section] : []);
+    if (applicable.includes(targetSection)) return true;
+    if (doc.section && doc.section !== targetSection && doc.section !== "general") {
+      return false;
+    }
+  }
+
+  // 2. Mapeo directo por categoría de la pregunta
+  const cat = item.cat || "";
+  const catMap = {
+    "Comunidad de Caminantes": "comunidad",
+    "Tropa de Scouts": "tropa",
+    "Manada de Lobatos": "manada",
+    "Clan de Rovers": "clan",
+    "Adultos y Scouters": "adultos",
+    "World Scouting": "internacional"
+  };
+  if (catMap[cat]) {
+    return catMap[cat] === targetSection;
+  }
+
+  // 3. Verificación de términos exclusivos de otra sección
+  const qNorm = normalizeStr(item.q || "");
+  const sectionKeywords = {
+    manada: ["lobato", "lobatos", "lobata", "lobatas", "lobezno", "manada", "akela", "baloo", "bagheera", "viejo lobo"],
+    tropa: ["tropa", "scout", "scouts", "patrulla", "patrullas", "guia de patrulla", "subguia", "alta patrulla"],
+    comunidad: ["comunidad", "caminante", "caminantes", "cprc", "cnrc", "caravan", "expedicion", "escalamiento", "siempre adelante"],
+    clan: ["clan", "rover", "rovers", "precursora", "precursoras", "precursor", "escudero", "horquilla", "servicio rover"],
+    adultos: ["scouter", "scouters", "dirigente", "dirigentes", "jefe de grupo", "consejo de grupo", "comisionado"],
+    internacional: ["wosm", "jamboree", "moot", "interamericano", "mundial"]
+  };
+
+  const targetKeywords = sectionKeywords[targetSection] || [];
+  const hasTargetKw = targetKeywords.some((kw) => qNorm.includes(kw));
+
+  for (const [sec, kws] of Object.entries(sectionKeywords)) {
+    if (sec !== targetSection && kws.some((kw) => qNorm.includes(kw))) {
+      if (!hasTargetKw) return false;
+    }
+  }
+
+  return true;
+}
+
 function updateAutocompleteDropdown(rawInput) {
   const box = document.getElementById("askAutocomplete");
   if (!box) return;
@@ -613,7 +663,24 @@ function updateAutocompleteDropdown(rawInput) {
     const nq = normalizeQuestionKey(item.q || "");
     if (!userTypedFalda && nq.includes("falda")) continue;
 
+    // Si el usuario seleccionó una sección en el buscador, no mostrar sugerencias de otras secciones
+    if (STATE.activeAskSection && STATE.activeAskSection !== "all") {
+      if (!isQuestionMatchingAskSection(item, STATE.activeAskSection)) {
+        continue;
+      }
+    }
+
     let score = 0;
+    // Bonificación de relevancia si coincide específicamente con la sección activa
+    if (STATE.activeAskSection && STATE.activeAskSection !== "all") {
+      const catSec = {
+        "Comunidad de Caminantes": "comunidad",
+        "Tropa de Scouts": "tropa",
+        "Manada de Lobatos": "manada",
+        "Clan de Rovers": "clan"
+      }[item.cat];
+      if (catSec === STATE.activeAskSection) score += 20;
+    }
     if (nq.startsWith(qNorm)) score += 30;
     else if (nq.includes(qNorm)) score += 18;
 
@@ -1171,6 +1238,10 @@ function answerLocallyInBrowser(query) {
   if (!sources.length && tokens.length) {
     const docScores = [];
     for (const d of STATE.documents) {
+      if (STATE.activeAskSection && STATE.activeAskSection !== "all") {
+        const secs = d.applicable_sections || [d.section];
+        if (!secs.includes(STATE.activeAskSection)) continue;
+      }
       const hay = normalizeStr(`${d.title} ${d.filename} ${d.summary || ""} ${d.category}`);
       let sc = 0;
       let docHits = 0;
@@ -1309,6 +1380,13 @@ function renderRelatedQuestions(query) {
     const key = normalizeQuestionKey(item.q || "");
     if (!key || key === qKey) continue;
     if (!queryNorm.includes("falda") && normalizeStr(item.q || "").includes("falda")) continue;
+
+    // Si el buscador tiene una sección activa, evitar sugerencias de secciones incompatibles
+    if (STATE.activeAskSection && STATE.activeAskSection !== "all") {
+      if (!isQuestionMatchingAskSection(item, STATE.activeAskSection)) {
+        continue;
+      }
+    }
 
     let hits = 0;
     let score = 0;
@@ -1561,6 +1639,50 @@ async function openDocumentModal(docId, shelfIndex = -1) {
         tab.document.close();
       }
     };
+  } else if (doc.ext === "PDF" && !doc.has_web_file) {
+    openTabBtn.onclick = (e) => {
+      e.preventDefault();
+      const tab = window.open("", "_blank");
+      if (tab) {
+        tab.document.write(`<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(doc.title)} — BiblioTech Scout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    body { background: #f8fafc; color: #0f172a; line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
+    header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #dbeafe; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; z-index: 50; }
+    .title-group { max-width: 75%; }
+    .badge { display: inline-block; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #6d28d9; margin-bottom: 2px; }
+    h1 { font-size: 1.15rem; font-weight: 800; color: #0c1938; line-height: 1.3; }
+    .fname { font-size: 0.8rem; color: #64748b; }
+    .btn-dl { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px; background: #6d28d9; color: #fff; font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: transform 0.15s ease, background 0.15s ease; }
+    .btn-dl:hover { background: #581c87; transform: translateY(-1px); }
+    main { flex: 1; max-width: 860px; margin: 0 auto; width: 100%; padding: 2rem 1.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title-group">
+      <span class="badge">BiblioTech Scout • Lectura del Documento</span>
+      <h1>${escapeHtml(doc.title)}</h1>
+      <span class="fname">${escapeHtml(doc.filename)} • ${doc.year} • ${escapeHtml(doc.section_label)}</span>
+    </div>
+    <a href="${dlUrl}" download class="btn-dl">Descargar PDF Original</a>
+  </header>
+  <main>
+    ${renderWebReaderView(doc, fullTextContent, dlUrl)}
+  </main>
+</body>
+</html>`);
+        tab.document.close();
+      }
+    };
   } else {
     openTabBtn.onclick = null;
   }
@@ -1741,10 +1863,42 @@ function bindEvents() {
   }
 
   document.querySelectorAll(".sec-pill").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       document.querySelectorAll(".sec-pill").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
-      STATE.activeAskSection = btn.dataset.section || "all";
+      const sec = btn.dataset.section || "all";
+      STATE.activeAskSection = sec;
+
+      // Sincronizar las pestañas del explorador de preguntas con la sección seleccionada
+      const secToCat = {
+        comunidad: "Comunidad de Caminantes",
+        tropa: "Tropa de Scouts",
+        manada: "Manada de Lobatos",
+        clan: "Clan de Rovers",
+        adultos: "Manuales Oficiales y de Operación",
+        internacional: "Campismo, Nudos y Naturaleza",
+        all: "Destacadas"
+      };
+      const targetCat = secToCat[sec] || "Destacadas";
+      document.querySelectorAll(".qcat-tab").forEach((t) => {
+        t.classList.toggle("active", t.dataset.qcat === targetCat);
+      });
+      STATE.activeQCat = targetCat;
+      await loadQuestionBank();
+      renderExplorerQuestions(targetCat, false);
+
+      // Si el buscador ya tiene texto, refrescar el autocompletado en vivo
+      const askInput = document.getElementById("askInput");
+      if (askInput && askInput.value.trim().length >= 2) {
+        updateAutocompleteDropdown(askInput.value.trim());
+      }
+
+      // Si hay una respuesta visible en pantalla, refrescar las preguntas relacionadas para que no mezclen secciones
+      const titleEl = document.getElementById("answerQuestionTitle");
+      const container = document.getElementById("answerContainer");
+      if (titleEl && container && !container.classList.contains("hidden") && titleEl.textContent) {
+        renderRelatedQuestions(titleEl.textContent);
+      }
     });
   });
 
