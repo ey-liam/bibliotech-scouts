@@ -1513,6 +1513,58 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   openTabBtn.href = viewUrl;
   dlBtn.href = dlUrl;
 
+  // Si es una imagen (PNG, JPG, WEBP, AVIF), 'Abrir en pestaña' abre un visor web
+  // limpio en la nueva pestaña para evitar que el navegador la descargue forzosamente
+  // por el Content-Disposition: attachment de GitHub Releases.
+  if (['PNG', 'JPG', 'JPEG', 'WEBP', 'AVIF'].includes(doc.ext)) {
+    openTabBtn.onclick = (e) => {
+      e.preventDefault();
+      const tab = window.open('', '_blank');
+      if (tab) {
+        tab.document.write(`<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(doc.title)}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+    body { background: #07090e; color: #f8fafc; min-height: 100vh; display: flex; flex-direction: column; }
+    header { position: sticky; top: 0; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; z-index: 50; }
+    .title-group { max-width: 75%; }
+    .badge { display: inline-block; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #a855f7; margin-bottom: 2px; }
+    h1 { font-size: 1.15rem; font-weight: 800; color: #fff; line-height: 1.3; }
+    .fname { font-size: 0.8rem; color: #94a3b8; }
+    .btn-dl { background: #7c3aed; color: #fff; text-decoration: none; padding: 9px 18px; border-radius: 10px; font-weight: 700; font-size: 0.88rem; transition: background 0.2s; }
+    .btn-dl:hover { background: #6d28d9; }
+    main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 24px; }
+    img { max-width: 95vw; max-height: calc(100vh - 120px); object-fit: contain; border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.85); background: #0f172a; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title-group">
+      <span class="badge">Vista Previa • ${escapeHtml(doc.category || 'ASMAC')}</span>
+      <h1>${escapeHtml(doc.title)}</h1>
+      <span class="fname">${escapeHtml(doc.filename)}</span>
+    </div>
+    <a href="${dlUrl}" download class="btn-dl">Descargar Archivo</a>
+  </header>
+  <main>
+    <img src="${viewUrl}" alt="${escapeHtml(doc.title)}">
+  </main>
+</body>
+</html>`);
+        tab.document.close();
+      }
+    };
+  } else {
+    openTabBtn.onclick = null;
+  }
+
   if (shelfIndex >= 0 && STATE.currentShelfDocs.length > 1) {
     prevBtn.classList.remove("hidden");
     nextBtn.classList.remove("hidden");
