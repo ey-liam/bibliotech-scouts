@@ -2566,6 +2566,7 @@ h1, h2, h3, h4 {
   align-items: center;
   justify-content: center;
   padding: 1.25rem;
+  overscroll-behavior: contain;
 }
 
 .modal-container {
@@ -2584,8 +2585,10 @@ h1, h2, h3, h4 {
   padding: 0;
 }
 
+html.reader-fullscreen,
 body.reader-fullscreen {
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .modal-container.fullscreen-reader {
@@ -2689,6 +2692,7 @@ body.reader-fullscreen {
 .modal-body {
   flex: 1;
   overflow: auto;
+  overscroll-behavior: contain;
   background: #0f172a;
 }
 
