@@ -98,3 +98,4 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 - **Preguntas relacionadas:** cada respuesta incluye hasta 5 preguntas del mismo tema o documento, calculadas con `topic_id`, `doc_id`, categoría y palabras clave. Así se puede seguir explorando aunque los títulos no se parezcan (por ejemplo, todos los nudos o todos los amarres).
 - **Autocompletado más útil:** al escribir un título completo ahora también sugiere preguntas del mismo tema, no solo coincidencias exactas.
 - **Botón «Nueva búsqueda»** en el panel de respuesta para limpiar la barra, cerrar la respuesta y volver al buscador.
+- **Filtros de la biblioteca juntos:** los estantes por categoría ahora están junto al buscador y los selectores, antes del banner del Centenario. Al elegir un estante, la vista baja a los resultados.
