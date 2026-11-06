@@ -596,12 +596,16 @@ function updateAutocompleteDropdown(rawInput) {
     return;
   }
 
-  const tokens = qNorm.split(" ").filter((w) => w.length >= 2);
+  // Se usan palabras significativas (sin artículos ni muletillas) para que al
+  // escribir una pregunta completa también aparezcan temas relacionados.
+  const tokens = tokenizeQuery(rawInput).filter((w) => w.length >= 2);
   if (!tokens.length) {
     box.classList.add("hidden");
+    box.innerHTML = "";
     return;
   }
 
+  const minHits = tokens.length <= 2 ? tokens.length : Math.ceil(tokens.length * 0.5);
   const userTypedFalda = qNorm.includes("falda");
   const matches = [];
 
@@ -616,12 +620,12 @@ function updateAutocompleteDropdown(rawInput) {
     let tokenHits = 0;
     for (const tk of tokens) {
       if (nq.includes(tk)) {
-        score += 5;
+        score += tk.length >= 5 ? 5 : 3;
         tokenHits += 1;
       }
     }
-    if (tokenHits === tokens.length) {
-      score += 12;
+    if (tokenHits >= minHits) {
+      if (tokenHits === tokens.length) score += 12;
       if (!item.doc_id) score += 6;
       matches.push({ score, item });
     }
@@ -870,9 +874,13 @@ function renderLibraryShelf() {
 // ============================================================================
 // MOTOR DE RESPUESTAS DOCUMENTALES (SERVIDOR LOCAL + NAVEGADOR WEB PUBLICO)
 // ============================================================================
-async function submitQuestion(queryText) {
+async function submitQuestion(queryText, options = {}) {
   const q = (queryText || "").trim();
   if (!q) return;
+
+  // Al abrir una pregunta sugerida no se escribe en la barra: la barra queda
+  // libre para buscar otra cosa y la pregunta elegida se muestra en el panel.
+  const syncInput = options.syncInput === true;
 
   // Los fragmentos se necesitan para enriquecer respuestas, no para cargar la página.
   loadWebChunks();
@@ -882,8 +890,8 @@ async function submitQuestion(queryText) {
 
   const input = document.getElementById("askInput");
   const clearBtn = document.getElementById("clearAskBtn");
-  if (input) input.value = q;
-  if (clearBtn) clearBtn.classList.remove("hidden");
+  if (syncInput && input) input.value = q;
+  if (syncInput && clearBtn) clearBtn.classList.remove("hidden");
 
   const container = document.getElementById("answerContainer");
   const titleEl = document.getElementById("answerQuestionTitle");
@@ -894,8 +902,6 @@ async function submitQuestion(queryText) {
   titleEl.textContent = q;
   bodyEl.innerHTML = `<p style="color:#6d28d9;font-weight:700;">Consultando los documentos oficiales...</p>`;
   sourcesEl.innerHTML = "";
-
-  container.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
   if (IS_LOCAL_SERVER) {
     try {
@@ -910,6 +916,8 @@ async function submitQuestion(queryText) {
       if (res.ok) {
         const data = await res.json();
         displayAnswer(data);
+        renderRelatedQuestions(q);
+        container.scrollIntoView({ behavior: "smooth", block: "start" });
         return;
       }
     } catch (_) {}
@@ -917,6 +925,8 @@ async function submitQuestion(queryText) {
 
   const ans = answerLocallyInBrowser(q);
   displayAnswer(ans);
+  renderRelatedQuestions(q);
+  container.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function buildDocSpecificAnswerInBrowser(doc) {
@@ -1257,6 +1267,99 @@ function displayAnswer(data) {
     .join("");
 }
 
+// Sugiere preguntas del banco que comparten tema con la consulta actual.
+// Se muestran dentro del panel para seguir explorando sin volver a escribir.
+function renderRelatedQuestions(query) {
+  const wrap = document.getElementById("answerRelated");
+  const chipsEl = document.getElementById("answerRelatedChips");
+  if (!wrap || !chipsEl) return;
+
+  const qKey = normalizeQuestionKey(query);
+  const tokens = tokenizeQuery(query).filter((w) => w.length >= 3);
+  const current = STATE.qBankByNorm[qKey];
+  const currentCat = current ? current.cat : "";
+  const currentDoc = current ? current.doc_id : "";
+  const currentTopic = current ? current.topic_id : "";
+
+  if (!STATE.questionBank.length) {
+    // El banco se descarga en el primer clic; al terminar, se recalculan las
+    // relacionadas si la misma pregunta sigue visible en el panel.
+    loadQuestionBank().then((bank) => {
+      if (!bank || !bank.length) return;
+      const titleEl = document.getElementById("answerQuestionTitle");
+      if (titleEl && normalizeQuestionKey(titleEl.textContent) === qKey) {
+        renderRelatedQuestions(query);
+      }
+    });
+    wrap.classList.add("hidden");
+    chipsEl.innerHTML = "";
+    return;
+  }
+
+  if (!tokens.length && !currentCat) {
+    wrap.classList.add("hidden");
+    chipsEl.innerHTML = "";
+    return;
+  }
+
+  const queryNorm = normalizeStr(query);
+  const scored = [];
+
+  for (const item of STATE.questionBank) {
+    const key = normalizeQuestionKey(item.q || "");
+    if (!key || key === qKey) continue;
+    if (!queryNorm.includes("falda") && normalizeStr(item.q || "").includes("falda")) continue;
+
+    let hits = 0;
+    let score = 0;
+    for (const tk of tokens) {
+      if (key.includes(tk)) {
+        hits += 1;
+        score += tk.length >= 5 ? 3 : 1;
+      }
+    }
+
+    const sameTopic = Boolean(currentTopic && item.topic_id === currentTopic);
+    const sameCat = Boolean(currentCat && item.cat === currentCat);
+    if (!hits && !sameTopic && !sameCat) continue;
+
+    // El topic_id agrupa preguntas del mismo tema aunque sus títulos no se
+    // parezcan (por ejemplo, todos los nudos o todos los amarres).
+    if (sameTopic) score += 10;
+    if (sameCat) score += 3;
+    if (currentDoc && item.doc_id === currentDoc) score += 6;
+    if (!item.doc_id) score += 1;
+    if (score <= 0) continue;
+
+    scored.push({ score, item, key });
+  }
+
+  scored.sort((a, b) => b.score - a.score || a.item.q.localeCompare(b.item.q, "es"));
+
+  const picked = [];
+  const seen = new Set([qKey]);
+  for (const entry of scored) {
+    if (seen.has(entry.key)) continue;
+    seen.add(entry.key);
+    picked.push(entry.item);
+    if (picked.length >= 5) break;
+  }
+
+  if (!picked.length) {
+    wrap.classList.add("hidden");
+    chipsEl.innerHTML = "";
+    return;
+  }
+
+  chipsEl.innerHTML = picked
+    .map(
+      (item) =>
+        `<button type="button" class="quick-q-chip" data-query="${escapeHtml(item.q)}">${escapeHtml(item.q)}</button>`
+    )
+    .join("");
+  wrap.classList.remove("hidden");
+}
+
 // ============================================================================
 // CATALOGO GENERAL Y FILTROS (498 DOCUMENTOS DESCARGABLES)
 // ============================================================================
@@ -1492,7 +1595,7 @@ function bindEvents() {
     askForm.addEventListener("submit", (e) => {
       e.preventDefault();
       loadQuestionBank();
-      submitQuestion(askInput.value);
+      submitQuestion(askInput.value, { syncInput: true });
     });
   }
 
@@ -1527,7 +1630,7 @@ function bindEvents() {
       if (!item) return;
       const q = item.getAttribute("data-ac-query");
       acBox.classList.add("hidden");
-      submitQuestion(q);
+      submitQuestion(q, { syncInput: true });
     });
   }
 
@@ -1592,6 +1695,22 @@ function bindEvents() {
   if (closeAnsBtn) {
     closeAnsBtn.addEventListener("click", () => {
       document.getElementById("answerContainer").classList.add("hidden");
+    });
+  }
+
+  const newSearchBtn = document.getElementById("newSearchBtn");
+  if (newSearchBtn) {
+    newSearchBtn.addEventListener("click", () => {
+      const input = document.getElementById("askInput");
+      const clearBtn = document.getElementById("clearAskBtn");
+      const ac = document.getElementById("askAutocomplete");
+      if (input) input.value = "";
+      if (clearBtn) clearBtn.classList.add("hidden");
+      if (ac) ac.classList.add("hidden");
+      document.getElementById("answerContainer").classList.add("hidden");
+      const searchSection = document.getElementById("buscador");
+      if (searchSection) searchSection.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (input) setTimeout(() => input.focus({ preventScroll: true }), 380);
     });
   }
 

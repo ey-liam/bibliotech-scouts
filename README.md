@@ -94,3 +94,7 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 - **Banco ampliado de preguntas frecuentes:** 56 nuevas respuestas fundamentadas, generadas con `scripts/build_faq_v3.js` a partir de `scripts/faq_v3_source.js` y publicadas en `data/faq_v3.json`. Cubren primeros auxilios y seguridad (16), campismo y naturaleza (18), ceremonial y símbolos (10), historia del escultismo mexicano (5), uniforme (4) y protección juvenil (3). El buscador carga ambos bancos en paralelo y elimina duplicados.
 - **Nueva pestaña «Primeros Auxilios y Seguridad»** en el explorador de preguntas, con chips destacados para atragantamiento, purificación de agua y la Política Nacional A Salvo del Peligro.
 - El contador del sitio y el README se actualizaron a **5,412 preguntas y respuestas**.
+- **Navegación del buscador:** al elegir una pregunta sugerida, la barra de búsqueda ya no se llena automáticamente. La pregunta se muestra en el panel de respuesta y la barra queda libre para una nueva consulta.
+- **Preguntas relacionadas:** cada respuesta incluye hasta 5 preguntas del mismo tema o documento, calculadas con `topic_id`, `doc_id`, categoría y palabras clave. Así se puede seguir explorando aunque los títulos no se parezcan (por ejemplo, todos los nudos o todos los amarres).
+- **Autocompletado más útil:** al escribir un título completo ahora también sugiere preguntas del mismo tema, no solo coincidencias exactas.
+- **Botón «Nueva búsqueda»** en el panel de respuesta para limpiar la barra, cerrar la respuesta y volver al buscador.
