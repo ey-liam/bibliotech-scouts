@@ -87,6 +87,8 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 
 ## 8. Novedades de la versión V4 Beta (05/11/2026)
 
+- **Imagen principal única en el inicio:** en lugar del trío de tres fotos, la pantalla de inicio muestra un solo hexágono grande de «Comunidad de Caminantes» (borde verde), con entrada desvanecida, flotación suave continua, caption sincronizada con el movimiento y mensaje resaltado. Respeta `prefers-reduced-motion` y mantiene el clic hacia el buscador.
+
 - **Especialización en Insignias Mundiales y Marco Mundo Mejor (WOSM):** incorporación de 39 preguntas y respuestas exhaustivas fundamentadas en los HTMLs oficiales de World Scouting y el Manual del Uniforme Junio 2026 sobre la Flor de Lis Mundial (diseño Egipto 2024), Mensajeros de la Paz, Earth Tribe (Champions for Nature, Plastic Tide Turners, Scouts Go Solar), Scouts del Mundo (SWA), Insignia de Madera (Wood Badge de 2, 3 y 4 maderos, collar de Dinizulu y Pañoleta de Gilwell), Lobo de Bronce, Diálogo por la Paz (KAICIID), Diálogo Interreligioso, Patrimonito (UNESCO), Life Leaders, Health Allies, JOTA-JOTI, 26° Jamboree Polonia 2027 y 17° Moot Taiwán 2029.
 - **Nueva pestaña temática y pastilla de World Scouting:** se añadió la pestaña «Insignias Mundiales (WOSM)» en el explorador de preguntas y se vinculó directamente a la pastilla de World Scouting del buscador.
 - **Filtro estricto de sección en el buscador:** al seleccionar una sección (como *Comunidad*), el autocompletado en vivo y las preguntas relacionadas bajo cada respuesta se restringen o priorizan a esa sección específica, evitando que aparezcan preguntas o sugerencias de otras secciones (como *Tropa* o *Manada*).
