@@ -53,7 +53,7 @@ body {
     radial-gradient(circle at 80% 65%, rgba(109, 40, 217, 0.09), transparent 35%);
 }
 
-/* Accesibilidad: permite saltar la navegación con Tab */
+/* Accesibilidad: permite saltar la navegaciÃ³n con Tab */
 .skip-link {
   position: fixed;
   top: -120px;
@@ -2015,7 +2015,7 @@ h1, h2, h3, h4 {
 }
 
 /* =====================================================
-   ¿QUE COSAS CAMBIARON AÑO CON AÑO?
+   Â¿QUE COSAS CAMBIARON AÃ‘O CON AÃ‘O?
    ===================================================== */
 .evolution-section {
   padding: 4rem 0;
@@ -2785,7 +2785,7 @@ body.reader-fullscreen {
 }
 
 /* =====================================================
-   PIE DE PAGINA CON LETRA PEQUEÑA HASTA ABAJO
+   PIE DE PAGINA CON LETRA PEQUEÃ‘A HASTA ABAJO
    ===================================================== */
 .site-footer {
   background: #081026;
@@ -2833,7 +2833,7 @@ body.reader-fullscreen {
    - DISTRIBUCION DINAMICA Y RESPONSIVA SIN SOLAPAMIENTOS (PC, TABLET HORIZONTAL/VERTICAL Y MOVIL)
    ===================================================== */
 
-/* Fondo animado global con orbes de color y hexágonos flotantes */
+/* Fondo animado global con orbes de color y hexÃ¡gonos flotantes */
 .global-animated-bg {
   position: fixed;
   inset: 0;
@@ -2990,7 +2990,7 @@ body.reader-fullscreen {
 }
 
 /* Asegurar que todas las secciones queden por encima del fondo animado.
-   La barra superior se excluye a propósito: debe conservar position: fixed. */
+   La barra superior se excluye a propÃ³sito: debe conservar position: fixed. */
 .hero-section,
 .library-section,
 .about-section,
@@ -3005,7 +3005,7 @@ body.reader-fullscreen {
   z-index: 1;
 }
 
-/* Separadores ondulados dinámicos entre secciones */
+/* Separadores ondulados dinÃ¡micos entre secciones */
 .library-section,
 .sections-showcase {
   position: relative;
@@ -3073,7 +3073,7 @@ body.reader-fullscreen {
   100% { transform: translateY(-4px) scale(1.015); }
 }
 
-/* Flotación independiente de los 3 octágonos del Hero + subtítulos escalonados sin colisión */
+/* FlotaciÃ³n independiente de los 3 octÃ¡gonos del Hero + subtÃ­tulos escalonados sin colisiÃ³n */
 @keyframes hexBobLeft {
   0%, 100% { transform: translateY(8px); }
   50% { transform: translateY(-4px); }
@@ -3129,7 +3129,7 @@ body.reader-fullscreen {
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
 }
 
-/* Resplandor 3D detrás del escenario de Liam Durán */
+/* Resplandor 3D detrÃ¡s del escenario de Liam DurÃ¡n */
 .liam-stage-glow {
   position: absolute;
   inset: -14px;
@@ -3141,7 +3141,7 @@ body.reader-fullscreen {
   pointer-events: none;
 }
 
-/* Orbes de los 4 Ejes Temáticos en Agentes de Cambio con etiqueta flotante al pasar el cursor */
+/* Orbes de los 4 Ejes TemÃ¡ticos en Agentes de Cambio con etiqueta flotante al pasar el cursor */
 .adc-icon-orb {
   position: relative;
 }
@@ -3178,7 +3178,7 @@ body.reader-fullscreen {
   padding: 12px 14px 32px 28px;
 }
 
-/* Prevención de solapamiento en tarjetas de sección (.scout-sec-card) */
+/* PrevenciÃ³n de solapamiento en tarjetas de secciÃ³n (.scout-sec-card) */
 .scout-sec-card {
   display: flex;
   flex-direction: column;
@@ -3215,7 +3215,7 @@ body.reader-fullscreen {
   bottom: -6px;
 }
 
-/* Controles de búsqueda y filtros en Biblioteca Scout */
+/* Controles de bÃºsqueda y filtros en Biblioteca Scout */
 .library-controls-bar {
   display: flex;
   align-items: center;
@@ -3243,7 +3243,7 @@ body.reader-fullscreen {
   box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12);
 }
 
-/* Barra flotante de acceso rápido (Preguntar / Subir) */
+/* Barra flotante de acceso rÃ¡pido (Preguntar / Subir) */
 .floating-quick-bar {
   position: fixed;
   bottom: 22px;
@@ -3290,7 +3290,7 @@ body.reader-fullscreen {
   box-shadow: 0 18px 36px rgba(109, 40, 217, 0.38);
 }
 
-/* Pie de página con logos oficiales ASMAC y WOSM y aviso de corte 03/11/2026 */
+/* Pie de pÃ¡gina con logos oficiales ASMAC y WOSM y aviso de corte 03/11/2026 */
 .footer-top-bar {
   display: flex;
   align-items: center;
@@ -3365,7 +3365,7 @@ body.reader-fullscreen {
 }
 
 /* =====================================================
-   ADAPTACIÓN RESPONSIVA MULTIDISPOSITIVO:
+   ADAPTACIÃ“N RESPONSIVA MULTIDISPOSITIVO:
    1) TABLET HORIZONTAL / LAPTOP COMPACTA (<= 1120px)
    ===================================================== */
 @media (max-width: 1120px) {
@@ -3590,7 +3590,7 @@ body.reader-fullscreen {
     border-radius: 24px;
   }
 
-  /* Barra deslizable horizontal táctil para pastillas de sección y categorías */
+  /* Barra deslizable horizontal tÃ¡ctil para pastillas de secciÃ³n y categorÃ­as */
   .search-section-pills,
   .quick-topic-tabs,
   .library-shelves-tabs,
@@ -3894,12 +3894,12 @@ body.reader-fullscreen {
 }
 
 /* =====================================================
-   RENOVACIÓN 3D COMPLETA, ESTILO JUVENIL ATREVIDO Y DIVERTIDO
+   RENOVACIÃ“N 3D COMPLETA, ESTILO JUVENIL ATREVIDO Y DIVERTIDO
    - ENLACE WEB COMPARTIBLE Y ACCESOS 3D EN EL HERO
-   - GUÍA RÁPIDA INTERACTIVA 3D (#guia-inicio) CON 6 TARJETAS 3D
-   - ELEMENTOS GEOMÉTRICOS 3D FLOTANTES EN FONDO Y ENTRE SECCIONES
-   - INCLINACIÓN 3D CON PERSPECTIVA REAL (pointermove)
-   - LIDERAZGO ACTUAL DEL CNRC Y CHIPS RÁPIDOS EN AGENTES DE CAMBIO.MX
+   - GUÃA RÃPIDA INTERACTIVA 3D (#guia-inicio) CON 6 TARJETAS 3D
+   - ELEMENTOS GEOMÃ‰TRICOS 3D FLOTANTES EN FONDO Y ENTRE SECCIONES
+   - INCLINACIÃ“N 3D CON PERSPECTIVA REAL (pointermove)
+   - LIDERAZGO ACTUAL DEL CNRC Y CHIPS RÃPIDOS EN AGENTES DE CAMBIO.MX
    ===================================================== */
 
 /* Figuras 3D flotantes en el fondo global */
@@ -3973,7 +3973,7 @@ body.reader-fullscreen {
   }
 }
 
-/* Barra 3D de enlace directo compartible y botón de salto en el Hero */
+/* Barra 3D de enlace directo compartible y botÃ³n de salto en el Hero */
 .hero-share-link-bar {
   display: flex;
   align-items: center;
@@ -3984,7 +3984,7 @@ body.reader-fullscreen {
 }
 
 /* =====================================================
-   SECCIÓN DE PRIMEROS PASOS (#guia-inicio)
+   SECCIÃ“N DE PRIMEROS PASOS (#guia-inicio)
    ===================================================== */
 .quickstart-section,
 .quickstart-3d-section {
@@ -4101,7 +4101,7 @@ body.reader-fullscreen {
   opacity: 0.55;
 }
 
-/* Variantes cromáticas atrevidas para las 6 tarjetas 3D */
+/* Variantes cromÃ¡ticas atrevidas para las 6 tarjetas 3D */
 .starter-3d-card.theme-emerald {
   --card-accent: #10b981;
   --card-shadow-3d: #047857;
@@ -4359,7 +4359,7 @@ body.reader-fullscreen {
   color: #fde047;
 }
 
-/* Adaptación responsiva de las nuevas tarjetas 3D y barras */
+/* AdaptaciÃ³n responsiva de las nuevas tarjetas 3D y barras */
 @media (max-width: 1120px) {
   .starter-3d-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4378,10 +4378,10 @@ body.reader-fullscreen {
 }
 
 /* ============================================================
-   REDISEÑO V3 — «SCOUT ZINE»
-   Sistema tipográfico, retícula, barra fija, hero editorial y
+   REDISEÃ‘O V3 â€” Â«SCOUT ZINEÂ»
+   Sistema tipogrÃ¡fico, retÃ­cula, barra fija, hero editorial y
    componentes consistentes. Esta capa va al final para ordenar
-   las reglas anteriores sin tocar la lógica de app.js.
+   las reglas anteriores sin tocar la lÃ³gica de app.js.
    ============================================================ */
 
 :root {
@@ -5467,7 +5467,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
 }
 
 /* ------------------------------------------------------------
-   6) PROPÓSITO Y AGENTES DE CAMBIO
+   6) PROPÃ“SITO Y AGENTES DE CAMBIO
    ------------------------------------------------------------ */
 .about-card {
   grid-template-columns: 340px minmax(0, 1fr);
@@ -5680,7 +5680,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
 }
 
 /* ------------------------------------------------------------
-   8) SERVICIOS, EVOLUCIÓN Y CATÁLOGO
+   8) SERVICIOS, EVOLUCIÃ“N Y CATÃLOGO
    ------------------------------------------------------------ */
 .services-header-photos {
   flex-shrink: 0;
@@ -6399,13 +6399,13 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
 }
 
 /* ============================================================
-   FONDO AURORA DINÁMICO — CAPA VIVA
-   Malla de color en movimiento, orbes, haces de luz, hexágonos,
+   FONDO AURORA DINÃMICO â€” CAPA VIVA
+   Malla de color en movimiento, orbes, haces de luz, hexÃ¡gonos,
    cubos, anillos y destellos. Solo anima transform/opacity para
    no generar cambios de layout ni costosos repintados.
    ============================================================ */
 
-/* 1) Secciones translúcidas: dejan ver la aurora sin perder lectura */
+/* 1) Secciones translÃºcidas: dejan ver la aurora sin perder lectura */
 .quickstart-section {
   background: linear-gradient(180deg, rgba(251, 250, 247, 0.64) 0%, rgba(244, 242, 236, 0.56) 100%);
 }
@@ -6464,7 +6464,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
   pointer-events: none;
 }
 
-/* Haz de luz diagonal que barre la página */
+/* Haz de luz diagonal que barre la pÃ¡gina */
 .global-animated-bg::after {
   content: "";
   position: absolute;
@@ -6483,7 +6483,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
   pointer-events: none;
 }
 
-/* 3) Orbes de color que flotan y cambian de tamaño */
+/* 3) Orbes de color que flotan y cambian de tamaÃ±o */
 .bg-orb {
   opacity: 0.42;
   animation: orbFloatA 28s ease-in-out infinite alternate;
@@ -6532,10 +6532,10 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
   animation-duration: 23s;
 }
 
-/* 4) Hexágonos: brillo suave sin rotación.
-   La rotación de un elemento con clip-path dentro de la capa fija
+/* 4) HexÃ¡gonos: brillo suave sin rotaciÃ³n.
+   La rotaciÃ³n de un elemento con clip-path dentro de la capa fija
    provocaba un reflujo inicial (CLS). El pulso de opacidad mantiene
-   la vida visual sin tocar geometría. */
+   la vida visual sin tocar geometrÃ­a. */
 .bg-hex-float {
   opacity: 0.12;
   animation: hexPulse 18s ease-in-out infinite alternate;
@@ -6570,7 +6570,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
   left: 42%;
 }
 
-/* 5) Cubos y anillos con más presencia */
+/* 5) Cubos y anillos con mÃ¡s presencia */
 .bg-3d-cube {
   opacity: 0.85;
   will-change: transform;
@@ -6581,7 +6581,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
   will-change: transform;
 }
 
-/* 6) Destellos que titilan por la página */
+/* 6) Destellos que titilan por la pÃ¡gina */
 .bg-spark {
   position: absolute;
   width: 10px;
@@ -6648,7 +6648,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
   animation-duration: 6.7s;
 }
 
-/* 7) El hero recupera sus auroras, ahora sí en movimiento */
+/* 7) El hero recupera sus auroras, ahora sÃ­ en movimiento */
 .hero-glow {
   display: block;
   animation: heroGlowFloat 15s ease-in-out infinite alternate;
@@ -6800,7 +6800,7 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
     display: none;
   }
 
-  /* En móvil el haz diagonal se oculta: es la capa más cara de pintar
+  /* En mÃ³vil el haz diagonal se oculta: es la capa mÃ¡s cara de pintar
      y la aurora ya aporta movimiento con la malla y los orbes. */
   .global-animated-bg::after {
     display: none;
@@ -6827,76 +6827,168 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
 }
 
 /* =====================================================
-   IMAGEN PRINCIPAL ÚNICA EN EL INICIO (COMUNIDAD DE
-   CAMINANTES): HEXÁGONO GRANDE CON ENTRADA DESVANECIDA
-   Y FLOTACIÓN SUAVE CONTINUA
+   IMAGEN PRINCIPAL A SANGRE EN EL INICIO (COMUNIDAD DE
+   CAMINANTES): SIN RECUADRO, FUNDIDA CON EL FONDO DEL
+   SITIO Y CON MOVIMIENTO SUAVE
    ===================================================== */
-.hero-hex-single .hex-cluster-item {
-  width: clamp(300px, 32vw, 440px);
-  height: clamp(300px, 32vw, 440px);
-  min-height: 0;
-  cursor: pointer;
-  opacity: 0;
-  animation:
-    heroHexEntrance 1s var(--spring) 0.15s forwards,
-    heroHexFloat 7s ease-in-out 1.3s infinite;
+.hero-photo-stage {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  min-width: 0;
 }
 
-/* Entrada: aparece desde abajo con desvanecido y escala suave */
-@keyframes heroHexEntrance {
-  from { opacity: 0; transform: translateY(30px) scale(0.92); }
+.hero-photo {
+  --hero-photo-bleed: calc((100vw - min(1200px, 100vw)) / 2 + clamp(1rem, 3vw, 2rem));
+  position: relative;
+  flex: 1 1 auto;
+  align-self: stretch;
+  min-height: clamp(420px, 42vw, 560px);
+  margin-top: calc(-1 * clamp(2.5rem, 5vw, 4.25rem));
+  cursor: pointer;
+  opacity: 1;
+  animation: heroPhotoEntrance 1.1s var(--spring);
+}
+
+.hero-photo-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + var(--hero-photo-bleed));
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 58% 55%;
+  animation: heroPhotoDrift 22s ease-in-out infinite alternate;
+  transition: filter 0.4s ease;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 34%, #000 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.35) 12%, #000 34%, #000 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.hero-photo:hover .hero-photo-img,
+.hero-photo:focus-visible .hero-photo-img {
+  filter: brightness(1.07) saturate(1.06);
+}
+
+.hero-photo:focus-visible {
+  outline: 3px solid rgba(34, 197, 94, 0.75);
+  outline-offset: 6px;
+  border-radius: 20px;
+}
+
+/* Entrada: aparece desde abajo con desvanecido */
+@keyframes heroPhotoEntrance {
+  from { opacity: 0; transform: translateY(28px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Movimiento vivo: flota suavemente sin dejar de girar el hexágono */
-@keyframes heroHexFloat {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-14px) scale(1.02); }
+/* Movimiento vivo: acercamiento y deriva muy lentos, tipo Ken Burns */
+@keyframes heroPhotoDrift {
+  from { transform: scale(1.04) translate3d(0, 0, 0); }
+  to { transform: scale(1.11) translate3d(-1.2%, -1%, 0); }
 }
 
-/* Brillo vivo que acompaña la flotación */
-.hero-hex-single .hex-cluster-item {
-  filter: drop-shadow(0 30px 46px rgba(22, 163, 74, 0.38));
+.hero-photo-caption {
+  position: absolute;
+  left: 34%;
+  bottom: 7%;
+  z-index: 5;
+  max-width: 80%;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.82rem, 1.1vw, 0.98rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow: 0 12px 26px rgba(2, 6, 23, 0.45);
+  animation: heroCaptionFloat 7s ease-in-out infinite;
 }
 
-.hero-hex-single .hex-cluster-item.hex-pos-center {
-  width: clamp(300px, 32vw, 440px);
-  height: clamp(300px, 32vw, 440px);
-  transform: none;
+@keyframes heroCaptionFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
 }
 
-/* El hover ahora realza con luz verde; el transform lo lleva la animación */
-.hero-hex-single .hex-cluster-item:hover {
-  filter: drop-shadow(0 36px 58px rgba(34, 197, 94, 0.55));
+/* Stickers sobre la imagen, sin tapar el rostro de las personas */
+.hero-photo-stage .hero-sticker {
+  font-size: 0.72rem;
+  padding: 0.48rem 0.85rem;
 }
 
-.hero-hex-single .hex-floating-caption {
-  font-size: 1rem;
-  padding: 0.42rem 1.15rem;
-  bottom: -8px;
-  animation: heroCaptionPulse 7s ease-in-out 1.3s infinite;
+.hero-photo-stage .hero-sticker-a {
+  top: 6%;
+  right: 1.5rem;
 }
 
-@keyframes heroCaptionPulse {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-14px); }
+.hero-photo-stage .hero-sticker-b {
+  bottom: 5%;
+  left: 2%;
 }
 
-/* Stickers alrededor de la imagen principal */
-.hero-hex-single .hero-sticker {
-  font-size: 0.74rem;
-  padding: 0.5rem 0.9rem;
+@media (max-width: 1120px) {
+  /* En mÃ³vil y tablet la foto va debajo del texto y se difumina
+     por arriba, abajo y los lados con el fondo del sitio. */
+  .hero-photo {
+    width: 100%;
+    min-height: clamp(240px, 62vw, 400px);
+    margin-top: -0.5rem;
+  }
+
+  .hero-photo-img {
+    width: 100%;
+    object-position: 50% 55%;
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 9%, #000 24%, #000 76%, transparent 100%),
+      linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 9%, #000 24%, #000 76%, transparent 100%),
+      linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  .hero-photo-caption {
+    left: 50%;
+    bottom: 2%;
+    transform: translateX(-50%);
+    animation: none;
+  }
+
+  .hero-photo-stage .hero-sticker-a {
+    top: 4%;
+    right: 4%;
+  }
+
+  .hero-photo-stage .hero-sticker-b {
+    bottom: 3%;
+    left: 4%;
+  }
 }
 
 @media (max-width: 700px) {
-  .hero-hex-single .hex-cluster-item,
-  .hero-hex-single .hex-cluster-item.hex-pos-center {
-    width: clamp(230px, 64vw, 300px);
-    height: clamp(230px, 64vw, 300px);
+  .hero-photo {
+    min-height: clamp(220px, 70vw, 320px);
   }
 
-  .hero-hex-single .hex-floating-caption {
-    font-size: 0.85rem;
-    padding: 0.35rem 0.9rem;
+  .hero-photo-stage .hero-sticker {
+    font-size: 0.62rem;
+    padding: 0.38rem 0.65rem;
+  }
+
+  .hero-photo-caption {
+    max-width: 92%;
+    font-size: 0.8rem;
+    padding: 0.35rem 0.85rem;
   }
 }
