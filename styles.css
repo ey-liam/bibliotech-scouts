@@ -6992,3 +6992,51 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
     padding: 0.35rem 0.85rem;
   }
 }
+
+/* =====================================================
+   AJUSTES MÓVILES: NAVEGACIÓN, BARRA RÁPIDA Y PIE
+   La barra rápida y el botón nativo de Mi biblioteca no
+   deben tapar contenido ni chocar entre sí.
+   ===================================================== */
+@media (max-width: 1024px) {
+  .main-nav {
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+  }
+
+  .site-footer {
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.floating-quick-bar {
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  right: calc(14px + env(safe-area-inset-right, 0px));
+}
+
+.reader-open .floating-quick-bar,
+.modal-open .floating-quick-bar {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .floating-quick-bar {
+    gap: 0.35rem;
+  }
+
+  .fab-ask {
+    min-height: 40px;
+    padding: 0.55rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  .fab-top {
+    width: 40px;
+    height: 40px;
+  }
+}
