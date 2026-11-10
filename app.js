@@ -174,6 +174,31 @@ function formatInlineMd(text) {
 let questionBankPromise = null;
 let webChunksPromise = null;
 
+// La primera pregunta puede llegar antes de que initApp termine de cargar el
+// catálogo y la base de conocimiento. Esta promesa espera a que todo el estado
+// necesario esté listo para responder sin conexión desde el primer intento.
+let appReadyPromise = null;
+let appReadyDone = false;
+let resolveAppReady = null;
+
+function waitForAppReady() {
+  if (appReadyDone) return Promise.resolve();
+  if (!appReadyPromise) {
+    appReadyPromise = new Promise((resolve) => {
+      resolveAppReady = resolve;
+    });
+  }
+  return appReadyPromise;
+}
+
+function markAppReady() {
+  appReadyDone = true;
+  if (resolveAppReady) {
+    resolveAppReady();
+    resolveAppReady = null;
+  }
+}
+
 function loadQuestionBank() {
   if (STATE.questionBank.length) return Promise.resolve(STATE.questionBank);
   if (questionBankPromise) return questionBankPromise;
@@ -311,6 +336,8 @@ async function initApp() {
     setupLazyDataWarmup();
   } catch (err) {
     console.error("Error cargando datos de BiblioTech:", err);
+  } finally {
+    markAppReady();
   }
 }
 
@@ -992,6 +1019,14 @@ async function submitQuestion(queryText, options = {}) {
       }
     } catch (_) {}
   }
+
+  // El banco, los fragmentos y el catálogo se cargan en el primer toque. La
+  // respuesta puede llegar antes de que terminen de descargarse; esperamos aquí
+  // para que la primera pregunta también funcione sin conexión y con todas las
+  // fuentes, incluso si se hace justo al abrir la app.
+  try {
+    await Promise.all([waitForAppReady(), loadQuestionBank(), loadWebChunks()]);
+  } catch (_) {}
 
   const ans = answerLocallyInBrowser(q);
   displayAnswer(ans);
