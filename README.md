@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 11/11/2026 • **Versión:** V7 Oficial - 2.2.1 Mobile (11/11/2026)  
+**Base de datos:** 11/11/2026 • **Versión:** V7 Oficial - 2.2.2 Mobile (11/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
