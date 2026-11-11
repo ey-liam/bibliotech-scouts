@@ -1,1 +1,13 @@
-Hoja: COTIZACIÓN ; ASOCIACION DE SCOUTS DE MEXICO A.C ; COTIZACIÓN ; FECHA___________ ; PROVINCIA | _______________ ; PROVEEDOR | DIRECCIÓN | TELÉFONO | IMPORTE | IVA | TOTAL | OBSERVACIONES ; 1 ; 2 ; 3 ; 4 ; 5
+HOJA DE CÁLCULO OFICIAL (XLSX): NO 9 COTIZACION
+
+=== HOJA: COTIZACIÓN (10 filas) ===
+ASOCIACION DE SCOUTS DE MEXICO A.C |  |  |  |  |  |  | 
+COTIZACIÓN |  |  |  |  |  |  | 
+FECHA___________ |  |  |  |  |  |  | 
+ |  | PROVINCIA | _______________ |  |  |  | 
+ | PROVEEDOR | DIRECCIÓN | TELÉFONO | IMPORTE | IVA | TOTAL | OBSERVACIONES
+1 |  |  |  |  |  |  | 
+2 |  |  |  |  |  |  | 
+3 |  |  |  |  |  |  | 
+4 |  |  |  |  |  |  | 
+5 |  |  |  |  |  |  | 

@@ -1,5 +1,86 @@
-Hoja: Autorización ; Autorización de viaje ; Partida presupuestal ; Fecha de solicitud ; Solicitado por ; Persona que realiza el viaje ; Cargo (Voluntario/Ejecutivo) ; Área de Adscripción ; Partida presupuestal ; Datos del viaje ; Ciudad(es) destino ; Motivo del viaje ; Nota informativa ; Lugar y fecha de salida ; Lugar y fecha de regreso ; Días de viaje | 0 | Transporte ; Requerimientos ; Boleto de Avión (Se debe incluir fecha de nacimiento) ; Viáticos que incluyen ; Presupuesto requerido ; Forma de anticipo ; Banco y sucursal ; Beneficiario ; Cuenta y Clabe ; Observaciones ; Aprobaciones ; Tengo conocimiento de que los gastos de viaje deberán ser comprobados (con comprobantes fiscales) a más tardar 7 días naturales posteriores al regreso a mi lugar de origen. ; Solicitado por: | Vo.Bo. por: | Autorizado por: ; 0 ; ASMAC.DAF-DDI.15.01
+HOJA DE CÁLCULO OFICIAL (XLSX): NO 15 FORMATO DE GASTOS DE VIAJE
 
-Hoja: Comprobación (NO Moificar) ; Comprobación de viaje ; Partida presupuestal ; Fecha de comprobación | 00:00:00 ; Solicitado por | 0 ; Persona que realiza el viaje | 0 ; Cargo (Voluntario/Ejecutivo) | 0 ; Área de Adscripción | 0 ; Partida presupuestal | 0 ; Datos del viaje ; Ciudad(es) destino | 0 ; Motivo del viaje | 0 ; Nota informativa | 0 ; Lugar y fecha de salida | 0 | 00:00:00 ; Lugar y fecha de regreso | 0 | 00:00:00 ; Días de viaje | 0 | Transporte | 0 ; Descripción de gastos ; Transporte Aéreo | 0 | Transporte local | 0 ; Transporte Terrestre | 0 | Hospedaje | 0 ; Renta de Vehículo | 0 | Alimentos | 0 ; Combustibles | 0 | Propinas | 0 ; Peajes (casetas) | 0 | Otros Gastos | 0 ; Subtotal de gastos | 0 ; Menos pago en la OSN | Banco y sucursal ; Total de gastos | 0 | Beneficiario ; Menos anticipo | Cuenta y Clabe ; Saldo a mi favor / a mi cargo | 0 ; Observaciones ; Aprobaciones ; Tengo conocimiento de que los gastos de viaje deberán ser comprobados (con comprobantes fiscales) a más tardar 7 días naturales posteriores al regreso a mi lugar de origen. ; Solicitado por: | Vo.Bo. por: | Autorizado por: ; 0 | 0 | 0 ; 0 | 0 | 0 ; ASMAC.DAF-DDI.15.02
+=== HOJA: Autorización (29 filas) ===
+Autorización de viaje |  |  |  |  |  | 
+Partida presupuestal |  |  |  |  |  | 
+Fecha de solicitud |  |  |  |  |  | 
+Solicitado por |  |  |  |  |  | 
+Persona que realiza el viaje |  |  |  |  |  | 
+Cargo (Voluntario/Ejecutivo) |  |  |  |  |  | 
+Área de Adscripción |  |  |  |  |  | 
+Partida presupuestal |  |  |  |  |  | 
+Datos del viaje |  |  |  |  |  | 
+Ciudad(es) destino |  |  |  |  |  | 
+Motivo del viaje |  |  |  |  |  | 
+Nota informativa |  |  |  |  |  | 
+Lugar y fecha de salida |  |  |  |  |  | 
+Lugar y fecha de regreso |  |  |  |  |  | 
+Días de viaje | 0 |  | Transporte |  |  | 
+Requerimientos |  |  |  |  |  | 
+Boleto de Avión (Se debe incluir fecha de nacimiento) |  |  |  |  |  | 
+Viáticos que incluyen |  |  |  |  |  | 
+Presupuesto requerido |  |  |  |  |  | 
+Forma de anticipo |  |  |  |  |  | 
+Banco y sucursal |  |  |  |  |  | 
+Beneficiario |  |  |  |  |  | 
+Cuenta y Clabe |  |  |  |  |  | 
+Observaciones |  |  |  |  |  | 
+Aprobaciones |  |  |  |  |  | 
+Tengo conocimiento de que los gastos de viaje deberán ser comprobados (con comprobantes fiscales) a más tardar 7 días naturales posteriores al regreso a mi lugar de origen. |  |  |  |  |  | 
+Solicitado por: |  |  | Vo.Bo. por: |  |  | Autorizado por:
+0 |  |  |  |  |  | 
+ASMAC.DAF-DDI.15.01 |  |  |  |  |  | 
 
-Hoja: Relación de Gastos ; RELACIÓN DE GASTOS VIAJE CAMPECHE ; FECHA | RUBRO | CONCEPTO | IMPORTE | IVA | TOTAL | Factura / Recibo | Nº (Ultimos 4 Digitos) ; Transporte Terrestre ; Renta de Vehículo ; Peajes ; Transporte local ; Hospedaje ; Alimentos ; Propinas ; Otros Gastos ; Factura ; Recibo ; *Entregar en CD o USB Archivos XML y PDF de cada factura y una versión impresa de la Autorización, Comprobación y Relación de Gastos a Contabilidad. ; PROMEDIO DIARIO | #DIV/0! | Tope de Gastos con Recibo ; GASTOS CON RECIBO | 0 | 0 ; GASTOS CON FACTURA | 0 ; TOTAL | 0 | 0 | 0 | ASMAC.DAF-DDI.15.03
+=== HOJA: Comprobación (NO Moificar) (33 filas) ===
+Comprobación de viaje |  |  |  |  |  |  | 
+Partida presupuestal |  |  |  |  |  |  | 
+Fecha de comprobación |  |  | 00:00 |  |  |  | 
+Solicitado por |  |  | 0 |  |  |  | 
+Persona que realiza el viaje |  |  | 0 |  |  |  | 
+Cargo (Voluntario/Ejecutivo) |  |  | 0 |  |  |  | 
+Área de Adscripción |  |  | 0 |  |  |  | 
+Partida presupuestal |  |  | 0 |  |  |  | 
+Datos del viaje |  |  |  |  |  |  | 
+Ciudad(es) destino |  |  | 0 |  |  |  | 
+Motivo del viaje |  |  | 0 |  |  |  | 
+Nota informativa |  |  | 0 |  |  |  | 
+Lugar y fecha de salida |  |  | 0 |  |  | 00:00 | 
+Lugar y fecha de regreso |  |  | 0 |  |  | 00:00 | 
+Días de viaje | 0 |  | Transporte | 0 |  |  | 
+Descripción de gastos |  |  |  |  |  |  | 
+Transporte Aéreo |  |  | 0 | Transporte local |  |  | 0
+Transporte Terrestre |  |  | 0 | Hospedaje |  |  | 0
+Renta de Vehículo |  |  | 0 | Alimentos |  |  | 0
+Combustibles |  |  | 0 | Propinas |  |  | 0
+Peajes (casetas) |  |  | 0 | Otros Gastos |  |  | 0
+Subtotal de gastos |  |  | 0 |  |  |  | 
+Menos pago en la OSN |  |  |  | Banco y sucursal |  |  | 
+Total de gastos |  |  | 0 | Beneficiario |  |  | 
+Menos anticipo |  |  |  | Cuenta y Clabe |  |  | 
+Saldo a mi favor / a mi cargo |  |  | 0 |  |  |  | 
+Observaciones |  |  |  |  |  |  | 
+Aprobaciones |  |  |  |  |  |  | 
+Tengo conocimiento de que los gastos de viaje deberán ser comprobados (con comprobantes fiscales) a más tardar 7 días naturales posteriores al regreso a mi lugar de origen. |  |  |  |  |  |  | 
+Solicitado por: |  |  | Vo.Bo. por: |  |  | Autorizado por: | 
+0 |  |  | 0 |  |  | 0 | 
+0 |  |  | 0 |  |  | 0 | 
+ASMAC.DAF-DDI.15.02 |  |  |  |  |  |  | 
+
+=== HOJA: Relación de Gastos (17 filas) ===
+RELACIÓN DE GASTOS VIAJE CAMPECHE |  |  |  |  |  |  |  |  | 
+FECHA | RUBRO | CONCEPTO | IMPORTE | IVA | TOTAL | Factura / Recibo | Nº (Ultimos 4 Digitos) |  | 
+ |  |  |  |  |  |  |  |  | Transporte Terrestre
+ |  |  |  |  |  |  |  |  | Renta de Vehículo
+ |  |  |  |  |  |  |  |  | Peajes
+ |  |  |  |  |  |  |  |  | Transporte local
+ |  |  |  |  |  |  |  |  | Hospedaje
+ |  |  |  |  |  |  |  |  | Alimentos
+ |  |  |  |  |  |  |  |  | Propinas
+ |  |  |  |  |  |  |  |  | Otros Gastos
+ |  |  |  |  |  |  |  |  | Factura
+ |  |  |  |  |  |  |  |  | Recibo
+*Entregar en CD o USB Archivos XML y PDF de cada factura y una versión impresa de la Autorización, Comprobación y Relación de Gastos a Contabilidad. |  |  |  |  |  |  |  |  | 
+ |  |  |  | PROMEDIO DIARIO | #DIV/0! | Tope de Gastos con Recibo |  |  | 
+ |  |  |  | GASTOS CON RECIBO | 0 | 0 |  |  | 
+ |  |  |  | GASTOS CON FACTURA | 0 |  |  |  | 
+ |  | TOTAL | 0 | 0 | 0 | ASMAC.DAF-DDI.15.03 |  |  | 

@@ -10,6 +10,7 @@ const GITHUB_RELEASE_BASE =
 
 const STATE = {
   catalog: null,
+  spreadsheets: null,
   allDocuments: [],
   documents: [], // Documentos oficiales accesibles en Biblioteca y Catalogo (incluye guias HTML autonomas)
   docsById: {},
@@ -2138,6 +2139,125 @@ function renderCatalogGrid() {
 // ============================================================================
 // LECTOR INTERACTIVO (MODO LECTURA LIBRE)
 // ============================================================================
+async function ensureSpreadsheets() {
+  if (STATE.spreadsheets) return STATE.spreadsheets;
+  try {
+    const res = await fetch("data/spreadsheets.json");
+    if (res.ok) {
+      STATE.spreadsheets = await res.json();
+      return STATE.spreadsheets;
+    }
+  } catch (_) {}
+  STATE.spreadsheets = {};
+  return STATE.spreadsheets;
+}
+
+function xlsxColLetter(idx) {
+  let n = idx + 1;
+  let out = "";
+  while (n > 0) {
+    const rem = (n - 1) % 26;
+    out = String.fromCharCode(65 + rem) + out;
+    n = Math.floor((n - 1) / 26);
+  }
+  return out;
+}
+
+function renderSpreadsheetReaderView(doc, sheetPkg, dlUrl, viewUrl, fullTextContent) {
+  const sheets = sheetPkg && Array.isArray(sheetPkg.sheets) ? sheetPkg.sheets : [];
+  if (!sheets.length) {
+    return renderWebReaderView(doc, fullTextContent, dlUrl, viewUrl);
+  }
+  const absXlsxUrl = /^https?:\/\//i.test(viewUrl)
+    ? viewUrl
+    : new URL(viewUrl, window.location.href).href;
+  const officeUrl = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(absXlsxUrl)}`;
+
+  const renderTableHtml = (sheet, filterText = "") => {
+    const rows = Array.isArray(sheet.rows) ? sheet.rows : [];
+    const needle = normalizeStr(filterText || "");
+    const visible = needle
+      ? rows.filter((r, rIdx) => rIdx === 0 || r.some((cell) => normalizeStr(cell).includes(needle)))
+      : rows;
+    const colsCount = Math.max(sheet.total_cols || 1, ...visible.map((r) => r.length), 1);
+    const colHeaders = Array.from({ length: colsCount }, (_, i) => `<th>${xlsxColLetter(i)}</th>`).join("");
+    const bodyRows = visible
+      .map((r, rIdx) => {
+        const cls = rIdx === 0 ? ' class="xlsx-row-header"' : "";
+        const cells = Array.from({ length: colsCount }, (_, cIdx) => {
+          const val = r[cIdx] !== undefined && r[cIdx] !== null ? String(r[cIdx]) : "";
+          return `<td>${escapeHtml(val)}</td>`;
+        }).join("");
+        return `<tr${cls}><th class="xlsx-row-num">${rIdx + 1}</th>${cells}</tr>`;
+      })
+      .join("");
+    const truncNote = sheet.truncated
+      ? `<p class="xlsx-trunc-note">Mostrando las primeras ${sheet.displayed_rows} de ${sheet.total_rows} filas con datos. Descarga el archivo .xlsx para revisar o editar el libro completo.</p>`
+      : "";
+    return `
+      <div class="xlsx-table-wrap">
+        <table class="xlsx-grid-table">
+          <thead><tr><th class="xlsx-corner">#</th>${colHeaders}</tr></thead>
+          <tbody>${bodyRows || `<tr><td colspan="${colsCount + 1}" class="xlsx-empty">Sin filas coincidentes.</td></tr>`}</tbody>
+        </table>
+      </div>
+      ${truncNote}
+    `;
+  };
+
+  setTimeout(() => {
+    const rootEl = document.getElementById("xlsxReaderRoot");
+    if (!rootEl) return;
+    let activeIdx = 0;
+    const stageEl = rootEl.querySelector("#xlsxTableStage");
+    const searchEl = rootEl.querySelector("#xlsxRowSearch");
+    const tabBtns = Array.from(rootEl.querySelectorAll(".xlsx-sheet-tab"));
+    const refresh = () => {
+      if (!stageEl || !sheets[activeIdx]) return;
+      stageEl.innerHTML = renderTableHtml(sheets[activeIdx], searchEl ? searchEl.value : "");
+    };
+    tabBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeIdx = Number(btn.dataset.sheetIdx || 0);
+        tabBtns.forEach((b) => b.classList.toggle("active", b === btn));
+        refresh();
+      });
+    });
+    if (searchEl) {
+      searchEl.addEventListener("input", refresh);
+    }
+    refresh();
+  }, 0);
+
+  return `
+    <div id="xlsxReaderRoot" class="xlsx-reader-wrap">
+      <div class="xlsx-reader-head">
+        <div>
+          <span class="xlsx-kicker">HOJA DE CÁLCULO INTERACTIVA (${escapeHtml(doc.ext)}) • ${sheets.length} ${sheets.length === 1 ? "HOJA" : "HOJAS"}</span>
+          <h3 class="xlsx-reader-title">${escapeHtml(doc.title)}</h3>
+          <p class="xlsx-reader-sub">${escapeHtml(doc.filename)} · Vista en tabla sin conexión lista para consultar</p>
+        </div>
+        <div class="xlsx-reader-actions">
+          <a href="${dlUrl}" download class="btn-modal-primary">Descargar .xlsx</a>
+          <a href="${officeUrl}" target="_blank" rel="noopener" class="btn-modal-secondary">Vista Office Online</a>
+        </div>
+      </div>
+      <div class="xlsx-controls-row">
+        <div class="xlsx-sheet-tabs" role="tablist" aria-label="Hojas del libro Excel">
+          ${sheets
+            .map(
+              (s, i) =>
+                `<button type="button" class="xlsx-sheet-tab ${i === 0 ? "active" : ""}" data-sheet-idx="${i}">${escapeHtml(s.name)} <span>(${s.total_rows})</span></button>`
+            )
+            .join("")}
+        </div>
+        <input type="search" id="xlsxRowSearch" class="xlsx-row-search" placeholder="Filtrar texto dentro de la hoja..." aria-label="Filtrar filas en Excel" />
+      </div>
+      <div id="xlsxTableStage" class="xlsx-table-stage"></div>
+    </div>
+  `;
+}
+
 async function openDocumentModal(docId, shelfIndex = -1) {
   const doc = STATE.docsById[docId];
   if (!doc) return;
@@ -2275,7 +2395,24 @@ async function openDocumentModal(docId, shelfIndex = -1) {
         ? viewUrl
         : new URL(viewUrl, window.location.href).href;
       const gDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}&embedded=true`;
-      previewPane.innerHTML = `<iframe id="gDocsIframe" src="${gDocsUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;background:#ffffff;" allowfullscreen></iframe>`;
+      previewPane.innerHTML = `
+        <div class="pdf-quick-bar">
+          <span>Vista PDF en la nube</span>
+          <div class="pdf-quick-actions">
+            <a href="${absPdfUrl}" target="_blank" rel="noopener">Abrir PDF directo</a>
+            <button type="button" class="btn-pdf-switch-text">Cambiar a Texto</button>
+          </div>
+        </div>
+        <iframe id="gDocsIframe" src="${gDocsUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:calc(100% - 38px);min-height:540px;border:none;background:#ffffff;" allowfullscreen></iframe>
+      `;
+      const swBtn = previewPane.querySelector(".btn-pdf-switch-text");
+      if (swBtn) {
+        swBtn.onclick = () => {
+          document.querySelectorAll(".modal-tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === "text"));
+          previewPane.classList.add("hidden");
+          document.getElementById("modalTextPane").classList.remove("hidden");
+        };
+      }
       openTabBtn.onclick = (e) => {
         e.preventDefault();
         window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}`, '_blank');
@@ -2309,21 +2446,27 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     }
   } else if (["PNG", "JPG", "JPEG", "WEBP", "AVIF"].includes(doc.ext)) {
     previewPane.innerHTML = `
-      <figure style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;height:100%;margin:0;padding:1.5rem;box-sizing:border-box;">
-        <figcaption style="flex:0 0 auto;text-align:center;">
-          <span style="display:block;font-size:0.72rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#6d28d9;">Vista previa de imagen</span>
-          <span style="display:block;font-size:1.05rem;font-weight:800;color:#0c1938;line-height:1.3;">${escapeHtml(doc.title)}</span>
+      <figure class="preview-image-figure">
+        <figcaption class="preview-image-figcaption">
+          <span class="preview-image-kicker">Vista previa de imagen (${escapeHtml(doc.ext)})</span>
+          <span class="preview-image-title">${escapeHtml(doc.title)}</span>
         </figcaption>
-        <img src="${viewUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" style="flex:1 1 auto;min-height:0;max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;" onerror="this.alt='No se pudo cargar la vista previa. Usa el botón Descargar.'; this.style.minHeight='120px';" />
-        <p style="flex:0 0 auto;margin:0;font-size:0.82rem;color:#64748b;text-align:center;">Archivo: <strong>${escapeHtml(doc.filename)}</strong></p>
+        <div class="preview-image-stage">
+          <img src="${viewUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" class="preview-image-el" onerror="this.alt='No se pudo cargar la vista previa. Usa el botón Descargar.'; this.style.minHeight='120px';" />
+        </div>
+        <p class="preview-image-meta">Archivo: <strong>${escapeHtml(doc.filename)}</strong></p>
       </figure>
     `;
   } else if (doc.ext === "HTML" && ((canEmbedNative && IS_LOCAL_SERVER) || (doc.is_readable_html && doc.has_web_file))) {
     previewPane.innerHTML = `<iframe src="${viewUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;background:#ffffff;"></iframe>`;
     openTabBtn.href = viewUrl;
     openTabBtn.onclick = null;
+  } else if (doc.ext === "XLSX") {
+    const sheetsDb = await ensureSpreadsheets();
+    const sheetPkg = sheetsDb ? sheetsDb[doc.sha12] : null;
+    previewPane.innerHTML = renderSpreadsheetReaderView(doc, sheetPkg, dlUrl, viewUrl, fullTextContent);
   } else {
-    previewPane.innerHTML = renderWebReaderView(doc, fullTextContent, dlUrl);
+    previewPane.innerHTML = renderWebReaderView(doc, fullTextContent, dlUrl, viewUrl);
   }
 
   chunksContainer.innerHTML = `<div class="chunk-block" style="white-space:pre-wrap;">${escapeHtml(fullTextContent || doc.summary || doc.title)}</div>`;
@@ -2337,35 +2480,44 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   if (modalBody) modalBody.scrollTop = 0;
 }
 
-function renderWebReaderView(doc, fullTextContent, dlUrl) {
+function renderWebReaderView(doc, fullTextContent, dlUrl, viewUrl = "") {
   const coverUrl = doc.ext === "PDF" && doc.sha12 ? `covers/${doc.sha12}.jpg` : "";
   const blocks = (fullTextContent || doc.summary || "")
     .split(/\n--- Página \d+ ---\n/)
     .map((b) => b.trim())
     .filter(Boolean);
+  const absFileUrl = viewUrl
+    ? (/^https?:\/\//i.test(viewUrl) ? viewUrl : new URL(viewUrl, window.location.href).href)
+    : "";
+  const officeBtn = ["DOCX", "PPTX", "XLSX"].includes(doc.ext) && absFileUrl && !IS_LOCAL_SERVER
+    ? `<a href="https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(absFileUrl)}" target="_blank" rel="noopener" class="btn-modal-secondary">Vista Office Online</a>`
+    : "";
 
   return `
-    <div style="background:#f8fafc;min-height:100%;padding:2rem;color:#0f172a;overflow-y:auto;">
-      <div style="max-width:860px;margin:0 auto;">
-        <div style="display:flex;gap:1.5rem;align-items:center;background:#ffffff;padding:1.5rem;border-radius:20px;border:1.5px solid #dbeafe;margin-bottom:1.5rem;flex-wrap:wrap;">
+    <div class="web-reader-wrap">
+      <div class="web-reader-inner">
+        <div class="web-reader-hero">
           ${
             coverUrl
-              ? `<img src="${coverUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" style="width:110px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,0.15);" onerror="this.style.display='none'" />`
+              ? `<img src="${coverUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" class="web-reader-cover" onerror="this.style.display='none'" />`
               : ""
           }
-          <div style="flex:1;min-width:220px;">
-            <span style="font-size:0.75rem;font-weight:800;color:#6d28d9;text-transform:uppercase;">MODO LECTURA LIBRE • ${escapeHtml(doc.section_label)}</span>
-            <h2 style="font-size:1.4rem;color:#0c1938;margin:0.3rem 0;">${escapeHtml(doc.title)}</h2>
-            <p style="font-size:0.84rem;color:#64748b;margin-bottom:0.85rem;">Archivo original: <code>${escapeHtml(doc.filename)}</code> (${doc.year})</p>
-            <a href="${dlUrl}" download class="btn-modal-primary" style="display:inline-block;">Descargar archivo original (${escapeHtml(doc.ext)})</a>
+          <div class="web-reader-hero-body">
+            <span class="web-reader-kicker">MODO LECTURA LIBRE • ${escapeHtml(doc.section_label)}</span>
+            <h2 class="web-reader-title">${escapeHtml(doc.title)}</h2>
+            <p class="web-reader-meta">Archivo original: <code>${escapeHtml(doc.filename)}</code> (${doc.year})</p>
+            <div class="web-reader-actions">
+              <a href="${dlUrl}" download class="btn-modal-primary">Descargar archivo original (${escapeHtml(doc.ext)})</a>
+              ${officeBtn}
+            </div>
           </div>
         </div>
         ${blocks
           .map(
             (blk, i) => `
-          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:1.5rem;margin-bottom:1rem;line-height:1.8;font-size:0.98rem;white-space:pre-wrap;">${
+          <div class="web-reader-block">${
             blocks.length > 1
-              ? `<div style="font-size:0.75rem;font-weight:800;color:#0284c7;margin-bottom:0.5rem;">SECCIÓN / PÁGINA ${i + 1}</div>`
+              ? `<div class="web-reader-block-tag">SECCIÓN / PÁGINA ${i + 1}</div>`
               : ""
           }${escapeHtml(blk)}</div>
         `

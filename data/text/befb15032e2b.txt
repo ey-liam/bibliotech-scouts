@@ -1,13 +1,145 @@
-Hoja: Instrucciones ; Ruta a la Excelencia Nivel Grupo 2023 - 2025 ; Esta Ruta a la Excelencia, tiene la finalidad de ofrecer una herramienta para determinar las áreas de oportunidad que deben ser consideradas en su planeación anual; Los resultados obtenidos no representan en ninguna forma una calificación, deben ser utilizados como un parámetro para determinar el énfasis en las actividades que deben ser consideradas para el año 2023 y dependiendo los resultados realizar una planificación para los años subsecuentes. Asimismo, es una pauta para que la Provincia y Órganos Nacionales determinen las áreas que requieren especial atención en el ámbito de su competencia. ; En este documento encontraras cuatro pestañas que te ayudaran a elaborar un Diagnostico, Análisis de fortalezas, oportunidades, debilidades y amenazas como grupo o provincia, detectar el problema raíz para poder cumplir con sus objetivos y por ultimo una parte donde pondrán poner todas las actividades que ayudaran a subsanar o mejorar las áreas en las que tenemos mayor problema a través de una calendarización y medición de cumplimiento. ; ¿Como debo empezar? ; Debes comenzar con un Diagnostico que es la pestaña denominada Reactivos, aquí encontrarás tres  preguntas por cada reactivo, mismas que les ayudaran a encontrar la situación en que está tu grupo referente a cada una de las áreas estratégicas. ; El segundo paso se llena ; Una vez que contestaste todos los reactivos y pasas a la pestaña de Análisis FODA donde deberás colocar cuales son tus principales Fortalezas, Oportunidades, Debilidades y Amenazas que tienen como Provincia o Grupo, mismas que puedes considerar de lo obtenido en la parte del Diagnóstico más algunas otras que ustedes hayan detectado y no vengan en el Diagnóstico. ; Que hacer en el Terc
+HOJA DE CÁLCULO OFICIAL (XLSX): Ruta a la Excelencia Grupo 2023 - 2025
 
-Hoja: Reactivos Grupo ; Ruta a la Excelencia Nivel Grupo 2023 - 2025 ; Provincia | No. De Adultos Voluntarios | Secciones con mínimos | Fecha de Realización ; Nombre y No. de Grupo | No. De Participantes del Programa de Jóvenes ; Esta Ruta a la Excelencia Nivel Grupo, tiene la finalidad de ofrecer a tu Consejo de Grupo una herramienta para determinar las áreas de oportunidad que deben ser consideradas en su planeación anual; Los resultados obtenidos no representan en ninguna forma una calificación para tu Grupo, deben ser utilizados como un parámetro para determinar el énfasis en las actividades que deben ser consideradas para el año 2023 y dependiendo los resultados realizar una planificación para los años subsecuentes. Asimismo, es una pauta para que la Provincia determine las áreas que requieren especial atención en el ámbito de su competencia. Este archivo, debe ser enviado a más tardar el 1° de diciembre del 2022, al correo que tu Provincia determine para dar el adecuado seguimiento y retroalimentación. ; Área Estratégica | Reactivo | ¿Cumples con este reactivo? | Describe como es que cubres o no este reactivo en tu Grupo, con el mayor detalle posible | ¿Los miembros del Consejo de Grupo creen conveniente desarrollar o mejorar este punto  en el 2023? ; Si | No | Es el por qué de tu respuesta anterior | Si | No, en 2024 | No, en 2025 ; Gobernanza | ¿En tu Grupo se evalúa periódicamente el desempeño de los integrantes del Consejo de Grupo y del Comité de Grupo? ; ¿En tu Grupo participan en las evaluaciones de desempeño del Equipo de Provincia? ; ¿Haz desarrollado o implementado mejoras en los procesos de operación de tu Grupo? ; ¿En tu Grupo se envían en tiempo y forma las actas del Consejo de Grupo con sus respectivos acuerdos bien elaborados? ; ¿En el Comité de Gru
+=== HOJA: Instrucciones (14 filas) ===
+ |  |  | Ruta a la Excelencia Nivel Grupo 2023 - 2025
+Esta Ruta a la Excelencia, tiene la finalidad de ofrecer una herramienta para determinar las áreas de oportunidad que deben ser consideradas en su planeación anual; Los resultados obtenidos no representan en ninguna forma una calificación, deben ser utilizados como un parámetro para determinar el énfasis en las actividades que deben ser consideradas para el año 2023 y dependiendo los resultados realizar una planificación para los años subsecuentes. Asimismo, es una pauta para que la Provincia y Órganos Nacionales determinen las áreas que requieren especial atención en el ámbito de su competencia. |  |  | 
+En este documento encontraras cuatro pestañas que te ayudaran a elaborar un Diagnostico, Análisis de fortalezas, oportunidades, debilidades y amenazas como grupo o provincia, detectar el problema raíz para poder cumplir con sus objetivos y por ultimo una parte donde pondrán poner todas las actividades que ayudaran a subsanar o mejorar las áreas en las que tenemos mayor problema a través de una calendarización y medición de cumplimiento. |  |  | 
+¿Como debo empezar? |  |  | 
+Debes comenzar con un Diagnostico que es la pestaña denominada Reactivos, aquí encontrarás tres preguntas por cada reactivo, mismas que les ayudaran a encontrar la situación en que está tu grupo referente a cada una de las áreas estratégicas. |  |  | 
+El segundo paso se llena |  |  | 
+Una vez que contestaste todos los reactivos y pasas a la pestaña de Análisis FODA donde deberás colocar cuales son tus principales Fortalezas, Oportunidades, Debilidades y Amenazas que tienen como Provincia o Grupo, mismas que puedes considerar de lo obtenido en la parte del Diagnóstico más algunas otras que ustedes hayan detectado y no vengan en el Diagnóstico. |  |  | 
+Que hacer en el Tercer paso: |  |  | 
+En este paso denominado Análisis de Problema, de acuerdo a lo que les arrojó el análisis FODA, deberán colocar los puntos que les aparecen en el cuadrante de debilidades y/o amenazas, preferentemente enfócate a las que consideres tu prioridad y tocando por lo menos cinco de las áreas estratégicas. Una vez seleccionados tendrán que ir de uno por uno buscando las causales que provocan el no poder cumplir con estos puntos, esto a través de preguntarse de manera secuencial ¿por qué?, es decir la primera vez que te preguntes Por qué te dará una respuesta y sobre esa respuesta tendrás que preguntarte el siguiente por qué y así sucesivamente hasta llegar a preguntártelo en 5 ocasiones como máximo, cada respuesta que encuentren deberán colocarla en la columna correspondiente a la posible causal (programa, gestión, etc.) con la finalidad de determinar el problema raíz.(el que se marque en verde) |  |  | 
+Como llenar lo correspondiente al Cuarto paso: |  |  | 
+A este paso lo nombramos Plan de Acción, en esta parte una vez que ya encontramos la raíz de los problemas, vamos a colocar en la primera columna en un texto breve las áreas de oportunidad que quieren resolver y que requieran de una planeación y/o programación que puedan resolver como Provincia o Grupo, en la segunda columna colocarán una o varias acciones que ayuden a resolver esta área de oportunidad, toda acción debe tener un responsable quien será la persona encargada de darle seguimiento y vele por que si se llegue a cubrir esta acción, el cual deberá señalarse en la siguiente columna y en la columna aledaña, quienes apoyaran para que esta acción pueda llevarse a cabo. En el siguiente bloque de columnas deberás colocar la programación y avance que se ha logrado progresivamente, es decir si en febrero avanzaste un 10% colocar ese 10% en febrero y si en marzo avanzaste otro 10% deberás colocar la suma de ambos en la columna de marzo, es decir 20% y así sucesivamente hasta llegar al 100% que deberás colocarlo en el mes que se logró dicho avance. Las últimas dos columnas te servirán para colocar algún recordatorio o algún acontecimiento importante que ayude o afecte a la realización de esta acción, por ejemplo: en Comentarios Operacionales puedes colocar que en X fecha deberán sacar la convocatoria de X evento y en Comentarios por Factores Externos colocaran todo aquello que les haya ayudado o perjudicado para poder lograr la acción en tiempo o de manera definitiva. |  |  | 
+Ya como ultimo paso deberás enviar este documento a la instancia correspondiente, para que le de seguimiento y ustedes puedan comenzar a documentar sus avances y logros. |  |  | 
+Para el Periodo 2024 deberás enfocarte en los reactivos que decidiste dejar para ese año y realizar los mismos pasos que mencionamos anteriormente y si hay alguna actividad que no concluiste en el 2023 o que requiera seguimiento en el 2024 pásalo tal cual en la hoja Plan de Acción 2024, en la columna de comentarios operacionales indica el motivo por el cual se paso del 2023 al 2024 y después de esas actividades comienza a colocar las nuevas. |  |  | 
+Para el Periodo 2025 deberás realizar exactamente lo mismo que el paso anterior pero con las actividades del 2024. |  |  | 
 
-Hoja: Analisis Foda ; Ruta a la Excelencia Nivel Grupo 2023 - 2025 ; ANÁLISIS FODA ; Fortalezas, Oportunidades, Debilidades, Amenazas ; FORTALEZAS (interno y positivo) | OPORTUNIDADES (externo y positivo) ; DEBILIDADES (interno y negativo) | AMENAZAS (externo y negativo)
+=== HOJA: Reactivos Grupo (60 filas) ===
+Ruta a la Excelencia Nivel Grupo 2023 - 2025 |  |  |  |  |  |  | 
+Provincia |  |  |  | No. De Adultos Voluntarios |  | Secciones con mínimos | Fecha de Realización
+Nombre y No. de Grupo |  |  |  | No. De Participantes del Programa de Jóvenes |  |  | 
+Esta Ruta a la Excelencia Nivel Grupo, tiene la finalidad de ofrecer a tu Consejo de Grupo una herramienta para determinar las áreas de oportunidad que deben ser consideradas en su planeación anual; Los resultados obtenidos no representan en ninguna forma una calificación para tu Grupo, deben ser utilizados como un parámetro para determinar el énfasis en las actividades que deben ser consideradas para el año 2023 y dependiendo los resultados realizar una planificación para los años subsecuentes. Asimismo, es una pauta para que la Provincia determine las áreas que requieren especial atención en el ámbito de su competencia. Este archivo, debe ser enviado a más tardar el 1° de diciembre del 2022, al correo que tu Provincia determine para dar el adecuado seguimiento y retroalimentación. |  |  |  |  |  |  | 
+Área Estratégica | Reactivo | ¿Cumples con este reactivo? |  | Describe como es que cubres o no este reactivo en tu Grupo, con el mayor detalle posible | ¿Los miembros del Consejo de Grupo creen conveniente desarrollar o mejorar este punto en el 2023? |  | 
+ |  | Si | No | Es el por qué de tu respuesta anterior | Si | No, en 2024 | No, en 2025
+Gobernanza | ¿En tu Grupo se evalúa periódicamente el desempeño de los integrantes del Consejo de Grupo y del Comité de Grupo? |  |  |  |  |  | 
+ | ¿En tu Grupo participan en las evaluaciones de desempeño del Equipo de Provincia? |  |  |  |  |  | 
+ | ¿Haz desarrollado o implementado mejoras en los procesos de operación de tu Grupo? |  |  |  |  |  | 
+ | ¿En tu Grupo se envían en tiempo y forma las actas del Consejo de Grupo con sus respectivos acuerdos bien elaborados? |  |  |  |  |  | 
+ | ¿En el Comité de Grupo se lleva a cabo una revisión periódica y cuidado de los bienes y finanzas del Grupo? |  |  |  |  |  | 
+ | ¿Tu Grupo cuenta o implementa los mecanismos necesarios para garantizar que la información pertinente llegue a todas las partes interesadas en tiempo y forma? |  |  |  |  |  | 
+ | ¿En tu Grupo realizan actividades económicas o proyectos que ayuden a los Participantes del Programa de Jóvenes, para que puedan asistir a actividades nacionales o internacionales? |  |  |  |  |  | 
+ | ¿En tu Grupo cuentas con por lo menos 2 secciones que tengan los mínimos? |  |  |  |  |  | 
+Participación Juvenil | ¿En tu Grupo difunden y participan en los eventos basados en los modelos de participación juvenil? (Peña de la Paz, Foros, Punta de Flecha,etc.) |  |  |  |  |  | 
+ | ¿En los espacios de participación juvenil de tu Grupo, los Participantes del Programa de Jóvenes generan recomendaciones, mismas que se toman en cuenta para la elaboración del plan de trabajo de Grupo? |  |  |  |  |  | 
+ | ¿En tu Grupo se generan espacios que promuevan los diálogos intergeneracionales? |  |  |  |  |  | 
+ | ¿Dentro de los espacios que generas en tu Grupo, los Participantes del Programa de Jóvenes participan de manera activa? |  |  |  |  |  | 
+ | ¿Tu Grupo participa en las acciones que la Oficina Scout Nacional emite para evaluar o actualizar el programa de jóvenes? |  |  |  |  |  | 
+ | ¿En tu Grupo promueven que los Participantes del Programa de Jóvenes participen en los espacios de toma de decisiones correspondientes de acuerdo a la Política Nacional de Participación Juvenil? |  |  |  |  |  | 
+Sustentabilidad | ¿En tu Grupo se evalúa por lo menos de forma trimestral, los proyectos y actividades de los Participantes del Programa de Jóvenes para el desarrollo sostenible? |  |  |  |  |  | 
+ | ¿Los adultos de tu Grupo se encuentran capacitados para guiar a los Participantes del Programa de Jóvenes en temas de sustentabilidad? |  |  |  |  |  | 
+ | ¿En tu Grupo motivas y fomentas las acciones para dar solución a la crisis socio ambiental? |  |  |  |  |  | 
+ | ¿En tu Grupo se realizan proyectos por parte de los Participantes del Programa de Jóvenes que generen un impacto en su comunidad en pro del medio ambiente? |  |  |  |  |  | 
+ | ¿En tu Grupo se contribuye con acciones para el desarrollo y la participación en materia de sustentabilidad en diversas comunidades? |  |  |  |  |  | 
+ | ¿En tu Grupo todas actividades que realizan al aire libre llevan acciones concretas para cumplir los siete principios de no dejar rastro? |  |  |  |  |  | 
+ | ¿En tu comunidad se difunden los proyectos que lograron un impacto dentro de los Objetivos de Desarrollo Sustentable realizados por tu Grupo? |  |  |  |  |  | 
+ | ¿En tu Grupo revisan el inventario existente para saber que materiales se pueden ocupar o reutilizar para evitar compras innecesarias? |  |  |  |  |  | 
+ | ¿En tu Grupo participan con otros grupos u organizaciones para el cumplimiento de los Objetivos de Desarrollo Sustentable? |  |  |  |  |  | 
+ | ¿En tu Grupo cuando realizan actividades aplican o promueven el uso de materiales reciclados y reciclables? |  |  |  |  |  | 
+Comunicación y Alianzas Estratégicas | ¿En tu Grupo se generan estrategias de comunicación integral para dar a conocer la esencia e impacto social del movimiento? |  |  |  |  |  | 
+ | ¿Consideras que tu Grupo ha alcanzado un impacto social por medio de su estrategia de comunicación? |  |  |  |  |  | 
+ | ¿Consideras que tu Grupo tiene una imagen positiva dentro de la comunidad, donde se transmite la misión del escultismo? |  |  |  |  |  | 
+ | ¿En tu Grupo se desarrollan alianzas estratégicas de valor que generen ganancias y compromisos mutuos? |  |  |  |  |  | 
+ | ¿Los miembros de tu Grupo conocen estas alianzas? |  |  |  |  |  | 
+ | ¿Tu Grupo lleva una medición y seguimiento de uso de estas alianzas? |  |  |  |  |  | 
+Métodos Educativos | ¿En tu Grupo se revisa que se aplique correctamente el programa de jóvenes, evaluando que este responda a los intereses y necesidades de los Participantes del Programa de Jóvenes? |  |  |  |  |  | 
+ | ¿En tu Grupo se han capacitado por lo menos el 90% de adultos voluntarios en la actualización del Programa de Jóvenes? |  |  |  |  |  | 
+ | ¿En tu Grupo las 4 secciones han adoptado y aplicado la actualización del Programa de Jóvenes? |  |  |  |  |  | 
+ | ¿En tu Grupo por lo menos el 80% de los adultos voluntarios cuentan con Insignia de Madera actualizada o se encuentran en proceso de formación? |  |  |  |  |  | 
+ | ¿En tu Grupo se evalúa el impacto que tienen las actividades realizadas por los jóvenes en comunidades e instituciones? |  |  |  |  |  | 
+ | ¿En tu Grupo se promueve y entregan los reconocimientos para jóvenes (Medallas y diplomas) establecidos en los ordenamientos? |  |  |  |  |  | 
+ | ¿En tu Grupo se promueve y entregan los reconocimientos para los adultos voluntarios establecidos en los ordenamientos? |  |  |  |  |  | 
+ | ¿De acuerdo a los años de servicio que tienen los adultos voluntarios en tu Grupo, cumplen con lo establecido en el ciclo de vida del adulto? |  |  |  |  |  | 
+ | ¿Los adultos voluntarios de tu Grupo se mantienen en constante actualización para cumplir con sus funciones? |  |  |  |  |  | 
+ | ¿Tu Grupo cuenta con una estrategia para la captación de membresía? |  |  |  |  |  | 
+ | ¿Tu Grupo cuenta con una estrategia para la retención de membresía? |  |  |  |  |  | 
+ | ¿Tu Grupo cuenta con una estrategia para la recuperación de membresía? |  |  |  |  |  | 
+A Salvo del Peligro | ¿Tu Grupo tiene un plan de acción que cumpla con el objetivo de Grupo seguro y las políticas de A Salvo del Peligro? |  |  |  |  |  | 
+ | ¿Las acciones a implementar o que se han implementado en tu Grupo son las correctas para tener un Grupo seguro y que la membresía este A Salvo del Peligro? |  |  |  |  |  | 
+ | ¿La capacitación y elaboración de los documentos del Programa Protección Civil generados por tu Grupo, son los adecuados para cubrir las necesidades del mismo? |  |  |  |  |  | 
+ | ¿Qué porcentaje de los miembros de tu Grupo están capacitados y conocen el Programa de Protección Civil y lo llevan acabo? |  |  |  |  |  | 
+ | ¿Con la implementación de los protocolos sanitarios y de seguridad que realiza tu Grupo generan un ambiente seguro y sano a la membresía? |  |  |  |  |  | 
+ | ¿En tu Grupo se evalúa el cumplimiento de la política de A Salvo del Peligro, conforme a los derechos de niños, niñas, adolescentes y jóvenes? |  |  |  |  |  | 
+Diversidad e Inclusión | ¿Tu Grupo cuenta con un Plan de Trabajo que atienda la diversidad e inclusión? |  |  |  |  |  | 
+ | ¿Las acciones del Plan de trabajo de tu Grupo tienen un enfoque de derechos humanos y perspectiva de género? |  |  |  |  |  | 
+ | ¿Las acciones a implementar o que sean implementado son las correctas para cumplir con a la política de Diversidad e Inclusión? |  |  |  |  |  | 
+ | ¿Los adultos en tu Grupo tienen las competencias necesarias para la promoción de la diversidad e inclusión? |  |  |  |  |  | 
+ | ¿En tu Grupo hay una persona que se encargue de generar y aplicar la Procuración de Fondos, para el beneficio de tu membresía y/o captaciones de bajos recursos? |  |  |  |  |  | 
+ | ¿En tu Grupo se implementan acciones para fomentar la igualdad entre todos los miembros? |  |  |  |  |  | 
 
-Hoja: Analisis de Problemas ; Ruta a la Excelencia Nivel Grupo 2023 - 2025 ; Causales ; Debilidades / Amenazas | Programa | Gestión | Formación | Scouters Dirigentes | Procesos | Otras Causas
+=== HOJA: Analisis Foda (5 filas) ===
+ |  |  |  | Ruta a la Excelencia Nivel Grupo 2023 - 2025 | 
+ANÁLISIS FODA |  |  |  |  | 
+Fortalezas, Oportunidades, Debilidades, Amenazas |  |  |  |  | 
+FORTALEZAS (interno y positivo) |  |  |  |  | OPORTUNIDADES (externo y positivo)
+DEBILIDADES (interno y negativo) |  |  |  |  | AMENAZAS (externo y negativo)
 
-Hoja: Plan de Accion 2023 ; Ruta a la Excelencia Nivel Grupo 2023 - 2025 ; Area de Oportunidad a Mejorar | Acciones | Responsable | Jefe de Grupo, Subjefes de Grupo y/o Scouters Involucrados | Fecha de Inicio | Fecha de Termino Programada | Porcentaje de Avance | Fecha de Termino Real | Comentarios Operacionales | Comentarios x factores externos ; Ene | Feb | Mar | Abr | May | Jun | Jul | Ago | Sep | Oct | Nov | Dic ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; Estas acciones te podrán ayudaran a elaborar tu Plan Personal de Formación y/o Acuerdo y Compromiso Mutuo.
+=== HOJA: Analisis de Problemas (3 filas) ===
+Ruta a la Excelencia Nivel Grupo 2023 - 2025 |  |  |  |  |  | 
+ | Causales |  |  |  |  | 
+Debilidades / Amenazas | Programa | Gestión | Formación | Scouters Dirigentes | Procesos | Otras Causas
 
-Hoja: Plan de Accion 2024 ; Ruta a la Excelencia Nivel Grupo 2023 - 2025 ; Area de Oportunidad a Mejorar | Acciones | Responsable | Jefe de Grupo, Subjefes de Grupo y/o Scouters Involucrados | Fecha de Inicio | Fecha de Termino Programada | Porcentaje de Avance | Fecha de Termino Real | Comentarios Operacionales | Comentarios x factores externos ; Ene | Feb | Mar | Abr | May | Jun | Jul | Ago | Sep | Oct | Nov | Dic ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; Estas acciones te podrán ayudaran a elaborar tu Plan Personal de Formación y/o Acuerdo y Compromiso Mutuo.
+=== HOJA: Plan de Accion 2023 (16 filas) ===
+Ruta a la Excelencia Nivel Grupo 2023 - 2025 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 
+Area de Oportunidad a Mejorar | Acciones | Responsable | Jefe de Grupo, Subjefes de Grupo y/o Scouters Involucrados | Fecha de Inicio | Fecha de Termino Programada | Porcentaje de Avance |  |  |  |  |  |  |  |  |  |  |  | Fecha de Termino Real |  | Comentarios Operacionales | Comentarios x factores externos
+ |  |  |  |  |  | Ene | Feb | Mar | Abr | May | Jun | Jul | Ago | Sep | Oct | Nov | Dic |  |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+Estas acciones te podrán ayudaran a elaborar tu Plan Personal de Formación y/o Acuerdo y Compromiso Mutuo. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 
 
-Hoja: Plan de Accion 2025 ; Ruta a la Excelencia Nivel Grupo 2023 - 2025 ; Area de Oportunidad a Mejorar | Acciones | Responsable | Jefe de Grupo, Subjefes de Grupo y/o Scouters Involucrados | Fecha de Inicio | Fecha de Termino Programada | Porcentaje de Avance | Fecha de Termino Real | Comentarios Operacionales | Comentarios x factores externos ; Ene | Feb | Mar | Abr | May | Jun | Jul | Ago | Sep | Oct | Nov | Dic ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; Estas acciones te podrán ayudaran a elaborar tu Plan Personal de Formación y/o Acuerdo y Compromiso Mutuo.
+=== HOJA: Plan de Accion 2024 (16 filas) ===
+Ruta a la Excelencia Nivel Grupo 2023 - 2025 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 
+Area de Oportunidad a Mejorar | Acciones | Responsable | Jefe de Grupo, Subjefes de Grupo y/o Scouters Involucrados | Fecha de Inicio | Fecha de Termino Programada | Porcentaje de Avance |  |  |  |  |  |  |  |  |  |  |  | Fecha de Termino Real |  | Comentarios Operacionales | Comentarios x factores externos
+ |  |  |  |  |  | Ene | Feb | Mar | Abr | May | Jun | Jul | Ago | Sep | Oct | Nov | Dic |  |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+Estas acciones te podrán ayudaran a elaborar tu Plan Personal de Formación y/o Acuerdo y Compromiso Mutuo. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 
+
+=== HOJA: Plan de Accion 2025 (16 filas) ===
+Ruta a la Excelencia Nivel Grupo 2023 - 2025 |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 
+Area de Oportunidad a Mejorar | Acciones | Responsable | Jefe de Grupo, Subjefes de Grupo y/o Scouters Involucrados | Fecha de Inicio | Fecha de Termino Programada | Porcentaje de Avance |  |  |  |  |  |  |  |  |  |  |  | Fecha de Termino Real |  | Comentarios Operacionales | Comentarios x factores externos
+ |  |  |  |  |  | Ene | Feb | Mar | Abr | May | Jun | Jul | Ago | Sep | Oct | Nov | Dic |  |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | 
+Estas acciones te podrán ayudaran a elaborar tu Plan Personal de Formación y/o Acuerdo y Compromiso Mutuo. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 

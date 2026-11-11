@@ -1,1 +1,21 @@
-Hoja: CTRL CH ; ASOCIACION DE SCOUTS DE MEXICO A.C ; CONTROL DE SALDO CUENTA DE CHEQUES ; AÑO__________ ; PROVINCIA | _______________ ; TIPO | INGRESO | SALDO INICIAL ; EGRESO ; TRASPASO ; FECHA DE EXPEDICIÓN DE CHEQUE | NÚM. CHEQUE | IMPORTE | DESCRIPCIÓN | TIPO | SALDO FINAL | OBSERVACIONES ; 1 ; 2 ; 3 ; 4 ; 5 ; 6 ; 7 ; 8 ; 9 ; 10
+HOJA DE CÁLCULO OFICIAL (XLSX): NO 5 CONTROL DE SALDO
+
+=== HOJA: CTRL CH (18 filas) ===
+ASOCIACION DE SCOUTS DE MEXICO A.C |  |  |  |  |  |  | 
+CONTROL DE SALDO CUENTA DE CHEQUES |  |  |  |  |  |  | 
+AÑO__________ |  |  |  |  |  |  | 
+ |  | PROVINCIA | _______________ |  |  |  | 
+ |  |  | TIPO | INGRESO |  | SALDO INICIAL | 
+ |  |  |  | EGRESO |  |  | 
+ |  |  |  | TRASPASO |  |  | 
+ | FECHA DE EXPEDICIÓN DE CHEQUE | NÚM. CHEQUE | IMPORTE | DESCRIPCIÓN | TIPO | SALDO FINAL | OBSERVACIONES
+1 |  |  |  |  |  |  | 
+2 |  |  |  |  |  |  | 
+3 |  |  |  |  |  |  | 
+4 |  |  |  |  |  |  | 
+5 |  |  |  |  |  |  | 
+6 |  |  |  |  |  |  | 
+7 |  |  |  |  |  |  | 
+8 |  |  |  |  |  |  | 
+9 |  |  |  |  |  |  | 
+10 |  |  |  |  |  |  | 

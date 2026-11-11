@@ -1,4 +1,63 @@
-Hoja: Hoja1 ; Anexo 1 ; Procedimiento de Captación y Selección de Adultos | Responsable | Realizado
-(Si/No) ; Análisis de la realidad del grupo | Indicador ; Número de jóvenes registrados en Manada | Consejo de Grupo ; Número de seisenas con que cuenta la Manada ; Número de jóvenes registrados en Tropa ; Número de patrullas con que cuenta la Tropa ; Número de jóvenes registrados en Comunidad ; Número de equipos con que cuenta la Comunidad ; Número de jóvenes registrados en Clan ; Detección de necesidades | Cargo | Número Actual | Personas que terminan su Misión este año | Necesidad de captación | Determinación de Necesidad ; Jefe de Grupo | 1 | Consejo de Grupo ; Subjefe de Grupo de Métodos Educativos | 1 ; Subjefe de Grupo de Administración | 1 ; Colaboradores de Grupo | 3 ; Jefe de Manada de Lobatos | 1 ; Subjefe de Manada de Lobatos | 2 ; Jefe de Tropa Scout | 1 ; Subjefe de Tropa Scout | 1 ; Jefe de Comunidad de Caminantes | 1 ; Subjefe de Comunidad de Caminantes | 1 ; Consejero Rover Responsable | 1 ; Consejero Rover | 1 ; Captación | Identificación de fuentes de Recursos Humanos | Consejo de Grupo / Equipo de Provincia ; Promoción del Movimiento Scout en los espacios / contextos identificados ; Acciones individuales de captación ; Selección | CUM* | (NAL1890020) ; Entrevista STAR | Equipo entrevistador ; Determinación del cargo ; Integración | Acuerdo y Compromiso Mutuo | Consejo de Grupo / FAR ; Nombramiento | Consejo de Grupo ; Inicio del desempeño y acceso al Proceso de Formación | Consejo de Grupo / FAR ; *Se debe emplear una columna por cada persona que ingrese al proceso de Selección e Integración
+HOJA DE CÁLCULO OFICIAL (XLSX): Anexo 8 Captación y Selección de Adultos
 
-Hoja: Datos ; Número de jóvenes registrados en Manada | 0 | -1 ; Número de seisenas con que cuenta la Manada | 0 | 0 ; Mínimos en la sección | 18 | 2 ; Número de jóvenes registrados en Tropa | 0 | -1 ; Número de patrullas con que cuenta la Tropa | 0 | 0 ; Mínimos en la sección | 12 | 1 ; Número de jóvenes registrados en Comunidad | 0 | -1 ; Número de equipos con que cuenta la Comunidad | 0 | 0 ; Mínimos en la sección | 12 | 1 ; Número de jóvenes registrados en Clan | 0 | -1 ; Mínimos en la sección | 5 | 1 ; Ideal mínimo ; Jefe de Grupo | 1 ; Subjefe de Grupo de Métodos Educativos | 1 ; Subjefe de Grupo de Administración | 1 ; Colaboradores de Grupo | 3 ; Patrono | 0 ; Jefe de Manada de Lobatos | 1 ; Subjefe de Manada de Lobatos | 2 ; Jefe de Tropa Scout | 1 ; Subjefe de Tropa Scout | 1 ; Jefe de Comunidad de Caminantes | 1 ; Subjefe de Comunidad de Caminantes | 1 ; Consejero Rover Responsable | 1 ; Consejero Rover | 1
+=== HOJA: Hoja1 (33 filas) ===
+Anexo 1 |  |  |  |  |  |  |  |  |  |  |  |  | 
+Procedimiento de Captación y Selección de Adultos |  |  |  |  |  |  |  |  |  |  |  | Responsable | Realizado (Si/No)
+Análisis de la realidad del grupo | Indicador |  |  |  |  |  |  |  |  |  |  |  | 
+ | Número de jóvenes registrados en Manada |  |  |  |  |  |  |  |  |  |  | Consejo de Grupo | 
+ | Número de seisenas con que cuenta la Manada |  |  |  |  |  |  |  |  |  |  |  | 
+ | Número de jóvenes registrados en Tropa |  |  |  |  |  |  |  |  |  |  |  | 
+ | Número de patrullas con que cuenta la Tropa |  |  |  |  |  |  |  |  |  |  |  | 
+ | Número de jóvenes registrados en Comunidad |  |  |  |  |  |  |  |  |  |  |  | 
+ | Número de equipos con que cuenta la Comunidad |  |  |  |  |  |  |  |  |  |  |  | 
+ | Número de jóvenes registrados en Clan |  |  |  |  |  |  |  |  |  |  |  | 
+Detección de necesidades | Cargo | Número Actual |  |  | Personas que terminan su Misión este año |  |  | Necesidad de captación |  | Determinación de Necesidad |  |  | 
+ | Jefe de Grupo |  |  |  |  |  |  | 1 |  |  |  | Consejo de Grupo | 
+ | Subjefe de Grupo de Métodos Educativos |  |  |  |  |  |  | 1 |  |  |  |  | 
+ | Subjefe de Grupo de Administración |  |  |  |  |  |  | 1 |  |  |  |  | 
+ | Colaboradores de Grupo |  |  |  |  |  |  | 3 |  |  |  |  | 
+ | Jefe de Manada de Lobatos |  |  |  |  |  |  | 1 |  |  |  |  | 
+ | Subjefe de Manada de Lobatos |  |  |  |  |  |  | 2 |  |  |  |  | 
+ | Jefe de Tropa Scout |  |  |  |  |  |  | 1 |  |  |  |  | 
+ | Subjefe de Tropa Scout |  |  |  |  |  |  | 1 |  |  |  |  | 
+ | Jefe de Comunidad de Caminantes |  |  |  |  |  |  | 1 |  |  |  |  | 
+ | Subjefe de Comunidad de Caminantes |  |  |  |  |  |  | 1 |  |  |  |  | 
+ | Consejero Rover Responsable |  |  |  |  |  |  | 1 |  |  |  |  | 
+ | Consejero Rover |  |  |  |  |  |  | 1 |  |  |  |  | 
+Captación | Identificación de fuentes de Recursos Humanos |  |  |  |  |  |  |  |  |  |  | Consejo de Grupo / Equipo de Provincia | 
+ | Promoción del Movimiento Scout en los espacios / contextos identificados |  |  |  |  |  |  |  |  |  |  |  | 
+ | Acciones individuales de captación |  |  |  |  |  |  |  |  |  |  |  | 
+Selección | CUM* | (NAL1890020) |  |  |  |  |  |  |  |  |  |  | 
+ | Entrevista STAR |  |  |  |  |  |  |  |  |  |  | Equipo entrevistador | 
+ | Determinación del cargo |  |  |  |  |  |  |  |  |  |  |  | 
+Integración | Acuerdo y Compromiso Mutuo |  |  |  |  |  |  |  |  |  |  | Consejo de Grupo / FAR | 
+ | Nombramiento |  |  |  |  |  |  |  |  |  |  | Consejo de Grupo | 
+ | Inicio del desempeño y acceso al Proceso de Formación |  |  |  |  |  |  |  |  |  |  | Consejo de Grupo / FAR | 
+ | *Se debe emplear una columna por cada persona que ingrese al proceso de Selección e Integración |  |  |  |  |  |  |  |  |  |  |  | 
+
+=== HOJA: Datos (25 filas) ===
+Número de jóvenes registrados en Manada | 0 | -1
+Número de seisenas con que cuenta la Manada | 0 | 0
+Mínimos en la sección | 18 | 2
+Número de jóvenes registrados en Tropa | 0 | -1
+Número de patrullas con que cuenta la Tropa | 0 | 0
+Mínimos en la sección | 12 | 1
+Número de jóvenes registrados en Comunidad | 0 | -1
+Número de equipos con que cuenta la Comunidad | 0 | 0
+Mínimos en la sección | 12 | 1
+Número de jóvenes registrados en Clan | 0 | -1
+Mínimos en la sección | 5 | 1
+ | Ideal mínimo | 
+Jefe de Grupo | 1 | 
+Subjefe de Grupo de Métodos Educativos | 1 | 
+Subjefe de Grupo de Administración | 1 | 
+Colaboradores de Grupo | 3 | 
+Patrono | 0 | 
+Jefe de Manada de Lobatos | 1 | 
+Subjefe de Manada de Lobatos | 2 | 
+Jefe de Tropa Scout | 1 | 
+Subjefe de Tropa Scout | 1 | 
+Jefe de Comunidad de Caminantes | 1 | 
+Subjefe de Comunidad de Caminantes | 1 | 
+Consejero Rover Responsable | 1 | 
+Consejero Rover | 1 | 

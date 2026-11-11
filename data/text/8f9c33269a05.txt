@@ -1,1 +1,123 @@
-Hoja: ReporteHistorico ; Seccion Femenina | Seccion Masculina ; Provincia | Localidad | Grupo | L | S | C | R | L | S | C | R | Scouter | Dirigente | Padre Scout | Total Manada | Total Tropa | Total Comunidad | Total Clan | Total Dirigentes | Total General ; AGUASCALIENTES | AGUASCALIENTES | 1-PARQUE BOSQUES | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 3 | 2 | 2 | 0 | 0 | 0 | 0 | 4 | 4 | 8 ; AGUASCALIENTES | AGUASCALIENTES | 3-DRAGONES | 13 | 11 | 5 | 7 | 11 | 12 | 7 | 3 | 13 | 7 | 0 | 24 | 23 | 12 | 10 | 20 | 89 ; AGUASCALIENTES | AGUASCALIENTES | 7-QUAUCALLI | 5 | 8 | 3 | 9 | 6 | 15 | 2 | 3 | 7 | 8 | 1 | 11 | 23 | 5 | 12 | 15 | 67 ; AGUASCALIENTES | AGUASCALIENTES | 8-BRODEGARIOS | 9 | 13 | 4 | 0 | 7 | 9 | 3 | 0 | 7 | 6 | 0 | 16 | 22 | 7 | 0 | 13 | 58 ; AGUASCALIENTES | AGUASCALIENTES | 9-PAXTU | 26 | 18 | 9 | 10 | 17 | 25 | 13 | 12 | 22 | 9 | 5 | 43 | 43 | 22 | 22 | 31 | 166 ; AGUASCALIENTES | AGUASCALIENTES | 10-LAHUN | 16 | 17 | 7 | 9 | 15 | 10 | 16 | 9 | 15 | 12 | 1 | 31 | 27 | 23 | 18 | 27 | 127 ; AGUASCALIENTES | AGUASCALIENTES | 11-JUAN GAVIOTA | 20 | 22 | 13 | 10 | 23 | 18 | 6 | 10 | 18 | 5 | 1 | 43 | 40 | 19 | 20 | 23 | 146 ; AGUASCALIENTES | AGUASCALIENTES | 15-CAXTOLLI IMPESSA | 10 | 13 | 10 | 5 | 10 | 10 | 6 | 7 | 18 | 7 | 2 | 20 | 23 | 16 | 12 | 25 | 98 ; AGUASCALIENTES | AGUASCALIENTES | 22-QUETZALCOATL | 14 | 13 | 5 | 9 | 18 | 19 | 16 | 6 | 10 | 7 | 0 | 32 | 32 | 21 | 15 | 17 | 117 ; AGUASCALIENTES | AGUASCALIENTES | 24-OLLIN YOLIZTLI | 2 | 3 | 2 | 5 | 7 | 4 | 2 | 1 | 8 | 2 | 0 | 9 | 7 | 4 | 6 | 10 | 36 ; AGUASCALIENTES | AGUASCALIENTES | 25-AVE FENIX | 3 | 6 | 3 | 2 | 10 | 3 | 6 | 5 | 6 | 4 | 0 | 13 | 9 | 9 | 7 | 10 | 48 ; AGUASCALIENTES | AGUASCALIENTES | 213-2013 KUAUHTLEKO IHUIYAN | 5 | 16 | 4 | 4 | 11 | 6 | 10 | 10 | 15 | 2 | 3 | 16 | 22 | 14 | 14 | 17 | 86 ; AGU
+HOJA DE CÁLCULO OFICIAL (XLSX): Reporte Nacional 2017 enero
+
+=== HOJA: ReporteHistorico (830 filas) ===
+ |  |  | Seccion Femenina |  |  |  | Seccion Masculina |  |  |  |  |  |  |  |  |  |  |  | 
+Provincia | Localidad | Grupo | L | S | C | R | L | S | C | R | Scouter | Dirigente | Padre Scout | Total Manada | Total Tropa | Total Comunidad | Total Clan | Total Dirigentes | Total General
+AGUASCALIENTES | AGUASCALIENTES | 1-PARQUE BOSQUES | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 3 | 2 | 2 | 0 | 0 | 0 | 0 | 4 | 4 | 8
+AGUASCALIENTES | AGUASCALIENTES | 3-DRAGONES | 13 | 11 | 5 | 7 | 11 | 12 | 7 | 3 | 13 | 7 | 0 | 24 | 23 | 12 | 10 | 20 | 89
+AGUASCALIENTES | AGUASCALIENTES | 7-QUAUCALLI | 5 | 8 | 3 | 9 | 6 | 15 | 2 | 3 | 7 | 8 | 1 | 11 | 23 | 5 | 12 | 15 | 67
+AGUASCALIENTES | AGUASCALIENTES | 8-BRODEGARIOS | 9 | 13 | 4 | 0 | 7 | 9 | 3 | 0 | 7 | 6 | 0 | 16 | 22 | 7 | 0 | 13 | 58
+AGUASCALIENTES | AGUASCALIENTES | 9-PAXTU | 26 | 18 | 9 | 10 | 17 | 25 | 13 | 12 | 22 | 9 | 5 | 43 | 43 | 22 | 22 | 31 | 166
+AGUASCALIENTES | AGUASCALIENTES | 10-LAHUN | 16 | 17 | 7 | 9 | 15 | 10 | 16 | 9 | 15 | 12 | 1 | 31 | 27 | 23 | 18 | 27 | 127
+AGUASCALIENTES | AGUASCALIENTES | 11-JUAN GAVIOTA | 20 | 22 | 13 | 10 | 23 | 18 | 6 | 10 | 18 | 5 | 1 | 43 | 40 | 19 | 20 | 23 | 146
+AGUASCALIENTES | AGUASCALIENTES | 15-CAXTOLLI IMPESSA | 10 | 13 | 10 | 5 | 10 | 10 | 6 | 7 | 18 | 7 | 2 | 20 | 23 | 16 | 12 | 25 | 98
+AGUASCALIENTES | AGUASCALIENTES | 22-QUETZALCOATL | 14 | 13 | 5 | 9 | 18 | 19 | 16 | 6 | 10 | 7 | 0 | 32 | 32 | 21 | 15 | 17 | 117
+AGUASCALIENTES | AGUASCALIENTES | 24-OLLIN YOLIZTLI | 2 | 3 | 2 | 5 | 7 | 4 | 2 | 1 | 8 | 2 | 0 | 9 | 7 | 4 | 6 | 10 | 36
+AGUASCALIENTES | AGUASCALIENTES | 25-AVE FENIX | 3 | 6 | 3 | 2 | 10 | 3 | 6 | 5 | 6 | 4 | 0 | 13 | 9 | 9 | 7 | 10 | 48
+AGUASCALIENTES | AGUASCALIENTES | 213-2013 KUAUHTLEKO IHUIYAN | 5 | 16 | 4 | 4 | 11 | 6 | 10 | 10 | 15 | 2 | 3 | 16 | 22 | 14 | 14 | 17 | 86
+AGUASCALIENTES | DIRIGENTES | 0-DIRIGENTES AGUASCALIENTES | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9 | 0 | 0 | 0 | 0 | 0 | 9 | 9
+AGUASCALIENTES | DIRIGENTES | 900-900 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 3
+AGUASCALIENTES | JESUS MARIA | 1-TEOTL | 7 | 4 | 1 | 2 | 2 | 12 | 6 | 3 | 7 | 2 | 4 | 9 | 16 | 7 | 5 | 9 | 50
+AGUASCALIENTES | LORETO | 21-EREINA DOXAS | 0 | 1 | 6 | 2 | 0 | 1 | 3 | 4 | 2 | 2 | 0 | 0 | 2 | 9 | 6 | 4 | 21
+ALVARO OBREGON | ALVARO OBREGON | 49-TAANKELEM BAAXALH | 7 | 4 | 1 | 1 | 12 | 9 | 1 | 2 | 6 | 3 | 3 | 19 | 13 | 2 | 3 | 9 | 49
+ALVARO OBREGON | ALVARO OBREGON | 77-HELIUS | 4 | 5 | 1 | 0 | 7 | 4 | 1 | 0 | 5 | 4 | 0 | 11 | 9 | 2 | 0 | 9 | 31
+ALVARO OBREGON | AMPL. LOS ALPES | 40-AGUILA BLANCA | 3 | 5 | 3 | 6 | 4 | 4 | 1 | 3 | 7 | 2 | 0 | 7 | 9 | 4 | 9 | 9 | 38
+ALVARO OBREGON | DIRIGENTES | 0-DIRIGENTES ALVARO OBREGON | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 7 | 7
+ALVARO OBREGON | FUENTES DEL PEDREGAL | 81-ALEJANDRO MERCADO COLÍN | 10 | 5 | 1 | 3 | 4 | 4 | 1 | 2 | 12 | 5 | 0 | 14 | 9 | 2 | 5 | 17 | 47
+ALVARO OBREGON | GARCIMARRERO | 6-COLINAS DEL SUR | 4 | 6 | 7 | 5 | 7 | 13 | 7 | 7 | 13 | 4 | 0 | 11 | 19 | 14 | 12 | 17 | 73
+ALVARO OBREGON | JARDINES DEL PEDREGAL | 51-SCOUTS DEL PEDREGAL | 12 | 21 | 17 | 15 | 19 | 24 | 17 | 10 | 8 | 4 | 1 | 31 | 45 | 34 | 25 | 12 | 148
+ALVARO OBREGON | LAS AGUILAS | 22-SCOUT | 0 | 0 | 0 | 0 | 7 | 7 | 2 | 6 | 7 | 4 | 1 | 7 | 7 | 2 | 6 | 11 | 34
+ALVARO OBREGON | MAGDALENA CONTRERAS | 129-ESPIRITU DE VENADO | 10 | 4 | 2 | 2 | 12 | 7 | 4 | 0 | 7 | 2 | 2 | 22 | 11 | 6 | 2 | 9 | 52
+ALVARO OBREGON | OLIVAR DE LOS PADRES | 99-GUARDIANES DEL FUEGO | 8 | 12 | 4 | 1 | 11 | 10 | 6 | 0 | 5 | 3 | 0 | 19 | 22 | 10 | 1 | 8 | 60
+ALVARO OBREGON | PEDREGAL SAN JERONIMO | 282-AZTLAN | 3 | 5 | 1 | 0 | 1 | 4 | 3 | 0 | 4 | 4 | 0 | 4 | 9 | 4 | 0 | 8 | 25
+ALVARO OBREGON | SAN BERNABE | 215-INDAJANI | 3 | 8 | 2 | 3 | 3 | 5 | 0 | 0 | 1 | 2 | 3 | 6 | 13 | 2 | 3 | 3 | 30
+ALVARO OBREGON | SANTA LUCIA | 27-SANTA LUCIA XANTEPEC | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 2
+ALVARO OBREGON | TOLTECAS | 154-IXTAC TEHUAN | 7 | 10 | 5 | 3 | 5 | 11 | 0 | 5 | 6 | 4 | 5 | 12 | 21 | 5 | 8 | 10 | 61
+ALVARO OBREGON | VISTA HERMOSA | 31-ITZCOATL | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 2
+ALVARO OBREGON | VISTA HERMOSA | 44-ALVARO OBREGON | 12 | 4 | 3 | 0 | 10 | 10 | 3 | 0 | 5 | 4 | 0 | 22 | 14 | 6 | 0 | 9 | 51
+AZCAPOTZALCO | AZCAPOTZALCO | 17-TLALOC | 2 | 2 | 1 | 3 | 2 | 6 | 2 | 2 | 6 | 9 | 0 | 4 | 8 | 3 | 5 | 15 | 35
+AZCAPOTZALCO | AZCAPOTZALCO | 91-TITANES | 7 | 5 | 7 | 5 | 8 | 13 | 8 | 3 | 3 | 3 | 0 | 15 | 18 | 15 | 8 | 6 | 62
+AZCAPOTZALCO | AZCAPOTZALCO | 257-COATL | 3 | 4 | 2 | 3 | 3 | 1 | 2 | 1 | 2 | 3 | 1 | 6 | 5 | 4 | 4 | 5 | 25
+AZCAPOTZALCO | CLAVERIA | 35-NETZAHUALCOYOLT | 5 | 0 | 2 | 3 | 4 | 1 | 1 | 2 | 3 | 2 | 0 | 9 | 1 | 3 | 5 | 5 | 23
+AZCAPOTZALCO | CLAVERIA | 145-CUITLAHUAC | 5 | 12 | 6 | 4 | 12 | 20 | 5 | 6 | 10 | 11 | 0 | 17 | 32 | 11 | 10 | 21 | 91
+AZCAPOTZALCO | DIRIGENTES | 0-DIRIGENTES AZCAPOTZALCO | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 9 | 0 | 0 | 0 | 0 | 0 | 12 | 12
+AZCAPOTZALCO | NUEVA SANTA MARIA | 58-ZOULE | 21 | 28 | 13 | 8 | 16 | 22 | 9 | 2 | 16 | 13 | 0 | 37 | 50 | 22 | 10 | 29 | 148
+AZCAPOTZALCO | NUEVA SANTA MARIA | 81-ITZINECAN | 5 | 5 | 6 | 3 | 2 | 4 | 2 | 4 | 8 | 3 | 0 | 7 | 9 | 8 | 7 | 11 | 42
+AZCAPOTZALCO | PARQUE HIDALGO | 63-HUEHUETEOTL | 10 | 8 | 4 | 12 | 8 | 7 | 9 | 4 | 7 | 8 | 3 | 18 | 15 | 13 | 16 | 15 | 80
+AZCAPOTZALCO | PRO-HOGAR | 1-STELLA MARIS | 9 | 8 | 1 | 4 | 10 | 10 | 1 | 4 | 10 | 6 | 0 | 19 | 18 | 2 | 8 | 16 | 63
+AZCAPOTZALCO | TABACALERA | 43-BALDER | 8 | 3 | 2 | 2 | 5 | 5 | 2 | 4 | 8 | 5 | 0 | 13 | 8 | 4 | 6 | 13 | 44
+AZCAPOTZALCO | TEZOZOMOC | 37-TEZOZOMOC | 9 | 3 | 5 | 4 | 5 | 9 | 5 | 6 | 11 | 4 | 0 | 14 | 12 | 10 | 10 | 15 | 61
+BAJA CALIFORNIA | DIRIGENTES | 0-DIRIGENTES BAJA CALIFORNIA NORTE | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 18 | 0 | 0 | 0 | 0 | 0 | 19 | 19
+BAJA CALIFORNIA | DIRIGENTES | 900-900 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 2
+BAJA CALIFORNIA | ENSENADA | 1-AMANECER | 4 | 3 | 3 | 1 | 10 | 8 | 2 | 0 | 10 | 3 | 0 | 14 | 11 | 5 | 1 | 13 | 44
+BAJA CALIFORNIA | ENSENADA | 6-HORIZONTE | 9 | 17 | 6 | 1 | 19 | 17 | 12 | 6 | 21 | 11 | 0 | 28 | 34 | 18 | 7 | 32 | 119
+BAJA CALIFORNIA | MEXICALI | 2-CENTINELA | 6 | 3 | 6 | 2 | 7 | 3 | 5 | 5 | 9 | 3 | 0 | 13 | 6 | 11 | 7 | 12 | 49
+BAJA CALIFORNIA | MEXICALI | 13-BOSQUE DE LA CIUDAD | 8 | 9 | 0 | 1 | 6 | 8 | 2 | 4 | 10 | 2 | 0 | 14 | 17 | 2 | 5 | 12 | 50
+BAJA CALIFORNIA | TIJUANA | 1-LABRA TU PORVENIR | 5 | 15 | 5 | 5 | 6 | 22 | 8 | 6 | 12 | 7 | 1 | 11 | 37 | 13 | 11 | 19 | 92
+BAJA CALIFORNIA | TIJUANA | 2-AGUACALIENTE | 14 | 7 | 2 | 9 | 8 | 12 | 2 | 7 | 6 | 10 | 0 | 22 | 19 | 4 | 16 | 16 | 77
+BAJA CALIFORNIA | TIJUANA | 3-DRUIDAS | 9 | 8 | 0 | 5 | 8 | 6 | 3 | 1 | 6 | 5 | 1 | 17 | 14 | 3 | 6 | 11 | 52
+BAJA CALIFORNIA | TIJUANA | 7-JOSÉ MA MORELOS Y PAVÓN | 5 | 8 | 10 | 5 | 13 | 22 | 12 | 10 | 8 | 5 | 2 | 18 | 30 | 22 | 15 | 13 | 100
+BAJA CALIFORNIA | TIJUANA | 8-INTEGRIDAD | 14 | 15 | 19 | 6 | 13 | 20 | 27 | 8 | 21 | 7 | 3 | 27 | 35 | 46 | 14 | 28 | 153
+BAJA CALIFORNIA | TIJUANA | 10-HERMANDAD | 9 | 7 | 3 | 2 | 11 | 14 | 8 | 1 | 8 | 3 | 0 | 20 | 21 | 11 | 3 | 11 | 66
+BAJA CALIFORNIA | TIJUANA | 12-SANTA FE | 4 | 4 | 0 | 0 | 6 | 9 | 0 | 0 | 6 | 2 | 0 | 10 | 13 | 0 | 0 | 8 | 31
+BAJA CALIFORNIA | TIJUANA | 15-UNIDAD | 2 | 5 | 2 | 4 | 5 | 10 | 5 | 2 | 11 | 5 | 0 | 7 | 15 | 7 | 6 | 16 | 51
+BAJA CALIFORNIA | TIJUANA | 21-VINAC | 4 | 3 | 2 | 1 | 5 | 13 | 2 | 5 | 5 | 5 | 0 | 9 | 16 | 4 | 6 | 10 | 45
+BAJA CALIFORNIA | TIJUANA | 25-KUMIAI TIILAK | 8 | 4 | 5 | 1 | 8 | 8 | 2 | 1 | 6 | 8 | 1 | 16 | 12 | 7 | 2 | 14 | 52
+BAJA CALIFORNIA | TIJUANA EXPERIENCIA SCOUT | 101-MARIANO MATAMOROS | 2 | 5 | 4 | 1 | 5 | 11 | 4 | 0 | 5 | 2 | 0 | 7 | 16 | 8 | 1 | 7 | 39
+BAJA CALIFORNIA | TIJUANA EXPERIENCIA SCOUT | 102-CAMINO VERDE | 3 | 6 | 3 | 0 | 1 | 5 | 2 | 0 | 6 | 3 | 1 | 4 | 11 | 5 | 0 | 9 | 30
+BAJA CALIFORNIA | TIJUANA EXPERIENCIA SCOUT | 103-GRANJAS FAMILIARES | 3 | 4 | 2 | 1 | 1 | 8 | 4 | 1 | 3 | 2 | 0 | 4 | 12 | 6 | 2 | 5 | 29
+BAJA CALIFORNIA SUR | CABO SAN LUCAS | 14-MARLIN | 11 | 4 | 0 | 0 | 10 | 7 | 1 | 0 | 8 | 2 | 0 | 21 | 11 | 1 | 0 | 10 | 43
+BAJA CALIFORNIA SUR | DIRIGENTES | 0-DIRIGENTES BAJA CALIFORNIA SUR | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 8 | 8
+BAJA CALIFORNIA SUR | LA PAZ | 2-ALBATROS | 17 | 21 | 6 | 11 | 13 | 12 | 10 | 6 | 14 | 6 | 0 | 30 | 33 | 16 | 17 | 20 | 116
+BAJA CALIFORNIA SUR | LA PAZ | 5-GUAJIAQUI | 15 | 16 | 8 | 10 | 5 | 8 | 8 | 8 | 12 | 3 | 4 | 20 | 24 | 16 | 18 | 15 | 97
+BAJA CALIFORNIA SUR | LA PAZ | 9-KADEIBI | 4 | 5 | 5 | 4 | 4 | 9 | 4 | 5 | 7 | 4 | 0 | 8 | 14 | 9 | 9 | 11 | 51
+BAJA CALIFORNIA SUR | LA PAZ | 11-KILIWA | 9 | 5 | 4 | 0 | 7 | 5 | 2 | 2 | 4 | 4 | 0 | 16 | 10 | 6 | 2 | 8 | 42
+BAJA CALIFORNIA SUR | LA PAZ | 16-CIMARRONES | 14 | 11 | 6 | 1 | 19 | 15 | 9 | 0 | 10 | 5 | 1 | 33 | 26 | 15 | 1 | 15 | 91
+BAJA CALIFORNIA SUR | SAN JOSE DEL CABO | 6-YENECAMI | 4 | 8 | 6 | 2 | 15 | 4 | 5 | 0 | 3 | 2 | 3 | 19 | 12 | 11 | 2 | 5 | 52
+BAJA CALIFORNIA SUR | SAN JOSE DEL CABO | 15-PERICÚES | 3 | 2 | 3 | 1 | 0 | 1 | 2 | 2 | 2 | 2 | 0 | 3 | 3 | 5 | 3 | 4 | 18
+BENITO JUAREZ | ALAMOS | 46-BADEN POWELL | 1 | 10 | 2 | 1 | 5 | 3 | 0 | 0 | 4 | 2 | 0 | 6 | 13 | 2 | 1 | 6 | 28
+BENITO JUAREZ | ALAMOS | 318-PALILZIHUALIL | 9 | 5 | 5 | 3 | 8 | 4 | 5 | 4 | 10 | 2 | 0 | 17 | 9 | 10 | 7 | 12 | 55
+BENITO JUAREZ | BENITO JUAREZ | 6-TOROS | 6 | 14 | 5 | 5 | 19 | 12 | 5 | 3 | 9 | 10 | 1 | 25 | 26 | 10 | 8 | 19 | 89
+BENITO JUAREZ | BENITO JUAREZ | 8-OCHO | 10 | 27 | 23 | 20 | 20 | 16 | 18 | 20 | 16 | 19 | 5 | 30 | 43 | 41 | 40 | 35 | 194
+BENITO JUAREZ | BENITO JUAREZ | 357-TITANES | 1 | 6 | 1 | 0 | 1 | 3 | 0 | 0 | 2 | 4 | 0 | 2 | 9 | 1 | 0 | 6 | 18
+BENITO JUAREZ | DEL VALLE | 3-G III M | 3 | 13 | 3 | 6 | 11 | 12 | 4 | 5 | 8 | 8 | 0 | 14 | 25 | 7 | 11 | 16 | 73
+BENITO JUAREZ | DEL VALLE | 27-HORUS RA | 8 | 5 | 1 | 1 | 10 | 1 | 3 | 0 | 6 | 3 | 0 | 18 | 6 | 4 | 1 | 9 | 38
+BENITO JUAREZ | DEL VALLE | 77-AZUL | 7 | 10 | 4 | 6 | 10 | 9 | 7 | 6 | 13 | 12 | 0 | 17 | 19 | 11 | 12 | 25 | 84
+BENITO JUAREZ | DEL VALLE | 200-PANDAS 200 | 10 | 7 | 7 | 2 | 11 | 6 | 7 | 2 | 9 | 5 | 0 | 21 | 13 | 14 | 4 | 14 | 66
+BENITO JUAREZ | DEL VALLE | 237-JORGE GONZALEZ TAMÉZ JGT | 1 | 2 | 1 | 4 | 2 | 1 | 3 | 3 | 3 | 3 | 0 | 3 | 3 | 4 | 7 | 6 | 23
+BENITO JUAREZ | DEL VALLE | 458-YOLIHUANI | 6 | 10 | 1 | 5 | 6 | 3 | 3 | 1 | 8 | 5 | 1 | 12 | 13 | 4 | 6 | 13 | 49
+BENITO JUAREZ | DIRIGENTES | 0-DIRIGENTES BENITO JUAREZ | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 21 | 0 | 0 | 0 | 0 | 0 | 23 | 23
+BENITO JUAREZ | DIRIGENTES | 900-900 | 1 | 3 | 0 | 0 | 3 | 4 | 0 | 0 | 5 | 0 | 0 | 4 | 7 | 0 | 0 | 5 | 16
+BENITO JUAREZ | LA MODERNA | 185-YACANTHIU | 8 | 5 | 5 | 6 | 7 | 6 | 4 | 7 | 9 | 4 | 2 | 15 | 11 | 9 | 13 | 13 | 63
+BENITO JUAREZ | LETRAN VALLE | 100-100 | 14 | 15 | 9 | 4 | 10 | 9 | 10 | 12 | 13 | 7 | 0 | 24 | 24 | 19 | 16 | 20 | 103
+BENITO JUAREZ | LETRAN VALLE | 344-TEYAOTLANI | 16 | 5 | 6 | 8 | 17 | 16 | 2 | 9 | 12 | 7 | 6 | 33 | 21 | 8 | 17 | 19 | 104
+BENITO JUAREZ | LETRAN VALLE | 479-CHICOMOZTOC | 1 | 7 | 3 | 7 | 1 | 4 | 1 | 0 | 5 | 6 | 0 | 2 | 11 | 4 | 7 | 11 | 35
+BENITO JUAREZ | MIGUEL ALEMAN | 79-79 | 2 | 2 | 1 | 4 | 4 | 2 | 2 | 5 | 7 | 3 | 0 | 6 | 4 | 3 | 9 | 10 | 32
+BENITO JUAREZ | NAPOLES | 15-OLYMPIA | 6 | 7 | 1 | 13 | 15 | 7 | 2 | 4 | 10 | 3 | 0 | 21 | 14 | 3 | 17 | 13 | 68
+BENITO JUAREZ | NARVARTE | 165-EL GUERRERO | 2 | 1 | 0 | 1 | 4 | 13 | 3 | 2 | 3 | 6 | 0 | 6 | 14 | 3 | 3 | 9 | 35
+BENITO JUAREZ | NOCHE BUENA | 33-QUETZALCOATL | 3 | 3 | 6 | 2 | 7 | 5 | 4 | 4 | 7 | 2 | 1 | 10 | 8 | 10 | 6 | 9 | 44
+BENITO JUAREZ | POSTAL | 18-AVALON | 8 | 8 | 1 | 2 | 10 | 5 | 1 | 5 | 5 | 9 | 0 | 18 | 13 | 2 | 7 | 14 | 54
+BENITO JUAREZ | TLAHUELILPAN | 12-BALAM | 9 | 17 | 4 | 2 | 11 | 7 | 6 | 5 | 11 | 11 | 2 | 20 | 24 | 10 | 7 | 22 | 85
+CAMPECHE | CAMPECHE | 1-MARINOS | 1 | 3 | 4 | 0 | 3 | 5 | 1 | 2 | 7 | 2 | 1 | 4 | 8 | 5 | 2 | 9 | 29
+CAMPECHE | CAMPECHE | 2-EK BALAM | 2 | 3 | 1 | 2 | 2 | 5 | 1 | 3 | 3 | 1 | 0 | 4 | 8 | 2 | 5 | 4 | 23
+CAMPECHE | CAMPECHE | 3-GUADALUPE | 10 | 11 | 3 | 4 | 19 | 9 | 9 | 3 | 13 | 4 | 0 | 29 | 20 | 12 | 7 | 17 | 85
+CAMPECHE | CAMPECHE | 10-CALAKMUL | 1 | 3 | 3 | 2 | 1 | 3 | 1 | 2 | 1 | 2 | 0 | 2 | 6 | 4 | 4 | 3 | 19
+CAMPECHE | CD DEL CARMEN | 1-AVE FENIX | 1 | 2 | 2 | 3 | 3 | 3 | 1 | 3 | 4 | 2 | 0 | 4 | 5 | 3 | 6 | 6 | 24
+CAMPECHE | CD DEL CARMEN | 3-XICALANGO | 6 | 4 | 2 | 6 | 6 | 11 | 3 | 2 | 10 | 8 | 1 | 12 | 15 | 5 | 8 | 18 | 59
+CAMPECHE | DIRIGENTES | 0-DIRIGENTES CAMPECHE | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 5 | 5
+CAMPECHE | DIRIGENTES | 900-900 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 2 | 1 | 3 | 0 | 0 | 0 | 1 | 3 | 4 | 8
+CHALCO-IXTAPALUCA | DIRIGENTES | 0-DIRIGENTES CHALCO-IXTAPALUCA | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 4 | 4
+CHALCO-IXTAPALUCA | DIRIGENTES | 900-900 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 2 | 2
+CHALCO-IXTAPALUCA | IXTAPALUCA | 1-CLOVIS | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 | 2 | 0 | 0 | 1 | 0 | 0 | 3 | 4
+CHALCO-IXTAPALUCA | IXTAPALUCA | 7-QUETZALES | 4 | 2 | 2 | 0 | 7 | 4 | 1 | 0 | 4 | 2 | 0 | 11 | 6 | 3 | 0 | 6 | 26
+CHALCO-IXTAPALUCA | IXTAPALUCA | 12-CABALLEROS ANCESTRALES | 2 | 3 | 0 | 2 | 2 | 6 | 3 | 1 | 2 | 5 | 0 | 4 | 9 | 3 | 3 | 7 | 26
+CHALCO-IXTAPALUCA | IXTAPALUCA | 85-CUAUHSHIHUA | 0 | 1 | 1 | 3 | 1 | 3 | 0 | 6 | 4 | 2 | 0 | 1 | 4 | 1 | 9 | 6 | 21
+CHALCO-IXTAPALUCA | IXTAPALUCA | 322-VIKINGOS | 6 | 10 | 3 | 0 | 6 | 6 | 7 | 1 | 5 | 3 | 2 | 12 | 16 | 10 | 1 | 8 | 49
+CHALCO-IXTAPALUCA | IXTAPALUCA | 335-POPOCATEPETL | 9 | 11 | 9 | 8 | 11 | 11 | 7 | 9 | 12 | 2 | 0 | 20 | 22 | 16 | 17 | 14 | 89
+CHALCO-IXTAPALUCA | SAN VICENTE CHICOLOAPAN | 5-AZTLAN | 2 | 4 | 2 | 2 | 5 | 3 | 5 | 2 | 5 | 3 | 4 | 7 | 7 | 7 | 4 | 8 | 37
+CHALCO-IXTAPALUCA | VALLE DE CHALCO | 10-AVE FENIX | 16 | 2 | 2 | 2 | 2 | 6 | 3 | 1 | 5 | 3 | 0 | 18 | 8 | 5 | 3 | 8 | 42
+CHALCO-IXTAPALUCA | VALLE DE CHALCO | 217-MAFEKING | 5 | 7 | 4 | 5 | 12 | 8 | 9 | 2 | 9 | 4 | 1 | 17 | 15 | 13 | 7 | 13 | 66
+CHIAPAS | DIRIGENTES | 0-DIRIGENTES CHIAPAS | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 4 | 4
+CHIAPAS | PALENQUE | 7-KITAM BALAM | 2 | 13 | 5 | 1 | 7 | 5 | 3 | 0 | 8 | 4 | 0 | 9 | 18 | 8 | 1 | 12 | 48
+CHIAPAS | TAPACHULA | 1-TACANA | 5 | 3 | 3 | 1 | 3 | 12 | 1 | 6 | 5 | 2 | 0 | 8 | 15 | 4 | 7 | 7 | 41
+CHIAPAS | TUXTLA GUTIERREZ | 1-NABALAM | 10 | 6 | 11 | 11 | 9 | 16 | 8 | 7 | 10 | 7 | 0 | 19 | 22 | 19 | 18 | 17 | 95

@@ -31,17 +31,35 @@ const stats = {};
 function add(item, bucket) {
   const key = norm(item.q);
   if (!key || seen.has(key)) return false;
-  if (!item.ans || clean(item.ans).length < 45) return false;
-  if (/\[email\s*protected\]/i.test(item.ans)) return false;
+  if (!item.ans) return false;
+  let fixedAns = String(item.ans)
+    .replace(/[\uFE0F\u200D]/g, "")
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "")
+    .replace(/---\s*P[aá]gina\s*\d+\s*---/gi, " ")
+    .replace(/\b(?:[A-ZÁÉÍÓÚÑ]\s+){4,}[A-ZÁÉÍÓÚÑ]\b/g, (m) => m.replace(/\s+/g, ""))
+    .replace(/Help Desk de la Asociacion de Scouts de Mexico[\s\S]{0,220}?Base de Conocimientos \(KB\)\s*/gi, "")
+    .replace(/\bPresi(?:dente|dentes) de Provincia,\./g, "Presidentes de Provincia.")
+    .replace(/,\./g, ".")
+    .replace(/[ \t]+\n/g, "\n")
+    .trim();
+  if (fixedAns && !/[.!?:"'»*)]$/.test(fixedAns)) {
+    fixedAns = fixedAns.replace(/[,;\-]+$/, "").trim() + ".";
+  }
+  if (clean(fixedAns).length < 45) return false;
+  if (/\[email\s*protected\]/i.test(fixedAns)) return false;
+  if (/Iniciar Sesión CUM Contraseña Ingresar ¿No tienes cuenta\?/i.test(fixedAns)) return false;
   seen.add(key);
-  out.push(item);
+  out.push({ ...item, ans: fixedAns });
   stats[bucket] = (stats[bucket] || 0) + 1;
   return true;
 }
 
 const clean = (s) =>
   String(s || "")
-    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u00ad]/g, "")
+    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u00ad\uFE0F\u200D]/g, "")
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "")
+    .replace(/---\s*P[aá]gina\s*\d+\s*---/gi, " ")
+    .replace(/\b(?:[A-ZÁÉÍÓÚÑ]\s+){4,}[A-ZÁÉÍÓÚÑ]\b/g, (m) => m.replace(/\s+/g, ""))
     .replace(/\s+/g, " ")
     .trim();
 
@@ -49,12 +67,16 @@ const escRe = (s) => String(s || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 function cutSentence(s, max) {
   s = clean(s);
-  if (s.length <= max) return s;
+  if (s.length <= max) {
+    return s && !/[.!?:"'»*)]$/.test(s) ? `${s}.` : s;
+  }
   const cut = s.slice(0, max);
-  const p = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("; "), cut.lastIndexOf(": "));
+  const p = cut.lastIndexOf(". ");
   if (p > max * 0.45) return cut.slice(0, p + 1).trim();
+  const semi = cut.lastIndexOf("; ");
+  if (semi > max * 0.55) return cut.slice(0, semi).trim() + ".";
   const sp = cut.lastIndexOf(" ");
-  return cut.slice(0, sp > 0 ? sp : max).trim() + "…";
+  return cut.slice(0, sp > 0 ? sp : max).trim().replace(/[,;:\-]+$/, "") + ".";
 }
 
 function stripPdfHeaders(s) {
@@ -1691,12 +1713,15 @@ function sliceSentenceAligned(body, startIdx, maxLen = 700) {
 for (const d of catalog) {
   if ((parseInt(String(d.id || "").slice(4), 10) || 0) > 650) continue;
   if (d.is_duplicate || !d.title) continue;
+  // Evitar preguntas vacías o con menús de inicio de sesión para URLs web externas sin visor propio
+  if (d.ext === "HTML" && d.is_readable_html !== true) continue;
   const t = shortTitle(d.title);
   const tipo = TIPO[d.ext] || "documento";
   const baseDoc = { cat: d.category, doc_id: d.id, page: 1 };
   const r = resumen(d);
   if (!r) continue;
-  const head = `**«${t}»** es ${tipo === "imagen" ? "una imagen oficial" : "un " + tipo} de la categoría *${d.category}*${d.year ? ` (${d.year})` : ""}.`;
+  const esFem = tipo === "imagen" || tipo.startsWith("hoja") || tipo.startsWith("presentaci") || tipo.startsWith("página");
+  const head = `**«${t}»** es ${tipo === "imagen" ? "una imagen oficial" : (esFem ? "una " : "un ") + tipo} de la categoría *${d.category}*${d.year ? ` (${d.year})` : ""}.`;
   const dirigido = d.section_label ? `**Dirigido a:** ${d.section_label}.` : "";
 
   if (d.ext === "HTML") {
@@ -1739,6 +1764,7 @@ const inline = new Map();
 
 for (const d of catalog) {
   if ((parseInt(String(d.id || "").slice(4), 10) || 0) > 650) continue;
+  if (d.ext === "HTML" && d.is_readable_html !== true) continue;
   if (d.is_duplicate || EXCLUDE_CAT.has(d.category) || /donation|Every Drop|Choose your/i.test(d.title)) continue;
   const raw = textOf(d);
   if (!raw) continue;
@@ -1815,6 +1841,10 @@ for (const x of Object.values(defs)) {
 /* -------------------------------------------------------------------- 8. Acervo RECME, Help Desk SISAS y FES */
 const { generateRecmeFaq } = require("./generate_recme_faq");
 generateRecmeFaq({ fs, path, DATA, catalog, byId, textOf, add, norm, clean, shortTitle, ubic, fmtSize, stats });
+
+/* ----------------------------------------------------- 9. Cobertura Universal Básica, Roles, Portales y XLSX */
+const { generateUniversalBasicsFaq } = require("./generate_universal_basics_faq");
+generateUniversalBasicsFaq({ fs, path, DATA, catalog, byId, textOf, add, norm, clean, cutSentence, shortTitle, ubic, fmtSize, stats });
 
 /* -------------------------------------------------------------------- Salida */
 const result = {

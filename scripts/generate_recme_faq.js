@@ -46,11 +46,23 @@ function stripEmojis(s) {
 }
 
 function cleanBlock(s, maxLen = 950) {
-  let out = stripEmojis(s).replace(/\r\n/g, "\n").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
+  let out = stripEmojis(s)
+    .replace(/\r\n/g, "\n")
+    .replace(/---\s*P[aá]gina\s*\d+\s*---/gi, "\n")
+    .replace(/\b(?:[A-ZÁÉÍÓÚÑ]\s+){4,}[A-ZÁÉÍÓÚÑ]\b/g, (m) => m.replace(/\s+/g, ""))
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
   if (out.length <= maxLen) return out;
   const sub = out.slice(0, maxLen);
-  const lastStop = Math.max(sub.lastIndexOf(". "), sub.lastIndexOf("\n"), sub.lastIndexOf("; "));
-  return (lastStop > maxLen * 0.55 ? sub.slice(0, lastStop + 1) : sub).trim() + (lastStop > maxLen * 0.55 ? "" : "...");
+  const lastStop = Math.max(sub.lastIndexOf(". "), sub.lastIndexOf("\n"));
+  if (lastStop > maxLen * 0.55) {
+    let part = sub.slice(0, lastStop + 1).trim();
+    if (part && !/[.!?:"'»*)]$/.test(part)) part += ".";
+    return part;
+  }
+  const sp = sub.lastIndexOf(" ");
+  return (sp > 0 ? sub.slice(0, sp) : sub).trim() + ".";
 }
 
 function splitBullets(s) {
