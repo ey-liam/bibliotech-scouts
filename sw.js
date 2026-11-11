@@ -4,7 +4,7 @@
 // Versión: V7
 // ============================================================================
 
-const CACHE_NAME = "bibliotech-scout-v9";
+const CACHE_NAME = "bibliotech-scout-v11";
 const STATIC_ASSETS = [
   "./",
   "index.html",

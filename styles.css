@@ -9365,7 +9365,8 @@ mark.doc-highlight {
 
 
 /* ==========================================================================
-   MODO NOCHE / MODO OSCURO GLOBAL COMPLETO (INVERSIÓN REAL Y LIMPIA DE TODO EL SITIO)
+   MODO NOCHE / MODO OSCURO GLOBAL COMPLETO (INVERSIÓN REAL, ARMONIOSA Y LIMPIA)
+   "Lo que ya es oscuro déjalo oscuro; lo que es claro pasa a oscuro elegante"
    ========================================================================== */
 
 html[data-camp-mode="true"] {
@@ -9378,8 +9379,6 @@ html[data-camp-mode="true"] {
   --text-secondary: #cbd5e1 !important;
   --text-muted: #94a3b8 !important;
   --text-main: #ffffff !important;
-  --ink: #ffffff !important;
-  --ink-soft: #cbd5e1 !important;
   --scout-navy: #ffffff !important;
   --accent-primary: #38bdf8 !important;
   background-color: #070514 !important;
@@ -9393,7 +9392,173 @@ html[data-camp-mode="true"] #contenido-principal {
   color: #ffffff !important;
 }
 
-/* 1. SECCIONES: TODAS EN FONDO OSCURO CÓSMICO */
+/* 1. CABECERA PRINCIPAL: VIDRIO CÓSMICO OSCURO CON TEXTO BLANCO NÍTIDO */
+html[data-camp-mode="true"] header.main-header,
+html[data-camp-mode="true"] .main-header,
+html[data-camp-mode="true"] header.main-header.is-scrolled {
+  background: rgba(10, 6, 22, 0.94) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.32) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+}
+
+html[data-camp-mode="true"] .brand-name {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .brand-author {
+  color: #94a3b8 !important;
+}
+
+html[data-camp-mode="true"] .brand-badge {
+  background: #facc15 !important;
+  color: #0f172a !important;
+}
+
+html[data-camp-mode="true"] .nav-link {
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .nav-link:hover,
+html[data-camp-mode="true"] .nav-link.active {
+  color: #38bdf8 !important;
+}
+
+html[data-camp-mode="true"] .nav-toggle {
+  background: rgba(22, 13, 46, 0.85) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.45) !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .nav-toggle span {
+  background: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .main-nav {
+  background: rgba(14, 8, 32, 0.98) !important;
+  border: 1px solid rgba(139, 92, 246, 0.35) !important;
+}
+
+/* 2. DOCK UNIFICADO INFERIOR: CÁPSULA FLOTANTE OSCURA CON ÍCONOS Y TEXTOS NÍTIDOS */
+html[data-camp-mode="true"] .bt-unified-dock {
+  background: rgba(14, 8, 30, 0.95) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.4) !important;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(139, 92, 246, 0.2) inset !important;
+}
+
+html[data-camp-mode="true"] .bt-dock-item {
+  color: #94a3b8 !important;
+}
+
+html[data-camp-mode="true"] .bt-dock-item svg {
+  stroke: #94a3b8 !important;
+}
+
+html[data-camp-mode="true"] .bt-dock-item span {
+  color: #94a3b8 !important;
+}
+
+html[data-camp-mode="true"] .bt-dock-item:hover,
+html[data-camp-mode="true"] .bt-dock-item:focus {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .bt-dock-item:hover svg,
+html[data-camp-mode="true"] .bt-dock-item:hover span {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .bt-dock-item.is-active,
+html[data-camp-mode="true"] .bt-dock-item[aria-current="true"] {
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.16) !important;
+}
+
+html[data-camp-mode="true"] .bt-dock-item.is-active svg,
+html[data-camp-mode="true"] .bt-dock-item.is-active span,
+html[data-camp-mode="true"] .bt-dock-item[aria-current="true"] svg,
+html[data-camp-mode="true"] .bt-dock-item[aria-current="true"] span {
+  color: #38bdf8 !important;
+  stroke: #38bdf8 !important;
+}
+
+html[data-camp-mode="true"] .bt-dock-badge {
+  background: #facc15 !important;
+  color: #0f172a !important;
+}
+
+/* 3. HERO SECTION Y BUSCADOR: YA SON OSCUROS, MANTENER SU ESTILO Y FIJAR BOTONES */
+html[data-camp-mode="true"] .bts-hero-section {
+  background: radial-gradient(circle at 50% 12%, rgba(99, 102, 241, 0.22) 0%, rgba(13, 8, 34, 0.95) 45%, #070514 100%) !important;
+}
+
+/* BOTÓN PRINCIPAL: FONDO AMARILLO VIBRANTE CON TEXTO E ÍCONO OSCURO (NUNCA CIAN) */
+html[data-camp-mode="true"] .btn-hero-primary,
+html[data-camp-mode="true"] a.btn-hero-primary {
+  background: #facc15 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 26px -8px rgba(250, 204, 21, 0.75) !important;
+}
+
+html[data-camp-mode="true"] .btn-hero-primary:hover,
+html[data-camp-mode="true"] a.btn-hero-primary:hover {
+  background: #fde047 !important;
+  color: #0f172a !important;
+}
+
+html[data-camp-mode="true"] .btn-hero-primary svg,
+html[data-camp-mode="true"] .btn-hero-primary span,
+html[data-camp-mode="true"] a.btn-hero-primary svg,
+html[data-camp-mode="true"] a.btn-hero-primary span {
+  color: #0f172a !important;
+  stroke: #0f172a !important;
+  fill: none !important;
+}
+
+html[data-camp-mode="true"] .btn-hero-ghost,
+html[data-camp-mode="true"] a.btn-hero-ghost {
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+html[data-camp-mode="true"] .btn-hero-ghost:hover,
+html[data-camp-mode="true"] a.btn-hero-ghost:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .bts-search-section {
+  background: radial-gradient(circle at 50% 15%, rgba(139, 92, 246, 0.2) 0%, rgba(10, 6, 26, 0.98) 60%, #060410 100%) !important;
+}
+
+html[data-camp-mode="true"] .search-hub-card {
+  background: rgba(18, 11, 40, 0.92) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.4) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7) !important;
+}
+
+html[data-camp-mode="true"] .search-kicker {
+  color: #38bdf8 !important;
+}
+
+html[data-camp-mode="true"] .btn-shuffle-questions {
+  background: rgba(139, 92, 246, 0.25) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.5) !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .btn-shuffle-questions:hover {
+  background: rgba(139, 92, 246, 0.4) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+}
+
+/* 4. SECCIONES CLARAS QUE PASAN A FONDO CÓSMICO OSCURO */
 html[data-camp-mode="true"] .quickstart-section,
 html[data-camp-mode="true"] .quickstart-3d-section,
 html[data-camp-mode="true"] .library-section,
@@ -9403,14 +9568,13 @@ html[data-camp-mode="true"] .evolution-section,
 html[data-camp-mode="true"] .catalog-section,
 html[data-camp-mode="true"] .app-download-section,
 html[data-camp-mode="true"] .official-services-section,
-html[data-camp-mode="true"] .agentes-cambio-section,
 html[data-camp-mode="true"] .site-footer {
   background: radial-gradient(ellipse at 50% 20%, #150d30 0%, #0d0822 65%, #060410 100%) !important;
   border-color: rgba(139, 92, 246, 0.25) !important;
   color: #ffffff !important;
 }
 
-/* 2. TARJETAS Y CONTENEDORES: VIDRIO OSCURO DE ALTO CONTRASTE */
+/* 5. TARJETAS Y CONTENEDORES: VIDRIO OSCURO DE ALTO CONTRASTE */
 html[data-camp-mode="true"] .starter-3d-card,
 html[data-camp-mode="true"] .quickstart-card,
 html[data-camp-mode="true"] .about-card,
@@ -9419,7 +9583,6 @@ html[data-camp-mode="true"] .doc-card,
 html[data-camp-mode="true"] .book-card,
 html[data-camp-mode="true"] .change-card,
 html[data-camp-mode="true"] .app-download-shell,
-html[data-camp-mode="true"] .search-hub-card,
 html[data-camp-mode="true"] .modal-container,
 html[data-camp-mode="true"] .modal-box,
 html[data-camp-mode="true"] .reader-modal,
@@ -9432,14 +9595,13 @@ html[data-camp-mode="true"] .service-info-card {
   color: #ffffff !important;
 }
 
-/* 3. IMAGEN 1: BOTONES Y TEXTOS DE PRIMEROS PASOS (#guia-inicio) */
+/* 6. PRIMEROS PASOS (#guia-inicio) */
 html[data-camp-mode="true"] .starter-3d-card h3,
 html[data-camp-mode="true"] .starter-3d-card h4 {
   color: #ffffff !important;
 }
 
 html[data-camp-mode="true"] .starter-3d-card p,
-html[data-camp-mode="true"] .starter-3d-card span,
 html[data-camp-mode="true"] .starter-3d-card small {
   color: #cbd5e1 !important;
 }
@@ -9463,7 +9625,7 @@ html[data-camp-mode="true"] .qs-query-btn:hover {
   box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35) !important;
 }
 
-/* 4. IMAGEN 2: CONTROLES, FILTROS Y ESTANTES DE BIBLIOTECA */
+/* 7. CONTROLES Y FILTROS DE BIBLIOTECA (#biblioteca) */
 html[data-camp-mode="true"] .lib-search-input,
 html[data-camp-mode="true"] .lib-filter-select,
 html[data-camp-mode="true"] .library-search-mini input,
@@ -9506,7 +9668,6 @@ html[data-camp-mode="true"] .shelf-pill[aria-selected="true"] {
   box-shadow: 0 4px 18px rgba(56, 189, 248, 0.45) !important;
 }
 
-/* 5. IMAGEN 3: BOTONES Y BADGES DE TARJETAS DE LECTURA */
 html[data-camp-mode="true"] .btn-open-read,
 html[data-camp-mode="true"] .doc-btn-read,
 html[data-camp-mode="true"] .book-card .btn,
@@ -9519,14 +9680,6 @@ html[data-camp-mode="true"] .doc-card .btn {
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4) !important;
 }
 
-html[data-camp-mode="true"] .btn-open-read:hover,
-html[data-camp-mode="true"] .doc-btn-read:hover,
-html[data-camp-mode="true"] .book-card .btn:hover {
-  background: linear-gradient(135deg, #8b5cf6 0%, #0ea5e9 100%) !important;
-  box-shadow: 0 6px 24px rgba(56, 189, 248, 0.5) !important;
-  transform: translateY(-2px) !important;
-}
-
 html[data-camp-mode="true"] .book-page-count,
 html[data-camp-mode="true"] .doc-pages-badge,
 html[data-camp-mode="true"] .doc-card-badge {
@@ -9535,7 +9688,38 @@ html[data-camp-mode="true"] .doc-card-badge {
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
-/* 6. IMAGEN 4: CAJA DE AUTOR / FIRMA Y CINTILLO (#acerca) */
+/* 8. LÍNEA DE TIEMPO / CAMBIOS OFICIALES (#cambios) - PÍLDORAS OSCURAS DE ALTO CONTRASTE */
+html[data-camp-mode="true"] .yr-old {
+  background: rgba(239, 68, 68, 0.22) !important;
+  color: #fca5a5 !important;
+  border: 1px solid rgba(239, 68, 68, 0.5) !important;
+}
+
+html[data-camp-mode="true"] .yr-new {
+  background: rgba(16, 185, 129, 0.22) !important;
+  color: #6ee7b7 !important;
+  border: 1px solid rgba(16, 185, 129, 0.5) !important;
+}
+
+html[data-camp-mode="true"] .yr-arrow {
+  color: #94a3b8 !important;
+}
+
+html[data-camp-mode="true"] .change-card h3 {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .change-card p {
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .version-chains-details {
+  background: rgba(12, 7, 26, 0.82) !important;
+  border: 1px solid rgba(139, 92, 246, 0.32) !important;
+  color: #cbd5e1 !important;
+}
+
+/* 9. ACERCA DE (#acerca) */
 html[data-camp-mode="true"] .about-signature-box {
   background: rgba(12, 7, 26, 0.92) !important;
   border: 1.5px solid rgba(234, 179, 8, 0.5) !important;
@@ -9561,7 +9745,7 @@ html[data-camp-mode="true"] .about-badge-pill {
   color: #38bdf8 !important;
 }
 
-/* 7. IMAGEN 5: ETIQUETAS DE EDAD Y LEMA EN SECCIONES SCOUT (#secciones) */
+/* 10. SECCIONES SCOUT (#secciones) */
 html[data-camp-mode="true"] .sec-age-tag,
 html[data-camp-mode="true"] .sec-tag {
   background: rgba(139, 92, 246, 0.25) !important;
@@ -9587,7 +9771,82 @@ html[data-camp-mode="true"] .sec-popout-photo {
   border: 1.5px solid rgba(139, 92, 246, 0.4) !important;
 }
 
-/* 8. GENERAL DE TEXTOS Y ENLACES EN MODO OSCURO */
+/* 11. AGENTES DE CAMBIO (#agentes-cambio) - PRESERVAR SU DISEÑO AZUL OSCURO */
+html[data-camp-mode="true"] .agentes-card {
+  background: radial-gradient(circle at 88% 0%, rgba(14, 165, 233, 0.25), transparent 42%), linear-gradient(135deg, #0a1024 0%, #151b40 55%, #1e1747 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.35) !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .agentes-content h2,
+html[data-camp-mode="true"] .agentes-content h3,
+html[data-camp-mode="true"] .agentes-content h4 {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .agentes-content p {
+  color: #e2e8f0 !important;
+}
+
+html[data-camp-mode="true"] .adc-btn-top-pill {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .adc-btn-register-action {
+  background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .adc-btn-register-action span {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .adc-btn-register-action svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .adc-btn-query-chip {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .adc-btn-network-pill {
+  border: 2px solid #ffffff !important;
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .adc-btn-network-pill:hover {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
+html[data-camp-mode="true"] .adc-contact-link {
+  color: #38bdf8 !important;
+}
+
+html[data-camp-mode="true"] .cnrc-leadership-box {
+  background: rgba(8, 16, 38, 0.65) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.42) !important;
+}
+
+html[data-camp-mode="true"] .cnrc-member-card {
+  background: rgba(12, 18, 40, 0.7) !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+}
+
+html[data-camp-mode="true"] .cnrc-member-card .member-name {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .cnrc-member-card .member-role {
+  color: #38bdf8 !important;
+}
+
+/* 12. TIPOGRAFÍA CONTEXTUAL (SIN SELECTORES GLOBALES QUE ROMPAN BOTONES) */
 html[data-camp-mode="true"] h1,
 html[data-camp-mode="true"] h2,
 html[data-camp-mode="true"] h3,
@@ -9598,29 +9857,25 @@ html[data-camp-mode="true"] strong {
   color: #ffffff !important;
 }
 
-html[data-camp-mode="true"] p,
-html[data-camp-mode="true"] li,
-html[data-camp-mode="true"] span,
-html[data-camp-mode="true"] label {
-  color: #e2e8f0;
+html[data-camp-mode="true"] .quickstart-3d-section p,
+html[data-camp-mode="true"] .library-section p,
+html[data-camp-mode="true"] .about-section p,
+html[data-camp-mode="true"] .sections-section p,
+html[data-camp-mode="true"] .evolution-section p,
+html[data-camp-mode="true"] .catalog-section p,
+html[data-camp-mode="true"] .app-download-section p,
+html[data-camp-mode="true"] .official-services-section p,
+html[data-camp-mode="true"] .site-footer p {
+  color: #cbd5e1;
 }
 
-html[data-camp-mode="true"] a {
-  color: #38bdf8;
-}
-
-html[data-camp-mode="true"] a:hover {
-  color: #7dd3fc;
-}
-
-/* 9. FOTOS Y DOCUMENTOS: LIMPIOS SIN TONO AMARILLENTO NI SEPIA */
 html[data-camp-mode="true"] img,
 html[data-camp-mode="true"] .book-cover,
 html[data-camp-mode="true"] iframe {
   filter: brightness(0.96) contrast(1.04) !important;
 }
 
-/* 10. PANEL DE GUARDADOS Y NOTAS */
+/* 13. PANEL DE GUARDADOS Y NOTAS */
 html[data-camp-mode="true"] .saved-panel-sheet {
   background: #0d0822 !important;
   color: #ffffff !important;
@@ -9647,7 +9902,7 @@ html[data-camp-mode="true"] .saved-panel-close {
   color: #ffffff !important;
 }
 
-/* 11. BOTÓN DE MODO NOCHE: VISIBLE EN ESCRITORIO Y OCULTO EN MÓVIL */
+/* 14. BOTÓN DE MODO NOCHE DE ESCRITORIO */
 html[data-camp-mode="true"] .btn-camp-mode {
   background: rgba(56, 189, 248, 0.25) !important;
   border-color: #38bdf8 !important;
