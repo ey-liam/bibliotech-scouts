@@ -83,6 +83,7 @@ El desarrollo actual de BiblioTech Scout es el resultado de un trabajo coordinad
   - Control de audio TTS (`speechSynthesis`).
   - Lector interactivo con visor PDF embebido, pestañas de texto extraído y buscador interno con resaltado.
 * **`data/catalog.json`**: Catálogo completo de 650 documentos (498 libros/manuales oficiales descargables), con metadatos de categoría, sección, año, páginas, sinopsis y hash SHA12.
+* **`data/questions_bank.json`, `data/faq_v3.json` y `data/faq_v4.json`**: Banco combinado de **11,254 preguntas y respuestas únicas** (`5,356` base, `101` V3 y `5,797` V4). El banco V4 se regenera con `scripts/generate_faq_v4.js` y añade preguntas de convocatorias (sede, fechas, cuotas, requisitos, contacto y modalidad), formatos/actas/seguro (asunto, datos solicitados, autorizaciones y orden del día), menciones textuales con página y cita, y extractos por documento.
 * **`data/text/`**: 650 archivos de texto plano indexados por hash SHA12 para lectura rápida y motor de búsqueda sin conexión.
 * **`covers/`**: 433 portadas de libros y manuales oficiales en formato JPG optimizado.
 
