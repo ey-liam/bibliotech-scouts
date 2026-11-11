@@ -121,21 +121,7 @@ Para aportar nuevos documentos, convocatorias, plantillas, actividades de progre
 
 ---
 
-## 9. Cómo colaborar y trabajar con agentes de IA
-
-El repositorio está preparado para que varias personas y agentes trabajen sin pisarse:
-
-- **`AGENTS.md`**: protocolo completo de ramas, validación, publicación y reparto de trabajo.
-- **`GEMINI.md`**: instrucciones específicas para Antigravity / Gemini.
-- **`.github/copilot-instructions.md`**: instrucciones que lee GitHub Copilot.
-- **`.github/ISSUE_TEMPLATE/`**: plantillas para reportar errores, proponer mejoras o pedir una tarea a un agente.
-- **`.github/PULL_REQUEST_TEMPLATE.md`**: lista de comprobación para cada pull request.
-
-Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/` se generan con scripts y no se editan a mano. Antes de volver a publicar desde Antigravity, hay que sincronizar `public/` con los archivos actuales de `main` para no revertir mejoras del sitio.
-
----
-
-## 10. Historial de versiones anteriores (V4.2 a V3)
+## 9. Historial de versiones anteriores (V4.2 a V3)
 
 - **Rediseño completo e integración del menú de descargas:** el panel «Mi biblioteca y descargas» se integra armónicamente en la experiencia visual de BiblioTech Scout. Se añade un botón de acceso directo en el encabezado principal superior (con icono, texto y contador dinámico de archivos guardados), un acceso directo en el menú lateral móvil y un botón flotante estilizado con la estética Scout Aurora.
 - **Corrección de visualización de descargas en la app:** se corrige el orden de pestañas para que el usuario acceda por defecto a «Mis descargas» y vea sus archivos guardados de inmediato al abrir el panel o tras descargar un documento.

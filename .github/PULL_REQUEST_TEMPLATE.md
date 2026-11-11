@@ -26,11 +26,9 @@ Closes #
 - [ ] Biblioteca, catálogo y lector funcionando
 - [ ] Lighthouse de accesibilidad y SEO revisado
 
-## Checklist del protocolo
+## Checklist de calidad
 
-- [ ] La rama sigue el formato `agent/<agente>/<tema>` o `human/<tema>`.
-- [ ] No edité a mano los JSON de `data/`.
-- [ ] No ejecuté `prepare_public_site.py` ni los `.bat` de publicación.
+- [ ] No edité a mano los JSON generados de `data/`.
 - [ ] No incluí tokens, contraseñas ni datos sensibles.
 - [ ] Actualicé la documentación si hacía falta.
 - [ ] Si cambié datos, expliqué qué script los generó.

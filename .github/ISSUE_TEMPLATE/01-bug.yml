@@ -1,4 +1,4 @@
-name: "🐞 Reportar un error"
+name: "Reportar un error"
 description: "Algo del sitio no funciona o muestra información incorrecta."
 title: "[Bug]: "
 labels: ["bug"]
