@@ -334,6 +334,11 @@ async function initApp() {
     // El banco de preguntas y los fragmentos se cargan de forma diferida:
     // primero la página, después los datos pesados cuando se usan.
     setupLazyDataWarmup();
+
+    // Registro de PWA Service Worker (solo en versión Web, fuera de Capacitor)
+    if ("serviceWorker" in navigator && !window.Capacitor) {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    }
   } catch (err) {
     console.error("Error cargando datos de BiblioTech:", err);
   } finally {
@@ -1150,7 +1155,14 @@ const SYNONYMS = {
   cobertura: ["seguro", "poliza"],
   siniestro: ["seguro", "accidente"],
   ficha: ["salud", "medica", "documento"],
-  salud: ["ficha", "medica", "seguro"]
+  salud: ["ficha", "medica", "seguro"],
+  caminantes: ["comunidad", "red", "cnrc", "aventura", "senderos"],
+  comunidad: ["caminantes", "red", "everest"],
+  manada: ["lobatos", "lobellas", "seisena", "akela", "selva"],
+  tropa: ["scouts", "patrulla", "guia", "rumbos"],
+  clan: ["rovers", "servicio", "horquilla", "rutas", "ppv"],
+  agentes: ["cambio", "cnrc", "ods", "proyectos", "salud", "sustentabilidad", "paz", "habilidades"],
+  promesa: ["ley", "principios", "virtudes", "flor", "lis", "investidura"]
 };
 
 const PHRASE_SYNONYMS = [
@@ -1160,8 +1172,21 @@ const PHRASE_SYNONYMS = [
   { rx: /\bcuanto cuesta\b|\bcuanto sale\b|\bprecio\b|\bcosto\b/, add: ["cuota", "membresia"] },
   { rx: /\bas de guia\b/, add: ["nudo", "cuerda"] },
   { rx: /\bjefe de grupo\b/, add: ["dirigente", "grupo"] },
-  { rx: /\bdocumentos?\b|\brequisitos?\b/, add: ["documentacion", "autorizacion", "ficha", "registro"] }
+  { rx: /\bdocumentos?\b|\brequisitos?\b/, add: ["documentacion", "autorizacion", "ficha", "registro"] },
+  { rx: /\bagentes de cambio\b|\bred de caminantes\b/, add: ["cnrc", "proyectos", "salud", "sustentabilidad", "paz", "habilidades"] }
 ];
+
+function expandScoutQueryTokens(tokens) {
+  const expanded = new Set(tokens);
+  for (const token of tokens) {
+    if (SYNONYMS[token]) {
+      for (const syn of SYNONYMS[token]) {
+        syn.split(/\s+/).forEach((w) => expanded.add(canonicalToken(w)));
+      }
+    }
+  }
+  return Array.from(expanded).filter(Boolean);
+}
 
 function canonicalToken(word) {
   let x = normalizeStr(word).replace(/[^a-z0-9]/g, "");
@@ -2179,11 +2204,37 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     } else {
       // En la web pública, Google Docs Viewer renderiza el PDF original visual completo con todas sus páginas y formatos
       const gDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(viewUrl)}&embedded=true`;
-      previewPane.innerHTML = `<iframe src="${gDocsUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;background:#ffffff;" allowfullscreen></iframe>`;
+      previewPane.innerHTML = `<iframe id="gDocsIframe" src="${gDocsUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;background:#ffffff;" allowfullscreen></iframe>`;
       openTabBtn.onclick = (e) => {
         e.preventDefault();
         window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(viewUrl)}`, '_blank');
       };
+
+      // Resiliencia: si el iframe no responde o está offline, ofrecer cambio rápido a lectura de texto
+      const gIframe = document.getElementById("gDocsIframe");
+      let gIframeLoaded = false;
+      if (gIframe) {
+        gIframe.onload = () => { gIframeLoaded = true; };
+      }
+      setTimeout(() => {
+        if (!gIframeLoaded && (!navigator.onLine || !gIframe || !gIframe.contentWindow)) {
+          const banner = document.createElement("div");
+          banner.className = "viewer-resilience-banner";
+          banner.style.cssText = "padding:10px 14px;background:rgba(245,158,11,0.18);border:1px solid rgba(245,158,11,0.4);color:#fef3c7;border-radius:10px;margin:8px 0;font-size:0.82rem;display:flex;justify-content:space-between;align-items:center;gap:10px;";
+          banner.innerHTML = `<span>El visor en la nube está demorando. ¿Deseas leer el texto completo del documento de forma inmediata?</span> <button type="button" style="background:#d97706;color:#ffffff;border:none;border-radius:6px;padding:5px 12px;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;">Leer Texto</button>`;
+          const btn = banner.querySelector("button");
+          if (btn) {
+            btn.onclick = () => {
+              document.querySelectorAll(".modal-tab").forEach(t => t.classList.toggle("active", t.dataset.tab === "text"));
+              previewPane.classList.add("hidden");
+              document.getElementById("modalTextPane").classList.remove("hidden");
+            };
+          }
+          if (previewPane.parentNode && !previewPane.classList.contains("hidden")) {
+            previewPane.prepend(banner);
+          }
+        }
+      }, 5000);
     }
   } else if (["PNG", "JPG", "JPEG", "WEBP", "AVIF"].includes(doc.ext)) {
     previewPane.innerHTML = `
@@ -2205,6 +2256,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   }
 
   chunksContainer.innerHTML = `<div class="chunk-block" style="white-space:pre-wrap;">${escapeHtml(fullTextContent || doc.summary || doc.title)}</div>`;
+  setupReaderQoLHandlers(doc, fullTextContent);
   modal.classList.remove("hidden");
   // Mientras el lector está abierto, la página de fondo no debe desplazarse.
   // Esto aplica también al modo normal, no solo a pantalla completa.
@@ -2595,6 +2647,7 @@ function bindEvents() {
   };
 
   const closeReader = () => {
+    stopReaderTTS();
     setReaderFullscreen(false);
     docModal.classList.add("hidden");
     document.documentElement.classList.remove("reader-open");
@@ -2684,6 +2737,649 @@ function bindEvents() {
       }, 1800);
     });
   }
+
+  // Controles V6: Modo Campamento, Físicas 3D, Lienzo Ambiental, Ejes y Dock
+  const btnToggleCampMode = document.getElementById("btnToggleCampMode");
+  if (btnToggleCampMode) {
+    btnToggleCampMode.addEventListener("click", () => {
+      BiblioFeel.toggleCampMode();
+    });
+  }
+
+  BiblioFeel.initCampMode();
+  BiblioFeel.init3DTilt();
+  BiblioFeel.initAmbientCanvas();
+  setupModalSwipeGestures();
+  setupAdcEjesInteractivity();
+  setupUnifiedDock();
+}
+
+// ============================================================================
+// BIBLIOTECH SCOUT V6 — MOTOR SENSORIAL BIBLIOFEEL, AUDIO TTS, MOCHILA & DOCK
+// ============================================================================
+
+const BiblioFeel = {
+  hapticsEnabled: true,
+  campMode: localStorage.getItem("bt_camp_mode") === "true",
+
+  pulse(pattern = 10) {
+    if (!this.hapticsEnabled) return;
+    try {
+      if (navigator.vibrate) navigator.vibrate(pattern);
+    } catch (_) {}
+  },
+
+  initCampMode() {
+    document.documentElement.setAttribute("data-camp-mode", String(this.campMode));
+    const btn = document.getElementById("btnToggleCampMode");
+    if (btn) {
+      btn.setAttribute("aria-pressed", String(this.campMode));
+    }
+  },
+
+  toggleCampMode() {
+    this.campMode = !this.campMode;
+    localStorage.setItem("bt_camp_mode", String(this.campMode));
+    document.documentElement.setAttribute("data-camp-mode", String(this.campMode));
+    const btn = document.getElementById("btnToggleCampMode");
+    if (btn) {
+      btn.setAttribute("aria-pressed", String(this.campMode));
+    }
+    this.pulse([12, 40, 12]);
+    return this.campMode;
+  },
+
+  init3DTilt() {
+    const selector = ".floating-photo, .hero-floating-card, .about-floating-photo, .book-card, .adc-axis-card, .adc-eje-item, .adc-cosmic-card";
+    document.addEventListener("pointermove", (e) => {
+      const card = e.target.closest(selector);
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const xc = rect.width / 2;
+      const yc = rect.height / 2;
+      const rx = ((y - yc) / yc) * -6;
+      const ry = ((x - xc) / xc) * 6;
+      card.style.setProperty("--rx", `${rx.toFixed(2)}deg`);
+      card.style.setProperty("--ry", `${ry.toFixed(2)}deg`);
+      card.style.setProperty("--glare-x", `${((x / rect.width) * 100).toFixed(1)}%`);
+      card.style.setProperty("--glare-y", `${((y / rect.height) * 100).toFixed(1)}%`);
+      card.classList.add("is-tilting");
+    }, { passive: true });
+
+    document.addEventListener("pointerout", (e) => {
+      const card = e.target.closest(selector);
+      if (!card) return;
+      card.style.setProperty("--rx", "0deg");
+      card.style.setProperty("--ry", "0deg");
+      card.classList.remove("is-tilting");
+    }, { passive: true });
+
+    // Fases orbitales aleatorias en fotos flotantes
+    document.querySelectorAll(".floating-photo, .hero-floating-card, .about-floating-photo, .sec-popout-photo").forEach((el, idx) => {
+      el.style.setProperty("--float-duration", `${6.5 + (idx % 4) * 1.3}s`);
+      el.style.setProperty("--float-delay", `${(idx * -1.4).toFixed(1)}s`);
+      el.style.setProperty("--drift-x", `${(idx % 2 === 0 ? 1 : -1) * (5 + (idx % 3) * 3)}px`);
+      el.addEventListener("click", () => {
+        this.pulse(12);
+        el.classList.toggle("is-spotlight");
+      });
+    });
+  },
+
+  initAmbientCanvas() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let canvas = document.getElementById("btAmbientCanvas");
+    if (!canvas) {
+      canvas = document.createElement("canvas");
+      canvas.id = "btAmbientCanvas";
+      canvas.setAttribute("aria-hidden", "true");
+      document.body.prepend(canvas);
+    }
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    let w = (canvas.width = window.innerWidth);
+    let h = (canvas.height = window.innerHeight);
+    window.addEventListener("resize", () => {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }, { passive: true });
+
+    const count = window.innerWidth < 768 ? 22 : 40;
+    const particles = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 1.2 + Math.random() * 2.2,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: -0.25 - Math.random() * 0.55,
+      alpha: 0.2 + Math.random() * 0.6,
+      phase: Math.random() * Math.PI * 2
+    }));
+
+    const render = () => {
+      if (!document.hidden) {
+        ctx.clearRect(0, 0, w, h);
+        const agentesSection = document.getElementById("agentes");
+        let isCosmic = false;
+        if (agentesSection) {
+          const rect = agentesSection.getBoundingClientRect();
+          isCosmic = rect.top < h * 0.65 && rect.bottom > h * 0.15;
+        }
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.phase += 0.03;
+          if (p.y < -10) p.y = h + 10;
+          if (p.x < -10) p.x = w + 10;
+          if (p.x > w + 10) p.x = -10;
+          const glow = 0.35 + Math.sin(p.phase) * 0.3;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = this.campMode
+            ? `rgba(255, 120, 0, ${glow})`
+            : isCosmic
+              ? `rgba(56, 189, 248, ${glow})`
+              : `rgba(250, 204, 21, ${glow})`;
+          ctx.fill();
+        }
+      }
+      requestAnimationFrame(render);
+    };
+    requestAnimationFrame(render);
+  }
+};
+
+// ============================================================================
+// AUDIO TTS, NOTAS DE CAMPO, MOCHILA SCOUT Y BUSCADOR INTERNO DEL LECTOR
+// ============================================================================
+
+let activeTTSUtterance = null;
+let isTTSPlaying = false;
+let internalSearchMatches = [];
+let internalSearchIndex = -1;
+
+function stopReaderTTS() {
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+  isTTSPlaying = false;
+  activeTTSUtterance = null;
+  const btn = document.getElementById("btnReaderTTS");
+  if (btn) {
+    btn.classList.remove("is-active");
+    btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg> <span>Escuchar</span>`;
+  }
+}
+
+function toggleReaderTTS(textToRead) {
+  if (!("speechSynthesis" in window)) {
+    alert("Tu navegador no soporta lectura de texto en voz alta.");
+    return;
+  }
+  if (isTTSPlaying) {
+    stopReaderTTS();
+    return;
+  }
+  stopReaderTTS();
+
+  const cleanText = (textToRead || "").replace(/\[Pág\.\s*\d+\]/g, "").replace(/--- Página \d+ ---/g, "").trim();
+  if (!cleanText) return;
+
+  const utterance = new SpeechSynthesisUtterance(cleanText.slice(0, 4500));
+  utterance.lang = "es-MX";
+  utterance.rate = 1.0;
+  utterance.pitch = 1.0;
+
+  const voices = window.speechSynthesis.getVoices();
+  const esVoice = voices.find((v) => v.lang.startsWith("es"));
+  if (esVoice) utterance.voice = esVoice;
+
+  utterance.onend = () => {
+    stopReaderTTS();
+  };
+  utterance.onerror = () => {
+    stopReaderTTS();
+  };
+
+  activeTTSUtterance = utterance;
+  isTTSPlaying = true;
+  window.speechSynthesis.speak(utterance);
+
+  const btn = document.getElementById("btnReaderTTS");
+  if (btn) {
+    btn.classList.add("is-active");
+    btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg> <span>Pausar</span>`;
+  }
+  BiblioFeel.pulse(12);
+}
+
+function updateBackpackBadge() {
+  const pins = getBackpackPins();
+  const countEl = document.getElementById("dockBackpackCount");
+  if (countEl) {
+    countEl.textContent = String(pins.length);
+    countEl.classList.toggle("hidden", pins.length === 0);
+  }
+}
+
+function getBackpackPins() {
+  try {
+    return JSON.parse(localStorage.getItem("bt_backpack_pins") || "[]");
+  } catch (_) {
+    return [];
+  }
+}
+
+function toggleBackpackPin(docId) {
+  if (!docId) return false;
+  let pins = getBackpackPins();
+  const idx = pins.indexOf(docId);
+  let isPinned = false;
+  if (idx >= 0) {
+    pins.splice(idx, 1);
+    isPinned = false;
+  } else {
+    pins.push(docId);
+    isPinned = true;
+  }
+  localStorage.setItem("bt_backpack_pins", JSON.stringify(pins));
+  updateBackpackBadge();
+  BiblioFeel.pulse(isPinned ? [12, 30, 18] : 10);
+  return isPinned;
+}
+
+function setupReaderQoLHandlers(doc, fullText) {
+  const ttsBtn = document.getElementById("btnReaderTTS");
+  if (ttsBtn) {
+    ttsBtn.onclick = () => {
+      toggleReaderTTS(fullText || doc.summary || doc.title);
+    };
+  }
+
+  const pinBtn = document.getElementById("btnPinBackpack");
+  if (pinBtn) {
+    const pins = getBackpackPins();
+    const isPinned = pins.includes(doc.id);
+    pinBtn.classList.toggle("is-active", isPinned);
+    pinBtn.title = isPinned ? "Quitar de Mi Mochila" : "Guardar en Mi Mochila Scout";
+    pinBtn.onclick = () => {
+      const nowPinned = toggleBackpackPin(doc.id);
+      pinBtn.classList.toggle("is-active", nowPinned);
+      pinBtn.title = nowPinned ? "Quitar de Mi Mochila" : "Guardar en Mi Mochila Scout";
+    };
+  }
+
+  const fieldNoteBtn = document.getElementById("btnFieldNote");
+  const fieldNoteBox = document.getElementById("modalFieldNoteBox");
+  const fieldNoteText = document.getElementById("modalFieldNoteText");
+  const saveNoteBtn = document.getElementById("btnSaveFieldNote");
+  const closeNoteBtn = document.getElementById("btnCloseFieldNote");
+
+  if (fieldNoteBtn && fieldNoteBox && fieldNoteText) {
+    const savedNote = localStorage.getItem("bt_note_" + doc.id) || "";
+    fieldNoteText.value = savedNote;
+    fieldNoteBtn.classList.toggle("is-active", Boolean(savedNote));
+
+    fieldNoteBtn.onclick = () => {
+      fieldNoteBox.classList.toggle("hidden");
+      if (!fieldNoteBox.classList.contains("hidden")) {
+        fieldNoteText.focus();
+      }
+    };
+
+    if (closeNoteBtn) {
+      closeNoteBtn.onclick = () => {
+        fieldNoteBox.classList.add("hidden");
+      };
+    }
+
+    if (saveNoteBtn) {
+      saveNoteBtn.onclick = () => {
+        const val = fieldNoteText.value.trim();
+        if (val) {
+          localStorage.setItem("bt_note_" + doc.id, val);
+          fieldNoteBtn.classList.add("is-active");
+        } else {
+          localStorage.removeItem("bt_note_" + doc.id);
+          fieldNoteBtn.classList.remove("is-active");
+        }
+        fieldNoteBox.classList.add("hidden");
+        BiblioFeel.pulse([10, 30]);
+      };
+    }
+  }
+
+  // Buscador interno de texto en el lector
+  const searchInput = document.getElementById("modalInternalSearchInput");
+  const prevBtn = document.getElementById("modalSearchPrevBtn");
+  const nextBtn = document.getElementById("modalSearchNextBtn");
+  const countEl = document.getElementById("modalSearchMatchesCount");
+
+  internalSearchMatches = [];
+  internalSearchIndex = -1;
+  if (countEl) countEl.textContent = "";
+  if (searchInput) searchInput.value = "";
+
+  const performInternalSearch = () => {
+    const query = (searchInput.value || "").trim().toLowerCase();
+    const chunksContainer = document.getElementById("modalChunksContainer");
+    if (!chunksContainer) return;
+
+    // Restaurar texto original antes de resaltar
+    chunksContainer.innerHTML = `<div class="chunk-block" style="white-space:pre-wrap;">${escapeHtml(fullText || doc.summary || doc.title)}</div>`;
+    internalSearchMatches = [];
+    internalSearchIndex = -1;
+
+    if (!query || query.length < 2) {
+      if (countEl) countEl.textContent = "";
+      return;
+    }
+
+    // Switch automático a pestaña de texto si se busca texto
+    document.querySelectorAll(".modal-tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === "text"));
+    document.getElementById("modalPreviewPane").classList.add("hidden");
+    document.getElementById("modalTextPane").classList.remove("hidden");
+
+    const block = chunksContainer.querySelector(".chunk-block");
+    if (!block) return;
+
+    const raw = block.textContent;
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
+    block.innerHTML = escapeHtml(raw).replace(regex, '<mark class="doc-highlight">$1</mark>');
+
+    internalSearchMatches = Array.from(block.querySelectorAll("mark.doc-highlight"));
+    if (countEl) {
+      countEl.textContent = internalSearchMatches.length ? `1/${internalSearchMatches.length}` : "0/0";
+    }
+    if (internalSearchMatches.length) {
+      internalSearchIndex = 0;
+      internalSearchMatches[0].scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  if (searchInput) {
+    searchInput.oninput = () => performInternalSearch();
+  }
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      if (!internalSearchMatches.length) return;
+      internalSearchIndex = (internalSearchIndex + 1) % internalSearchMatches.length;
+      internalSearchMatches[internalSearchIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+      if (countEl) countEl.textContent = `${internalSearchIndex + 1}/${internalSearchMatches.length}`;
+    };
+  }
+  if (prevBtn) {
+    prevBtn.onclick = () => {
+      if (!internalSearchMatches.length) return;
+      internalSearchIndex = (internalSearchIndex - 1 + internalSearchMatches.length) % internalSearchMatches.length;
+      internalSearchMatches[internalSearchIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+      if (countEl) countEl.textContent = `${internalSearchIndex + 1}/${internalSearchMatches.length}`;
+    };
+  }
+}
+
+// Gestos Swipe-Down para cerrar modal en móvil
+function setupModalSwipeGestures() {
+  const container = document.getElementById("docModalContainer");
+  const handle = document.querySelector(".sheet-drag-handle");
+  const headerTop = document.querySelector(".modal-header-top");
+  if (!container) return;
+
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+
+  const onTouchStart = (e) => {
+    if (e.touches.length !== 1) return;
+    startY = e.touches[0].clientY;
+    currentY = startY;
+    isDragging = true;
+  };
+
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+    currentY = e.touches[0].clientY;
+    const dy = currentY - startY;
+    if (dy > 0) {
+      container.style.transform = `translateY(${dy * 0.7}px)`;
+    }
+  };
+
+  const onTouchEnd = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    const dy = currentY - startY;
+    if (dy > 90) {
+      const closeBtn = document.getElementById("closeDocModalBtn");
+      if (closeBtn) closeBtn.click();
+      BiblioFeel.pulse(10);
+    }
+    container.style.transform = "";
+  };
+
+  if (handle) {
+    handle.addEventListener("touchstart", onTouchStart, { passive: true });
+    handle.addEventListener("touchmove", onTouchMove, { passive: true });
+    handle.addEventListener("touchend", onTouchEnd, { passive: true });
+  }
+  if (headerTop) {
+    headerTop.addEventListener("touchstart", onTouchStart, { passive: true });
+    headerTop.addEventListener("touchmove", onTouchMove, { passive: true });
+    headerTop.addEventListener("touchend", onTouchEnd, { passive: true });
+  }
+}
+
+// ============================================================================
+// INTERACTIVIDAD DE LOS 4 EJES TEMÁTICOS EN AGENTES DE CAMBIO.MX
+// ============================================================================
+
+const ADC_EJES_DATA = {
+  salud: {
+    title: "Salud y Bienestar",
+    pilar: "Aprender a ser",
+    desc: "Desarrollo armónico de la salud física, emocional y mental, hábitos saludables y prevención de adicciones en entornos seguros.",
+    ideas: [
+      "Taller de salud mental y manejo de estrés para jóvenes de comunidad.",
+      "Campaña comunitaria de hidratación y acondicionamiento físico scout.",
+      "Botiquín de primeros auxilios y capacitación de brigadas juveniles de emergencia."
+    ],
+    shelfCategory: "Manada",
+    query: "¿En qué consiste el eje temático de Salud y Bienestar en Agentes de Cambio?"
+  },
+  habilidades: {
+    title: "Habilidades para la Vida",
+    pilar: "Aprender a hacer",
+    desc: "Capacitación técnica, liderazgo, resolución de problemas, oratoria, emprendimiento scout y competencias para el futuro laboral.",
+    ideas: [
+      "Incubadora de proyectos de emprendimiento juvenil scout.",
+      "Taller de robótica y tecnologías abiertas para comunidades vulnerables.",
+      "Guía práctica de finanzas personales y orientación vocacional para Caminantes."
+    ],
+    shelfCategory: "Comunidad",
+    query: "¿En qué consiste el eje temático de Habilidades para la Vida en Agentes de Cambio?"
+  },
+  sustentabilidad: {
+    title: "Medio Ambiente y Sustentabilidad",
+    pilar: "Aprender a saber",
+    desc: "Acción por el clima, conservación de la biodiversidad, manejo de residuos, ecología práctica y proyectos alineados a los ODS de la ONU.",
+    ideas: [
+      "Jornada de reforestación con especies nativas y adopción de árboles.",
+      "Huertos comunitarios urbanos con sistema de captación pluvial.",
+      "Campaña de reducción y separación de plásticos de un solo uso en locales de grupo."
+    ],
+    shelfCategory: "General",
+    query: "¿En qué consiste el eje temático de Medio Ambiente y Sustentabilidad en Agentes de Cambio?"
+  },
+  paz: {
+    title: "Paz y Participación Comunitaria",
+    pilar: "Aprender a convivir",
+    desc: "Cultura de paz, derechos humanos, mediación pacífica de conflictos, servicio social transformador e inclusión activa.",
+    ideas: [
+      "Red de apoyo escolar y fomento a la lectura en albergues infantiles.",
+      "Mural comunitario por la no violencia y la cultura de paz.",
+      "Jornadas de voluntariado en asilos de ancianos y comedores comunitarios."
+    ],
+    shelfCategory: "General",
+    query: "¿En qué consiste el eje temático de Paz y Participación Comunitaria en Agentes de Cambio?"
+  }
+};
+
+function setupAdcEjesInteractivity() {
+  const grid = document.querySelector(".adc-ejes-cards-grid");
+  if (!grid) return;
+
+  let tray = document.getElementById("adcEjesDetailTray");
+  if (!tray) {
+    tray = document.createElement("div");
+    tray.id = "adcEjesDetailTray";
+    tray.className = "adc-ejes-detail-tray hidden";
+    grid.insertAdjacentElement("afterend", tray);
+  }
+
+  const ejeItems = document.querySelectorAll(".adc-eje-item");
+  ejeItems.forEach((item) => {
+    const ejeKey = item.classList.contains("eje-salud")
+      ? "salud"
+      : item.classList.contains("eje-habilidades")
+      ? "habilidades"
+      : item.classList.contains("eje-sustentabilidad")
+      ? "sustentabilidad"
+      : "paz";
+
+    const trigger = () => {
+      BiblioFeel.pulse(12);
+      const data = ADC_EJES_DATA[ejeKey];
+      if (!data) return;
+
+      const isCurrentOpen = !tray.classList.contains("hidden") && tray.dataset.activeEje === ejeKey;
+      if (isCurrentOpen) {
+        tray.classList.add("hidden");
+        tray.dataset.activeEje = "";
+        ejeItems.forEach((el) => el.classList.remove("is-active"));
+        return;
+      }
+
+      ejeItems.forEach((el) => el.classList.remove("is-active"));
+      item.classList.add("is-active");
+      tray.dataset.activeEje = ejeKey;
+      tray.classList.remove("hidden");
+
+      tray.innerHTML = `
+        <div class="adc-eje-detail-card" style="margin-top:1.25rem;background:rgba(15,23,42,0.85);backdrop-filter:blur(18px);border:1.5px solid rgba(56,189,248,0.35);border-radius:18px;padding:1.5rem;box-shadow:0 12px 35px rgba(0,0,0,0.6);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:8px;">
+            <h4 style="margin:0;font-size:1.15rem;font-weight:800;color:#38bdf8;">Eje: ${escapeHtml(data.title)}</h4>
+            <span style="font-size:0.75rem;font-weight:700;background:rgba(56,189,248,0.18);color:#7dd3fc;padding:3px 10px;border-radius:999px;border:1px solid rgba(56,189,248,0.3);text-transform:uppercase;">Pilar: ${escapeHtml(data.pilar)}</span>
+          </div>
+          <p style="margin:0 0 1rem 0;font-size:0.88rem;color:#cbd5e1;line-height:1.5;">${escapeHtml(data.desc)}</p>
+          <div style="margin-bottom:1.25rem;">
+            <strong style="display:block;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:#facc15;margin-bottom:0.4rem;">Ideas de proyectos para la Red de Caminantes:</strong>
+            <ul style="margin:0;padding-left:1.2rem;font-size:0.85rem;color:#e2e8f0;line-height:1.6;">
+              ${data.ideas.map((i) => `<li>${escapeHtml(i)}</li>`).join("")}
+            </ul>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button type="button" class="btn-adc-shelf-jump" style="background:#2563eb;color:#ffffff;border:none;border-radius:999px;padding:8px 16px;font-size:0.82rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+              <span>Ver manuales en Biblioteca</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button type="button" class="btn-adc-query-jump" style="background:rgba(255,255,255,0.08);color:#f8fafc;border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:8px 16px;font-size:0.82rem;font-weight:600;cursor:pointer;">
+              Consultar en el Buscador
+            </button>
+          </div>
+        </div>
+      `;
+
+      const shelfJumpBtn = tray.querySelector(".btn-adc-shelf-jump");
+      if (shelfJumpBtn) {
+        shelfJumpBtn.onclick = () => {
+          const biblio = document.getElementById("biblioteca");
+          if (biblio) biblio.scrollIntoView({ behavior: "smooth", block: "start" });
+        };
+      }
+
+      const queryJumpBtn = tray.querySelector(".btn-adc-query-jump");
+      if (queryJumpBtn) {
+        queryJumpBtn.onclick = () => {
+          submitQuestion(data.query, { syncInput: true });
+        };
+      }
+    };
+
+    item.addEventListener("click", trigger);
+    item.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        trigger();
+      }
+    });
+  });
+}
+
+// ============================================================================
+// DOCK INFERIOR FLOTANTE UNIFICADO (MÓVIL & ANDROID APP)
+// ============================================================================
+
+function setupUnifiedDock() {
+  const dock = document.getElementById("unifiedBottomDock");
+  if (!dock) return;
+
+  const items = dock.querySelectorAll(".bt-dock-item");
+  items.forEach((item) => {
+    item.addEventListener("click", (e) => {
+      BiblioFeel.pulse(8);
+      const action = item.getAttribute("data-action");
+      const target = item.getAttribute("data-target");
+
+      if (action === "mochila") {
+        e.preventDefault();
+        const pins = getBackpackPins();
+        if (!pins.length) {
+          alert("Tu Mochila Scout aún no tiene manuales guardados. En cualquier documento del lector, presiona 'Mochila' para tenerlo siempre a mano.");
+          return;
+        }
+        // Filtrar biblioteca por documentos guardados
+        STATE.libraryQuery = "";
+        STATE.librarySection = "all";
+        STATE.currentShelfDocs = STATE.documents.filter((d) => pins.includes(d.id));
+        renderLibraryShelfCards(STATE.currentShelfDocs);
+        const biblio = document.getElementById("biblioteca");
+        if (biblio) biblio.scrollIntoView({ behavior: "smooth", block: "start" });
+        items.forEach((i) => i.classList.remove("is-active"));
+        item.classList.add("is-active");
+        return;
+      }
+
+      if (target) {
+        e.preventDefault();
+        const el = document.getElementById(target);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        items.forEach((i) => i.classList.remove("is-active"));
+        item.classList.add("is-active");
+      }
+    });
+  });
+
+  // Vincular scroll spy con los items del dock
+  const dockSpyTargets = ["inicio", "buscador", "biblioteca", "agentes"];
+  window.addEventListener("scroll", () => {
+    const sy = window.scrollY + 180;
+    for (let i = dockSpyTargets.length - 1; i >= 0; i--) {
+      const id = dockSpyTargets[i];
+      const sec = document.getElementById(id);
+      if (sec && sec.offsetTop <= sy) {
+        items.forEach((item) => {
+          if (item.getAttribute("data-target") === id) {
+            items.forEach((it) => it.classList.remove("is-active"));
+            item.classList.add("is-active");
+          }
+        });
+        break;
+      }
+    }
+  }, { passive: true });
+
+  updateBackpackBadge();
 }
 
 document.addEventListener("DOMContentLoaded", initApp);
