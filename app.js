@@ -454,7 +454,7 @@ function setupScrollAnimations() {
   const askFab = document.getElementById("floatingAskBtn");
   const topFab = document.getElementById("floatingTopBtn");
   const navLinks = Array.from(document.querySelectorAll(".main-nav .nav-link"));
-  const spyIds = ["buscador", "biblioteca", "acerca", "agentes", "secciones", "cambios", "explorar"];
+  const spyIds = ["buscador", "biblioteca", "acerca", "agentes", "secciones", "cambios", "explorar", "app"];
 
   if (askFab) {
     askFab.addEventListener("click", () => {
@@ -1063,79 +1063,514 @@ function buildDocSpecificAnswerInBrowser(doc) {
   return lines.join("\n");
 }
 
-function matchTopicsInBrowser(query) {
-  const qNorm = normalizeStr(query);
-  const qClean = qNorm.replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
+// ============================================================================
+// MOTOR DE RESPUESTAS DIRECTAS
+// ----------------------------------------------------------------------------
+// El banco tiene miles de preguntas generadas a partir de documentos. Muchas
+// describen un archivo («¿De qué trata…?») y no responden a una duda real. Este
+// motor prioriza respuestas concretas: primero una pregunta del banco cuya
+// respuesta cubra la consulta; después un tema curado del que se extrae el
+// bloque y la frase que mejor responden. Las listas de documentos quedan como
+// último recurso.
+// ============================================================================
 
-  const results = [];
-  const seenTopicIds = new Set();
+const ENGINE_STOPWORDS = new Set([
+  ...STOPWORDS_ES,
+  "hacer", "hago", "hacerlo", "hace", "hacen", "debo", "debe", "deben",
+  "alguien", "algo", "cosa", "cosas", "pasa", "pasar", "cuanto", "cuanta",
+  "cuantos", "cuantas", "ser", "soy", "eres", "somos", "son", "esta", "estan",
+  "aqui", "alli", "entonces", "asi", "solo", "sola", "solo", "cada", "vez",
+  "hacia", "durante", "antes", "despues", "siempre", "nunca", "caso", "casos"
+]);
 
-  const exactQ = STATE.qBankByNorm[qClean];
-  if (exactQ && exactQ.topic_id && STATE.topicsById[exactQ.topic_id]) {
-    const t = STATE.topicsById[exactQ.topic_id];
-    results.push(t);
-    seenTopicIds.add(t.id);
+const SYNONYMS = {
+  inscribir: ["inscripcion", "registro", "registrar", "integrar", "ingresar", "unir", "unirme"],
+  inscribirme: ["inscripcion", "registro", "registrar", "integrar", "ingresar", "unir"],
+  inscribo: ["inscripcion", "registro", "registrar", "integrar", "ingresar", "unir"],
+  inscriba: ["inscripcion", "registro", "registrar", "integrar", "ingresar", "unir"],
+  inscribirse: ["inscripcion", "registro", "registrar", "integrar", "ingresar", "unir"],
+  inscripcion: ["inscribir", "registro", "registrar", "integrar", "ingresar"],
+  registro: ["inscripcion", "inscribir", "registrar", "integrar"],
+  registrarme: ["inscripcion", "inscribir", "registro", "registrar"],
+  registrar: ["inscripcion", "inscribir", "registro"],
+  integrarme: ["inscripcion", "inscribir", "registro", "unir", "ingresar"],
+  integrar: ["inscripcion", "inscribir", "registro", "unir", "ingresar"],
+  integro: ["inscripcion", "inscribir", "registro", "unir", "ingresar"],
+  unirme: ["inscripcion", "inscribir", "registro", "integrar"],
+  unir: ["inscripcion", "inscribir", "registro", "integrar"],
+  ingresar: ["inscripcion", "inscribir", "registro", "integrar"],
+  entrar: ["inscripcion", "inscribir", "registro", "integrar"],
+  requisito: ["documentacion", "documento", "necesita", "autorizacion", "ficha"],
+  requisitos: ["documentacion", "documento", "necesita", "autorizacion", "ficha"],
+  documentacion: ["requisito", "autorizacion", "ficha", "registro"],
+  documento: ["documentacion", "requisito", "autorizacion", "ficha"],
+  documentos: ["documentacion", "requisito", "autorizacion", "ficha"],
+  lastimar: ["accidente", "emergencia", "herida", "lesion", "primeros auxilios", "urgencia"],
+  lastima: ["accidente", "emergencia", "herida", "lesion", "primeros auxilios", "urgencia"],
+  lastimo: ["accidente", "emergencia", "herida", "lesion", "primeros auxilios", "urgencia"],
+  lastimado: ["accidente", "emergencia", "herida", "lesion", "primeros auxilios"],
+  lesion: ["accidente", "emergencia", "herida", "lastimar", "primeros auxilios"],
+  lesionado: ["accidente", "emergencia", "herida", "lastimar", "primeros auxilios"],
+  accidente: ["emergencia", "herida", "lesion", "seguro", "siniestro", "lastimar"],
+  accidenta: ["emergencia", "herida", "lesion", "seguro", "siniestro", "lastimar"],
+  accidentar: ["emergencia", "herida", "lesion", "seguro", "siniestro", "lastimar"],
+  accidento: ["emergencia", "herida", "lesion", "seguro", "siniestro", "lastimar"],
+  accidentado: ["emergencia", "herida", "lesion", "seguro", "siniestro", "lastimar"],
+  lesiona: ["accidente", "emergencia", "herida", "lastimar", "primeros auxilios"],
+  lesionar: ["accidente", "emergencia", "herida", "lastimar", "primeros auxilios"],
+  lastimarse: ["accidente", "emergencia", "herida", "lesion", "primeros auxilios"],
+  lastimaron: ["accidente", "emergencia", "herida", "lesion", "primeros auxilios"],
+  emergencia: ["accidente", "primeros auxilios", "urgencia", "lastimar"],
+  herida: ["accidente", "lesion", "primeros auxilios"],
+  herido: ["accidente", "lesion", "primeros auxilios"],
+  campamento: ["acampar", "campismo"],
+  acampar: ["campamento", "campismo"],
+  campismo: ["campamento", "acampar"],
+  cuota: ["costo", "precio", "membresia", "pago"],
+  costo: ["cuota", "precio", "membresia"],
+  precio: ["cuota", "costo", "membresia"],
+  membresia: ["cuota", "costo", "registro", "pago"],
+  uniforme: ["camisola", "insignia", "prenda", "vestimenta"],
+  camisola: ["uniforme", "prenda"],
+  insignia: ["uniforme", "distintivo"],
+  dirigente: ["scouter", "jefe", "adulto"],
+  scouter: ["dirigente", "jefe", "adulto"],
+  jefe: ["dirigente", "scouter"],
+  hijo: ["menor", "nino", "nina", "familia"],
+  hija: ["menor", "nino", "nina", "familia"],
+  nino: ["menor", "hijo", "familia"],
+  nina: ["menor", "hija", "familia"],
+  edad: ["edades", "anos", "rango", "seccion"],
+  edades: ["edad", "anos", "rango", "seccion"],
+  seccion: ["secciones", "edad", "rango"],
+  secciones: ["seccion", "edad", "rango"],
+  seguro: ["poliza", "accidente", "siniestro", "cobertura"],
+  poliza: ["seguro", "cobertura"],
+  cobertura: ["seguro", "poliza"],
+  siniestro: ["seguro", "accidente"],
+  ficha: ["salud", "medica", "documento"],
+  salud: ["ficha", "medica", "seguro"]
+};
+
+const PHRASE_SYNONYMS = [
+  { rx: /\bser scout\b|\bquiero ser scout\b|\bcomo ser scout\b|\bpara ser scout\b/, add: ["inscripcion", "registro", "integrar", "requisito"] },
+  { rx: /\bme lastime\b|\bse lastimo\b|\bse lastima\b|\bse lesiona\b|\bse hirio\b|\bse accidento\b|\bse accidenta\b|\bse accidente\b/, add: ["emergencia", "accidente", "primeros auxilios", "herida"] },
+  { rx: /\bprimeros auxilios\b|\bprimer respondiente\b/, add: ["emergencia", "accidente"] },
+  { rx: /\bcuanto cuesta\b|\bcuanto sale\b|\bprecio\b|\bcosto\b/, add: ["cuota", "membresia"] },
+  { rx: /\bas de guia\b/, add: ["nudo", "cuerda"] },
+  { rx: /\bjefe de grupo\b/, add: ["dirigente", "grupo"] },
+  { rx: /\bdocumentos?\b|\brequisitos?\b/, add: ["documentacion", "autorizacion", "ficha", "registro"] }
+];
+
+function canonicalToken(word) {
+  let x = normalizeStr(word).replace(/[^a-z0-9]/g, "");
+  if (!x) return "";
+  if (x.length > 5 && (x.endsWith("me") || x.endsWith("te") || x.endsWith("se"))) {
+    const stem = x.slice(0, -2);
+    if (/(ar|er|ir)$/.test(stem)) x = stem;
   }
-
-  const scored = [];
-  for (const topic of STATE.topics) {
-    if (seenTopicIds.has(topic.id)) continue;
-    let score = 0;
-    for (const pat of topic.patterns || []) {
-      try {
-        const rx = new RegExp(pat, "i");
-        if (rx.test(qClean)) score += 12;
-      } catch (_) {}
-    }
-    for (const kw of topic.keywords || []) {
-      const nkw = normalizeStr(kw);
-      if (qClean.includes(nkw)) {
-        score += nkw.includes(" ") ? 5 : 2;
-      }
-    }
-    if (score >= 5) {
-      scored.push({ score, topic });
-    }
-  }
-
-  scored.sort((a, b) => b.score - a.score);
-  if (scored.length) {
-    const topScore = scored[0].score;
-    results.push(scored[0].topic);
-    if (scored.length > 1 && scored[1].score >= Math.max(8, topScore * 0.65)) {
-      results.push(scored[1].topic);
-    }
-  }
-  return results.slice(0, 2);
+  if (x.length > 5 && x.endsWith("ciones")) x = x.slice(0, -5) + "cion";
+  else if (x.length > 4 && x.endsWith("es")) x = x.slice(0, -2);
+  else if (x.length > 3 && x.endsWith("s")) x = x.slice(0, -1);
+  if (x.length > 5 && x.endsWith("ando")) x = x.slice(0, -4);
+  if (x.length > 5 && x.endsWith("iendo")) x = x.slice(0, -5);
+  return x;
 }
 
-function findBestQuestionBankAnswer(query, tokens) {
-  if (!tokens || tokens.length < 2 || !STATE.questionBank.length) return null;
-  const qNorm = normalizeQuestionKey(query);
-  let best = null;
-  let bestScore = 0;
+function tokenVariants(word) {
+  const raw = normalizeStr(word).replace(/[^a-z0-9]/g, "");
+  if (!raw) return [];
+  const out = new Set([raw]);
+  const canonical = canonicalToken(raw);
+  if (canonical) out.add(canonical);
+  if (raw.length > 4 && raw.endsWith("es")) out.add(raw.slice(0, -1));
+  if (raw.length > 3 && raw.endsWith("s")) out.add(raw.slice(0, -1));
+  return [...out];
+}
 
-  for (const item of STATE.questionBank) {
-    if (!item.ans) continue;
-    const nq = normalizeQuestionKey(item.q || "");
-    if (!nq) continue;
-    let hits = 0;
-    let score = 0;
-    for (const tk of tokens) {
-      if (nq.includes(tk)) {
-        hits += 1;
-        score += tk.length >= 5 ? 4 : 2;
-      }
-    }
-    if (hits === tokens.length || (tokens.length >= 3 && hits >= tokens.length - 1)) {
-      if (nq.includes(qNorm)) score += 15;
-      if (score > bestScore) {
-        bestScore = score;
-        best = item;
-      }
+function baseTokenSet(text) {
+  const all = normalizeStr(text).match(/[a-z0-9]{2,}/g) || [];
+  const filtered = all.filter((w) => !ENGINE_STOPWORDS.has(w));
+  const words = filtered.length ? filtered : all;
+  const set = new Set();
+  for (const word of words) for (const variant of tokenVariants(word)) set.add(variant);
+  return set;
+}
+
+function expandTokenSet(text) {
+  const set = new Set(baseTokenSet(text));
+  for (const token of [...set]) {
+    const direct = Object.prototype.hasOwnProperty.call(SYNONYMS, token) ? SYNONYMS[token] : [];
+    for (const synonym of direct) for (const variant of tokenVariants(synonym)) set.add(variant);
+  }
+  const normalized = normalizeQuestionKey(text);
+  for (const phrase of PHRASE_SYNONYMS) {
+    if (phrase.rx.test(normalized)) {
+      for (const synonym of phrase.add) for (const variant of tokenVariants(synonym)) set.add(variant);
     }
   }
-  return bestScore >= 6 ? best : null;
+  return set;
+}
+
+function isGenericDocQuestion(question) {
+  const normalized = normalizeQuestionKey(question);
+  return /^(de que trata|que informacion oficial publica|que requisitos fechas|que especifica la pagina|que informacion contiene|que dice la pagina|que requisitos, fechas)/.test(normalized) ||
+    (/«/.test(question) && /(de que trata|informacion oficial|que especifica|que requisitos)/.test(normalized));
+}
+
+let bankIndexCache = null;
+
+function getBankIndex() {
+  if (bankIndexCache && bankIndexCache.length === STATE.questionBank.length) return bankIndexCache;
+  bankIndexCache = STATE.questionBank.map((item) => ({
+    ...item,
+    _nq: normalizeQuestionKey(item.q || ""),
+    _base: baseTokenSet(item.q || ""),
+    _search: expandTokenSet(item.q || ""),
+    _answer: null
+  }));
+  return bankIndexCache;
+}
+
+function rankQuestionBank(query) {
+  if (!STATE.questionBank.length) return { item: null, score: 0, coverage: 0, bodyCoverage: 0 };
+  const qSet = expandTokenSet(query);
+  const qNorm = normalizeQuestionKey(query);
+  const qTokens = [...qSet];
+  const bank = getBankIndex();
+  let best = null;
+  let bestScore = 0;
+  let bestCoverage = 0;
+  let bestBody = 0;
+
+  for (const item of bank) {
+    if (!item.ans || !item._nq) continue;
+    if (isGenericDocQuestion(item.q)) continue;
+    let hits = 0;
+    for (const token of qTokens) if (item._search.has(token)) hits++;
+    if (!hits) continue;
+    const coverage = hits / Math.max(1, qSet.size);
+    if (coverage < 0.55 && !(qSet.size > 5 && hits >= 3)) continue;
+    const exact = item._nq === qNorm || item._nq.includes(qNorm) || qNorm.includes(item._nq);
+    if (hits < 2 && !(qSet.size === 1 && hits === 1 && exact)) continue;
+
+    // La respuesta se tokeniza solo para los candidatos que ya coinciden con la
+    // pregunta. Así el índice inicial sigue siendo ligero en el teléfono.
+    const answerTokens = item._answer || (item._answer = expandTokenSet(item.ans || ""));
+    let bodyHits = 0;
+    for (const token of qTokens) if (answerTokens.has(token)) bodyHits++;
+    const bodyCoverage = bodyHits / Math.max(1, qSet.size);
+    const itemCoverage = hits / Math.max(1, item._base.size);
+
+    let score = coverage * 60 + itemCoverage * 15 + bodyCoverage * 24 + hits * 4;
+    if (exact) score += 30;
+    if (item.doc_id) score += 2;
+    if (item.topic_id) score += 3;
+    if (item.cat) score += 1;
+    if (score > bestScore) {
+      bestScore = score;
+      best = item;
+      bestCoverage = coverage;
+      bestBody = bodyCoverage;
+    }
+  }
+  return { item: best, score: bestScore, coverage: bestCoverage, bodyCoverage: bestBody };
+}
+
+function splitTopicSections(content) {
+  const lines = String(content || "").split("\n");
+  let title = "";
+  let start = 0;
+  const first = (lines[0] || "").match(/^#{2,4}\s+(.+)$/);
+  if (first) {
+    title = first[1].trim();
+    start = 1;
+  }
+  const intro = [];
+  const sections = [];
+  let current = null;
+  const headingRx = /^(#{2,4})\s+(.+)$/;
+  for (let i = start; i < lines.length; i++) {
+    const line = lines[i];
+    const heading = line.match(headingRx);
+    if (heading) {
+      if (current) sections.push(current);
+      current = { heading: line.trim(), lines: [line] };
+    } else if (current) {
+      current.lines.push(line);
+    } else {
+      intro.push(line);
+    }
+  }
+  if (current) sections.push(current);
+  const usable = sections
+    .map((section) => ({ heading: section.heading, text: section.lines.join("\n").trim() }))
+    .filter((section) => section.text.replace(/^#{2,4}\s+.+$/m, "").trim().length > 0);
+  return { title, intro: intro.join("\n").trim(), sections: usable };
+}
+
+function prepareTopic(topic) {
+  if (topic._sections) return topic;
+  const { title, intro, sections } = splitTopicSections(topic.content);
+  topic._intro = intro || (title ? `**${title}**` : "");
+  topic._sections = sections.map((section) => ({
+    text: section.text,
+    heading: section.heading,
+    headingTokens: expandTokenSet(section.heading),
+    tokens: expandTokenSet(section.text)
+  }));
+  const frequencies = new Map();
+  for (const section of topic._sections) {
+    const seen = new Set();
+    for (const token of section.tokens) {
+      if (token.length < 3 || seen.has(token)) continue;
+      seen.add(token);
+      frequencies.set(token, (frequencies.get(token) || 0) + 1);
+    }
+  }
+  topic._df = frequencies;
+  topic._titleTokens = expandTokenSet(`${topic.title || ""} ${topic.id || ""}`);
+  return topic;
+}
+
+function scoreTopic(topic, qSet, qNorm) {
+  let score = 0;
+  for (const pattern of topic.patterns || []) {
+    try {
+      if (new RegExp(pattern, "i").test(qNorm)) score += 30;
+    } catch (_) {}
+  }
+  for (const keyword of topic.keywords || []) {
+    const normalized = normalizeQuestionKey(keyword);
+    if (!normalized) continue;
+    const core = [...baseTokenSet(keyword)].filter((token) => token.length >= 3);
+    if (!core.length) continue;
+    if (core.length > 1 && qNorm.includes(normalized)) {
+      score += 10 + Math.min(6, core.length * 2);
+      continue;
+    }
+    let hits = 0;
+    for (const token of core) if (qSet.has(token)) hits++;
+    if (hits === core.length) score += core.length >= 2 ? 8 : 6;
+  }
+  const titleTokens = topic._titleTokens || (topic._titleTokens = expandTokenSet(`${topic.title || ""} ${topic.id || ""}`));
+  let titleHits = 0;
+  for (const token of titleTokens) if (qSet.has(token) && token.length >= 3) titleHits++;
+  score += Math.min(12, titleHits * 3);
+
+  // Preguntas de definición («¿Qué es…?», «¿Qué hace…?») valoran los términos
+  // que el tema destaca en negritas al inicio de sus viñetas.
+  if (/^(que hace|que es|que significa|quien es|quienes son)\b/.test(qNorm)) {
+    if (!topic._bold) {
+      topic._bold = [...String(topic.content || "").matchAll(/\*\*([^*]{3,90})\*\*/g)]
+        .map((match) => expandTokenSet(match[1]))
+        .slice(0, 30);
+    }
+    let definitionBoost = 0;
+    for (const bold of topic._bold) {
+      let hits = 0;
+      for (const token of qSet) if (bold.has(token) && token.length >= 3) hits++;
+      if (hits >= 2) definitionBoost = 7;
+    }
+    score += definitionBoost;
+  }
+  return score;
+}
+
+function rankTopics(query) {
+  const qSet = expandTokenSet(query);
+  const qNorm = normalizeQuestionKey(query);
+  const ranked = [];
+  for (const topic of STATE.topics) {
+    const score = scoreTopic(topic, qSet, qNorm);
+    if (score > 0) ranked.push({ topic, score });
+  }
+  ranked.sort((a, b) => b.score - a.score);
+  return ranked;
+}
+
+function matchTopicsInBrowser(query) {
+  return rankTopics(query).slice(0, 2).map((entry) => entry.topic);
+}
+
+function phraseLine(excerpt, query) {
+  const queryWords = normalizeStr(query).match(/[a-z0-9]{2,}/g) || [];
+  const generic = new Set(["scout", "scouts", "scoutismo", "escultismo", "movimiento"]);
+  const primary = queryWords.filter(
+    (word) => word.length >= 4 && !ENGINE_STOPWORDS.has(word) && !generic.has(word)
+  );
+  const grams = [];
+  for (let size = 3; size >= 2; size--) {
+    for (let i = 0; i + size <= queryWords.length; i++) {
+      const parts = queryWords.slice(i, i + size);
+      if (!parts.some((word) => word.length >= 3 && !ENGINE_STOPWORDS.has(word) && !generic.has(word))) continue;
+      grams.push(parts.join(" "));
+    }
+  }
+  if (!grams.length || !primary.length) return null;
+  const querySet = expandTokenSet(query);
+  let best = null;
+  for (const raw of String(excerpt || "").split("\n")) {
+    const line = raw.trim();
+    if (!line || /^#{2,4}\s/.test(line) || line.length < 35) continue;
+    const normalized = normalizeQuestionKey(line);
+    let primaryHits = 0;
+    for (const word of primary) if (normalized.includes(word)) primaryHits++;
+    if (!primaryHits) continue;
+    let score = primaryHits * 2;
+    for (const gram of grams) if (normalized.includes(gram)) score += gram.split(" ").length;
+    const definition = line.match(/^[-*]?\s*\*\*([^*]{3,90}):\*\*/);
+    if (definition) {
+      const head = expandTokenSet(definition[1]);
+      let headHits = 0;
+      for (const token of querySet) if (head.has(token) && token.length >= 3) headHits++;
+      if (headHits >= 2) score += 6;
+    }
+    if (score >= 4 && (!best || score > best.score)) best = { line, score };
+  }
+  return best;
+}
+
+function trimSection(text, maxChars) {
+  const clean = String(text || "").replace(/\n{3,}/g, "\n\n").trim();
+  if (clean.length <= maxChars) return clean;
+  const lines = clean.split("\n");
+  let out = "";
+  for (const line of lines) {
+    if ((out + "\n" + line).length > maxChars) break;
+    out += (out ? "\n" : "") + line;
+  }
+  if (out) return out.trim();
+  const cut = clean.slice(0, maxChars);
+  const lastStop = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf(".\n"), cut.lastIndexOf("; "));
+  return (lastStop > maxChars * 0.55 ? cut.slice(0, lastStop + 1) : cut).trim() + "…";
+}
+
+function buildTopicAnswer(topic, query, maxChars = 1500) {
+  prepareTopic(topic);
+  const qSet = expandTokenSet(query);
+  const qNorm = normalizeQuestionKey(query);
+  const wantsDocs = /\b(document\w*|requisito\w*|papel\w*|permiso\w*|autorizacion|ficha)\b/.test(qNorm);
+  const wantsPrice = /\b(cuesta|precio|costo|cuota|membresia|pago)\b/.test(qNorm);
+  const wantsSteps = /\b(pasos|procedimiento|proceso|inscrip|registro|como)\b/.test(qNorm);
+  const wantsWhere = /\b(donde|direccion|ubicacion|tienda|portal|sitio)\b/.test(qNorm);
+  const scored = topic._sections.map((section) => {
+    let hits = 0;
+    let weight = 0;
+    const total = Math.max(1, topic._sections.length);
+    for (const token of qSet) {
+      if (!section.tokens.has(token) || token.length < 3) continue;
+      hits++;
+      const frequency = topic._df.get(token) || 1;
+      weight += 1 + Math.log((total + 1) / (frequency + 1));
+    }
+    let headingWeight = 0;
+    for (const token of qSet) {
+      if (!section.headingTokens.has(token) || token.length < 3) continue;
+      const frequency = topic._df.get(token) || 1;
+      headingWeight += (1 + Math.log((total + 1) / (frequency + 1))) * 1.8;
+    }
+    const body = normalizeQuestionKey(section.text);
+    let boost = 0;
+    if (wantsDocs && /(document|autoriz|ficha|permiso|acta|curp|codigo de conducta)/.test(body)) boost += 14;
+    if (wantsPrice && /(\$|cuota|precio|costo|membresia|pago)/.test(body)) boost += 10;
+    if (wantsSteps && /(pasos|procedimiento|proceso|inscrip|registro)/.test(normalizeQuestionKey(section.heading))) boost += 6;
+    if (wantsWhere && /(donde|direccion|ubicacion|tienda|portal|sitio)/.test(body)) boost += 6;
+    return { section, hits, score: weight + headingWeight + boost };
+  });
+  scored.sort((a, b) => b.score - a.score);
+  const best = scored[0] && scored[0].hits > 0 ? scored[0] : null;
+  const intro = topic._intro && !/^#{2,4}\s/.test(topic._intro) ? topic._intro : "";
+  let out = intro;
+  if (best) {
+    if (out) out += "\n\n";
+    out += best.section.text;
+  } else if (!out && topic._sections.length) {
+    out = topic._sections[0].text;
+  }
+  if (!out) out = topic.content || "";
+  if (best && best.hits <= 1 && scored[1] && scored[1].hits > 1 && out.length < 900) {
+    out += "\n\n" + scored[1].section.text;
+  }
+  out = trimSection(out, maxChars);
+  const phrase = phraseLine(out, query);
+  if (phrase && out.indexOf(phrase.line) > 80 && !(/\$/.test(phrase.line) && !wantsPrice)) {
+    const withoutPhrase = out
+      .split("\n")
+      .filter((line) => line.trim() !== phrase.line.trim())
+      .join("\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+    out = `**En concreto:** ${phrase.line}\n\n${withoutPhrase}`;
+  }
+  return out;
+}
+
+function buildAnswerLocally(query) {
+  const qNorm = normalizeQuestionKey(query);
+  const bank = getBankIndex();
+  const exact = bank.find((item) => item._nq === qNorm);
+  if (exact && exact.ans && !isGenericDocQuestion(exact.q)) {
+    return { kind: "exact", text: exact.ans, item: exact };
+  }
+
+  const topicRank = rankTopics(query);
+  const qa = rankQuestionBank(query);
+  const top = topicRank[0];
+  const second = topicRank[1];
+  const topicScore = top ? top.score : 0;
+  const qaCoverage = qa.item ? qa.coverage : 0;
+
+  if (qa.item && qaCoverage >= 0.92 && topicScore < 30) {
+    return { kind: "qa", text: qa.item.ans, item: qa.item, qa, top };
+  }
+  if (qa.item && qa.bodyCoverage >= 0.55 && topicScore < 32) {
+    let text = qa.item.ans;
+    let extraTopic = null;
+    if (top && topicScore >= 12 && top.topic.id !== qa.item.topic_id) {
+      const related = buildTopicAnswer(top.topic, query, 700);
+      if (related) {
+        text += "\n\n**Información relacionada:**\n" + related;
+        extraTopic = top.topic;
+      }
+    }
+    return { kind: "qa", text, item: qa.item, qa, top, extraTopic };
+  }
+  if (top && topicScore >= 20) {
+    let primary = top;
+    let secondary = second;
+    let text = buildTopicAnswer(primary.topic, query, 1500);
+    let primaryPhrase = phraseLine(text, query);
+    let secondText = secondary ? buildTopicAnswer(secondary.topic, query, 900) : "";
+    let secondPhrase = secondText ? phraseLine(secondText, query) : null;
+    if (
+      secondary &&
+      secondary.score >= Math.max(18, topicScore * 0.85) &&
+      secondPhrase &&
+      (!primaryPhrase || secondPhrase.score > primaryPhrase.score)
+    ) {
+      [primary, secondary] = [secondary, primary];
+      [text, secondText] = [secondText, text];
+      [primaryPhrase, secondPhrase] = [secondPhrase, primaryPhrase];
+    }
+    let extraTopic = null;
+    if (secondary && secondary.score >= Math.max(16, primary.score * 0.62) && secondary.topic.id !== primary.topic.id) {
+      const firstNorm = normalizeStr(text);
+      const secondLead = normalizeStr(secondText).slice(0, 120);
+      if (secondLead && !firstNorm.includes(secondLead)) {
+        text += "\n\n**También aplica:**\n" + secondText;
+        extraTopic = secondary.topic;
+      }
+    }
+    return { kind: "topic", text, topic: primary.topic, extraTopic, score: primary.score, topics: topicRank.slice(0, 4) };
+  }
+  if (qa.item && qaCoverage >= 0.6 && qa.score >= 45) {
+    return { kind: "qa", text: qa.item.ans, item: qa.item, qa, top };
+  }
+  if (top && topicScore >= 12) {
+    return { kind: "topic", text: buildTopicAnswer(top.topic, query, 1300), topic: top.topic, score: topicScore, topics: topicRank.slice(0, 4) };
+  }
+  return { kind: "none", topicRank: topicRank.slice(0, 5), qa };
 }
 
 function answerLocallyInBrowser(query) {
@@ -1180,30 +1615,48 @@ function answerLocallyInBrowser(query) {
     };
   }
 
-  const matchedTopics = matchTopicsInBrowser(query);
+  const engine = buildAnswerLocally(query);
+  const matchedTopics =
+    engine.kind === "topic"
+      ? [engine.topic, engine.extraTopic].filter(Boolean)
+      : engine.top
+        ? [engine.top.topic]
+        : [];
   const tokens = tokenizeQuery(query);
 
-  if (!matchedTopics.length) {
-    const bestQA = findBestQuestionBankAnswer(query, tokens);
-    if (bestQA && bestQA.ans) {
-      const qSources = [];
-      if (bestQA.doc_id && STATE.docsById[bestQA.doc_id]) {
-        const doc = STATE.docsById[bestQA.doc_id];
+  if (engine.kind === "exact" || engine.kind === "qa") {
+    const qSources = [];
+    if (engine.item && engine.item.doc_id && STATE.docsById[engine.item.doc_id]) {
+      const doc = STATE.docsById[engine.item.doc_id];
+      qSources.push({
+        doc_id: doc.id,
+        title: doc.title,
+        filename: doc.filename,
+        ext: doc.ext,
+        year: doc.year,
+        page_start: engine.item.page || 1
+      });
+    }
+    for (const topic of matchedTopics) {
+      for (const sourceFile of topic.source_files || []) {
+        const doc = findDocByFilename(sourceFile);
+        if (!doc || String(doc.ext || "").toUpperCase() === "HTML") continue;
+        if (qSources.some((source) => source.doc_id === doc.id)) continue;
         qSources.push({
           doc_id: doc.id,
           title: doc.title,
           filename: doc.filename,
           ext: doc.ext,
           year: doc.year,
-          page_start: bestQA.page || 1
+          page_start: 1
         });
       }
-      return {
-        query,
-        answer_markdown: bestQA.ans,
-        sources: qSources
-      };
     }
+    return {
+      query,
+      answer_markdown: engine.text,
+      sources: qSources.slice(0, 6)
+    };
   }
   const sources = [];
   const seenIds = new Set();
@@ -1311,7 +1764,7 @@ function answerLocallyInBrowser(query) {
   if (matchedTopics.length) {
     return {
       query,
-      answer_markdown: matchedTopics.map((t) => t.content).join("\n\n---\n\n"),
+      answer_markdown: engine.text,
       sources: sources.slice(0, 6)
     };
   }
