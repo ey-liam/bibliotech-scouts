@@ -43,9 +43,10 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ## 3. Novedades de la Versión V7 y Banco Ampliado V4 (11/11/2026)
 
-- **Duplicación del Banco de Preguntas (`faq_v4.json` — 11,060 preguntas totales):**
-  - El repositorio pasa de 5,457 a **11,060 preguntas y respuestas únicas** (`5,356` en `data/questions_bank.json`, `101` en `data/faq_v3.json` y **`5,603`** nuevas en `data/faq_v4.json`, generadas con `scripts/generate_faq_v4.js`).
+- **Duplicación del Banco de Preguntas (`faq_v4.json` — 11,254 preguntas totales):**
+  - El repositorio pasa de 5,457 a **11,254 preguntas y respuestas únicas** (`5,356` en `data/questions_bank.json`, `101` en `data/faq_v3.json` y **`5,797`** nuevas en `data/faq_v4.json`, generadas con `scripts/generate_faq_v4.js`).
   - Incluye explicaciones claras y directas sobre objetivos **SMART**, ciclo **PER** (*Planeo, Ejecuto, Reviso*), los **4 Ejes Temáticos**, sistemas nacionales (`SISAS`, `ExplorApp`, `CarpetApp`, `CDC`), artículos reales de normativas vigentes (`Reglamento 2023`, `Estatutos 2023`, `Manual del Uniforme junio 2026`, `Reglamento CNH 2025`), términos de **glosarios oficiales**, capítulos de manuales/políticas, los **39 libros de la Biblioteca del Centenario**, páginas HTML e infografías.
+  - La ampliación V4 añade tres capas documentales: campos etiquetados de **convocatorias** (dirigido a, sede, fechas, cuotas, requisitos, contacto y modalidad), campos y actos de **formatos, actas y seguro** (asunto, datos solicitados, autorizaciones, documentos anexos y orden del día), y **menciones textuales con página y cita** en manuales, libros del Centenario e identidad gráfica.
 - **Nueva Portada Hero Cósmica Dinámica:**
   - Lienzo poligonal estilizado con cinta diagonal en zigzag en gradiente morado a azul eléctrico y cian neón (`#7928ca` a `#06b6d4`) con resplandor suave.
   - Tarjeta central inclinada destacando el título en gran formato `BIBLIOTECH SCOUT` y la firma de autoría centralizada `By Liam`.
@@ -76,7 +77,7 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ## 5. Contenido del acervo documental
 
-El sistema integra **110 temas enciclopédicos y literarios**, **11,060 preguntas y respuestas únicas de consulta directa** (`5,356` del banco base, `101` de `faq_v3.json` y `5,603` de `faq_v4.json`, abarcando desde preguntas básicas de iniciación hasta preguntas específicas por artículo, glosario, capítulo y extracto de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
+El sistema integra **110 temas enciclopédicos y literarios**, **11,254 preguntas y respuestas únicas de consulta directa** (`5,356` del banco base, `101` de `faq_v3.json` y `5,797` de `faq_v4.json`, abarcando desde preguntas básicas de iniciación hasta preguntas específicas por artículo, glosario, capítulo, campo de convocatoria, formato institucional y mención textual con página) y **498 documentos oficiales descargables** organizados en 8 categorías:
 
 1. **Colección Biblioteca del Centenario (39 volúmenes):** Los 39 libros oficiales numerados de la Colección Biblioteca del Centenario, incluyendo las obras clásicas de Robert Baden-Powell (*Escultismo para Muchachos, Manual de Lobatos, Guía para el Jefe de Tropa, Roverismo hacia el Éxito, Tropiezos de la Vida, Juegos Scouts*), obras históricas de Gilcraft y César Macazaga Ordoño, y publicaciones formativas y literarias (*Cuentos de la Selva, Francisco de Asís y el Lobo de Gubbio*).
 2. **Guías, Carnets y Programa de Jóvenes — PJOS (42 documentos):** Guías de sección actualizadas (*Mis Rastros en la Selva 2024, Pistas de Aventura 2024, El Desafío de ser Caminante 2024, Las Rutas del Rover, Las Rutas de la Precursora*), Carnets de *Aventuras en la Naturaleza 2024*, Guías de *Punta de Flecha 2025*, *Tribu de la Tierra*, *Campeones de la Naturaleza*, *Mensajeros de la Paz*, *Go Solar*, *Plastic Tide Turners*, *De FOROS a CASA* y *Agentes de Cambio.MX*.

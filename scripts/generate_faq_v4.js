@@ -127,13 +127,57 @@ function topicAnswer(id, max = 1950) {
   const p = cut.lastIndexOf("\n\n");
   return (p > max * 0.5 ? cut.slice(0, p) : cut.slice(0, cut.lastIndexOf("\n"))).trim();
 }
-function T(id, cat, qs) {
-  const ans = topicAnswer(id);
+function T(id, cat, qs, max = 1950) {
+  const ans = topicAnswer(id, max);
   if (!ans) {
     console.warn("Tema KB faltante:", id);
     return;
   }
   for (const q of qs) add({ q, cat, topic_id: id, doc_id: "", ans }, "curadas");
+}
+
+function topicDetail(id, needle, max = 900) {
+  const t = topicById[id];
+  if (!t) return null;
+  const c = String(t.content || "");
+  const idx = c.toLowerCase().indexOf(String(needle).toLowerCase());
+  if (idx < 0) return null;
+  const lines = c.split("\n");
+  let lineIdx = -1;
+  let acc = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const next = acc + lines[i].length + 1;
+    if (idx < next) {
+      lineIdx = i;
+      break;
+    }
+    acc = next;
+  }
+  if (lineIdx < 0) return null;
+  const baseIndent = (lines[lineIdx].match(/^\s*/) || [""])[0].length;
+  const buf = [lines[lineIdx]];
+  for (let j = lineIdx + 1; j < lines.length && buf.join(" ").length < max; j++) {
+    const l = lines[j];
+    if (!l.trim()) break;
+    const indent = (l.match(/^\s*/) || [""])[0].length;
+    if (indent > baseIndent) buf.push(l);
+    else break;
+  }
+  const ans = cutSentence(buf.join(" ").replace(/^\s*[-•]\s*/, ""), max);
+  return ans.length >= 30 ? ans : null;
+}
+
+function TD(id, cat, q, needle, max = 900) {
+  const ans = topicDetail(id, needle, max);
+  if (!ans) {
+    console.warn("Detalle no encontrado:", id, "→", needle);
+    return;
+  }
+  add({ q, cat, topic_id: id, doc_id: "", ans }, "curadas");
+}
+
+function TDM(id, cat, defs) {
+  for (const [q, needle, max] of defs) TD(id, cat, q, needle, max);
 }
 
 const BAS = "Basicas y Secciones";
@@ -416,14 +460,216 @@ T("proyectos_caminantes_agentes_de_cambio_formatos_y_especialidades", "Comunidad
   "¿Dónde registro mi proyecto de Caminantes?", "¿Qué formatos necesito para un proyecto de Agentes de Cambio?",
 ]);
 
+/* ------------------------------------------- 1b. Detalle curado de temas con poca cobertura */
+const CAMP = "Campismo, Nudos y Naturaleza";
+const SIMB = "Promesa, Ley y Simbolos";
+const FMT = "Formatos, Actas y Seguro Scout";
+const RES = "Resolucion de Problemas y Reglas";
+
+TDM("campamentos_primeros_auxilios_y_emergencias", CAMP, [
+  ["¿Qué temas cubre el Manual Scout de Primeros Auxilios?", "Manual Scout de Primeros Auxilios"],
+  ["¿Qué son los Equipos Scouts de Emergencias y qué labor realizan?", "Establecen la organización de las brigadas"],
+  ["¿Qué manual regula la operación de los centros de acopio en emergencias?", "Manual Operativo para los Centros de Acopio"],
+  ["¿Qué técnicas de campismo y naturaleza enseña el Manual del Pie Tierno?", "Campismo y Técnica Scout"],
+]);
+
+TDM("nudos_basicos_scouts_explicados", CAMP, [
+  ["¿Para qué sirve el nudo rizo o llano?", "Nudo Rizo o Llano"],
+  ["¿Qué nudo une dos cuerdas de diferente grosor o mojadas?", "Vuelta de Escota"],
+  ["¿Para qué sirve el nudo ballestrinque?", "Ballestrinque"],
+  ["¿Qué nudo forma una gaza fija que no se corre ni se cierra?", "As de Guia"],
+  ["¿Cómo se usa el nudo margarita para acortar una cuerda?", "Margarita"],
+  ["¿Qué nudo une dos cuerdas delgadas, húmedas o resbaladizas?", "Pescador"],
+  ["¿Para qué sirve el nudo leñador o vuelta de braza?", "Lenador"],
+  ["¿Qué nudo asegura una cuerda sometida a tensión contra un poste?", "Media Llave"],
+]);
+
+TDM("amarres_pionerismo_scout", CAMP, [
+  ["¿Cómo se hace un amarre cuadrado y para qué sirve?", "Amarre Cuadrado"],
+  ["¿Cuándo se usa el amarre diagonal en pionerismo?", "Amarre Diagonal"],
+  ["¿Para qué sirve el amarre redondo o paralelo?", "Amarre Redondo"],
+  ["¿Cómo se construye un trípode con amarres?", "Amarre Tripode"],
+]);
+
+TDM("brujula_orientacion_y_pistas", CAMP, [
+  ["¿Cuáles son los 4 puntos cardinales y sus grados en la rosa de los vientos?", "4 Puntos Cardinales"],
+  ["¿Qué son los 4 rumbos laterales de la brújula?", "4 Rumbos Laterales"],
+  ["¿Cuáles son los 8 rumbos colaterales de la rosa de los vientos?", "8 Rumbos Colaterales"],
+  ["¿Qué significan los signos de pista tradicionales?", "Se trazan de manera discreta"],
+  ["¿Qué significa el círculo con un punto central en una pista scout?", "Fin de pista"],
+]);
+
+TDM("manual_honores_a_la_bandera_y_escolta_scout", "Manuales Oficiales y de Operación", [
+  ["¿Quiénes forman la primera fila de una escolta scout?", "En primera fila"],
+  ["¿Quiénes forman la segunda fila de una escolta scout?", "En segunda fila"],
+  ["¿Cómo se saluda a la bandera cuando se porta uniforme scout?", "Cuando el miembro porta"],
+  ["¿Cómo se saluda a la bandera cuando no se porta uniforme ni pañoleta?", "Cuando no porta uniforme"],
+  ["¿Cómo se dobla una bandera nacional al terminar los honores?", "se dobla longitudinalmente"],
+  ["¿Cuándo se incinera una bandera nacional?", "Ceremonia Solemne de Incineración"],
+]);
+
+TDM("flor_de_lis_sena_y_simbolos", SIMB, [
+  ["¿Qué representan los 3 pétalos de la flor de lis?", "Sus 3 pétalos"],
+  ["¿Qué significan la aguja, las estrellas y el anillo de la flor de lis?", "La Flor de Lis Mundial"],
+  ["¿Cómo se hace la seña scout en Tropa, Comunidad y Clan?", "En Tropa, Comunidad, Clan y Adultos"],
+  ["¿Cómo saludan los lobatos en la Manada?", "Manada de Lobatos"],
+  ["¿Por qué los scouts se saludan con la mano izquierda?", "Fue adoptado por Baden-Powell"],
+]);
+
+TDM("jamboree_internacional_wosm", BAS, [
+  ["¿Cuándo y dónde es el 26° Jamboree Scout Mundial?", "Fechas y Sede"],
+  ["¿Quiénes pueden ser participantes juveniles en el Jamboree 2027?", "Participantes Juveniles"],
+  ["¿Qué edad se necesita para ser Unit Leader o EIS en el Jamboree 2027?", "Jefes/Subjefes de Patrulla"],
+  ["¿Cuánto cuesta participar en el Jamboree Mundial 2027?", "Participantes y Jefes/Subjefes de Tropa"],
+  ["¿Cuánto cuesta participar como EIS en el Jamboree Mundial 2027?", "1,950.00 USD"],
+  ["¿Cuál es el calendario de pagos del Jamboree 2027 en SISAS?", "Esquema de 7 pagos"],
+  ["¿Qué incluye la cuota del contingente mexicano al Jamboree 2027?", "Incluye inscripción al Jamboree"],
+  ["¿Qué agencias están autorizadas para los viajes de menores al Jamboree 2027?", "Mundo Joven"],
+]);
+
+TDM("seguro_scout_salud", FMT, [
+  ["¿Cuál es el plazo máximo para notificar un accidente al Seguro Scout?", "Notificación del accidente"],
+  ["¿Cuánto tiempo hay para entregar la reclamación del Seguro Scout?", "Entrega de la reclamación"],
+  ["¿En cuánto tiempo pagan el reembolso del Seguro Scout?", "Tiempo de pago"],
+  ["¿Qué formatos oficiales pide el Seguro Scout?", "Formato de Aviso de Accidente"],
+  ["¿Qué comprobantes de gastos se requieren para el reembolso del Seguro Scout?", "Facturas originales"],
+  ["¿Qué identificación y comprobante de domicilio pide el Seguro Scout?", "Copia de identificación oficial"],
+]);
+
+TDM("cuotas_registro_2026", FMT, [
+  ["¿Cuánto cuesta el reingreso 2026 a los scouts?", "Reingreso 2026"],
+  ["¿Cuánto cuesta el nuevo ingreso 2026 a los scouts?", "Nuevo Ingreso 2026"],
+  ["¿Cuánto paga una familia de 3 miembros en el Registro Familiar 2026?", "3 miembros"],
+  ["¿Cuánto paga una familia de 4 miembros en el Registro Familiar 2026?", "4 miembros"],
+  ["¿Cuánto paga una familia de 5 miembros en el Registro Familiar 2026?", "5 miembros"],
+  ["¿Qué descuento da el Registro Familiar en la Tienda Scout?", "Beneficio adicional"],
+  ["¿Cómo se repone la credencial scout física y cuánto cuesta?", "depositados a la cuenta BBVA"],
+  ["¿Cómo se sube la fotografía para la credencial scout?", "La fotografía debe subirse"],
+  ["¿Cuántos cortes mensuales hay para imprimir la credencial scout?", "dos cortes mensuales"],
+]);
+
+TDM("edades_secciones_sisas", BAS, [
+  ["¿De qué edades es la Manada de Lobatos?", "Manada de Lobatos"],
+  ["¿De qué edades es la Tropa de Scouts?", "Tropa de Scouts"],
+  ["¿De qué edades es la Comunidad de Caminantes?", "Comunidad de Caminantes"],
+  ["¿De qué edades es el Clan de Rovers?", "Clan de Rovers"],
+  ["¿Desde qué edad puede una persona ser adulto en el Movimiento Scout?", "Adultos en el Movimiento Scout"],
+]);
+
+TDM("uniforme_2026", BAS, [
+  ["¿De qué color es la camisola de cada sección scout?", "Camisolas oficiales"],
+  ["¿Qué color debe tener el pantalón, short o falda del uniforme scout?", "Pantalón, short y falda"],
+  ["¿Cómo deben ser el cinturón y las calcetas del uniforme scout?", "Cinturón, Calcetas"],
+  ["¿Qué artículos de bolsillo son obligatorios en el uniforme scout?", "Artículos de Bolsillo"],
+  ["¿Cómo es la pañoleta nacional del uniforme 2026?", "Pañoleta Nacional"],
+  ["¿Dónde se colocan las insignias en la camisola scout?", "Ubicación de Insignias"],
+  ["¿Dónde van la Insignia de Compromiso y la cinta de registro anual?", "Bolsa izquierda"],
+]);
+
+TDM("a_salvo_del_peligro_safe_from_harm", RES, [
+  ["¿Cómo deben dormir adultos y menores en un campamento scout?", "En campamentos y pernoctas"],
+  ["¿Qué es la regla de visibilidad y acompañamiento en los scouts?", "Toda interacción debe seguir"],
+  ["¿Cómo se registra una denuncia en la plataforma CONECTA?", "cualquier integrante"],
+  ["¿Qué tipos de denuncia acepta la plataforma CONECTA?", "Tipo de denuncia"],
+  ["¿Qué datos y evidencias se solicitan en una denuncia de CONECTA?", "3 archivos de evidencia"],
+]);
+
+TDM("politica_a_salvo_del_peligro_sfh_bullying_acoso", RES, [
+  ["¿Qué nivel de tolerancia tiene la ASMAC ante el abuso y el bullying?", "Cero tolerancia"],
+  ["¿Cuál es la regla de los dos adultos en los scouts?", "Regla de visibilidad y acompañamiento"],
+  ["¿Cómo debe ser la comunicación digital con menores de edad?", "Comunicación digital responsable"],
+  ["¿Quiénes deben certificarse en Safe from Harm y firmar el Código de Conducta?", "Todo adulto voluntario"],
+  ["¿Qué se debe priorizar al atender una situación de riesgo?", "Priorizar la seguridad inmediata"],
+  ["¿Se debe mediar en casos de violencia o abuso?", "No intentar mediar"],
+  ["¿Dónde se reporta una situación de riesgo y a quién se avisa?", "Reportar de inmediato"],
+]);
+
+TDM("resolucion_de_problemas_y_conflictos", RES, [
+  ["¿Cómo se aborda un conflicto a nivel de Manada, Tropa, Comunidad o Clan?", "Escucha respetuosa"],
+  ["¿Qué órgano resuelve los desacuerdos en cada sección scout?", "Organos de toma de decisiones"],
+  ["¿Qué es el Diálogo Directo y cuál es su formato oficial?", "Paso 1"],
+  ["¿Qué es la Mediación Asociativa y cuándo se usa?", "Paso 2"],
+  ["¿Cuándo interviene la Corte Nacional de Honor en un conflicto?", "Paso 3"],
+  ["¿Qué casos no se pueden mediar en los scouts?", "no procede la mediacion"],
+]);
+
+TDM("adultos_scouters_insignia_de_madera", BAS, [
+  ["¿Qué diferencia hay entre un scouter y un dirigente?", "Diferencia entre Scouter y Dirigente"],
+  ["¿Qué significa la Insignia de Madera de 2, 3 y 4 maderos?", "La Insignia de Madera"],
+  ["¿Qué tartán distingue la pañoleta de Gilwell?", "Nudo de Gilwell"],
+]);
+
+TDM("explorapp_y_carpetapp_sisas_cdc", BAS, [
+  ["¿Qué trámites se pueden hacer en el SISAS?", "SISAS —"],
+  ["¿Qué es el CDC y cómo se ingresa?", "CDC —"],
+  ["¿Qué permite hacer ExplorApp a los jóvenes?", "ExplorApp (`Manual ExplorApp.pdf`"],
+  ["¿Qué funciones tiene CarpetApp para los scouters?", "CarpetApp (`Manual Scouters"],
+]);
+TD("sisas_explorapp_y_carpetapp_explicacion_completa", BAS,
+  "¿Qué reportes oficiales genera CarpetApp para tramitar las insignias finales?",
+  "Reportes para Insignias Finales y Terminales");
+
+TDM("jamboree_nacional_world_scout_jamboree_philia_y_moot", BAS, [
+  ["¿De dónde viene la palabra Jamboree?", "Origen del término"],
+  ["¿Qué es el Jamboree Nacional y dónde fue el de 2024?", "¿Qué es el Jamboree Nacional en México?"],
+  ["¿Cada cuánto se hace el World Scout Jamboree?", "¿Cada cuánto se realiza?:** Se celebra"],
+  ["¿Qué es el World Scout Moot y para qué edades es?", "El **World Scout Moot** es el evento mundial oficial"],
+  ["¿Dónde será el 17° World Scout Moot?", "17° World Scout Moot"],
+  ["¿Qué es el Philia Nacional y quiénes participan?", "El **Philia Nacional** es el evento nacional"],
+  ["¿Dónde y cuándo fue el Philia Nacional 2026?", "Sede, fechas y costos del Philia"],
+  ["¿Cuánto cuesta participar en el Philia Nacional 2026?", "`$2,000.00 MXN`"],
+]);
+
+function centenarioTitle(t) {
+  const fromContent = String(t.content || "").match(/^###\s*Libro de la Colección Biblioteca del Centenario:\s*«([^»]+)»/i);
+  if (fromContent) return clean(fromContent[1]);
+  return clean(t.title || "")
+    .replace(/^Libro (?:de la Colección Biblioteca )?del Centenario:\s*/i, "")
+    .replace(/^«|»$/g, "");
+}
+
+function centenarioExtracts(t) {
+  const out = [];
+  const re = /-\s*\*\*\(Pág\.\s*(\d+)\):\*\*\s*([^\n]+)/g;
+  let m;
+  while ((m = re.exec(String(t.content || "")))) {
+    const text = clean(m[2]);
+    if (text.length < 160) continue;
+    if (/Documento oficial Scout|Disponible para visualización|BiblioTech|Descarga directa|\[email\s*protected\]/i.test(text)) continue;
+    if (/^(?:ÍNDICE|Contenido|Créditos|Portada|ASMAC|Autor|Editorial|Presentación)\b/i.test(text)) continue;
+    if ((text.match(/\d/g) || []).length / text.length > 0.25) continue;
+    const sentenceCount = (text.match(/[.!?](?:\s|$)/g) || []).length;
+    if (sentenceCount < 2 && text.length < 260) continue;
+    out.push({ page: Number(m[1]), text: cutSentence(text, 620) });
+  }
+  return out;
+}
+
 for (const t of kb) {
   if (!/^libro_centenario_doc_/.test(t.id)) continue;
-  const titleClean = clean(t.title || "").replace(/^Libro del Centenario:\s*/i, "");
+  const titleClean = centenarioTitle(t);
   if (!titleClean) continue;
-  T(t.id, "Colección Biblioteca del Centenario", [
-    `¿De qué trata el libro «${titleClean}» de la Biblioteca del Centenario?`,
-    `¿Qué enseña el volumen «${titleClean}» del Centenario Scout?`,
-  ]);
+  const cat = "Colección Biblioteca del Centenario";
+  const extracts = centenarioExtracts(t);
+  const base = { cat, topic_id: t.id, doc_id: "" };
+  if (extracts.length) {
+    T(t.id, cat, [
+      `¿De qué trata el libro «${titleClean}» de la Biblioteca del Centenario?`,
+      `¿Qué enseña el volumen «${titleClean}» del Centenario Scout?`,
+    ]);
+    const sample = extracts.slice(0, 3);
+    const ans = `**«${titleClean}» — episodios, anécdotas y testimonios** (Colección Biblioteca del Centenario):\n\n` +
+      sample.map((e) => `- **(Pág. ${e.page}):** ${e.text}`).join("\n\n") +
+      `\n\n*Fuente oficial: ${titleClean} (ASMAC, Colección Biblioteca del Centenario).*`;
+    add({ ...base, q: `¿Qué episodios, anécdotas o testimonios reúne «${titleClean}»?`, ans }, "centenario");
+    for (const e of extracts.slice(0, 2)) {
+      add({
+        ...base,
+        q: `¿Qué se narra en la página ${e.page} de «${titleClean}»?`,
+        ans: `**«${titleClean}» — página ${e.page}:**\n\n${e.text}\n\n*Fuente oficial: ${titleClean}, pág. ${e.page}.*`,
+      }, "centenario");
+    }
+  }
 }
 
 const ansSmart = `**SMART es una metodología para formular objetivos claros** al planear un proyecto o actividad scout. Es un acrónimo en inglés y cada letra describe una característica del objetivo (\`Las Rutas del Rover\`, págs. 72–74):
@@ -719,6 +965,629 @@ for (const id of CHAP_DOCS) {
   }
 }
 
+/* ------------------------------------------- 4b. Extracción documental por campos y menciones */
+function pagesWithNumbers(d) {
+  const raw = textOf(d);
+  if (!raw) return [];
+  const cleaned = raw
+    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u00ad]/g, "")
+    .replace(/\r\n/g, "\n");
+  if (d.ext === "HTML") return [{ page: 1, text: clean(cleaned) }];
+  const marks = [...cleaned.matchAll(/---\s*Página\s*(\d+)\s*---/g)];
+  if (!marks.length) return [{ page: 1, text: clean(cleaned) }];
+  const out = [];
+  for (let i = 0; i < marks.length; i++) {
+    const start = marks[i].index + marks[i][0].length;
+    const end = i + 1 < marks.length ? marks[i + 1].index : cleaned.length;
+    out.push({ page: Number(marks[i][1]), text: clean(stripPdfHeaders(cleaned.slice(start, end))) });
+  }
+  return out;
+}
+
+function fieldOk(v, min = 8) {
+  if (!v || v.length < min || v.length > 540) return false;
+  if (/_{3,}|\[email\s*protected\]|Documento oficial|Disponible para visualización/i.test(v)) return false;
+  if ((v.match(/\d/g) || []).length / v.length > 0.4) return false;
+  if ((v.match(/[A-ZÁÉÍÓÚÑ]/g) || []).length / v.length > 0.78 && v.length > 70) return false;
+  if ((v.match(/[:|]/g) || []).length > 9 && v.length < 130) return false;
+  const odd = (v.match(/[^A-Za-zÁÉÍÓÚÑáéíóúñ0-9\s.,;:()¿?¡!«»“”"'\-–—/\\$%&@+=*]/g) || []).length;
+  if (odd / v.length > 0.06) return false;
+  if ((v.match(/[A-Za-zÁÉÍÓÚÑáéíóúñ]/g) || []).length / v.length < 0.55) return false;
+  if (/[!"#$%&'()*+,./:\\-]{5,}/.test(v)) return false;
+  if (/^(?:de|del|la|el|los|las|y|o|por|para|con|en|al)\s/i.test(v)) return false;
+  if (/\b(?:Tratados|Asuntos tratados)\b/i.test(v) && v.length < 120) return false;
+  if (/https?:\/\//i.test(v) && v.length > 120) return false;
+  return true;
+}
+
+function cleanFieldValue(v, max = 420) {
+  v = clean(v).replace(/^[:\-–—•●\s]+/, "").trim();
+  const stop = v.search(/\s+(?:Dirigido a|Convoca a|Atención a|Fecha(?:s)?\b|Horario\b|Hora\b|Lugar\b|Sede\b|Dirección\b|Costo(?:s)?\b|Cuota(?:s)?\b|Inversión\b|Precio\b|Requisitos\b|Inscripción\b|Registro\b|Proceso de registro\b|Informes\b|Contacto\b|Mayores informes\b|Tel(?:éfono)?\b|Correo\b|Email\b|E-mail\b|Modalidad\b|Nota\b|Observaciones\b|Cupo\b|Objetivo\b|Prop[oó]sito\b|Estimad|Apreciad|Herman|Reciban|Por medio|Me es grato|Hago de su conocimiento|Les presentamos|Con motivo|ASMAC\/|ASUNTO\b)/i);
+  if (stop > 0) v = v.slice(0, stop).trim();
+  return cutSentence(v, max);
+}
+
+function labelField(pages, labels, max = 420, min = 8) {
+  const pat = labels.map(escRe).join("|");
+  for (const pg of pages) {
+    // Con dos puntos: etiqueta en cualquier posición.
+    let re = new RegExp(`(?:^|\\s)(?:${pat})\\s*:\\s*([\\s\\S]{${min},${max + 140}}?)(?:\\.\\s|\\.$|$)`, "i");
+    let m = pg.text.match(re);
+    if (!m) {
+      // Sin dos puntos: solo etiquetas inequívocas y en inicio de línea o tras viñeta.
+      const noColon = labels.filter((l) => /^(?:Dirigido a|Convoca a|Atención a|Lugar|Sede)$/i.test(l));
+      if (!noColon.length) continue;
+      re = new RegExp(`(?:^|[\\n\\r•●]\\s*)(?:${noColon.map(escRe).join("|")})\\s+(?=[A-ZÁÉÍÓÚÑ0-9¿“"'(])([\\s\\S]{${min},${max + 140}}?)(?:\\.\\s|\\.$|$)`, "i");
+      m = pg.text.match(re);
+    }
+    if (!m) continue;
+    const v = cleanFieldValue(m[1], max);
+    if (!fieldOk(v, min)) continue;
+    return { value: v, page: pg.page };
+  }
+  return null;
+}
+
+const MONTH_RE = "enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre";
+const HAS_DATE = new RegExp(`\\b(?:${MONTH_RE})\\b[^.!?]{0,70}\\b(?:19|20)\\d{2}\\b|\\b(?:19|20)\\d{2}\\b[^.!?]{0,70}\\b(?:${MONTH_RE})\\b`, "i");
+
+function eventDate(pages) {
+  let best = null;
+  for (const pg of pages) {
+    const sents = pg.text.split(/(?<=[.!?])\s+/).map(clean).filter((s) => s.length >= 12 && HAS_DATE.test(s));
+    for (let s of sents) {
+      const label = s.search(/\bFechas?\s+(?:del|de(?:l)?|para el)\s+(?:evento|encuentro|actividad|taller|convocatoria|foro|concierto|campamento)\s*:/i);
+      if (label > 0) s = s.slice(label);
+      if (s.length > 280) continue;
+      if (/\b(?:FASE|calendario|Secci[oó]n\s+Fecha|cronograma|programa de actividades)\b/i.test(s)) continue;
+      if ((s.match(new RegExp(`\\b(?:${MONTH_RE})\\b`, "gi")) || []).length > 2) continue;
+      const hasLabel = /\bFechas?\b[^.]{0,50}:/i.test(s);
+      const hasRange = new RegExp(`\\b(?:del?|desde)\\s+\\d{1,2}\\s+(?:al|hasta)\\s+\\d{1,2}\\s+de\\s+(?:${MONTH_RE})\\b`, "i").test(s);
+      const hasEventVerb = /\b(?:se realizar[áa]|se llevar[áa] a cabo|tendr[áa] lugar)\b/i.test(s);
+      const singleDate = new RegExp(`^\\d{1,2}\\s+de\\s+(?:${MONTH_RE})\\s+(?:de\\s+)?(?:19|20)\\d{2}\\b`, "i").test(s);
+      if (!hasLabel && !hasRange && !hasEventVerb && !(singleDate && s.length < 160)) continue;
+      if (/\b(?:a la fecha|vigente|nacid[oa]s?|desde el|antes del|mayores de|menores de|edad)\b/i.test(s)) continue;
+      if (new RegExp(`\\b(?:Ciudad de M[ée]xico|M[ée]xico)\\s*,?\\s*a?\\s*\\d{1,2}\\s+de\\s+(?:${MONTH_RE})`, "i").test(s) && !hasLabel && !hasRange && !hasEventVerb) continue;
+      if (!fieldOk(s, 12)) continue;
+      let sc = 0;
+      if (/\b(?:fecha|fechas)\b/i.test(s)) sc += 7;
+      if (/\b(?:se realizar[áa]|se llevar[áa] a cabo|tendr[áa] lugar|del\s+\d{1,2}.*\bal\b)/i.test(s)) sc += 5;
+      if (/\b(?:encuentro|evento|concierto|rally|jamboree|curso|taller|campamento|foro|convocatoria|philia|moot)\b/i.test(s)) sc += 3;
+      if (/^(?:ciudad de m[ée]xico|m[ée]xico)\s*,?\s*a?\s*\d{1,2}\s+de/i.test(s)) sc -= 8;
+      if (/\b(?:hasta el|a m[áa]s tardar|fecha l[íi]mite|pago|reembolso|inscripci[óo]n)\b/i.test(s)) sc -= 5;
+      if (sc > 0 && (!best || sc > best.score)) {
+        const value = cutSentence(s, 280)
+          .replace(/^(?:Lugar y fechas?|Fechas? y lugar|Lugar|Sede|Fechas?)\s*:?\s*/i, "")
+          .replace(/\s*[●•]\s*/g, "; ")
+          .replace(/:\s*;/g, ": ")
+          .replace(/^;\s*/, "")
+          .replace(/;\s*;/g, ";")
+          .trim();
+        best = { value, page: pg.page, score: sc };
+      }
+    }
+  }
+  return best;
+}
+
+function costField(pages) {
+  const lab = labelField(pages, ["Costo", "Costos", "Cuota", "Cuotas", "Inversión", "Precio", "Donativo"], 320, 3);
+  if (lab && /\$|\b(?:MXN|USD|pesos|d[óo]lares)\b/i.test(lab.value)) return lab;
+  let best = null;
+  for (const pg of pages) {
+    const sents = pg.text.split(/(?<=[.!?])\s+/).map(clean);
+    for (let s of sents) {
+      if (!/\$\s?[\d,.]+|\b(?:MXN|USD|pesos|d[óo]lares)\b/i.test(s)) continue;
+      if (/^[-•●]\s*(?:Ejemplos|En caso|Trabajo|Resiliencia|cultura)/i.test(s)) continue;
+      const dollar = s.indexOf("$");
+      if (dollar > 110) s = s.slice(Math.max(0, dollar - 80)).trim();
+      if (!fieldOk(s, 8)) continue;
+      let sc = 0;
+      if (/\b(?:costo|cuota|precio|inversi[óo]n|pago|donativo)\b/i.test(s)) sc += 5;
+      if (/\$/.test(s)) sc += 2;
+      if (/\b(?:participante|asistente|miembro|persona|niño|joven|adulto)\b/i.test(s)) sc += 1;
+      if (/\b(?:hasta el|a m[áa]s tardar|fecha l[íi]mite)\b/i.test(s)) sc += 1;
+      if (s.length > 320) sc -= 2;
+      if (sc > 0 && (!best || sc > best.score)) best = { value: cutSentence(s, 320), page: pg.page, score: sc };
+    }
+  }
+  return best;
+}
+
+function requirementsField(pages) {
+  let best = null;
+  for (const pg of pages) {
+    const sents = pg.text.split(/(?<=[.!?])\s+/).map(clean);
+    for (let s of sents) {
+      if (s.length < 50 || s.length > 650) continue;
+      if (/_{3,}|Documento oficial|Disponible para visualización/i.test(s)) continue;
+      if (/^(?:ASMAC\/|ASUNTO\b|Asunto\b)/i.test(s) && !/\b(?:deber|indispensable|presentar|entregar|adjuntar|anexar|registr)\b/i.test(s)) continue;
+      let sc = 0;
+      if (/\brequisitos?\b/i.test(s)) sc += 6;
+      if (/\bindispensable\b|\bobligatorio\b|\bdeber[áa]n?\b/i.test(s)) sc += 3;
+      if (/\b(?:presentar|entregar|adjuntar|anexar|registrarse|inscripci[óo]n|registro)\b/i.test(s)) sc += 3;
+      if (/\b(?:documentos?|comprobante|ficha|credencial)\b/i.test(s)) sc += 2;
+      if (/\b(?:para participar|podr[áa]n participar|qui[ée]nes pueden)\b/i.test(s)) sc += 2;
+      if (/\b(?:fecha|hora|lugar|sede|costo|cuota)\b/i.test(s)) sc -= 2;
+      if (sc >= 5 && (!best || sc > best.score)) best = { value: cutSentence(s, 560), page: pg.page, score: sc };
+    }
+  }
+  return best;
+}
+
+function contactField(pages) {
+  const emails = [];
+  const phones = [];
+  let firstPage = null;
+  for (const pg of pages) {
+    const em = pg.text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi) || [];
+    for (const e of em) {
+      const v = clean(e);
+      if (!emails.some((x) => x.toLowerCase() === v.toLowerCase())) emails.push(v);
+    }
+    const ph = [...pg.text.matchAll(/(?:Tel(?:[ée]fono)?|WhatsApp|Cel(?:ular)?)\s*:?\s*((?:\+?52\s*)?(?:\(?\d{2,3}\)?[\s.-]?)?\d{3,4}[\s.-]?\d{4})/gi)];
+    for (const m of ph) {
+      const v = clean(m[1]);
+      if (!phones.includes(v)) phones.push(v);
+    }
+    if ((em.length || ph.length) && !firstPage) firstPage = pg.page;
+  }
+  if (!emails.length && !phones.length) return null;
+  const parts = [];
+  if (emails.length) parts.push(`Correo(s): ${emails.slice(0, 3).join(", ")}`);
+  if (phones.length) parts.push(`Teléfono(s): ${phones.slice(0, 2).join(", ")}`);
+  return { value: parts.join(". "), page: firstPage || 1 };
+}
+
+function modalityField(pages) {
+  const lab = labelField(pages, ["Modalidad", "Lugar", "Sede"], 220, 5);
+  if (lab && /\b(?:v[íi]a zoom|en l[íi]nea|virtual|presencial|transmisi[oó]n|streaming|h[íi]brid[oa])\b/i.test(lab.value) && !/\b(?:sexual|sexualidad|ITS|infecciones)\b/i.test(lab.value)) {
+    let v = lab.value.replace(/^(?:Lugar|Sede|Modalidad)\s*:\s*/i, "").replace(/\s+(?:Proceso de registro|Acceso|Link|Liga)\b.*$/i, "").trim();
+    if (v.length >= 8 && v.length <= 180 && !/https?:\/\//i.test(v) && !/^(?:DOCUMENTOS|REQUISITOS|PROCESO|PAGO|COSTO|INSCRIPCI[ÓO]N)\b/i.test(v) && !/\b(?:pagar|pago|banco|tarjeta|ficha|corresponsal)\b/i.test(v)) return { value: v, page: lab.page };
+  }
+  let best = null;
+  for (const pg of pages) {
+    const sents = pg.text.split(/(?<=[.!?])\s+/).map(clean);
+    for (let s of sents) {
+      if (!/\b(?:v[íi]a zoom|en l[íi]nea|virtual|presencial|transmisi[oó]n|streaming|h[íi]brid[oa])\b/i.test(s)) continue;
+      if (s.length < 12 || s.length > 220) continue;
+      if (/https?:\/\/|modos? de transmisi[oó]n|proceso de registro|acceso a trav[ée]s del siguiente/i.test(s)) continue;
+      if (/\b(?:sexual|sexualidad|ITS|infecciones)\b/i.test(s)) continue;
+      if (/^\d+[.)-]/.test(s)) continue;
+      if (/^(?:DOCUMENTOS|REQUISITOS|PROCESO|PAGO|COSTO|INSCRIPCI[ÓO]N|ASMAC\/|ASUNTO)\b/i.test(s)) continue;
+      if (/\b(?:pagar|pago|banco|tarjeta|ficha|corresponsal)\b/i.test(s)) continue;
+      if (/\b(?:del|desde)\s+\d{1,2}\b.*\b(?:al|hasta)\s+\d{1,2}\b/i.test(s) && /\bpresencial\b/i.test(s)) continue;
+      s = s.replace(/^(?:Lugar|Sede|Modalidad)\s*:\s*/i, "").replace(/\s+(?:Proceso de registro|Acceso|Link|Liga)\b.*$/i, "").trim();
+      if (!fieldOk(s, 12)) continue;
+      let sc = 0;
+      if (/\b(?:v[íi]a zoom|en l[íi]nea|virtual|presencial|transmisi[óo]n|streaming|h[íi]brid[oa])\b/i.test(s)) sc += 3;
+      if (/\b(?:evento|encuentro|reuni[óo]n|conferencia|transmisi[óo]n)\b/i.test(s)) sc += 2;
+      if (/\b(?:lugar|sede)\b/i.test(s)) sc += 1;
+      if (sc > 0 && (!best || sc > best.score)) best = { value: cutSentence(s, 180), page: pg.page, score: sc };
+    }
+  }
+  return best;
+}
+
+const CONV_CAT = "Convocatorias y Comunicados Nacionales";
+for (const d of catalog) {
+  if (d.is_duplicate || d.category !== CONV_CAT || !d.title) continue;
+  if (!["PDF", "DOCX", "HTML"].includes(d.ext)) continue;
+  const pages = pagesWithNumbers(d);
+  if (!pages.length) continue;
+  const title = shortTitle(d.title);
+  const baseItem = { cat: CONV_CAT, doc_id: d.id };
+  const nonEvent = /conclusi[oó]n de la misi[oó]n|nombramiento|designaci[oó]n|felicitaci[oó]n|condolencia|agradecimiento/i.test(title);
+
+  const audience = labelField(pages, ["Dirigido a", "Dirigido especialmente a", "Convoca a", "Atención a", "Invitación para"], 420, 8);
+  if (audience)
+    add({ ...baseItem, page: audience.page, q: `¿A quién está dirigida la convocatoria «${title}»?`, ans: `**Dirigido a:** ${audience.value}\n\n*Fuente oficial: «${title}», pág. ${audience.page}.*` }, "convocatorias");
+
+  if (!nonEvent) {
+    let place = labelField(pages, ["Lugar", "Sede", "Dirección"], 420, 5);
+    if (place && /^(?:(?:conferencia|reuni[oó]n|evento|sesi[oó]n)\s+)?(?:v[íi]a|por)\s+zoom$/i.test(place.value)) place = null;
+    if (place && /^(?:Nacional|Internacional)\b/i.test(place.value)) place = null;
+    if (place)
+      add({ ...baseItem, page: place.page, q: `¿Dónde se realiza «${title}»?`, ans: `**Lugar o sede:** ${place.value}\n\n*Fuente oficial: «${title}», pág. ${place.page}.*` }, "convocatorias");
+
+    const date = eventDate(pages);
+    if (date)
+      add({ ...baseItem, page: date.page, q: `¿Cuándo se realiza «${title}»?`, ans: `**Fecha del evento:** ${date.value}\n\n*Fuente oficial: «${title}», pág. ${date.page}.*` }, "convocatorias");
+
+    const cost = costField(pages);
+    if (cost)
+      add({ ...baseItem, page: cost.page, q: `¿Cuánto cuesta participar en «${title}»?`, ans: `**Costo o cuota:** ${cost.value}\n\n*Fuente oficial: «${title}», pág. ${cost.page}.*` }, "convocatorias");
+
+    const modality = modalityField(pages);
+    if (modality)
+      add({ ...baseItem, page: modality.page, q: `¿En qué modalidad se realiza «${title}»?`, ans: `**Modalidad:** ${modality.value}\n\n*Fuente oficial: «${title}», pág. ${modality.page}.*` }, "convocatorias");
+  }
+
+  const req = requirementsField(pages);
+  if (req)
+    add({ ...baseItem, page: req.page, q: `¿Qué requisitos o proceso de inscripción pide «${title}»?`, ans: `**Requisitos o inscripción:** ${req.value}\n\n*Fuente oficial: «${title}», pág. ${req.page}.*` }, "convocatorias");
+
+  const contact = contactField(pages);
+  if (contact)
+    add({ ...baseItem, page: contact.page, q: `¿A qué correo o teléfono puedo pedir informes sobre «${title}»?`, ans: `**Contacto e informes:** ${contact.value}.\n\n*Fuente oficial: «${title}», pág. ${contact.page}.*` }, "convocatorias");
+}
+
+/* Formatos, actas y seguro: campos, autorizaciones y documentos */
+const FORMAT_FIELDS = [
+  ["Nombre", /\bNombre(?:\(s\))?\b/i],
+  ["Apellido(s)", /\bApellidos?(?:\(s\))?\b/i],
+  ["CURP", /\bCURP\b/i],
+  ["RFC", /\bRFC\b/i],
+  ["CUM", /\bCUM\b/i],
+  ["Fecha de nacimiento", /Fecha de nacimiento/i],
+  ["Edad", /\bEdad\b/i],
+  ["Sexo o género", /\b(?:Sexo|G[eé]nero)\b/i],
+  ["Domicilio o dirección", /\b(?:Domicilio|Direcci[oó]n)\b/i],
+  ["Teléfono", /\bTel[eé]fono\b/i],
+  ["Correo electrónico", /\b(?:Correo(?: electr[oó]nico)?|E-?mail)\b/i],
+  ["Escuela", /\bEscuela\b/i],
+  ["Grado escolar", /\bGrado\b/i],
+  ["Grupo Scout", /\bGrupo\b/i],
+  ["Sección", /\bSecci[oó]n\b/i],
+  ["Provincia", /\bProvincia\b/i],
+  ["Firma", /\bFirma\b/i],
+  ["Religión", /\bReligi[oó]n\b/i],
+  ["Nacionalidad", /\bNacionalidad\b/i],
+  ["Ocupación", /\bOcupaci[oó]n\b/i],
+  ["Estado civil", /\bEstado civil\b/i],
+  ["Tipo de sangre", /\bTipo de sangre\b/i],
+  ["Alergias", /\bAlergias?\b/i],
+  ["Tratamientos actuales", /Tratamientos? actuales?/i],
+  ["Contacto de emergencia", /Contacto de emergencias?/i],
+  ["Antecedentes médicos", /\b(?:Padecimientos?|Antecedentes?)\b/i],
+  ["Vacunas", /\bVacunas?\b/i],
+  ["Folio", /\bFolio\b/i],
+  ["Orden del día", /Orden del [Dd][ií]a/i],
+  ["Acuerdos", /\bAcuerdos?\b/i],
+  ["Asistentes", /\bAsistentes\b/i],
+];
+
+function sentencePick(pages, scoreFn) {
+  let best = null;
+  for (const pg of pages) {
+    const sents = pg.text.split(/(?<=[.!?])\s+/).map(clean);
+    for (const s of sents) {
+      if (s.length < 60 || s.length > 720) continue;
+      if (/_{3,}|Documento oficial|Disponible para visualización|\[email\s*protected\]/i.test(s)) continue;
+      const sc = scoreFn(s);
+      if (sc > 0 && (!best || sc > best.score)) best = { value: cutSentence(s, 620), page: pg.page, score: sc };
+    }
+  }
+  return best;
+}
+
+const FORMAT_CAT = "Formatos, Actas y Seguro Scout";
+for (const d of catalog) {
+  if (d.is_duplicate || d.category !== FORMAT_CAT || !d.title) continue;
+  if (!["PDF", "DOCX"].includes(d.ext)) continue;
+  const pages = pagesWithNumbers(d);
+  if (!pages.length) continue;
+  const body = pages.map((p) => p.text).join(" ");
+  if (body.length < 300) continue;
+  const title = shortTitle(d.title);
+  const baseItem = { cat: FORMAT_CAT, doc_id: d.id };
+
+  const asunto = labelField(pages, ["Asunto"], 320, 5);
+  if (asunto && /^[A-ZÁÉÍÓÚÑ0-9¿“"]/.test(asunto.value) && !/\b(?:Tratados|Asuntos tratados)\b/i.test(asunto.value) && !/\|/.test(asunto.value))
+    add({ ...baseItem, page: asunto.page, q: `¿Cuál es el asunto o finalidad de «${title}»?`, ans: `**Asunto:** ${asunto.value}\n\n*Fuente oficial: «${title}», pág. ${asunto.page}.*` }, "formatos");
+
+  const hits = FORMAT_FIELDS.filter(([, re]) => re.test(body)).map(([name]) => name);
+  const isForm = /formato|ficha|solicitud|autorizaci|registro|carta|acta|aviso|plan|imagen|di[aá]logo|mediaci[oó]n|arbitraje|reporte/i.test(d.title);
+  const isProcess = /proceso|convocatoria|comunicado|instructivo|gu[ií]a|cierre de solicitudes|nombramiento|designaci[oó]n|conclusi[oó]n de la misi[oó]n|felicitaci[oó]n/i.test(d.title);
+  if (hits.length >= 4 && isForm && !isProcess) {
+    let bestPage = 1;
+    let bestCount = 0;
+    for (const pg of pages) {
+      const n = FORMAT_FIELDS.filter(([, re]) => re.test(pg.text)).length;
+      if (n > bestCount) {
+        bestCount = n;
+        bestPage = pg.page;
+      }
+    }
+    add({
+      ...baseItem,
+      page: bestPage,
+      q: `¿Qué datos solicita el formato «${title}»?`,
+      ans: `**Datos solicitados en «${title}» (pág. ${bestPage}):** ${hits.slice(0, 13).join(", ")}.\n\n*Fuente oficial: «${title}», pág. ${bestPage}.*`,
+    }, "formatos");
+  }
+
+  const auth = sentencePick(pages, (s) => {
+    let sc = 0;
+    if (/\bautoriz(?:o|amos|a|an)\b/i.test(s)) sc += 6;
+    if (/\bdeclar(?:o|amos|a|an)\b/i.test(s)) sc += 4;
+    if (/\bme comprometo\b/i.test(s)) sc += 3;
+    if (/\b(?:menor|imagen|actividad|evento|asociaci[oó]n|scout)\b/i.test(s)) sc += 2;
+    if (/\b(?:consentimiento|permiso|responsabilidad)\b/i.test(s)) sc += 2;
+    return sc >= 6 ? sc : 0;
+  });
+  if (auth)
+    add({
+      ...baseItem,
+      page: auth.page,
+      q: `¿Qué autoriza o declara la persona que firma «${title}»?`,
+      ans: `**Autorización o declaración en «${title}» (pág. ${auth.page}):**\n\n> ${auth.value}\n\n*Fuente oficial: «${title}», pág. ${auth.page}.*`,
+    }, "formatos");
+
+  const reqDoc = sentencePick(pages, (s) => {
+    let sc = 0;
+    if (/\b(?:anexar|adjuntar)\b/i.test(s)) sc += 7;
+    if (/\b(?:deber[áa]|deben|favor de)\s+(?:presentar|entregar|adjuntar|anexar)\b/i.test(s)) sc += 6;
+    if (/\b(?:documentos?|comprobante|copia|carta|itinerario)\b/i.test(s)) sc += 2;
+    if (/\b(?:requisitos?|indispensable|obligatorio)\b/i.test(s)) sc += 2;
+    return sc >= 6 ? sc : 0;
+  });
+  if (reqDoc)
+    add({
+      ...baseItem,
+      page: reqDoc.page,
+      q: `¿Qué documentos deben anexarse o presentarse con «${title}»?`,
+      ans: `**Documentos o requisitos en «${title}» (pág. ${reqDoc.page}):**\n\n> ${reqDoc.value}\n\n*Fuente oficial: «${title}», pág. ${reqDoc.page}.*`,
+    }, "formatos");
+
+  if (/acta|di[aá]logo|mediaci[oó]n|arbitraje/i.test(d.title)) {
+    const idx = body.search(/Orden del [Dd][ií]a/i);
+    if (idx >= 0) {
+      let v = body.slice(idx, idx + 760);
+      const stop = v.slice(20).search(/Asistentes|DEBE SER LA MISMA|Nota Importante|Firmas|Asuntos Tratados|La resoluci[oó]n|Los acuerdos/i);
+      if (stop > 0) v = v.slice(0, 20 + stop);
+      v = cutSentence(clean(v), 560);
+      if (v.length > 40)
+        add({ ...baseItem, page: 1, q: `¿Qué orden del día incluye el acta «${title}»?`, ans: `**Orden del día de «${title}»:**\n\n${v}\n\n*Fuente oficial: «${title}».*` }, "formatos");
+    }
+    const attendeeFields = [
+      ["Nombre", /\bNombre\b/i],
+      ["CUM", /\bCUM\b/i],
+      ["vigencia de registro", /vigencia de registro/i],
+      ["cargo", /\bCargo\b/i],
+      ["firma", /\bFirma\b/i],
+    ].filter(([, re]) => re.test(body)).map(([name]) => name);
+    if (/\bAsistentes\b/.test(body) && attendeeFields.length >= 3) {
+      add({
+        ...baseItem,
+        page: 1,
+        q: `¿Qué datos de los asistentes registra el acta «${title}»?`,
+        ans: `El acta **«${title}»** pide registrar a cada asistente con **${attendeeFields.join(", ")}**.\n\n*Fuente oficial: «${title}».*`,
+      }, "formatos");
+    }
+  }
+
+  if (/seguro|accidente|siniestro|reembolso|p[oó]liza/i.test(d.title)) {
+    const covIdx = body.search(/coberturas?/i);
+    if (covIdx >= 0) {
+      let v = body.slice(covIdx, covIdx + 520);
+      const stop = v.slice(10).search(/monto|¿Cu[áa]l|COMO PRESENTAR|documentos/i);
+      if (stop > 0) v = v.slice(0, 10 + stop);
+      v = clean(v).replace(/^[^?]*\?\s*/, "");
+      v = cutSentence(v, 420);
+      if (v.length > 30)
+        add({ ...baseItem, page: 1, q: `¿Qué coberturas ofrece «${title}»?`, ans: `**Coberturas de «${title}»:** ${v}\n\n*Fuente oficial: «${title}».*` }, "formatos");
+    }
+  }
+}
+
+/* Menciones por palabra clave en manuales, Centenario e identidad gráfica */
+const ACCENT = { a: "[aá]", e: "[eé]", i: "[ií]", o: "[oó]", u: "[uú]", n: "[nñ]" };
+function termRegex(term) {
+  const esc = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  let pat = "";
+  for (const ch of esc) pat += ACCENT[ch.toLowerCase()] || ch;
+  return new RegExp(`(^|[^a-záéíóúñ])(${pat})(?=$|[^a-záéíóúñ])`, "i");
+}
+
+function snippetAround(text, idx, termLen, max = 680) {
+  let start = Math.max(text.lastIndexOf(". ", idx), text.lastIndexOf("• ", idx), text.lastIndexOf("; ", idx));
+  if (start < 0 || idx - start > 300) start = Math.max(0, idx - 220);
+  else start += 2;
+  let end = text.indexOf(". ", idx + termLen);
+  if (end < 0 || end - idx > max) end = Math.min(text.length, idx + max);
+  else end += 1;
+  return clean(text.slice(start, end));
+}
+
+function trimHeader(s) {
+  s = clean(s)
+    .replace(/^ASMAC\/[A-Z0-9\/._-]+(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ ,0-9]{0,75})?\s+\d{1,3}\s+/i, "")
+    .replace(/^ASMAC\/[A-Z0-9\/._-]+\s*/i, "")
+    .replace(/^Direcci[oó]n Nacional de [A-ZÁÉÍÓÚÑa-záéíóúñ ]{3,60}\s+/i, "")
+    .replace(/^(?:\d{1,3}\s+)(?=[A-ZÁÉÍÓÚÑ])/, "")
+    .replace(/^[•\-–—\s]+/, "")
+    .trim();
+  if (!/[.!?]/.test(s.slice(0, 120)) && /\b(?:ASMAC|Manual|Direcci[oó]n Nacional|ExplorApp|CarpetApp)\b/i.test(s.slice(0, 120))) {
+    const m = s.match(/^.{0,120}?\b\d{1,3}\s+(?=[A-ZÁÉÍÓÚÑ][a-záéíóúñ])/);
+    if (m) s = s.slice(m[0].length).trim();
+  }
+  s = s.replace(/^(?:Manual (?:del|de|para) [A-ZÁÉÍÓÚÑa-záéíóúñ ]{2,45})\s+(?=[A-ZÁÉÍÓÚÑ][a-záéíóúñ])/, "").trim();
+  s = s.replace(/^[a-záéíóúñ]{2,12},\s+/, "").trim();
+  return s;
+}
+
+function formLike(s) {
+  if (/_{3,}/.test(s)) return true;
+  const fieldHits = (s.match(/\b(?:Nombre|Apellido|CURP|RFC|Domicilio|Tel[eé]fono|Correo|CUM|Fecha|Firma)\s*:/gi) || []).length;
+  return fieldHits >= 3;
+}
+
+function scoreCandidate(s, term, ctx) {
+  if (!s || s.length < 120 || s.length > 780) return -99;
+  if (!termRegex(term).test(s)) return -99;
+  const words = s.split(/\s+/).length;
+  if (words < 10) return -99;
+  if (/\.{4,}/.test(s)) return -99;
+  if (formLike(s)) return -99;
+  if (/Documento oficial Scout|Disponible para visualización|\[email\s*protected\]/i.test(s)) return -99;
+  const digits = (s.match(/\d/g) || []).length / s.length;
+  if (digits > 0.18) return -99;
+  const uppers = (s.match(/[A-ZÁÉÍÓÚÑ]/g) || []).length / s.length;
+  if (uppers > 0.42) return -99;
+  if ((s.match(/[:□]/g) || []).length > 12 && words < 45) return -99;
+  if ((s.match(/\|/g) || []).length > 6) return -99;
+  if ((s.match(/[•●]/g) || []).length >= 3) return -99;
+  if (/^[^.]{0,80}[•●]/.test(s)) return -99;
+  const odd = (s.match(/[^A-Za-zÁÉÍÓÚÑáéíóúñ0-9\s.,;:()¿?¡!«»“”"'\-–—/\\$%&@+=*]/g) || []).length;
+  if (odd / s.length > 0.05) return -99;
+  if (ctx && !ctx.test(s)) return -99;
+
+  let sc = 0;
+  const pos = s.search(termRegex(term));
+  if (pos > 200) return -99;
+  if (pos >= 0 && pos < 110) sc += 3;
+  const after = s.slice(Math.max(0, pos), Math.max(0, pos) + 180);
+  if (/\b(?:es|son|se le llama|se entiende|consiste|se refiere|significa|sirve|permite|se realiza|se utiliza|se emplea|tiene como)\b/i.test(after)) sc += 9;
+  if (/\b(?:requisito|obligatorio|indispensable|prohibido|no se permite)\b/i.test(s)) sc += 2;
+  if (/\b(?:fecha|plazo|d[ií]a|hora|año|mes)\b/i.test(s)) sc += 1;
+  if (/\$\s?[\d,.]+|\b(?:MXN|USD)\b/.test(s)) sc += 1;
+  if (s.length >= 170 && s.length <= 580) sc += 2;
+  if (/^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]/.test(s)) sc += 1;
+  if (/^(?:Manejo|Clasificaci[oó]n|Tipos|Cap[ií]tulo|[IÍ]ndice|Contenido)\b/i.test(s) && sc < 9) sc -= 3;
+  return sc;
+}
+
+const MK = (t, v, o = {}) => ({ t, v: v || [t], a: o.a || null, ctx: o.ctx || null, def: !!o.def });
+const MCTX = {
+  seguro: /\b(?:seguro\s+(?:de|contra|m[eé]dic|scout|accidente|viajero|cobertura|p[oó]liza|en caso)|p[oó]liza\s+de\s+seguro|seguro\s+scout)\b/i,
+  proyecto: /\bproyecto\s+(?:scout|educativo|personal|de servicio|comunitario|social|local|autorizado|de vida)\b/i,
+  formacion: /\bformaci[oó]n\s+(?:del adulto|de adultos|scout|continua|inicial|de formadores)\b/i,
+  cuota: /\bcuota\s+(?:de|anual|nacional|de registro|scout|extraordinaria|mensual)\b/i,
+  color: /\bcolor(?:es)?\s+(?:institucional|de la|del|pantone|cmyk|rgb|hex|paleta)\b|\bpaleta\s+de\s+color\b/i,
+  simbolo: /\bs[ií]mbolo(?:s)?\s+(?:scout|de la|del|institucional|patrio)\b|\bflor de lis\b/i,
+  bandera: /\bbandera\s+(?:nacional|de m[eé]xico|scout|patria)\b/i,
+  adultos: /\badultos?\s+(?:voluntarios?|en el movimiento|scouts?|responsables)\b/i,
+  progresion: /\bprogresi[oó]n\s+(?:personal|de|en|del)\b/i,
+  insignia: /\binsignia(?:s)?\s+(?:de|del|final|terminal|mundo|madera|progresi[oó]n|compromiso)\b/i,
+};
+
+const MENTION_KEYWORDS = {
+  "Manuales Oficiales y de Operación": [
+    MK("primeros auxilios", ["primeros auxilios"], { a: "los primeros auxilios", def: true }),
+    MK("RCP", ["RCP", "reanimación cardiopulmonar"], { a: "la RCP", def: true }),
+    MK("maniobra de Heimlich", ["maniobra de Heimlich", "Heimlich"], { a: "la maniobra de Heimlich", def: true }),
+    MK("hemorragia", ["hemorragia", "hemorragias"], { a: "la hemorragia", def: true }),
+    MK("quemadura", ["quemadura", "quemaduras"], { a: "la quemadura", def: true }),
+    MK("fractura", ["fractura", "fracturas"], { a: "la fractura", def: true }),
+    MK("botiquín", ["botiquín", "botiquin"], { a: "el botiquín" }),
+    MK("protocolo PAS", ["protocolo PAS", "Proteger, Avisar, Socorrer"], { a: "el protocolo PAS", def: true }),
+    MK("evacuación", ["evacuación", "evacuar"], { a: "la evacuación" }),
+    MK("brújula", ["brújula", "brujula"], { a: "la brújula" }),
+    MK("rosa de los vientos", ["rosa de los vientos"], { a: "la rosa de los vientos", def: true }),
+    MK("nudo", ["nudo", "nudos"], { a: "los nudos" }),
+    MK("amarre", ["amarre", "amarres"], { a: "los amarres" }),
+    MK("pionerismo", ["pionerismo"], { a: "el pionerismo" }),
+    MK("flor de lis", ["flor de lis"], { a: "la flor de lis" }),
+    MK("insignia de madera", ["insignia de madera"], { a: "la Insignia de Madera" }),
+    MK("progresión", ["progresión", "progresion"], { a: "la progresión", ctx: MCTX.progresion }),
+    MK("especialidad", ["especialidad", "especialidades"], { a: "las especialidades" }),
+    MK("proyecto", ["proyecto", "proyectos"], { a: "el proyecto", ctx: MCTX.proyecto }),
+    MK("cuota", ["cuota", "cuotas"], { a: "la cuota", ctx: MCTX.cuota }),
+    MK("seguro", ["seguro", "seguros"], { a: "el seguro", ctx: MCTX.seguro }),
+    MK("safe from harm", ["safe from harm", "a salvo del peligro"], { a: "Safe from Harm" }),
+    MK("denuncia", ["denuncia", "denuncias"], { a: "la denuncia" }),
+    MK("acoso", ["acoso"], { a: "el acoso" }),
+    MK("bullying", ["bullying"], { a: "el bullying" }),
+    MK("inclusión", ["inclusión", "inclusion"], { a: "la inclusión" }),
+    MK("diversidad", ["diversidad"], { a: "la diversidad" }),
+    MK("adultos", ["adultos", "adulto"], { a: "los adultos", ctx: MCTX.adultos }),
+    MK("formación", ["formación", "formacion"], { a: "la formación", ctx: MCTX.formacion }),
+    MK("Meztitla", ["Meztitla"], { a: "Meztitla" }),
+    MK("campamento", ["campamento", "campamentos"], { a: "el campamento" }),
+    MK("no dejar rastro", ["no dejar rastro"], { a: "la técnica de No Dejar Rastro" }),
+    MK("fogata", ["fogata", "fogatas"], { a: "la fogata" }),
+    MK("herramientas de corte", ["herramientas de corte"], { a: "las herramientas de corte" }),
+    MK("bandera", ["bandera", "Bandera"], { a: "la bandera" }),
+    MK("escolta", ["escolta", "Escolta"], { a: "la escolta" }),
+    MK("abanderado", ["abanderado", "Abanderado"], { a: "el abanderado" }),
+    MK("incineración", ["incineración", "incineracion"], { a: "la incineración" }),
+    MK("uniforme", ["uniforme"], { a: "el uniforme" }),
+    MK("camisola", ["camisola"], { a: "la camisola" }),
+    MK("pañoleta", ["pañoleta", "panoleta"], { a: "la pañoleta" }),
+    MK("insignia", ["insignia", "insignias"], { a: "la insignia", ctx: MCTX.insignia }),
+    MK("scouter", ["scouter", "scouters"], { a: "el scouter" }),
+    MK("dirigente", ["dirigente", "dirigentes"], { a: "el dirigente" }),
+    MK("centro de acopio", ["centro de acopio", "centros de acopio"], { a: "el centro de acopio" }),
+  ],
+  "Colección Biblioteca del Centenario": [
+    MK("Meztitla", ["Meztitla"], { a: "Meztitla" }),
+    MK("Baden-Powell", ["Baden-Powell", "Baden Powell"], { a: "Baden-Powell" }),
+    MK("Jamboree", ["Jamboree"], { a: "el Jamboree" }),
+    MK("campamento", ["campamento", "campamentos"], { a: "el campamento" }),
+    MK("excursión", ["excursión", "excursion"], { a: "la excursión" }),
+    MK("Consejo de Roca", ["Consejo de Roca"], { a: "el Consejo de Roca" }),
+    MK("Corte de Honor", ["Corte de Honor"], { a: "la Corte de Honor" }),
+    MK("Flor de Lis", ["Flor de Lis", "flor de lis"], { a: "la Flor de Lis" }),
+    MK("Promesa", ["Promesa", "promesa"], { a: "la Promesa" }),
+    MK("Ley Scout", ["Ley Scout"], { a: "la Ley Scout" }),
+    MK("patrulla", ["patrulla", "patrullas"], { a: "la patrulla" }),
+    MK("manada", ["manada", "manadas"], { a: "la manada" }),
+    MK("tropa", ["tropa", "tropas"], { a: "la tropa" }),
+    MK("rover", ["rover", "rovers"], { a: "los rovers" }),
+    MK("Centenario", ["Centenario", "centenario"], { a: "el Centenario" }),
+    MK("Guadalajara", ["Guadalajara"], { a: "Guadalajara" }),
+    MK("Puebla", ["Puebla"], { a: "Puebla" }),
+    MK("Monterrey", ["Monterrey"], { a: "Monterrey" }),
+  ],
+  "Identidad Gráfica y Recursos Visuales": [
+    MK("flor de lis", ["flor de lis"], { a: "la flor de lis" }),
+    MK("color", ["color", "colores"], { a: "el color", ctx: MCTX.color }),
+    MK("tipografía", ["tipografía", "tipografia"], { a: "la tipografía" }),
+    MK("logotipo", ["logotipo", "logotipos"], { a: "el logotipo" }),
+    MK("símbolo", ["símbolo", "simbolo", "símbolos"], { a: "el símbolo", ctx: MCTX.simbolo }),
+    MK("paleta", ["paleta"], { a: "la paleta" }),
+    MK("CMYK", ["CMYK"], { a: "el CMYK" }),
+    MK("RGB", ["RGB"], { a: "el RGB" }),
+    MK("HEX", ["HEX"], { a: "el HEX" }),
+    MK("Pantone", ["Pantone", "PANT"], { a: "el Pantone" }),
+  ],
+};
+
+const MENTION_CAP = {
+  "Manuales Oficiales y de Operación": 3,
+  "Colección Biblioteca del Centenario": 2,
+  "Identidad Gráfica y Recursos Visuales": 2,
+};
+
+for (const d of catalog) {
+  if (d.is_duplicate || !d.title) continue;
+  const terms = MENTION_KEYWORDS[d.category];
+  if (!terms) continue;
+  const pages = pagesWithNumbers(d);
+  if (!pages.length) continue;
+  const title = shortTitle(d.title);
+  const titleFold = norm(title);
+  let added = 0;
+  for (const kw of terms) {
+    if (added >= (MENTION_CAP[d.category] || 2)) break;
+    if (kw.v.some((v) => titleFold.includes(norm(v)))) continue;
+    let best = null;
+    for (const variant of kw.v) {
+      const re = termRegex(variant);
+      for (const pg of pages) {
+        let m;
+        const gr = new RegExp(re.source, "gi");
+        while ((m = gr.exec(pg.text))) {
+          const start = m.index + (m[1] ? m[1].length : 0);
+          const s = trimHeader(snippetAround(pg.text, start, m[2].length));
+          const score = scoreCandidate(s, variant, kw.ctx);
+          if (score > 0 && (!best || score > best.score)) best = { page: pg.page, s, score, variant };
+        }
+      }
+    }
+    if (!best) continue;
+    const a = kw.a || `«${kw.t}»`;
+    const isDefinition = kw.def && /\b(?:es|son|consiste|se refiere|se entiende|se define|significa)\b/i.test(best.s.slice(0, 260));
+    const plural = /^(?:los|las)\s/i.test(a);
+    const q = isDefinition
+      ? `¿Qué ${plural ? "son" : "es"} ${a} según «${title}»?`
+      : `¿Qué dice «${title}» sobre ${a}?`;
+    const ans = `**«${title}» — mención de «${kw.t}» (pág. ${best.page}):**\n\n> ${best.s}\n\n*Referencia: «${title}», pág. ${best.page}.*`;
+    if (add({ q, cat: d.category, doc_id: d.id, page: best.page, ans }, "menciones")) added++;
+  }
+}
+
 /* ------------------------------------------- 5. Documentos, Páginas, Imágenes + Extractos múltiples */
 const TIPO = {
   PDF: "documento PDF",
@@ -735,8 +1604,27 @@ const TIPO = {
 const IMG = new Set(["PNG", "JPG", "JPEG", "WEBP", "AVIF"]);
 
 function resumen(d) {
-  const s = clean(d.full_excerpt || d.summary || "").replace(/\.\.\.$/, "");
-  return cutSentence(s, 450);
+  const raw = clean(d.full_excerpt || d.summary || "").replace(/\.\.\.$/, "");
+  const subjectMatch = raw.match(/\b(?:Asunto|ASUNTO)\s*:?\s*([\s\S]{5,320}?)(?=\s+(?:Dirigido a|Dirigido especialmente|Convoca a|Atención a)\b|\.\s|$)/i);
+  const subject = subjectMatch ? clean(subjectMatch[1]) : "";
+  const aud = raw.match(/(?:Dirigido a|Dirigido especialmente a|Convoca a|Atención a)\s*:?\s*([\s\S]{2,300}?)(?=\s+(?:Estimad|Apreciad|Herman|Por medio|Me es grato|Hago de su|Les presentamos|Con motivo|¿)|\s*\.\s|$)/i);
+  let body = aud ? raw.slice(aud.index + aud[0].length) : raw;
+  if (!aud) {
+    body = body
+      .replace(/^[A-ZÁÉÍÓÚÑ0-9 ,.\-]{0,60}?(?:Ciudad de M[ée]xico|M[ée]xico)\s*,?\s*a?\s*\d{1,2}\s+de\s+[A-Za-zÁÉÍÓÚÑáéíóúñ]+\s+(?:de|del)\s+\d{4}\.?\s*/i, "")
+      .replace(/^ASMAC\s*\/?\s*[A-Z0-9\/._\- ]{2,60}\s*/i, "")
+      .replace(/^(?:Asunto|ASUNTO)\s*:?\s*/i, "");
+  }
+  body = body
+    .replace(/^[.\s]+/, "")
+    .replace(/^(?:\d{1,3}[.)-]\s*)?(?:Estimad[@oa]s?|Apreciad[@oa]s?|Herman[@oa]s?)[^:]{0,90}:\s*/i, "")
+    .replace(/^(?:Por medio de la presente|Me es grato|Hago de su conocimiento|Les presentamos|Con motivo|Con gran entusiasmo)[^.]{0,240}\.\s*/i, "")
+    .replace(/^(?:\d{1,3}[.)-]\s*)?¿[^?]{5,140}\?\s*:?\s*/, "")
+    .trim();
+  if (subject && norm(body).startsWith(norm(subject))) body = body.slice(subject.length).replace(/^[.\s]+/, "").trim();
+  if (subject && body.length >= 40) return cutSentence(`${subject}. ${body}`, 450);
+  if (subject) return cutSentence(subject, 450);
+  return cutSentence(body, 450);
 }
 function ubic(d) {
   return `En BiblioTech Scout abre **Biblioteca**, busca «${shortTitle(d.title)}» en el buscador de documentos o filtra por la categoría *${d.category}*, y pulsa **Leer** para verlo o **Descargar** para guardarlo.`;
@@ -778,6 +1666,15 @@ function extractCleanBodyPages(d) {
 
 function sliceSentenceAligned(body, startIdx, maxLen = 700) {
   let chunk = body.slice(startIdx);
+  if (startIdx === 0) {
+    const head = chunk.slice(0, 520);
+    const tocNums = (head.match(/\s\d{1,3}(?=\s+[A-ZÁÉÍÓÚÑ])/g) || []).length;
+    if (tocNums >= 4) {
+      const intro = chunk.search(/\b(?:INTRODUCCI[ÓO]N|PRESENTACI[ÓO]N|BIENVENIDA|OBJETIVO GENERAL|PROP[ÓO]SITO GENERAL)\b/i);
+      if (intro > 100 && intro < 760) chunk = chunk.slice(intro);
+      else return "";
+    }
+  }
   if (startIdx > 0) {
     const dot = chunk.search(/[.!?]\s+[A-ZÁÉÍÓÚÑ¿¡«"]/);
     if (dot >= 0 && dot < 360) chunk = chunk.slice(dot + 2);
@@ -829,46 +1726,12 @@ for (const d of catalog) {
   if (firstSlice && firstSlice.length >= 160 && norm(firstSlice.slice(0, 120)) !== norm(r.slice(0, 120))) {
     add({ ...baseDoc, q: `¿Qué puntos clave explica el contenido de «${t}»?`, ans: `**Extracto principal de «${t}»:**\n\n${firstSlice}\n\n${ubic(d)}` }, d.ext === "HTML" ? "paginas_detalle" : "documentos_detalle");
   }
-
-  if (body.length >= 2200) {
-    const midSlice = sliceSentenceAligned(body, Math.floor(body.length * 0.42), 720);
-    if (midSlice) {
-      add({ ...baseDoc, q: `¿Qué detalles o lineamientos adicionales incluye «${t}»?`, ans: `**Desarrollo en «${t}»:**\n\n${midSlice}\n\n*Fuente oficial: ${t}.*` }, d.ext === "HTML" ? "paginas_detalle" : "documentos_detalle");
-    }
-  }
-
-  if (body.length >= 6500) {
-    const lateSlice = sliceSentenceAligned(body, Math.floor(body.length * 0.72), 720);
-    if (lateSlice) {
-      add({ ...baseDoc, q: `¿Qué criterios o disposiciones complementarias aborda «${t}»?`, ans: `**Criterios complementarios en «${t}»:**\n\n${lateSlice}\n\n*Fuente oficial: ${t}.*` }, d.ext === "HTML" ? "paginas_detalle" : "documentos_detalle");
-    }
-  }
-
-  if (body.length >= 12000) {
-    const s20 = sliceSentenceAligned(body, Math.floor(body.length * 0.2), 720);
-    if (s20) {
-      add({ ...baseDoc, q: `¿Cómo se introducen y estructuran los temas iniciales de «${t}»?`, ans: `**Primera parte de «${t}»:**\n\n${s20}\n\n*Fuente oficial: ${t}.*` }, "documentos_detalle");
-    }
-  }
-
-  if (body.length >= 22000) {
-    const s58 = sliceSentenceAligned(body, Math.floor(body.length * 0.58), 720);
-    if (s58) {
-      add({ ...baseDoc, q: `¿Qué herramientas, procesos o ejemplos prácticos desarrolla «${t}»?`, ans: `**Desarrollo práctico en «${t}»:**\n\n${s58}\n\n*Fuente oficial: ${t}.*` }, "documentos_detalle");
-    }
-  }
-
-  if (body.length >= 36000) {
-    const s86 = sliceSentenceAligned(body, Math.floor(body.length * 0.86), 720);
-    if (s86) {
-      add({ ...baseDoc, q: `¿Qué acuerdos finales, evaluaciones o anexos incluye «${t}»?`, ans: `**Apartado final de «${t}»:**\n\n${s86}\n\n*Fuente oficial: ${t}.*` }, "documentos_detalle");
-    }
-  }
 }
 
 /* ------------------------------------------- 6. Preguntas planteadas en los documentos */
 const BAD_START = /^¿(?:tienes|quieres|puedes|has|eres|sabes|necesitas|olvidaste|esperas|prefieres|ya |est[aá]s|buscas|te |no |listo|qu[eé] esperas|c[oó]mo puedes)/i;
 const GOOD_START = /^¿(?:qu[eé]|cu[aá]l|cu[aá]les|c[oó]mo|qui[eé]n|qui[eé]nes|por qu[eé]|para qu[eé]|cu[aá]ndo|d[oó]nde|cu[aá]nt|en qu[eé]|de qu[eé]|a qui[eé]n|es |son |se |debe|deben|puede|pueden|tiene|tienen|hay )/i;
+const FORM_PROMPT = /\b(?:en qu[eé] forma|describe|explica|menciona|cu[aá]l es el nombre|c[oó]mo se llama|qu[eé] necesitas|qu[eé] esperas|tus |tu |contigo|quieres|puedes|has |eres |sabes )\b/i;
 const EXCLUDE_CAT = new Set(["Colección Biblioteca del Centenario", "Revistas Foro Joven y Boletines", "Historia, Libros y Revista Foro Joven"]);
 const inline = new Map();
 
@@ -884,7 +1747,7 @@ for (const d of catalog) {
   let m;
   while ((m = re.exec(text))) {
     const q = normalizeQuestionCase("¿" + clean(m[1]) + "?");
-    if (BAD_START.test(q) || !GOOD_START.test(q)) continue;
+    if (BAD_START.test(q) || !GOOD_START.test(q) || FORM_PROMPT.test(q)) continue;
     if (/\b(tu|tus|tienes|quieres|puedes|has|eres|sabes|necesitas|olvidaste|esperas|prefieres|ti|contigo)\b/i.test(q)) continue;
     const words = q.split(/\s+/);
     const hasProper = words.slice(1).some((w) => /^[A-ZÁÉÍÓÚÑ]/.test(w.replace(/^[¿«"“]+/, "")));
@@ -892,7 +1755,11 @@ for (const d of catalog) {
     const after = text.slice(m.index + m[0].length);
     const stop = after.search(/¿|⟦P/);
     let ans = clean(stop > 0 ? after.slice(0, Math.min(stop, 1300)) : after.slice(0, 1300));
+    ans = ans.replace(/^[:\-–—.;,\s]+/, "").trim();
     if (ans.length < 110) continue;
+    if (/^[a-záéíóúñ]/.test(ans)) continue;
+    if (/^(?:[a-z]\)|\d+[.)]|[a-z]\.)\s/i.test(ans)) continue;
+    if (/^(?:Nombre|Apellido|Domicilio|Tel[eé]fono|Correo|CURP|RFC|CUM|Firma)\b/.test(ans)) continue;
     if (/^[A-ZÁÉÍÓÚÑ\s,.:;¿?]{55,}/.test(ans.slice(0, 70))) continue;
     ans = cutSentence(ans, 780);
     if (ans.length < 100 || (ans.match(/\d/g) || []).length / ans.length > 0.18) continue;
