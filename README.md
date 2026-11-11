@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 03/11/2026 • **Versión del sitio web:** V4 Beta (05/11/2026)  
+**Base de datos:** 03/11/2026 • **Versión:** BETA V4.1 - 1.4 Mobile (10/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -85,7 +85,16 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 
 ---
 
-## 8. Novedades de la versión V4 Beta (05/11/2026)
+## 8. Novedades de la versión V4.1 - 1.4 Mobile (10/11/2026)
+
+- **Motor de respuestas directas y concretas:** en lugar de presentar únicamente citas o listas de documentos cuando el usuario consulta una duda puntual («¿Cómo puedo inscribirme?», «¿Qué pasa si un scout se lastima en un campamento?», «¿Qué se necesita para ser scout?», «¿Cuánto cuesta la membresía?»), el motor de búsqueda analiza la intención, compara con sinónimos temáticos y extrae respuestas estructuradas, accionables y directas con sus fuentes oficiales asociadas.
+- **Sección oficial de descarga de la App Android (`#app`):** se añade el apartado «Lleva BiblioTech Scout en tu bolsillo» con botón de descarga permanente al APK oficial más reciente (`https://github.com/ey-liam/bibliotech-scouts-app/releases/latest/download/bibliotech-scout.apk`), guía de instalación en 3 pasos e indicación clara de que el archivo está libre de virus.
+- **Aviso sobre Play Protect y mitigación de falsos positivos:** aclaración oficial sobre las advertencias heurísticas de Google Play Protect al instalar APKs fuera de Play Store. La versión 1.4 retira el permiso innecesario `REQUEST_INSTALL_PACKAGES` y el autoinstalador interno, dejando la descarga en manos del navegador y reduciendo la superficie de alertas.
+- **Detección nativa inteligente:** cuando la web se ejecuta dentro del APK de Android (modo nativo Capacitor), la sección de descarga `#app` y el enlace «App» del menú superior se ocultan automáticamente para no redundar con la app ya instalada.
+- **Menú y scroll-spy:** se añade el acceso directo «App» en la barra de navegación superior con seguimiento automático de posición en la página.
+- **Sincronización de versión unificada:** se establece la leyenda combinada `BETA V4.1 - 1.4 Mobile (10/11/2026)` tanto en la web como en la app móvil.
+
+### Versión V4 Beta (05/11/2026)
 
 - **Imagen principal única en el inicio:** en lugar del trío de tres fotos, la pantalla de inicio muestra una sola fotografía grande de «Comunidad de Caminantes» sin recuadro, fundida con el fondo del sitio. En PC se ancla a la esquina derecha y se difumina hacia el texto; en móvil aparece debajo del contenido con desvanecido por todos los lados. Incluye entrada desvanecida y una deriva lenta tipo Ken Burns, respeta `prefers-reduced-motion` y mantiene el clic hacia el buscador.
 
