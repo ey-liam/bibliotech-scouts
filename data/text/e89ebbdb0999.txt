@@ -1,0 +1,193 @@
+GUÍA OFICIAL HELP DESK ASMAC: Mi credencial: cómo descargar la digital y seguir la física
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=20
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Mi ficha y credencial
+Mi credencial: cómo descargar la digital y seguir la física
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Mi credencial: cómo descargar la digital y seguir la física
+Tienes dos credenciales: la digital, que ves y descargas en SISAS cuando quieras, y la física, que se imprime en la oficina nacional y viaja a tu provincia. Descargar la digital toma un minuto. La física no la pides tú: se genera sola cuando pagas tu inscripción o reinscripción, y en tu pantalla de inicio puedes ver en qué paso va.
+Antes de empezar
+Tu ficha de perfil completa y validada. Si al entrar al menú te sale "Completa/Actualiza los datos de tu Perfil." o "Tu información se está validando.", primero resuelve eso.
+Tu foto de perfil cargada. La credencial sale con la foto que tengas en tu ficha; si no hay, sale sin foto.
+Tu contacto de emergencia y tipo de sangre capturados en tu ficha. Van impresos en el reverso.
+Si eres papá o mamá: entra con la cuenta de tu hijo o hija. La credencial es de su cuenta.
+Pasos
+Ver y descargar la credencial digital
+Entra a
+SISAS y en el menú de la izquierda haz clic en el icono de credencial (la tarjeta con la silueta),
+Mi credencial
+. Se abre la pantalla
+Mi credencial
+.
+Revisa lo que aparece. Frente: tu nombre, CUM, grupo y localidad, provincia, sección, año en que te registraste, fecha hasta la que está vigente tu membresía, tu cargo (si tienes), tu foto, un código de barras con tu CUM y un código QR. Reverso: número de credencial, tipo de sangre, nombre y teléfono de tu contacto de emergencia.
+Haz clic en Descargar credencial
+. Se descarga un archivo PDF llamado
+Credencial.pdf
+. Es la misma credencial que ves en pantalla; guárdala en tu teléfono o imprímela.
+Si algo está mal en la credencial (nombre, foto, tipo de sangre, contacto de emergencia, grupo), no se corrige aquí: se corrige en tu ficha de perfil. La credencial digital se arma con los datos de tu ficha cada vez que la abres, así que en cuanto el cambio quede guardado (y validado, si SISAS lo manda a validar) la vuelves a descargar y ya sale bien.
+Seguir la credencial física
+Entra a
+SISAS. En tu pantalla de inicio busca el recuadro
+Seguimiento de Credencial
+.
+Lee los cuatro datos de izquierda a derecha. No traen etiqueta, solo un icono:
+Icono de impresora: si ya se imprimió (
+Si
+/
+No
+).
+Icono de calendario: fecha en que se imprimió.
+Icono de camión: fecha en que se envió a tu provincia.
+Icono de dos personas cargando: cargo de la persona que la recogió en tu provincia (por ejemplo, Presidente de Provincia o Jefe de Grupo).
+Donde dice
+N/A
+es que ese paso todavía no pasa. Si los cuatro dicen N/A o el primero dice
+No
+, tu credencial está en la fila de impresión.
+3. Cuando el último dato ya muestre un cargo, la credencial está en tu provincia. Pídesela a tu Jefe de Grupo; él la recibe de la provincia.
+Pedir una reposición (perdida, dañada o con datos viejos)
+En
+Mi credencial
+haz clic en
+Reposición de credencial
+. Te lleva directo a la pantalla de pago con el concepto ya elegido.
+También puedes llegar por el menú
+Mis pagos
+→
+Pagar
+→ en
+Tipo de Pago
+elige
+Reposición
+, en
+Concepto
+elige la reposición de credencial →
+Continuar
+→ en el aviso "Para continuar con el proceso elije el método de pago" haz clic en
+Ir al pago
+.
+Revisa el
+Detalle
+: concepto y
+Total a pagar
+. El costo lo fija el catálogo de cuotas del año.
+Haz clic en Pagar
+y completa el pago con tarjeta en la ventana de Conekta.
+Al terminar verás "¡Tu pago ha sido transmitido exitosamente!" con
+Aceptar
+. Te regresa a
+Mi credencial
+(o a
+Mis pagos
+, según de dónde entraste).
+Qué pasa después
+Credencial nueva.
+No la pides. Cuando se acredita tu pago de inscripción, reinscripción o reinscripción vencida (también si fue de $0 por beca), SISAS crea tu credencial en ese momento: le asigna número, la deja lista para imprimir y registra un pago de $0 en
+Mis pagos
+con el concepto de credencial. Desde ese instante la digital ya se puede descargar. Si cambias de grupo o de sección, la digital se actualiza sola; la física no, es la que se imprimió en su momento.
+Impresión y envío.
+La oficina nacional saca de SISAS la lista de credenciales pendientes, las imprime en lotes y marca en el sistema la fecha de impresión y el folio físico. Después se envían a la provincia y alguien con cargo las recibe. Esos tres movimientos son los que ves en
+Seguimiento de Credencial
+. SISAS no te avisa por correo ni por notificación en cada paso; hay que entrar al inicio y revisar. Cuánto tarda cada paso no lo controla el sistema.
+Reposición.
+Cuando se acredita el pago te llega el correo de pago acreditado y SISAS crea una credencial nueva con otro número, lista para imprimir. Entra al mismo ciclo que una credencial normal: impresión en nacional, envío a tu provincia. La anterior deja de ser la vigente.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+"Completa/Actualiza los datos de tu Perfil." al hacer clic en
+Mi credencial
+Tu ficha no está completa o validada.
+Entra a tu perfil, completa lo que falte y espera la validación.
+"Tu información se está validando."
+Cambiaste datos de tu perfil y todavía no te los validan.
+Espera la validación. Mientras tanto la credencial no se puede abrir.
+"Tu perfil no está validado." al abrir la pantalla
+Entraste por liga directa con el perfil sin validar.
+Igual que arriba: te regresa al inicio hasta que validen tu perfil.
+La credencial sale sin foto, sin tipo de sangre o sin contacto de emergencia
+Ese dato no está en tu ficha.
+Captúralo en tu perfil (foto de perfil, datos de salud, segundo contacto) y vuelve a descargar.
+La credencial trae el grupo o la sección anterior
+La digital se arma con tu ficha; si sigue saliendo lo viejo, el cambio todavía no se aplica en tu ficha.
+Revisa tu perfil. Si ahí ya está bien y la credencial no, escribe al helpdesk con tu CUM.
+La fecha de vigencia en la credencial ya pasó
+Tu membresía está vencida. La credencial sigue mostrándose, pero con esa fecha.
+Haz tu reinscripción. Al acreditarse se crea una credencial nueva.
+Seguimiento de Credencial
+lleva meses en N/A
+Tu credencial no ha entrado a un lote de impresión.
+Pregunta a tu Jefe de Grupo o Presidente de Provincia si hay lote programado. Si tu pago se acreditó hace más de y sigue en N/A, escribe al helpdesk con tu CUM y la fecha de pago.
+Dice
+Si
+con fecha de impresión pero el envío sigue en N/A
+Se imprimió y está en nacional, todavía no sale a provincia.
+Espera el envío. Si pasan semanas, pregunta por tu Presidente de Provincia.
+Ya muestra un cargo en el último dato pero nadie me la entrega
+La credencial llegó a tu provincia y la recogió la persona con ese cargo.
+Pídela a tu Jefe de Grupo; él la pide a la provincia.
+Pagué la reposición y en
+Seguimiento de Credencial
+no cambia nada
+Si el pago ya está acreditado en
+Mis pagos
+, la credencial nueva existe pero aún no entra a impresión. Si el pago sigue pendiente, no se ha creado.
+Revisa el estatus del pago en
+Mis pagos
+. Si está acreditado y pasan semanas en N/A, escribe al helpdesk con tu CUM y el folio del pago.
+"No hay una cuota establecida, validalo con el administrador del sistema.." al entrar a la pantalla de pago
+El catálogo no tiene monto de reposición para este año o tu provincia.
+Escribe al helpdesk con tu CUM y provincia; no es algo que puedas resolver tú.
+Cuando escribas al helpdesk incluye: tu CUM, qué credencial es (nueva o reposición), la fecha en que se acreditó el pago y qué dice hoy
+Seguimiento de Credencial
+.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Tengo que pagar mi credencial?
+La primera de cada periodo no: va incluida en tu inscripción o reinscripción y aparece en
+Mis pagos
+como un pago de $0. Solo pagas si pides una reposición.
+¿La digital sirve igual que la física?
+La digital trae los mismos datos, el código de barras con tu CUM y el QR. Si un evento o una instancia acepta solo la física es decisión de ellos.
+¿Qué abre el código QR?
+Tu ficha de salud en SISAS (tipo de sangre, alergias, contacto de emergencia), para que en una emergencia la vea quien escanee el código.
+Cambié de grupo. ¿Me dan credencial nueva?
+No automáticamente. La digital ya sale con el grupo nuevo. Si quieres la física con el grupo nuevo, es una reposición con costo.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+20
+Categoría:
+Mi ficha y credencial
+Fecha de alta:
+2026-10-11 12:55:21
+Vistas:
+10
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo completar o corregir mis datos (mi ficha al 100 %)
+Jefe de Grupo: consultar a mis miembros y descargar reportes
+Mis pagos: ver lo que he pagado, comprobantes y facturas
+Cómo entrar a SISAS (y qué ves al entrar)
+Cómo reinscribirme (renovar mi membresía)
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

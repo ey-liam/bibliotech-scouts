@@ -1,0 +1,431 @@
+GUÍA OFICIAL HELP DESK ASMAC: Jefe de Grupo: consultar a mis miembros y descargar reportes
+Categoría: Guía para Jefes de Grupo y Scouters (SISAS)
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=27
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Para Jefes de Grupo
+Jefe de Grupo: consultar a mis miembros y descargar reportes
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Jefe de Grupo: consultar a mis miembros y descargar reportes
+Esta guía es para Jefes de Grupo y cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia).
+Con esto ves la lista de los miembros de tu grupo, abres su ficha, y bajas a Excel los reportes de tu grupo (vigencias, inactivos, becas, reconocimientos, pagos). Una consulta toma menos de un minuto.
+Antes de empezar
+Tener un cargo vigente de Jefe de Grupo (o equivalente) registrado en tu currículum. SISAS toma tus permisos del cargo cuya fecha de inicio y fin cubren el día de hoy. Si tu cargo venció, no verás el módulo.
+Tu ficha completa y sin cambios en validación. Si al entrar te sale "Completa/Actualiza los datos de tu Perfil." o "Tu información se está validando.", primero resuelve eso (ver guías
+Completar mis datos
+y
+Validación del perfil
+).
+Entrar en la vista de
+Administrador
+. Con tu cuenta normal, en el menú de arriba a la derecha
+Hola, [tu nombre]
+hay una opción que dice
+Administrador
+; haz clic ahí. SISAS te lleva al tablero de administrador (MEMBRESIA VIGENTE, VENCIMIENTOS EN EL MES, DESERCION DURANTE EL AÑO, IDO'S/IT'S OBTENIDAS, RECONOCIMIENTOS ENTREGADOS) y el menú de la izquierda cambia a los módulos de jefe. Para regresar a tu vista de miembro, en el mismo menú la opción ahora dice
+Mi Perfil
+.
+Los datos de tus miembros son datos personales, varios de menores de edad. Úsalos solo para el trabajo del grupo y no compartas las exportaciones fuera de él.
+Pasos
+Consultar a mis miembros
+En la vista de
+Administrador
+, en el menú de la izquierda haz clic en el icono de personas,
+Consulta de miembros
+. Se abre la pantalla
+Consulta de miembros
+con la tabla vacía.
+Haz clic en Filtros
+. Se abre el panel
+Filtros de Búsqueda
+. Como Jefe de Grupo no ves provincia ni localidad: SISAS ya sabe tu grupo y solo trae a los miembros de ese grupo. El campo
+Grupo
+muestra únicamente el número de tu grupo.
+Deja los filtros como están y
+haz clic en Buscar
+para ver a todo el grupo, o acota con:
+ID
+,
+CUM
+o
+Nombre
+(busca por coincidencia parcial).
+Sección
+y
+Cargos
+(puedes elegir varios).
+Estatus
+:
+Vigentes
+(viene así por defecto),
+No Vigentes
+o
+Todos
+. Fíjate en esto: por defecto solo ves a los vigentes.
+Ocultar Inactivos
+: viene marcado. Desmárcalo para ver también a los miembros que fueron eliminados de la consulta.
+Revisa la tabla. Arriba a la derecha dice "Se encontrarón N registros.
+Informamos que en este total, no se incluye el miembro que realiza la consulta": tú no apareces en tu propia lista. Las columnas son
+Id
+,
+CUM
+,
+Nombre
+,
+Provincia
+,
+Localidad
+,
+Grupo
+,
+Sección
+,
+No. de sección
+,
+Cargos
+,
+Estatus
+,
+Vigencia
+y
+Acciones
+. Puedes filtrar cualquier columna escribiendo en la casilla morada debajo del encabezado, y cambiar cuántos registros ves por página con
+Mostrar _ registros** (100, 500, 1000 o Todos).
+Qué significa cada columna de estado:
+Columna
+Lo que ves
+Qué es
+Estatus
+Palomita verde
+Cuenta activa.
+Estatus
+Tache rojo (al pasar el mouse dice "Usuario bloqueado")
+El miembro está suspendido, dado de baja o bloqueado del sistema. No puedes abrir su ficha.
+Vigencia
+Fecha
+Hasta cuándo está pagado su registro. Si la fecha ya pasó, el miembro aparece solo cuando pones
+Estatus
+en
+No Vigentes
+o
+Todos
+.
+Acciones por fila (columna
+Acciones
+):
+Icono
+Qué hace
+Cuándo aparece
+Lápiz
+Abre la ficha del miembro para editarla.
+Miembro activo y tú con permiso de modificar.
+Ojo
+Abre la ficha del miembro solo para verla.
+Miembro activo. Las pestañas que ves (datos personales, contacto, currículum, ficha de salud, seguridad) dependen de tus permisos.
+Campana con número
+Notificaciones pendientes que tienes sobre ese miembro (por ejemplo, validaciones). Haz clic para verlas y atenderlas.
+Solo si hay pendientes.
+Bote de basura
+Elimina al miembro: desaparece de tu lista y
+ya no puede entrar a SISAS
+(al intentarlo le sale "Por favor contacta al administrador del sistema (eliminado)."). No borra su historial. Pregunta "¿Estas seguro de eliminar el usuario?" y confirmas con
+Si, eliminar
+.
+Solo en miembros
+no vigentes
+y si tienes el permiso.
+Icono de reciclaje
+Reactiva a un miembro eliminado: vuelve a tu lista y vuelve a poder entrar. Pregunta "¿Estas seguro de activar el usuario?" y confirmas con
+Si, activar
+.
+Solo con
+Ocultar Inactivos
+desmarcado, sobre miembros eliminados, y si tienes el permiso.
+Si el miembro está suspendido o dado de baja, el lápiz y el ojo te sacan el aviso "Los datos de este miembro no pueden ser mostrados.".
+Después de buscar, aparece también la lista
+Acciones
+(arriba de la tabla) para aplicar algo a varios miembros a la vez: marcas las casillas de la primera columna (o
+Seleccionar Todos
+) y eliges la acción. Las opciones son ir a pagos por varios miembros (
+Ir a Pagos
+), bloquear o desbloquear de un evento (
+Bloqueo
+/
+Desbloqueo
+eligiendo el
+Evento
+), imprimir credenciales (
+Imprimir
+) y bloquear o desbloquear del sistema.
+Esta pantalla no tiene botón para exportar. Para bajar la lista de tu grupo a Excel usa el reporte
+Miembros y vigencias
+o el
+Reporteador
+(abajo).
+Descargar un reporte
+En el menú de la izquierda haz clic en el icono de gráfica,
+Reportes
+. Se despliega el submenú con los reportes a los que tienes acceso.
+Haz clic en el reporte. Todos funcionan igual:
+Filtros
+→ eliges →
+Buscar
+→ aparece la tabla →
+Exportar
+.
+Haz clic en Filtros
+. Como Jefe de Grupo, provincia y localidad no aparecen y
+Grupo
+solo trae tu número de grupo. Si el reporte pide fechas (campos con DD/MM/YYYY), ponlas: sin rango de fechas algunos reportes salen vacíos.
+Haz clic en Buscar
+. Si no hay datos sale el aviso "No se localizaron datos" (o "Se econtrarón 0 registros.").
+Limpiar filtros
+regresa todo a su valor inicial.
+Haz clic en Exportar
+(botón verde con icono de Excel). Se descarga un archivo.xlsx con el nombre del reporte. Hasta que no hayas buscado, el botón
+Exportar
+no aparece.
+Reportes que ve un Jefe de Grupo (verificado en producción el 11-oct-2026):
+Historicos
+,
+Miembros con beca
+,
+Miembros y vigencias
+,
+Mínimos
+,
+Reconocimientos
+,
+Reporteador
+,
+Totales por provincia
+y
+Usuarios activos e inactivos
+. Los demás de la tabla son de provincia o nacional y no te aparecen:
+Reporte (nombre en el menú)
+Qué trae
+Filtros clave
+Descarga
+Miembros y vigencias
+Lista completa de tus miembros con CUM, correo, fecha de nacimiento, mayoría de edad, estatus, perfil validado y fecha de vencimiento. Es el que usas para saber a quién se le vence el registro.
+Sección, Cargo, Edad, Estatus, Fecha de vencimiento (desde/hasta), Miembro desde
+Excel
+Usuarios activos e inactivos
+Miembros con su estatus de registro y de perfil, calidad y fecha de vigencia.
+Sección, Cargo, Calidad, Vigencia, Estatus
+Excel
+Miembros inactivos
+Miembros dados de baja o inactivados, con fecha de inactivación y motivo o sanción.
+Sección, Cargo, Vigencia, Fecha de Inactivación, Sanción
+Excel
+Reporteador
+Tú eliges las columnas (CURP, domicilio, teléfono, correo, contacto de emergencia, escolaridad, etc.) con las casillas de
+Seleccionar todas
+. Es el reporte más completo y el más sensible.
+Sección, Cargo, Religión, Estatus Vigencia, Género, Fotografía, Calidad
+Excel
+Miembros con beca
+Quién tiene beca, de qué tipo, si ya la usó y el porcentaje o monto asignado.
+Sección, Cargo, Tipo de Beca, Utilizada, Vigencia de beca
+Excel
+Reconocimientos
+Reconocimientos solicitados por miembro: folio, tipo, fecha de solicitud y estatus.
+Nombre del Reconocimiento, CUM o Id, Fecha de Solicitud, Estatus
+Excel
+Reconocimientos Gral.
+Conteo de reconocimientos por grupo y sección: solicitados, validados, generados, entregados, rechazados.
+Nombre del Reconocimiento, Fecha de Solicitud
+Excel
+Asistentes a eventos
+Quiénes de tu grupo están inscritos a un evento, su estatus de pago, si asistió y si recibió kit.
+Evento, Sección, Estatus del pago, Asistió
+Excel
+Eventos
+Pagos de eventos por miembro: concepto, fecha, monto, cupones y becas.
+Sección, Rango de fechas de depósitos
+Excel
+Evento Nal/Inter
+Inscritos de tu grupo a eventos nacionales o internacionales con paquete, tallas y folio. Solo aparece si tu rol lo tiene activo.
+Nacional o Inter., Evento, Sección
+Excel
+Pagos
+Pagos de registro y reposición de credencial de tu grupo, por método de pago y rango de fechas.
+Método Pago, fechas desde/hasta
+Excel
+Mínimos
+Cuántos miembros tiene tu grupo por sección y si cumple los mínimos (calidad de grupo).
+Grupo
+Excel (
+Exportar
+o
+Exportar Directo
+)
+Credenciales para impresión
+Listado para la impresión de credenciales. Es un proceso de la Oficina Nacional (
+Importar
+,
+Siguiente
+); normalmente no lo usa un grupo.
+Año, Estatus de Impresión, Concepto
+Excel
+Cuota por Provincia
+,
+Ingresos por Provincia
+,
+Totales por provincia
+Totales de ingresos y membresía por provincia. Son reportes de provincia o nacionales; un Jefe de Grupo normalmente no los tiene.
+Provincia, Método Pago
+Excel
+Historicos
+Archivos de reportes que la Oficina Nacional guardó en fechas anteriores. Eliges el reporte y el
+Periodo
+,
+Buscar
+, y bajas el archivo con el icono de nube.
+Elige un reporte, Periodo
+Archivo guardado (Excel)
+Ningún reporte sale en PDF: todas las descargas son Excel (.xlsx).
+Qué pasa después
+Consultar o exportar no cambia nada en SISAS ni le avisa a nadie. Lo que sí queda registrado en bitácora, con tu usuario, son las acciones sobre miembros: eliminar o reactivar en la consulta ("Usuario borrado desde consulta de miembros" / "Usuario activado desde consulta de miembros"), y bloquear o desbloquear de un evento o del sistema.
+Eliminar a un miembro no borra su cuenta ni su historial, pero sí tiene efecto inmediato: sale de tu lista y de los reportes que ocultan inactivos, y cuando intente entrar a SISAS verá "Por favor contacta al administrador del sistema (eliminado).". Es reversible: desmarca
+Ocultar Inactivos
+, búscalo y usa el icono de reciclaje.
+Bloquear del sistema (desde
+Acciones
+) hace algo parecido: el miembro no puede entrar y le sale "Para poder acceder al sistema contacta a tu scouter o al administrador del sistema." hasta que alguien lo desbloquee. Úsalo solo cuando corresponda.
+El archivo de Excel se genera en tu navegador y se guarda en tu carpeta de descargas con el nombre del reporte (por ejemplo "Reporte miembros y vigencias.xlsx").
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+No aparece
+Administrador
+en el menú
+Hola, [nombre]
+Tu cuenta no tiene ningún rol de jefe. O tu cargo no está registrado, o ya venció.
+Revisa en
+Mi currículum
+que tu cargo de Jefe de Grupo tenga fechas vigentes. Si no está, pídele a tu Presidente de Provincia que lo registre. Si está y sigue sin salir, cierra sesión y vuelve a entrar (los permisos se guardan en el navegador).
+No veo
+Consulta de miembros
+o
+Reportes
+en el menú, o faltan reportes
+Tu cargo tiene rol, pero ese rol no tiene activo ese módulo o ese reporte. Los permisos se asignan por cargo, no por persona.
+Escribe al helpdesk con tu CUM y tu cargo, y di qué módulo o reporte te falta.
+"Alguno de tus cargos no cuenta con la asignación del nivel en el catalogo de roles, contacta por favor con Soporte en la OSN"
+Tu rol existe pero no tiene definido si es de grupo, provincia o nacional. No es algo que puedas arreglar tú.
+Escribe al helpdesk con tu CUM y tu cargo; el mensaje tal cual.
+No encuentro a un miembro que sí es de mi grupo
+Lo más común: su registro venció y el filtro
+Estatus
+está en
+Vigentes
+; o fue eliminado de la consulta y
+Ocultar Inactivos
+está marcado; o ya se cambió de grupo.
+Pon
+Estatus
+en
+Todos
+y desmarca
+Ocultar Inactivos
+. Si sigue sin salir, revisa el reporte
+Miembros inactivos
+. Si tampoco, pregúntale al miembro si pidió cambio de grupo; si está en otro grupo, ya no lo ves.
+Un miembro sale con tache rojo y no puedo abrir su ficha ("Los datos de este miembro no pueden ser mostrados.")
+Está suspendido, dado de baja o bloqueado del sistema.
+Si es un bloqueo del sistema que hizo alguien del grupo, se quita con
+Acciones
+→ bloqueo del sistema →
+Desbloqueo
+. Si es suspensión o baja, escribe al helpdesk con el CUM del miembro.
+Un miembro me dice que al entrar le sale "Por favor contacta al administrador del sistema (eliminado)."
+Alguien lo eliminó desde
+Consulta de miembros
+(o desde otro módulo).
+Desmarca
+Ocultar Inactivos
+, búscalo y reactívalo con el icono de reciclaje. Si no tienes el icono, escribe al helpdesk con su CUM.
+El reporte sale vacío ("No se localizaron datos")
+Casi siempre es el rango de fechas, o un filtro que se quedó de una búsqueda anterior.
+Limpiar filtros
+, pon un rango de fechas amplio y vuelve a
+Buscar
+.
+No aparece el botón
+Exportar
+Todavía no has buscado, o la búsqueda no trajo datos.
+Primero
+Buscar
+; cuando haya tabla, aparece
+Exportar
+.
+Hago clic en
+Exportar
+y no baja nada, o sale "Sin datos para exportar."
+El navegador bloqueó la descarga, o la tabla está vacía.
+Revisa el icono de descargas del navegador y permite las descargas de sisas.scouts.org.mx (en Chrome: candado junto a la dirección → Permisos → Descargas automáticas). Si usas el navegador del celular, prueba en una computadora.
+"Debes seleccionar al menos un registro."
+Elegiste una acción en
+Acciones
+sin marcar a nadie.
+Marca las casillas de la primera columna y vuelve a intentar.
+"No se puede imprimir la credencial para miembros vencidos."
+Marcaste a alguien con registro vencido para imprimir credencial.
+Quita de la selección a los vencidos. La credencial requiere registro vigente.
+"Ocurrio un problema al actualizar los registros, contacte al administrador del sistema."
+Falló el bloqueo/desbloqueo o la eliminación en el servidor.
+Vuelve a intentar. Si se repite, escribe al helpdesk con tu CUM, el CUM del miembro y qué acción hacías.
+Cuando escribas al helpdesk incluye: tu CUM, tu cargo, el módulo o reporte, los filtros que usaste y el mensaje exacto.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Por qué no me veo a mí mismo en la consulta?
+SISAS te excluye a propósito; la pantalla lo dice en el conteo. Tu propia ficha la editas desde
+Mi Perfil
+.
+¿Puedo ver miembros de otro grupo?
+No. Como Jefe de Grupo solo ves tu grupo. Si también tienes un cargo de provincia, SISAS te da el alcance de provincia y entonces sí eliges localidad y grupo.
+¿Puedo editar la ficha de un miembro?
+Depende del permiso de tu rol. Si el lápiz aparece, sí. Ten en cuenta que los cambios a datos de un miembro pasan por validación igual que cuando los hace él (ver guía
+Validación del perfil
+).
+¿Puedo bajar la lista de mi grupo con correos y teléfonos?
+Sí, con el
+Reporteador
+, marcando esas columnas. Es información personal: guárdala en un lugar seguro y no la mandes por grupos de WhatsApp ni la compartas fuera del grupo.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+27
+Categoría:
+Para Jefes de Grupo
+Fecha de alta:
+2026-10-11 14:12:48
+Vistas:
+8valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes
+Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)
+Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis pagos: ver lo que he pagado, comprobantes y facturas — BiblioTech Scout</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --ink: #0f172a;
+      --muted: #475569;
+      --accent: #6d28d9;
+      --accent-soft: #ede9fe;
+      --border: #dbeafe;
+      --warn-bg: #fff7ed;
+      --warn-border: #fdba74;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #080414;
+        --card: #120b26;
+        --ink: #f8fafc;
+        --muted: #cbd5e1;
+        --accent: #a855f7;
+        --accent-soft: rgba(168, 85, 247, 0.18);
+        --border: rgba(139, 92, 246, 0.35);
+        --warn-bg: rgba(245, 158, 11, 0.12);
+        --warn-border: rgba(251, 191, 36, 0.45);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px 48px;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 26px;
+      margin-bottom: 18px;
+    }
+    .crumbs {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 1.55rem;
+      line-height: 1.28;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .pill {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .src {
+      margin: 10px 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      word-break: break-all;
+    }
+    .card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 26px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+      color: var(--accent);
+    }
+    h3 {
+      margin: 16px 0 6px;
+      font-size: 1rem;
+    }
+    p, li {
+      font-size: 0.96rem;
+    }
+    ul, ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--accent-soft);
+      font-weight: 800;
+    }
+    .note {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+    figure {
+      margin: 16px 0;
+      padding: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: center;
+    }
+    figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    figcaption {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    code {
+      background: var(--accent-soft);
+      padding: 1px 5px;
+      border-radius: 5px;
+      font-size: 0.88em;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero-card">
+      <div class="crumbs">Guías SISAS, CONECTA y Soporte Digital • Pagos, Reinscripción, Becas y Eventos</div>
+      <h1>Mis pagos: ver lo que he pagado, comprobantes y facturas</h1>
+      <div class="meta">
+        <span class="pill">Guía Oficial Help Desk ASMAC</span>
+        <span>Corte documental: 11 de noviembre de 2026</span>
+      </div>
+      <p class="src">Fuente oficial de referencia: <code>https://helpdesk.scouts.org.mx/knowledgebase.php?article=21</code></p>
+    </header>
+    <section class="card">
+<p>Help Desk de la Asociacion de Scouts de Mexico</p>
+<p>Español</p>
+<p>English</p>
+<p>Español</p>
+<p>Español</p>
+<p>English</p>
+<p>Help Desk de la Asociacion de Scouts de Mexico</p>
+<p>Base de Conocimientos (KB)</p>
+<p>Eventos y pagos</p>
+<p>Mis pagos: ver lo que he pagado, comprobantes y facturas</p>
+<p>Buscar</p>
+<p>artículos sugeridos de la base de conocimiento (KB):</p>
+<p>Mis pagos: ver lo que he pagado, comprobantes y facturas</p>
+<p>En</p>
+<p>Mis pagos</p>
+<p>ves todos los pagos que has hecho tú desde tu cuenta (cuotas, eventos, credenciales, donativos), pides factura de los recientes y revisas tus cupones. Es solo consulta: lo que aparece ahí no sirve como comprobante. Tu comprobante es el correo que te manda SISAS cuando el pago se acredita.</p>
+<p>Antes de empezar</p>
+<p>Solo necesitas tu cuenta de SISAS. No hay requisito de ficha completa ni de vigencia para ver esta pantalla.</p>
+<p>Si entras con la cuenta de un menor, ves los pagos hechos desde esa cuenta.</p>
+<p>La lista muestra los pagos que</p>
+<p>tú</p>
+<p>generaste desde tu cuenta. Si tu Jefe de Grupo pagó por ti con una ficha múltiple, ese pago sale en la lista de él, no en la tuya.</p>
+<p>Pasos</p>
+<p>Entra a</p>
+<p>SISAS y en el menú de la izquierda haz clic en el icono de la moneda,</p>
+<p>Mis pagos</p>
+<p>.</p>
+<p>Abre en la pestaña</p>
+<p>Pagos</p>
+<p>. Cada renglón es un pago. Arriba de cada columna hay una casilla para filtrar (por concepto, fecha, etc.) y abajo puedes cambiar cuántos renglones ves con</p>
+<p>Mostrar _ Registros</p>
+<p>. Los más recientes van primero.</p>
+<p>Si quieres ver tus cupones, haz clic en la pestaña</p>
+<p>Cupones</p>
+<p>.</p>
+<p>Si quieres hacer un pago nuevo, haz clic en el botón verde</p>
+<p>Pagar</p>
+<p>(arriba a la derecha). Te lleva a la pantalla</p>
+<p>Pago</p>
+<p>. Para cuotas sigue la guía</p>
+<p>Cómo reinscribirme</p>
+<p>; para eventos,</p>
+<p>Cómo pagar un evento</p>
+<p>.</p>
+<p>Para regresar al inicio,</p>
+<p>Salir</p>
+<p>(abajo).</p>
+<p>Qué significa cada columna</p>
+<p>Columna</p>
+<p>Qué es</p>
+<div class="note">Tipo De Pago</div>
+<p>Unitario</p>
+<p>si pagaste solo por ti;</p>
+<p>Multiple</p>
+<p>si en ese mismo pago entraron varias personas (ficha múltiple).</p>
+<p>Clasificacion</p>
+<p>De qué familia es el pago: Registro, Reposición, Donativos, Servicios Cuautli, Servicios Meztitla, Cursos. Si fue un evento, dice</p>
+<p>Evento</p>
+<p>seguido del nombre del evento.</p>
+<p>Concepto</p>
+<p>El concepto exacto que pagaste (por ejemplo Reinscripción, Reinscripción Vencido, credencial, el paquete del evento).</p>
+<p>Fecha</p>
+<p>Fecha en que el pago quedó acreditado. Si dice</p>
+<p>Pendiente</p>
+<p>, SISAS ya registró el pago pero todavía no le llega la confirmación del dinero.</p>
+<p>Importe Esperado</p>
+<p>Lo que costaba antes de descuentos (subtotal).</p>
+<p>Descuento Por Beca</p>
+<p>Lo que te descontó tu beca, si tenías una asignada.</p>
+<p>Descuento Por Cupón</p>
+<p>Lo que cubriste con un cupón.</p>
+<p>Meses</p>
+<p>y</p>
+<p>MontoPF</p>
+<p>Si pagaste a meses (Plazos Fijos): cuántos meses y cuánto se sumó de comisión. En pago de contado quedan en 0.</p>
+<p>Total Abonado</p>
+<p>Lo que realmente pagaste.</p>
+<p>Saldo a Favor</p>
+<p>Dinero que pagaste de más en una transferencia o depósito con referencia y que SISAS tiene detectado a tu favor. Casi siempre es $0.00. Ver &quot;Cupones y saldo a favor&quot;.</p>
+<p>Medio de Pago</p>
+<p>Por dónde pagaste (Conekta con tarjeta, efectivo, etc.).</p>
+<p>Factura</p>
+<p>Botón</p>
+<p>Factura</p>
+<p>si todavía puedes pedirla; iconos PDF y XML si ya la generaste; icono de prohibido si ya se pasó el plazo; icono de información si ese pago ya entró en una factura global de la Asociación.</p>
+<p>Cupón</p>
+<p>Botón</p>
+<p>Generar cupón</p>
+<p>solo cuando tienes saldo a favor sin usar en ese pago.</p>
+<p>Si pagaste un evento en dólares, los importes aparecen ya convertidos a pesos con el tipo de cambio del día del pago.</p>
+<p>Al pie de la tabla hay una fila</p>
+<p>Total</p>
+<p>que suma todos los renglones que tienes a la vista.</p>
+<p>Tu comprobante de pago</p>
+<p>El estado de cuenta de</p>
+<p>Mis pagos</p>
+<p>no es un comprobante. Lo que vale es el correo con asunto</p>
+<p>&quot;Se acreditó tu pago.&quot;</p>
+<p>que SISAS manda cuando Conekta le confirma el cobro. Llegan hasta dos:</p>
+<p>Recibo Electrónico de transacciones bancarias (ORIGINAL)</p>
+<p>. Trae fecha y hora de pago, folio, concepto, tu nombre y CUM, importe, medio de pago (</p>
+<p>Conekta Checkout</p>
+<p>) y en</p>
+<p>Autorización</p>
+<p>el número de orden de Conekta (empieza con</p>
+<p>ord_</p>
+<p>). Se manda al correo que escribiste en la ventana</p>
+<p>Ingresa tus datos de contacto</p>
+<p>antes de pagar. Este es el que debes guardar.</p>
+<p>Si el pago fue de inscripción o reinscripción, además llega un correo corto con solo el concepto (&quot;Tu pago fue acreditado.&quot;) al correo de tu cuenta de SISAS.</p>
+<p>Si pagaste en efectivo en OXXO, Conekta te manda primero el correo con la referencia para ir a pagar; el de SISAS llega cuando OXXO reporta el pago.</p>
+<p>Si no encuentras el correo, revisa la bandeja de spam y el correo que pusiste en la ventana de contacto (puede ser distinto al de tu cuenta). Si de plano no está, escribe al helpdesk con tu CUM y el concepto y fecha del pago; en SISAS queda registrado el folio y la orden de Conekta.</p>
+<p>Cómo pedir factura</p>
+<p>Puedes pedir factura de un pago desde</p>
+<p>Mis pagos</p>
+<p>siempre que:</p>
+<p>- el pago tenga importe mayor a $0.00,</p>
+<p>- hayan pasado</p>
+<p>30 días o menos</p>
+<p>desde la fecha de pago, y</p>
+<p>- el pago sea de este mismo año calendario.</p>
+<p>Si ya se pasó el plazo, en la columna</p>
+<p>Factura</p>
+<p>sale un icono de prohibido con el aviso &quot;El periodo de facturación ha finalizado.&quot; y ya no se puede por SISAS.</p>
+<p>En el renglón del pago, haz clic en</p>
+<p>Factura</p>
+<p>.</p>
+<p>Se abre</p>
+<p>Factura / Datos del Pago</p>
+<p>con el concepto, la fecha y el monto (no se pueden cambiar). Abajo, en</p>
+<p>Factura / Datos del Receptor</p>
+<p>, llena</p>
+<p>RFC</p>
+<p>,</p>
+<p>Nombre Completo o Razón Social</p>
+<p>,</p>
+<p>Regimen Fiscal</p>
+<p>,</p>
+<p>E-mail</p>
+<p>,</p>
+<p>Uso del CFDI</p>
+<p>y</p>
+<p>Forma de Pago</p>
+<p>. Si ya facturaste antes, el RFC y la razón social vienen precargados.</p>
+<p>En</p>
+<p>Dirección del Receptor</p>
+<p>escribe el</p>
+<p>CODIGO POSTAL</p>
+<p>; el estado, municipio y colonia se llenan solos (elige la colonia; si no está, usa</p>
+<p>OTRA COLONIA NO LISTADA</p>
+<p>). Calle y número son opcionales.</p>
+<p>Haz clic en</p>
+<p>Siguiente</p>
+<p>. Pregunta &quot;Confirmo que los datos proporcionados para la generación de la factura son correctos&quot;; dale</p>
+<p>Si</p>
+<p>.</p>
+<p>Sale &quot;La factura Fue creada con exito!!&quot; y aparecen los enlaces</p>
+<p>Comprobante formato PDF</p>
+<p>y</p>
+<p>Comprobante Formato XML</p>
+<p>. Descárgalos ahí mismo. También te llega el correo</p>
+<p>&quot;Envio de factura SISAS&quot;</p>
+<p>.</p>
+<p>Después de eso, en</p>
+<p>Mis pagos</p>
+<p>la columna</p>
+<p>Factura</p>
+<p>muestra los iconos PDF y XML de ese pago; puedes volver a descargarlos cuando quieras.</p>
+<p>Los datos fiscales tienen que coincidir con tu constancia del SAT (RFC, nombre o razón social, régimen y código postal). Si no coinciden, el timbrado falla y sale un error en rojo con el motivo.</p>
+<p>Las cuotas y servicios se facturan exentos de IVA. Los donativos se facturan como donativo y solo admiten los usos de CFDI de donativos.</p>
+<p>Cupones y saldo a favor</p>
+<p>Saldo a favor</p>
+<p>aparece cuando pagaste de más por transferencia o depósito con referencia y SISAS, al conciliar, detectó el excedente. Para usarlo lo conviertes en cupón: en ese renglón haz clic en</p>
+<p>Generar cupón</p>
+<p>, revisa el monto y la vigencia (60 días), dale</p>
+<p>Generar</p>
+<p>para crear el código y luego</p>
+<p>Crear</p>
+<p>. El cupón te llega por correo (&quot;Nuevo cupon SISAS&quot;) y queda en tu pestaña</p>
+<p>Cupones</p>
+<p>. Los pagos con tarjeta o en OXXO por Conekta no generan saldo a favor: se cobra exacto.</p>
+<p>También hay cupones que te asigna la Asociación (por ejemplo, para devolverte un pago). Esos llegan por correo con su código.</p>
+<p>En la pestaña</p>
+<p>Cupones</p>
+<p>ves</p>
+<p>Saldo disponible:</p>
+<p>(la suma de tus cupones vigentes sin usar) y la lista con</p>
+<p>Código</p>
+<p>,</p>
+<p>Vigencia</p>
+<p>,</p>
+<p>Monto</p>
+<p>,</p>
+<p>Referencia/Clave de Rastreo</p>
+<p>, quién lo generó y para quién,</p>
+<p>Estatus</p>
+<p>y</p>
+<p>Fecha de uso</p>
+<p>.</p>
+<p>Para usar un cupón: al pagar cualquier cosa, en</p>
+<p>Sistema de pagos</p>
+<p>escribe el código en</p>
+<p>IngresarCupón</p>
+<p>y dale</p>
+<p>APLICAR</p>
+<p>. El descuento se resta del total; si el cupón cubre todo, el pago queda en $0.00 y se confirma sin pasar por Conekta. Un cupón se usa una sola vez y completo: si vale más que lo que estás pagando, el sobrante se pierde (así lo avisa la pantalla).</p>
+<p>Si un pago no aparece</p>
+<p>Lo más común es que el pago se quedó en &quot;intento&quot;: SISAS creó la orden en Conekta, pero nunca le llegó la confirmación de que se cobró. Mientras esté así, el pago no se ve en</p>
+<p>Mis pagos</p>
+<p>y tampoco se aplica (ni vigencia, ni evento).</p>
+<p>Antes de escribir, revisa:</p>
+<p>1. Si te llegó el correo &quot;Se acreditó tu pago.&quot; Si llegó, el pago sí entró; espera unos minutos y vuelve a abrir</p>
+<p>Mis pagos</p>
+<p>(o cierra sesión y vuelve a entrar).</p>
+<p>2. Si pagaste en OXXO, que de verdad hayas pagado la referencia y que no haya vencido (vence al día siguiente a las 22:00).</p>
+<p>3. Que el pago no lo haya hecho otra persona por ti (Jefe de Grupo, mamá/papá desde su propia cuenta): entonces está en la lista de esa persona.</p>
+<p>Si nada de eso aplica, escribe al helpdesk con:</p>
+<p>- tu CUM,</p>
+<p>- concepto que pagaste (Reinscripción, nombre del evento, etc.),</p>
+<p>- fecha y hora del pago y monto,</p>
+<p>- el número de orden de Conekta (</p>
+<p>ord_..</p>
+<p>): viene en el correo de Conekta o en el de SISAS en</p>
+<p>Autorización</p>
+<p>,</p>
+<p>- captura o PDF del cargo (estado de cuenta de la tarjeta o ticket de OXXO).</p>
+<p>Con eso Tesorería confirma la orden en Conekta y aplica el pago.</p>
+<p>Si algo falla</p>
+<p>Lo que ves</p>
+<p>Qué significa</p>
+<p>Qué hacer</p>
+<p>Pagaste y el pago no está en</p>
+<p>Mis pagos</p>
+<p>Quedó en intento: no llegó la confirmación de Conekta, o lo hizo otra persona desde su cuenta</p>
+<p>Ver &quot;Si un pago no aparece&quot; arriba</p>
+<p>El pago está pero en</p>
+<p>Fecha</p>
+<p>dice</p>
+<p>Pendiente</p>
+<p>SISAS registró el pago, pero el dinero no se ha confirmado (típico de referencia bancaria o efectivo sin pagar)</p>
+<p>Paga la referencia o espera la confirmación. Si ya pagaste hace más de 24 h, helpdesk con CUM, concepto y comprobante</p>
+<p>El mismo pago aparece dos veces</p>
+<p>Pagaste dos órdenes distintas (por ejemplo, reintentaste y las dos entraron), o un renglón es tuyo y otro de una ficha múltiple en la que te incluyeron</p>
+<p>Helpdesk con CUM, concepto y las dos fechas; si hubo doble cobro, pide la devolución</p>
+<p>Total Abonado</p>
+<p>no es lo que esperabas</p>
+<p>El total es Importe Esperado menos beca y cupón, más MontoPF si pagaste a meses. Un evento en dólares se muestra en pesos al tipo de cambio del día</p>
+<p>Compara contra el Desglose que viste al pagar. Si no cuadra, helpdesk con CUM y captura del renglón</p>
+<p>&quot;No existe cupón con este código&quot;</p>
+<p>Escribiste mal el código o el cupón no existe</p>
+<p>Cópialo tal cual del correo &quot;Nuevo cupon SISAS&quot; o de la pestaña</p>
+<p>Cupones</p>
+<p>&quot;El cupón ya fue utilizado&quot;</p>
+<p>Ese cupón ya se aplicó a otro pago</p>
+<p>Revisa</p>
+<p>Fecha de uso</p>
+<p>en la pestaña</p>
+<p>Cupones</p>
+<p>. Un cupón solo sirve una vez</p>
+<p>&quot;El código ya no esta vigente&quot;</p>
+<p>Se pasó la</p>
+<p>Vigencia</p>
+<p>del cupón, o fue cancelado</p>
+<p>Helpdesk con CUM y el código</p>
+<p>&quot;El campo cupón es requerido&quot;</p>
+<p>Diste</p>
+<p>APLICAR</p>
+<p>sin escribir nada</p>
+<p>Escribe el código y vuelve a aplicar</p>
+<p>Diste</p>
+<p>Pagar</p>
+<p>, se acabaron los 60 segundos y te regresó a</p>
+<p>Mis pagos</p>
+<p>La pantalla</p>
+<p>Pago</p>
+<p>te da 60 segundos para elegir Tipo de Pago, Concepto y Plan y dar</p>
+<p>Continuar</p>
+<p>Vuelve a dar</p>
+<p>Pagar</p>
+<p>y elige rápido; ten decidido qué vas a pagar antes de entrar</p>
+<p>&quot;Favor de elegir su Tipo de Pago y hacer clic en Contiuar en el tiempo indicado&quot;</p>
+<p>Aviso normal al abrir la pantalla</p>
+<p>Pago</p>
+<p>Nada, es el recordatorio del contador</p>
+<p>&quot;Debes seleccionar un concepto de pago.&quot; / &quot;Debes seleccionar un plan de pago.&quot;</p>
+<p>Falta elegir</p>
+<p>Concepto</p>
+<p>o</p>
+<p>Plan</p>
+<p>antes de</p>
+<p>Continuar</p>
+<p>Elígelo y vuelve a dar</p>
+<p>Continuar</p>
+<p>&quot;Ocurrio un error, consulta al administrador del sistema..&quot; al dar</p>
+<p>Continuar</p>
+<p>No se pudo preparar el pago (por ejemplo el concepto no tiene monto cargado)</p>
+<p>Helpdesk con CUM, Tipo de Pago y Concepto que elegiste</p>
+<p>Verifica</p>
+<p>: &quot;Ya existe una solicitud de pago generada para ti o el/los miembro(s) elegido(s), ésta aún se encuentra Activa, deberás esperar 24 horas para solicitar una nueva.&quot;</p>
+<p>Ya tienes una orden de Conekta abierta por ese mismo concepto</p>
+<p>Paga esa orden (correo de Conekta) o espera a que venza</p>
+<p>Pago no completado</p>
+<p>: &quot;Tu transacción fue cancelada o no se procesó correctamente. Por favor intenta nuevamente.&quot;</p>
+<p>Cancelaste en Conekta o la tarjeta fue rechazada; no se cobró</p>
+<p>Vuelve a intentar desde</p>
+<p>Pagar</p>
+<p>Pago en proceso</p>
+<p>y al dar</p>
+<p>Entendido</p>
+<p>te sacó de SISAS</p>
+<p>Es normal después de pagar inscripción o reinscripción</p>
+<p>Vuelve a entrar; el pago se refleja en segundos (tarjeta) o cuando OXXO lo reporte</p>
+<p>En</p>
+<p>Factura</p>
+<p>sale el icono de prohibido &quot;El periodo de facturación ha finalizado.&quot;</p>
+<p>Pasaron más de 30 días del pago, o el pago es de otro año</p>
+<p>Ya no se factura por SISAS</p>
+<p>En</p>
+<p>Factura</p>
+<p>sale el icono de información &quot;Factura global.&quot;</p>
+<p>Ese pago ya se incluyó en una factura global de la Asociación (RFC genérico)</p>
+<p>No se puede facturar a tu nombre</p>
+<p>&quot;El RFC no es valido.&quot; / &quot;El Código Postal no es valido o no existe.&quot;</p>
+<p>Formato incorrecto</p>
+<p>Copia el RFC y el CP de tu constancia del SAT</p>
+<p>Error en rojo al generar la factura</p>
+<p>El SAT rechazó el timbrado, casi siempre por datos fiscales que no coinciden</p>
+<p>Corrige nombre/razón social, régimen o CP según tu constancia y vuelve a intentar. Si persiste, helpdesk con CUM y el texto del error</p>
+<p>Cuando escribas al helpdesk incluye siempre: CUM, pantalla, mensaje exacto y, si es sobre un pago, concepto, fecha, monto y el número de orden</p>
+<p>ord_</p>
+<p>de Conekta.</p>
+<p>Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.</p>
+<p>Preguntas frecuentes</p>
+<h3>¿La tabla de Mis pagos me sirve como comprobante?</h3>
+<p>No. El comprobante es el correo &quot;Se acreditó tu pago.&quot; (el Recibo Electrónico) y, si la pediste, la factura PDF/XML.</p>
+<h3>¿Puedo donar desde Mis pagos?</h3>
+<p>Sí:</p>
+<p>Pagar</p>
+<p>→</p>
+<div class="note">Tipo de Pago</div>
+<p>=</p>
+<p>Donativos</p>
+<p>y eliges el concepto. Los donativos tienen monto fijo por concepto, no cantidad libre.</p>
+<h3>¿Qué son Servicios Cuautli y Servicios Meztitla?</h3>
+<p>Pagos de servicios en los campos escuela de la Asociación (Cuautli y Meztitla). Al elegirlos te pide una</p>
+<p>Fecha</p>
+<p>(la del servicio).</p>
+<h3>¿Puedo usar un cupón que le dieron a otra persona?</h3>
+<p>SISAS acepta el código de cualquier cupón vigente al pagar; no hace falta que esté a tu nombre. Pero cada cupón se usa una sola vez, así que ponte de acuerdo con quien lo recibió.</p>
+<h3>¿Dónde veo el pago que hizo mi Jefe de Grupo por mí?</h3>
+<p>En tu</p>
+<p>Mis pagos</p>
+<p>no aparece; está en la lista de quien lo hizo. Lo que sí ves es el efecto: tu</p>
+<p>Vigencia:</p>
+<p>en el Dashboard o tu lugar en el evento.</p>
+<h3>¿Le ha sido útil este artículo?</h3>
+<p>|</p>
+<p>Detalles del articulo</p>
+<p>ID de artículo:</p>
+<p>21</p>
+<p>Eventos y pagos</p>
+<p>Fecha de alta:</p>
+<p>2026-10-11 12:55:21</p>
+<p>Vistas:</p>
+<p>16</p>
+<p>valoración                                         (Votar):</p>
+<p>(0)</p>
+<p>Volver atrás</p>
+<p>Artículos relacionados</p>
+<p>Cómo inscribirme y pagar un evento</p>
+<p>Cómo reinscribirme (renovar mi membresía)</p>
+<p>Becas y descuentos: cómo se asignan y cómo se aplican al pagar</p>
+<p>Jefe de Grupo: inscribir y pagar un evento por varios miembros</p>
+<p>Registro Familiar: inscribir a toda la familia con descuento</p>
+<p>Powered by</p>
+<p>Help Desk Software</p>
+<p>HESK</p>
+<p>More IT firepower? Try</p>
+<p>SysAid</p>
+</section>
+<section class="card"><h2>Capturas Oficiales del Procedimiento en SISAS</h2>
+<figure><img src="data:image/webp;base64,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" alt="Pantalla Mis pagos con el botón Pagar" /><figcaption>Pantalla Mis pagos con el botón Pagar</figcaption></figure>
+</section>
+  </main>
+</body>
+</html>

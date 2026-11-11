@@ -1,0 +1,52 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Diseño, Patronaje y confección de textileria escénica
+Archivo: FES_CC_HPV_DISENO PATRONAJE Y CONFECCION DE TEXTILERIA ESCENICA.pdf
+Fecha de publicación en RECME: 25 Septiembre 2026
+Categoría RECME: Especialidades Habilidades para la Vida
+Etiqueta temática RECME: Emprendimiento
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: Diseño, Patronaje y Confección de Textilería Folclórica Escénica
+    Texto161: Investigación Etnográfica y Análisis de Materiales: Investigar las características textiles de diversas estampas folclóricas (popelina, raso, satín, manta, encajes y pasalistones) y el origen histórico de su diseño tradicional.  Física y Mecánica del Vestuario Escénico: Estudiar las exigencias de movilidad y tensión a las que se somete el vestuario durante la ejecución dancística (puntos críticos de tiro, axilas, cinturillas y bastillas), así como los tipos de puntadas y refuerzos necesarios.  Patronaje Técnico y Sistemas de Ajuste: Comprender la geometría del patronaje folclórico (cálculo de faldones de doble vuelo, holguras para movimiento, nesgas y cuchillas) y los sistemas de ajuste adaptable para diferentes tallas en elencos.
+Estudiar técnicas de mantenimiento, lavado especializado, almacenaje e higienización de vestuarios folclóricos para prolongar la vida útil de las prendas de elenco
+    Texto163: Muestrario Técnico de Textiles y Costura: Crear un catálogo ilustrado de telas tradicionales (popelina, raso, satín, manta) incluyendo muestras físicas y ejercicios de puntadas a mano y máquina con refuerzos de alta tensión.  Taller de Patronaje y Confección Tradicional: Trazar, cortar y confeccionar una prenda folclórica completa (como una falda de doble vuelo tipo Jalisco/Veracruz o una camisola tradicional), calculando holguras, metros de encaje, pasalistones y cierres adaptables.  Manual de Reparación y Adaptación Escénica: Diseñar e implementar un kit de costura de emergencia y guía de ajustes rápidos para resolver rasgaduras, bastillas sueltas o desprendimiento de avíos durante ensayos o presentaciones.
+Diseñar un sistema de codificación e inventario de vestuario para organizar por regiones, tallas y accesorios el almacén de un grupo folclórico escolar o comunitario.
+    Texto165: Gestión de Vestuario Escénico Comunitaria: Liderar o coordinar el equipo de vestuario para una representación cultural de la Comunidad de Caminantes, Tropa o escuela, supervisando patronaje, confección o adaptación con criterios de durabilidad y mantenimiento.  Taller Práctico de Modistería Básica para el Grupo Scout: Impartir una sesión técnica a otros jóvenes sobre costura de emergencia, colocación de parches, zurcido de bastillas y mantenimiento de prendas folclóricas o de campamento.  Proyecto de Restauración o Donación de Vestuario: Organizar un proyecto de rescate, zurcido y habilitación de vestuario dancístico en desuso dentro de una institución local para ponerlo a disposición de grupos comunitarios.
+Crear y difundir una guía digital sobre consumo responsable de telas, reutilización textil en escenografía y valor del trabajo artesanal folclórico.
+    Texto167: María de Jesús García Juarez
+    Texto168: Uso Seguro de Herramientas de Corte y Costura: Manipular tijeras de modistería, cúteres rotativos, alfileres y cortahilos con atención; utilizar protectores o dedales y guardar elementos punzocortantes en alfileteros o estuches cerrados.Prevención en el Manejo de Máquinas de Coser y Planchas: Mantener dedos alejados de la aguja al coser a máquina a alta velocidad; emplear superficies térmicas aislantes al utilizar planchas de vapor y verificar que el cableado eléctrico esté en buen estado.Ergonomía en el Trabajo de Taller: Mantener posturas corporales adecuadas durante el trazo y corte en mesa; realizar pausas activas de estiramiento para muñecas, espalda y cuello en jornadas prolongadas de confección.Normativa Safe from Harm: Las tomas de medidas corporales, pruebas de vestuario o talleres de confección con terceros deben ejecutarse en espacios visibles y siempre en presencia de al menos dos adultos o Scouters responsables.
+    Texto169: Emprendimiento
+    Dropdown170: COMUNIDAD
+    Check Box174: /Sí
+    Check Box178: /Sí
+    Check Box181: /Sí
+    Check Box182: /Sí
+    Group188: /Opci髇2
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

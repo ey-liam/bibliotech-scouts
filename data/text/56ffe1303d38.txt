@@ -1,0 +1,204 @@
+GUÍA OFICIAL HELP DESK ASMAC: Registro Familiar: inscribir a toda la familia con descuento
+Categoría: Pagos, Reinscripción, Becas y Eventos
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=30
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Eventos y pagos
+Registro Familiar: inscribir a toda la familia con descuento
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Registro Familiar: inscribir a toda la familia con descuento
+Registro Familiar es un sitio aparte de SISAS donde una familia de 3 a 5 miembros paga su inscripción o reinscripción en un solo cargo, con descuento sobre la cuota nacional. Tardas unos 10 minutos si ya tienes los CUMs a la mano. La vigencia de cada miembro no se ve al instante en SISAS: se actualiza en los días hábiles siguientes.
+Antes de empezar
+Entrar a
+https://familiar.scouts.org.mx
+. No está en el menú de SISAS; es otra dirección.
+La cuenta con la que entras es la de un miembro (CUM y la misma contraseña de SISAS). Si eres papá o mamá y no eres miembro, entra con la cuenta de uno de tus hijos: esa cuenta queda como quien paga y a su correo llega el comprobante.
+Los CUMs de los 3 a 5 miembros que vas a inscribir. Deben ser familia nuclear (papá, mamá e hijos). Al pagar certificas que es así.
+Cada miembro debe tener cuenta y ficha en SISAS. Si alguno está vencido y no ha llenado sus datos de salud, el sitio no lo deja pasar (ver "Si algo falla").
+Una tarjeta de crédito o débito. Aquí no hay pago en OXXO ni transferencia.
+Tiempo: desde que abres la pantalla de registro tienes 20 minutos para capturar y pagar. Si se acaba, el sitio cierra tu sesión y empiezas de nuevo.
+Pasos
+Entra a
+https://familiar.scouts.org.mx. Escribe tu
+CUM
+y tu
+Contraseña
+(la de SISAS) y haz clic en
+Ingresar
+.
+Te saluda con
+Hola, [tu nombre]
+y tu foto. En el menú de arriba haz clic en
+Registro Familiar
+.
+Aparece el aviso "Bienvenido!, Puede comenzar a ingresar los CUMs de la Familia, máximo 5" y arranca el contador de
+Tiempo para completar registro y pago.
+(20:00).
+En
+CUM Fam. 1
+escribe el CUM del primer miembro (puedes incluirte) y haz clic en el botón de la lupa. Si lo encuentra, muestra su foto,
+Prov.
+y
+Estatus
+(
+Nuevo
+,
+Reinscripción
+o
+Vencido
+) y abajo sale "Se agregó correctamente a la lista familiar". El botón del borrador quita a ese miembro.
+Repite en
+CUM Fam. 2
+y
+CUM Fam. 3
+. Mientras lleves uno o dos, te avisa "Sólo faltan 2 Familiares" / "Sólo falta 1 Familiar".
+Con el tercer miembro aparecen los montos de cada uno:
+% Desc.
+,
+Couta Nac.
+,
+Couta Nac.Desc.
+(cuota nacional ya con descuento),
+Couta Prov.
+y
+Subtotal
+. Si son 4 o 5, agrégalos en
+CUM Fam. 4
+y
+CUM Fam. 5
+; el porcentaje sube con cada miembro.
+En
+Forma de Pago
+elige
+Una sola exhibición
+o
+Plazos fijos
+. Si eliges plazos, en
+Elija un plazo
+escoge "3 pagos mensuales", "6 pagos mensuales", etc. El
+Total
+cambia: los plazos tienen un recargo.
+Lee el texto "El Scout cifra su honor en ser digno de confianza" y marca la casilla. Con eso certificas que la información es verídica, que son tu familia nuclear y que puedes ser sancionado si no es así. Si cambias la forma de pago o un plazo, la casilla se desmarca y la vuelves a marcar.
+Abajo sale "* Ingresa tus datos en el método de pago para completar el Registro" y se carga el formulario de pago de Conekta. Captura la tarjeta (en una sola exhibición también puedes usar Apple Pay o Google Pay) y confirma el pago.
+Espera sin cerrar la ventana. Verás "Procesando su Pago..No cierre la aplicación" y luego
+Registro Familiar completo.
+"En un plazo de 48 hrs. hábiles se verán reflejadas las vigencias de las Inscripciones en SISAS." El sitio te regresa al inicio.
+Cómo se calcula el descuento
+Miembros válidos en la lista
+Descuento sobre la cuota nacional
+3
+25 %
+4
+30 %
+5
+35 %
+El descuento solo aplica a la cuota nacional. La cuota de provincia se cobra completa. Cada miembro paga según su estatus (nuevo, reinscripción o vencido), así que dos hermanos pueden tener subtotales distintos. Si tienes una beca en SISAS, aquí no se aplica: Registro Familiar cobra la cuota normal con el descuento familiar.
+Qué pasa después
+Conekta hace un solo cargo a nombre de la cuenta con la que entraste. El concepto es "RegFam [tu CUM]".
+Al correo de esa cuenta llega "se realizó un pago de Registro Familiar" con el Id de conekta (empieza con
+ord_
+), el total, la fecha y la lista de los miembros. Guarda ese correo: el Id de la orden es lo que vas a necesitar si algo falla.
+La vigencia de cada miembro se actualiza en SISAS en los siguientes días hábiles; no es inmediato. Lo aplica el equipo de Soporte SISAS a partir del pago. Si pasan más de 48 horas hábiles y en SISAS sigue sin verse la vigencia nueva (Dashboard, línea
+Vigencia:
+), escribe al helpdesk de Soporte SISAS con el Id de la orden de Conekta y los CUMs de la familia.
+Este pago no aparece en
+Mis pagos
+de SISAS de cada miembro mientras no se aplique, y la credencial se genera cuando se aplica la vigencia.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+"Login Incorrecto:No existe el CUM"
+Ese CUM no tiene cuenta en SISAS.
+Revisa el CUM. Si no tienes cuenta, el enlace
+Regístrate aquí
+te lleva al pre-registro de SISAS; ve la guía "Crear mi cuenta".
+"Login Incorrecto:Password Incorrecto"
+La contraseña no es la de SISAS.
+Es la misma contraseña con la que entras a SISAS. Si no la recuerdas, recupérala en SISAS ("Olvidé mi contraseña") y vuelve.
+"Favor de capturarlo correctamente"
+Diste clic en la lupa con el campo vacío.
+Escribe el CUM y vuelve a buscar.
+"El registro ya se encuentra pagado, coloca CUMs del año actual o anteriores."
+Ese miembro ya tiene vigencia pagada hasta el año que viene; no le toca pagar todavía. El mismo aviso sale si el CUM está mal escrito o no existe.
+Revisa que el CUM esté bien. Si está bien, ese miembro no entra en el registro de este año; arma la familia con los que sí deben pagar.
+"Tu cuenta está incompleta, favor termina de crearla en SISAS."
+Ese miembro está vencido y no tiene capturados sus datos de salud.
+Entra a SISAS con su cuenta, completa la ficha (guía "Completar mis datos") y regresa.
+"Recuerde que no puede agregar más de una vez la misma CUM"
+Repetiste un CUM.
+Captura un CUM distinto en ese campo.
+"CUM con datos faltantes para calcular faltantes! Favor de capturarlo correctamente en SISAS"
+A uno de los miembros le faltan datos en su ficha y el sitio no pudo calcular su cuota. Lo quita de la lista.
+Completa la ficha de ese miembro en SISAS y vuelve a agregarlo. Si la ficha está completa y sigue saliendo, escribe al helpdesk de Soporte SISAS con el CUM.
+"Falta un miembro" / "Recuerde que deben ser de 3 a 5 para calcular el descuento"
+Quitaste a alguien y quedaron 2.
+Con menos de 3 miembros no hay descuento ni pago. Agrega al tercero.
+El descuento no es el que esperabas
+El porcentaje depende de cuántos miembros válidos haya en la lista (3, 4 o 5), no de cuántos escribiste. Un CUM rechazado no cuenta.
+Revisa que cada miembro tenga foto y estatus en pantalla. Si son 3 válidos, el descuento es 25 %.
+"Tiempo para registro terminado"
+Pasaron los 20 minutos. El sitio cierra tu sesión.
+Vuelve a entrar y captura de nuevo. Ten los CUMs listos antes de empezar.
+"Hay una intermitencia con el servidor, intente de nuevo."
+Marcaste la casilla y no se pudo crear la orden de pago.
+Desmarca y marca la casilla otra vez. Si se repite, espera unos minutos o cierra sesión y vuelve a entrar.
+El formulario de pago no carga
+El componente de Conekta no cargó en tu navegador.
+Recarga la página y repite. Prueba en otro navegador o desactiva bloqueadores de anuncios.
+Pagué y cerré la ventana antes de ver "Registro Familiar completo."
+El cargo se hizo, pero el sitio no alcanzó a registrar a los miembros.
+No vuelvas a pagar. Escribe al helpdesk de Soporte SISAS con el Id de la orden de Conekta (del correo o del cargo en tu tarjeta) y los CUMs; ellos lo aplican.
+Pagué y después de 48 horas hábiles nadie tiene vigencia nueva
+El pago no se ha aplicado en SISAS.
+Escribe al helpdesk de Soporte SISAS con el Id de la orden (
+ord_…
+) y los CUMs de la familia. Lo atienden en máximo 48 horas.
+Pagué dos veces
+Si repetiste el proceso antes de que se aplicara el primer pago, el sitio dejó pasar los mismos CUMs y hay dos cargos.
+Escribe al helpdesk de Soporte SISAS con los dos Id de orden para que revisen el segundo cargo.
+Preguntas frecuentes
+¿Tengo que estar yo en la lista para pagar?
+No. La cuenta con la que entras solo es quien paga; puedes incluirte o no. Pero quien paga tiene que ser un miembro con cuenta en SISAS: no hay cuenta de papá o mamá.
+¿Puedo meter a mis sobrinos o abuelos?
+No. El sitio lo dice al entrar: solo núcleo familiar (papá, mamá e hijos), y al pagar lo certificas.
+¿Por qué un hijo paga más que otro?
+Porque cada uno paga según su situación: nuevo, reinscripción o vencido, y la cuota de provincia es la de su grupo. El porcentaje de descuento sí es el mismo para todos.
+¿Puedo pagar en OXXO o por transferencia?
+No. Registro Familiar solo acepta tarjeta (y Apple Pay o Google Pay en una sola exhibición). Si necesitas pagar en efectivo, cada miembro se reinscribe por separado en SISAS (guía "Cómo reinscribirme").
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+30
+Categoría:
+Eventos y pagos
+Fecha de alta:
+2026-10-11 14:32:34
+Vistas:
+13
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo reinscribirme (renovar mi membresía)
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Cómo inscribirme y pagar un evento
+Mis pagos: ver lo que he pagado, comprobantes y facturas
+Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

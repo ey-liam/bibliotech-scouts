@@ -1,0 +1,131 @@
+GUÍA OFICIAL HELP DESK ASMAC: Cómo cambiar mi contraseña
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=17
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Acceso y cuenta
+Cómo cambiar mi contraseña
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Cómo cambiar mi contraseña
+Con esto cambias la contraseña con la que entras a SISAS. Es una sola pantalla y toma un minuto. Al terminar, SISAS cierra tu sesión y tienes que volver a entrar con la contraseña nueva.
+Antes de empezar
+Saber tu contraseña actual. Sin ella no se puede cambiar desde aquí; si no la recuerdas, ver la guía Olvidé mi contraseña.
+Tener pensada la nueva. SISAS pide:
+8 caracteres como mínimo.
+Al menos una letra mayúscula (A-Z).
+Al menos una letra minúscula (a-z).
+Al menos un número (0-9).
+Al menos un símbolo, es decir, algo que no sea letra ni número (por ejemplo
+.
+,
+#
+,
+!
+).
+Sin repetir el mismo carácter tres veces seguidas ("aaa", "111").
+Si eres papá o mamá y entras con la cuenta de tu hijo o hija: la contraseña que cambias es la de esa cuenta.
+Pasos
+Entra a
+SISAS y arriba a la derecha haz clic en
+Hola,
+. Se despliega un menú.
+Haz clic en Cambiar Contraseña
+. Se abre la pantalla
+Cambia tu contraseña
+.
+Escribe tu contraseña de hoy en
+Contraseña Actual
+.
+Escribe la nueva en
+Nueva contraseña
+. El icono del ojo a la derecha de cada campo muestra u oculta lo que escribiste; úsalo para revisar que no haya errores de dedo.
+Vuelve a escribir la nueva en
+Confirma contraseña
+. Tiene que quedar idéntica.
+Haz clic en Aceptar
+.
+Verás el aviso "¡Se ha cambiado tu contraseña! Por seguridad la sesión se cerrará, por favor vuelve a ingresar con tu nueva contraseña". Haz clic en
+Ok
+.
+Si quieres salir sin cambiar nada, usa
+Salir
+; te regresa al inicio.
+Qué pasa después
+SISAS cierra tu sesión en ese momento y te manda a la pantalla de entrada. Entra con tu CUM y la contraseña nueva. La anterior ya no sirve.
+No te llega correo ni notificación por este cambio. Nadie tiene que aprobarlo. Si tenías la cuenta bloqueada por intentos fallidos, con el cambio se desbloquea.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+"La contraseña actual no es correcta"
+La que pusiste en
+Contraseña Actual
+no es la de tu cuenta, o la cuenta está bloqueada por intentos fallidos.
+Revísala con el icono del ojo y vuelve a intentar. Si no la recuerdas, cierra sesión y sigue la guía Olvidé mi contraseña.
+"La contraseña debe constar de 8 caracteres mínimo" debajo de un campo
+Ese campo tiene menos de 8 caracteres.
+Escribe una contraseña más larga.
+"La contraseñas deben coincidir."
+Lo que escribiste en
+Nueva contraseña
+y en
+Confirma contraseña
+no es igual.
+Muestra los dos campos con el ojo y corrige.
+"Las contraseñas deben tener al menos un carácter que no sea una letra ni un dígito." (puede venir junto con "...al menos un dígito ('0'-'9').", "...al menos una letra en minúscula ('a'-'z')." o "...al menos una letra en mayúscula ('A'-'Z').")
+A la nueva le falta algo de la lista de arriba. El aviso dice exactamente qué.
+Agrega lo que falte (símbolo, número, mayúscula o minúscula) y vuelve a dar
+Aceptar
+.
+"La contraseña no debe contener 3 letras o 3 números consecutivos."
+La nueva repite el mismo carácter tres veces seguidas, como "aaa" o "111".
+Cambia esa parte. Algo como "abc" o "123" sí se acepta; lo que no pasa es el mismo carácter repetido.
+"Se ha detecado un intento de acceso invalido"
+Falló la verificación automática contra robots (reCAPTCHA).
+Recarga la página y vuelve a intentar. Si se repite, prueba en otro navegador o sin bloqueadores de anuncios.
+Das
+Aceptar
+y no pasa nada
+Falló la conexión con SISAS o el navegador bloqueó el reCAPTCHA.
+Recarga la página y vuelve a intentar. Si sigue igual, escribe al helpdesk.
+No recuerdo la contraseña actual
+Desde esta pantalla no se puede cambiar sin la actual.
+Cierra sesión y sigue la guía Olvidé mi contraseña.
+Cuando escribas al helpdesk incluye: tu CUM, el mensaje exacto que te salió y en qué navegador estás.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+17
+Categoría:
+Acceso y cuenta
+Fecha de alta:
+2026-10-11 12:29:10
+Vistas:
+10
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Olvidé mi contraseña o mi cuenta está bloqueada
+Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)
+Que pasa si no recuerdo la contraseña de Autorizacion?
+Cómo entrar a SISAS (y qué ves al entrar)
+Registro Familiar: inscribir a toda la familia con descuento
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

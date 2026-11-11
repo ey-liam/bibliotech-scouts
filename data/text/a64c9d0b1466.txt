@@ -1,0 +1,172 @@
+GUÍA OFICIAL HELP DESK ASMAC: Cómo solicitar un cambio de grupo
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=11
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Cambios de Grupo
+Cómo solicitar un cambio de grupo
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Cómo solicitar un cambio de grupo
+Con esto pides pasar de tu grupo actual a otro grupo de cualquier provincia. Llenar la solicitud toma dos minutos. La aprobación la hacen cuatro personas (dos de tu grupo actual y dos del grupo al que vas) y puede tardar hasta 30 días.
+Antes de empezar
+Tu ficha de perfil completa. Si SISAS te dice "Completa/Actualiza los datos de tu Perfil." al entrar al menú, primero termina tu perfil.
+Que tu perfil no esté en validación. Si acabas de cambiar datos y te sale "Tu información se está validando.", espera a que te lo validen.
+No tener una solicitud de cambio de grupo en curso. Solo puedes tener una a la vez.
+No tener una sanción vigente. Con sanción activa SISAS no deja enviar la solicitud.
+Saber la provincia, la localidad y el nombre del grupo al que quieres ir. Si no los sabes, pregúntale al Jefe de Grupo de ese grupo antes de empezar.
+Si eres papá o mamá: entra con la cuenta de tu hijo o hija. La solicitud se hace desde su cuenta.
+Pasos
+Entra a
+SISAS y en el menú de la izquierda haz clic en el icono de las dos flechas (⇄),
+Mi cambio de grupo
+. Se abre la pantalla
+Cambio de grupo
+.
+Revisa el bloque
+Datos actuales
+(Nombre, CUM, Provincia, Grupo - Localidad). Son solo de lectura; si algo está mal ahí, no lo corriges en esta pantalla sino en tu perfil.
+En
+Datos de cambio
+, elige la
+Provincia
+del grupo al que quieres ir.
+Elige la
+Localidad
+. La lista se llena después de escoger provincia.
+Elige el
+Grupo
+. La lista se llena después de escoger localidad y muestra solo el
+número
+del grupo (por ejemplo "4"), no su nombre. Si no sabes el número, pregúntalo en el grupo al que vas.
+En
+Detalles/Observaciones
+escribe por qué cambias de grupo. No es obligatorio, pero quienes aprueban lo leen. El recuadro
+Detalles / Observaciones (Presidente de Provincia / Jefe de Grupo ORIGEN)
+que ves abajo es para quienes aprueban; a ti te aparece bloqueado.
+Haz clic en Siguiente
+.
+Confirma en el aviso "¿Estás seguro de solicitar el cambio de grupo?" con
+Continuar
+. Si te arrepientes,
+Cancelar
+te deja en el formulario con todo lo que ya llenaste.
+Verás "Estamos validando tu solicitud, este paso puede demorar un poco, te notificaremos vía correo cuando esté lista para continuar." Haz clic en
+Aceptar
+y SISAS te regresa al inicio.
+Si quieres salir sin enviar nada, usa
+Salir
+y confirma con
+Salir
+en el aviso "¿Está seguro de regresar a home?".
+Qué pasa después
+Tu solicitud pasa por dos etapas y en cada una tienen que aprobar dos personas:
+Tu grupo actual (origen):
+el Jefe de Grupo y el Presidente de Provincia de tu grupo actual reciben una notificación en SISAS. Los dos tienen que validar. Si en 15 días no la atienden, SISAS la da por aprobada en automático y la pasa a la siguiente etapa.
+El grupo al que vas (destino):
+el Jefe de Grupo y el Presidente de Provincia del grupo destino reciben la notificación. Los dos tienen que validar. Si en 15 días no la atienden, SISAS la
+rechaza
+en automático.
+Si te cambias a un grupo de
+la misma provincia
+, el Presidente de Provincia es el mismo en las dos etapas y tiene que validar dos veces: como origen y como destino.
+Un administrador nacional puede validar o rechazar cualquiera de las dos etapas por sí solo. Eso es lo que pasa cuando tu grupo de origen está cerrado, o cuando el origen o el destino es un grupo especial (grupo 0 o 900) que no tiene Jefe de Grupo: ahí Nacional aprueba o cierra el cambio.
+Cuando los dos del grupo destino validan, el cambio se aplica en ese momento: tu ficha ya aparece en el nuevo grupo, y los cargos y calidades que tenías en el grupo anterior pasan a tu historial. Tu sección y tus cargos en el grupo nuevo los asigna tu nuevo Jefe de Grupo.
+Te enteras del resultado por la campana de notificaciones de SISAS. Al abrirla y hacer clic en
+Ver
+te sale "El cambio de grupo fue validado." o "El cambio de grupo fue rechazado.". A pesar de lo que dice el aviso al enviar, SISAS no manda correo por este trámite; revisa la campana.
+Mientras la solicitud está en trámite no puedes ver en qué etapa va: si entras a
+Mi cambio de grupo
+te vuelve a salir el aviso "Estamos validando tu solicitud.." y te regresa al inicio. Para saber en qué paso va, pregúntale a tu Jefe de Grupo o al Presidente de Provincia; ellos sí ven la solicitud y su estatus en el módulo
+Cambio de grupo
+.
+No hay botón para cancelar una solicitud enviada. Si te arrepientes, pídele a tu Jefe de Grupo que la rechace; después de un rechazo puedes hacer una nueva.
+Si te rechazan, el motivo que escribió quien rechazó no se te muestra en SISAS; pídeselo a tu Jefe de Grupo o Presidente de Provincia.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+"Completa/Actualiza los datos de tu Perfil." al hacer clic en el menú
+Tu ficha de perfil no está completa.
+Entra a tu perfil, completa lo que falte y vuelve a intentar.
+"Tu información se está validando." al hacer clic en el menú
+Cambiaste datos de tu perfil y todavía no te los validan.
+Espera la validación del perfil. Mientras, ningún trámite se puede iniciar.
+"Los datos de este miembro no pueden ser mostrados."
+Tu cuenta está suspendida.
+Escribe al helpdesk con tu CUM.
+"Debes seleccionar una provincia y un grupo para solicitar el cambio."
+Diste
+Siguiente
+sin escoger grupo.
+Elige provincia, localidad y grupo.
+"El grupo origen no puede ser igual al grupo destino."
+Escogiste el grupo en el que ya estás.
+Elige otro grupo.
+"Ya existe una solicitud previa.. consulta al validador de la solicitud."
+Ya tienes una solicitud en trámite (o una vieja que nunca se cerró).
+Pregunta a tu Jefe de Grupo o Presidente de Provincia en qué va. Si nadie la ve, escribe al helpdesk con tu CUM y la fecha en que la enviaste.
+"El miembro cuenta con una sanción vigente que no permite solicitar un cambio de grupo."
+Tienes una sanción activa.
+Hasta que termine la sanción no se puede. Si crees que es un error, escribe al helpdesk con tu CUM.
+La lista de
+Localidad
+o
+Grupo
+se queda vacía
+Esa provincia o localidad no tiene grupos activos, o falló la carga.
+Vuelve a escoger la provincia. Si sigue vacía, confirma con el grupo destino su provincia y localidad exactas.
+"Ya lo aprobó el Presidente de Provincia pero sigo en mi grupo"
+La aprobación del Presidente de Provincia es una de cuatro. Faltan el Jefe de Grupo de tu grupo actual y los dos del grupo destino. El cambio solo se aplica cuando validan los dos del destino.
+Pide a tu Jefe de Grupo actual que valide. Si ya pasó la etapa de origen, pide al Jefe de Grupo y al Presidente de Provincia del grupo destino que entren a sus notificaciones y validen. Si ya te llegó "El cambio de grupo fue validado." y aun así sigues en el grupo anterior, escribe al helpdesk con tu CUM: ese caso lo tiene que revisar el administrador.
+"El cambio de grupo fue rechazado." sin que nadie lo rechazara
+Pasaron 15 días desde que se aprobó en tu grupo actual y nadie del grupo destino validó. SISAS lo rechazó en automático.
+Habla con el Jefe de Grupo del grupo destino para que esta vez sí atienda la notificación, y envía la solicitud de nuevo.
+Cuando escribas al helpdesk incluye: tu CUM, el grupo al que quieres ir, la fecha en que enviaste la solicitud y el mensaje exacto que te salió.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Puedo cambiarme a un grupo de otra provincia?
+Sí. La lista de
+Provincia
+muestra todas las provincias activas.
+¿Cuánto tarda?
+Depende de que cuatro personas atiendan su notificación. El límite que pone SISAS es 15 días por etapa: si el origen no responde, se aprueba solo; si el destino no responde, se rechaza solo.
+¿Pierdo mi sección o mis insignias?
+Tu sección y progresión no se tocan en este trámite. Lo que sí se cierra son los cargos y calidades que tenías en el grupo anterior; quedan en tu historial.
+¿Puedo hacer la solicitud por mi hijo o hija?
+Sí, entrando con su cuenta. El trámite es el mismo.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+11
+Categoría:
+Cambios de Grupo
+Fecha de alta:
+2026-10-11 10:07:58
+Vistas:
+19
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Jefe de Grupo: aprobar o rechazar un cambio de grupo
+Mi perfil está en validación: qué significa y qué puedo hacer
+Cómo registrar mis avances: progresión, especialidades e insignias
+Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes
+Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

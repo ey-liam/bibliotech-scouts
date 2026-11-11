@@ -1,0 +1,363 @@
+GUÍA OFICIAL HELP DESK ASMAC: Cómo completar o corregir mis datos (mi ficha al 100 %)
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=18
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Mi ficha y credencial
+Cómo completar o corregir mis datos (mi ficha al 100 %)
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Cómo completar o corregir mis datos (mi ficha al 100 %)
+Con esto llenas o corriges tu ficha en SISAS (foto, domicilio, contacto de emergencia, salud) y la mandas a que tu jefe la valide. Llenarla toma unos 15 minutos. Llegar al 100 % depende de que alguien la valide, no de ti.
+El círculo con el porcentaje que ves al entrar no cuenta campos: marca si tu ficha ya fue
+validada
+o no. Con todo lleno pero sin validar te quedas en 90 % y con el aviso "¡Tu cuenta no esta completa!". Cuando tu jefe la valida pasa a 100 % y dice "¡Tu cuenta esta completa!". Mientras estés en 90 %, SISAS no te deja abrir ningún otro módulo.
+Antes de empezar
+Una foto tuya, de frente, en la que solo salga tu cara. JPG o PNG, máximo 3 MB. SISAS la revisa y rechaza fotos sin rostro, con más de una persona o que no sean una foto real.
+Tu domicilio con código postal.
+Nombre, teléfono y correo de tu tutor o contacto de emergencia.
+Tus datos de salud: peso, estatura, tipo de sangre y factor RH, seguro médico, alergias, medicamentos y las fechas de tus vacunas.
+Si eres menor de edad: la
+Contraseña de autorización
+de tu tutor (10 caracteres). SISAS la pide antes de dejarte editar. Si eres papá o mamá, entras con la cuenta de tu hijo o hija y usas tu contraseña.
+Tu nombre, apellidos, CURP, fecha de nacimiento, CUM y correo no se pueden cambiar desde aquí. Si alguno está mal, ve a "Si algo falla".
+Pasos
+Entra a
+SISAS. En la pantalla de inicio haz clic en el círculo con el porcentaje (el recuadro que dice "¡Tu cuenta no esta completa!" o "Ver / Actualizar tu información"). También puedes ir arriba a la derecha a
+Hola, [tu nombre]
+y elegir
+Mis datos
+. Se abre la pantalla
+Perfil
+.
+Si eres menor de edad y tu tutor ya tiene correo registrado, antes de ver tus datos sale el aviso "Para realizar cambios en tu perfil necesitaremos validar la Contraseña de autorización de tu tutor..". Escribe los 10 caracteres en
+Contraseña de autorización:
+y haz clic en
+Editar información
+. Si solo quieres ver tus datos,
+Sólo deseo consultar mi información
+. Si tu tutor la olvidó,
+Restablecer la contraseña de autorización
+le manda un correo para crear una nueva.
+La ficha tiene cinco pestañas en orden:
+Datos Personales
+,
+Datos de contacto
+,
+Curriculum scout
+,
+Ficha de salud
+y
+Seguridad
+. Avanzas con
+Siguiente
+y regresas con
+Regresar
+. No puedes brincar de pestaña haciendo clic arriba.
+Salir
+te pregunta "¿Estás seguro de salir? La información se guardará parcialmente." y te regresa al inicio.
+En
+Datos Personales
+, sube tu foto: haz clic en la imagen o en
+Cambiar imagen
+, confirma "Se cambiará la imagen de tu perfil ¿deseas continuar?" con
+Continuar
+y elige el archivo. Verás "Verificando tu foto.. Si durante la revisión detectamos que NO es tu foto real, tú o tu grupo podrían ser sancionados." Espera unos segundos; si la foto pasa, se queda en pantalla. La foto se guarda en ese momento, no hace falta nada más.
+Llena el resto de
+Datos Personales
+. Obligatorios:
+Género
+,
+Religión
+,
+Escolaridad
+,
+Su alimentación incluye carne
+,
+Ocupación
+,
+Teléfono
+(10 dígitos) y el domicilio:
+Calle
+,
+Número
+,
+Código Postal
+,
+Estado
+,
+Municipio
+y
+Colonia
+. Al escribir el código postal SISAS llena estado, municipio y colonia; tú solo eliges la colonia.
+Estado Civil
+y
+Lugar de trabajo
+son opcionales. Haz clic en
+Siguiente
+. Si cambiaste algo sale "Se realizaron cambios":
+Guardar y continuar
+guarda,
+Continuar sin Guardar
+pasa a la siguiente pestaña sin guardar.
+En
+Datos de contacto
+hay dos bloques.
+Datos del Tutor / Emergencia
+es obligatorio:
+Nombre
+,
+Primer apellido
+,
+Parentesco
+,
+Teléfono
+y
+Correo
+(el segundo apellido no). Si eres menor también aparece
+Celular/WhatsApp
+. En
+Datos de contacto
+(una segunda persona) solo el
+Correo
+es obligatorio. Haz clic en
+Siguiente
+y, si cambiaste algo,
+Guardar y continuar
+. El aviso dice "De guardar y continuar, tus datos se enviaran a validar y no podrás navegar en el sistema hasta que sean aprobados."; suena drástico, pero guardar esta pestaña por sí sola no manda nada a validar. Lo que manda la ficha a validación es el botón del final (paso 10).
+Curriculum scout
+muestra tus datos scout (
+Miembro desde
+,
+Vigencia
+,
+Sección
+,
+Provincia
+,
+Grupo/Localidad
+, cargos, calidades, reconocimientos, cursos). Son de consulta; tu sección y tus cargos los maneja tu Jefe de Grupo, no los cambies aquí. Haz clic en
+Siguiente
+. Desde aquí también puedes
+Imprimir Curriculum
+.
+En
+Ficha de salud
+son obligatorios
+Peso (Kg)
+,
+Estatura (cm)
+,
+Tipo de sangre
+,
+Factor RH
+y
+¿Sabes nadar?
+. Marca tu seguro médico (IMSS, ISSSTE, SEGURO POPULAR,
+Otro seguro médico
+, aseguradora particular con
+Número de Poliza
+), y llena alergias, tratamientos y vacunas. En
+Vacunación
+, a cada vacuna que marques ponle la fecha: "ES NECESARIO COLOCAR LA FECHA DE APLICACIÓN EN LA VACUNA SELECCIONADA". Haz clic en
+Siguiente
+y
+Guardar y continuar
+.
+Al llegar a
+Seguridad
+sale "Datos Guardados. Si sólo actualizaste tus datos de la Ficha de Salud, Favor de hacer clic en Salir". Haz clic en
+Aceptar
+. Si solo viniste a actualizar salud, teléfono o contacto, aquí puedes usar
+Salir
+: lo que guardaste ya quedó y tu ficha no se va a validación. Si vienes a completar la ficha por primera vez, o a corregir lo que te rechazaron, sigue al paso 10.
+En
+Seguridad
+, si eres mayor de edad ves tu
+Contraseña de autorización
+tapada con puntos (el ojo la muestra). En
+Detalles/Observaciones
+puedes dejarle un comentario a quien valida; no es obligatorio. Si ya te habían rechazado la ficha, aquí abajo aparece
+Detalles/Observaciones(Validador)
+con el motivo. Haz clic en el botón verde de abajo,
+Guardar datos
+.
+Sale "Estamos validando tu Información, este paso puede demorar un poco, te notificaremos vía correo cuando esté lista para continuar." Haz clic en
+Aceptar
+y SISAS te regresa al inicio. Desde ese momento tu ficha está en validación.
+Qué pasa después
+Tu ficha le llega como notificación (la campana de SISAS) a tu jefe inmediato: el jefe de tu sección (Akela, Jefe de Tropa, de Comunidad o de Clan) y tu Jefe de Grupo. También la pueden validar el Subjefe de Grupo, el Presidente de Provincia y Nacional. Con que uno de ellos la valide es suficiente.
+Mientras la validan, SISAS te bloquea: al entrar te sale "Tu información se está validando." y al dar
+Aceptar
+te cierra la sesión. El menú tampoco responde. Si intentas abrir un módulo por la dirección directa te regresa al inicio de sesión con "Se perdió la comunicación con el servidor, vuelva a ingresar al sistema.". Es normal; no es una falla.
+Cuánto tarda depende de que tu jefe entre a SISAS y atienda la notificación. No hay un límite ni validación automática: si nadie la atiende, se queda ahí.
+Si la
+validan
+: te llega un correo ("Tu Perfil fue validado") y una notificación en la campana que al abrirla dice "Tu perfil fue validado.". Tu círculo pasa a 100 % con "¡Tu cuenta esta completa!" y ya puedes usar todos los módulos. Si subiste foto nueva, hasta este momento se vuelve tu foto oficial (en tu credencial y donde te busquen); antes de eso se sigue viendo la anterior.
+Si la
+rechazan
+: te llega un correo ("Tu Perfil fue rechazado, ingresa al sistema y valida la información.") y al entrar a SISAS sale "Tu perfil fue rechazado, para seguir navegando en el sistema debes editar tu información y enviarla a validación nuevamente.". Haz clic en
+Editar información
+(o
+Salir del sistema
+). Se abre tu ficha; el motivo del rechazo está en la pestaña
+Seguridad
+, en
+Detalles/Observaciones(Validador)
+. Corrige lo que te pidieron, vuelve a pasar por las pestañas y manda de nuevo con el botón final. Si subiste foto, el rechazo la borra: tienes que volver a subirla.
+Qué manda tu ficha a validación y qué no:
+- El botón final de la pestaña
+Seguridad
+(paso 10)
+siempre
+la manda a validación, hayas cambiado algo o no.
+- Guardar una pestaña con
+Guardar y continuar
+y después irte con
+Salir
+no la manda: el dato queda guardado y sigues navegando normal. Sirve para teléfono, domicilio, contacto de emergencia y ficha de salud.
+- La foto nueva se guarda al momento, pero solo se vuelve oficial cuando validan tu ficha. Si cambias la foto, tienes que mandar a validar.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+"Completa/Actualiza los datos de tu Perfil." al entrar o al hacer clic en el menú
+Tu ficha no está validada (estás en 90 %). Pasa aunque tengas todo lleno.
+Entra a tu ficha, pasa por las cinco pestañas y manda con el botón final de
+Seguridad
+. Si ya lo hiciste, tu jefe todavía no la valida: ve "Mi jefe no me valida".
+"Tu información se está validando." y al dar
+Aceptar
+se cierra la sesión
+Ya la mandaste y nadie la ha validado.
+Espera. Avísale a tu jefe de sección o Jefe de Grupo que tiene la notificación pendiente.
+"Se perdió la comunicación con el servidor, vuelva a ingresar al sistema."
+Tu ficha está en validación o rechazada y trataste de abrir un módulo. No es una falla de internet.
+Vuelve a entrar. Hasta que validen solo puedes ver el inicio y tu ficha.
+"Tu perfil fue rechazado, para seguir navegando en el sistema debes editar tu información y enviarla a validación nuevamente."
+Quien revisó encontró algo mal.
+Editar información
+, lee el motivo en
+Seguridad
+→
+Detalles/Observaciones(Validador)
+, corrige y manda de nuevo.
+"La foto pesa más de 3 MB, favor de subir una más ligera :] "
+El archivo es muy grande.
+Redúcela (una foto de celular normal cabe; evita las de cámara profesional) y vuelve a subirla.
+"Verificar el formato de archivo. Sólo se permiten imágenes con extensión JPG o PNG."
+El archivo no es JPG ni PNG (por ejemplo HEIC del iPhone o PDF).
+Conviértela a JPG o PNG.
+"No se detectó un rostro válido. Debes usar otra fotografía con el rostro visible."
+SISAS no encontró una cara en la foto.
+Foto de frente, con luz, sin lentes oscuros ni cubrebocas, sin filtros ni caricaturas.
+"Se detectó más de un rostro. Debes usar otra fotografía con sólo tu rostro visible."
+Hay más de una persona en la foto.
+Recórtala para que solo salgas tú.
+"Se produjo un error al actualizar la imagen."
+Falló el guardado de la foto.
+Intenta de nuevo con otra foto. Si sigue, escribe al helpdesk con tu CUM.
+"La imagen es obligatoria" al dar
+Siguiente
+No tienes foto.
+Sube tu foto antes de avanzar.
+"El código postal no existe."
+El código postal no está en el catálogo de SISAS.
+Revisa que sean 5 dígitos correctos. Si es correcto y aun así no lo encuentra, escribe al helpdesk con tu CUM, el código postal y la colonia.
+"El campo [nombre] es obligatorio." al dar el botón final
+Dejaste un campo obligatorio vacío en alguna pestaña.
+Regresa a esa pestaña y llénalo.
+"Se produjo un error al guardar el registro."
+Falló el guardado de la pestaña.
+Vuelve a dar
+Siguiente
+y
+Guardar y continuar
+. Si se repite, escribe al helpdesk con tu CUM y la pestaña donde pasó.
+"La Contraseña de autorización no es válida." o "Es necesario escribir los 10 caracteres de la Contraseña de autorización."
+La contraseña del tutor está mal o incompleta (son 10 caracteres, distingue mayúsculas).
+Pídesela a tu tutor. Si no la recuerda,
+Restablecer la contraseña de autorización
+le manda un correo para crear otra.
+"Hemos enviado información importante al correo del tutor o responsable, verifica el contenido para continuar con el proceso."
+SISAS le mandó un correo a tu tutor (al
+Correo
+de
+Datos del Tutor / Emergencia
+) para que autorice.
+Que tu tutor revise su correo, también en spam, y siga el enlace.
+"El CURP no coincide."
+Sale en el registro inicial. SISAS calcula el CURP con tu nombre, apellidos, fecha de nacimiento, sexo y estado, y lo compara con el que escribiste. No consulta RENAPO.
+Revisa que nombre y apellidos estén escritos igual que en tu CURP (acentos no, pero sí letras y orden) y que la fecha de nacimiento y el sexo sean los correctos.
+Mi nombre, CURP o fecha de nacimiento están mal y no me deja cambiarlos
+Esos campos son de solo lectura en tu ficha.
+Escribe al helpdesk con tu CUM, el dato correcto y una foto de tu CURP o acta.
+"Mi jefe no me valida"
+La notificación está en su campana y no la ha atendido.
+Primero díselo directo. Si no responde, escribe al helpdesk con: tu CUM, tu grupo y provincia, el nombre de tu jefe de sección o de grupo y la fecha en que mandaste la ficha.
+"Cambié un dato y me volvió a bloquear"
+Diste el botón final de
+Seguridad
+. Ese botón siempre manda a validar.
+Espera la validación. La próxima vez que solo actualices salud, teléfono o contacto:
+Guardar y continuar
+en esa pestaña y luego
+Salir
+, sin llegar al botón final.
+"Los datos de este miembro no pueden ser mostrados."
+Tu cuenta está suspendida.
+Escribe al helpdesk con tu CUM.
+Cuando escribas al helpdesk incluye: tu CUM, en qué pestaña estabas, el mensaje exacto que te salió y, si es por validación, la fecha en que mandaste la ficha.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+Tengo todo lleno y sigo en 90 %. ¿Qué me falta?
+Nada que llenar. El 90 % significa "sin validar". Tu jefe tiene que entrar a SISAS y validarla; hasta entonces el círculo no cambia.
+¿Puedo llenar la ficha de mi hijo o hija?
+Sí, entrando con su cuenta. Si ya registraste tu correo como tutor, SISAS te pide tu
+Contraseña de autorización
+antes de dejarte editar.
+Cambié mi foto y se sigue viendo la anterior.
+La foto nueva se vuelve oficial hasta que validan tu ficha. Si solo cambiaste la foto y saliste sin dar el botón final, nadie la va a validar: entra de nuevo, pasa las pestañas y manda.
+¿Puedo cambiar mi sección o mi cargo desde aquí?
+No. Eso lo hace tu Jefe de Grupo. Si te deja mover la
+Sección
+en
+Curriculum scout
+, no lo hagas.
+¿Me van a avisar por correo?
+Sí, tanto si validan como si rechazan. Y también en la campana de notificaciones de SISAS.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+18
+Categoría:
+Mi ficha y credencial
+Fecha de alta:
+2026-10-11 12:54:35
+Vistas:
+15
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Mi perfil está en validación: qué significa y qué puedo hacer
+Mi credencial: cómo descargar la digital y seguir la física
+Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)
+Cómo entrar a SISAS (y qué ves al entrar)
+Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

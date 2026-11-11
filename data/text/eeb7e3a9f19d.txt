@@ -1,0 +1,40 @@
+DOCUMENTO OFICIAL ASMAC: Carta P10.7 — Conclusión de Acompañamiento Formativo (No Acreditado)
+Archivo: P10.7_Carta_de_Conclusion_de_acompanamiento_formativo_ No_acreditado.pdf
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto1.0.0: Nombre de la persona cursante
+    Texto1.1.0: CLAC del curso
+    Texto1.1.1.1.0: Nombre completo del FAR
+    Texto1.1.1.1.1: Nombre del/a Director/a
+    Fecha3_af_date: 28/1/26
+    Texto5: MOTIVOS DE INCUMPLIMIENTO (AUSENCIAS MAYOR AL PORCENTAJE, NO ENTREGA DE EVIDENCIAS)
+
+--- Página 1 ---
+
+Consejo de Nivel
+P R E S E N T E
+Por medio de la presente, hago constar que ha concluido de manera satisfactoria el proceso
+de acompañamiento formativo en mi carácter de Formador Acompañante Responsable (FAR)
+de                                                       , quien participó en el Curso Insignia de Madera
+con CLAC:                                     bajo la Direccion de
+No obstante, al concluir el periodo establecido para el acompañamiento, se determina que la
+persona cursante  no  logró  cumplir  en  su  totalidad  con  los  requisitos  del  proceso
+formativo, por  lo  que  no  es  posible,  proceder  con  el  trámite  de  certificación
+correspondiente.
+Los motivos del incumplimiento son los siguientes:
+Es importante  señalar  que  esta  determinación  no  invalida  el  esfuerzo  realizado  ni  el
+aprendizaje alcanzado durante el curso, sino que responde al carácter formativo y normativo
+del proceso de certificación. El desarrollo de competencias es un camino progresivo, y cada
+etapa aporta elementos valiosos para el crecimiento personal y scout.
+Se invita  a  la  persona  cursante  a  continuar  su proceso  de  formación  en  una  próxima
+oportunidad, retomando los aprendizajes adquiridos y fortaleciendo  aquellos aspectos que
+quedaron pendientes, con la certeza de que el Movimiento Scout valora la perseverancia, el
+compromiso y la mejora continua de sus adultos voluntarios.
+Siempre Listo/a para Servir
+Formador Acompañante Responsable (FAR)
+Curso Insignia de Madera 3.0
+Asociación de Scouts de México, A.C.
+C.c.p. Vicepresidencia de Métodos Educativos.
+C.c.p. Dirección del Curso
+Fecha:

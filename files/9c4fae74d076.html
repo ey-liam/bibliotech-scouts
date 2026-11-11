@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes — BiblioTech Scout</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --ink: #0f172a;
+      --muted: #475569;
+      --accent: #6d28d9;
+      --accent-soft: #ede9fe;
+      --border: #dbeafe;
+      --warn-bg: #fff7ed;
+      --warn-border: #fdba74;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #080414;
+        --card: #120b26;
+        --ink: #f8fafc;
+        --muted: #cbd5e1;
+        --accent: #a855f7;
+        --accent-soft: rgba(168, 85, 247, 0.18);
+        --border: rgba(139, 92, 246, 0.35);
+        --warn-bg: rgba(245, 158, 11, 0.12);
+        --warn-border: rgba(251, 191, 36, 0.45);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px 48px;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 26px;
+      margin-bottom: 18px;
+    }
+    .crumbs {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 1.55rem;
+      line-height: 1.28;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .pill {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .src {
+      margin: 10px 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      word-break: break-all;
+    }
+    .card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 26px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+      color: var(--accent);
+    }
+    h3 {
+      margin: 16px 0 6px;
+      font-size: 1rem;
+    }
+    p, li {
+      font-size: 0.96rem;
+    }
+    ul, ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--accent-soft);
+      font-weight: 800;
+    }
+    .note {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+    figure {
+      margin: 16px 0;
+      padding: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: center;
+    }
+    figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    figcaption {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    code {
+      background: var(--accent-soft);
+      padding: 1px 5px;
+      border-radius: 5px;
+      font-size: 0.88em;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero-card">
+      <div class="crumbs">Guías SISAS, CONECTA y Soporte Digital • Guía para Jefes de Grupo y Scouters (SISAS)</div>
+      <h1>Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes</h1>
+      <div class="meta">
+        <span class="pill">Guía Oficial Help Desk ASMAC</span>
+        <span>Corte documental: 11 de noviembre de 2026</span>
+      </div>
+      <p class="src">Fuente oficial de referencia: <code>https://helpdesk.scouts.org.mx/knowledgebase.php?article=26</code></p>
+    </header>
+    <section class="card">
+<p>Help Desk de la Asociacion de Scouts de Mexico</p>
+<p>Español</p>
+<p>English</p>
+<p>Español</p>
+<p>Español</p>
+<p>English</p>
+<p>Help Desk de la Asociacion de Scouts de Mexico</p>
+<p>Base de Conocimientos (KB)</p>
+<p>Para Jefes de Grupo</p>
+<p>Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes</p>
+<p>Buscar</p>
+<p>artículos sugeridos de la base de conocimiento (KB):</p>
+<p>Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes</p>
+<p>Esta guía es para los</p>
+<p>scouters que son jefes de sección</p>
+<p>(Akela, Jefe de Tropa, Jefe de Comunidad, Consejero Rover). Un Jefe de Grupo que no tenga además cargo de jefe de sección ve &quot;Acceso restringido&quot; en Reporte Scouter: para validar, hay que tener el cargo de la sección. Aplica también a cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia) solo si tienen ese cargo de sección.</p>
+<p>Tus jóvenes registran sus avances desde su cuenta (ver la guía</p>
+<p>Cómo registrar mis avances: progresión, especialidades e insignias</p>
+<p>). Tú los revisas en</p>
+<p>Reporte Scouter</p>
+<p>: ves lo que capturaron, les escribes comentarios y decides si les asignas la insignia, se las regresas para que corrijan, o se las retiras. Validar una insignia toma un par de minutos por joven.</p>
+<p>Antes de empezar</p>
+<p>Tener un cargo vigente en SISAS que te dé el menú de</p>
+<p>Administrador</p>
+<p>(jefe de sección, Jefe de Grupo o superior). Sin cargo vigente no aparece el módulo.</p>
+<p>Si eres scouter de sección, tienes que estar registrado en SISAS como</p>
+<p>jefe de esa sección</p>
+<p>de tu grupo (eso lo hace el Jefe de Grupo en la sección). Si no estás registrado, no te llegan las notificaciones y solo puedes abrir a los jóvenes de la sección que tengas asignada.</p>
+<p>La solicitud del joven tiene que estar enviada a validar. Si él solo guardó sin enviar, el botón</p>
+<p>Asignar</p>
+<p>sale gris.</p>
+<p>Pasos</p>
+<p>Cambiar al menú de Administrador</p>
+<p>Entra a SISAS. Arriba a la derecha haz clic en</p>
+<p>Hola, [tu nombre]</p>
+<p>y luego en</p>
+<p>Administrador</p>
+<p>. Te lleva al tablero con los indicadores (MEMBRESIA VIGENTE, IDO&#x27;S OBTENIDAS EN EL AÑO, RECONOCIMIENTOS ENTREGADOS, etc.) y el menú de la izquierda cambia a los módulos de gestión.</p>
+<p>Para regresar a tu propia manga, en el mismo menú la opción ahora dice</p>
+<p>Mi Perfil</p>
+<p>.</p>
+<p>Cómo te enteras de que hay algo por validar</p>
+<p>Cuando un joven de tu sección envía un avance, te llega una notificación en la campana de SISAS: &quot;Nueva progresión&quot;, &quot;Nueva especialidad&quot;, &quot;Nueva competencia&quot;, &quot;Nuevo IDS&quot; o &quot;Nueva insignia&quot; (VAL), con el nombre del joven.</p>
+<p>Haz clic en la campana y en</p>
+<p>Ver</p>
+<p>de la notificación.</p>
+<p>Sale un aviso &quot;El usuario [nombre] obtuvo una nueva insignia.&quot; (o &quot;obtuvo un nuevo IDS.&quot;) con el botón</p>
+<p>Validar</p>
+<p>. Haz clic en</p>
+<p>Validar</p>
+<p>y SISAS abre directo el</p>
+<p>Reporte Scouter</p>
+<p>de ese joven, ya posicionado en la insignia que envió.</p>
+<p>La notificación le llega al jefe de la sección del joven registrado en SISAS (si la sección está dividida en equipos, al jefe de su equipo). Si el grupo no tiene jefe de sección registrado, le llega al Jefe de Grupo. Si no hay ninguno de los dos, no le llega a nadie: por eso importa tener bien registrados los cargos de sección.</p>
+<p>Abrir el Reporte Scouter sin notificación</p>
+<p>También puedes entrar por tu cuenta, por ejemplo para revisar a toda la sección o si la notificación ya se perdió.</p>
+<p>En el menú de la izquierda haz clic en</p>
+<p>Reporte Scouter</p>
+<p>(icono del globo terráqueo). Se abre una pantalla con filtros.</p>
+<p>Elige la</p>
+<p>Sección</p>
+<p>(es obligatorio; si no eliges sale &quot;Es necesario seleccionar una sección&quot;). Si tu cargo es de provincia o nacional también puedes filtrar por</p>
+<p>Provincia</p>
+<p>,</p>
+<p>Localidad</p>
+<p>y</p>
+<p>Grupo</p>
+<p>.</p>
+<p>Haz clic en</p>
+<p>Buscar</p>
+<p>. Sale la tabla con los jóvenes de esa sección a los que tienes acceso: Provincia, Localidad, Grupo, Nombre, CUM, CURP, Fecha de nacimiento y una columna por cada insignia de la sección (etapas, especialidades por color, IDS, VAL, Mundo mejor). Cada celda dice si el joven tiene esa insignia y el color de fondo te dice en qué va:</p>
+<p>amarillo</p>
+<p>= enviada a validar (te toca a ti),</p>
+<p>verde</p>
+<p>= validada,</p>
+<p>rojo</p>
+<p>= iniciada pero sin enviar.</p>
+<p>Arriba de la tabla hay cuadros de búsqueda por columna.</p>
+<p>En la columna</p>
+<p>Reporte</p>
+<p>haz clic en</p>
+<p>Ir</p>
+<p>del joven que quieras revisar.</p>
+<p>Exportar</p>
+<p>descarga la misma tabla en Excel.</p>
+<p>Qué muestra el Reporte Scouter de un joven</p>
+<p>Arriba ves el nombre del joven, su</p>
+<p>Provincia</p>
+<p>,</p>
+<p>Grupo - Localidad</p>
+<p>y un carrusel de</p>
+<p>Pendientes</p>
+<p>: cada pendiente es algo que el joven envió y no has atendido, con el formato &quot;Progresiones - Tropa - Pista&quot;, &quot;Especialidades - Manada - Deportes&quot;, &quot;Competencias - Clan -..&quot;, &quot;IDS - Tropa -..&quot;, &quot;Vida al aire libre - Comunidad -..&quot; o &quot;Mundo mejor -..&quot;. Haz clic en un pendiente y se carga abajo.</p>
+<p>Si prefieres navegar a mano: elige</p>
+<p>Sección</p>
+<p>,</p>
+<div class="note">Tipo</div>
+<p>(Progresiones, Especialidades, IDS, VAL; Mundo mejor solo lo ven cargos nacionales; en Clan no aparece IDS) e</p>
+<p>Insignia</p>
+<p>.</p>
+<p>Solo puedes validar en la sección actual del joven. Si en</p>
+<p>Sección</p>
+<p>eliges otra, puedes ver lo que tenga de esa sección pero todos los botones quedan grises.</p>
+<p>Validar una etapa de progresión</p>
+<p>Con la etapa cargada, arriba ves</p>
+<p>Insignia correspondiente</p>
+<p>con el nombre de la etapa y su imagen (a color si ya la tiene, en gris si no). En Clan, en vez del nombre fijo hay una lista para elegir el nombre del Campo de Acción, el botón</p>
+<p>Actualizar</p>
+<p>y el enlace de</p>
+<p>Evidencia</p>
+<p>que el joven pegó (haz clic para abrirlo en otra pestaña).</p>
+<p>Abajo vienen las tarjetas por</p>
+<p>Área de crecimiento</p>
+<p>(personajes en Manada) con cada objetivo: el número, el nivel que marcó el joven (las huellas o iconos), el texto del objetivo (</p>
+<p>Territorio a conquistar</p>
+<p>), lo que escribió el joven (</p>
+<p>Comentarios muchacho</p>
+<p>), tu cuadro</p>
+<p>Comentarios scouter</p>
+<p>, la</p>
+<p>Fecha de revisión</p>
+<p>y un botón</p>
+<p>Guardar</p>
+<p>por objetivo. El botón</p>
+<p>Guardar</p>
+<p>de la cabecera guarda todos tus comentarios de una vez (&quot;¿Estás seguro de guardar todos los comentarios?&quot; → &quot;Se guardaron los comentarios correctamente.&quot;).</p>
+<p>Escribe en</p>
+<p>Comentarios nivel validador(no visibles para el usuario)</p>
+<p>(arriba a la derecha). Es obligatorio para cualquier acción y pide mínimo 15 caracteres: es tu nota interna, el joven no la ve.</p>
+<p>Elige qué hacer:</p>
+<p>Asignar</p>
+<p>: confirma en &quot;¿Estás seguro de asignar la insignia?&quot;. La insignia queda validada y a color en la manga del joven.</p>
+<p>En revisión</p>
+<p>: regresa la etapa al joven para que la corrija. Antes de poder hacerlo tienes que escribir un comentario de al menos 15 caracteres en</p>
+<p>Comentarios scouter</p>
+<p>de</p>
+<p>todos</p>
+<p>los objetivos de la etapa; si falta alguno sale &quot;Debes ingresar un comentario de al menos 15 caracteres en los comentarios para el usuario.&quot;. Confirma en &quot;¿Deseas regresar la solicitud para su revisión y en su caso corrección, al solicitante?&quot;. Los objetivos que el joven tenía en el nivel máximo bajan un nivel para que los retrabaje.</p>
+<p>Retirar</p>
+<p>: solo aparece cuando la insignia ya está validada. Confirma en &quot;¿Estás seguro de retirar la insignia?&quot;.</p>
+<p>Verás &quot;La insignia se asignó correctamente.&quot; (o &quot;se envió a revisión&quot; / &quot;se retiró&quot;) y la pantalla se recarga.</p>
+<p>Validar una especialidad o competencia</p>
+<p>Carga</p>
+<p>Especialidades</p>
+<p>(o</p>
+<p>Competencias</p>
+<p>) y el área. Ves la insignia del área y las mini-tarjetas de cada especialidad del joven con su porcentaje; la que está enviada a validar trae la etiqueta</p>
+<p>Por Validar</p>
+<p>. Los cuadros con</p>
+<p>+</p>
+<p>son espacios vacíos (el joven aún no inicia esa especialidad).</p>
+<p>Haz clic en la mini-tarjeta. A la derecha se abre el detalle:</p>
+<p>Nombre</p>
+<p>,</p>
+<p>Porcentaje de avance</p>
+<p>, los textos de</p>
+<p>Conozco</p>
+<p>,</p>
+<p>Aplico</p>
+<p>y</p>
+<p>Comparto</p>
+<p>(en Comunidad y Clan los nombres largos de cada paso), el enlace de</p>
+<p>Evidencias</p>
+<p>, la</p>
+<p>Fecha</p>
+<p>de inicio y fin, y tu cuadro</p>
+<p>Comentario scouter</p>
+<p>con su botón</p>
+<p>Guardar</p>
+<p>(&quot;Se guardó el comentario correctamente.&quot;).</p>
+<p>Escribe</p>
+<p>Comentarios nivel validador(no visibles para el usuario)</p>
+<p>(mínimo 15 caracteres).</p>
+<p>Asignar</p>
+<p>le da al joven el siguiente color de insignia de esa área.</p>
+<p>En revisión</p>
+<p>se la regresa (exige tu</p>
+<p>Comentario scouter</p>
+<p>de al menos 15 caracteres).</p>
+<p>Retirar</p>
+<p>solo sale si la insignia que ves es la que el joven ya tiene.</p>
+<p>Validar un reto de IDS</p>
+<p>Las IDS se validan reto por reto.</p>
+<p>Carga</p>
+<p>IDS</p>
+<p>y la insignia. Ves la tarjeta de la insignia con sus retos; cada reto trae su porcentaje y un icono: prohibido = &quot;El scout aun no ha registrado ninguna actividad.&quot;, ojo = puedes leerlo pero no está enviado, botón</p>
+<p>Validar</p>
+<p>= el joven ya lo envió (90 %).</p>
+<p>Haz clic en</p>
+<p>Validar</p>
+<p>(o en el ojo). A la derecha se abre el reto con las acciones de</p>
+<p>Inspirarse</p>
+<p>,</p>
+<p>Aprender y decidir</p>
+<p>y</p>
+<p>Tomar acción</p>
+<p>, el enlace</p>
+<p>Ver Evidencia(s)</p>
+<p>y tu cuadro</p>
+<p>Comentario scouter</p>
+<p>con</p>
+<p>Guardar Comentario</p>
+<p>.</p>
+<p>Escribe</p>
+<p>Comentarios nivel validador(no visibles para el usuario)</p>
+<p>(mínimo 15 caracteres) en la tarjeta de la insignia.</p>
+<p>Validar área</p>
+<p>aprueba ese reto.</p>
+<p>En revisión</p>
+<p>se lo regresa al joven (exige tu</p>
+<p>Comentario scouter</p>
+<p>). Cuando todos los retos de la insignia están validados, el joven la ve a color.</p>
+<p>Retirar</p>
+<p>(en la tarjeta de la insignia) quita la insignia completa y le regresa todos los retos para editar.</p>
+<p>Validar Vida al aire libre (VAL)</p>
+<p>Carga</p>
+<p>VAL</p>
+<p>y la insignia (amarilla, verde, azul o roja). Ves</p>
+<p>Mínimos técnicos</p>
+<p>y, si ya los tiene,</p>
+<p>Destrezas</p>
+<p>, con las casillas tal como las marcó el joven. Aquí no puedes marcar ni desmarcar nada: solo lectura. En Clan ves la URL de evidencia de cada destreza.</p>
+<p>Escribe tu</p>
+<p>Comentario scouter</p>
+<p>abajo y haz clic en</p>
+<p>Guardar</p>
+<p>si quieres dejárselo sin decidir todavía.</p>
+<p>Escribe</p>
+<p>Comentarios nivel validador(no visibles para el usuario)</p>
+<p>y usa</p>
+<p>Asignar</p>
+<p>,</p>
+<p>En revisión</p>
+<p>(exige el</p>
+<p>Comentario scouter</p>
+<p>de 15 caracteres) o</p>
+<p>Retirar</p>
+<p>, igual que en progresión.</p>
+<p>Mundo mejor</p>
+<p>Las insignias de Mundo mejor no las valida el scouter ni el Jefe de Grupo: las atiende el equipo de Mundo Mejor de Nacional. En tu</p>
+<p>Reporte Scouter</p>
+<p>ese tipo no aparece.</p>
+<p>IDO/IT y reconocimientos institucionales</p>
+<p>Las IDO/IT no se asignan desde</p>
+<p>Reporte Scouter</p>
+<p>. Lo que sí puedes hacer desde la tabla de</p>
+<p>Reporte Scouter</p>
+<p>es descargar la</p>
+<p>Solicitud IDO</p>
+<p>(icono de descarga en esa columna): SISAS genera un PDF llamado Solicitud.pdf con la boleta del joven (sus etapas, especialidades, IDS, VAL y evidencias) para tramitarla.</p>
+<p>Los reconocimientos institucionales (condecoraciones, reconocimientos por servicio) son otro módulo: en el menú de Administrador entra a</p>
+<p>Reconocimientos</p>
+<p>, haz clic en</p>
+<p>Crear</p>
+<p>, busca al miembro por</p>
+<p>Id o CUM</p>
+<p>con</p>
+<p>Buscar</p>
+<p>(mínimo 5 caracteres), elige el</p>
+<div class="note">Tipo de Reconocimiento</div>
+<p>, escribe la</p>
+<p>Descripción detallada y/o acciones que hacen merecedor al reconocimiento</p>
+<p>, adjunta el</p>
+<p>Acta de consejo en formato.PDF</p>
+<p>, pon la</p>
+<p>Fecha de sesión del consejo</p>
+<p>(antigüedad máxima 3 meses), marca la casilla de veracidad y haz clic en</p>
+<p>Siguiente</p>
+<p>. Confirma en &quot;¿Deseas enviar la solicitud del reconocimiento?&quot;. La solicitud le llega a Atención a la Membresía en Nacional, que la valida, genera el reconocimiento con folio y código QR y lo marca como entregado; en</p>
+<p>Reconocimientos</p>
+<p>ves el estatus de cada solicitud. Ese flujo merece su propia guía.</p>
+<p>Qué pasa después</p>
+<p>Al joven le llega una notificación en su campana según lo que hiciste: validada, rechazada (en revisión) o retirada. Si validaste, además sale un correo con asunto &quot;Nueva progresión&quot;: en Manada y Tropa va al papá o mamá registrado como tutor; en Comunidad y Clan va al propio joven. Al regresar o retirar no sale correo, solo la notificación.</p>
+<p>Cuando asignas una insignia, al Jefe de Grupo le llega una notificación &quot;El usuario [CUM] [nombre] obtuvo una nueva insignia [nombre].&quot; para que esté enterado y pueda entregar la insignia física.</p>
+<p>Tus comentarios en</p>
+<p>Comentarios scouter</p>
+<p>(por objetivo, por especialidad, por reto o el de VAL) sí los ve el joven en su pantalla. Los de</p>
+<p>Comentarios nivel validador(no visibles para el usuario)</p>
+<p>se quedan en el expediente de la insignia y solo los ve quien entre al Reporte Scouter.</p>
+<p>Buenas prácticas:</p>
+<p>- Al regresar algo a revisión escribe en los comentarios qué falta y cómo corregirlo. Es lo único que el joven recibe; sin eso solo ve que le rechazaron.</p>
+<p>- Usa el comentario de nivel validador para dejar constancia de por qué validaste o retiraste; te lo va a pedir el siguiente scouter o el Jefe de Grupo.</p>
+<p>- Atiende los pendientes del carrusel con regularidad: no hay recordatorios, solo la notificación inicial.</p>
+<p>Si algo falla</p>
+<p>Lo que ves</p>
+<p>Qué significa</p>
+<p>Qué hacer</p>
+<p>No me aparece</p>
+<p>Reporte Scouter</p>
+<p>en el menú</p>
+<p>No estás en el menú de Administrador, o tu cargo no tiene el permiso del módulo, o tu cargo ya no está vigente.</p>
+<p>Cambia a</p>
+<p>Administrador</p>
+<p>en</p>
+<p>Hola, [nombre]</p>
+<p>. Si aun así no sale, pide al Jefe de Grupo que revise tu cargo y su vigencia en tu currículum de SISAS.</p>
+<p>No me llegan las notificaciones de mis jóvenes</p>
+<p>No estás registrado como jefe de esa sección en SISAS (o el joven está en un equipo cuyo jefe es otra persona). La notificación se va al Jefe de Grupo o a nadie.</p>
+<p>Pide al Jefe de Grupo que te asigne como jefe de la sección (y del equipo, si hay división). Mientras tanto entra por</p>
+<p>Reporte Scouter</p>
+<p>→</p>
+<p>Buscar</p>
+<p>y revisa el carrusel de</p>
+<p>Pendientes</p>
+<p>de cada joven.</p>
+<p>Al elegir</p>
+<p>Sección</p>
+<p>en Reporte Scouter solo me sale una (o ninguna)</p>
+<p>Solo ves las secciones en las que estás registrado como jefe o subjefe.</p>
+<p>Si te falta una sección, el Jefe de Grupo tiene que agregarte en ella.</p>
+<p>Página &quot;Ups!! Algo no salió como lo esperabamos&quot; al abrir a un joven</p>
+<p>Intentaste abrir a un joven de una sección que no tienes asignada (pasa al entrar desde una notificación vieja o si el joven cambió de sección).</p>
+<p>Regresa a</p>
+<p>Reporte Scouter</p>
+<p>, busca al joven en su sección actual. Si no tienes esa sección, pídela al Jefe de Grupo o que él lo valide.</p>
+<p>Asignar</p>
+<p>sale gris con el aviso &quot;Para asignar la insignia el usuario debe iniciar el objetivo.&quot;</p>
+<p>El joven no ha capturado nada en esa insignia o no la ha enviado a validar.</p>
+<p>Pídele al joven que complete y envíe desde su cuenta. Tú no puedes capturar por él.</p>
+<p>&quot;Debes ingresar un comentario de al menos 15 caracteres a nivel validador.&quot;</p>
+<p>Falta el comentario interno.</p>
+<p>Escribe al menos 15 caracteres en</p>
+<p>Comentarios nivel validador(no visibles para el usuario)</p>
+<p>.</p>
+<p>&quot;Debes ingresar un comentario de al menos 15 caracteres en los comentarios para el usuario.&quot;</p>
+<p>Quieres regresar a revisión sin comentario para el joven. En progresión tiene que haber comentario en todos los objetivos de la etapa.</p>
+<p>Escribe el comentario (en cada objetivo si es progresión) y vuelve a dar</p>
+<p>En revisión</p>
+<p>.</p>
+<p>Los botones</p>
+<p>Asignar</p>
+<p>/</p>
+<p>En revisión</p>
+<p>/</p>
+<p>Retirar</p>
+<p>se ven grises y no responden</p>
+<p>Cambiaste la</p>
+<p>Sección</p>
+<p>a una que no es la actual del joven, o tu cargo no tiene el permiso específico (asignar, retirar o enviar a revisión).</p>
+<p>Vuelve a la sección actual del joven. Si siguen grises, pide al Jefe de Grupo que revise los permisos de tu cargo.</p>
+<p>&quot;Ocurrio un problema, contacta al administrador del sistema.&quot; al validar</p>
+<p>Falló el guardado en el servidor. En IDS pasa si se validó sin tener abierto el reto.</p>
+<p>En IDS, vuelve a abrir el reto con</p>
+<p>Validar</p>
+<p>y repite. Si se repite, escribe al helpdesk con tu CUM, el CUM del joven, el tipo de insignia y la hora.</p>
+<p>&quot;El usuario debe iniciar el objetivo.&quot; al guardar un comentario</p>
+<p>Intentaste comentar una especialidad o reto que el joven no ha empezado.</p>
+<p>Espera a que el joven lo inicie.</p>
+<p>Validé y el joven no ve la insignia en su manga</p>
+<p>Si lo validaste desde</p>
+<p>Reporte Scouter</p>
+<p>, revisa que el joven esté viendo la manga de su sección actual. Si la especialidad se validó desde otra pantalla puede haber quedado registrada sin activar (falla conocida).</p>
+<p>Pide al joven que recargue su inicio. Si sigue sin verse, escribe al helpdesk con el CUM del joven y el nombre exacto de la especialidad o insignia para que la activen.</p>
+<p>Retiré una insignia por error</p>
+<p>El retiro quita la insignia y le avisa al joven; no hay botón de deshacer.</p>
+<p>Vuelve a cargar la insignia y dale</p>
+<p>Asignar</p>
+<p>de nuevo (el joven recibe otra notificación de validada). Si el botón no aparece, escribe al helpdesk con el CUM del joven y la insignia.</p>
+<p>Validé una progresión y no salió correo al joven o al tutor</p>
+<p>En Manada y Tropa el correo va al tutor registrado; si el joven no tiene tutor en SISAS no se envía nada. Al regresar o retirar nunca sale correo.</p>
+<p>Es normal. La notificación en SISAS sí le llega.</p>
+<p>Cuando escribas al helpdesk incluye: tu CUM y cargo, el CUM del joven, su sección, el tipo (Progresiones, Especialidades, IDS, VAL), el nombre de la insignia y el mensaje exacto.</p>
+<p>Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.</p>
+<p>Preguntas frecuentes</p>
+<h3>¿Puedo capturar o corregir los objetivos del joven?</h3>
+<p>No. Desde Reporte Scouter todo lo del joven es de solo lectura; tú solo escribes comentarios y decides asignar, regresar o retirar. Lo único que editas es el nombre del Campo de Acción en Clan (</p>
+<p>Actualizar</p>
+<p>).</p>
+<p>Soy Jefe de Grupo, ¿puedo validar aunque no sea el scouter de la sección?</p>
+<p>Sí. El Jefe de Grupo ve todas las secciones del grupo en</p>
+<p>Reporte Scouter</p>
+<p>y puede validar. Si el grupo no tiene jefe de sección registrado, las notificaciones te llegan a ti.</p>
+<h3>¿Qué pasa si el joven cambia de sección antes de que yo valide?</h3>
+<p>El pendiente deja de aparecer en su Reporte Scouter porque ahí solo se muestra lo de su sección actual, y el nuevo scouter tampoco lo recibe como notificación. Lo capturado no se borra, pero ya no se puede validar desde esa pantalla.</p>
+<h3>¿Le ha sido útil este artículo?</h3>
+<p>|</p>
+<p>Detalles del articulo</p>
+<p>ID de artículo:</p>
+<p>26</p>
+<p>Para Jefes de Grupo</p>
+<p>Fecha de alta:</p>
+<p>2026-10-11 14:12:48</p>
+<p>Vistas:</p>
+<p>17</p>
+<p>valoración                                         (Votar):</p>
+<p>(0)</p>
+<p>Volver atrás</p>
+<p>Artículos relacionados</p>
+<p>Cómo registrar mis avances: progresión, especialidades e insignias</p>
+<p>Jefe de Grupo: cambiar de sección a un miembro</p>
+<p>Jefe de Grupo: aprobar o rechazar un cambio de grupo</p>
+<p>Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo</p>
+<p>Jefe de Grupo: consultar a mis miembros y descargar reportes</p>
+<p>Powered by</p>
+<p>Help Desk Software</p>
+<p>HESK</p>
+<p>More IT firepower? Try</p>
+<p>SysAid</p>
+</section>
+<section class="card"><h2>Capturas Oficiales del Procedimiento en SISAS</h2>
+<figure><img src="data:image/webp;base64,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" alt="Menú Hola, nombre con la opción Administrador" /><figcaption>Menú Hola, nombre con la opción Administrador</figcaption></figure>
+</section>
+  </main>
+</body>
+</html>

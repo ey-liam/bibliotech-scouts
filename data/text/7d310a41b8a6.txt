@@ -1,0 +1,273 @@
+GUÍA OFICIAL HELP DESK ASMAC: Cómo inscribirme y pagar un evento
+Categoría: Pagos, Reinscripción, Becas y Eventos
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=12
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Eventos y pagos
+Cómo inscribirme y pagar un evento
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Cómo inscribirme y pagar un evento
+Eliges el evento en
+Mis eventos
+, apartas tu lugar con
+¡Asistir!
+y pagas en Conekta (tarjeta, efectivo en OXXO, Apple Pay o Google Pay) o por SPEI si el evento lo permite. Con tarjeta quedas inscrito en segundos; con efectivo o SPEI, cuando el pago llega a SISAS.
+Antes de empezar
+Tu ficha scout completa y validada. Si no lo está, el Dashboard no te muestra los eventos y verás "¡Tu cuenta no esta completa!".
+Tu Ficha de Salud al día. SISAS te la pide en el detalle del evento; no bloquea la inscripción, pero algunas actividades sí la usan (por ejemplo, saber nadar).
+Sin sanción vigente. Con sanción, el botón
+¡Asistir!
+no te deja pasar.
+Un correo y un teléfono a la mano: Conekta te los pide antes de pagar y a ese correo llega la confirmación.
+Si pagas en efectivo en OXXO o por SPEI, guarda tu comprobante. SISAS lo dice en el estado de cuenta: no vale como comprobante de pago.
+Pasos
+Entra a
+SISAS. En el Dashboard, el bloque
+Próximos eventos
+muestra los eventos que te corresponden (botón
+Ver detalle
+); también puedes ir al icono del calendario del menú de la izquierda,
+Mis eventos
+, que abre la pantalla
+Eventos
+.
+En
+Eventos
+ves una tarjeta por evento con su etiqueta: "Disponible", "¡NUEVO!", "Inscrito" o "En proceso". Cada tarjeta dice "Duración N dias" y "Cupo disponible N lugares". Solo aparecen los eventos de tu sección o rango de edad, y de tu provincia, localidad o grupo si el evento está acotado. Si no hay ninguno: "No existen eventos en este momento".
+Haz clic en
+la tarjeta del evento. Verás "Eventos /
+" con las pestañas
+Datos del evento
+(fechas "Del: … Al …", ubicación, descripción, imágenes) y
+Metodo de Pago
+(paquetes o fechas de pago, con columnas "Fecha límite" y "Pago" y el "Total:").
+Si arriba aparece "Por tu seguridad, te invitamos a Actualizar tu Ficha de Salud:" con el botón
+Ir a Ficha de Salud
+, actualízala antes de seguir. Cuando está al día verás "Datos de Salud Actualizados!".
+Haz clic en
+¡Asistir!
+. El botón solo aparece si el evento está "Disponible", hay cupo y la fecha límite de pago no ha pasado.
+Elige qué pagar. Depende de cómo esté armado el evento:
+Evento con
+fechas de pago
+: SISAS te manda directo al pago con el monto de la fecha límite más cercana (si tienes beca para ese evento, ya viene descontada).
+Evento con
+paquetes
+: en "Eventos /
+/ Inscripción" verás "Selecciona alguno de los paquetes disponibles". Marca uno, escribe cuánto vas a pagar en
+Monto que desea pagar
+(abajo dice "
+Monto sugerido $…") y
+haz clic en
+Pagar
+*. Puedes pagar en partes; el total nunca puede ser mayor al costo del paquete.
+Llegas a
+Sistema de pagos
+. A la izquierda,
+Detalle
+(Tipo de Pago, Concepto, Evento) y el
+Desglose
+(Subtotal, Descuento por Beca, Comisión Plazos Fijos, Total (MXP)). Si tienes un cupón, escríbelo en
+IngresarCupón
+y
+haz clic en
+APLICAR
+.
+A la derecha, en
+Forma de pago
+→
+Elije la Modalidad de Pago
+, marca
+Al Contado
+. Sale el aviso "Se pagará en una sola exhibición"; dale
+Aceptar
+y aparece el botón verde
+Pagar
+. Si el evento permite pagar a meses verás también
+Plazos Fijos
+: elige los meses en
+Seleccione los Meses a Plazos Fijos
+; el total sube según el plazo y solo se puede pagar con tarjeta de crédito ("El pago en plazos fijos sólo se puede realizar con tarjeta de crédito").
+Haz clic en
+Pagar
+. Se abre "Ingresa tus datos de contacto": captura
+Correo electrónico
+y
+Teléfono
+, marca "Confirmo que mis datos son correctos" y
+Aceptar
+. Luego confirma "Estás a punto de salir de nuestro sitio para completar el pago en Conekta." con
+Aceptar
+.
+En la página de Conekta elige cómo pagar: tarjeta de crédito o débito, efectivo en OXXO, Apple Pay o Google Pay. Con tarjeta, el cobro es inmediato. Con efectivo, Conekta te da una referencia para pagar en OXXO. El enlace de pago vence al día siguiente a las 22:00; si no pagaste, vuelve a empezar desde el paso 5.
+Al terminar, SISAS muestra "Pago en proceso": "Si fue con Tarjeta, se reflejará en unos segundos y recibirás un correo de confirmación. Si es en Efectivo, recibirás un correo con instrucciones de Pago."
+Haz clic en
+Entendido
+.
+Si prefieres SPEI
+(solo cuando el evento tiene cuenta bancaria propia; es la única opción en eventos cobrados en dólares): en "Forma de pago" marca
+Pago con SPEI
+y
+haz clic en
+Solicitar cuenta / Pagar
+. Si ya tienes cuenta asignada, se descarga tu ficha SPEI con la CLABE y el monto; si no, verás "Tu cuenta se generará en los próximos días" y recibes el correo "Asignación de Cuenta SPEI" cuando esté lista. La siguiente vez el botón dice
+Generar Ficha / Pagar
+. Transfiere exactamente el monto de la ficha.
+Qué pasa después
+Con tarjeta: Conekta avisa a SISAS en segundos, tu pago queda confirmado y recibes el correo "Se acreditó tu pago." en el correo que capturaste en el paso 9. En
+Mis eventos
+la tarjeta cambia a "Inscrito" si pagaste completo, o "En proceso" si pagaste una parte.
+Con efectivo en OXXO: el estatus se queda pendiente hasta que OXXO reporta el pago a Conekta y Conekta avisa a SISAS. Normalmente es el mismo día o al siguiente. Mientras, el evento no aparece como "Inscrito".
+Con SPEI: SISAS lo aplica cuando la OSN concilia el archivo del banco, no en automático.
+Dentro del evento, en la pestaña
+Metodo de Pago
+, ves tu estado de cuenta ("Total pagado:" y lo que falta). Si pagaste en partes, ahí mismo está el botón
+Pagar
+para abonar el resto. Cuando liquidas aparece la pestaña
+Pasaporte-Scout
+y el botón
+Imprimir Pasaporte-Scout
+: es tu pase al evento, con tu foto, tu CUM y un código de barras. Descárgalo.
+Si el evento tiene actividades, en la pestaña
+Actividades
+marca las que quieres ("Selecciona la actividad en la que deseas participar") y guarda. Hay un máximo por grupo y algunas piden "Requiere saber nadar" según tu Ficha de Salud.
+Si eres menor de edad y el evento es nacional, al confirmarse el pago SISAS le manda a tu padre, madre o tutor una Carta de Autorización para firma electrónica. En
+Mis eventos
+verás "Falta firmar su Carta de Autorización" hasta que la firme; después, "Carta Firmada".
+Si eres Jefe de Grupo y quieres inscribir a varios miembros de tu grupo, hay un flujo aparte de inscripción masiva; está en la guía de Jefe de Grupo.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+Pagaste (tarjeta, efectivo en OXXO o SPEI) pero el evento sigue sin "Inscrito" y no llegó el correo "Se acreditó tu pago."
+SISAS se entera del pago por un aviso automático de Conekta. Si ese aviso no llegó, tu pago quedó registrado como "intento" y no aparece ni en
+Mis pagos
+. En SPEI, falta que la OSN concilie.
+Espera unas horas si fue efectivo. Si sigue igual, escribe al helpdesk con: tu CUM, nombre del evento, fecha y hora del pago, referencia u orden de Conekta (viene en el correo o comprobante de Conekta, empieza con "ord_") o clave de rastreo del SPEI, y el comprobante.
+El Dashboard dice "¡Tu cuenta no esta completa!" y no hay carrusel de eventos
+Tu ficha no está completa o validada.
+Completa tu ficha y espera la validación; después entra por
+Mis eventos
+.
+"No existen eventos en este momento"
+No hay eventos publicados para tu sección, edad, provincia o grupo, o te bloquearon para ese evento.
+Si el evento existe y crees que te toca, pide al helpdesk que revise las restricciones del evento con tu CUM.
+No aparece el botón
+¡Asistir!
+El evento no está "Disponible", ya no hay cupo ("Cupo disponible 0 lugares") o pasó la última fecha límite de pago.
+Revisa la tarjeta en
+Mis eventos
+. Si crees que es error, helpdesk con tu CUM y el nombre del evento.
+"No existen paquetes vigentes"
+Todas las fechas límite de pago del evento ya pasaron.
+Pregunta al organizador o al helpdesk si habrá prórroga.
+"El miembro tiene alguna sanción vigente y no se puede inscribir, favor de consultar a la Administración."
+Tienes una sanción activa registrada en SISAS.
+Escribe al helpdesk o a tu provincia con tu CUM.
+"Es necesario seleccionar un Pago/Paquete"
+No marcaste ningún paquete.
+Marca el círculo del paquete antes de
+Pagar
+.
+"El monto debe ser mayor a 0" / "El monto a pagar, no debe ser superior al costo total del paquete"
+El monto que escribiste está vacío, en cero o es mayor al costo.
+Corrige
+Monto que desea pagar
+.
+"Ya has generado una referencia prevía con otro paquete"
+Antes elegiste otro paquete y quedó una referencia abierta.
+Continuar
+cancela la anterior y sigue con el nuevo paquete;
+Cancelar
+te deja en el anterior.
+"Ya existe una solicitud de pago generada para ti o el/los miembro(s) elegido(s), ésta aún se encuentra Activa, deberás esperar 24 horas para solicitar una nueva."
+Ya hay una orden abierta en Conekta para este mismo concepto.
+Paga con el enlace o la referencia que ya tienes (revisa el correo de Conekta). Si se venció, espera 24 horas e inténtalo de nuevo.
+"Debes confirmar tus datos"
+No marcaste la casilla "Confirmo que mis datos son correctos".
+Márcala y
+Aceptar
+.
+"Pago no completado" — "Tu transacción fue cancelada o no se procesó correctamente. Por favor intenta nuevamente."
+Conekta rechazó o cancelaste el pago. No se cobró nada.
+Vuelve al evento y repite desde
+¡Asistir!
+. Si la tarjeta falla, prueba otra o efectivo.
+"Se han perdido los datos del evento,favor de seleccinar nuevamente un evento de la lista" o te regresa a
+Mis pagos
+sin avisar
+Se perdió la sesión (mucho tiempo sin actividad, botón atrás, dos pestañas).
+Entra de nuevo a
+Mis eventos
+y repite desde el paso 3.
+"No hay una cuota establecida, validalo con el administrador del sistema.."
+El evento no tiene monto configurado.
+Avisa al helpdesk con el nombre del evento.
+"Ups! El monto es menor al mínimo necesario para activar Pagos a meses en Plazos Fijos."
+El total no alcanza el mínimo para plazos.
+Paga
+Al Contado
+.
+El enlace de Conekta ya no abre
+Venció (al día siguiente a las 22:00).
+Repite desde
+¡Asistir!
+para generar uno nuevo.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Puedo pagar en partes?
+Solo en eventos con paquetes. Escribe el monto en
+Monto que desea pagar
+y abona el resto después con el botón
+Pagar
+de la pestaña
+Metodo de Pago
+. Mientras falte dinero el evento aparece "En proceso".
+Pagué y me llegó el correo de Conekta, pero no el de SISAS.
+Son dos correos distintos. El de SISAS ("Se acreditó tu pago.") solo sale cuando el pago ya está aplicado. Si pasan más de 24 horas sin él, escribe al helpdesk con los datos de la primera fila de la tabla de arriba.
+¿Dónde está mi boleto?
+Es el
+Pasaporte-Scout
+, dentro del evento, pestaña
+Pasaporte-Scout
+o botón
+Imprimir Pasaporte-Scout
+. Aparece hasta que el paquete esté liquidado.
+¿Mi beca se aplica sola?
+Sí, si está asignada a tu CUM, vigente y ligada a ese evento. Verás el "Descuento:" en el paquete y en el "Detalle" del pago.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+12
+Categoría:
+Eventos y pagos
+Fecha de alta:
+2026-10-11 10:07:58
+Vistas:
+28
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Cómo reinscribirme (renovar mi membresía)
+Mis pagos: ver lo que he pagado, comprobantes y facturas
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Registro Familiar: inscribir a toda la familia con descuento
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

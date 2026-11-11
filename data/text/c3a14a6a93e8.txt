@@ -1,0 +1,335 @@
+GUÍA OFICIAL HELP DESK ASMAC: Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=16
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Acceso y cuenta
+Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)
+Con esto obtienes tu usuario y contraseña para entrar a SISAS. Llenar el formulario toma dos minutos; después te llega un correo con tu ID y una contraseña temporal, y con eso entras por primera vez.
+Hay dos caminos y depende de si ya tienes CUM (la Clave Única de Membresía de 10 caracteres que aparece en tu credencial):
+Ya tienes CUM pero nunca has entrado a SISAS
+(por ejemplo, tu Jefe de Grupo ya te dio de alta, o vienes del sistema anterior): usa el botón verde
+Tengo CUM pero no tengo una cuenta
+.
+Eres nuevo
+(quieres ser scout, Impulsor Scout, o vas como invitado a un curso o evento): usa
+Quiero ser Scout, Impulsor Scout o soy Invitado a curso ó Evento
+. Esto es un pre-registro: SISAS te crea un ID provisional y luego completas tus datos.
+Si no sabes si tienes CUM, pregúntale a tu Jefe de Grupo antes de empezar. Hacer un pre-registro nuevo teniendo CUM te deja con dos registros y eso después lo tiene que arreglar el helpdesk.
+Antes de empezar
+Un correo electrónico que
+no esté usado en otra cuenta de SISAS
+. Cada cuenta necesita su propio correo; si eres papá o mamá y registras a dos hijos, necesitas dos correos distintos.
+Acceso a ese correo en ese momento: ahí te llega el ID y la contraseña.
+Si ya tienes CUM: tu CUM y tu
+primer apellido escrito exactamente como está en tu credencial
+(con acentos y tal cual).
+Si eres nuevo: nombre y apellidos
+de la persona que se va a registrar
+(si es tu hijo o hija, los datos van a nombre del menor, no los tuyos).
+Para completar el registro después del primer acceso te van a pedir CURP (o cédula de identidad si no eres mexicano), fecha de nacimiento, estado de nacimiento, provincia, localidad y grupo al que entras, y el archivo de la CURP (PDF, JPEG o PNG de máximo 3 Mb). Si la persona es menor de 18 años, además nombre, teléfono y
+un correo distinto
+del padre, madre o tutor.
+La persona a registrar debe tener al menos 6 años cumplidos.
+Pasos
+A. Ya tengo CUM
+Entra a SISAS. En la pantalla
+Acceso a Miembros Scout
+, abajo de
+He olvidado mi contraseña
+,
+haz clic en el botón verde Tengo CUM pero no tengo una cuenta
+.
+Se abre la pantalla
+Tengo CUM y quiero obtener una cuenta en SISAS
+. Escribe tu
+CUM
+(10 caracteres, sin espacios).
+Escribe tu
+Primer Apellido
+tal cual aparece en tu credencial, con acentos si los lleva.
+Escribe tu
+Correo electrónico
+y repítelo en
+Confirma tu Correo electrónico
+. El segundo campo no acepta pegar; tienes que teclearlo.
+Marca
+Estoy de acuerdo con el Aviso de privacidad
+y
+Acepto Términos y Condiciones
+. Si registras a un menor, estas casillas las acepta el padre, madre o tutor.
+Haz clic en Enviar
+.
+Verás "Pre registro enviado, Recibirás en tu correo electrónico un número de identificación y una contraseña, por favor revisa tu bandeja de entrada para continuar con el proceso."
+Haz clic en Aceptar
+; SISAS te regresa a la pantalla de acceso.
+Si quieres salir sin enviar,
+Regresa a la pantalla de inicio
+.
+B. Soy nuevo (pre-registro)
+Entra a SISAS. En la pantalla
+Acceso a Miembros Scout
+, bajo la pregunta
+¿Quieres ser un Scout ó eres un invitado?
+,
+haz clic en Quiero ser Scout, Impulsor Scout o soy Invitado a curso ó Evento
+.
+Se abre la pantalla
+REGISTRO
+("Nuevos miembros, Impulsores Scout ó Invitados"). Escribe
+Nombre(s) de la persona a registrar
+,
+Primer Apellido
+y
+Segundo Apellido
+. Solo acepta letras.
+Escribe
+Correo electrónico de la persona a registrar
+y repítelo en
+Confirmación de correo electrónico
+(tampoco deja pegar).
+Elige qué eres:
+Quiero ser Scout
+,
+Impulsor Scout
+o
+Soy Invitado a curso ó Evento
+. Si vas a entrar a un grupo, es
+Quiero ser Scout
+.
+Marca
+Estoy de acuerdo con el Aviso de privacidad
+y
+Acepto Términos y Condiciones
+.
+Haz clic en Enviar
+.
+La pantalla cambia a
+Pre registro enviado
+: "Recibirás en tu correo electrónico un número de identificación y una contraseña, por favor revisa tu bandeja de entrada para continuar con el proceso." Con
+Regresar
+o
+Ir a la pantalla de inicio
+vuelves al acceso.
+C. Entrar por primera vez
+Abre el correo
+"Pre registro ASMAC"
+que te llegó de
+Notificaciones SISAS
+(postmaster@sisas.scouts.org.mx). Trae dos datos:
+ID Miembro
+y
+Contraseña
+. No hay enlace que confirmar: la cuenta ya está activa con esos datos.
+Entra a SISAS. En
+CUM o ID
+escribe el ID Miembro del correo (si ya tienes CUM, también sirve tu CUM).
+En
+Primer Apellido
+escribe tu primer apellido.
+En
+Contraseña
+pega la contraseña del correo tal cual (copia solo la contraseña, sin espacios antes o después). El ojo a la derecha del campo te deja verla.
+Haz clic en Enviar
+.
+SISAS te lleva a la pestaña
+Crear contraseña
+. Escribe tu
+Nueva contraseña
+y repítela en
+Confirma contraseña
+. Mínimo 8 caracteres, con mayúscula, minúscula, número y un símbolo; sin tres letras o números seguidos ni repetidos (por ejemplo "abc" o "111").
+Haz clic en Enviar
+. Verás "¡Se ha cambiado tu contraseña!";
+haz clic en Siguente
+(así, con esa falta de ortografía, aparece el botón).
+A partir de aquí entras siempre con tu CUM (o tu ID) + primer apellido + la contraseña que acabas de crear. La del correo ya no sirve.
+Qué pasa después
+El correo sale en el momento en que das
+Enviar
+. Normalmente tarda unos minutos. Revisa también la carpeta de spam o correo no deseado y, si es correo del trabajo o de la escuela, la cuarentena.
+La contraseña del correo no caduca por sí sola: SISAS no tiene un plazo programado que la invalide. El correo dice que tienes 45 días para completar el registro o se eliminan tus datos.
+Después de crear tu contraseña, SISAS te lleva por las pestañas
+Datos generales
+,
+Contraseña de autorización/Datos del tutor
+y
+Validación
+:
+En
+Datos generales
+capturas nacionalidad,
+Fecha de nacimiento
+(DD/MM/AAAA),
+Género
+,
+Estado de nacimiento
+,
+CURP o Cédula de identidad
+, el archivo de la CURP (
+Adjuntar
+) y el
+Estado o Provincia
+,
+Localidad
+y
+Grupo
+al que entras. SISAS calcula la CURP con tu nombre, apellidos, fecha, género y estado, y la compara con la que escribiste: si no cuadra, revisa que los datos sean los de tu acta de nacimiento. No consulta RENAPO. Si entraste con CUM, varios campos ya vienen llenos y bloqueados.
+Si la persona registrada es menor de 18 años, sigue
+Datos del tutor
+:
+Nombre (s)
+,
+Primer apellido
+,
+Segundo apellido
+,
+Teléfono
+,
+Celular
+,
+Correo electrónico
+y
+Confirma correo electrónico
+del padre, madre o tutor. Ese correo
+tiene que ser distinto
+del que usaste para la cuenta. Al dar
+Siguiente
+, al tutor le llega el correo
+"Contraseña de autorización ASMAC"
+con un enlace para generar su contraseña de autorización, y a ti te sale "Hemos enviado información importante al correo del tutor o responsable, verifica el contenido para continuar con el proceso." y SISAS te saca. El registro del menor no avanza hasta que el tutor haga su parte.
+Si es mayor de edad, genera su propia
+Contraseña de autorización
+(10 caracteres; la vas a usar para firmar autorizaciones digitales, guárdala) y adjunta la carátula de uso.
+Al terminar ves "Estamos validando tu información, este paso puede demorar un poco, te notificaremos vía correo cuando esté lista para continuar." Lo valida tu jefe inmediato del siguiente nivel (jefe de sección, Subjefe de Grupo Administrativo o Jefe de Grupo), que recibe una notificación en SISAS. No hay un plazo fijo: depende de que lo atienda. Cuando lo valide te llega el correo
+"¡Bienvenida ASMAC!"
+y sigue el pago de inscripción.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+No llega el correo "Pre registro ASMAC"
+Lo más común: está en spam, o el correo quedó mal escrito. Si el camino fue
+Tengo CUM
+, SISAS ya marcó tu CUM como "en proceso" y no te deja repetirlo.
+Busca en spam y en "Todos los correos". Si no está y usaste
+Tengo CUM
+: en la pantalla de acceso escribe tu CUM y primer apellido y haz clic en
+He olvidado mi contraseña
+; te llega "Reestablecer contraseña" al correo que diste y con eso entras. Si usaste el pre-registro nuevo o el correo quedó mal capturado, escribe al helpdesk con nombre completo, el correo que escribiste y la fecha: pueden reiniciar tu registro para que lo hagas de nuevo.
+El tutor no recibió "Contraseña de autorización ASMAC"
+El correo del tutor quedó mal escrito, cayó en spam, o el envío falló. No hay botón para reenviarlo.
+Que el tutor busque en spam. Si no está, escribe al helpdesk con el CUM o ID del menor, el nombre del tutor y su correo: el helpdesk puede reiniciar tu registro para que vuelvas a capturar los datos del tutor.
+"Este CUM ya ha iniciado el proceso de obtención de cuenta, favor de contactar a tu Scouter o Administrador"
+Ya enviaste
+Tengo CUM
+antes (tú u otra persona por ti). SISAS no deja repetirlo.
+Usa
+He olvidado mi contraseña
+con tu CUM y primer apellido. Si no te llega nada, helpdesk con tu CUM: pueden reiniciar tu registro.
+"Debes iniciar el proceso de obtención de cuenta." al intentar entrar
+Tu CUM existe (vienes del sistema anterior) pero nunca creaste tu cuenta.
+Haz el camino A:
+Tengo CUM pero no tengo una cuenta
+.
+"Intento de inicio de sesión no válido, por favor verifica que tus datos sean correctos." en
+Tengo CUM
+El CUM no existe o el primer apellido no coincide letra por letra con el que está en SISAS (aquí sí importan los acentos).
+Escribe el apellido exactamente como en tu credencial. Si aun así falla, tu apellido quedó capturado con error: escribe al helpdesk con tu CUM, tu apellido correcto y una foto de tu credencial o identificación.
+"Intento de inicio de sesión no válido.." al entrar con el ID y la contraseña del correo
+ID, apellido o contraseña mal escritos. Al entrar los acentos del apellido no importan; la contraseña sí es exacta.
+Copia la contraseña del correo sin espacios. Cinco intentos fallidos bloquean la cuenta un día.
+"¡La cuenta ha sido bloqueada! Hemos enviado un correo para su restablecimiento."
+Cinco intentos fallidos seguidos.
+Revisa tu correo: te llegó "Reestablecer contraseña". Síguelo para poner una contraseña nueva.
+"Este Correo Electrónico se encuentra asociado a una cuenta, por lo que no es posible realizar el Pre-Registro."
+Ese correo ya está en otra cuenta de SISAS (un hermano, tu propia cuenta, o un registro anterior tuyo).
+Si es un registro anterior tuyo, no hagas otro: entra con
+He olvidado mi contraseña
+(necesitas tu CUM o ID) o escribe al helpdesk. Si es de otra persona, usa otro correo.
+"Ya contamos con una cuenta creada con la información proporcionada" al capturar la CURP
+Esa CURP ya está en otra cuenta de SISAS. Es tu registro anterior.
+No sigas con el nuevo. Revisa tu correo (y spam) por los accesos de ese registro o pregunta a tu Scouter; si nadie lo encuentra, helpdesk con tu CURP y nombre completo para que unan o borren el duplicado.
+"El CURP no coincide."
+La CURP que escribiste no corresponde al nombre, apellidos, fecha de nacimiento, género o estado que capturaste.
+Revisa esos cinco datos contra tu acta o tu CURP impresa. Un segundo apellido mal escrito o la fecha al revés (MM/DD) provocan esto.
+"El usuario no cumple con la edad mínima."
+La persona tiene menos de 6 años.
+No se puede registrar todavía.
+"No puedes usar tu dirección de correo electrónico" en Datos del tutor
+Pusiste como correo del tutor el mismo correo de la cuenta.
+Usa otro correo para el tutor.
+"El correo no coincide." / "El Correo Electrónico no coincide."
+Los dos campos de correo son distintos.
+Tecléalo igual en los dos (no deja pegar en el segundo).
+"El CUM debe contener 10 caracteres alfanuméricos"
+Te faltan o sobran caracteres.
+Revisa tu credencial. Sin espacios ni guiones.
+"Es necesario aceptar los Términos y Condiciones." / "Es necesario indicar que esta de acuerdo con el Aviso de Privacidad."
+Falta marcar una casilla.
+Márcalas.
+"Se ha detecado un intento de acceso invalido"
+El filtro anti-robots (reCAPTCHA) rechazó el envío.
+Recarga la página y vuelve a intentar desde un navegador normal, sin VPN ni modo incógnito. Si persiste, prueba otro navegador.
+"Todos los datos son requeridos"
+Dejaste vacío CUM/ID, apellido o contraseña.
+Llena los tres.
+Cuando escribas al helpdesk incluye: nombre completo de la persona registrada, CUM (si tienes) o ID Miembro, el correo que escribiste en el formulario, qué camino usaste (Tengo CUM o pre-registro) y el mensaje exacto que te salió. Si el problema es el correo del tutor, también nombre y correo del tutor.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿A qué correo llega la contraseña, al del hijo o al del papá?
+Al que escribiste en el formulario. SISAS no distingue: si registras a tu hijo con tu correo, llega a tu correo. El correo del tutor es otro distinto y solo se usa más adelante, en
+Datos del tutor
+, para la contraseña de autorización.
+¿Puedo registrar a dos hijos con el mismo correo?
+No. SISAS no permite el mismo correo en dos cuentas. Necesitas un correo por cada hijo (los correos alternos del tutor sí pueden repetirse).
+Hice el registro, nunca me llegó nada y ya pasó una semana. ¿Lo vuelvo a hacer?
+Si usaste
+Tengo CUM
+, no te va a dejar (te saldrá "Este CUM ya ha iniciado el proceso.."); usa
+He olvidado mi contraseña
+. Si fue pre-registro, no te dejará repetirlo con el mismo correo. En los dos casos, si
+He olvidado mi contraseña
+no resuelve, el helpdesk puede reiniciar tu registro.
+¿Cuánto dura la contraseña del correo?
+No caduca sola. Puedes entrar con ella mientras no la cambies. Lo que sí: hasta que no entres y la cambies, tu registro no avanza.
+Me equivoqué de camino: hice pre-registro y sí tenía CUM.
+Escribe al helpdesk con tu CUM, tu nombre completo y el correo que usaste en el pre-registro para que borren el registro duplicado. No completes los datos del nuevo.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+16
+Categoría:
+Acceso y cuenta
+Fecha de alta:
+2026-10-11 12:29:10
+Vistas:
+15
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Olvidé mi contraseña o mi cuenta está bloqueada
+Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)
+Cómo entrar a SISAS (y qué ves al entrar)
+Cómo completar o corregir mis datos (mi ficha al 100 %)
+Cómo cambiar mi contraseña
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

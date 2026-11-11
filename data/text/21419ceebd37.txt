@@ -1,0 +1,68 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Debate Colegial
+Archivo: FES_CC_HPV_DEBATE COLEGIAL.pdf
+Fecha de publicación en RECME: 25 Septiembre 2026
+Categoría RECME: Especialidades Habilidades para la Vida
+Etiqueta temática RECME: Liderazgo
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: DEBATE COLEGIAL
+    Texto161: ¿En que consiste la liga de debate colegial?
+¿Qué modalidades de debate existe en México?
+¿Qué organizaciones representan o organizan el debate en México?
+¿Qué es y en que consiste un postura en debate?
+¿Qué beneficios tiene la practica del debate?
+¿Cómo mejora mi capacidad de hablar en publico y comunicarme?
+¿Qué técnicas o estrategias se pueden usar en el debate?
+¿Que herramientas puedo adquirir para hablar en público?
+    Texto163: - Participa en un taller de debate
+- Compite o participa en torneos escolares o locales
+- Representa a tu asociación o universidad en algún torneo
+- Expón a tu sección los aprendizajes
+- Asisto o participo en (foro provincia, modelo de la ONU, otros)
+-Aprende temas selectos y desarrolla análisis e investigación
+    Texto165: - Durante los órganos de toma de decisiones conduzco y modero las discusiones
+- Apoyo a otros miembros de la sección a argumentar su propuestas
+- Presento mis proyectos de manera clara y respetuosa
+- Con mi familia o amigos intercambio ideas, presente propuesta y en su caso doy argumentos respetuosos.
+-Apoyar a otras secciones como moderador en situaciones de conflicto, presentaciones regulares de investigaciones y trabajos.
+    Texto167: Santiago Ramírez Ramírez
+    Texto168: - Respeto para con los demás
+- Inteligencia emocional
+- Análisis y prevención de conflictos
+    Texto169: Liderazgo
+    Dropdown170: COMUNIDAD
+    Check Box174: /Sí
+    Check Box175: /Sí
+    Check Box178: /Sí
+    Check Box180: /Sí
+    Check Box186: /Sí
+    Group188: /Opci髇2
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

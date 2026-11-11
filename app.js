@@ -11,7 +11,7 @@ const GITHUB_RELEASE_BASE =
 const STATE = {
   catalog: null,
   allDocuments: [],
-  documents: [], // 498 documentos oficiales descargables (excluye paginas .html)
+  documents: [], // Documentos oficiales accesibles en Biblioteca y Catalogo (incluye guias HTML autonomas)
   docsById: {},
   docsByFilename: {},
   versionChains: [],
@@ -24,10 +24,11 @@ const STATE = {
   webChunks: [], // [[doc_id, page_start, text], ...]
   activeAskSection: "all",
 
-  // Biblioteca Scout interactiva (Lectura libre + filtro por seccion y alcance)
+  // Biblioteca Scout interactiva (Lectura libre + filtro por seccion, subcategoria y alcance)
   activeShelf: "featured",
   libraryQuery: "",
   librarySection: "all",
+  librarySubcategory: "all",
   libraryScope: "shelf",
   libraryVisibleCount: 12,
   currentShelfDocs: [],
@@ -39,6 +40,7 @@ const STATE = {
   pageSize: 24,
   searchQuery: "",
   categoryFilter: "all",
+  subcategoryFilter: "all",
   sectionFilter: "all",
   extFilter: "all",
   onlyLatest: false,
@@ -103,6 +105,9 @@ function buildFileUrl(doc, download = false) {
   }
   const extLow = (doc.ext || "pdf").toLowerCase();
   if (doc.sha12) {
+    if (doc.has_web_file) {
+      return `files/${doc.sha12}.${extLow}`;
+    }
     return `${GITHUB_RELEASE_BASE}${doc.sha12}.${extLow}`;
   }
   return `data/text/${doc.sha12}.txt`;
@@ -303,8 +308,12 @@ async function initApp() {
     const data = await catRes.json();
     STATE.catalog = data;
     STATE.allDocuments = data.documents || [];
-    // Excluir archivos .html de la Biblioteca y del Catalogo (su contenido ya vive estructurado en el sitio y en Q&A)
-    STATE.documents = STATE.allDocuments.filter((d) => String(d.ext || "").toUpperCase() !== "HTML");
+    // Incluir documentos descargables y guias HTML autonomas legibles (is_readable_html)
+    STATE.documents = STATE.allDocuments.filter(
+      (d) => String(d.ext || "").toUpperCase() !== "HTML" || d.is_readable_html === true
+    );
+    const scopeOpt = document.querySelector('#libraryScopeSelect option[value="all"]');
+    if (scopeOpt) scopeOpt.textContent = `Todos los estantes (${STATE.documents.length})`;
     STATE.versionChains = data.version_chains || [];
     STATE.docsById = {};
     STATE.docsByFilename = {};
@@ -566,7 +575,11 @@ const DEFAULT_FEATURED_QUESTIONS = [
   "¿Qué especialidades, reconocimientos e insignias puedo obtener con mis proyectos de Caminante y cómo sé a qué Eje Temático pertenecen?",
   "¿Cómo se aplica el nuevo esquema PJOS y pueden combinarse las nuevas insignias con las antiguas?",
   "¿Dónde compro el uniforme scout?",
-  "¿Qué es la Política Nacional A Salvo del Peligro?"
+  "¿Qué es la Política Nacional A Salvo del Peligro?",
+  "¿Qué es la plataforma RECME y qué significan SCNCD y CNAMS?",
+  "¿Qué es el PPV (Proyecto Personal de Vida) en el Clan de Rovers y cómo usa el método SMART?",
+  "¿Cuál es la diferencia entre las versiones Obsidiana y Jade de la Insignia Final y Terminal?",
+  "¿Cómo funciona el Registro Familiar y qué descuentos aplica al pagar la membresía?"
 ];
 
 function renderExplorerQuestions(cat, shuffle = false) {
@@ -779,6 +792,9 @@ function populateCategoryDropdown() {
   const orderedCats = [
     "Colección Biblioteca del Centenario",
     "Guías, Carnets y Programa de Jóvenes (PJOS)",
+    "Especialidades Scouts (FES)",
+    "Plantillas PJOS, FAES y RECME",
+    "Guías SISAS, CONECTA y Soporte Digital",
     "Manuales Oficiales y de Operación",
     "Reglamentos, Estatutos y Políticas",
     "Convocatorias y Comunicados Nacionales",
@@ -821,7 +837,7 @@ function renderVersionChains() {
 }
 
 // ============================================================================
-// APARTADO DE BIBLIOTECA INTERACTIVA POR LAS 8 CATEGORIAS OFICIALES
+// APARTADO DE BIBLIOTECA INTERACTIVA POR LAS 11 CATEGORIAS Y SUBCATEGORIAS
 // ============================================================================
 function filterDocsByShelfName(list, shelf) {
   switch (shelf) {
@@ -832,6 +848,11 @@ function filterDocsByShelfName(list, shelf) {
         "Pistas de Aventura 2024.pdf",
         "Mis Rastros en la Selva 2024.pdf",
         "Las Rutas del Rover.pdf",
+        "P9.3_Formato_de_solicitud_de_IF_CC_v2.pdf",
+        "P3.3.2_PasaporteComunidad_v1.1.pdf",
+        "P3.4_MapaRutas_v1.1.pdf",
+        "FES_CC_SYB_PRIMEROS AUXILIOS AGRESTES.pdf",
+        "Directorio_Help_Desk_ASMAC_Tickets_y_KB.html",
         "REGLAMENTO 2023.pdf",
         "Estatutos 2023.pdf",
         "010 Guia Red de Caminantes.pdf",
@@ -840,7 +861,6 @@ function filterDocsByShelfName(list, shelf) {
         "CODIGO DE CONDUCTA 2025.pdf",
         "Manual del Pie Tierno.pdf",
         "Escultismo para Muchachos.pdf",
-        "40 Años de Expresión y Arte Scout.pdf",
         "Comunicado ASMAC DNME-CNPJ 26.010 Implementación de Cuadernillos Tribu de la Tierra.pdf",
         "Comunicado ASMAC JSN 26.133 Convocatoria EEAS 2026.pdf"
       ].map(normalizeStr);
@@ -852,7 +872,7 @@ function filterDocsByShelfName(list, shelf) {
         const idx = priorityNames.findIndex((p) => nf.includes(p) || p.includes(nf));
         if (idx !== -1) {
           featured.push({ idx, d });
-        } else if (d.ext === "PDF" && d.is_latest_in_family !== false) {
+        } else if ((d.ext === "PDF" || d.is_readable_html) && d.is_latest_in_family !== false) {
           rest.push(d);
         }
       }
@@ -865,6 +885,12 @@ function filterDocsByShelfName(list, shelf) {
         .sort((a, b) => a.filename.localeCompare(b.filename, "es", { numeric: true }));
     case "guias_pjos":
       return list.filter((d) => d.category === "Guías, Carnets y Programa de Jóvenes (PJOS)");
+    case "especialidades_fes":
+      return list.filter((d) => d.category === "Especialidades Scouts (FES)");
+    case "plantillas_recme":
+      return list.filter((d) => d.category === "Plantillas PJOS, FAES y RECME");
+    case "soporte_sisas":
+      return list.filter((d) => d.category === "Guías SISAS, CONECTA y Soporte Digital");
     case "manuales":
       return list.filter((d) => d.category === "Manuales Oficiales y de Operación");
     case "reglamentos":
@@ -882,6 +908,32 @@ function filterDocsByShelfName(list, shelf) {
   }
 }
 
+function renderSubcategoryPills(containerId, docsPool, activeSub, onSelect) {
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  const counts = {};
+  for (const d of docsPool) {
+    if (d.subcategory) counts[d.subcategory] = (counts[d.subcategory] || 0) + 1;
+  }
+  const subs = Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "es"));
+  if (subs.length <= 1) {
+    wrap.innerHTML = "";
+    wrap.classList.add("hidden");
+    return;
+  }
+  wrap.classList.remove("hidden");
+  wrap.innerHTML = [
+    `<button type="button" class="subcat-pill${activeSub === "all" ? " active" : ""}" data-sub="all">Todas las subcategorías (${docsPool.length})</button>`,
+    ...subs.map(
+      ([sub, cnt]) =>
+        `<button type="button" class="subcat-pill${activeSub === sub ? " active" : ""}" data-sub="${escapeHtml(sub)}">${escapeHtml(sub)} (${cnt})</button>`
+    )
+  ].join("");
+  wrap.querySelectorAll(".subcat-pill").forEach((btn) => {
+    btn.addEventListener("click", () => onSelect(btn.getAttribute("data-sub") || "all"));
+  });
+}
+
 function getDocsForShelf(shelf, filterText = "") {
   const q = normalizeStr(filterText.trim());
   const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
@@ -894,7 +946,7 @@ function getDocsForShelf(shelf, filterText = "") {
       if (!secs.includes(secFilter)) return false;
     }
     if (tokens.length) {
-      const hay = normalizeStr(`${d.title} ${d.filename} ${d.category} ${d.section_label} ${d.summary || ""} ${d.code || ""}`);
+      const hay = normalizeStr(`${d.title} ${d.filename} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""} ${d.code || ""}`);
       for (const tk of tokens) {
         if (!hay.includes(tk)) return false;
       }
@@ -902,16 +954,22 @@ function getDocsForShelf(shelf, filterText = "") {
     return true;
   });
 
-  if (scope === "all") {
-    return readable;
+  let baseDocs = scope === "all" ? readable : filterDocsByShelfName(readable, shelf);
+  if (scope !== "all" && tokens.length && !baseDocs.length && readable.length) {
+    baseDocs = readable;
   }
 
-  const shelfDocs = filterDocsByShelfName(readable, shelf);
-  // Si el usuario escribio una busqueda y no hay coincidencias en el estante actual, mostrar coincidencias de todos los estantes
-  if (tokens.length && !shelfDocs.length && readable.length) {
-    return readable;
+  renderSubcategoryPills("librarySubcategoryPills", baseDocs, STATE.librarySubcategory, (sub) => {
+    STATE.librarySubcategory = sub;
+    STATE.libraryVisibleCount = 12;
+    renderLibraryShelf();
+  });
+
+  if (STATE.librarySubcategory && STATE.librarySubcategory !== "all") {
+    const subFiltered = baseDocs.filter((d) => d.subcategory === STATE.librarySubcategory);
+    if (subFiltered.length) return subFiltered;
   }
-  return shelfDocs;
+  return baseDocs;
 }
 
 function renderLibraryShelf() {
@@ -954,7 +1012,7 @@ function renderLibraryShelf() {
             <span class="book-pages-pill">${escapeHtml(pagesLabel)}</span>
           </div>
           <h3 class="book-title" title="${escapeHtml(d.title)}">${escapeHtml(d.title)}</h3>
-          <span class="book-meta">${escapeHtml(d.section_label)}</span>
+          <span class="book-meta">${escapeHtml(d.section_label)}${d.subcategory ? ` · ${escapeHtml(d.subcategory)}` : ""}</span>
           ${d.summary ? `<p class="book-desc">${escapeHtml(d.summary)}</p>` : ''}
           <button type="button" class="book-read-btn">Abrir lectura</button>
         </article>
@@ -1664,7 +1722,7 @@ function answerLocallyInBrowser(query) {
     for (const topic of matchedTopics) {
       for (const sourceFile of topic.source_files || []) {
         const doc = findDocByFilename(sourceFile);
-        if (!doc || String(doc.ext || "").toUpperCase() === "HTML") continue;
+        if (!doc || (String(doc.ext || "").toUpperCase() === "HTML" && doc.is_readable_html !== true)) continue;
         if (qSources.some((source) => source.doc_id === doc.id)) continue;
         qSources.push({
           doc_id: doc.id,
@@ -1688,7 +1746,7 @@ function answerLocallyInBrowser(query) {
   for (const t of matchedTopics) {
     for (const sf of t.source_files || []) {
       const d = findDocByFilename(sf);
-      if (d && !seenIds.has(d.id) && String(d.ext || "").toUpperCase() !== "HTML") {
+      if (d && !seenIds.has(d.id) && (String(d.ext || "").toUpperCase() !== "HTML" || d.is_readable_html === true)) {
         seenIds.add(d.id);
         sources.push({
           doc_id: d.id,
@@ -1707,7 +1765,7 @@ function answerLocallyInBrowser(query) {
     for (const entry of STATE.webChunks) {
       const [docId, pageStart, rawText] = entry;
       const d = STATE.docsById[docId];
-      if (!d || String(d.ext || "").toUpperCase() === "HTML") continue;
+      if (!d || (String(d.ext || "").toUpperCase() === "HTML" && d.is_readable_html !== true)) continue;
       if (STATE.activeAskSection !== "all") {
         const secs = d.applicable_sections || [d.section];
         if (!secs.includes(STATE.activeAskSection)) continue;
@@ -1967,7 +2025,7 @@ function applyCatalogFilters() {
   const q = normalizeStr(STATE.searchQuery.trim());
   const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
 
-  const filtered = STATE.documents.filter((d) => {
+  const baseFiltered = STATE.documents.filter((d) => {
     if (STATE.onlyLatest && d.is_latest_in_family === false) return false;
     if (STATE.categoryFilter !== "all" && d.category !== STATE.categoryFilter) return false;
     if (STATE.sectionFilter !== "all") {
@@ -1982,13 +2040,24 @@ function applyCatalogFilters() {
       }
     }
     if (tokens.length) {
-      const hay = normalizeStr(`${d.title} ${d.filename} ${d.code || ""} ${d.category} ${d.section_label} ${d.summary || ""}`);
+      const hay = normalizeStr(`${d.title} ${d.filename} ${d.code || ""} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""}`);
       for (const tk of tokens) {
         if (!hay.includes(tk)) return false;
       }
     }
     return true;
   });
+
+  renderSubcategoryPills("catalogSubcategoryPills", baseFiltered, STATE.subcategoryFilter, (sub) => {
+    STATE.subcategoryFilter = sub;
+    applyCatalogFilters();
+  });
+
+  let filtered = baseFiltered;
+  if (STATE.subcategoryFilter && STATE.subcategoryFilter !== "all") {
+    const subOnly = baseFiltered.filter((d) => d.subcategory === STATE.subcategoryFilter);
+    if (subOnly.length) filtered = subOnly;
+  }
 
   filtered.sort((a, b) => {
     if (STATE.sortOrder === "title") {
@@ -2021,6 +2090,7 @@ function renderCatalogGrid() {
   const hasActiveFilter =
     STATE.searchQuery.trim() !== "" ||
     STATE.categoryFilter !== "all" ||
+    STATE.subcategoryFilter !== "all" ||
     STATE.sectionFilter !== "all" ||
     STATE.extFilter !== "all" ||
     STATE.onlyLatest;
@@ -2046,7 +2116,7 @@ function renderCatalogGrid() {
             <p class="doc-summary">${escapeHtml(d.summary || d.filename)}</p>
           </div>
           <div class="doc-card-footer">
-            <span style="font-size:0.74rem;color:#64748b;font-weight:600;">${escapeHtml(d.category)}</span>
+            <span style="font-size:0.74rem;color:#64748b;font-weight:600;">${escapeHtml(d.category)}${d.subcategory ? ` · ${escapeHtml(d.subcategory)}` : ""}</span>
             <div class="doc-actions">
               <button type="button" class="btn-doc-view" data-open-doc="${escapeHtml(d.id)}">Leer</button>
               <a href="${dlUrl}" download class="btn-doc-dl">Descargar</a>
@@ -2094,7 +2164,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   document.getElementById("modalTextPane").classList.add("hidden");
 
   titleEl.textContent = doc.title;
-  fnameEl.textContent = `${doc.filename} • ${doc.category}`;
+  fnameEl.textContent = `${doc.filename} • ${doc.category}${doc.subcategory ? ` • ${doc.subcategory}` : ""}`;
   badgesEl.innerHTML = `
     <span class="badge badge-ext">${escapeHtml(doc.ext)}</span>
     <span class="badge badge-year">${doc.year}</span>
@@ -2245,8 +2315,8 @@ async function openDocumentModal(docId, shelfIndex = -1) {
         <p style="flex:0 0 auto;margin:0;font-size:0.82rem;color:#64748b;text-align:center;">Archivo: <strong>${escapeHtml(doc.filename)}</strong></p>
       </figure>
     `;
-  } else if (canEmbedNative && IS_LOCAL_SERVER && doc.ext === "HTML") {
-    previewPane.innerHTML = `<iframe src="${viewUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe"></iframe>`;
+  } else if (doc.ext === "HTML" && ((canEmbedNative && IS_LOCAL_SERVER) || (doc.is_readable_html && doc.has_web_file))) {
+    previewPane.innerHTML = `<iframe src="${viewUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;background:#ffffff;"></iframe>`;
     openTabBtn.href = viewUrl;
     openTabBtn.onclick = null;
   } else {
@@ -2447,6 +2517,7 @@ function bindEvents() {
         t.classList.toggle("active", t.dataset.shelf === targetShelf);
       });
       STATE.activeShelf = targetShelf;
+      STATE.librarySubcategory = "all";
       STATE.libraryVisibleCount = 24;
       renderLibraryShelf();
       revealLibraryResults();
@@ -2481,6 +2552,7 @@ function bindEvents() {
       document.querySelectorAll(".shelf-tab").forEach((t) => t.classList.remove("active"));
       tab.classList.add("active");
       STATE.activeShelf = tab.dataset.shelf || "featured";
+      STATE.librarySubcategory = "all";
       STATE.libraryVisibleCount = 12;
       renderLibraryShelf();
       revealLibraryResults();
@@ -2559,6 +2631,7 @@ function bindEvents() {
     pill.addEventListener("click", () => {
       const val = pill.getAttribute("data-cat-val") || "all";
       STATE.categoryFilter = val;
+      STATE.subcategoryFilter = "all";
       if (filterCat) filterCat.value = val;
       applyCatalogFilters();
     });
@@ -2573,6 +2646,7 @@ function bindEvents() {
   if (filterCat) {
     filterCat.addEventListener("change", () => {
       STATE.categoryFilter = filterCat.value;
+      STATE.subcategoryFilter = "all";
       applyCatalogFilters();
     });
   }
@@ -2604,6 +2678,7 @@ function bindEvents() {
     resetBtn.addEventListener("click", () => {
       STATE.searchQuery = "";
       STATE.categoryFilter = "all";
+      STATE.subcategoryFilter = "all";
       STATE.sectionFilter = "all";
       STATE.extFilter = "all";
       STATE.onlyLatest = false;

@@ -1,0 +1,249 @@
+GUÍA OFICIAL HELP DESK ASMAC: Cómo entrar a SISAS (y qué ves al entrar)
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=15
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Acceso y cuenta
+Cómo entrar a SISAS (y qué ves al entrar)
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Cómo entrar a SISAS (y qué ves al entrar)
+SISAS es el sistema donde está tu ficha de miembro scout, tu credencial, tus pagos y tus eventos. Entrar toma menos de un minuto si tienes tu CUM y tu contraseña a la mano.
+Antes de empezar
+Tu
+CUM
+: es tu número de miembro. Está impreso en tu credencial scout y en el correo de bienvenida que te llegó cuando te dieron de alta. Si no lo encuentras, pídeselo a tu Jefe de Grupo.
+Tu
+Primer Apellido
+(solo el primero, no los dos).
+Tu contraseña. Si nunca la has creado, abajo te decimos qué hacer.
+Si eres papá o mamá: en SISAS no hay cuenta de padres. Entras con el CUM, el primer apellido y la contraseña de tu hijo o hija, y todo lo que hagas adentro queda a nombre de él o ella.
+Pasos
+Entra a
+sisas.scouts.org.mx
+. Verás la pantalla
+Acceso a Miembros Scout
+.
+En
+CUM o ID
+escribe tu CUM tal como aparece en tu credencial.
+En
+Primer Apellido
+escribe solo tu primer apellido. Da igual que lo pongas con mayúsculas o minúsculas, con acento o sin él: SISAS quita acentos y mayúsculas antes de comparar. "Núñez", "nunez" y "NUÑEZ" cuentan igual.
+En
+Contraseña
+escribe tu contraseña. El icono del ojo a la derecha te la muestra por si quieres revisarla.
+Haz clic en Enviar
+.
+Si todo está bien, SISAS te lleva a tu Dashboard.
+Si es tu primera vez y nunca has creado contraseña, no uses este formulario: haz clic en
+Tengo CUM pero no tengo una cuenta
+y sigue ese proceso. Si ya tenías contraseña y la olvidaste, llena
+CUM o ID
+y
+Primer Apellido
+, haz clic en
+He olvidado mi contraseña
+y te llega un correo para restablecerla.
+Qué pasa después
+Al entrar ves tu Dashboard. Esto es lo que hay:
+Tu tarjeta.
+Arriba a la izquierda: tu foto, el escudo de tu provincia, la pañoleta de tu grupo, tu nombre completo, tu CUM y la
+Vigencia
+de tu membresía (la fecha hasta la que estás al corriente). Si eres mayor de edad y tienes cargo, aparece
+Cargo(s)
+. Si es tu cumpleaños, SISAS te felicita ahí mismo.
+Próximos eventos.
+A la derecha de la tarjeta, un carrusel con los eventos a los que puedes inscribirte. Haz clic en uno para ver el detalle. Solo aparece cuando tu perfil ya está validado.
+Seguimiento de Credencial.
+Un bloque gris con cuatro iconos: si tu credencial ya se imprimió, la fecha de impresión, la fecha de envío y quién la recoge en tu grupo. Mientras no haya datos verás "N/A".
+Tu ficha.
+Un medidor con porcentaje. Si dice "¡Tu cuenta no esta completa!" te falta llenar o validar datos de tu perfil; haz clic en el bloque para ir a tu ficha. Cuando ya esté validada dice "¡Tu cuenta esta completa!".
+Menú de la izquierda.
+Una columna de iconos. Si pasas el mouse encima te dice qué es cada uno; el icono de las tres rayas lo despliega con nombres:
+Icono
+Nombre
+Para qué
+Casa
+Home
+Regresar al Dashboard.
+Credencial
+Mi credencial
+Ver y pedir tu credencial.
+Calendario
+Mis eventos
+Inscribirte y pagar eventos.
+Dos flechas
+Mi cambio de grupo
+Pedir cambio a otro grupo.
+Mano con moneda
+Mis pagos
+Tus pagos y recibos.
+Megáfono
+Mis anuncios
+Avisos de tu grupo, provincia o nacional.
+Lápiz
+Mis encuestas
+Encuestas que te asignaron.
+Medalla
+Mi cacería
+/
+Mi exploración
+/
+Mi desafío
+/
+Mi proyecto de vida
+Tu progresión. El nombre cambia según tu sección (manada, tropa, comunidad, clan). Solo aparece para miembros de sección, no para scouters.
+Pizarrón
+Cursos Adultos en Movimiento
+Cursos de formación para adultos.
+Qué iconos ves depende de tu sección y de tus permisos; no todos tienen todos.
+La campana.
+Arriba a la derecha, con un número. Son tus notificaciones: validaciones de perfil, respuestas a tu cambio de grupo y avisos parecidos. Haz clic para abrirlas.
+Hola,
+.
+Al lado de la campana. Al hacer clic se abre un menú con
+Mis datos
+(tu ficha completa),
+Cambiar Contraseña
+y
+Cerrar sesión
+.
+Si tienes un cargo (Jefe de Grupo, scouter, Presidente de Provincia, etc.) en ese mismo menú verás una opción más,
+Administrador
+. Al hacer clic cambias a la vista de administración, con otro menú y otro Dashboard. Para regresar a tu vista de miembro, abre el mismo menú y haz clic en
+Mi Perfil
+. Cada vez que entras a SISAS arrancas en la vista de miembro; el cambio a Administrador se olvida al cerrar sesión.
+A la derecha de la pantalla hay dos pestañas plegadas:
+Reconocimientos
+(tus insignias y reconocimientos) y
+Normatividad
+(aviso de privacidad, términos, código de ética y reglamento).
+Cierre por inactividad.
+Si dejas SISAS abierto sin mover el mouse ni teclear, a los 20 minutos te sale "¡La sesión expiró!" y al dar
+Salir
+regresas a la pantalla de acceso. Si al volver ves "Se perdió la comunicación con el servidor, vuelva a ingresar al sistema." es lo mismo: vuelve a entrar.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+"Todos los datos son requeridos"
+Dejaste vacío alguno de los tres campos.
+Llena
+CUM o ID
+,
+Primer Apellido
+y
+Contraseña
+.
+"Intento de inicio de sesión no válido, por favor verifica que tus datos sean correctos."
+Puede ser cualquiera de las tres cosas: el CUM no existe, el primer apellido no coincide con el que está registrado, o la contraseña está mal. SISAS no te dice cuál.
+Revisa el CUM contra tu credencial. Pon solo el primer apellido. Si sigue fallando, usa
+He olvidado mi contraseña
+. Ojo: después de 5 contraseñas incorrectas seguidas la cuenta se bloquea un día.
+"¡La cuenta ha sido bloqueada! Hemos enviado un correo para su restablecimiento."
+Fallaste la contraseña 5 veces. La cuenta queda bloqueada 24 horas y SISAS te mandó solo un correo para cambiarla.
+Abre el correo y crea una contraseña nueva. Si no te llega, revisa spam; si tampoco, escribe al helpdesk con tu CUM.
+"Debes iniciar el proceso de obtención de cuenta."
+Tu CUM existe pero nunca creaste cuenta en el sistema actual.
+Haz clic en
+Tengo CUM pero no tengo una cuenta
+y sigue los pasos.
+"Usuario con problemas para acceder al sistema, contacta a tu scouter o al administrador del sistema."
+Tu cuenta tiene una baja o una suspensión registrada.
+Habla con tu Jefe de Grupo. Si crees que es un error, escribe al helpdesk con tu CUM.
+"Para poder acceder al sistema contacta a tu scouter o al administrador del sistema."
+Tu cuenta está desactivada.
+Igual: Jefe de Grupo primero, luego helpdesk con tu CUM.
+"Por favor contacta al administrador del sistema (eliminado)."
+Tu registro fue dado de baja.
+Escribe al helpdesk con tu CUM y tu grupo.
+"Se ha detecado un intento de acceso invalido"
+La verificación automática contra robots (reCAPTCHA) no pasó.
+Recarga la página e intenta de nuevo. Si usas bloqueador de anuncios o un navegador muy viejo, prueba con otro.
+"El campo ID y el Primer Apellido son obligatorio."
+Diste clic en
+He olvidado mi contraseña
+sin llenar esos dos campos.
+Llena
+CUM o ID
+y
+Primer Apellido
+y vuelve a hacer clic.
+Entras pero en vez del Dashboard ves un formulario largo con tus datos
+Tu cuenta todavía no termina el registro (falta completar la ficha o el primer pago).
+Termina de llenar ese formulario; al acabar te manda al Dashboard.
+Entras y sale "Completa/Actualiza los datos de tu Perfil."
+Tu perfil no está validado. Mientras tanto no puedes abrir ningún módulo del menú ni las notificaciones.
+Haz clic en el bloque de porcentaje o en
+Mis datos
+, completa la ficha y envíala.
+Entras y sale "Tu información se está validando." y te saca
+Editaste tu perfil y tu Jefe de Grupo o provincia aún no lo valida. Hasta entonces SISAS no te deja usar el sistema.
+Espera la validación. Si llevas varios días, pregúntale a tu Jefe de Grupo.
+Entras y sale "Tu perfil fue rechazado, para seguir navegando en el sistema debes editar tu información y enviarla a validación nuevamente."
+Quien valida tu perfil lo regresó.
+Haz clic en
+Editar información
+, corrige y vuelve a enviar.
+Salir del sistema
+te cierra la sesión.
+Entras y sale "Vigencia de membresia vencida"
+Tu membresía ya no está al corriente.
+Pagar
+te lleva a la reinscripción.
+Salir
+cierra la sesión; no puedes usar el resto del sistema hasta pagar.
+Entras pero no hay menú de iconos a la izquierda y arriba dice "Pre-registro"
+Tu acceso está limitado por alguna de las razones de arriba (validación pendiente, vencida, rechazada o suspendida).
+Atiende el aviso que te salió al entrar.
+Cuando escribas al helpdesk incluye: tu CUM, tu grupo, el mensaje exacto que te salió y desde qué dispositivo entras (celular o computadora).
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Puedo entrar con mi correo?
+No. Solo con CUM (o el ID que te dio el sistema al preinscribirte) más tu primer apellido.
+¿Qué es el texto que cambia arriba del logo?
+Es uno de los diez artículos de la Ley Scout, que SISAS va rotando cada 18 segundos con un efecto de letras. No tiene que ver con tu cuenta ni es un error.
+Tengo cargo. ¿Dónde está el menú de administración?
+Abre el menú
+Hola,
+y haz clic en
+Administrador
+. Para volver a tu credencial, pagos y eventos, el mismo menú te muestra
+Mi Perfil
+.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+15
+Categoría:
+Acceso y cuenta
+Fecha de alta:
+2026-10-11 12:29:10
+Vistas:
+16
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Olvidé mi contraseña o mi cuenta está bloqueada
+Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)
+Cómo cambiar mi contraseña
+Cómo completar o corregir mis datos (mi ficha al 100 %)
+Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

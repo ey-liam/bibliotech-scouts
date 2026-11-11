@@ -1,0 +1,78 @@
+DOCUMENTO OFICIAL ASMAC: Plantilla P2.0.1 — Evaluación Auxiliar de Acciones Educativas
+Archivo: P2.0.1_FAES_EvaluaciónAuxiliarAccionesEducativas_v1.1.pdf
+Fecha de publicación en RECME: 19 Abril 2026
+Categoría RECME: Plantillas de Evaluación
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Campo de texto 1: 2
+    Campo de texto 8: Evaluar la progresión personal de cada NNAJ al terminar el ciclo de programa o ciclo personal de programa en el caso de Rovers
+    Campo de texto 11: Etapa 1 -¿Que Actividades realizaste en este periodo? ¡Ya concluiste tus especialidades o tus proyectos? ¿Hay alguna actividad relevante que realizaste con tu familia, escuela o en otro lugar fuera de los Scouts? ¿ Terminaras alguna iniciativa en el siguiente ciclo de programa?
+Etapa 2 - ¿Cual etapa de progresión te gustaría iniciar? ¡Hay alguna Especialidad o proyecto que te ayudaria a seguir aprendiendo? ¿Qué actividades realizaras fuera del movimiento los siguientes meses?
+    Campo de texto 13: - Considere evaluación complementaria, con evidencias como diplomas, vídeos, fotografías
+- Apoye evaluación entre pares, ferias de especialidades, presentaciones de proyecto, o dinámicas de evaluación del ciclo de programa.
+Recuerde la metodológica Identifico, Conozco, Aplico, Comparto
+    Campo de texto 14: Diagnóstico / Evaluación por observación / Evaluación Progresión Personal
+    Campo de texto 15: Israel Ramirez
+    Campo de texto 12: Recuerde los criterios de la Política de A Salvo del Peligro al momento de realizar entrevista con Menores
+Procure estar en un espacio abierto, acompañado de otro adulto y donde pueda ser observado por terceros
+    Campo de texto 9: El Scouter deberá estar familiarizado con perfil de egreso de sección, competencias por sección y competencias intermedias. Revisar Guía de Scouter, guía vigente y/o Modelo de Programa de Jóvenes
+
+- Se recomienda conocer Proyecto Educativo Orientado a la Sustenibilidad
+- Puede repasar conocimientos en Curso Especializado por sección en CDC
+- Matriz de competencias por sección para sección analizada
+    Campo de texto 10: Etapa 1
+1.- Al finalizar el ciclo de programa o ciclo personal de programa, realice recuento de Acciones Educativas realizadas durante el periodo y/o periodos anteriores que abarque el desarrollo de la Etapa de Progresión
+2.- Realice una pequeña reunión con cada NNAJ para identificar las Acciones Educativas Fuera del Movimiento
+3. Revise el avance o conclusión de Especialidades, Iniciativas, Proyectos, y otros escenarios de aprendizaje
+4. Registre el avance y si se han alcanzado el parámetro sugerido de Acciones Educativas para la sección y y etapa de Progresión de corresponda
+Etapa 2
+5.- Revise la competencia final y competencias intermedias de la Etapa de Progresión que corresponda
+6- Si ha logrado el nivel de competencia del criterio Aplica o Comparte, considere programar la entrega de la progresión. Registre que se ha terminado
+7.- Si hay algún aspecto de mejora con ayuda de Preguntas Orientadoras determine las acciones complementarias y motive a iniciar una nueva etapa de progresión
+Etapa 3
+Considere que las Acciones sugeridas son una propuesta, algunos NNAJ pueden requerir menos y otros más
+Reconozca oportunamente, según las características de cada NNAJ
+    Campo de texto 7: Evaluación de de Progresión personal por Competencias y Acciones Educativas
+    Campo de texto 6: 1
+    Campo de texto 4: Impresión de Matriz de Competencias
+Pluma o colores
+    Campo de texto 5: Proyecto Educativo
+https://datacentermexico.app.box.com/v/proyecto-educativo-2020
+
+Ordenamientos
+https://scouts.org.mx/ordenamientos/
+
+Política Nacional de Programa de Jóvenes
+https://app.box.com/s/xnnu1b0i4mv1xeyyisxdfwxnfx75s6jh
+    Cuadro de lista 2: 6 AÑOS EN ADELANTE
+    Cuadro de lista 3: HORAS
+    Casilla de verificación 4: /S
+    Casilla de verificación 5: /S
+    Casilla de verificación 16: /S
+    Casilla de verificación 3: /S
+    Casilla de verificación 19: /S
+    Casilla de verificación 23: /S
+    Casilla de verificación 21: /S
+    Casilla de verificación 20: /S
+    Casilla de verificación 22: /S
+
+--- Página 1 ---
+
+DURACIÓN
+EJE TEMÁTICO
+RECURSOS MATERIALES
+FICHA DE ACCIONES EDUCATIVAS SCOUTS
+NÚMERO DE PARTICIPANTES
+RANGO DE EDAD APOYO ADULTO
+ENLACES Y RECURSOS DIGITALES
+OBJETIVO
+PREPARACIÓN
+DESARROLLO
+VARIANTES (SECCIÓN, DESAFÍO, ACCESIBILIDAD)
+MEDIDAS DE SEGURIDAD
+ELABORACIÓN/FUENTE
+PALABRAS CLAVE
+PREGUNTAS ORIENTADORAS/REFLEXIÓN
+TÍTULO
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES

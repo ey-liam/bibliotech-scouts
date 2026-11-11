@@ -1,0 +1,61 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Triatlón junior B
+Archivo: FES_CC_SYB_TRIATLON JUNIOR B.pdf
+Fecha de publicación en RECME: 25 Septiembre 2026
+Categoría RECME: Especialidades Salud y Bienestar
+Etiqueta temática RECME: Deportes_y_cultura_física
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: TRIATLÓN JUNIOR B
+    Texto161: ¿Qué disciplinas integra un triatlón? ¿En qué orden van las disciplinas en un triatlón? ¿Cuáles son las reglas? ¿Qué distancias son las más conocidas? ¿Qué categorías existen? ¿Qué es una transición? ¿Cuántas transiciones hay en un triatlón? ¿Cuál es el equipo personal? ¿Cuáles son las medidas de seguridad? ¿Qué es una zona de entrenamiento? ¿Qué es una zona de recuperación? ¿Qué es una competencia en categoría por equipos? ¿Cuál es la nutrición adecuada? Conozco la mecánica de mi bicicleta
+    Texto163: * Participa en entrenamiento con algún club o equipo
+* Participa en algún duatlón o acuatlón
+* Participa en un triatlon en distancia Sprint o Corto
+* Realiza el lavado o mantenimiento baásico de tu bicicleta
+* Asiste a nutriologo y chequeo medico regular
+* Participa en alguna carrera, o competencia de natación o ciclismo como disciplina única.
+    Texto165: * Invita a tu Equipo, amigos, o familia a una competencia
+* Comparte un video de alguna competencia o entrenamiento
+* Realiza una exposición, muestra tu equipo, numero de competencia o alguna medalla
+* Pon la rutina de ejercicios en campamento o alguna actividad de fin de semana
+    Texto167: Israel Ramírez/SCNPJ
+    Texto168: -Acompañamiento de adulto responsable
+- Supervisión de adulto responsable
+-Uso de gorra y gogles en alberca
+- Uso de chanclas, sandalias o zapatillas de alberca
+- Uso de boya de seguridad en aguas abiertas
+- Mantenimiento profesional de bicicleta
+    Texto169: Deportes y cultura física
+    Dropdown170: COMUNIDAD
+    Check Box173: /Sí
+    Check Box174: /Sí
+    Check Box175: /Sí
+    Group188: /Opci髇4
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

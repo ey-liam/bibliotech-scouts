@@ -1,0 +1,69 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Primeros Auxilios Agrestes
+Archivo: FES_CC_SYB_PRIMEROS AUXILIOS AGRESTES.pdf
+Fecha de publicación en RECME: 17 Octubre 2026
+Categoría RECME: Especialidades Salud y Bienestar
+Etiqueta temática RECME: A_salvo_del_peligro
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: PRIMEROS AUXILIOS AGRESTES
+    Texto161: - Distingo los primeros auxilios urbanos de los agrestes por el tiempo de respuesta, los recursos disponibles y las condiciones del entorno.
+- Analizo la seguridad de la escena antes de acercarme y reconozco riesgos para el paciente y el grupo.
+- Conozco la evaluación inicial, la activación de ayuda y la atención prioritaria de una persona lesionada o enferma.
+- Identifico signos de alarma y cuidados iniciales ante heridas, hemorragias, lesiones musculo esqueléticas y emergencias ambientales.
+- Comprendo la importancia de proteger, vigilar y revaluar al paciente mientras llega la ayuda o se organiza su evacuación.
+- Reconozco el contenido, uso y límites de un botiquín para actividades en áreas naturales.
+- Conozco los datos necesarios para solicitar apoyo y entregar información clara a los servicios de emergencia.
+    Texto163: - Participo en capacitaciones y práctica orientada por una persona competente en primeros auxilios agrestes.
+- Evalúo la seguridad de una escena simulada y establezco prioridades de atención.
+-  Practico la evaluación del paciente, la activación de ayuda, la RCP y el uso del DEA con equipo de entrenamiento.
+-  Aplico procedimientos simulados para controlar hemorragias, proteger heridas e inmovilizar lesiones.
+- Practico la atención ante frío, calor, deshidratación y otras condiciones propias del entorno.
+- Preparo un botiquín adecuado para una actividad y justifico su contenido.
+- Elaboro un plan básico de comunicación, atención y evacuación.
+- Registro y comunico los cambios observados en el paciente durante un ejercicio o simulacro.
+< Evalúo mi actuación e identifico lo que necesito mejorar.
+    Texto165: - Presento a mi Comunidad una demostración o escenario simulado de primeros auxilios agrestes.
+- Explico cómo evaluar la escena, solicitar ayuda y comunicar la condición del paciente.
+- Muestro el contenido de un botiquín agreste y explico su uso responsable.
+- Comparto medidas para prevenir lesiones y emergencias durante actividades al aire libre.
+- Elaboro una guía breve, cartel o bitácora con los aprendizajes y prácticas realizadas.
+- Presento a mi asesor o sinodal las evidencias de mi capacitación, prácticas y avances.
+    Texto167: Francisco Nivon Roblero
+    Texto168: * Practico únicamente con la supervisión de una persona competente y con equipo de simulación adecuado.
+* En una emergencia real, aseguro la escena, solicito ayuda y actúo solamente dentro de mi capacitación.
+* No realizo procedimientos invasivos, maniobras inseguras ni acciones que pongan en riesgo al paciente, al grupo o a mí.
+    Texto169: A salvo del peligro
+    Dropdown170: COMUNIDAD
+    Check Box173: /Sí
+    Check Box174: /Sí
+    Check Box175: /Sí
+    Group188: /Opci髇4
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

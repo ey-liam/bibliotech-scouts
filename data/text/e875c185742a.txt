@@ -1,0 +1,78 @@
+DOCUMENTO OFICIAL ASMAC: Plantilla P1.0.1 — Diagnóstico Inicial NNAJ (Editable)
+Archivo: P1.0.1_ FAESDiagnosticoInicialNNAJ_v1.1.pdf
+Fecha de publicación en RECME: 19 Abril 2026
+Categoría RECME: Plantillas de Diagnostico
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Campo de texto 1: 2
+    Campo de texto 8: Realizar un diagnostico de competencias desarrolladas por NNAJ al ingresar a la cada una de las secciones. Se recomienda Nuevo Ingreso, cambio de Grupo e implementación PJOS
+    Campo de texto 11: Etapa 1 -¿Cuales son tus gustos?, ¿Te gusta la naturaleza?, ¿Realizas algún deporte o tienes ?¿Tienes muchos amigos? ¿A qué te dedicas? ¿Tienes alguna actividad adicional a la escuela?
+Etapa 2 - ¿Tiene interés por la naturaleza o medio ambiente? ¿Es tímido, extrovertido? ¿Le gusta ayudar a los demás, ó colabora en actividades de hogar?
+    Campo de texto 13: Si se requiere diagnostico de sección o seisena, realice juego de bases o rally con actividades que muestren el nivel de desarrollo de competencia, empleando criterios.
+
+Identifico, Conozco, Aplico, Comparto
+    Campo de texto 14: Diagnóstico / Evaluación por observación
+    Campo de texto 15: Israel Ramirez
+    Campo de texto 12: Recuerde los criterios de la Política de A Salvo del Peligro al momento de realizar entrevista con Menores
+Procure estar en un espacio abierto, acompañado de otro adulto y donde pueda ser observado por terceros
+    Campo de texto 9: El Scouter deberá estar familiarizado con perfil de egreso de sección, competencias por sección y competencias intermedias. Revisar Guía de Scouter, guía vigente y/o Modelo de Programa de Jóvenes
+
+- Se recomienda conocer Proyecto Educativo Orientado a la Sustenibilidad
+- Puede repasar conocimientos en Curso Especializado por sección en CDC
+- Matriz de competencias por sección para sección analizada
+    Campo de texto 10: Nota: La duración propuesta considera tiempo de entrevistas y evaluación por observación en periodos interrumpidos que puede ser varias juntas o actividades, y concluir con el registro.
+
+Etapa 1
+Reciba al aspirante y busque tener una pequeña entrevista mientras lo acompaña, emplee preguntas orientadoras.
+Etapa 2
+Entreviste a los padres o tutores e identifique, motivaciones para ingresar al movimiento, contexto familiar general, intereses y gustos desde el punto de vista de los padres o tutores.
+En caso de ser mayor de edad es deseable el acercamiento, puede profundizar con la o el joven
+Etapa 3
+Durante 2 ó 3 juntas semanales observe comportamiento, participación en juegos, observando los criterios de desarrollo de competencia Identifico, Conozco, Aplico, Comparto
+Etapa 4
+Reúnase con equipo de Scouter y vacié información en Matriz de Diagnostico inicial
+    Campo de texto 7: Diagnóstico Inicial  para NNAJ de
+Nuevo Ingreso, Enlace y Cambio de Grupo
+    Campo de texto 6: 1
+    Campo de texto 4: Impresión de Matriz de Competencias
+Pluma o colores
+    Campo de texto 5: Proyecto Educativo
+https://datacentermexico.app.box.com/v/proyecto-educativo-2020
+
+Ordenamientos
+https://scouts.org.mx/ordenamientos/
+
+Política Nacional de Programa de Jóvenes
+https://app.box.com/s/xnnu1b0i4mv1xeyyisxdfwxnfx75s6jh
+    Cuadro de lista 2: 14 AÑOS EN ADELANTE
+    Cuadro de lista 3: HORAS
+    Casilla de verificación 4: /S
+    Casilla de verificación 5: /S
+    Casilla de verificación 16: /S
+    Casilla de verificación 3: /S
+    Casilla de verificación 19: /S
+    Casilla de verificación 23: /S
+    Casilla de verificación 21: /S
+    Casilla de verificación 20: /S
+    Casilla de verificación 22: /S
+
+--- Página 1 ---
+
+DURACIÓN
+EJE TEMÁTICO
+RECURSOS MATERIALES
+FICHA DE ACCIONES EDUCATIVAS SCOUTS
+NÚMERO DE PARTICIPANTES
+RANGO DE EDAD APOYO ADULTO
+ENLACES Y RECURSOS DIGITALES
+OBJETIVO
+PREPARACIÓN
+DESARROLLO
+VARIANTES (SECCIÓN, DESAFÍO, ACCESIBILIDAD)
+MEDIDAS DE SEGURIDAD
+ELABORACIÓN/FUENTE
+PALABRAS CLAVE
+PREGUNTAS ORIENTADORAS/REFLEXIÓN
+TÍTULO
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES

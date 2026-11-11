@@ -1,0 +1,110 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Gestión de riesgos en áreas naturales
+Archivo: FES_CC_SYB_GESTION DE RIESGOS EN AREAS NATURALES.pdf
+Fecha de publicación en RECME: 26 Septiembre 2026
+Categoría RECME: Especialidades Salud y Bienestar
+Etiqueta temática RECME: A_salvo_del_peligro
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: GESTION DE RIESGOS EN ÁREAS NATURALES
+    Texto161: - Distingo los conceptos de peligro, riesgo, vulnerabilidad, incidente y emergencia.
+- Identifico riesgos relacionados con el entorno, la actividad, las personas, el equipo y la organización.
+- Analizo cómo el clima, el terreno, la ruta, la distancia y el acceso a servicios pueden modificar una actividad.
+- Conozco una matriz básica de riesgos y relaciono la probabilidad de un incidente con la gravedad de sus consecuencias.
+- Distingo las medidas de prevención, reducción y control, y comprendo que ningún riesgo se elimina por completo.
+- Identifico la información necesaria para planear una actividad: participantes, ruta, equipo, clima, comunicaciones y servicios de emergencia.
+- Comprendo la función del protocolo de seguridad y del plan de contingencia.
+- Reconozco las acciones previstas ante lluvia intensa, tormenta eléctrica, vientos fuertes, temperaturas extremas, incendios forestales, inundaciones, deslizamientos y sismos.
+- Identifico las funciones, responsabilidades y canales de comunicación del equipo.
+- Analizo cómo las medidas de Protección y Cuidado protegen el bienestar físico y emocional de las personas.
+- Comprendo cómo los principios de No Dejar Rastro ayudan a prevenir daños al entorno y a quienes realizan la actividad.
+- Identifico las condiciones que requieren modificar, detener o cancelar una actividad.
+    Texto163: . Selecciono una actividad en un área natural y reúno información sobre el lugar, la ruta, el clima y los participantes.
+. Identifico los peligros relacionados con el entorno, las personas, el equipo y la organización.
+. Elaboro una matriz para valorar la probabilidad y las consecuencias de cada riesgo.
+. Propongo medidas para prevenir, reducir o controlar los riesgos identificados.
+. Colaboro en la elaboración del protocolo de seguridad y el plan de contingencia.
+. Defino funciones, medios de comunicación, puntos de reunión y rutas de salida.
+. Analizo escenarios de lluvia intensa, tormenta eléctrica, incendio forestal, inundación, deslizamiento o sismo, y determino cómo actuar.
+. Participo en ejercicios o simulacros controlados para practicar la comunicación y la toma de decisiones.
+. Aplico criterios de Protección y Cuidado para procurar el bienestar físico y emocional de quienes participan.
+. Incorporo medidas para evitar daños al entorno durante la actividad.
+. Determino cuándo una actividad debe modificarse, detenerse o cancelarse.
+. Registro los resultados y evalúo las mejoras necesarias.
+    Texto165: * Presento el análisis de riesgos de una actividad y explico las medidas preventivas propuestas.
+* Comparto la matriz de riesgos, el protocolo de seguridad y el plan de contingencia elaborados.
+* Utilizo un croquis para comunicar las zonas de seguridad, rutas de salida y puntos de reunión.
+* Explico cómo actuar ante fenómenos meteorológicos y otros eventos naturales.
+* Coordino un ejercicio de gabinete o simulacro controlado con mi equipo.
+* Promuevo una comunicación clara, la distribución de funciones y la toma responsable de decisiones.
+* Comparto recomendaciones de Protección y Cuidado para procurar el bienestar físico y emocional de quienes participan.
+* Presento los resultados del ejercicio, identifico los aprendizajes obtenidos y propongo mejoras.
+* Integro mis evidencias en una bitácora y las presento a mi asesor o sinodal.
+    Texto167: Francisco Nivon Roblero
+    Texto168: . Realizo recorridos y simulacros con el acompañamiento de mi asesor.
+. No me expongo ni expongo a otras personas para recrear una situación de riesgo.
+. No ingreso a zonas restringidas ni manipulo equipo sin autorización.
+. Ante una emergencia real, aviso a las personas responsables y sigo las indicaciones de las autoridades.
+    Texto169: A salvo del peligro, Aventuras en la Naturaleza
+    Dropdown170: COMUNIDAD
+    Check Box173: /Sí
+    Check Box174: /Sí
+    Check Box175: /Sí
+    Check Box181: /Sí
+    Group188: /Opci髇4
+    Campo de texto 10: La especialidad se desarrollará a partir del análisis de una actividad real o proyectada.
+
+La persona Caminante identificará los peligros relacionados con el entorno, participantes, equipo y Organización; valorará su probabilidad y consecuencias, y propondrá medidas preventivas.
+
+Como instrumento básico podrá utilizar una matriz con los siguientes datos:
+Peligro – Probabilidad – Consecuencia – Nivel de riesgo – Medida preventiva – Responsable.
+
+El protocolo de seguridad y el plan de contingencia deberán señalar funciones, medios de comunicación, rutas de salida, puntos de reunión, contactos de emergencia y criterios para modificar, detener o cancelar la actividad. Se considerarán escenarios como lluvia intensa, tormenta eléctrica, vientos fuertes, temperaturas extremas, incendio forestal, inundación, deslizamiento y sismo.
+
+Las acciones deberán adaptarse al lugar y seguir las indicaciones de Protección Civil; CENAPRED recomienda, entre otras medidas, no cruzar corrientes de agua y trasladarse a un lugar seguro ante señales de inestabilidad de laderas. CENAPRED: inundaciones y CENAPRED: laderas.
+
+El asesor orientará el proceso; el sinodal revisará las evidencias y el responsable de la actividad conservará la conducción técnica. Los ejercicios serán simulados y no deberán generar riesgos reales.
+
+La matriz, protocolo, plan, croquis y evaluación podrán utilizarse como evidencias para la Insignia de Protección y Cuidado, cuando correspondan con sus requisitos.
+    Campo de texto 7: GESTION DE RIESGOS EN ÁREAS NATURALES
+    Cuadro de lista 6: 01
+    Cuadro de lista 7: 01
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró
+
+--- Página 2 ---
+
+EJE TEMÁTICO
+TÍTULO
+INFORMACIÓN ADICIONAL
+FICHA DE ESPECIALIDAD SCOUT
+ ANEXO
+HOJA
+DE
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES

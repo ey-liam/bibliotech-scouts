@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BiblioTech Scout: By Liam</title>
-  <meta name="description" content="Biblioteca digital y buscador documental scout: 498 documentos oficiales ASMAC y WOSM, 104 temas y más de 5,300 preguntas con fuentes." />
+  <meta name="description" content="Biblioteca digital y buscador documental scout: 599 documentos oficiales accesibles ASMAC y WOSM, 110 temas y 12,264 preguntas y respuestas con fuentes." />
   <meta name="author" content="Liam Durán - Provincia TLXH" />
   <meta name="theme-color" content="#6d28d9" />
   <meta name="robots" content="index, follow" />
@@ -18,7 +18,7 @@
   <meta property="og:site_name" content="BiblioTech Scout" />
   <meta property="og:locale" content="es_MX" />
   <meta property="og:title" content="BiblioTech Scout: By Liam" />
-  <meta property="og:description" content="Consulta 498 documentos oficiales ASMAC y WOSM, 104 temas y más de 5,300 preguntas con fuentes." />
+  <meta property="og:description" content="Consulta 599 documentos oficiales ASMAC y WOSM, especialidades FES, plantillas RECME, guías SISAS y 12,264 preguntas con fuentes." />
   <meta property="og:url" content="https://ey-liam.github.io/bibliotech-scouts/" />
   <meta property="og:image" content="https://ey-liam.github.io/bibliotech-scouts/img/photos/p01.jpg" />
   <meta property="og:image:alt" content="Comunidad de Caminantes en un evento scout" />
@@ -26,7 +26,7 @@
   <meta property="og:image:height" content="731" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="BiblioTech Scout: By Liam" />
-  <meta name="twitter:description" content="Consulta 498 documentos oficiales ASMAC y WOSM, 104 temas y más de 5,300 preguntas con fuentes." />
+  <meta name="twitter:description" content="Consulta 599 documentos oficiales ASMAC y WOSM, especialidades FES, plantillas RECME, guías SISAS y 12,264 preguntas con fuentes." />
   <meta name="twitter:image" content="https://ey-liam.github.io/bibliotech-scouts/img/photos/p01.jpg" />
 
   <script type="application/ld+json">
@@ -48,7 +48,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=13" />
+  <link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -247,7 +247,7 @@
               <svg width="18" height="18" aria-hidden="true"><use href="#icon-search"/></svg>
               Hacer una pregunta
             </a>
-            <a href="#biblioteca" class="btn-hero-ghost">Explorar los 648 archivos</a>
+            <a href="#biblioteca" class="btn-hero-ghost">Explorar los 599 documentos</a>
             <a href="#comparador" class="btn-hero-ghost">Ver qué cambió año con año</a>
           </div>
 
@@ -328,6 +328,9 @@
               <button type="button" class="qcat-tab" data-qcat="Basicas y Secciones">Primeros Pasos y Secciones</button>
               <button type="button" class="qcat-tab" data-qcat="Comunidad de Caminantes">Comunidad, CPRC y CNRC</button>
               <button type="button" class="qcat-tab" data-qcat="Progresion, Proyectos y PJOS">Proyectos, Insignias y PJOS</button>
+              <button type="button" class="qcat-tab" data-qcat="Especialidades Scouts (FES)">Especialidades (FES)</button>
+              <button type="button" class="qcat-tab" data-qcat="Plantillas PJOS, FAES y RECME">Plantillas RECME y FAES</button>
+              <button type="button" class="qcat-tab" data-qcat="Guías SISAS, CONECTA y Soporte Digital">Help Desk y SISAS</button>
               <button type="button" class="qcat-tab" data-qcat="Manada de Lobatos">Manada</button>
               <button type="button" class="qcat-tab" data-qcat="Tropa de Scouts">Tropa</button>
               <button type="button" class="qcat-tab" data-qcat="Clan de Rovers">Clan</button>
@@ -640,7 +643,7 @@
         <div>
           <h2 class="section-title">Biblioteca Scout</h2>
           <p class="section-subtitle">
-            Consulta, filtra por sección y lee íntegros los 498 documentos oficiales organizados en la Colección Biblioteca del Centenario, guías de progresión, manuales, reglamentos, convocatorias, revistas y formatos.
+            Consulta, filtra por sección, categoría o subcategoría y lee íntegros los 599 documentos oficiales organizados en 11 colecciones: Biblioteca del Centenario, PJOS, Especialidades FES, Plantillas RECME/FAES, Guías SISAS/Help Desk, manuales, reglamentos, convocatorias, revistas y formatos.
           </p>
         </div>
         <div class="library-controls-bar">
@@ -665,7 +668,7 @@
           </select>
           <select id="libraryScopeSelect" class="lib-filter-select" aria-label="Alcance de búsqueda en biblioteca">
             <option value="shelf">Estante actual</option>
-            <option value="all">Todos los estantes (498)</option>
+            <option value="all">Todos los estantes (599)</option>
           </select>
         </div>
       </div>
@@ -675,13 +678,17 @@
         <button type="button" class="shelf-tab active" data-shelf="featured">Destacados Vigentes</button>
         <button type="button" class="shelf-tab" data-shelf="centenario">Colección Biblioteca del Centenario (39)</button>
         <button type="button" class="shelf-tab" data-shelf="guias_pjos">Guías, Carnets y PJOS (42)</button>
+        <button type="button" class="shelf-tab" data-shelf="especialidades_fes">Especialidades Scouts FES (20)</button>
+        <button type="button" class="shelf-tab" data-shelf="plantillas_recme">Plantillas PJOS, FAES y RECME (51)</button>
+        <button type="button" class="shelf-tab" data-shelf="soporte_sisas">Guías SISAS, CONECTA y Help Desk (26)</button>
         <button type="button" class="shelf-tab" data-shelf="manuales">Manuales Oficiales (70)</button>
         <button type="button" class="shelf-tab" data-shelf="reglamentos">Reglamentos y Políticas (24)</button>
         <button type="button" class="shelf-tab" data-shelf="convocatorias">Convocatorias y Comunicados (187)</button>
         <button type="button" class="shelf-tab" data-shelf="revistas">Revistas Foro Joven y Boletines (44)</button>
         <button type="button" class="shelf-tab" data-shelf="formatos">Formatos, Actas y Seguro (66)</button>
-        <button type="button" class="shelf-tab" data-shelf="identidad">Identidad Gráfica (26)</button>
+        <button type="button" class="shelf-tab" data-shelf="identidad">Identidad Gráfica (30)</button>
       </div>
+      <div class="subcategory-pills-bar hidden" id="librarySubcategoryPills" role="group" aria-label="Subcategorías del estante actual"></div>
 
       <!-- BANNER DESTACADO DE LA COLECCIÓN BIBLIOTECA DEL CENTENARIO CON FOTOS EN HEXÁGONO Y POLAROID -->
       <div class="centenario-collection-banner">
@@ -1309,10 +1316,10 @@
     <div class="container">
       <div class="catalog-header-row">
         <div>
-          <span class="section-eyebrow">ARCHIVO DOCUMENTAL DESCARGABLE (498 DOCUMENTOS OFICIALES)</span>
-          <h2 class="section-title">Catálogo Organizado por Categorías</h2>
+          <span class="section-eyebrow">ARCHIVO DOCUMENTAL DESCARGABLE (599 DOCUMENTOS OFICIALES)</span>
+          <h2 class="section-title">Catálogo Organizado por Categorías y Subcategorías</h2>
           <p class="section-subtitle">
-            Selecciona una categoría o utiliza los filtros para leer en línea o descargar cualquier libro, manual, guía, reglamento, convocatoria o formato editable.
+            Selecciona una categoría o subcategoría y utiliza los filtros para leer en línea o descargar cualquier libro, ficha FES, plantilla RECME/FAES, guía SISAS, manual, reglamento o formato editable.
           </p>
         </div>
 
@@ -1324,18 +1331,22 @@
         </div>
       </div>
 
-      <!-- BOTONES RÁPIDOS DE LAS 8 CATEGORÍAS DEL CATÁLOGO -->
+      <!-- BOTONES RÁPIDOS DE LAS 11 CATEGORÍAS DEL CATÁLOGO -->
       <div class="catalog-category-cards" id="catalogCategoryPills">
-        <button type="button" class="cat-filter-pill active" data-cat-val="all">Todas las categorías (498)</button>
+        <button type="button" class="cat-filter-pill active" data-cat-val="all">Todas las categorías (599)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Colección Biblioteca del Centenario">Colección Biblioteca del Centenario (39)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Guías, Carnets y Programa de Jóvenes (PJOS)">Guías, Carnets y PJOS (42)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Especialidades Scouts (FES)">Especialidades Scouts FES (20)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Plantillas PJOS, FAES y RECME">Plantillas PJOS, FAES y RECME (51)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Guías SISAS, CONECTA y Soporte Digital">Guías SISAS, CONECTA y Soporte (26)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Manuales Oficiales y de Operación">Manuales Oficiales (70)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Reglamentos, Estatutos y Políticas">Reglamentos y Políticas (24)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Convocatorias y Comunicados Nacionales">Convocatorias y Comunicados (187)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Revistas Foro Joven y Boletines">Revistas Foro Joven y Boletines (44)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Formatos, Actas y Seguro Scout">Formatos, Actas y Seguro (66)</button>
-        <button type="button" class="cat-filter-pill" data-cat-val="Identidad Gráfica y Recursos Visuales">Identidad Gráfica (26)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Identidad Gráfica y Recursos Visuales">Identidad Gráfica (30)</button>
       </div>
+      <div class="subcategory-pills-bar hidden" id="catalogSubcategoryPills" role="group" aria-label="Filtrar por subcategoría"></div>
 
       <!-- BARRA DE FILTROS DEL CATÁLOGO -->
       <div class="catalog-filters-bar">
@@ -1373,7 +1384,8 @@
           <label for="filterExt">Formato</label>
           <select id="filterExt">
             <option value="all">Todos los formatos descargables</option>
-            <option value="PDF">PDF (Libros, Manuales, Guías, Comunicados)</option>
+            <option value="PDF">PDF (Libros, FES, Plantillas, Manuales)</option>
+            <option value="HTML">Guías Web Autónomas (Help Desk / RECME)</option>
             <option value="DOCX">Editables Word (DOCX)</option>
             <option value="XLSX">Hojas de Cálculo (XLSX)</option>
             <option value="IMAGE">Imágenes e Infografías Oficiales</option>
@@ -1410,7 +1422,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · V2.2.2 Mobile · Web V7</span>
+          <span class="app-download-eyebrow">App Android · V2.2.3 Mobile · Web V7.1</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout en tu bolsillo</h2>
           <p class="app-download-subtitle">
             Biblioteca sin conexión, lector de PDF integrado, las mismas preguntas de la web y actualización automática.
@@ -1644,7 +1656,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 11/11/2026 • BETA V7 - 2.2.2 Mobile (11/11/2026)
+          Base de datos: 11/11/2026 • BETA V7.1 - 2.2.3 Mobile (11/11/2026)
         </p>
         <p class="footer-non-affiliation">
           <strong>Aviso de proyecto independiente:</strong> BiblioTech es un proyecto personal, educativo y sin fines de lucro creado para facilitar la búsqueda y comprensión de los documentos oficiales a toda la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la Asociación de Scouts de México, A.C. (ASMAC) ni de la Organización Mundial del Movimiento Scout (World Scouting / WOSM); todos los documentos, manuales, reglamentos, logotipos y marcas citados pertenecen a sus respectivos titulares oficiales.

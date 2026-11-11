@@ -1,0 +1,387 @@
+GUÍA OFICIAL HELP DESK ASMAC: Mis pagos: ver lo que he pagado, comprobantes y facturas
+Categoría: Pagos, Reinscripción, Becas y Eventos
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=21
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Eventos y pagos
+Mis pagos: ver lo que he pagado, comprobantes y facturas
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Mis pagos: ver lo que he pagado, comprobantes y facturas
+En
+Mis pagos
+ves todos los pagos que has hecho tú desde tu cuenta (cuotas, eventos, credenciales, donativos), pides factura de los recientes y revisas tus cupones. Es solo consulta: lo que aparece ahí no sirve como comprobante. Tu comprobante es el correo que te manda SISAS cuando el pago se acredita.
+Antes de empezar
+Solo necesitas tu cuenta de SISAS. No hay requisito de ficha completa ni de vigencia para ver esta pantalla.
+Si entras con la cuenta de un menor, ves los pagos hechos desde esa cuenta.
+La lista muestra los pagos que
+tú
+generaste desde tu cuenta. Si tu Jefe de Grupo pagó por ti con una ficha múltiple, ese pago sale en la lista de él, no en la tuya.
+Pasos
+Entra a
+SISAS y en el menú de la izquierda haz clic en el icono de la moneda,
+Mis pagos
+.
+Abre en la pestaña
+Pagos
+. Cada renglón es un pago. Arriba de cada columna hay una casilla para filtrar (por concepto, fecha, etc.) y abajo puedes cambiar cuántos renglones ves con
+Mostrar _ Registros
+. Los más recientes van primero.
+Si quieres ver tus cupones, haz clic en la pestaña
+Cupones
+.
+Si quieres hacer un pago nuevo, haz clic en el botón verde
+Pagar
+(arriba a la derecha). Te lleva a la pantalla
+Pago
+. Para cuotas sigue la guía
+Cómo reinscribirme
+; para eventos,
+Cómo pagar un evento
+.
+Para regresar al inicio,
+Salir
+(abajo).
+Qué significa cada columna
+Columna
+Qué es
+Tipo De Pago
+Unitario
+si pagaste solo por ti;
+Multiple
+si en ese mismo pago entraron varias personas (ficha múltiple).
+Clasificacion
+De qué familia es el pago: Registro, Reposición, Donativos, Servicios Cuautli, Servicios Meztitla, Cursos. Si fue un evento, dice
+Evento
+seguido del nombre del evento.
+Concepto
+El concepto exacto que pagaste (por ejemplo Reinscripción, Reinscripción Vencido, credencial, el paquete del evento).
+Fecha
+Fecha en que el pago quedó acreditado. Si dice
+Pendiente
+, SISAS ya registró el pago pero todavía no le llega la confirmación del dinero.
+Importe Esperado
+Lo que costaba antes de descuentos (subtotal).
+Descuento Por Beca
+Lo que te descontó tu beca, si tenías una asignada.
+Descuento Por Cupón
+Lo que cubriste con un cupón.
+Meses
+y
+MontoPF
+Si pagaste a meses (Plazos Fijos): cuántos meses y cuánto se sumó de comisión. En pago de contado quedan en 0.
+Total Abonado
+Lo que realmente pagaste.
+Saldo a Favor
+Dinero que pagaste de más en una transferencia o depósito con referencia y que SISAS tiene detectado a tu favor. Casi siempre es $0.00. Ver "Cupones y saldo a favor".
+Medio de Pago
+Por dónde pagaste (Conekta con tarjeta, efectivo, etc.).
+Factura
+Botón
+Factura
+si todavía puedes pedirla; iconos PDF y XML si ya la generaste; icono de prohibido si ya se pasó el plazo; icono de información si ese pago ya entró en una factura global de la Asociación.
+Cupón
+Botón
+Generar cupón
+solo cuando tienes saldo a favor sin usar en ese pago.
+Si pagaste un evento en dólares, los importes aparecen ya convertidos a pesos con el tipo de cambio del día del pago.
+Al pie de la tabla hay una fila
+Total
+que suma todos los renglones que tienes a la vista.
+Tu comprobante de pago
+El estado de cuenta de
+Mis pagos
+no es un comprobante. Lo que vale es el correo con asunto
+"Se acreditó tu pago."
+que SISAS manda cuando Conekta le confirma el cobro. Llegan hasta dos:
+Recibo Electrónico de transacciones bancarias (ORIGINAL)
+. Trae fecha y hora de pago, folio, concepto, tu nombre y CUM, importe, medio de pago (
+Conekta Checkout
+) y en
+Autorización
+el número de orden de Conekta (empieza con
+ord_
+). Se manda al correo que escribiste en la ventana
+Ingresa tus datos de contacto
+antes de pagar. Este es el que debes guardar.
+Si el pago fue de inscripción o reinscripción, además llega un correo corto con solo el concepto ("Tu pago fue acreditado.") al correo de tu cuenta de SISAS.
+Si pagaste en efectivo en OXXO, Conekta te manda primero el correo con la referencia para ir a pagar; el de SISAS llega cuando OXXO reporta el pago.
+Si no encuentras el correo, revisa la bandeja de spam y el correo que pusiste en la ventana de contacto (puede ser distinto al de tu cuenta). Si de plano no está, escribe al helpdesk con tu CUM y el concepto y fecha del pago; en SISAS queda registrado el folio y la orden de Conekta.
+Cómo pedir factura
+Puedes pedir factura de un pago desde
+Mis pagos
+siempre que:
+- el pago tenga importe mayor a $0.00,
+- hayan pasado
+30 días o menos
+desde la fecha de pago, y
+- el pago sea de este mismo año calendario.
+Si ya se pasó el plazo, en la columna
+Factura
+sale un icono de prohibido con el aviso "El periodo de facturación ha finalizado." y ya no se puede por SISAS.
+En el renglón del pago, haz clic en
+Factura
+.
+Se abre
+Factura / Datos del Pago
+con el concepto, la fecha y el monto (no se pueden cambiar). Abajo, en
+Factura / Datos del Receptor
+, llena
+RFC
+,
+Nombre Completo o Razón Social
+,
+Regimen Fiscal
+,
+E-mail
+,
+Uso del CFDI
+y
+Forma de Pago
+. Si ya facturaste antes, el RFC y la razón social vienen precargados.
+En
+Dirección del Receptor
+escribe el
+CODIGO POSTAL
+; el estado, municipio y colonia se llenan solos (elige la colonia; si no está, usa
+OTRA COLONIA NO LISTADA
+). Calle y número son opcionales.
+Haz clic en
+Siguiente
+. Pregunta "Confirmo que los datos proporcionados para la generación de la factura son correctos"; dale
+Si
+.
+Sale "La factura Fue creada con exito!!" y aparecen los enlaces
+Comprobante formato PDF
+y
+Comprobante Formato XML
+. Descárgalos ahí mismo. También te llega el correo
+"Envio de factura SISAS"
+.
+Después de eso, en
+Mis pagos
+la columna
+Factura
+muestra los iconos PDF y XML de ese pago; puedes volver a descargarlos cuando quieras.
+Los datos fiscales tienen que coincidir con tu constancia del SAT (RFC, nombre o razón social, régimen y código postal). Si no coinciden, el timbrado falla y sale un error en rojo con el motivo.
+Las cuotas y servicios se facturan exentos de IVA. Los donativos se facturan como donativo y solo admiten los usos de CFDI de donativos.
+Cupones y saldo a favor
+Saldo a favor
+aparece cuando pagaste de más por transferencia o depósito con referencia y SISAS, al conciliar, detectó el excedente. Para usarlo lo conviertes en cupón: en ese renglón haz clic en
+Generar cupón
+, revisa el monto y la vigencia (60 días), dale
+Generar
+para crear el código y luego
+Crear
+. El cupón te llega por correo ("Nuevo cupon SISAS") y queda en tu pestaña
+Cupones
+. Los pagos con tarjeta o en OXXO por Conekta no generan saldo a favor: se cobra exacto.
+También hay cupones que te asigna la Asociación (por ejemplo, para devolverte un pago). Esos llegan por correo con su código.
+En la pestaña
+Cupones
+ves
+Saldo disponible:
+(la suma de tus cupones vigentes sin usar) y la lista con
+Código
+,
+Vigencia
+,
+Monto
+,
+Referencia/Clave de Rastreo
+, quién lo generó y para quién,
+Estatus
+y
+Fecha de uso
+.
+Para usar un cupón: al pagar cualquier cosa, en
+Sistema de pagos
+escribe el código en
+IngresarCupón
+y dale
+APLICAR
+. El descuento se resta del total; si el cupón cubre todo, el pago queda en $0.00 y se confirma sin pasar por Conekta. Un cupón se usa una sola vez y completo: si vale más que lo que estás pagando, el sobrante se pierde (así lo avisa la pantalla).
+Si un pago no aparece
+Lo más común es que el pago se quedó en "intento": SISAS creó la orden en Conekta, pero nunca le llegó la confirmación de que se cobró. Mientras esté así, el pago no se ve en
+Mis pagos
+y tampoco se aplica (ni vigencia, ni evento).
+Antes de escribir, revisa:
+1. Si te llegó el correo "Se acreditó tu pago." Si llegó, el pago sí entró; espera unos minutos y vuelve a abrir
+Mis pagos
+(o cierra sesión y vuelve a entrar).
+2. Si pagaste en OXXO, que de verdad hayas pagado la referencia y que no haya vencido (vence al día siguiente a las 22:00).
+3. Que el pago no lo haya hecho otra persona por ti (Jefe de Grupo, mamá/papá desde su propia cuenta): entonces está en la lista de esa persona.
+Si nada de eso aplica, escribe al helpdesk con:
+- tu CUM,
+- concepto que pagaste (Reinscripción, nombre del evento, etc.),
+- fecha y hora del pago y monto,
+- el número de orden de Conekta (
+ord_..
+): viene en el correo de Conekta o en el de SISAS en
+Autorización
+,
+- captura o PDF del cargo (estado de cuenta de la tarjeta o ticket de OXXO).
+Con eso Tesorería confirma la orden en Conekta y aplica el pago.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+Pagaste y el pago no está en
+Mis pagos
+Quedó en intento: no llegó la confirmación de Conekta, o lo hizo otra persona desde su cuenta
+Ver "Si un pago no aparece" arriba
+El pago está pero en
+Fecha
+dice
+Pendiente
+SISAS registró el pago, pero el dinero no se ha confirmado (típico de referencia bancaria o efectivo sin pagar)
+Paga la referencia o espera la confirmación. Si ya pagaste hace más de 24 h, helpdesk con CUM, concepto y comprobante
+El mismo pago aparece dos veces
+Pagaste dos órdenes distintas (por ejemplo, reintentaste y las dos entraron), o un renglón es tuyo y otro de una ficha múltiple en la que te incluyeron
+Helpdesk con CUM, concepto y las dos fechas; si hubo doble cobro, pide la devolución
+Total Abonado
+no es lo que esperabas
+El total es Importe Esperado menos beca y cupón, más MontoPF si pagaste a meses. Un evento en dólares se muestra en pesos al tipo de cambio del día
+Compara contra el Desglose que viste al pagar. Si no cuadra, helpdesk con CUM y captura del renglón
+"No existe cupón con este código"
+Escribiste mal el código o el cupón no existe
+Cópialo tal cual del correo "Nuevo cupon SISAS" o de la pestaña
+Cupones
+"El cupón ya fue utilizado"
+Ese cupón ya se aplicó a otro pago
+Revisa
+Fecha de uso
+en la pestaña
+Cupones
+. Un cupón solo sirve una vez
+"El código ya no esta vigente"
+Se pasó la
+Vigencia
+del cupón, o fue cancelado
+Helpdesk con CUM y el código
+"El campo cupón es requerido"
+Diste
+APLICAR
+sin escribir nada
+Escribe el código y vuelve a aplicar
+Diste
+Pagar
+, se acabaron los 60 segundos y te regresó a
+Mis pagos
+La pantalla
+Pago
+te da 60 segundos para elegir Tipo de Pago, Concepto y Plan y dar
+Continuar
+Vuelve a dar
+Pagar
+y elige rápido; ten decidido qué vas a pagar antes de entrar
+"Favor de elegir su Tipo de Pago y hacer clic en Contiuar en el tiempo indicado"
+Aviso normal al abrir la pantalla
+Pago
+Nada, es el recordatorio del contador
+"Debes seleccionar un concepto de pago." / "Debes seleccionar un plan de pago."
+Falta elegir
+Concepto
+o
+Plan
+antes de
+Continuar
+Elígelo y vuelve a dar
+Continuar
+"Ocurrio un error, consulta al administrador del sistema.." al dar
+Continuar
+No se pudo preparar el pago (por ejemplo el concepto no tiene monto cargado)
+Helpdesk con CUM, Tipo de Pago y Concepto que elegiste
+Verifica
+: "Ya existe una solicitud de pago generada para ti o el/los miembro(s) elegido(s), ésta aún se encuentra Activa, deberás esperar 24 horas para solicitar una nueva."
+Ya tienes una orden de Conekta abierta por ese mismo concepto
+Paga esa orden (correo de Conekta) o espera a que venza
+Pago no completado
+: "Tu transacción fue cancelada o no se procesó correctamente. Por favor intenta nuevamente."
+Cancelaste en Conekta o la tarjeta fue rechazada; no se cobró
+Vuelve a intentar desde
+Pagar
+Pago en proceso
+y al dar
+Entendido
+te sacó de SISAS
+Es normal después de pagar inscripción o reinscripción
+Vuelve a entrar; el pago se refleja en segundos (tarjeta) o cuando OXXO lo reporte
+En
+Factura
+sale el icono de prohibido "El periodo de facturación ha finalizado."
+Pasaron más de 30 días del pago, o el pago es de otro año
+Ya no se factura por SISAS
+En
+Factura
+sale el icono de información "Factura global."
+Ese pago ya se incluyó en una factura global de la Asociación (RFC genérico)
+No se puede facturar a tu nombre
+"El RFC no es valido." / "El Código Postal no es valido o no existe."
+Formato incorrecto
+Copia el RFC y el CP de tu constancia del SAT
+Error en rojo al generar la factura
+El SAT rechazó el timbrado, casi siempre por datos fiscales que no coinciden
+Corrige nombre/razón social, régimen o CP según tu constancia y vuelve a intentar. Si persiste, helpdesk con CUM y el texto del error
+Cuando escribas al helpdesk incluye siempre: CUM, pantalla, mensaje exacto y, si es sobre un pago, concepto, fecha, monto y el número de orden
+ord_
+de Conekta.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿La tabla de Mis pagos me sirve como comprobante?
+No. El comprobante es el correo "Se acreditó tu pago." (el Recibo Electrónico) y, si la pediste, la factura PDF/XML.
+¿Puedo donar desde Mis pagos?
+Sí:
+Pagar
+→
+Tipo de Pago
+=
+Donativos
+y eliges el concepto. Los donativos tienen monto fijo por concepto, no cantidad libre.
+¿Qué son Servicios Cuautli y Servicios Meztitla?
+Pagos de servicios en los campos escuela de la Asociación (Cuautli y Meztitla). Al elegirlos te pide una
+Fecha
+(la del servicio).
+¿Puedo usar un cupón que le dieron a otra persona?
+SISAS acepta el código de cualquier cupón vigente al pagar; no hace falta que esté a tu nombre. Pero cada cupón se usa una sola vez, así que ponte de acuerdo con quien lo recibió.
+¿Dónde veo el pago que hizo mi Jefe de Grupo por mí?
+En tu
+Mis pagos
+no aparece; está en la lista de quien lo hizo. Lo que sí ves es el efecto: tu
+Vigencia:
+en el Dashboard o tu lugar en el evento.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+21
+Categoría:
+Eventos y pagos
+Fecha de alta:
+2026-10-11 12:55:21
+Vistas:
+16
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo inscribirme y pagar un evento
+Cómo reinscribirme (renovar mi membresía)
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Registro Familiar: inscribir a toda la familia con descuento
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

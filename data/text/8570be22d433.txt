@@ -1,0 +1,40 @@
+DOCUMENTO OFICIAL ASMAC: Plantilla P1.0.2 — Anexo Diagnóstico Inicial NNAJ
+Archivo: P1.0.2_ANEXOFAESDiagnosticoIniciaNNAJAnexo_V1.1.pdf
+Fecha de publicación en RECME: 19 Abril 2026
+Categoría RECME: Plantillas de Diagnostico
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Campo de texto 10: Metodología de Evaluación por Competencias Educativas
+
+1. IDENTIFICO (Diagnóstico): Los NNAJ junto con el equipo de Scouters, manifiestan inquietudes, seleccionan el eje temático o actividades de interés.
+• Acción Requerida: Se requiere acompañamiento, mentoría y establecer acciones educativas para generar el aprendizaje y desarrollo de competencia. Emplea la metodología Planea Ejecuta Revisa
+
+2. CONOZCO (Conocimiento): Se observa que conoce los conceptos y los asocia.
+• Acción Requerida: Motivar para ampliar conocimiento y realizar acciones educativas dentro y fuera del movimiento que le permitan desarrollar la competencia
+
+3. APLICO (Habilidad): Conoce conceptos, los pone en práctica con facilidad.
+
+• Acción Requerida: Alcanzo la competencia esperada, se debe motivar a la acción regular y a compartir con otros. Si se logró el desarrollo de 3 o más competencias intermedias se programa la celebración y debe iniciar el desarrollo de nuevas competencias o aprendizajes.
+
+4. COMPARTO (Actitud): Conoce el tema, es capaz de aprender de manera continua, tiene la habilidad de resolver problemáticas o aplicar a situaciones y es capaz de compartir o enseñar a otros.
+
+• Acción Requerida: Alto desarrollo de la competencia, motivar a practica continua y a desarrollar otras competencias.
+
+Después de las distintas etapas de entrevistas y evaluación por observación emplee matriz de Diagnóstico
+
+1.- Registre los datos personales de la niña o niño
+2.- Revise las competencias por cada cazadero o eje temático
+3.- Identifique el nivel de desarrollo de cada competencia intermedia
+4.- Asigne un nivel de desarrollo con el criterio Identifico, Conozco, Aplico y Comparto
+
+Al terminar su diagnóstico podrá observar las fortalezas y debilidades de la niña o niño, esto le sera útil para planear Acciones Educativas que contribuyan al desarrollo de esas competencias y a acompañarlo en la elección de CAZADEROS (Etapa de Progresión), Especialidades e Iniciativas, donde ellas o ellos se vuelvan personas activas PROTAGONISTAS de su propio desarrollo.
+
+Adopte y adapte el formato de Matriz de Competencias según sus necesidades
+    Campo de texto 7: Metodología de Evaluación por Competencias Educativas
+    Casilla de verificación 19: /S
+    Casilla de verificación 21: /S
+    Casilla de verificación 20: /S
+    Casilla de verificación 22: /S
+
+--- Página 1 ---

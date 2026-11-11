@@ -1,0 +1,42 @@
+GUÍA OFICIAL HELP DESK ASMAC: ¿Que sucede cuando los textos de las etiquetas o los campos en SISAS tienen palabras diferentes?
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=4
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+SISAS
+¿Que sucede cuando los textos de las etiquetas o los campos en SISAS tienen palabras diferentes?
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+¿Que sucede cuando los textos de las etiquetas o los campos en SISAS tienen palabras diferentes?
+Muchas veces nosotros los usuarios utilizamos el traductor automático para nuestras páginas de internet.
+Si llegas a observar que tu SISAS tiene palabras extrañas en español que no deberían de estar ahi, asegúrate de desactivar los traductores automáticos de tu navegador.
+En caso de que te siga fallando después de hacer eso, prueba en otro equipo o navegador si te es posible; si no funciona,
+levanta un ticket.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+4Categoría:
+SISAS
+Fecha de alta:
+2023-01-20 12:06:13
+Vistas:
+428
+valoración                                         (Votar):
+(0)
+Volver atrás
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

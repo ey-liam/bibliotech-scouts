@@ -1,0 +1,56 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Guardianes del arbolado
+Archivo: FES_CC_HPV_GUARDIANES DEL ARBOLADO.pdf
+Fecha de publicación en RECME: 26 Septiembre 2026
+Categoría RECME: Especialidades Medio Ambiente y Sustentabilidad
+Etiqueta temática RECME: Naturaleza_y_biodiversidad
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: GUARDIANES DEL ARBOLADO
+    Texto161: -Conozco la importancia del arbolado urbano para la biodiversidad, el bienestar de las personas y el ambiente.
+-Comprendo la utilidad de realizar un inventario para conocer qué árboles existen, dónde se encuentran y cuáles requieren seguimiento.
+-Conozco diferentes características que permiten identificar especies y señales que pueden indicar estrés hídrico, daños o necesidad de atención.
+-Comprendo la importancia del uso responsable del agua durante la temporada de estiaje.
+    Texto163: -Participo en la elaboración de un inventario de árboles de un espacio autorizado.
+-Registro información sobre su ubicación, especie cuando sea posible, estado general, follaje, daños visibles y necesidad de seguimiento.
+-Elaboro un mapa o registro organizado de los árboles identificados.
+-Con base en la información obtenida, identifico cuáles requieren atención y apoyo en acciones autorizadas de cuidado.
+    Texto165: -Comparto con otros jóvenes los resultados del inventario mediante una presentación, exposición, mapa o actividad.
+-Explico por qué es importante conocer el estado del arbolado antes de intervenirlo y promuevo acciones responsables para su conservación.
+-Puedo organizar una actividad de sensibilización sobre el cuidado de los árboles y el uso responsable del agua.
+    Texto167: Adaptado por SCNPJ
+    Texto168: Contar con autorización de la autoridad responsable del espacio y supervisión adulta.
+No realizar podas, cortes, aplicaciones de productos ni intervenciones que requieran capacitación especializada. Utilizar guantes y calzado cerrado cuando corresponda. Mantener hidratación y realizar pausas.
+No manipular fauna silvestre y reportar situaciones de riesgo al responsable del lugar.
+    Texto169: Naturaleza y Biodiversidad
+    Dropdown170: COMUNIDAD
+    Check Box185: /Sí
+    Group188: /Opci髇1
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

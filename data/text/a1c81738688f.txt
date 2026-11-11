@@ -1,0 +1,125 @@
+GUÍA OFICIAL HELP DESK ASMAC: Mi perfil está en validación: qué significa y qué puedo hacer
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=19
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Mi ficha y credencial
+Mi perfil está en validación: qué significa y qué puedo hacer
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Mi perfil está en validación: qué significa y qué puedo hacer
+"Validación" quiere decir que SISAS mandó tus datos a tu jefe inmediato para que los revise y apruebe. Mientras no lo haga, no puedes usar el sistema. No hay nada que tengas que hacer dentro de SISAS: lo que sigue depende de tu jefe.
+Cuándo entras en validación
+Hay dos momentos en que pasa:
+Cuando te acabas de registrar.
+Al terminar el pre-registro (tus datos y tu Contraseña de autorización) SISAS te avisa "Estamos validando tu información, este paso puede demorar un poco, te notificaremos vía correo cuando esté lista para continuar." y te regresa a la pantalla de entrada. Cada vez que intentes entrar verás ese mismo aviso hasta que te validen.
+Cuando completas o corriges tu ficha.
+Al hacer clic en
+Enviar a validación
+en tu perfil, SISAS avisa "Estamos validando tu Información, este paso puede demorar un poco, te notificaremos vía correo cuando esté lista para continuar." Desde ese momento, al entrar verás "Tu información se está validando." y al dar
+Aceptar
+SISAS cierra tu sesión. Cómo llenar la ficha está en la guía "Cómo completar o corregir mis datos".
+Cambiar tu dirección, tu contacto o tu ficha de salud te advierte "De guardar y continuar, tus datos se enviaran a validar y no podrás navegar en el sistema hasta que sean aprobados." Eso solo marca tu ficha como pendiente; la validación arranca hasta que das
+Enviar a validación
+.
+El cambio de grupo es otra validación distinta, con su propia guía.
+Quién te valida y cómo se entera
+Tu jefe inmediato del siguiente nivel: el jefe de tu sección, el Subjefe de Grupo Administrativo o el Jefe de Grupo. Si no hay nadie en el grupo, lo puede hacer el Vicepresidente Administrativo o el Presidente de Provincia. A cada uno le llega una notificación en la campana de SISAS; con que uno de ellos valide es suficiente.
+SISAS no les manda correo ni mensaje. Si tu jefe no entra a SISAS, no se entera. Avísale tú.
+Qué puedes hacer mientras tanto
+Nada dentro de SISAS. Al entrar te sale el aviso y se cierra la sesión: no puedes ver eventos, pagar, ni abrir ningún módulo del menú. Si acabas de registrarte, el pago de tu membresía viene después de que te validen.
+Cuánto tarda
+No hay un plazo fijo ni SISAS manda recordatorios a tu jefe. Tarda lo que tu jefe tarde en entrar a SISAS y hacer clic en
+Validar
+. Si llevas varios días, háblale directo.
+Qué pasa después
+Si te validan
+Registro nuevo: te llega el correo "¡Bienvenida ASMAC!" con tu CUM, tu provincia y tu grupo. Al entrar verás "¡Tu Información está validada! por favor continúa con tu proceso de registro." y con
+Siguiente
+pasas al pago de tu membresía. Tu credencial se genera cuando el pago queda acreditado, no con la validación. Después de pagar, al entrar por primera vez al inicio tu cuenta aparece al 90 % con "¡Tu cuenta no esta completa!": falta completar la ficha y enviarla a validar por segunda vez.
+Ficha: te llega el correo "Tu perfil ya fue validado" y una notificación en la campana que dice "Tu perfil fue validado." Tu cuenta pasa al 100 % con "¡Tu cuenta esta completa!" y el menú se abre.
+Si te rechazan
+Registro nuevo: te llega el correo "Disculpa, tu registro a la ASMAC presenta un problema." SISAS te regresa al paso de tus datos generales; ahí, en
+Detalles/Observaciones
+, está el motivo que escribió tu jefe. Corrige lo que te pide, vuelve a generar tu Contraseña de autorización y se reenvía solo a validar.
+Ficha: te llega el correo "Verifica la información de tu perfil". Al entrar ves "Tu perfil fue rechazado, para seguir navegando en el sistema debes editar tu información y enviarla a validación nuevamente." con dos botones:
+Salir del sistema
+o
+Editar información
+. Con
+Editar información
+entras a tu perfil; el motivo está en el recuadro
+Detalles/Observaciones(Validador)
+. Corrige y vuelve a dar
+Enviar a validación
+.
+El motivo del rechazo solo se ve dentro de SISAS; el correo no lo trae.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+"Tu información se está validando." y SISAS me saca
+Es lo normal mientras tu jefe no valida. No es un error.
+Habla con tu jefe para que entre a SISAS y valide.
+"Estamos validando tu información.." cada vez que entro
+Tu pre-registro sigue sin validar.
+Igual: tu jefe tiene que entrar a sus notificaciones y validar.
+Mi jefe dice que no le aparece nada
+Las notificaciones solo llegan a quien tiene cargo registrado en SISAS en tu grupo o provincia. Si tu jefe no tiene cargo en el sistema, o estás en un grupo sin cargos, nadie recibe el aviso.
+Pídele que busque tu nombre en
+Consulta de miembros
+y te valide desde tu ficha. Si no te encuentra o no tiene la opción, escribe al helpdesk con tu CUM.
+Me rechazaron pero no veo el motivo
+El motivo está en tu ficha (
+Detalles/Observaciones
+o
+Detalles/Observaciones(Validador)
+), no en el correo. Si el recuadro está vacío, tu jefe rechazó sin escribir nada.
+Entra con
+Editar información
+y revisa el recuadro. Si está vacío, pregúntale directo a tu jefe qué quiere que corrijas.
+Ya me validaron pero sigo al 90 %
+Si acabas de registrarte y pagar, es normal: falta la segunda validación, la de la ficha. Si ya enviaste la ficha y te validaron, SISAS tarda unos segundos en reflejarlo.
+Completa tu ficha y da
+Enviar a validación
+. Si ya lo hiciste y te confirmaron la validación, cierra sesión y vuelve a entrar. Si sigue al 90 %, escribe al helpdesk con tu CUM.
+"Se perdió la comunicación con el servidor, vuelva a ingresar al sistema." al abrir una pantalla
+Intentaste abrir una pantalla por el enlace directo mientras estás en validación o con un rechazo pendiente. SISAS te sacó.
+Entra de nuevo y atiende el aviso que te salga.
+Cuando escribas al helpdesk incluye: tu CUM, si es registro nuevo o ficha, la fecha en que enviaste a validar y el nombre de tu jefe.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+19
+Categoría:
+Mi ficha y credencial
+Fecha de alta:
+2026-10-11 12:54:35
+Vistas:
+10
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo completar o corregir mis datos (mi ficha al 100 %)
+Cómo solicitar un cambio de grupo
+Jefe de Grupo: aprobar o rechazar un cambio de grupo
+Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)
+Cómo entrar a SISAS (y qué ves al entrar)
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

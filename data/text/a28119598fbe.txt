@@ -1,0 +1,196 @@
+GUÍA OFICIAL HELP DESK ASMAC: Jefe de Grupo: cambiar de sección a un miembro
+Categoría: Guía para Jefes de Grupo y Scouters (SISAS)
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=25
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Para Jefes de Grupo
+Jefe de Grupo: cambiar de sección a un miembro
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Jefe de Grupo: cambiar de sección a un miembro
+Esta guía es para Jefes de Grupo y cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia).
+Lo primero que tienes que saber:
+el paso de Manada a Tropa, de Tropa a Comunidad y de Comunidad a Clan ya no se hace a mano.
+SISAS lo hace solo, por edad. Lo que sí puedes cambiar tú desde la ficha del miembro es el paso de Clan a Scouter y entre Scouter y Dirigente (adultos). El resto de esta guía explica dónde está el combo, qué deja hacer y qué hace el cambio automático.
+Antes de empezar
+Entra en modo
+Administrador
+(en el menú
+Hola, nombre
+, el conmutador
+Administrador
+/
+Mi Perfil
+).
+El miembro tiene que ser de tu grupo y no estar bloqueado ni dado de baja. A los bloqueados solo los ves, no los editas.
+Para un cambio de adulto (Clan → Scouter, Scouter ↔ Dirigente) el miembro tiene que tener 18 años o más. Para Clan → Scouter, además, tener Clan como sección actual.
+Si el miembro está en una patrulla, seisena o equipo, al cambiar de sección sale de él. Tenlo en cuenta antes de guardar.
+Pasos
+Entra a
+menú
+Consulta de miembros
+.
+Haz clic en Filtros
+, busca al miembro por
+CUM
+o
+Nombre
+y da
+Buscar
+.
+En la fila del miembro, haz clic en el
+lápiz
+(editar). Si solo das clic en el
+ojo
+, abres la ficha en modo lectura y el combo de sección queda bloqueado.
+Abre la pestaña
+Curriculum scout
+. En el bloque
+Datos Scout actuales
+está el combo
+Sección
+.
+Elige la sección nueva. El combo solo muestra las secciones a las que ese miembro puede pasar según su edad y su sección actual; si solo aparece la sección que ya tiene, no hay cambio posible desde aquí (ver "Si algo falla").
+Haz clic en Siguiente
+. Ahí se guarda el cambio. No sale ningún aviso de confirmación.
+Sigue con
+Siguiente
+hasta la última pestaña y da
+Guardar datos
+. Verás "Información guardada con éxito." y regresas a
+Consulta de miembros
+.
+Si cambias de opinión antes de dar
+Siguiente
+, usa
+Salir
+. SISAS pregunta "¿Estás seguro de salir?" con el aviso "La información se guardará parcialmente.": lo que ya pasó por
+Siguiente
+en otras pestañas sí quedó guardado.
+Qué pasa después
+El cambio es inmediato. No pasa por validación de nadie y no se avisa por correo ni por campana al miembro ni a ti. Queda registrado en la bitácora como "Cambio manual de sección".
+Lo que hace SISAS en ese momento:
+La sección anterior pasa al
+historial de secciones
+del miembro (tabla
+Secciones
+dentro de
+Curriculum scout
+), con el periodo que estuvo en ella.
+Si estaba en una patrulla, seisena o equipo, sale de él. Hay que volver a asignarlo desde la división de secciones de
+Administración
+.
+Sus insignias no se borran.
+Mi Manga
+le muestra por defecto la sección actual, pero con el combo de sección de esa pantalla puede ver las insignias que ganó en secciones anteriores.
+Especialidades: si tenía una especialidad en nivel rojo (el último) en la sección anterior y esa especialidad existe en la nueva, se le abre en nivel 1 de la nueva sección.
+VAL: si tenía la VAL roja de la sección anterior, SISAS le da la VAL amarilla de la nueva sección ya validada, le carga los mínimos de aire libre y le avisa por campana al jefe de la sección nueva.
+El cambio automático por edad
+Una tarea programada de SISAS (
+TareasProgramadas
+) revisa cada vez que corre la fecha de nacimiento de todos los miembros y sube de sección a quien ya cumplió la edad de la siguiente:
+Pasa a
+Cuándo
+Tropa
+al cumplir la edad de inicio de Tropa, estando en Manada
+Comunidad
+al cumplir la edad de inicio de Comunidad, estando en Manada o Tropa
+Clan
+al cumplir la edad de inicio de Clan, estando en una sección menor
+Scouter
+solo desde Clan, al cumplir 4 años más que la edad de inicio de Scouter
+Los rangos de edad por sección están en el catálogo de secciones de SISAS.
+El cambio automático hace lo mismo que el manual (historial, sale del equipo, VAL roja → amarilla) y queda en bitácora como "Cambio de sección automático".
+No le avisa al miembro ni a ti.
+El único aviso que existe es previo y solo para Manada: seis meses antes de que un lobato cumpla la edad de salir de Manada, el jefe de la sección (o de su seisena) recibe una notificación en la campana para que se prepare. Para Tropa y Comunidad no hay aviso previo.
+Ojo: si tú bajaste a un miembro de sección a mano (por ejemplo lo regresaste de Tropa a Manada) y esa fue su última modificación, SISAS no lo vuelve a subir solo mientras tenga esa edad: respeta tu decisión y el combo de la ficha se queda fijo en la sección actual.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+El combo
+Sección
+está gris y no se puede abrir
+Abriste la ficha con el
+ojo
+(solo lectura) o tu rol no tiene permiso de modificar en
+Consulta de miembros
+.
+Regresa a la consulta y abre con el
+lápiz
+. Si el lápiz tampoco te deja, escribe al helpdesk con tu CUM y tu cargo.
+El combo solo muestra la sección que ya tiene el miembro
+No hay cambio permitido para su edad y sección. En secciones de jóvenes el paso lo hace SISAS solo cuando cumple la edad.
+No hay nada que hacer en la ficha. Si el miembro ya tiene la edad y sigue en la sección anterior, escribe al helpdesk con su CUM y su fecha de nacimiento.
+"De acuerdo al reglamento, debe permanecer en la sección Manada correspondiente a la edad actual." (o Tropa, Comunidad, Clan, Scouter)
+Intentaste subir o bajar a mano entre Manada, Tropa, Comunidad y Clan, o bajar de Scouter a Clan. Está bloqueado.
+Espera al cambio automático. Si crees que la fecha de nacimiento está mal, corrígela en
+Datos Personales
+(eso sí va a validación).
+"No puedo saltar dos secciones"
+El combo nunca ofrece más de una sección de distancia.
+No se puede. El historial de secciones se arma una por una.
+"El miembro perdió sus insignias" al cambiar de sección
+No se perdieron.
+Mi Manga
+abre en la sección actual.
+Que el miembro use el combo de sección en
+Mi Manga
+para ver las anteriores. Su historial de secciones está en
+Curriculum scout
+.
+"Cambió solo de sección y no debía"
+La tarea automática lo subió porque su fecha de nacimiento ya cae en el rango de la siguiente sección.
+Revisa la fecha de nacimiento en
+Datos Personales
+. Si está mal, corrígela y escribe al helpdesk con el CUM para que regresen la sección; desde la ficha no se puede bajar.
+"Se produjo un error al guardar el registro."
+Falló el guardado de la pestaña.
+Vuelve a intentar. Si se repite, escribe al helpdesk con el CUM del miembro, la sección que intentaste poner y la hora.
+"Alguno de tus cargos no cuenta con la asignación del nivel en el catalogo de roles, contacta por favor con Soporte en la OSN" al entrar a
+Consulta de miembros
+Tu cargo no tiene nivel (grupo, provincia, nacional) en el catálogo.
+Escribe al helpdesk con tu CUM y tu cargo.
+Cuando escribas al helpdesk incluye: el CUM del miembro, su fecha de nacimiento, la sección en la que está y a la que debería ir.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Puedo regresar a un miembro a la sección anterior?
+No. Desde febrero de 2026 la ficha bloquea bajar de sección entre Manada, Tropa, Comunidad y Clan, y de Scouter a Clan. Si hay un caso justificado, va por helpdesk.
+¿El miembro o sus papás se enteran del cambio?
+No. Ni el manual ni el automático mandan correo o notificación al miembro. Avísale tú.
+¿Cambiar de sección le quita cargos o calidades?
+No. El cambio de sección no toca cargos ni calidades (eso lo hace el cambio de grupo, ver la guía "Cómo solicitar un cambio de grupo"). Solo lo saca de su patrulla, seisena o equipo.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+25
+Categoría:
+Para Jefes de Grupo
+Fecha de alta:
+2026-10-11 14:12:48
+Vistas:
+11
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo registrar mis avances: progresión, especialidades e insignias
+Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes
+Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo
+Cómo entrar a SISAS (y qué ves al entrar)
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

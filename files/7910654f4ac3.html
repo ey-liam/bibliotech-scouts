@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva) — BiblioTech Scout</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --ink: #0f172a;
+      --muted: #475569;
+      --accent: #6d28d9;
+      --accent-soft: #ede9fe;
+      --border: #dbeafe;
+      --warn-bg: #fff7ed;
+      --warn-border: #fdba74;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #080414;
+        --card: #120b26;
+        --ink: #f8fafc;
+        --muted: #cbd5e1;
+        --accent: #a855f7;
+        --accent-soft: rgba(168, 85, 247, 0.18);
+        --border: rgba(139, 92, 246, 0.35);
+        --warn-bg: rgba(245, 158, 11, 0.12);
+        --warn-border: rgba(251, 191, 36, 0.45);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px 48px;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 26px;
+      margin-bottom: 18px;
+    }
+    .crumbs {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 1.55rem;
+      line-height: 1.28;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .pill {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .src {
+      margin: 10px 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      word-break: break-all;
+    }
+    .card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 26px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+      color: var(--accent);
+    }
+    h3 {
+      margin: 16px 0 6px;
+      font-size: 1rem;
+    }
+    p, li {
+      font-size: 0.96rem;
+    }
+    ul, ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--accent-soft);
+      font-weight: 800;
+    }
+    .note {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+    figure {
+      margin: 16px 0;
+      padding: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: center;
+    }
+    figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    figcaption {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    code {
+      background: var(--accent-soft);
+      padding: 1px 5px;
+      border-radius: 5px;
+      font-size: 0.88em;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero-card">
+      <div class="crumbs">Guías SISAS, CONECTA y Soporte Digital • Guía para Jefes de Grupo y Scouters (SISAS)</div>
+      <h1>Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)</h1>
+      <div class="meta">
+        <span class="pill">Guía Oficial Help Desk ASMAC</span>
+        <span>Corte documental: 11 de noviembre de 2026</span>
+      </div>
+      <p class="src">Fuente oficial de referencia: <code>https://helpdesk.scouts.org.mx/knowledgebase.php?article=28</code></p>
+    </header>
+    <section class="card">
+<p>Help Desk de la Asociacion de Scouts de Mexico</p>
+<p>Español</p>
+<p>English</p>
+<p>Español</p>
+<p>Español</p>
+<p>English</p>
+<p>Help Desk de la Asociacion de Scouts de Mexico</p>
+<p>Base de Conocimientos (KB)</p>
+<p>Para Jefes de Grupo</p>
+<p>Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)</p>
+<p>Buscar</p>
+<p>artículos sugeridos de la base de conocimiento (KB):</p>
+<p>Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)</p>
+<p>Esta guía es para Jefes de Grupo y cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia).</p>
+<p>Con esto registras tú a una persona nueva en tu grupo sin que ella pase por el pre-registro. SISAS le genera su CUM al momento, le crea su cuenta y le manda por correo su ID y una contraseña temporal. Un alta de uno toma un minuto; un Excel de varios, unos minutos más la revisión. Cómo se registra una persona por su cuenta está en la guía</p>
+<p>Cómo crear mi cuenta en SISAS</p>
+<p>; aquí solo va tu parte.</p>
+<p>Hay dos maneras:</p>
+<p>Reg. Express</p>
+<p>(también aparece como</p>
+<p>Carga Rápida</p>
+<p>): un formulario, una persona a la vez, siempre en tu grupo.</p>
+<p>Carga masiva de usuarios</p>
+<p>: subes un Excel con varias personas de un mismo grupo.</p>
+<p>Usa el alta tú mismo cuando ya tienes los datos del nuevo a la mano (CURP, fecha de nacimiento, correo) y quieres que entre a SISAS ya con CUM. Si no tienes sus datos o el papá prefiere capturar él, mándalo al pre-registro de la pantalla de acceso; después tú validas su perfil igual.</p>
+<p>Antes de empezar</p>
+<p>Estar en la vista</p>
+<p>Administrador</p>
+<p>. Entras con tu cuenta normal, abres el menú</p>
+<p>Hola, [tu nombre]</p>
+<p>arriba a la derecha y haces clic en</p>
+<p>Administrador</p>
+<p>. Si ya estás ahí, el menú dice</p>
+<p>Mi Perfil</p>
+<p>.</p>
+<p>Tener el permiso. Si en</p>
+<p>Consulta de miembros</p>
+<p>no ves los botones</p>
+<p>Carga masiva de usuarios</p>
+<p>y</p>
+<p>Carga Rápida</p>
+<p>, o en el menú de la izquierda no aparece</p>
+<p>Reg. Express</p>
+<p>, tu rol no lo tiene: pídelo al helpdesk con tu CUM y tu cargo.</p>
+<p>Los datos de cada persona nueva: nombre, primer apellido, segundo apellido, fecha de nacimiento, estado de nacimiento, género, CURP y</p>
+<p>un correo propio que no esté en ninguna otra cuenta de SISAS</p>
+<p>. Si es menor, el correo puede ser del papá o la mamá, pero un correo sirve para una sola cuenta: dos hermanos necesitan dos correos. El correo del tutor para la autorización se captura después y ese sí puede repetirse.</p>
+<p>La persona debe tener al menos 6 años cumplidos.</p>
+<p>SISAS calcula la CURP con nombre, apellidos, fecha, género y estado y la compara con la que escribes. Si un dato no cuadra con el acta de nacimiento, no pasa.</p>
+<p>Para Carga masiva: Excel</p>
+<p>.xlsx</p>
+<p>(el.xls viejo no se acepta) armado con el formato que se descarga en la misma pantalla.</p>
+<p>Pasos</p>
+<p>A. Reg. Express (una persona)</p>
+<p>En la vista</p>
+<p>Administrador</p>
+<p>, en el menú de la izquierda haz clic en</p>
+<p>Reg. Express</p>
+<p>. También llegas desde</p>
+<p>Consulta de miembros</p>
+<p>con el botón</p>
+<p>Carga Rápida</p>
+<p>.</p>
+<p>Se abre</p>
+<p>Miembros / Fast Charge</p>
+<p>. Arriba ves</p>
+<p>Provincia</p>
+<p>,</p>
+<p>Localidad</p>
+<p>y</p>
+<p>Grupo</p>
+<p>: son los tuyos y no se pueden cambiar. La persona queda en tu grupo.</p>
+<p>Llena</p>
+<p>Nombre</p>
+<p>,</p>
+<p>Primer Apellido</p>
+<p>y</p>
+<p>Segundo Apellido</p>
+<p>(este último es opcional; si no tiene, déjalo vacío).</p>
+<p>Elige</p>
+<p>Fecha Nacimiento</p>
+<p>en el calendario.</p>
+<p>Escribe el</p>
+<p>Email</p>
+<p>de la persona (o del papá o mamá). Revísalo dos veces: a ese correo le llega su contraseña.</p>
+<p>Escribe la</p>
+<p>CURP</p>
+<p>completa (18 caracteres).</p>
+<p>Elige</p>
+<p>Estado</p>
+<p>(estado de nacimiento;</p>
+<p>EXTRANJERO</p>
+<p>si nació fuera de México) y</p>
+<p>Género</p>
+<p>.</p>
+<p>Haz clic en</p>
+<p>Cargar</p>
+<p>.</p>
+<p>Si algo no pasa, la misma pantalla te muestra arriba un recuadro</p>
+<p>Error de captura:..</p>
+<p>con el motivo (ver &quot;Si algo falla&quot;). Corrige y vuelve a</p>
+<p>Cargar</p>
+<p>.</p>
+<p>Si pasa, SISAS te lleva a</p>
+<p>Consulta de miembros / Carga masiva</p>
+<p>con una tabla de un renglón y una palomita verde en</p>
+<p>Valido</p>
+<p>. Revisa los datos.</p>
+<p>Haz clic en</p>
+<p>Cargar</p>
+<p>(arriba a la derecha). Verás &quot;Se cargarán 1 registros.&quot;; haz clic en</p>
+<p>Aceptar</p>
+<p>.</p>
+<p>Verás &quot;La carga se realizó con éxito.&quot;;</p>
+<p>Aceptar</p>
+<p>te lleva a</p>
+<p>Consulta de miembros / Confirmación de carga masiva</p>
+<p>, donde ya aparece el</p>
+<p>Id</p>
+<p>y el</p>
+<p>CUM</p>
+<p>nuevos. Anótalos o usa</p>
+<p>Exportar</p>
+<p>para bajarlos a Excel.</p>
+<p>Si quieres pagar la inscripción en ese momento, sigue en el paso C. Si no,</p>
+<p>Regresar</p>
+<p>.</p>
+<p>B. Carga masiva (varias personas por Excel)</p>
+<p>En la vista</p>
+<p>Administrador</p>
+<p>, entra a</p>
+<p>Consulta de miembros</p>
+<p>y haz clic en</p>
+<p>Carga masiva de usuarios</p>
+<p>.</p>
+<p>Se abre</p>
+<p>Miembros / Carga Masiva</p>
+<p>. Haz clic en</p>
+<p>Descargar formato</p>
+<p>: baja</p>
+<p>LayoutCargaMasiva.xlsx</p>
+<p>. Úsalo tal cual; no cambies el orden de las columnas ni el nombre de la hoja.</p>
+<p>Llena la hoja</p>
+<p>Hoja1</p>
+<p>, un renglón por persona desde la fila 2 (la fila 1 son los encabezados; la fila 2 trae un ejemplo que debes borrar o sobrescribir):</p>
+<p>Columna</p>
+<p>Qué va</p>
+<p>Ejemplo</p>
+<p>Email</p>
+<p>Correo de la persona, único en SISAS. Un renglón sin correo se ignora.</p>
+<p>ejemplo@dominio.com</p>
+<p>Nombre</p>
+<p>Nombre(s)</p>
+<p>MARÍA FERNANDA</p>
+<p>Primer apellido</p>
+<p>LÓPEZ</p>
+<p>Segundo apellido</p>
+<p>Opcional</p>
+<p>RUIZ</p>
+<p>Id nacionalidad</p>
+<p>Número: 1 Mexicana, 2 Extranjera</p>
+<p>1</p>
+<p>Fecha de nacimiento</p>
+<p>Celda con formato de fecha de Excel, no texto. No puede ser la fecha de hoy.</p>
+<p>15/03/2015</p>
+<p>Estado de nacimiento</p>
+<p>Número del estado, según la hoja</p>
+<p>Ayuda</p>
+<p>(1 Aguascalientes.. 9 Ciudad de México.. 33 Extranjero)</p>
+<p>9</p>
+<p>CURP</p>
+<p>18 caracteres</p>
+<p>LOFM150315MDFPZR01</p>
+<p>Id Genero</p>
+<p>Número: 1 Masculino, 2 Femenino</p>
+<p>2</p>
+<p>La hoja</p>
+<p>Ayuda</p>
+<p>del mismo archivo tiene las tres listas de números.</p>
+<h3>4. En SISAS deja</h3>
+<div class="note">Tipo de Usuarios</div>
+<p>en</p>
+<p>Miembro Scout</p>
+<p>. La opción</p>
+<p>Invitado (Solo autorizado por la OSN)</p>
+<p>no es para altas de grupo.</p>
+<h3>5. Elige</h3>
+<p>Provincia</p>
+<p>,</p>
+<p>Localidad</p>
+<p>y</p>
+<p>Grupo</p>
+<p>. Todas las personas del Excel quedan en ese grupo; si tienes nuevos de dos grupos, son dos archivos.</p>
+<h3>6. Haz clic en</h3>
+<p>Adjuntar</p>
+<p>, elige tu.xlsx y luego</p>
+<p>Siguiente</p>
+<p>.</p>
+<h3>7. Espera. SISAS revisa el archivo renglón por renglón y durante ese rato la pantalla no cambia.</h3>
+<p>No vuelvas a dar clic en Siguiente ni recargues</p>
+<p>: con archivos grandes puede tardar varios minutos y un segundo envío solo le carga más trabajo a SISAS. Sube lotes de pocas personas.</p>
+<h3>8. Se abre</h3>
+<p>Consulta de miembros / Carga masiva</p>
+<p>con la tabla de lo que leyó. Cada renglón trae en</p>
+<p>Valido</p>
+<p>una palomita verde (pasa) o una X roja (no pasa). Pasa el ratón sobre un renglón rojo: el globo te dice qué está mal, por ejemplo &quot;Ya existe un registro con el valor  CURP&quot; o &quot;El CURP no coincide.&quot;.</p>
+<h3>9. Si hay renglones rojos, decide:</h3>
+<p>Cargar</p>
+<p>da de alta solo los verdes y deja fuera los rojos, o</p>
+<p>Regresar</p>
+<p>para corregir el Excel y volverlo a subir. Si los corriges después, sube un Excel solo con los que faltaron; los que ya entraron saldrán como &quot;Ya existe&quot;.</p>
+<h3>10. Haz clic en</h3>
+<p>Cargar</p>
+<p>. Verás &quot;Se cargarán N registros.&quot;;</p>
+<p>Aceptar</p>
+<p>.</p>
+<h3>11. Verás &quot;La carga se realizó con éxito.&quot; y, con</h3>
+<p>Aceptar</p>
+<p>, la pantalla</p>
+<p>Consulta de miembros / Confirmación de carga masiva</p>
+<p>con</p>
+<p>Id</p>
+<p>,</p>
+<p>CUM</p>
+<p>y datos de cada persona que entró. Haz clic en</p>
+<p>Exportar</p>
+<p>y guarda ese Excel: es tu lista de CUM nuevos.</p>
+<p>C. Pagar la inscripción de los nuevos (opcional, lo puedes hacer después)</p>
+<p>Puedes pagar tú la inscripción de varios en una sola ficha, o dejar que cada persona pague la suya desde su cuenta (le aparece al terminar su registro, ver guía</p>
+<p>Cómo reinscribirme (renovar mi membresía)</p>
+<p>para los métodos de pago).</p>
+<p>Desde la pantalla de confirmación:</p>
+<p>En</p>
+<p>Consulta de miembros / Confirmación de carga masiva</p>
+<p>, marca a quién vas a pagar. La casilla de la cabecera</p>
+<p>Haz Click Aquí para Confirmar</p>
+<p>los marca a todos.</p>
+<p>Haz clic en</p>
+<p>Inscribir</p>
+<p>. Confirma &quot;¿Está seguro de continuar con los usuarios seleccionados?&quot; con</p>
+<p>Aceptar</p>
+<p>.</p>
+<p>Sigue en la ficha de pago múltiple con el concepto de inscripción ya elegido.</p>
+<p>Más tarde, desde el menú:</p>
+<p>En la vista</p>
+<p>Administrador</p>
+<p>, abre</p>
+<p>Pagos</p>
+<p>en el menú de la izquierda y haz clic en</p>
+<p>Consulta pago alta masiva</p>
+<p>.</p>
+<p>En</p>
+<p>Consulta de miembros (Alta masiva)</p>
+<p>haz clic en</p>
+<p>Filtros</p>
+<p>, elige</p>
+<p>Sección</p>
+<p>o escribe</p>
+<p>CUM</p>
+<p>o</p>
+<p>Nombre</p>
+<p>, y</p>
+<p>Buscar</p>
+<p>. Como Jefe de Grupo solo ves tu grupo.</p>
+<p>La tabla trae</p>
+<p>Id</p>
+<p>,</p>
+<p>CUM</p>
+<p>,</p>
+<p>Nombre</p>
+<p>,</p>
+<p>Provincia</p>
+<p>,</p>
+<p>Localidad</p>
+<p>,</p>
+<p>Grupo</p>
+<p>,</p>
+<p>Sección</p>
+<p>y</p>
+<p>Estatus</p>
+<p>. Marca las casillas de los que vas a pagar.</p>
+<p>Haz clic en</p>
+<p>Continuar con Tipo de Pago</p>
+<p>y confirma &quot;¿Está seguro de continuar con los usuarios seleccionados?&quot; con</p>
+<p>Aceptar</p>
+<p>.</p>
+<p>En</p>
+<p>Pago/Alta Masiva-Rápida</p>
+<p>elige</p>
+<div class="note">Tipo de Pago</div>
+<p>,</p>
+<p>Concepto</p>
+<p>(inscripción) y</p>
+<p>Plan</p>
+<p>(</p>
+<p>Anual</p>
+<p>). Haz clic en</p>
+<p>Continuar</p>
+<p>.</p>
+<p>Verás &quot;Continuarás con N usuarios.&quot;;</p>
+<p>Aceptar</p>
+<p>. Luego &quot;Para continuar con el proceso elije el método de pago&quot;;</p>
+<p>Ir al pago</p>
+<p>te lleva a la pantalla de pago, igual que un pago de evento (guía</p>
+<p>Cómo inscribirme y pagar un evento</p>
+<p>).</p>
+<p>Qué pasa después</p>
+<p>En cuanto das</p>
+<p>Cargar</p>
+<p>, SISAS crea para cada persona su CUM (clave de provincia + año + sección por edad + consecutivo), su cuenta y su ficha con los datos que capturaste, la pone en tu grupo y en la sección que le toca por edad. Si tiene 18 o más, además queda con el cargo de Aspirante.</p>
+<p>A cada persona le llega el correo</p>
+<p>&quot;Pre registro ASMAC&quot;</p>
+<p>de</p>
+<p>Notificaciones SISAS</p>
+<p>(postmaster@sisas.scouts.org.mx), al correo que capturaste, con su</p>
+<p>ID Miembro</p>
+<p>y una</p>
+<p>Contraseña</p>
+<p>temporal. Sale en el momento; normalmente tarda unos minutos. Dile al papá o a la persona que revise spam.</p>
+<p>Lo que le dices al nuevo (o al papá):</p>
+<p>Entra a SISAS con el</p>
+<p>ID Miembro</p>
+<p>del correo (o con su CUM), su</p>
+<p>Primer Apellido</p>
+<p>y la contraseña del correo.</p>
+<p>SISAS le pide crear su contraseña definitiva y luego le muestra</p>
+<p>Datos generales</p>
+<p>ya llenos con lo que tú capturaste. Provincia, localidad y grupo vienen bloqueados; lo demás lo puede corregir. Tiene que adjuntar el archivo de la CURP.</p>
+<p>Si es menor de 18, sigue</p>
+<p>Datos del tutor</p>
+<p>(nombre, teléfono y un correo distinto del padre, madre o tutor); al tutor le llega el correo</p>
+<p>&quot;Contraseña de autorización ASMAC&quot;</p>
+<p>y el registro se detiene hasta que él lo complete. Si es mayor, genera su contraseña de autorización.</p>
+<p>Al terminar ve &quot;Estamos validando tu información..&quot; y a ti te llega la notificación para validar su perfil. Hasta que no lo valides, no avanza al pago ni a la credencial.</p>
+<p>No le digas que use &quot;Tengo CUM pero no tengo una cuenta&quot;</p>
+<p>: su cuenta ya existe. Ese botón solo le sirve si el correo nunca llegó o quedó mal escrito (ver &quot;Si algo falla&quot;).</p>
+<p>La inscripción se puede pagar antes o después de que valides el perfil; la ficha múltiple no revisa eso. Hasta que no esté pagada, la persona no tiene vigencia ni credencial.</p>
+<p>Si algo falla</p>
+<p>Lo que ves</p>
+<p>Qué significa</p>
+<p>Qué hacer</p>
+<p>&quot;Error de captura: Ya existe un registro con el valor  Email&quot; (o el renglón rojo con ese texto)</p>
+<p>Ese correo ya está en otra cuenta de SISAS: otro hijo, el propio papá, o un registro anterior de esta misma persona.</p>
+<p>Usa otro correo. Si sospechas que la persona ya tiene cuenta, búscala en</p>
+<p>Consulta de miembros</p>
+<p>por nombre antes de darla de alta otra vez.</p>
+<p>&quot;Error de captura: Ya existe un registro con el valor  CURP&quot;</p>
+<p>Esa CURP ya está en SISAS. La persona ya fue dada de alta (quizá en otro grupo o por pre-registro).</p>
+<p>No la des de alta de nuevo. Búscala en</p>
+<p>Consulta de miembros</p>
+<p>; si está en otro grupo, que pida cambio de grupo (guía</p>
+<p>Cómo solicitar un cambio de grupo</p>
+<p>). Si no la encuentras, helpdesk con nombre completo y CURP: puede estar eliminada o en otra provincia.</p>
+<p>&quot;Error de captura: El CURP no coincide.&quot;</p>
+<p>La CURP no corresponde a la fecha de nacimiento, género o estado que capturaste (SISAS compara esos datos, no consulta RENAPO).</p>
+<p>Revisa los tres datos contra la CURP impresa. La fecha al revés (mes/día) y el estado equivocado son lo más común.</p>
+<p>&quot;Error de captura: El usuario debe tener 6 años 1 día&quot;</p>
+<p>La persona tiene menos de 6 años.</p>
+<p>No se puede registrar todavía.</p>
+<p>&quot;Error de captura: Los datos no cumplen con el formato correcto DD/MM/AAAA FechaNacimiento&quot;</p>
+<p>En el Excel la fecha venía como texto o vacía (SISAS la lee como hoy).</p>
+<p>En Excel pon la celda en formato Fecha y escribe la fecha otra vez.</p>
+<p>&quot;Error de captura: Debe ingresar un valor númerico Nacionalidad&quot; / &quot;.. EstadoNacimiento&quot;</p>
+<p>En el Excel escribiste el nombre (&quot;Mexicana&quot;, &quot;Jalisco&quot;) en vez del número.</p>
+<p>Usa los números de la hoja</p>
+<p>Ayuda</p>
+<p>.</p>
+<p>&quot;Error de captura: No hay registros con este parametro. Genero&quot; (o Nacionalidad / EstadoNacimiento)</p>
+<p>Pusiste un número que no existe en la lista.</p>
+<p>Corrige con la hoja</p>
+<p>Ayuda</p>
+<p>: género 1 o 2, nacionalidad 1 o 2, estado 1 a 33.</p>
+<p>&quot;Error de captura: El campo es obligatorio. Nombre&quot; (o PrimerApellido / CURP)</p>
+<p>Celda vacía.</p>
+<p>Llénala.</p>
+<p>&quot;Favor de capturar su Email correctamente.&quot; / &quot;Favor de capturar su CURP&quot; / &quot;Favor de capturar su Nombre Completo&quot; / &quot;Favor de capturar su Primer Apellido&quot; / &quot;Favor de capturar la Fecha de Nacimiento&quot;</p>
+<p>Un campo obligatorio de Reg. Express llegó vacío.</p>
+<p>Llénalo y vuelve a</p>
+<p>Cargar</p>
+<p>.</p>
+<p>&quot;El formato que intentas agregar no es compatible&quot;</p>
+<p>Subiste un.xls (Excel viejo).</p>
+<p>Guarda el archivo como.xlsx.</p>
+<p>&quot;El tipo de archivo requerido no es el correcto, por favor intentalo nuevamente&quot;</p>
+<p>No es un.xlsx (CSV, PDF, etc.).</p>
+<p>Usa el formato descargado.</p>
+<p>&quot;Es necesario seleccionar un archivo.&quot;</p>
+<p>Diste</p>
+<p>Siguiente</p>
+<p>sin adjuntar.</p>
+<p>Adjunta el.xlsx.</p>
+<p>&quot;Para avanzar debes seleccionar Provincia, Localidad y Grupo.&quot;</p>
+<p>Falta alguno de los tres.</p>
+<p>Elígelos.</p>
+<p>Diste</p>
+<p>Siguiente</p>
+<p>y no pasa nada después de varios minutos</p>
+<p>SISAS sigue leyendo el archivo, o se cayó a la mitad. El error no se muestra en pantalla.</p>
+<p>Espera 5 minutos sin recargar. Luego abre</p>
+<p>Consulta de miembros</p>
+<p>y busca por nombre si alguno ya entró. Si no, divide el Excel en lotes más chicos y súbelos uno por uno. Si vuelve a fallar, helpdesk con el archivo.</p>
+<p>La tabla sale vacía o faltan renglones que sí estaban en el Excel</p>
+<p>Renglones sin correo se ignoran; SISAS se detiene tras cinco renglones seguidos sin correo. Un renglón con un dato que no pudo leer se salta sin avisar.</p>
+<p>Revisa que todos tengan correo y que no haya renglones vacíos en medio. Vuelve a subir solo los que faltaron.</p>
+<p>&quot;Los registros no cumplen con los datos mínimos y/o correctos para una carga masiva o ya se encuentran registrados.&quot;</p>
+<p>Todos los renglones salieron rojos.</p>
+<p>Corrige el Excel con lo que dice cada globo y súbelo de nuevo.</p>
+<p>&quot;Ocurrio un error, consulta al administrador del sistema..&quot; al dar</p>
+<p>Cargar</p>
+<p>Se perdió la lista (por ejemplo, tardaste mucho entre</p>
+<p>Siguiente</p>
+<p>y</p>
+<p>Cargar</p>
+<p>y la sesión caducó) o falló el alta.</p>
+<p>Vuelve a subir el Excel. Si el error se repite, helpdesk con la hora y el archivo.</p>
+<p>Dio &quot;La carga se realizó con éxito.&quot; pero la confirmación sale vacía o con menos personas</p>
+<p>Para alguna persona el alta falló por dentro y SISAS no lo avisa.</p>
+<p>Búscala en</p>
+<p>Consulta de miembros</p>
+<p>. Si no está, inténtalo de nuevo con ella; si vuelve a fallar, helpdesk con sus datos.</p>
+<p>Al nuevo no le llegó &quot;Pre registro ASMAC&quot;</p>
+<p>Spam, o el correo quedó mal capturado.</p>
+<p>Que busque en spam. Si no está, dos salidas: (1) en la pantalla de acceso,</p>
+<p>He olvidado mi contraseña</p>
+<p>con su CUM y primer apellido: le llega &quot;Reestablecer contraseña&quot; al correo que capturaste; (2) si el correo quedó mal escrito,</p>
+<p>Tengo CUM pero no tengo una cuenta</p>
+<p>con su CUM, primer apellido y el correo correcto: SISAS cambia el correo y le manda otra contraseña. Esta segunda opción solo funciona una vez; si después sale &quot;Este CUM ya ha iniciado el proceso de obtención de cuenta..&quot;, helpdesk con el CUM y el correo correcto.</p>
+<p>&quot;Debes seleccionar al menos un registro.&quot;</p>
+<p>Diste</p>
+<p>Inscribir</p>
+<p>o</p>
+<p>Continuar con Tipo de Pago</p>
+<p>sin marcar a nadie.</p>
+<p>Marca las casillas.</p>
+<p>&quot;No es posible realizar esta operación, la vigencia de la membresia no corresponde al concepto seleccionado o periodo de pago&quot;</p>
+<p>Entre los marcados hay alguien que ya tiene vigencia (no es inscripción) o mezclaste conceptos.</p>
+<p>Marca solo a los nuevos sin pago y elige el concepto de inscripción.</p>
+<p>&quot;Debes seleccionar un concepto de pago.&quot; / &quot;Debes seleccionar un plan de pago.&quot;</p>
+<p>Falta elegir</p>
+<p>Concepto</p>
+<p>o</p>
+<p>Plan</p>
+<p>.</p>
+<p>Elígelos.</p>
+<p>&quot;Alguno de tus cargos no cuenta con la asignación del nivel en el catalogo de roles, contacta por favor con Soporte en la OSN&quot;</p>
+<p>Tu cargo no tiene nivel (grupo/provincia/nacional) asignado en SISAS.</p>
+<p>Helpdesk con tu CUM y cargo.</p>
+<p>Cuando escribas al helpdesk incluye: tu CUM y grupo, qué camino usaste (Reg. Express o carga masiva), el mensaje exacto, y los datos de la persona (nombre completo, CURP, correo capturado). Si fue Excel, adjúntalo.</p>
+<p>Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.</p>
+<p>Preguntas frecuentes</p>
+<h3>¿El nuevo tiene que hacer algo con &quot;Tengo CUM pero no tengo una cuenta&quot;?</h3>
+<p>No. Tú ya le creaste la cuenta; solo entra con el ID y la contraseña del correo. Ese botón es para quien tiene CUM de antes y nunca ha entrado.</p>
+<h3>¿Quién paga la inscripción?</h3>
+<p>Cualquiera de los dos. Tú puedes pagar a varios en una sola ficha (paso C) o cada persona paga la suya desde su cuenta al terminar su registro.</p>
+<p>Me equivoqué en un dato (fecha, CURP, correo). ¿Lo corrijo yo?</p>
+<p>El correo lo puede corregir la propia persona con</p>
+<p>Tengo CUM pero no tengo una cuenta</p>
+<p>(una sola vez). Fecha y CURP las puede corregir ella en</p>
+<p>Datos generales</p>
+<p>al entrar por primera vez. Si el error ya pasó la validación, helpdesk con el CUM y el dato correcto.</p>
+<h3>¿Puedo dar de alta a alguien de otro grupo?</h3>
+<p>Con Reg. Express no: siempre cae en tu grupo. Con carga masiva eliges el grupo, pero solo entre los que tu cargo alcanza.</p>
+<h3>¿Le ha sido útil este artículo?</h3>
+<p>|</p>
+<p>Detalles del articulo</p>
+<p>ID de artículo:</p>
+<p>28</p>
+<p>Para Jefes de Grupo</p>
+<p>Fecha de alta:</p>
+<p>2026-10-11 14:12:48</p>
+<p>Vistas:</p>
+<p>12</p>
+<p>valoración                                         (Votar):</p>
+<p>(0)</p>
+<p>Volver atrás</p>
+<p>Artículos relacionados</p>
+<p>Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)</p>
+<p>Jefe de Grupo: inscribir y pagar un evento por varios miembros</p>
+<p>Becas y descuentos: cómo se asignan y cómo se aplican al pagar</p>
+<p>Jefe de Grupo: consultar a mis miembros y descargar reportes</p>
+<p>Cómo completar o corregir mis datos (mi ficha al 100 %)</p>
+<p>Powered by</p>
+<p>Help Desk Software</p>
+<p>HESK</p>
+<p>More IT firepower? Try</p>
+<p>SysAid</p>
+</section>
+<section class="card"><h2>Capturas Oficiales del Procedimiento en SISAS</h2>
+<figure><img src="data:image/jpeg;base64,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iY90wi/L04rL6rU/mFySPo7R/hj8O76TUvHT+H9MtYR4fstSt9Ju5LhrKKeaRkZyEbzHQeXnYOPn9hXk3xx8L+G/DnjqxPhqH7JbXtjFdSWqmXy4JCMMYnmAYJnnmuV07x54x0nUYL/TvE2p21zBbCyiljnYMluORED/AHeTxWXrOuav4i1Z9T1zUbjULxwFM1w+5sAY2j0GOw4q6WHnCfNzaFQjJbmfRRRXYaBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB9efsT/8AIE8ff9c7X/0GavaPD/8AyNen/wDXwteL/sT/APIE8ff9c7X/ANBmr2jw/wD8jXp//XwtfKY3+NI8uv8AxD2W3/49lqWorf8A49lqWuQzCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/HGiijDYJ67R82Bxn0ByK+2eh7DdlcAADnA/KjAPUA+5Fa0/hnxBbajptjPot6lxqcEdxZQmMhrmNyFDpxyGYECqN9YXmmalcafqFvJb3UEhikhlAVkYdQRyQalOLdkxJX6leiij5SMg5HselUMDyefTFFFFFmAHnr6Yoooo62AKKKKdgCiiikAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB9efsT/APIE8ff9c7X/ANBmr2jw/wD8jXp//XwteL/sT/8AIE8ff9c7X/0GavaPD/8AyNen/wDXwtfKY3+NI8uv/EPZbf8A49lqWorf/j2Wpa5DMKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD8ca9D+B+mJq/x10S3m0vTNSHmM5ttTI+zthWPUgg9B2rzyvSfgLr+k+G/j9oOsa1ex2VpGzI00o4X5CMsf7uSea+xrt+zuj1paqx9rpeQ6jc6HcpoHw0u55Fkh0mXezN+4JLJCTD8ojJJwMY7V83ftURQXkfhrxHFpfhqL7e10r32iOWNyy7Nxc7AWIyeT6175p3xG8K26eGxceMfhiv2SW6N79miZdqv/qvs391v+emfvV8+ftLeLtG1/w14P0yy1nw7qF7ZSXk1yNAjZLaNJCg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" alt="Menú de Administrador desplegado, con el submenú Reportes y Reg. Express" /><figcaption>Menú de Administrador desplegado, con el submenú Reportes y Reg. Express</figcaption></figure>
+</section>
+  </main>
+</body>
+</html>

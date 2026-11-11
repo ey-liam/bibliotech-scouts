@@ -1,0 +1,263 @@
+GUÍA OFICIAL HELP DESK ASMAC: Olvidé mi contraseña o mi cuenta está bloqueada
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=14
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Acceso y cuenta
+Olvidé mi contraseña o mi cuenta está bloqueada
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Olvidé mi contraseña o mi cuenta está bloqueada
+Con esto recuperas el acceso a SISAS cuando no recuerdas tu contraseña o cuando te salió "¡La cuenta ha sido bloqueada!". Todo se hace desde la pantalla de entrada, sin escribir a nadie: pides un código, te llega por correo y pones una contraseña nueva. Toma cinco minutos si el correo llega rápido.
+Antes de empezar
+Tu
+CUM
+(o tu ID de SISAS) y tu
+Primer Apellido
+tal como están en tu ficha. Con eso basta; no necesitas la contraseña vieja.
+Acceso al correo que registraste en SISAS. El código llega ahí y a ningún otro lado. Si ya no usas ese correo, ve directo a "Si algo falla".
+Si eres papá o mamá: el trámite se hace con el CUM y el apellido de tu hijo o hija, y el correo llega al que quedó registrado en la cuenta de tu hijo o hija (normalmente el que diste al inscribirlo).
+Si tu cuenta está bloqueada por intentos fallidos,
+deja de intentar entrar
+. Cada intento mientras está bloqueada manda un correo nuevo y cancela el código del correo anterior. Solo vale el último.
+Pasos
+1. Pide el código
+Entra a
+sisas.scouts.org.mx. Es la pantalla
+Acceso a Miembros Scout
+.
+Llena
+CUM o ID
+y
+Primer Apellido
+. Deja
+Contraseña
+vacía.
+Haz clic en He olvidado mi contraseña
+(el enlace debajo del botón
+Enviar
+).
+Verás el aviso "Correcto" con "¡Hemos enviado un correo para su restablecimiento!". Haz clic en
+Aceptar
+.
+El enlace se desactiva después de un envío. Si necesitas otro código, recarga la página y repite.
+2. Abre el correo
+Busca en tu bandeja un correo de
+Notificaciones SISAS
+con el asunto
+Reestablecer contraseña
+. Si no aparece en un par de minutos, revisa la carpeta de spam o correo no deseado.
+El correo trae dos cosas: un
+Código
+de 15 caracteres (letras, números y símbolos) y el enlace
+Sistemas SAS
+. Copia el código tal cual; es más seguro copiarlo que escribirlo.
+3. Escribe el código
+Haz clic en Sistemas SAS
+en el correo. Se abre la pantalla "¡Hola!" con el texto
+Ingresa los datos solicitados
+. Si el enlace no abre, entra a sisas.scouts.org.mx/Registro/validaResetPassword.
+Llena
+CUM
+,
+Primer Apellido
+y
+Código dinámico
+. Aquí el apellido tiene que ir exactamente como está en tu ficha, con sus acentos (ver "Si algo falla"). En esta pantalla solo sirve el CUM, no el ID.
+Haz clic en Aceptar
+.
+4. Crea la contraseña nueva
+Se abre la pantalla "¡Hola [tu nombre]!" con el texto
+Crea tu contraseña
+.
+Escribe la
+Nueva contraseña
+y repítela en
+Confirma contraseña
+. El ojito a la derecha te deja verla. Reglas:
+Mínimo 8 caracteres.
+Al menos una mayúscula, una minúscula, un número y un símbolo (por ejemplo
+.
+,
+#
+,
+!
+,
+-
+).
+Sin tres caracteres iguales seguidos:
+aaa
+o
+111
+no pasan.
+Haz clic en Aceptar
+. Verás "Correcto" con "¡Se ha cambiado tu contraseña!". Haz clic en
+Siguiente
+y SISAS te regresa a la pantalla de entrada.
+Entra con tu
+CUM o ID
+, tu
+Primer Apellido
+y la contraseña nueva. Si estabas bloqueado, con esto ya quedó destrabado.
+En cualquiera de estas pantallas,
+Salir
+te saca sin cambiar nada (confirma con
+Salir
+en el aviso "¿Está seguro de salir del sistema?").
+Qué pasa después
+Entras de inmediato con la contraseña nueva. No hay que esperar validación de nadie: ni tu Jefe de Grupo ni el helpdesk tienen que aprobar nada.
+El código no tiene fecha de caducidad, pero solo vale el último que SISAS generó. Si pides otro, o si alguien intenta entrar a tu cuenta mientras está bloqueada, el anterior deja de servir. Por eso conviene hacer el trámite de corrido.
+Si ya estás dentro de SISAS y solo quieres cambiar la contraseña, no hace falta todo esto: haz clic en tu nombre arriba a la derecha y en
+Cambiar Contraseña
+. Te pide
+Contraseña Actual
+,
+Nueva contraseña
+y
+Confirma contraseña
+, con las mismas reglas. Al guardar te cierra la sesión: "Por seguridad la sesión se cerrará, por favor vuelve a ingresar con tu nueva contraseña".
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+"Todos los datos son requeridos" al dar
+Enviar
+Dejaste vacío alguno de los tres campos de entrada.
+Llena
+CUM o ID
+,
+Primer Apellido
+y
+Contraseña
+.
+"Intento de inicio de sesión no válido, por favor verifica que tus datos sean correctos." al entrar
+El CUM/ID no existe, el apellido no es el de la ficha o la contraseña está mal. Al entrar, SISAS ignora mayúsculas y acentos en el apellido, así que el problema casi siempre es el CUM (espacios, un 0 por una O) o la contraseña.
+Escribe el CUM sin espacios y revisa letra por letra. Si no estás seguro de la contraseña, no sigas probando: a los 5 intentos fallidos se bloquea. Pide el código con
+He olvidado mi contraseña
+.
+"¡La cuenta ha sido bloqueada! Hemos enviado un correo para su restablecimiento."
+Hubo 5 intentos fallidos seguidos. SISAS bloquea la cuenta 24 horas y en ese momento te manda solo el correo con el código. Mientras está bloqueada, ni la contraseña correcta entra.
+Dos opciones: espera 24 horas y entra con tu contraseña de siempre, o sigue los pasos de esta guía con el correo que te acaba de llegar (desbloquea al instante). No vuelvas a intentar entrar mientras tanto: cada intento manda otro correo y cancela el código anterior.
+"El campo ID y el Primer Apellido son obligatorio."
+Diste clic en
+He olvidado mi contraseña
+con alguno de los dos campos vacío.
+Llena
+CUM o ID
+y
+Primer Apellido
+y vuelve a hacer clic.
+"Intento de inicio de sesión no válido.." al pedir el código o al escribir el código
+El CUM no existe o el apellido no coincide. En estas dos pantallas (a diferencia de la entrada) el apellido sí distingue acentos: "Perez" no es "Pérez".
+Escribe el apellido exactamente como está en tu ficha, con acento si lo tiene. Mayúsculas y minúsculas no importan. Si no sabes cómo quedó registrado, pregúntale a tu Jefe de Grupo o escribe al helpdesk con tu CUM.
+No llega el correo
+Puede tardar unos minutos, estar en spam, o el correo registrado en tu cuenta ya no es el tuyo.
+Espera 5 minutos y revisa spam o "correo no deseado". Si no está, escribe al helpdesk con tu CUM, tu nombre completo y el correo al que quieres que llegue; ellos actualizan el correo de la cuenta. Si eres menor de edad, ese correo tiene que ser distinto al de tu papá, mamá o tutor.
+"El código no coincide con el correo electrónico."
+El código está mal escrito, o ya no es el último: pediste otro después, o alguien intentó entrar mientras la cuenta estaba bloqueada.
+Usa el código del correo más reciente y cópialo, no lo escribas. Si tienes duda, pide uno nuevo con
+He olvidado mi contraseña
+y usa ese.
+"El correo electrónico no existe." al escribir el código
+Nunca se ha pedido un código para ese CUM.
+Regresa a la pantalla de entrada y pide el código con
+He olvidado mi contraseña
+.
+"Se ha detecado un intento de acceso invalido"
+Falló la verificación automática contra robots (reCAPTCHA). Pasa con bloqueadores de anuncios, navegadores muy viejos, o si Google no responde.
+Recarga la página y vuelve a intentar. Si sigue, prueba en otro navegador o sin extensiones, o desde el celular con datos.
+"La contraseña debe constar de 8 caracteres mínimo" / "La contraseñas deben coincidir."
+La contraseña nueva es corta o no escribiste la misma dos veces.
+Corrige y vuelve a dar
+Aceptar
+.
+"La contraseña no debe contener 3 letras o 3 números consecutivos."
+Tiene el mismo carácter tres veces seguidas (
+aaa
+,
+111
+,
+..
+).
+Cambia esa parte.
+abc
+o
+123
+sí pasan; lo que no pasa es repetir el mismo.
+Un mensaje que empieza con "Las contraseñas deben tener al menos.."
+Falta la mayúscula, la minúscula, el número o el símbolo.
+Agrega lo que te pide y vuelve a dar
+Aceptar
+.
+"Usuario con problemas para acceder al sistema, contacta a tu scouter o al administrador del sistema."
+Tu membresía tiene una sanción de baja o está suspendida. No es un problema de contraseña y recuperarla no lo resuelve.
+Habla con tu Jefe de Grupo. Si crees que es un error, escribe al helpdesk con tu CUM.
+"Para poder acceder al sistema contacta a tu scouter o al administrador del sistema."
+Un administrador bloqueó tu cuenta a mano. Tampoco se arregla con la contraseña.
+Pregunta a tu Jefe de Grupo el motivo. Si no lo sabe, escribe al helpdesk con tu CUM.
+"Debes iniciar el proceso de obtención de cuenta."
+Tu CUM viene del sistema anterior y nunca se activó en SISAS. No tiene contraseña que recuperar.
+En la pantalla de entrada haz clic en
+Tengo CUM pero no tengo una cuenta
+, llena
+CUM
+,
+Primer Apellido
+,
+Correo electrónico
+y
+Confirma tu Correo electrónico
+, acepta el aviso y los términos y da
+Enviar
+. Te llega un correo con una contraseña temporal.
+"Por favor contacta al administrador del sistema (eliminado)."
+La cuenta está dada de baja en SISAS.
+Escribe al helpdesk con tu CUM y tu grupo.
+Cuando escribas al helpdesk incluye: tu CUM, tu nombre completo con apellidos como están en tu credencial, el correo al que quieres que lleguen los avisos y el mensaje exacto que te salió.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Cuánto dura el bloqueo?
+24 horas desde el último intento fallido. No tienes que esperarlas: recuperar la contraseña con el código lo quita en ese momento.
+¿Alguien del grupo o del helpdesk puede desbloquearme?
+No hay un botón para eso. El desbloqueo es automático (24 horas) o por cambio de contraseña con el código. Lo que sí puede hacer el helpdesk es corregir el correo de tu cuenta si el código no te llega.
+¿El código caduca?
+No por tiempo. Deja de servir cuando se genera otro: porque lo pediste de nuevo o porque hubo un intento de entrar con la cuenta bloqueada.
+¿Puedo usar mi ID en vez del CUM?
+Para entrar y para pedir el código, sí. En la pantalla donde escribes el código solo acepta el CUM.
+Soy papá o mamá, ¿hago esto con mis datos o con los de mi hijo?
+Con los de tu hijo o hija: su CUM y su primer apellido. El correo llega al que está registrado en su cuenta.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+14
+Categoría:
+Acceso y cuenta
+Fecha de alta:
+2026-10-11 12:29:10
+Vistas:
+33
+valoración                                         (Votar):
+(1)
+Volver atrás
+Artículos relacionados
+Cómo cambiar mi contraseña
+Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)
+Cómo entrar a SISAS (y qué ves al entrar)
+Cómo completar o corregir mis datos (mi ficha al 100 %)
+Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

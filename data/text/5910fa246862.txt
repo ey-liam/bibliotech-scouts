@@ -1,0 +1,241 @@
+GUÍA OFICIAL HELP DESK ASMAC: Cómo reinscribirme (renovar mi membresía)
+Categoría: Pagos, Reinscripción, Becas y Eventos
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=13
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Eventos y pagos
+Cómo reinscribirme (renovar mi membresía)
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Cómo reinscribirme (renovar mi membresía)
+Reinscribirte es pagar la cuota anual para que tu membresía siga vigente otro año. Se hace desde SISAS y se paga en línea con Conekta. Si pagas con tarjeta, queda vigente en minutos; en efectivo en OXXO tarda más.
+Antes de empezar
+Saber tu fecha de vigencia. Está en el Dashboard, en tu tarjeta de datos, en la línea
+Vigencia:
+.
+Tener a la mano una tarjeta, o estar dispuesto a ir a pagar en efectivo a un OXXO.
+Un correo y un teléfono tuyos (o del papá/mamá si entras con la cuenta de un menor): te los pide antes de pagar y ahí llega el comprobante.
+Si tienes beca o descuento asignado, no tienes que hacer nada extra: se aplica solo al elegir
+Anual
+.
+Cuándo te toca
+SISAS maneja dos casos y los trata distinto:
+Tu situación
+Cómo se llama en SISAS
+Desde cuándo nuevo periodo
+Tu vigencia todavía no se vence, pero se vence este mes o el siguiente
+Reinscripción
+Arranca el día en que se vence la actual. No pierdes días.
+Tu vigencia ya se venció
+Reinscripción Vencido
+Arranca el día que pagas.
+Con el plan
+Anual
+el nuevo periodo termina el último día del mismo mes, pero del año siguiente. Ejemplo: si tu vigencia termina el 15 de marzo de 2026, la nueva queda hasta el 31 de marzo de 2027.
+Cómo te enteras
+Te llega una notificación en SISAS (la campana del menú). Al abrirla y dar clic en
+Ver
+te lleva directo a la pantalla de reinscripción.
+Si ya estás vencido, al entrar al Dashboard sale un aviso
+Vigencia de membresia vencida
+con dos botones:
+Pagar
+y
+Salir
+. Con
+Pagar
+vas directo a reinscribirte.
+Pasos
+Hay dos caminos para llegar a la misma pantalla de pago. Usa el que te quede más cerca.
+Camino A: desde la notificación o el aviso de vencido
+Haz clic en Ver
+(notificación) o en
+Pagar
+(aviso de vencido).
+Te abre la pantalla
+Selecciona tu programa
+. Solo hay una opción:
+Anual
+, "12 meses", con la cuota completa (el descuento de beca, si tienes, se ve hasta la siguiente pantalla; por eso el aviso rojo dice que elijas el plan y des clic en siguiente). Déjala marcada.
+Haz clic en Siguiente
+. Pregunta "Continuar el trámite con la Cuota seleccionada." Dale
+Aceptar
+.
+Sigue en el paso 1 de "Pagar", abajo.
+Camino B: desde Mis pagos
+Entra a
+SISAS, en el menú de la izquierda haz clic en el icono de la moneda,
+Mis pagos
+, y arriba a la derecha en el botón verde
+Pagar
+.
+Se abre la pantalla
+Pago
+. En
+Tipo de Pago
+elige
+Registro
+; en
+Concepto
+elige
+Reinscripción
+(si todavía estás vigente) o
+Reinscripción Vencido
+(si ya te venciste); en
+Plan
+elige
+Anual
+.
+Haz clic en Continuar
+. Tienes 60 segundos desde que abriste la pantalla (el contador azul lo va descontando y arriba dice "Favor de capturar su información y hacer clic en Continuar antes del tiempo restante"); si te tardas más, te regresa a
+Mis pagos
+y lo repites.
+Pagar
+Llegas a
+Sistema de pagos
+. Revisa el
+Desglose
+: Subtotal, Descuento por Beca, Comisión Plazos Fijos y Total; arriba a la derecha dice
+Total a pagar
+. Si tienes un cupón, escríbelo en
+IngresarCupón
+y da
+APLICAR
+.
+En
+Forma de pago
+→
+Elige la Modalidad de Pago
+, marca
+Al Contado
+(si aparece
+Plazos Fijos
+, es para pagar a meses con tarjeta de crédito; el total sube por la comisión). Sale el aviso "Se pagará en una sola exhibición", dale
+Aceptar
+y aparece el botón verde
+Pagar
+.
+Haz clic en Pagar
+. Sale la ventana
+Ingresa tus datos de contacto
+: llena
+Correo electrónico
+y
+Teléfono
+, marca la casilla
+Confirmo que mis datos son correctos
+y da
+Aceptar
+.
+Confirma "Estás a punto de salir de nuestro sitio para completar el pago en Conekta." con
+Aceptar
+. Te manda a la página de pago de Conekta.
+En Conekta elige cómo pagar: tarjeta de crédito o débito, efectivo en OXXO, Apple Pay, Google Pay o pago a meses. No hay SPEI. Termina el pago ahí mismo. No cierres la pestaña hasta que te regrese a SISAS.
+De vuelta en SISAS sale el aviso
+Pago en proceso
+: "Si fue con Tarjeta, se reflejará en unos segundos y podrás ingresar nuevamente a la cuenta. Si es en Efectivo, recibirás un correo con instrucciones de Pago." Al dar
+Entendido
+SISAS cierra tu sesión. Es normal.
+Qué pasa después
+Nadie aplica tu pago a mano. Cuando Conekta avisa a SISAS que la orden quedó pagada, SISAS extiende solo tu vigencia, marca como vista la notificación de reinscripción, quita el aviso de vencido y te manda el correo "Se acreditó tu pago." También genera la solicitud de tu nueva credencial sin costo.
+Tiempos, según cómo pagaste:
+- Tarjeta, Apple Pay, Google Pay: en unos segundos o minutos.
+- Efectivo en OXXO: recibes un correo con la referencia; la orden vence al día siguiente a las 22:00 hrs (si te reinscribes el último día del mes, ese mismo día a las 23:59). Una vez que pagas en OXXO, el aviso a SISAS tarda lo que tarde OXXO en reportarlo.
+Para comprobar que quedó: vuelve a entrar a SISAS y revisa la línea
+Vigencia:
+del Dashboard. También lo ves en
+Mis pagos
+, donde el pago aparece con su concepto, fecha y medio de pago.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+Pagaste, ya pasó un buen rato y
+Vigencia:
+sigue igual
+SISAS no ha recibido la confirmación de Conekta, o pagaste cuando tu vigencia aún tenía más de 60 días por delante (en ese caso SISAS guarda el pago pero no mueve la fecha)
+Revisa si te llegó el correo "Se acreditó tu pago." Si llegó y la fecha no cambió, o no llegó en 24 h, escribe al helpdesk con tu CUM, fecha y hora del pago, medio de pago y el correo de Conekta
+"Verifica — Ya existe una solicitud de pago generada para ti o el/los miembro(s) elegido(s), ésta aún se encuentra Activa, deberás esperar 24 horas para solicitar una nueva."
+Ya generaste una orden de pago (por ejemplo una referencia de efectivo) y sigue activa
+Paga esa orden con el correo que te llegó, o espera a que venza (al día siguiente a las 22:00) y vuelve a intentar
+"No es posible realizar esta operación, la vigencia de la membresia no corresponde al concepto seleccionado o periodo de pago" (aviso rojo arriba a la derecha, en
+Pago
+)
+Elegiste
+Reinscripción
+pero tu vigencia vence después del mes que entra, o ya se venció; o elegiste
+Reinscripción Vencido
+sin estar vencido
+Cambia el concepto. Si todavía te faltan más de dos meses, espera: aún no te toca.
+No te aparece la notificación ni el aviso, y en
+Mis pagos
+te rechaza el concepto
+Todavía no estás en ventana de reinscripción (vence después del mes siguiente)
+Espera. La ventana abre el mes anterior al vencimiento
+"No hay una cuota establecida, validalo con el administrador del sistema.."
+Tu provincia no tiene cargada la cuota de este año
+Escribe al helpdesk con tu CUM y tu provincia
+Te cobra una cantidad distinta a la que esperabas
+El monto es cuota nacional + cuota de tu provincia del año que te corresponde, menos beca si tienes una asignada y vigente. Si tu vigencia termina el año que entra, se cobra la cuota de ese año, no la de este
+Compara contra la cuota publicada por tu provincia. Si no cuadra, helpdesk con tu CUM y captura del Desglose
+"Ups! El monto es menor al mínimo necesario para activar Pagos a meses en Plazos Fijos."
+La cuota no llega al mínimo para pagar a meses
+Paga
+Al Contado
+Te mandó a
+Mis pagos
+sin avisar nada
+Se perdió la sesión de pago (pestaña duplicada, botón atrás, o se pasaron los 60 segundos)
+Vuelve a empezar desde
+Pagar
+Pantalla de error de SISAS al abrir la reinscripción
+Tu cuenta no tiene registrada una vigencia previa (no eres reinscripción sino inscripción)
+Escribe al helpdesk con tu CUM
+Cuando escribas al helpdesk incluye: CUM, pantalla en la que estabas, mensaje exacto, y si ya pagaste, fecha, monto y medio de pago.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Cambio de sección al reinscribirme?
+No. La reinscripción solo mueve la vigencia. El cambio de sección por edad es otro proceso.
+¿Puedo pagar antes de que me llegue la notificación?
+Sí, desde
+Mis pagos
+, siempre que tu vigencia se venza este mes o el siguiente. Antes de eso SISAS no lo acepta.
+¿Me cobran lo mismo si ya me venció?
+El cálculo es el mismo (nacional + provincial). La diferencia es que el nuevo periodo arranca el día que pagas, no el día que se venció la anterior, y las becas de reinscripción vencida son de otro tipo.
+¿Puedo pagar en SPEI o con referencia bancaria?
+No. Los métodos activos son tarjeta, efectivo en OXXO, Apple Pay, Google Pay y pago a meses.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+13
+Categoría:
+Eventos y pagos
+Fecha de alta:
+2026-10-11 10:07:58
+Vistas:
+36
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo inscribirme y pagar un evento
+Mis pagos: ver lo que he pagado, comprobantes y facturas
+Registro Familiar: inscribir a toda la familia con descuento
+Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

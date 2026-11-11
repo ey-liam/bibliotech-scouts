@@ -1,0 +1,54 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Gestiono mi tiempo
+Archivo: FES_CC_HPV_GESTIONO MI TIEMPO.pdf
+Fecha de publicación en RECME: 26 Septiembre 2026
+Categoría RECME: Especialidades Habilidades para la Vida
+Etiqueta temática RECME: Liderazgo
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: GESTIONO DE MI TIEMPO
+    Texto161: -Conozco principios básicos de administración del tiempo y herramientas que permiten organizar actividades y prioridades.
+-Identifico la diferencia entre lo urgente y lo importante, reconozco distractores y comprendo cómo establecer objetivos, fechas límite y tiempos de ejecución.
+-Reflexiono sobre la relación entre una buena organización, el cumplimiento de compromisos y mi bienestar personal.
+    Texto163: -Diseño y utilizo durante un periodo determinado un sistema personal para administrar mi tiempo.
+-Organizo mis actividades escolares, familiares, personales, laborales, scouts, estableciendo prioridades y fechas.
+-Registro mis avances y al finalizar evalúo qué actividades cumplí, cuáles se retrasaron y qué cambios puedo realizar para mejorar mi organización.
+    Texto165: -Comparto con mi comunidad, familia o grupo de amigos una herramienta o estrategia de administración del tiempo.
+-Puedo preparar una actividad breve en la que otros jóvenes identifiquen sus principales distractores y elaboren una estrategia para organizar mejor una semana de actividades.
+    Texto167: Lidia Margarita Malpica González
+Mtra. en Gestión y Cambio Organizacional
+    Texto168: La planificación debe considerar tiempos suficientes para dormir, alimentarse, descansar y realizar actividades recreativas.
+Evitar cargas excesivas de actividades.
+Proteger la información personal cuando se utilicen aplicaciones, calendarios o herramientas digitales.
+    Texto169: Liderazgo
+    Dropdown170: COMUNIDAD
+    Check Box174: /Sí
+    Group188: /Opci髇2
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

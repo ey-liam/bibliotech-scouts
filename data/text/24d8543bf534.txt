@@ -1,0 +1,247 @@
+GUÍA OFICIAL HELP DESK ASMAC: Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo
+Categoría: Guía para Jefes de Grupo y Scouters (SISAS)
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=29
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Para Jefes de Grupo
+Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo
+Esta guía es para Jefes de Grupo y cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia).
+Aquí entiendes qué es un cargo en SISAS, qué permisos te da, cómo se asigna, y por qué a veces tienes el cargo y aun así no ves a tu grupo.
+Antes de empezar
+Cargo
+es lo que eres en tu grupo (Jefe de Grupo, Jefe de Tropa, Subjefe de Grupo Administrativo..). Vive en tu ficha, pestaña
+Curriculum scout
+, y siempre tiene un periodo: fecha
+De
+y fecha
+A
+. Fuera de ese periodo el cargo existe en tu historial, pero para SISAS ya no cuenta.
+Permisos
+son lo que SISAS te deja ver y hacer. No se asignan a mano: salen del cargo. Cada cargo del catálogo está ligado a un rol con un nivel (SECCIÓN, GRUPO, PROVINCIA o NACIONAL) y ese rol es el que abre módulos del menú de administración y limita hasta dónde ves.
+Solo los mayores de edad tienen cargos. A un menor de edad o a un invitado no se le puede asignar ninguno.
+Un miembro puede tener máximo tres cargos a la vez, y solo uno por nivel.
+Pasos
+Ver tus cargos
+Entra a SISAS. En tu Dashboard, bajo tu nombre y CUM, aparece
+Cargo(s):
+con tus cargos vigentes hoy. Si no aparece nada, no tienes ningún cargo vigente.
+Para ver también los vencidos: abre
+Hola,
+→
+Mis datos
+→ pestaña
+Curriculum scout
+. La tabla de cargos tiene las columnas
+Cargo
+,
+De
+y
+A
+. Ahí sigue apareciendo un cargo aunque la fecha
+Aya pasó.
+Entrar a la vista de administración
+Abre
+Hola,
+y haz clic en
+Administrador
+. Te lleva al Dashboard de administración (MEMBRESIA VIGENTE, VENCIMIENTOS EN EL MES, DESERCION DURANTE EL AÑO, IDO'S/IT'S OBTENIDAS, RECONOCIMIENTOS ENTREGADOS) y el menú de la izquierda cambia a los módulos de administración. Los números del Dashboard son solo de tu grupo.
+Si no ves
+Administrador
+en ese menú, es que hoy no tienes ningún cargo vigente con rol administrativo. Sigue en "Si algo falla".
+Asignar un cargo a alguien de tu grupo
+En la vista de administración entra a
+Consulta de miembros
+.
+Busca a la persona (por nombre, CUM o ID). En su renglón haz clic en el lápiz (
+Modificar
+). El ojo (
+Ver
+) abre la ficha solo para consulta y no deja tocar cargos.
+Ve a la pestaña
+Curriculum scout
+. En el bloque de cargos elige el cargo en
+Cargo
+(la lista dice
+Selecciona
+al inicio), pon el periodo en
+De
+y
+a
+, y haz clic en
++
+.
+Si te sale "Los cambios se guardaron con éxito", el cargo ya quedó en la tabla de abajo. Si te sale otro mensaje, está en la tabla de "Si algo falla".
+Lo que ves en la lista
+Cargo
+depende de tu nivel: un Jefe de Grupo solo ve cargos de nivel GRUPO y SECCIÓN; un Presidente de Provincia ve además los de PROVINCIA; Nacional ve todos. Si al miembro le quitaron un cargo por sanción vigente, ese cargo no aparece en la lista.
+Quién asigna qué
+Cargo que se quiere asignar
+Quién lo puede poner
+Jefe de sección (Manada, Tropa, Comunidad, Clan) y subjefes de sección
+Jefe de Grupo o Subjefe de Grupo Administrativo, dentro de su grupo. También provincia y nacional.
+Subjefe de Grupo Administrativo y demás cargos de nivel GRUPO
+Igual: nivel GRUPO hacia abajo dentro del mismo grupo.
+Jefe de Grupo
+Presidente / Vicepresidente de Provincia (nivel PROVINCIA) o nacional. En la práctica lo hace el Presidente de Provincia. También existe el camino
+Administración
+→
+Grupo
+→ editar el grupo → pestaña
+Jefe de grupo
+, que pone a la persona como jefe y le crea el cargo con vigencia igual a la de su membresía.
+Presidente de Provincia
+Nacional.
+Quitar un cargo o pasarlo a histórico
+En la misma tabla de cargos de la ficha, cada cargo tiene dos iconos: el disquete lo guarda en el histórico con fecha de hoy ("¿Deseas guardar el cargo en el histórico?") y el bote de basura lo elimina ("¿Deseas eliminar el registro?"). Usa el disquete cuando la persona sí ocupó el cargo; el bote solo si se asignó por error.
+Qué pasa después
+Al asignar un cargo:
+La persona lo ve en su Dashboard en
+Cargo(s)
+y en
+Curriculum scout
+en cuanto vuelve a entrar.
+Si el cargo es Jefe de Grupo, SISAS además la registra como
+jefe del grupo
+: a partir de ahí las solicitudes de cambio de grupo que entran o salen de tu grupo le llegan a ella en la campana, y las notificaciones pendientes del jefe anterior se le pasan. Si es Presidente de Provincia, lo mismo a nivel provincia.
+Si el cargo es jefe o subjefe de sección, SISAS la liga a esa sección del grupo y recibe las validaciones de ficha de los miembros de esa sección.
+Al quitar un cargo (basura o histórico) también se borra la marca de jefe de grupo o de provincia. Al
+vencerse
+por fecha, no: ver "Si algo falla".
+Qué notificaciones le llegan a quién, según el código:
+Aviso
+A quién le llega
+Solicitud de cambio de grupo (nueva, cancelada, validada)
+Solo a quien está marcado como jefe del grupo de origen y del grupo destino, y al jefe de la provincia. No va "por cargo": si tienes cargo de JG pero no eres el jefe marcado del grupo, no te llega.
+Ficha enviada a validar / pre-registro nuevo
+A todos los del grupo con cargo de Jefe de Grupo o Subjefe de Grupo Administrativo, al jefe de la sección del miembro, y a provincia (Presidente y Vicepresidente Administrativo) y a ciertos cargos nacionales.
+Los permisos del menú se calculan al entrar.
+Cualquier cambio de cargo (tuyo o de alguien más) se refleja hasta que esa persona cierra sesión y vuelve a entrar.
+No hay forma de refrescarlos desde adentro.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+Me pusieron el cargo pero el menú sigue siendo el de miembro y no aparece
+Administrador
+SISAS guardó tus permisos cuando entraste y no los vuelve a pedir en toda la sesión.
+Cierra sesión con
+Cerrar sesión
+y vuelve a entrar. Si ya lo hiciste, revisa en
+Mis datos
+→
+Curriculum scout
+que la fecha
+De
+del cargo no sea futura y la fecha
+Ano haya pasado.
+Tengo el cargo, entro a Administrador, pero
+Consulta de miembros
+no muestra a mi grupo (o muestra otro)
+Tu alcance sale del grupo que tiene tu ficha, no del cargo. Si tu ficha está en otro grupo, ves ese otro grupo.
+Revisa en
+Mis datos
+el campo
+Grupo/Localidad
+. Si está mal, pide tu cambio de grupo (guía "Mi cambio de grupo"). Ojo: cuando el cambio se valida, todos tus cargos pasan al histórico y hay que volver a asignarlos en el grupo nuevo.
+Mi cargo venció (la fecha
+Aya pasó)
+Desde el día siguiente SISAS deja de contarlo: no aparece en
+Cargo(s)
+, no tienes rol administrativo y no ves
+Administrador
+. Pero sigue en la tabla del currículum y, si eras Jefe de Grupo, sigues marcado como jefe del grupo.
+Pide a tu Presidente de Provincia (o a quien te asignó el cargo) que lo renueve: pasar el viejo a histórico y volver a agregarlo con fechas nuevas.
+No me llegan las solicitudes de cambio de grupo de mi grupo, pero sí las validaciones de ficha
+Tienes cargo de Jefe de Grupo pero otra persona sigue marcada como jefe del grupo (normalmente el JG anterior, cuyo cargo venció sin que nadie lo quitara).
+Pide al Presidente de Provincia que entre a la ficha del JG anterior y pase su cargo al histórico, o que te vuelva a asignar el cargo de JG. Cualquiera de las dos te deja como jefe marcado. Si no se arregla, escribe al helpdesk con tu CUM, tu grupo y el CUM del JG anterior.
+"El usuario ya tiene un cargo con ese nivel." / "¿Deseas cambiar el cargo anterior?"
+La persona ya tiene un cargo de ese mismo nivel (por ejemplo ya es Jefe de Tropa y le quieres poner Jefe de Clan).
+Aceptar
+pasa el cargo viejo al histórico con fecha de hoy y pone el nuevo.
+Cancelar
+no cambia nada.
+"El cargo que se intenta asignar ya esta activo para otro miembro."
+Ese cargo tiene cupo (por ejemplo un solo Jefe de Grupo por grupo) y alguien más ya lo tiene registrado en tu grupo, aunque su fecha ya haya vencido.
+Primero pasa al histórico el cargo de la otra persona y luego vuelve a intentar.
+"El cargo que se intenta asignar ya esta activo para este."
+La persona ya tiene exactamente ese cargo vigente.
+No hay nada que hacer; si quieres cambiar las fechas, pásalo a histórico y vuelve a agregarlo.
+"El cargo que se intenta asignar no es compatible con otros cargos del usuario."
+Uno de los dos cargos está marcado como exclusivo en el catálogo.
+Quita el otro cargo antes, o consulta al helpdesk si crees que deberían coexistir.
+"El cargo que se intenta asignar ya esta activo para este u otro miembro."
+Error genérico: SISAS no pudo aplicar la regla del cargo.
+Vuelve a intentar. Si persiste, helpdesk con el CUM de la persona y el cargo que intentabas poner.
+"Solo puedes tener tres cargos."
+La persona ya tiene tres cargos en la tabla.
+Pasa al histórico el que ya no aplique.
+"Debes indicar el cargo y el periodo."
+Falta elegir el cargo o llenar alguna de las dos fechas.
+Llena
+Cargo
+,
+De
+y
+a
+.
+La lista
+Cargo
+está deshabilitada (gris) en la ficha de la persona
+Abriste la ficha con el ojo (solo ver), o la persona es menor de edad o invitado, o es tu propia ficha.
+Usa el lápiz (
+Modificar
+) desde
+Consulta de miembros
+. Tus propios cargos te los pone tu jefe del siguiente nivel, no tú.
+Hay dos personas con cargo de Jefe de Grupo en mi grupo
+Puede pasar si el cargo viejo no se pasó a histórico cuando venció, o si se asignó por dos caminos distintos. Solo una de las dos está marcada como jefe del grupo (la última a la que se le asignó).
+Que el Presidente de Provincia pase al histórico el cargo que sobra. Si la que queda no recibe las solicitudes, que le vuelva a asignar el cargo para que SISAS la marque como jefe.
+Cuando escribas al helpdesk incluye: tu CUM, tu grupo, el cargo que tienes o quieres asignar, el CUM de la otra persona si aplica, y el mensaje exacto.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Quién me asigna a mí el cargo de Jefe de Grupo?
+Tu Presidente de Provincia (o el Vicepresidente Administrativo de Provincia). Nacional también puede. Tú no puedes ponértelo.
+¿Qué ve un jefe de sección y qué veo yo?
+El alcance lo da el nivel del cargo. Un jefe o subjefe de sección ve solo a los miembros de su sección dentro de tu grupo. Tú (nivel GRUPO) ves a todo el grupo, todas las secciones. Provincia ve todos los grupos de su provincia. Nacional ve todo. Qué módulos exactos aparecen en el menú (Consulta de miembros, Eventos, Reconocimientos, Pagos, Reportes, Anuncios, Becas, Encuestas, Cambio de grupo, Reporte Scouter, Sanciones, Adultos en movimiento..) depende del rol que se configuró para cada cargo en el catálogo.
+¿Para qué son las pantallas Cargo y Catálogos?
+Son del catálogo nacional: ahí se crean y editan los tipos de cargo (nombre, nivel, cupo). No es donde se asigna un cargo a una persona; eso se hace en la ficha del miembro. Si no las ves en
+Administración
+, es normal.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+29
+Categoría:
+Para Jefes de Grupo
+Fecha de alta:
+2026-10-11 14:12:48
+Vistas:
+11
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes
+Jefe de Grupo: cambiar de sección a un miembro
+Jefe de Grupo: consultar a mis miembros y descargar reportes
+Jefe de Grupo: aprobar o rechazar un cambio de grupo
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

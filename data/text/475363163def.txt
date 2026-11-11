@@ -1,0 +1,3 @@
+Diagrama SISAS — Recuperar Contraseña de Autorización (Help Desk)
+
+Captura oficial del menú 'Autorización' en SISAS que muestra el recuadro de ingreso de Contraseña de Autorización y el botón morado 'Recuperar contraseña' para restablecerla vía correo electrónico registrado.

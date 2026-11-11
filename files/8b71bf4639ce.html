@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jefe de Grupo: aprobar o rechazar un cambio de grupo — BiblioTech Scout</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --ink: #0f172a;
+      --muted: #475569;
+      --accent: #6d28d9;
+      --accent-soft: #ede9fe;
+      --border: #dbeafe;
+      --warn-bg: #fff7ed;
+      --warn-border: #fdba74;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #080414;
+        --card: #120b26;
+        --ink: #f8fafc;
+        --muted: #cbd5e1;
+        --accent: #a855f7;
+        --accent-soft: rgba(168, 85, 247, 0.18);
+        --border: rgba(139, 92, 246, 0.35);
+        --warn-bg: rgba(245, 158, 11, 0.12);
+        --warn-border: rgba(251, 191, 36, 0.45);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px 48px;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 26px;
+      margin-bottom: 18px;
+    }
+    .crumbs {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 1.55rem;
+      line-height: 1.28;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .pill {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .src {
+      margin: 10px 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      word-break: break-all;
+    }
+    .card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 26px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+      color: var(--accent);
+    }
+    h3 {
+      margin: 16px 0 6px;
+      font-size: 1rem;
+    }
+    p, li {
+      font-size: 0.96rem;
+    }
+    ul, ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--accent-soft);
+      font-weight: 800;
+    }
+    .note {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+    figure {
+      margin: 16px 0;
+      padding: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: center;
+    }
+    figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    figcaption {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    code {
+      background: var(--accent-soft);
+      padding: 1px 5px;
+      border-radius: 5px;
+      font-size: 0.88em;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero-card">
+      <div class="crumbs">Guías SISAS, CONECTA y Soporte Digital • Guía para Jefes de Grupo y Scouters (SISAS)</div>
+      <h1>Jefe de Grupo: aprobar o rechazar un cambio de grupo</h1>
+      <div class="meta">
+        <span class="pill">Guía Oficial Help Desk ASMAC</span>
+        <span>Corte documental: 11 de noviembre de 2026</span>
+      </div>
+      <p class="src">Fuente oficial de referencia: <code>https://helpdesk.scouts.org.mx/knowledgebase.php?article=24</code></p>
+    </header>
+    <section class="card">
+<p>Help Desk de la Asociacion de Scouts de Mexico</p>
+<p>Español</p>
+<p>English</p>
+<p>Español</p>
+<p>Español</p>
+<p>English</p>
+<p>Help Desk de la Asociacion de Scouts de Mexico</p>
+<p>Base de Conocimientos (KB)</p>
+<p>Para Jefes de Grupo</p>
+<p>Jefe de Grupo: aprobar o rechazar un cambio de grupo</p>
+<p>Buscar</p>
+<p>artículos sugeridos de la base de conocimiento (KB):</p>
+<p>Jefe de Grupo: aprobar o rechazar un cambio de grupo</p>
+<p>Esta guía es para Jefes de Grupo y cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia).</p>
+<p>Cuando un miembro pide cambiarse de grupo, SISAS te manda una notificación y tú decides si lo apruebas o lo rechazas. Validar toma un minuto. Tu voto es uno de cuatro: también validan el Presidente de Provincia de tu provincia y el Jefe de Grupo y Presidente de Provincia del otro grupo. Cómo lo solicita el miembro está en la guía</p>
+<p>Cómo solicitar un cambio de grupo</p>
+<p>.</p>
+<p>Antes de empezar</p>
+<p>Estar registrado como Jefe de Grupo de tu grupo en SISAS. La notificación le llega a la persona que está dada de alta como jefe del grupo, no a quien tenga el cargo en papel. Si no te llega nada, empieza por ahí (ver &quot;Si algo falla&quot;).</p>
+<p>Estar en la vista</p>
+<p>Administrador</p>
+<p>. Entras con tu cuenta normal, abres el menú</p>
+<p>Hola, [tu nombre]</p>
+<p>arriba a la derecha y haces clic en</p>
+<p>Administrador</p>
+<p>. Si ya estás ahí, el menú dice</p>
+<p>Mi Perfil</p>
+<p>(eso es para regresar a tu vista de miembro).</p>
+<p>Tu propia ficha completa y sin cambios en validación. Si al abrir la campana te sale &quot;Completa/Actualiza los datos de tu Perfil.&quot; o &quot;Tu información se está validando.&quot;, primero resuelve eso en tu perfil.</p>
+<p>Tener claro qué vas a responderle al miembro. Él no ve en SISAS en qué etapa va su solicitud ni el motivo si la rechazan; se lo tienes que decir tú.</p>
+<p>Pasos</p>
+<p>A. Validar o rechazar una solicitud que sale de tu grupo (eres el grupo origen)</p>
+<p>En la vista</p>
+<p>Administrador</p>
+<p>, haz clic en la campana de notificaciones (arriba a la derecha). Verás una notificación con el nombre del miembro que pidió el cambio.</p>
+<p>Haz clic en</p>
+<p>Ver</p>
+<p>. Se abre la pantalla</p>
+<p>Cambio de grupo</p>
+<p>con la solicitud de ese miembro.</p>
+<p>Revisa</p>
+<p>Datos actuales</p>
+<p>(Nombre, CUM, Provincia, Grupo - Localidad) y</p>
+<p>Datos de cambio</p>
+<p>(Provincia y Grupo - Localidad del grupo al que quiere irse). Todo es de solo lectura.</p>
+<p>Lee</p>
+<p>Detalles/Observaciones</p>
+<p>: ahí está lo que el miembro escribió al pedir el cambio. Puede venir vacío; no era obligatorio para él.</p>
+<p>Si vas a rechazar, escribe el motivo en</p>
+<p>Detalles / Observaciones (Presidente de Provincia / Jefe de Grupo ORIGEN)</p>
+<p>. Mínimo 16 caracteres (la pantalla dice 15, pero con 15 no pasa). Si vas a validar, el comentario es opcional.</p>
+<p>Haz clic en</p>
+<p>Validar</p>
+<p>o en</p>
+<p>Rechazar</p>
+<p>.</p>
+<p>Confirma en el aviso &quot;¿Estás seguro de validar el cambio de grupo?&quot; con</p>
+<p>Validar</p>
+<p>, o en &quot;¿Estás seguro de rechazar el cambio de grupo?&quot; con</p>
+<p>Rechazar</p>
+<p>.</p>
+<p>Cancelar</p>
+<p>te deja en la pantalla.</p>
+<p>Verás &quot;El cambio fue Validado&quot; o &quot;El cambio fue Rechazado&quot;. Haz clic en</p>
+<p>Aceptar</p>
+<p>y SISAS te regresa al inicio.</p>
+<p>Para salir sin decidir usa</p>
+<p>Salir</p>
+<p>y confirma con</p>
+<p>Salir</p>
+<p>en &quot;¿Está seguro de regresar a home?&quot;. La notificación se queda en la campana hasta que alguien decida.</p>
+<p>B. Validar o rechazar una solicitud que llega a tu grupo (eres el grupo destino)</p>
+<p>Te llega la notificación cuando el grupo de origen ya aprobó (sus dos validadores o, si no respondieron en 15 días, SISAS en automático).</p>
+<p>Campana de notificaciones en la vista</p>
+<p>Administrador</p>
+<p>, clic en</p>
+<p>Ver</p>
+<p>en la notificación del miembro.</p>
+<p>Se abre</p>
+<p>Cambio de grupo</p>
+<p>con los datos del miembro, el grupo al que viene (el tuyo), lo que él escribió en</p>
+<p>Detalles/Observaciones</p>
+<p>y, en</p>
+<p>Detalles / Observaciones (Presidente de Provincia / Jefe de Grupo ORIGEN)</p>
+<p>, lo que escribió su grupo anterior al aprobar. Todo de solo lectura.</p>
+<p>Si rechazas, escribe el motivo en</p>
+<p>Detalles / Observaciones (Presidente de Provincia /Jefe de Grupo DESTINO)</p>
+<p>, mínimo 16 caracteres.</p>
+<p>Validar</p>
+<p>o</p>
+<p>Rechazar</p>
+<p>, y confirma igual que en el paso A.</p>
+<p>En el momento en que validan los dos del grupo destino (tú y tu Presidente de Provincia), el cambio se aplica: el miembro ya aparece en tu grupo. La sección y los cargos en tu grupo se los asignas tú después.</p>
+<p>C. Ver todas las solicitudes de tu grupo (la bandeja)</p>
+<p>En la vista</p>
+<p>Administrador</p>
+<p>, en el menú de la izquierda, haz clic en el icono de las dos flechas (⇄),</p>
+<p>Cambio de grupo</p>
+<p>. Se abre la pantalla</p>
+<p>Cambios de grupo</p>
+<p>.</p>
+<p>La tabla sale vacía. Haz clic en</p>
+<p>Buscar</p>
+<p>para cargar todas las solicitudes, o escribe antes un CUM en el campo</p>
+<p>cum</p>
+<p>para ver solo las de ese miembro.</p>
+<p>Columnas: CUM, Usuario, Provincia origen, Grupo origen, Provincia destino, Grupo destino, Fecha de solicitud, Estatus general origen, Estatus general destino, JG origen, JG destino, PP origen, PP destino, Admin Nal origen, Admin Nal destino, Comentario (usuario), Comentario (Validador origen), Comentario (Validador destino). Debajo de cada encabezado hay un cuadro para filtrar por esa columna.</p>
+<p>En</p>
+<p>Estatus general origen</p>
+<p>y</p>
+<p>Estatus general destino</p>
+<p>lees quién ya decidió: &quot;Pendiente de validar&quot;, &quot;Validado JG&quot;, &quot;Validado PP&quot;, &quot;Validado Admin Nal&quot;, &quot;Rechazado JG&quot;, &quot;Rechazado PP&quot; o &quot;Rechazado Admin Nal&quot;. Pueden salir varias líneas en la misma celda (por ejemplo &quot;Validado JG&quot; y &quot;Validado PP&quot;).</p>
+<p>Dos cosas que confunden:</p>
+<p>- La bandeja solo lista solicitudes</p>
+<p>que salen</p>
+<p>de tu grupo. Las que llegan a tu grupo como destino no aparecen aquí; esas solo las ves por la campana.</p>
+<p>- Desde la tabla no se valida nada. Es consulta. Para decidir, usa la notificación de la campana (pasos A y B).</p>
+<p>D. Solicitar el cambio por un miembro</p>
+<p>Si el miembro no puede entrar a SISAS, tú puedes levantar la solicitud por él. Tu validación como Jefe de Grupo queda registrada en automático; el Presidente de Provincia sí tiene que validar después.</p>
+<p>En</p>
+<p>Cambios de grupo</p>
+<p>haz clic en</p>
+<p>Nuevo cambio de grupo</p>
+<p>.</p>
+<p>En la ventana</p>
+<p>Busca por:</p>
+<p>escribe el</p>
+<p>CUM, ID o Nombre de usuario</p>
+<p>del miembro (mínimo 3 caracteres) y haz clic en</p>
+<p>Buscar</p>
+<p>. Solo aparecen miembros a tu cargo.</p>
+<p>Haz clic en el renglón del miembro. Se abre</p>
+<p>Cambio de grupo</p>
+<p>con sus datos.</p>
+<p>Elige</p>
+<p>Provincia</p>
+<p>,</p>
+<p>Localidad</p>
+<p>y</p>
+<p>Grupo</p>
+<p>del grupo destino. El combo</p>
+<p>Grupo</p>
+<p>muestra solo el número del grupo.</p>
+<p>El cuadro</p>
+<p>Detalles/Observaciones</p>
+<p>del miembro queda bloqueado. Si quieres dejar un comentario, escríbelo en</p>
+<p>Detalles / Observaciones (Presidente de Provincia / Jefe de Grupo ORIGEN)</p>
+<p>.</p>
+<p>Siguiente</p>
+<p>, confirma &quot;¿Estás seguro de solicitar el cambio de grupo?&quot; con</p>
+<p>Continuar</p>
+<p>y acepta el aviso &quot;Estamos validando tu solicitud..&quot;. Ese aviso dice que te avisarán por correo; no es así, el seguimiento es por la campana y por la bandeja.</p>
+<p>Si el miembro ya tiene una solicitud en trámite, al abrirlo verás la solicitud existente con los botones</p>
+<p>Validar</p>
+<p>/</p>
+<p>Rechazar</p>
+<p>en vez de los combos.</p>
+<p>Qué pasa después</p>
+<p>La solicitud tiene dos etapas y en cada una deciden dos personas:</p>
+<p>Origen</p>
+<p>: Jefe de Grupo y Presidente de Provincia del grupo actual. Basta un rechazo de cualquiera de los dos para cerrarla. Si en 15 días nadie decide, SISAS la aprueba sola y pasa a destino.</p>
+<p>Destino</p>
+<p>: Jefe de Grupo y Presidente de Provincia del grupo nuevo. Un rechazo la cierra. Si en 15 días nadie decide, SISAS la</p>
+<p>rechaza</p>
+<p>sola con el comentario &quot;Se ha excedido el tiempo de validación&quot;.</p>
+<p>Si el cambio es dentro de la misma provincia, el Presidente de Provincia es el mismo en las dos etapas y le llegan dos notificaciones: valida como origen y luego como destino.</p>
+<p>Un administrador nacional puede validar o rechazar cualquiera de las dos etapas él solo. Si quien levanta la solicitud es el Presidente de Provincia o Nacional, la etapa de origen queda aprobada en ese momento, sin que tú valides.</p>
+<p>Lo que te llega a ti por la campana (siempre en vista</p>
+<p>Administrador</p>
+<p>; la lista se refresca cada minuto):</p>
+<p>- Como grupo origen: la solicitud nueva; después, &quot;El cambio de grupo fue rechazado.&quot; si tu Presidente de Provincia o el grupo destino lo rechazan, o &quot;El cambio de grupo fue validado.&quot; cuando el destino lo aprueba. Al hacer clic en</p>
+<p>Ver</p>
+<p>sale el aviso con el nombre del miembro y de qué grupo a cuál.</p>
+<p>- Como grupo destino: solo la solicitud para validar. Si tu Presidente de Provincia la rechaza, a ti no te avisa; lo ves en el estatus general de la bandeja de él o preguntándole.</p>
+<p>El miembro recibe en su campana &quot;El cambio de grupo fue validado.&quot; o &quot;El cambio de grupo fue rechazado.&quot;, nada más. No ve en qué etapa va ni quién rechazó ni el comentario. Si rechazas, díselo tú y explícale el motivo; SISAS no se lo muestra. Tampoco puede cancelar su solicitud: si se arrepiente, te pide a ti que la rechaces, y después puede volver a solicitar.</p>
+<p>El combo</p>
+<p>Estatus</p>
+<p>(&quot;Con proceso anterior&quot;, &quot;En proceso actual&quot;, &quot;Contactar al Jefe del Grupo saliente&quot;) solo lo ven Presidentes de Provincia y Nacional. Es una nota informativa; no cambia el estado de la solicitud.</p>
+<p>Si algo falla</p>
+<p>Lo que ves</p>
+<p>Qué significa</p>
+<p>Qué hacer</p>
+<p>No me llegó ninguna notificación y el miembro dice que ya envió la solicitud</p>
+<p>La notificación va a quien está registrado como jefe del grupo en SISAS. O no eres tú, o el grupo no tiene jefe asignado. También puede ser que estés en la vista</p>
+<p>Mi Perfil</p>
+<p>en lugar de</p>
+<p>Administrador</p>
+<p>.</p>
+<p>Cambia a</p>
+<p>Administrador</p>
+<p>y revisa la campana. Si sigue sin aparecer, escribe al helpdesk con tu CUM y el número de tu grupo para que revisen quién está como jefe. Ojo: si el grupo no tiene jefe asignado, nadie puede validar y a los 15 días SISAS decide sola (aprueba en origen, rechaza en destino).</p>
+<p>La solicitud no sale en</p>
+<p>Cambios de grupo</p>
+<p>La bandeja muestra solo las que salen de tu grupo. Las que llegan como destino no se listan. O no diste clic en</p>
+<p>Buscar</p>
+<p>.</p>
+<p>Haz clic en</p>
+<p>Buscar</p>
+<p>sin CUM. Si eres destino, usa la campana.</p>
+<p>&quot;Los comentarios deben contener al menos 15 caracteres.&quot;</p>
+<p>Quisiste rechazar con comentario corto o vacío. Pide 16 caracteres reales.</p>
+<p>Escribe el motivo completo en el cuadro de observaciones de tu etapa y vuelve a</p>
+<p>Rechazar</p>
+<p>.</p>
+<p>&quot;Algo salio mal.. consulta al administrador del sistema.&quot;</p>
+<p>Falló el guardado. Si pasó al validar como destino, puede que la solicitud haya quedado marcada como validada sin mover al miembro de grupo.</p>
+<p>No vuelvas a intentar. Escribe al helpdesk con tu CUM, el CUM del miembro y la hora en que diste</p>
+<p>Validar</p>
+<p>; lo tiene que revisar el administrador.</p>
+<p>&quot;Estamos validando tu solicitud, este paso puede demorar un poco..&quot; al abrir la notificación</p>
+<p>Esa etapa ya se cerró (la aprobaron los dos o pasaron los 15 días) y la notificación quedó vieja.</p>
+<p>Haz clic en</p>
+<p>Aceptar</p>
+<p>. Revisa en</p>
+<p>Cambios de grupo</p>
+<p>el estatus general; no hay nada que hacer de tu lado.</p>
+<p>&quot;Sin cambios pendientes de validar.&quot;</p>
+<p>La solicitud de destino ya se decidió (alguien la validó, la rechazó o se rechazó sola a los 15 días).</p>
+<p>Aceptar</p>
+<p>. Si quieres saber qué pasó, pregunta al Presidente de Provincia o revisa con el grupo origen.</p>
+<p>&quot;Sin permisos para ver esta pantalla.&quot;</p>
+<p>Entraste a la pantalla de validación de destino sin venir de la notificación.</p>
+<p>Vuelve a la campana y entra con</p>
+<p>Ver</p>
+<p>.</p>
+<p>&quot;No es posible continuar con el proceso, el miembro cuenta con una sanción vigente que no permite solicitar un cambio de grupo.&quot;</p>
+<p>El miembro tiene una sanción activa. SISAS no deja validar ni solicitar hasta que termine.</p>
+<p>Espera a que termine la sanción. Si crees que es un error, helpdesk con el CUM del miembro.</p>
+<p>El miembro dice que ya lo aprobaron y sigue en el mismo grupo</p>
+<p>Faltan validaciones. El cambio se aplica solo cuando validan los dos del grupo destino. Revisa</p>
+<p>Estatus general origen</p>
+<p>y</p>
+<p>Estatus general destino</p>
+<p>en la bandeja.</p>
+<p>Si en origen falta tu voto o el del Presidente de Provincia, valídenlo. Si origen ya está completo, pide al grupo destino que atienda su notificación. Si el miembro ya recibió &quot;El cambio de grupo fue validado.&quot; y sigue en tu grupo, helpdesk con el CUM del miembro.</p>
+<p>&quot;El cambio de grupo fue rechazado.&quot; sin que nadie de tu grupo rechazara</p>
+<p>El grupo destino lo rechazó, o pasaron 15 días sin respuesta del destino y SISAS lo rechazó sola.</p>
+<p>Revisa el</p>
+<p>Comentario (Validador destino)</p>
+<p>en la bandeja. Si dice &quot;Se ha excedido el tiempo de validación&quot;, habla con el Jefe de Grupo destino y pide al miembro que vuelva a solicitar.</p>
+<p>&quot;No hay coincidencias con ningún miembro a tu cargo.&quot; al buscar para</p>
+<p>Nuevo cambio de grupo</p>
+<p>El miembro no está en tu grupo o escribiste mal el dato.</p>
+<p>Revisa el CUM. Si el miembro es de otro grupo, la solicitud la hace él o su propio Jefe de Grupo.</p>
+<p>Al elegir al miembro en</p>
+<p>Nuevo cambio de grupo</p>
+<p>sale &quot;Los datos de este miembro no pueden ser mostrados.&quot;</p>
+<p>El miembro está suspendido o dado de baja.</p>
+<p>No se puede tramitar el cambio. Helpdesk con su CUM si crees que es un error.</p>
+<p>Cuando escribas al helpdesk incluye: tu CUM, el CUM del miembro, el grupo origen y destino, la fecha de la solicitud y el mensaje exacto que te salió.</p>
+<p>Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.</p>
+<p>Preguntas frecuentes</p>
+<p>Ya validé y el miembro sigue en mi grupo. ¿Hice algo mal?</p>
+<p>No. Tu validación es una de cuatro. El miembro se mueve hasta que validan el Jefe de Grupo y el Presidente de Provincia del grupo destino.</p>
+<h3>¿Puedo cancelar una solicitud que ya validé?</h3>
+<p>No hay botón para eso. Si ya validaste y te arrepientes, pide al Presidente de Provincia de tu provincia (si aún no ha validado) o al grupo destino que la rechace.</p>
+<h3>¿Le llega correo al miembro?</h3>
+<p>No. Todo es por la campana de SISAS, tanto a él como a ti.</p>
+<h3>¿Qué pasa con la sección y cargos del miembro cuando se va?</h3>
+<p>Sus cargos y calidades en tu grupo pasan a su historial en automático al aplicarse el cambio. La sección y cargos en el nuevo grupo se los asigna el nuevo Jefe de Grupo.</p>
+<h3>¿Le ha sido útil este artículo?</h3>
+<p>|</p>
+<p>Detalles del articulo</p>
+<p>ID de artículo:</p>
+<p>24</p>
+<p>Para Jefes de Grupo</p>
+<p>Fecha de alta:</p>
+<p>2026-10-11 14:12:48</p>
+<p>Vistas:</p>
+<p>10</p>
+<p>valoración                                         (Votar):</p>
+<p>(0)</p>
+<p>Volver atrás</p>
+<p>Artículos relacionados</p>
+<p>Cómo solicitar un cambio de grupo</p>
+<p>Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes</p>
+<p>Mi perfil está en validación: qué significa y qué puedo hacer</p>
+<p>Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo</p>
+<p>Cómo completar o corregir mis datos (mi ficha al 100 %)</p>
+<p>Powered by</p>
+<p>Help Desk Software</p>
+<p>HESK</p>
+<p>More IT firepower? Try</p>
+<p>SysAid</p>
+</section>
+<section class="card"><h2>Capturas Oficiales del Procedimiento en SISAS</h2>
+<figure><img src="data:image/webp;base64,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" alt="Bandeja Cambios de grupo: CUM, Buscar y Nuevo cambio de grupo" /><figcaption>Bandeja Cambios de grupo: CUM, Buscar y Nuevo cambio de grupo</figcaption></figure>
+</section>
+  </main>
+</body>
+</html>

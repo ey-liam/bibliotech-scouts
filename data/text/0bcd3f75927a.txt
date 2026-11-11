@@ -1,0 +1,74 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Primer Respondiente Juvenil Avanzado
+Archivo: FES_CC_SYB_PRIMER RESPONDIENTE JUVENIL AVANZADO.pdf
+Fecha de publicación en RECME: 24 Septiembre 2026
+Categoría RECME: Especialidades Salud y Bienestar
+Etiqueta temática RECME: A_salvo_del_peligro
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: PRIMER RESPONDIENTE JUVENIL AVANZADO
+    Texto161: *Conozco los números de emergencia locales y que información debo brindar al operador (ubicación precisa, tipo de incidente, número de lesionados y estado aparente).
+*Se como activar el sistema de emergencia y como asignar tareas claras a testigos (Tú, la persona de  camisa negra, llama al 9-1-1 y avisame, etc)
+*Se como guardar la calma y como debo presentarme con una persona lesionada
+*Se como realizar una "Evaluacion de la escena"
+*Se que es el equipo de protección personal.
+*Conozco como tomar los signos vitales.
+*Reconozco si la persona responde, si respira normalmente y tomar la frecuencia del pulso radial o carotídeo.
+*Conozco técnica de limpieza de heridas, inmovilización de lesionados, vendajes, atender hemorragias leves y quemaduras.
+*Conozco los sintomas de golpe de  calor  y de hipotermia.
+* Se cual es la posición lateral de  seguridad y cuando debo o no mover a  un lesionado.
+*Conozco los elementos de un botiquín personal, de sección.
+    Texto163: *Realizo simulacros de llamadas de activación del sistema de emergencia.
+*Realizo  una evaluación de la escena con lesionados simulados.
+*Me coloco el equipo de protección personal.
+*Atiendo lesiones leves, limpio heridas correctamente, realizo inmovilizaciones de lesiones.
+*Puedo atender una quemadura leve y una hemorragia nasal.
+*Puedo colocar a un compañero en posición de recuperación de forma fluida y segura para mantener la vía aérea abierta.
+*Demuestro como actuar ante una víctima de golpe de calor y a alguien con hipotermia leve.
+*Puedo realizar la llamada internacional de auxilio con el silbato y luz.
+*Diseño y armo un botiquín para mi equipo/sección.
+    Texto165: *Realizo un taller de seguridad con mi equipo: "Activación del sistema de emergencia,  evaluación de la escena y como colocar a un lesionado en posición lateral de seguridad.
+*Enseño a mi equipo que es un equipo de  protección personal y como usarlo.
+*Muestro a mi equipo como tomar los signos vitales.
+*Coordino una práctica interactiva sobre atención de heridas, vendajes, inmovilización, control de  hemorragias, golpe de calor e hipotermia
+*Realizo difusión (infografía, video, etc) de los números de emergencia y del contenido de un botiquín familiar, en mi grupo y comunidad.
+    Texto167: Alicia Huerta Valdés, medico familiar, akelahvenado13@gmail.com
+    Texto168: *Explicar que las llamadas al número de emergencias se hacen solo en casos reales.
+*Vigilar que no juegen con los elementos del botiquín.
+*Vigilar que no realizen maniobras con las que puedan lesionarse o lesionar a los demás.
+*Apoyo por personal especializado.
+*En caso de  los simulacros avisar y solicitar los permisos necesarios.
+    Texto169: Protección y cuidado.
+    Dropdown170: COMUNIDAD
+    Check Box173: /Sí
+    Check Box174: /Sí
+    Check Box175: /Sí
+    Group188: /Opci髇4
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

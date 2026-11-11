@@ -1,0 +1,57 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): La Palabra como guía Litúrgica
+Archivo: FES_CC_PPC_LA PALABRA COMO GUIA LITURGICA.pdf
+Fecha de publicación en RECME: 26 Septiembre 2026
+Categoría RECME: Especialidades Paz y Participación Comunitaria
+Etiqueta temática RECME: Paz_y_accion_humanitaria
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: LA PALABRA COMO GUÍA LITURGICA
+    Texto161: * Hermenéutica y Contexto Bíblico: Comprender la formación de los textos canónicos católicos (73 libros), reconociendo el contexto sociocultural de redacción, la intención teológica de los autores y el sentido figurado vs. literal de las escrituras.
+* Pedagogía de Iniciación Bíblica (Desde la Fe): Analizar la justificación pedagógica de por qué un joven debe estructurar su lectura a partir de la cristología (Nuevo Testamento: 1 San Juan y Evangelios de San Marcos/San Juan) para consolidar un criterio ético antes de abordar pasajes complejos del Antiguo Testamento.
+* Estructura Litúrgica Superior: Comprender a fondo la Liturgia de la Palabra, la distribución del Leccionario y el uso del Misal o Liturgia de las Horas (Laudes y Vísperas) como herramientas cotidianas para la paz interior y el crecimiento personal.
+* Lectio Divina Integrada: Dominar el ciclo completo de la Lectio Divina: Lectio (¿Qué dice el texto?), Meditatio (¿Qué me dice a mí hoy?), Oratio (¿Qué le respondo a Dios?) y Actio/Contemplatio (¿A qué acción concreta en favor de mi prójimo me compromete?).
+* El uso de herramientas digitales especializadas (apps de la Liturgia de las Horas, Biblias de Jerusalén con aparato crítico, concordancias exegéticas).Principios del ecumenismo y diálogo interreligioso dentro del Movimiento Scout Mundial.
+    Texto163: * Proyecto de Acompañamiento Orante (Plan de 60 días): Desarrollar un diario espiritual sistemático basado en el esquema recomendado (Nuevo Testamento), integrando la Lectio Divina en la toma de decisiones diarias sobre el Proyecto de Vida personal y la evaluación de hábitos de salud mental y bienestar.
+* Diseño de Vivencias Litúrgicas de Comunidad: Organizar y dirigir una Liturgia de la Palabra / Oración de Taizé al aire libre durante una expedición o campamento de la Comunidad de Caminantes, creando los guiones, seleccionando la ambientación y moderando el momento de eco espiritual de los jóvenes.
+* Taller de Manejo de la Biblia: Crear y facilitar un taller interactivo dirigido a la Tropa Scout o a un grupo de confirmación parroquial, enseñándoles a navegar por el texto bíblico, interpretar las notas a pie de página y emplear el método de lectura progresiva.
+* Elaborar una "Guía Digital de Bolsillo para la Lectura Bíblica Scout", con mapas conceptuales y esquemas de oración utilizables en actividades en la naturaleza.Realizar un ensayo reflexivo donde se vincule un pasaje evangélico estudiado con un desafío actual de la sociedad (ej. la justicia social, el cuidado de la casa común o la salud mental).
+    Texto165: *Liderazgo Litúrgico y Comunitario: Servir activamente como monitor, lector o coordinador de grupos de reflexión bíblica en su comunidad local, parroquia o institución educativa.
+* Asesoría entre Pares: Acompañar a un Scout o Caminante más joven que desee iniciar su propia especialidad en áreas de espiritualidad o expresión, compartiendo su metodología de estudio.
+* Coordinar una campaña o acción comunitaria (visita a asilos, albergues o reforestación) cuya motivación y marco conceptual haya sido diseñado a partir de una reflexión bíblica de la Comunidad.  Presentar una ponencia o charla informal durante un Foro de Jóvenes o consejo de sección sobre cómo la espiritualidad fortalece la resiliencia y la salud mental.
+    Texto167: María de Jesús Garcia Juárez, Puebla.
+    Texto168: Seguridad en Actividades Contemplativas: La realización de oraciones nocturnas, fuegos contemplativos o actividades en la naturaleza requiere la supervisión indirecta del equipo de Scouters y el cumplimiento estricto de los protocolos de seguridad de campismo.Respeto a la Diversidad y Libertad de Conciencia: Dado que las especialidades en esta etapa promueven la inclusión, las reflexiones litúrgicas deben encuadrarse siempre en un ambiente de total tolerancia, apertura de pensamiento y absoluto respeto a la diversidad de creencias de los demás integrantes de la Comunidad
+    Texto169: Paz y acción humanitaria, espiritualidad
+    Dropdown170: COMUNIDAD
+    Check Box174: /Sí
+    Check Box175: /Sí
+    Check Box186: /Sí
+    Group188: /Opci髇3
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

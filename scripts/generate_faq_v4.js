@@ -1551,6 +1551,7 @@ const MENTION_CAP = {
 };
 
 for (const d of catalog) {
+  if ((parseInt(String(d.id || "").slice(4), 10) || 0) > 650) continue;
   if (d.is_duplicate || !d.title) continue;
   const terms = MENTION_KEYWORDS[d.category];
   if (!terms) continue;
@@ -1688,6 +1689,7 @@ function sliceSentenceAligned(body, startIdx, maxLen = 700) {
 }
 
 for (const d of catalog) {
+  if ((parseInt(String(d.id || "").slice(4), 10) || 0) > 650) continue;
   if (d.is_duplicate || !d.title) continue;
   const t = shortTitle(d.title);
   const tipo = TIPO[d.ext] || "documento";
@@ -1736,6 +1738,7 @@ const EXCLUDE_CAT = new Set(["Colección Biblioteca del Centenario", "Revistas F
 const inline = new Map();
 
 for (const d of catalog) {
+  if ((parseInt(String(d.id || "").slice(4), 10) || 0) > 650) continue;
   if (d.is_duplicate || EXCLUDE_CAT.has(d.category) || /donation|Every Drop|Choose your/i.test(d.title)) continue;
   const raw = textOf(d);
   if (!raw) continue;
@@ -1785,6 +1788,7 @@ const ALLOWED_DEF_CAT = new Set([
 const defRe = /(?:^|[.!?]\s+)((?:El|La|Los|Las)\s+[A-ZÁÉÍÓÚÑ][A-Za-záéíóúñÁÉÍÓÚÑ-]+(?:\s+(?:de|del|de la|y|en|para|a)?\s*[A-ZÁÉÍÓÚÑa-záéíóúñ-]+){0,4})\s+(es|son)\s+((?:el\s+(?:conjunto|proceso|m[eé]todo|sistema|motor|[oó]rgano|espacio|documento)|la\s+(?:herramienta|[uú]ltima|primera|instancia|unidad|organizaci[oó]n|estructura)|un\s+(?:conjunto|sistema|espacio|proceso|m[eé]todo|[oó]rgano|programa|marco)|una\s+(?:organizaci[oó]n|herramienta|instancia|unidad|red|secci[oó]n))[^.]{40,280}\.)/g;
 const defs = {};
 for (const d of catalog) {
+  if ((parseInt(String(d.id || "").slice(4), 10) || 0) > 650) continue;
   if (d.ext === "HTML" || d.is_duplicate || !ALLOWED_DEF_CAT.has(d.category)) continue;
   const text = clean(stripPdfHeaders(textOf(d)));
   if (!text) continue;
@@ -1808,9 +1812,13 @@ for (const x of Object.values(defs)) {
   add({ ...baseDef, q: `¿Qué ${x.verb === "es" ? "es" : "son"} ${x.term.replace(/^(El|La|Los|Las)\s/, (s) => s.toLowerCase())}?`, ans }, "definiciones");
 }
 
+/* -------------------------------------------------------------------- 8. Acervo RECME, Help Desk SISAS y FES */
+const { generateRecmeFaq } = require("./generate_recme_faq");
+generateRecmeFaq({ fs, path, DATA, catalog, byId, textOf, add, norm, clean, shortTitle, ubic, fmtSize, stats });
+
 /* -------------------------------------------------------------------- Salida */
 const result = {
-  version: "1.2",
+  version: "1.3",
   generated_from: "scripts/generate_faq_v4.js",
   total_questions: out.length,
   questions: out,

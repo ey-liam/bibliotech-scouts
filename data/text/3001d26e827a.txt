@@ -1,0 +1,50 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Técnico en caracterización escénica, visagismo y maquillaje de danza folclórica
+Archivo: FES_CC_HPV_TECNICO EN CARACTERIZACION ESCENICA VISAGISMO Y MAQUILLAJE DE DANZA FOLCLORICA.pdf
+Fecha de publicación en RECME: 25 Septiembre 2026
+Categoría RECME: Especialidades Habilidades para la Vida
+Etiqueta temática RECME: Tecnología_e_innovación
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: Técnico en Caracterización Escénica, Visagismo y Maquillaje de Danza Folclórica
+    Texto161: Visagismo Regional e Identidad Histórica: Investigar los estándares morfológicos y cromáticos que definen los estilos de maquillaje por región folclórica (ej. la marcación angular y labios intensos del Istmo de Tehuantepec, la sobriedad del Norte, o el dramatismo cromático del Jarabe Tapatío).  Física de la Luz Escénica y Contraste: Estudiar el comportamiento de los pigmentos bajo luminarias teatrales (cálidas, frías y LED), comprendiendo por qué las sombras cotidianas se desvanecen y cómo estructurar sombras fácticas y luces de alto impacto para ser percibidas a distancia.  Química de Materiales y Cosmiatría: Aprender las propiedades de los productos escénicos (bases en crema densa, supracolores, polvos traslúcidos microfinados, fijadores térmicos y pigmentos minerales), así como el cuidado de la salud cutánea (preparación e hidratación previa, desmaquillaje profundo y asepsia de pincelería).
+    Texto163: Diseño de Face Charts Regionales: Crear un cuaderno técnico de trabajo (Face Charts) con el diseño desglosado paso a paso de al menos 3 caracterizaciones de zonas dancísticas distintas (ej. Istmo, Jalisco, Huasteca o Veracruz), especificando paleta de color, puntos de luz, contornos y corrección morfológica.  Práctica de Caracterización en Vivo (Prueba de Escenario): Realizar la caracterización completa de un bailarín o bailarina aplicando la técnica de alto contraste, ejecutando el sellado indeleble a prueba de sudoración extrema y comprobando la visibilidad del diseño con iluminación focalizada.  Manual de Cuidado Dermatológico y Asepsia: Redactar y aplicar un protocolo de desinfección de pinceles, esponjas y productos, junto con una guía de preparación de la piel para evitar brotes o alergias producidas por el maquillaje teatral. Diseña un kit portátil de caracterización y retoque rápido de camerino (Backstage Emergency Kit) organizado para atender necesidades de vestuario, peinado y fijación facial durante funciones.
+    Texto165: Servicio Técnico tras Bambalinas: Coordinar el área de maquillaje y caracterización para un grupo dancístico local, escolta tradicional o representación cultural escolar durante una presentación pública o festival cultural.  Taller de Maquillaje Escénico para la Comunidad: Impartir un taller práctico a compañeros Caminantes o integrantes de un grupo de danza folclórica sobre automaquillaje escénico, optimización de productos de alto contraste y técnicas de desmaquillaje seguro.  Guía Visual y Tutorial de Difusión: Crear un catálogo ilustrado o guía paso a paso digital para compartir en redes institucionales o comunitarias sobre cómo preservar la fidelidad estética regional en la caracterización folclórica.
+Asesorar a grupos escolares o culturales de la zona en el diseño de caracterizaciones respetuosas de la iconografía e historia folclórica mexicana.
+    Texto167: maria de jesus garcia juarez
+    Texto168: Higiene y Asepsia Interpersonal: Emplear espátulas de acero inox y paletas mezcladoras para no contaminar productos cosméticos directamente; desinfectar brochas y pinceles con alcohol isopropílico de 70° entre persona y persona.Pruebas de Sensibilidad Cutánea (Parche Dermatológico): Aplicar una prueba de parche previa en la parte interna del antebrazo del caracterizado 24 horas antes si se utilizan pegamentos escénicos, látex o pigmentos de alta intensidad para descartar reacciones alérgicas.Protección Ocular y Mucosas: Extremar precauciones al trabajar cerca de la zona ocular, empleando productos oftálmicamente aprobados y evitando fijadores en aerosol con los ojos abiertos.Normativa Safe from Harm: Las sesiones de caracterización o pruebas de maquillaje deben realizarse siempre en espacios abiertos o visibles, en presencia de al menos dos adultos o Scouters responsables.
+    Texto169: STEAM
+    Dropdown170: COMUNIDAD
+    Check Box173: /Sí
+    Check Box174: /Sí
+    Check Box178: /Sí
+    Check Box181: /Sí
+    Group188: /Opci髇2
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

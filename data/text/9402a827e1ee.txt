@@ -1,0 +1,54 @@
+DOCUMENTO OFICIAL ASMAC: Especialidad Scout (Comunidad): Promotor de la Salud Juvenil Avanzado
+Archivo: FES_CC_SYB_PROMOTOR DE LA SALUD JUVENIL AVANZADO.pdf
+Fecha de publicación en RECME: 24 Septiembre 2026
+Categoría RECME: Especialidades Salud y Bienestar
+Etiqueta temática RECME: Salud
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Texto160: PROMOTOR DE LA SALUD JUVENIL AVANZADO
+    Texto161: *Investigo sobre prevencióbn de enfermedades crónicas no transmitibles, salud mental y manejo del estrés.
+*Comprender la salud reproductiva, la prevención de adicciones y la importancia de la vacunación.
+    Texto163: *Tomar un taller formal de Reanimación cardiopulmonar básica y maniobra de Heimlich.
+*Realizar un diágnostico de  hábitos de salud y bienestar dentro de su Equipo de Caminantes.
+*Implementar una rutina de acondicionamiento físico de 8 semanas enfocads en salud integral.
+    Texto165: *Dirigir un taller o foro de discusión sobre bienestar  emocional y manejo del estrés para la Comunidad.
+*Coordinar una campaña de concientización sobre salud mental y prevención de adicciones en su grupo o escuela.
+    Texto167: Alicia Huerta Valdés/akelahvenado13@gmail.com
+    Texto168: Supervisión por un adulto para la realización de diversas acciones.
+*Acompañamiento por especialistas en caso necesario para foros o talleres.
+    Texto169: Salud y autocuidado
+    Dropdown170: COMUNIDAD
+    Check Box173: /Sí
+    Check Box174: /Sí
+    Check Box175: /Sí
+    Check Box177: /Sí
+    Group188: /Opci髇4
+
+--- Página 1 ---
+
+FICHA DE ESPECIALIDAD SCOUT
+NOMBRE DE MI ESPECIALIDAD
+DESCUBRO ¿Qué me llama la atención? ¿Qué me gustaría aprender?
+¿Qué cosas nuevas me gustaría hacer? ¿Qué cosas me emocionan y me
+ponen feliz cuando las hago? ¿Cuál de las actividades que practico me
+gustaría conocer más? ¿Cuáles son mis pasatiempos favoritos?
+REFLEXIONO ¿Qué cosas nuevas aprendí? ¿Cómo me siento de poder
+ayudar a los demás con mis habilidades? ¿Cómo me sentí con las
+personas que me ayudaron a obtener mi especialidad?
+¿Cuáles problemas me encontré y cómo los resolví? ¿Qué consejo le daría
+a quienes quisieran lograr esta especialidad?
+SECCIÓN
+TEMA RELACIONADO
+ODS A LOS QUE ABONA
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
+EJE TEMÁTICO DE LA ESPECIALIDAD
+MEDIDAS DE SEGURIDAD
+1/1
+1. CONOZCO Lo que tengo que aprender sobre la especialidad.
+¿Qué más puedo aprender?
+2. APLICO Lo que hago para demostrar los conocimientos que adquirí sobre la especialidad.
+¿Qué más puedo hacer?
+3. COMPARTO La forma en que comparto mis nuevas habilidades con el resto. (familia, escuela, amigos...)
+¿De qué otras formas puedo compartir?
+Elaboró

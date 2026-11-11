@@ -1,0 +1,44 @@
+GUÍA OFICIAL HELP DESK ASMAC: Que pasa si no recuerdo la contraseña de Autorizacion?
+Categoría: Acceso, Cuenta y Credencial SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=7
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+SISAS
+Que pasa si no recuerdo la contraseña de Autorizacion?
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Que pasa si no recuerdo la contraseña de Autorizacion?
+ESTO ES ALGO OBLIGATORIO PARA LOS MENORES DE EDAD
+Cuando el SISAS pide la contraseña de autorización, Tiene la opción de restablecer la contraseña de autorización ( Dando click al Botón Morado).
+Al momento de darle click al botón, en cuestión de minutos se le envía un correo al correo registrado del tutor para el restablecimiento.
+Recuerda siempre revisar su bandeja de SPAM o correos no deseados
+En caso de necesitar el cambio del correo del tutor, este puede ser cambiado por le mismo usuario o por el Subjefe de Grupo Administrativo, Jefe de Grupo, Vicepresidente Administrativo y el Presidente de Provincia, en palabras sencillas por el Jefe Inmediato del siguiente Nivel
+No se recomienda que las personas de los Niveles Superiores les llenen el perfil ya que la cuenta (Desde el punto de vista del usuario) tiene que estar al 100% si no, no se emite la credencial
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+7Categoría:
+SISAS
+Fecha de alta:
+2023-02-01 12:21:56
+Vistas:
+620
+valoración                                         (Votar):
+(5)
+Volver atrás
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

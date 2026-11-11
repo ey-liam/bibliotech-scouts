@@ -1,0 +1,273 @@
+GUÍA OFICIAL HELP DESK ASMAC: Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Categoría: Guía para Jefes de Grupo y Scouters (SISAS)
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=23
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Para Jefes de Grupo
+Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Esta guía es para Jefes de Grupo y cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia).
+Desde la vista
+Administrador
+subes un Excel con los CUM de tu gente, SISAS revisa quién puede entrar al evento, y pagas todo en una sola operación con tarjeta o en OXXO. Cada miembro queda "Inscrito" en cuanto el pago se acredita. Si cada quien va a pagar lo suyo, no uses esto: que entren por su cuenta con la guía
+Cómo inscribirme y pagar un evento
+.
+Antes de empezar
+Un cargo vigente de Jefe de Grupo (o equivalente) en tu currículum. SISAS arma tus permisos con los cargos cuyo periodo incluye el día de hoy; si tu cargo venció, no verás la opción
+Administrador
+ni el módulo
+Eventos
+.
+El evento tiene que ser de
+fechas de pago
+(no de paquetes), estar "Disponible" y cobrarse en pesos. Si no cumple las tres, la opción de inscripción masiva no aparece.
+La lista de CUM de los miembros que vas a inscribir. Solo puedes inscribir gente de tu grupo; si tienes cargo de provincia, de tu provincia.
+Que cada miembro cumpla lo que pide el evento: sección o rango de edad, y provincia, localidad o grupo si el evento está acotado. Si alguien tiene beca para ese evento, se descuenta sola.
+Con qué vas a pagar: tarjeta, Apple Pay, Google Pay o efectivo en OXXO. Es un solo cobro por el total de todos. SPEI no está disponible en este flujo.
+Un correo y un teléfono a la mano: Conekta te los pide antes de pagar y ahí llegan los comprobantes.
+Pasos
+Entra a
+SISAS con tu cuenta de siempre. Arriba a la derecha,
+haz clic en
+Hola,
+y luego en
+Administrador
+. Cambia el menú de la izquierda y caes en el tablero de administración (membresía vigente, vencimientos del mes, deserción, IDO's/IT's, reconocimientos). Para regresar a tu vista de miembro, el mismo menú dice ahora
+Mi Perfil
+.
+En el menú de la izquierda
+haz clic en
+Eventos
+(icono de calendario). Verás la pantalla
+Eventos
+: una tabla con ID, MacroEv, Evento, Tipo de evento, Fecha y Estatus. Solo salen los eventos "Disponible" o "¡NUEVO!" que aplican a tu grupo, localidad o provincia. Hay una fila de filtros debajo de los encabezados para buscar por nombre.
+En la fila del evento
+haz clic en
+el icono del ojo (
+Ver_detalle
+). Se abre "Evento /
+" con la pestaña
+Detalles del evento
+y, si tienes el permiso,
+Asistentes al evento
+y
+Usuarios bloqueados
+.
+Arriba a la derecha está
+Inscripcion masiva (Descargar formato)
+.
+Haz clic en
+Descargar formato
+para bajar el Excel
+Formato.xlsx
+. Llénalo así: fila 1 son los encabezados (no la borres), desde la fila 2 un miembro por renglón, columna A el CUM y columna B el ID de SISAS. Basta con uno de los dos por renglón. Guárdalo como
+.xlsx
+.
+Haz clic en
+Adjuntar
+y elige tu archivo. En cuanto lo seleccionas SISAS lo lee y te pasa a
+Inscripción masiva al evento "
+"
+. No hay botón de "subir": se dispara solo.
+Revisa la tabla: CUM, ID, Nombre (s), Primer apellido, Segundo apellido, Provincia, Grupo - localidad, Sección y
+Validar
+con una palomita y una cruz por miembro. Los que sí pueden entrar vienen con la palomita marcada. Los que no, salen en rojo, con la cruz fija y un aviso al pasar el mouse: "El usuario no cumple con los requerimientos del evento", "El usuario ya se encuentra inscrito al evento", "No puedes inscribir usuarios que no estén a tu cargo" o "El usuario se encuentra bloqueado al evento". Si quieres dejar fuera a alguien válido, márcale la cruz.
+Haz clic en
+Cargar
+. SISAS cuenta las palomitas y pregunta "Se cargarán N registros."
+Aceptar
+te lleva a
+Sistema de pagos
+;
+Cancelar
+te deja revisar.
+Regresar
+te devuelve a la tabla de eventos sin inscribir a nadie.
+En
+Sistema de pagos
+el
+Detalle
+muestra Tipo de Pago, Concepto y Evento, y el
+Desglose
+trae Subtotal (la suma de todos), Descuento por Beca (la suma de las becas de tus miembros), Comisión Plazos Fijos y Total (MXP). No aparece la lista de nombres ni se pueden usar cupones en pagos de varios miembros.
+En
+Forma de pago
+marca
+Al Contado
+(sale "Se pagará en una sola exhibición", dale
+Aceptar
+). Si el evento permite meses, también verás
+Plazos Fijos
+; solo funciona con tarjeta de crédito y sube el total.
+Haz clic en
+Pagar
+.
+Captura
+Correo electrónico
+y
+Teléfono
+, marca "Confirmo que mis datos son correctos",
+Aceptar
+, y confirma "Estás a punto de salir de nuestro sitio para completar el pago en Conekta." Pagas en Conekta con tarjeta, Apple Pay, Google Pay o con referencia para OXXO. El enlace vence al día siguiente a las 22:00.
+Al volver verás "Pago en proceso". Con tarjeta se acredita en segundos; con OXXO, cuando la tienda reporta el pago.
+Haz clic en
+Entendido
+.
+Qué pasa después
+Cuando Conekta avisa a SISAS que el pago entró, cada miembro queda inscrito con el paquete del evento: en su
+Mis eventos
+la tarjeta cambia a "Inscrito" y, si el evento ya tiene Pasaporte-Scout, cada uno lo imprime desde su cuenta. Tú lo puedes verificar en la pestaña
+Asistentes al evento
+del evento, que lista a los inscritos de tu grupo con su Estatus.
+Los correos "Se acreditó tu pago." llegan al correo que escribiste en el paso 10, uno por cada miembro (cada uno sale con el nombre y CUM del miembro, no con el tuyo). Los miembros no reciben nada de SISAS.
+El pago aparece en
+tu
+pantalla
+Mis pagos
+, no en la del miembro: SISAS guarda quién creó el pago y cada quien solo ve los suyos. Si un miembro te pregunta "no veo mi pago", es normal; la prueba de que está inscrito es la etiqueta "Inscrito" en su
+Mis eventos
+.
+Si alguno de tus inscritos es menor de edad y el evento es nacional, SISAS manda la Carta de Autorización para firma electrónica a su tutor en cuanto se acredita el pago.
+Este flujo paga el monto completo de la fecha límite vigente. No hay pago parcial ni "abonar el resto" en la inscripción masiva; si pagaste y hubo un cambio de monto, se resuelve con el helpdesk.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+En
+Hola,
+no sale
+Administrador
+Tu cuenta no tiene ningún cargo con permisos de administración vigente hoy.
+Revisa en
+Mi currículum
+las fechas de tu cargo. Si está mal, pide la corrección a tu provincia o al helpdesk con tu CUM.
+En la vista Administrador no está
+Eventos
+en el menú, o el evento no aparece en la tabla
+Tu rol no tiene el módulo, o el evento no está "Disponible"/"¡NUEVO!" ni abierto para tu grupo, localidad o provincia.
+Pregunta al organizador si el evento ya está publicado y para quién. Si debería verse, helpdesk con tu CUM y el nombre del evento.
+En el detalle del evento no aparece
+Inscripcion masiva
+El evento es de paquetes, no está "Disponible", se cobra en dólares, o tu rol no tiene el permiso de carga masiva.
+Si el evento es de paquetes, cada miembro se inscribe solo. Si crees que te falta el permiso, helpdesk con tu CUM y el nombre del evento.
+"El formato que intentas agregar no es compatible" / "El tipo de archivo requerido no es el correcto, por favor intentalo nuevamente"
+Subiste un
+.xls
+u otro formato.
+Guarda el archivo como
+.xlsx
+y vuelve a
+Adjuntar
+.
+Adjuntas el archivo y no pasa nada, o la tabla sale vacía
+SISAS no pudo leer el archivo (celdas en columnas equivocadas, archivo abierto en Excel) o todas las fechas de pago del evento ya vencieron: en ese caso los renglones desaparecen sin aviso.
+Revisa que el CUM esté en la columna A y el ID en la B, desde la fila 2. Si las fechas de pago ya pasaron, pide prórroga al organizador.
+Un renglón sale sin nombre, en rojo, con el aviso "Usuario no cumple con las características del evento, revisa su Perfil"
+SISAS no encontró ese CUM o ID, o el miembro tiene pendiente su reinscripción en SISAS.
+Corrige el CUM. Si es correcto, el miembro primero tiene que reinscribirse (guía
+Reinscripción
+).
+"El usuario no cumple con los requerimientos del evento"
+Sección o edad fuera del evento, o el miembro es de otra provincia, localidad o grupo que el evento no admite.
+Verifica la sección del miembro en
+Consulta de miembros
+. Si el evento está mal acotado, avisa al organizador.
+"No puedes inscribir usuarios que no estén a tu cargo"
+El miembro no es de tu grupo (o de tu provincia si tu cargo es provincial), o en SISAS está dado de alta en otro grupo.
+Que el miembro revise su grupo en
+Mis datos
+; si cambió de grupo, primero la guía
+Cambio de grupo
+.
+"El usuario ya se encuentra inscrito al evento"
+Ya pagó por su cuenta o alguien ya lo inscribió.
+Nada que hacer; déjalo con la cruz.
+"El usuario se encuentra bloqueado al evento"
+Un administrador lo bloqueó para ese evento.
+Pregunta en la pestaña
+Usuarios bloqueados
+o al organizador.
+"Debes elegir al menos 1 usuario"
+Todas las filas están con cruz.
+Marca la palomita de al menos uno.
+"Superaste los lugares disponibles"
+Hay más palomitas que cupo libre.
+Quita miembros hasta caber, o pide al organizador más cupo.
+"Error en el proceso, intentelo más tarde" al dar
+Cargar
+La sesión se perdió (mucho tiempo en la tabla, otra pestaña) o falló el cálculo del pago.
+Vuelve al evento y repite desde
+Adjuntar
+. Si se repite, helpdesk con tu CUM y el nombre del evento.
+"Ya existe una solicitud de pago generada para ti o el/los miembro(s) elegido(s), ésta aún se encuentra Activa, deberás esperar 24 horas para solicitar una nueva."
+Ya hay una orden abierta en Conekta para alguno de esos miembros (tuya o del propio miembro).
+Paga con el enlace o referencia que ya tienes. Si se venció, espera 24 horas o quita a ese miembro de la lista.
+"Pago no completado"
+Conekta rechazó o cancelaste el pago. No se cobró ni se inscribió a nadie.
+Repite desde el paso 3.
+Pagaste pero los miembros siguen sin "Inscrito" y no llegaron los correos
+SISAS no recibió el aviso de Conekta; el pago quedó como "intento" y no se ve ni en tu
+Mis pagos
+. Con OXXO, puede que la tienda no haya reportado todavía.
+Espera unas horas si fue OXXO. Si no, helpdesk con: tu CUM, nombre del evento, fecha y hora, la orden de Conekta (empieza con "ord_", viene en el correo de Conekta) y la lista de CUM.
+Un miembro dice "no veo mi pago en Mis pagos"
+Es normal: el pago es tuyo, no de él.
+Que revise "Inscrito" en
+Mis eventos
+. Si necesita comprobante, el recibo está en tu
+Mis pagos
+.
+Te regresa a
+Mis pagos
+o a la tabla de eventos sin avisar
+Se perdió la sesión de pago.
+Repite desde el paso 3.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Puedo pagar una parte y el resto después?
+No. La inscripción masiva cobra el monto completo de la fecha límite vigente por cada miembro. Para pagos en partes el miembro se inscribe solo en un evento con paquetes.
+¿Puedo pagar por SPEI?
+No en este flujo. Aunque el evento tenga cuenta para SPEI, al pagar por varios miembros solo hay Conekta (tarjeta, Apple Pay, Google Pay, OXXO).
+¿A quién le llega el recibo?
+A ti, al correo que capturaste antes de ir a Conekta: un correo por miembro. El miembro no recibe nada de SISAS.
+¿Puedo inscribir a alguien de otro grupo?
+No. SISAS solo acepta miembros a tu cargo: tu grupo si eres Jefe de Grupo, tu provincia si tu cargo es provincial.
+¿Puedo agregar gente después?
+Sí, repite el proceso con otro Excel. Los que ya están inscritos salen en rojo y se saltan solos.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+23
+Categoría:
+Para Jefes de Grupo
+Fecha de alta:
+2026-10-11 14:12:48
+Vistas:
+11
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo inscribirme y pagar un evento
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Mis pagos: ver lo que he pagado, comprobantes y facturas
+Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)
+Cómo reinscribirme (renovar mi membresía)
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

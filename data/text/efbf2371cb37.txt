@@ -1,0 +1,420 @@
+GUÍA OFICIAL HELP DESK ASMAC: Cómo registrar mis avances: progresión, especialidades e insignias
+Categoría: Progresión y Currículum en SISAS
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=22
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Mi currículum
+Cómo registrar mis avances: progresión, especialidades e insignias
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Cómo registrar mis avances: progresión, especialidades e insignias
+Tú registras tus avances; tu scouter los valida. Eso es lo primero que hay que tener claro: en SISAS el joven captura lo que va logrando (su etapa de progresión, sus especialidades, sus IDS, su Vida al aire libre) y el scouter de su sección revisa, comenta y aprueba. Hasta que el scouter valida, la insignia no aparece en tu manga.
+El módulo se llama distinto según tu sección:
+Mi cacería
+(Manada),
+Mi exploración
+(Tropa),
+Mi desafío
+(Comunidad) o
+Mi proyecto de vida
+(Clan). Es el mismo módulo con otro nombre y otros textos. Esta guía explica la mecánica común y luego las diferencias por rama.
+Antes de empezar
+Tu ficha de perfil completa y validada. Si al hacer clic en el menú te sale "Completa/Actualiza los datos de tu Perfil." o "Tu información se está validando.", primero resuelve eso; mientras tanto el módulo no abre.
+Tener sección asignada (Manada, Tropa, Comunidad o Clan). Si eres adulto (scouter o dirigente), este módulo no te aparece: lo tuyo está en
+Reporte Scouter
+, donde validas a tus jóvenes.
+Sin reinscripción vencida ni cuenta suspendida. Si SISAS te está mostrando la ventana de reinscripción o estás suspendido, la manga del inicio se ve pero no se puede tocar.
+Para especialidades e IDS necesitas tener las evidencias en algún lugar público de internet (Drive, YouTube, una página): SISAS pide una
+URL
+, no te deja subir archivos.
+Si eres papá o mamá: entra con la cuenta de tu hijo o hija. Los avances se registran desde su cuenta y los correos de insignias nuevas te llegan a ti como tutor.
+Pasos
+Dónde está todo
+Entra a
+SISAS. En el menú de la izquierda haz clic en el icono de la medalla (
+Mi cacería
+/
+Mi exploración
+/
+Mi desafío
+/
+Mi proyecto de vida
+, según tu sección). Se despliega un submenú con cuatro opciones:
+Etapas de progresión
+Especialidades
+(en Comunidad y Clan se llama
+Competencias
+)
+IDS
+(no aparece en Clan)
+VAL
+(Vida al aire libre)
+En la pantalla de inicio, a la derecha, está tu
+manga
+: la tarjeta de color de tu sección con tu cinta arriba, las seis especialidades a los lados, tu etapa de progresión y tu insignia VAL al centro, y las IDS abajo. Las insignias que ya tienes se ven a color; las que te faltan, en gris. Desde ahí también entras a
+Cintas
+(haz clic en tu cinta o en
+Agrega tu cinta
+).
+Del lado derecho de la pantalla de inicio está la pestaña
+Reconocimientos
+. Ábrela para ver
+Mundo mejor
+(con el botón
+Registrar
+),
+IDO/IT
+y
+Mis Reconocimientos
+.
+Etapas de progresión (Manada, Tropa, Comunidad)
+Cada etapa es una insignia. Dentro de cada etapa hay varios "personajes" o áreas (en Manada son los viejos lobos; en Tropa y Comunidad, las áreas de crecimiento), y cada uno trae una lista de objetivos. Tú marcas qué tan cerca estás de cada objetivo y explicas cómo lo hiciste.
+Haz clic en Etapas de progresión
+. Ves una tarjeta por etapa de tu sección. El botón de cada tarjeta te dice en qué está:
+Ver más
+: puedes trabajarla.
+Bloqueado
+(en Tropa dice
+Sin explorar
+): todavía no te toca.
+Logrado
+(en Tropa,
+Conquistado
+): ya la tienes.
+En validación
+: ya la completaste y tu scouter la está revisando.
+Haz clic en Ver más
+en la etapa activa. Se abre un carrusel con los personajes o áreas de esa etapa.
+Haz clic en la imagen de cada uno para leer su consejo. El botón
+Resumen
+te muestra todo tu avance de esa etapa en una sola pantalla.
+Haz clic en Ir a mi cacería
+(o
+Ir a mi exploración
+/
+Ir a mi desafío
+) en el personaje que quieras trabajar. Se abre una tarjeta por objetivo.
+En cada objetivo marca el nivel haciendo clic en uno de los tres iconos. Los nombres cambian por sección:
+Manada:
+Oliendo a la presa
+,
+Acechando a la presa
+,
+Presa conseguida
+.
+Tropa:
+Inicio de Pista
+,
+Obstáculo a franquear
+,
+Camino a seguir
+.
+Comunidad:
+Comienzo
+,
+En Proceso
+,
+Completado
+.
+Escribe en
+¿Cómo realizas dicha acción?
+(obligatorio, hasta 500 caracteres). El recuadro de abajo (
+Comentarios de mi Viejo Lobo
+/
+Comentarios de tu Scouter
+/
+Comentarios del validador
+) es solo de lectura: ahí te escribe tu scouter.
+Haz clic en Guardar
+. Si no marcaste nivel te sale "Debes seleccionar el nivel de tu presa." (o "..de tu territorios." / "..de tu caminos."). Al guardar, la tarjeta pasa sola al siguiente objetivo. Usa
+Regresar
+para volver al resumen.
+Cuando terminas todos los objetivos de un personaje, SISAS te felicita ("¡Ánimo!.") y te deja seguir con el siguiente o volver al inicio.
+Cuando juntas el número de objetivos en el nivel máximo que pide la etapa, SISAS la envía sola a validar. Te sale el aviso "Tu información está siendo validada." (Tropa: "Tu exploración está siendo validada.") y la tarjeta cambia a
+En validación
+. No hay botón de "enviar a validar" en progresiones: se dispara al guardar el objetivo que completa la cuenta.
+Puedes seguir entrando a una etapa en validación para leer, pero ya no puedes cambiar niveles ni textos hasta que tu scouter responda.
+Mi proyecto de vida (Clan)
+En Clan las etapas no son fijas: son cuatro
+Campos de Acción
+y tú les pones nombre.
+Haz clic en Etapas de progresión
+. En cada tarjeta elige un campo en la lista
+Selecciona
+(Viajes y experiencias interculturales, Aventuras al aire libre, Servicio a la comunidad, Integración social y económica). Si das
+Ver más
+sin elegir, te sale "Debes elegir un Campo de Acción".
+Marca tus metas igual que en las otras ramas (los tres niveles no tienen etiqueta en Clan, solo el color). Si intentas registrar más metas de las que admite ese campo, SISAS te avisa "Ya has elegido el máximo de objetivos para esta insignia" y recarga la pantalla.
+Al completar las metas te sale "Para completar tu información ingresa tu evidencia" y SISAS te manda al
+Resumen
+.
+En el resumen, en
+Coloca la URL del proyecto registrado en https://sdgs.scout.org
+, pega el enlace de tu proyecto y
+haz clic en Enviar a validar
+. Verás "Tu información está siendo validada.". Ese botón sí existe en Clan.
+Cuando tu Consejero Rover valida, en la tarjeta aparece
+Logrado
+y un enlace
+Ver evidencia
+con tu URL.
+Especialidades (Manada y Tropa) / Competencias (Comunidad y Clan)
+Hay seis áreas: Deportes, Ecología, Expresión y Comunicación, Humanidades, Seguridad y Rescate, Tecnología y Ciencia (en Clan se concentra todo en
+Competencias
+). En cada área puedes registrar hasta cuatro especialidades; cada una validada te sube un color de insignia (amarilla, verde, azul, roja).
+Haz clic en Especialidades
+(o
+Competencias
+). Ves una tarjeta por área con la insignia que llevas y las mini-tarjetas de cada especialidad con su porcentaje.
+Para empezar una nueva,
+haz clic en el cuadro con el +
+del área. Para seguir una que ya empezaste, haz clic en el lápiz de su mini-tarjeta; si ya la enviaste a validar ves un ojo (solo lectura).
+Llena la cabecera:
+¿Por qué te interesa esta Especialidad?
+,
+Nombre de la Especialidad
+,
+Nombre del asesor
+y
+Ocupación del asesor
+(todos obligatorios). Las fechas
+Lo inicié el:
+y
+Lo cumplí el:
+las pone SISAS.
+Llena los tres pasos en orden. En Manada y Tropa se llaman
+Conozco
+,
+Aplico
+,
+Comparto
+; en Comunidad y Clan,
+Determinar destrezas a desarrollar y adquirir nuevos conocimientos
+,
+Aplicar y dominar lo aprendido
+,
+Compartirlo con terceros
+. El segundo se desbloquea al escribir el primero, y el tercero al escribir el segundo. Cada paso suma 30 % de avance.
+En el tercer paso pega el enlace en
+Coloca una URL con las evidencias
+.
+Haz clic en Guardar
+para guardar sin enviar. Confirma en "¿Estás seguro de guardar la información?" (Manada: "¿Estás seguro de guardar esta dentellada?"). Verás "Guardado exitosamente". Puedes guardar con solo la cabecera llena y seguir después.
+Cuando tengas los tres pasos y la URL,
+haz clic en Enviar a validar
+y confirma en "Tu información será enviada a validación" (Manada: "¡Buena caza lobo! Chil llevará este mensaje a tus Viejos lobos."). La especialidad queda al 90 % y en solo lectura hasta que el scouter la revise.
+IDS (Manada, Tropa y Comunidad)
+Las IDS son insignias de desarrollo sostenible. Cada una tiene varios retos y cada reto se trabaja en tres partes:
+Inspirarse
+,
+Aprender y decidir
+y
+Tomar acción
+. En Clan este apartado no aparece en el menú.
+Haz clic en IDS
+. Ves una tarjeta por insignia con sus retos y el porcentaje de cada uno. Haz clic en el lápiz del reto que quieras trabajar.
+Llena
+Nombre del asesor
+y
+Ocupación del asesor
+.
+En cada una de las tres partes escribe una acción en
+Nueva Acción
+y
+haz clic en +
+para agregarla a la lista
+Acciones
+. Mínimo una acción por parte, máximo ocho. Puedes borrar acciones mientras no hayas enviado a validar.
+En
+Tomar acción
+pega el enlace en
+Coloca la URL de la evidencia de las acciones realizadas
+.
+Haz clic en Guardar
+para guardar sin enviar, o
+Enviar a validar
+cuando tengas las tres partes y la URL. Confirma en "¿Estás seguro de enviar la información a validar?" y verás "Tu información está siendo validada". Si falta algo te sale "Debes tener mínimo 1 acciones en "Inspirarse"" (o en "Aprender y decidir" / "Tomar acción").
+VAL — Vida al aire libre
+Haz clic en VAL
+. Se abre
+Vida al aire libre
+con tu insignia (gris si aún no la tienes) y la lista de
+Mínimos técnicos
+en tres bloques.
+Marca la casilla de cada punto que ya dominas y
+haz clic en Guardar
+. Confirma en "¿Desea guardar el avance?". Verás "Guardado exitosamente" y la pantalla se recarga.
+Cuando completas los tres bloques de mínimos, SISAS los envía solos a validar y te avisa "Tus mínimos técnicos se han enviado a validación. Las Destrezas estarán disponibles, cuando hayan sido validados.". Las casillas quedan bloqueadas.
+Con los mínimos validados tienes la insignia amarilla y aparece el bloque
+Destrezas
+(Cabuyería, Campismo, Exploración). Cada destreza que completas se envía a validar y te sube un color. En Clan, en vez de casillas, cada destreza pide
+Coloca la URL de la evidencia de las acciones realizadas
+.
+Mundo mejor
+Son las insignias de los programas mundiales (por ejemplo Scouts del Mundo) que se obtienen fuera de SISAS; aquí solo registras el certificado.
+En el inicio abre la pestaña
+Reconocimientos
+de la derecha, despliega
+Mundo mejor
+y
+haz clic en Registrar
+. También puedes entrar por la tarjeta de tu manga.
+En la insignia que quieras
+haz clic en Ver más
+. Si dice
+Bloqueado
+no corresponde a tu sección.
+Llena
+Ingresa el No. Certificado
+e
+Ingresa el Nodo
+(es un enlace al sitio de scout.org donde quedó tu registro).
+Haz clic en Guardar
+y confirma en "Para continuar con el proceso, tu información será enviada a validar". Verás "Tu información está siendo validada." La tarjeta cambia a
+En validación
+.
+Cintas
+La cinta es la única pieza que no pasa por validación: la eliges tú.
+En tu manga del inicio haz clic en la cinta (o en
+Agrega tu cinta
+). Se abre
+Cintas
+con las cintas de tu sección.
+Marca la que te corresponde y
+haz clic en Guardar
+. Confirma en "¿Deseas guardar tu cinta?" y verás "Guardado con éxito". Si no marcaste ninguna te sale "Debes elegir una cinta".
+Si eliges una cinta de enlace, SISAS le avisa a tu scouter, pero la cinta se guarda de inmediato.
+Qué pasa después
+Cada vez que envías algo a validar, le llega una notificación en la campana de SISAS a tu
+scouter de sección
+(el jefe de tu manada, tropa, comunidad o clan; si tu sección está dividida en equipos, al jefe de tu equipo; si tu grupo no tiene jefe de sección registrado, al Jefe de Grupo). Él entra a
+Reporte Scouter
+, ve tu avance y puede hacer tres cosas:
+Validar
+: la insignia se activa y aparece a color en tu manga del inicio y en el módulo.
+Mandar a revisión / rechazar
+: te regresa el avance con un comentario para que lo corrijas y vuelvas a enviar. En progresiones, los objetivos que tenías en el nivel máximo bajan un nivel para que los retrabajes.
+Retirar
+: te quita una insignia que ya tenías (no es común).
+Te enteras por la campana de notificaciones de SISAS. Al abrirla y hacer clic en
+Ver
+te sale, por ejemplo, "Se validó la especialidad.." o "Se rechazó la especialidad..". Cuando validan una insignia además llega un correo con asunto "Nueva progresión": en Manada y Tropa le llega al papá o mamá registrado como tutor; en Comunidad y Clan te llega a ti. Mundo mejor no lo valida tu scouter sino el equipo de Mundo Mejor de Nacional.
+No hay tiempos definidos: depende de que tu scouter atienda la notificación.
+Tus insignias validadas se ven en tres lugares: la
+manga
+del inicio (solo las de tu sección actual), la pestaña
+Reconocimientos
+de la derecha (
+Mundo mejor
+,
+IDO/IT
+y
+Mis Reconocimientos
+) y las tarjetas de cada módulo.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+No me aparece
+Mi cacería
+/
+Mi exploración
+/
+Mi desafío
+/
+Mi proyecto de vida
+en el menú
+Tu cuenta no tiene sección de jóvenes (eres adulto, o tu ficha no tiene sección) o el permiso del módulo no está dado.
+Si eres scouter o dirigente, es normal: tu módulo es
+Reporte Scouter
+. Si eres joven, revisa en tu perfil que tengas sección; si la tienes y sigue sin salir, escribe al helpdesk con tu CUM.
+"Completa/Actualiza los datos de tu Perfil." o "Tu información se está validando." al hacer clic
+Tu ficha está incompleta o en validación.
+Completa el perfil o espera a que lo validen.
+La manga del inicio se ve pero no puedo hacer clic en nada
+Tienes la reinscripción vencida, cambios de perfil pendientes o la cuenta suspendida.
+Resuelve primero lo que SISAS te está pidiendo al entrar (reinscripción o perfil). Si estás suspendido, escribe al helpdesk.
+La etapa dice
+Bloqueado
+/
+Sin explorar
+No te toca todavía: las etapas van en orden, y en Manada antes de los 9 años (Tropa: 13) solo puedes trabajar las dos primeras.
+Termina la etapa anterior. Si crees que la edad o la sección están mal, revisa tu fecha de nacimiento en el perfil.
+Marqué mis objetivos y la insignia no aparece en la manga
+Falta que tu scouter la valide (la tarjeta dice
+En validación
+), o todavía no juntas los objetivos que pide la etapa.
+Revisa que la tarjeta esté
+En validación
+. Si lo está, pídele a tu scouter que entre a
+Reporte Scouter
+y la atienda.
+"Debes seleccionar el nivel de tu presa." (o territorios / caminos)
+Diste
+Guardar
+sin marcar uno de los tres niveles.
+Marca el nivel y vuelve a guardar.
+Mi scouter dice que no le llega nada
+La notificación va al jefe de sección registrado en SISAS para tu grupo y sección. Si ese registro está vacío o apunta a otra persona, le llega al Jefe de Grupo o a nadie.
+Pide al Jefe de Grupo que revise quién está registrado como jefe de tu sección (y de tu equipo, si hay división). Si está bien y aun así no llega, escribe al helpdesk con tu CUM, el módulo y la fecha de envío.
+Me cambiaron de sección y mi manga está vacía
+La manga y los módulos muestran solo las insignias de tu sección actual. Lo que ganaste antes sigue en tu historial, no se borra.
+Es normal. Si tenías la insignia roja de VAL o de alguna especialidad, SISAS te da la amarilla de la nueva sección en automático.
+"Ya has elegido el máximo de objetivos para esta insignia" (Clan)
+Ese campo de acción ya tiene todas las metas que admite.
+Trabaja las metas que ya registraste; no agregues más.
+"Ocurrio un error al actualizar los datos, intente de nuevo más tarde."
+Falló el guardado en el servidor.
+Vuelve a intentar. Si se repite, escribe al helpdesk con tu CUM, el módulo y la hora.
+Cuando escribas al helpdesk incluye: tu CUM, tu sección, el módulo (Etapas, Especialidades, IDS, VAL, Mundo mejor), el nombre de la insignia o reto y el mensaje exacto que te salió.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Puedo registrar mis avances yo o lo hace mi scouter?
+Tú los registras. Tu scouter solo valida, comenta o regresa. Lo único que el scouter captura directamente son sus comentarios en cada objetivo.
+¿Mi scouter puede marcar mis objetivos por mí?
+No. Desde
+Reporte Scouter
+ve tus objetivos en solo lectura y solo puede escribir comentarios; además, para comentar un objetivo tú ya tienes que haberlo capturado ("Para guardar un comentario el joven debe capturar su presa.").
+¿Dónde veo las IDO/IT?
+En la pestaña
+Reconocimientos
+de la derecha del inicio, en
+IDO/IT
+. Esas insignias no se solicitan desde este módulo: las tramita tu scouter con la boleta que genera SISAS cuando completas tu progresión.
+¿Se pierden mis insignias si cambio de grupo?
+No. El cambio de grupo no toca tus insignias ni tu progresión.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+22
+Categoría:
+Mi currículum
+Fecha de alta:
+2026-10-11 12:55:21
+Vistas:
+23
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes
+Jefe de Grupo: cambiar de sección a un miembro
+Cómo entrar a SISAS (y qué ves al entrar)
+Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo
+Cómo solicitar un cambio de grupo
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

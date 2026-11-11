@@ -1,0 +1,406 @@
+GUÍA OFICIAL HELP DESK ASMAC: Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes
+Categoría: Guía para Jefes de Grupo y Scouters (SISAS)
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=26
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Para Jefes de Grupo
+Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Scouter y Jefe de Grupo: validar progresión, especialidades e insignias de mis jóvenes
+Esta guía es para los
+scouters que son jefes de sección
+(Akela, Jefe de Tropa, Jefe de Comunidad, Consejero Rover). Un Jefe de Grupo que no tenga además cargo de jefe de sección ve "Acceso restringido" en Reporte Scouter: para validar, hay que tener el cargo de la sección. Aplica también a cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia) solo si tienen ese cargo de sección.
+Tus jóvenes registran sus avances desde su cuenta (ver la guía
+Cómo registrar mis avances: progresión, especialidades e insignias
+). Tú los revisas en
+Reporte Scouter
+: ves lo que capturaron, les escribes comentarios y decides si les asignas la insignia, se las regresas para que corrijan, o se las retiras. Validar una insignia toma un par de minutos por joven.
+Antes de empezar
+Tener un cargo vigente en SISAS que te dé el menú de
+Administrador
+(jefe de sección, Jefe de Grupo o superior). Sin cargo vigente no aparece el módulo.
+Si eres scouter de sección, tienes que estar registrado en SISAS como
+jefe de esa sección
+de tu grupo (eso lo hace el Jefe de Grupo en la sección). Si no estás registrado, no te llegan las notificaciones y solo puedes abrir a los jóvenes de la sección que tengas asignada.
+La solicitud del joven tiene que estar enviada a validar. Si él solo guardó sin enviar, el botón
+Asignar
+sale gris.
+Pasos
+Cambiar al menú de Administrador
+Entra a SISAS. Arriba a la derecha haz clic en
+Hola, [tu nombre]
+y luego en
+Administrador
+. Te lleva al tablero con los indicadores (MEMBRESIA VIGENTE, IDO'S OBTENIDAS EN EL AÑO, RECONOCIMIENTOS ENTREGADOS, etc.) y el menú de la izquierda cambia a los módulos de gestión.
+Para regresar a tu propia manga, en el mismo menú la opción ahora dice
+Mi Perfil
+.
+Cómo te enteras de que hay algo por validar
+Cuando un joven de tu sección envía un avance, te llega una notificación en la campana de SISAS: "Nueva progresión", "Nueva especialidad", "Nueva competencia", "Nuevo IDS" o "Nueva insignia" (VAL), con el nombre del joven.
+Haz clic en la campana y en
+Ver
+de la notificación.
+Sale un aviso "El usuario [nombre] obtuvo una nueva insignia." (o "obtuvo un nuevo IDS.") con el botón
+Validar
+. Haz clic en
+Validar
+y SISAS abre directo el
+Reporte Scouter
+de ese joven, ya posicionado en la insignia que envió.
+La notificación le llega al jefe de la sección del joven registrado en SISAS (si la sección está dividida en equipos, al jefe de su equipo). Si el grupo no tiene jefe de sección registrado, le llega al Jefe de Grupo. Si no hay ninguno de los dos, no le llega a nadie: por eso importa tener bien registrados los cargos de sección.
+Abrir el Reporte Scouter sin notificación
+También puedes entrar por tu cuenta, por ejemplo para revisar a toda la sección o si la notificación ya se perdió.
+En el menú de la izquierda haz clic en
+Reporte Scouter
+(icono del globo terráqueo). Se abre una pantalla con filtros.
+Elige la
+Sección
+(es obligatorio; si no eliges sale "Es necesario seleccionar una sección"). Si tu cargo es de provincia o nacional también puedes filtrar por
+Provincia
+,
+Localidad
+y
+Grupo
+.
+Haz clic en
+Buscar
+. Sale la tabla con los jóvenes de esa sección a los que tienes acceso: Provincia, Localidad, Grupo, Nombre, CUM, CURP, Fecha de nacimiento y una columna por cada insignia de la sección (etapas, especialidades por color, IDS, VAL, Mundo mejor). Cada celda dice si el joven tiene esa insignia y el color de fondo te dice en qué va:
+amarillo
+= enviada a validar (te toca a ti),
+verde
+= validada,
+rojo
+= iniciada pero sin enviar.
+Arriba de la tabla hay cuadros de búsqueda por columna.
+En la columna
+Reporte
+haz clic en
+Ir
+del joven que quieras revisar.
+Exportar
+descarga la misma tabla en Excel.
+Qué muestra el Reporte Scouter de un joven
+Arriba ves el nombre del joven, su
+Provincia
+,
+Grupo - Localidad
+y un carrusel de
+Pendientes
+: cada pendiente es algo que el joven envió y no has atendido, con el formato "Progresiones - Tropa - Pista", "Especialidades - Manada - Deportes", "Competencias - Clan -..", "IDS - Tropa -..", "Vida al aire libre - Comunidad -.." o "Mundo mejor -..". Haz clic en un pendiente y se carga abajo.
+Si prefieres navegar a mano: elige
+Sección
+,
+Tipo
+(Progresiones, Especialidades, IDS, VAL; Mundo mejor solo lo ven cargos nacionales; en Clan no aparece IDS) e
+Insignia
+.
+Solo puedes validar en la sección actual del joven. Si en
+Sección
+eliges otra, puedes ver lo que tenga de esa sección pero todos los botones quedan grises.
+Validar una etapa de progresión
+Con la etapa cargada, arriba ves
+Insignia correspondiente
+con el nombre de la etapa y su imagen (a color si ya la tiene, en gris si no). En Clan, en vez del nombre fijo hay una lista para elegir el nombre del Campo de Acción, el botón
+Actualizar
+y el enlace de
+Evidencia
+que el joven pegó (haz clic para abrirlo en otra pestaña).
+Abajo vienen las tarjetas por
+Área de crecimiento
+(personajes en Manada) con cada objetivo: el número, el nivel que marcó el joven (las huellas o iconos), el texto del objetivo (
+Territorio a conquistar
+), lo que escribió el joven (
+Comentarios muchacho
+), tu cuadro
+Comentarios scouter
+, la
+Fecha de revisión
+y un botón
+Guardar
+por objetivo. El botón
+Guardar
+de la cabecera guarda todos tus comentarios de una vez ("¿Estás seguro de guardar todos los comentarios?" → "Se guardaron los comentarios correctamente.").
+Escribe en
+Comentarios nivel validador(no visibles para el usuario)
+(arriba a la derecha). Es obligatorio para cualquier acción y pide mínimo 15 caracteres: es tu nota interna, el joven no la ve.
+Elige qué hacer:
+Asignar
+: confirma en "¿Estás seguro de asignar la insignia?". La insignia queda validada y a color en la manga del joven.
+En revisión
+: regresa la etapa al joven para que la corrija. Antes de poder hacerlo tienes que escribir un comentario de al menos 15 caracteres en
+Comentarios scouter
+de
+todos
+los objetivos de la etapa; si falta alguno sale "Debes ingresar un comentario de al menos 15 caracteres en los comentarios para el usuario.". Confirma en "¿Deseas regresar la solicitud para su revisión y en su caso corrección, al solicitante?". Los objetivos que el joven tenía en el nivel máximo bajan un nivel para que los retrabaje.
+Retirar
+: solo aparece cuando la insignia ya está validada. Confirma en "¿Estás seguro de retirar la insignia?".
+Verás "La insignia se asignó correctamente." (o "se envió a revisión" / "se retiró") y la pantalla se recarga.
+Validar una especialidad o competencia
+Carga
+Especialidades
+(o
+Competencias
+) y el área. Ves la insignia del área y las mini-tarjetas de cada especialidad del joven con su porcentaje; la que está enviada a validar trae la etiqueta
+Por Validar
+. Los cuadros con
++
+son espacios vacíos (el joven aún no inicia esa especialidad).
+Haz clic en la mini-tarjeta. A la derecha se abre el detalle:
+Nombre
+,
+Porcentaje de avance
+, los textos de
+Conozco
+,
+Aplico
+y
+Comparto
+(en Comunidad y Clan los nombres largos de cada paso), el enlace de
+Evidencias
+, la
+Fecha
+de inicio y fin, y tu cuadro
+Comentario scouter
+con su botón
+Guardar
+("Se guardó el comentario correctamente.").
+Escribe
+Comentarios nivel validador(no visibles para el usuario)
+(mínimo 15 caracteres).
+Asignar
+le da al joven el siguiente color de insignia de esa área.
+En revisión
+se la regresa (exige tu
+Comentario scouter
+de al menos 15 caracteres).
+Retirar
+solo sale si la insignia que ves es la que el joven ya tiene.
+Validar un reto de IDS
+Las IDS se validan reto por reto.
+Carga
+IDS
+y la insignia. Ves la tarjeta de la insignia con sus retos; cada reto trae su porcentaje y un icono: prohibido = "El scout aun no ha registrado ninguna actividad.", ojo = puedes leerlo pero no está enviado, botón
+Validar
+= el joven ya lo envió (90 %).
+Haz clic en
+Validar
+(o en el ojo). A la derecha se abre el reto con las acciones de
+Inspirarse
+,
+Aprender y decidir
+y
+Tomar acción
+, el enlace
+Ver Evidencia(s)
+y tu cuadro
+Comentario scouter
+con
+Guardar Comentario
+.
+Escribe
+Comentarios nivel validador(no visibles para el usuario)
+(mínimo 15 caracteres) en la tarjeta de la insignia.
+Validar área
+aprueba ese reto.
+En revisión
+se lo regresa al joven (exige tu
+Comentario scouter
+). Cuando todos los retos de la insignia están validados, el joven la ve a color.
+Retirar
+(en la tarjeta de la insignia) quita la insignia completa y le regresa todos los retos para editar.
+Validar Vida al aire libre (VAL)
+Carga
+VAL
+y la insignia (amarilla, verde, azul o roja). Ves
+Mínimos técnicos
+y, si ya los tiene,
+Destrezas
+, con las casillas tal como las marcó el joven. Aquí no puedes marcar ni desmarcar nada: solo lectura. En Clan ves la URL de evidencia de cada destreza.
+Escribe tu
+Comentario scouter
+abajo y haz clic en
+Guardar
+si quieres dejárselo sin decidir todavía.
+Escribe
+Comentarios nivel validador(no visibles para el usuario)
+y usa
+Asignar
+,
+En revisión
+(exige el
+Comentario scouter
+de 15 caracteres) o
+Retirar
+, igual que en progresión.
+Mundo mejor
+Las insignias de Mundo mejor no las valida el scouter ni el Jefe de Grupo: las atiende el equipo de Mundo Mejor de Nacional. En tu
+Reporte Scouter
+ese tipo no aparece.
+IDO/IT y reconocimientos institucionales
+Las IDO/IT no se asignan desde
+Reporte Scouter
+. Lo que sí puedes hacer desde la tabla de
+Reporte Scouter
+es descargar la
+Solicitud IDO
+(icono de descarga en esa columna): SISAS genera un PDF llamado Solicitud.pdf con la boleta del joven (sus etapas, especialidades, IDS, VAL y evidencias) para tramitarla.
+Los reconocimientos institucionales (condecoraciones, reconocimientos por servicio) son otro módulo: en el menú de Administrador entra a
+Reconocimientos
+, haz clic en
+Crear
+, busca al miembro por
+Id o CUM
+con
+Buscar
+(mínimo 5 caracteres), elige el
+Tipo de Reconocimiento
+, escribe la
+Descripción detallada y/o acciones que hacen merecedor al reconocimiento
+, adjunta el
+Acta de consejo en formato.PDF
+, pon la
+Fecha de sesión del consejo
+(antigüedad máxima 3 meses), marca la casilla de veracidad y haz clic en
+Siguiente
+. Confirma en "¿Deseas enviar la solicitud del reconocimiento?". La solicitud le llega a Atención a la Membresía en Nacional, que la valida, genera el reconocimiento con folio y código QR y lo marca como entregado; en
+Reconocimientos
+ves el estatus de cada solicitud. Ese flujo merece su propia guía.
+Qué pasa después
+Al joven le llega una notificación en su campana según lo que hiciste: validada, rechazada (en revisión) o retirada. Si validaste, además sale un correo con asunto "Nueva progresión": en Manada y Tropa va al papá o mamá registrado como tutor; en Comunidad y Clan va al propio joven. Al regresar o retirar no sale correo, solo la notificación.
+Cuando asignas una insignia, al Jefe de Grupo le llega una notificación "El usuario [CUM] [nombre] obtuvo una nueva insignia [nombre]." para que esté enterado y pueda entregar la insignia física.
+Tus comentarios en
+Comentarios scouter
+(por objetivo, por especialidad, por reto o el de VAL) sí los ve el joven en su pantalla. Los de
+Comentarios nivel validador(no visibles para el usuario)
+se quedan en el expediente de la insignia y solo los ve quien entre al Reporte Scouter.
+Buenas prácticas:
+- Al regresar algo a revisión escribe en los comentarios qué falta y cómo corregirlo. Es lo único que el joven recibe; sin eso solo ve que le rechazaron.
+- Usa el comentario de nivel validador para dejar constancia de por qué validaste o retiraste; te lo va a pedir el siguiente scouter o el Jefe de Grupo.
+- Atiende los pendientes del carrusel con regularidad: no hay recordatorios, solo la notificación inicial.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+No me aparece
+Reporte Scouter
+en el menú
+No estás en el menú de Administrador, o tu cargo no tiene el permiso del módulo, o tu cargo ya no está vigente.
+Cambia a
+Administrador
+en
+Hola, [nombre]
+. Si aun así no sale, pide al Jefe de Grupo que revise tu cargo y su vigencia en tu currículum de SISAS.
+No me llegan las notificaciones de mis jóvenes
+No estás registrado como jefe de esa sección en SISAS (o el joven está en un equipo cuyo jefe es otra persona). La notificación se va al Jefe de Grupo o a nadie.
+Pide al Jefe de Grupo que te asigne como jefe de la sección (y del equipo, si hay división). Mientras tanto entra por
+Reporte Scouter
+→
+Buscar
+y revisa el carrusel de
+Pendientes
+de cada joven.
+Al elegir
+Sección
+en Reporte Scouter solo me sale una (o ninguna)
+Solo ves las secciones en las que estás registrado como jefe o subjefe.
+Si te falta una sección, el Jefe de Grupo tiene que agregarte en ella.
+Página "Ups!! Algo no salió como lo esperabamos" al abrir a un joven
+Intentaste abrir a un joven de una sección que no tienes asignada (pasa al entrar desde una notificación vieja o si el joven cambió de sección).
+Regresa a
+Reporte Scouter
+, busca al joven en su sección actual. Si no tienes esa sección, pídela al Jefe de Grupo o que él lo valide.
+Asignar
+sale gris con el aviso "Para asignar la insignia el usuario debe iniciar el objetivo."
+El joven no ha capturado nada en esa insignia o no la ha enviado a validar.
+Pídele al joven que complete y envíe desde su cuenta. Tú no puedes capturar por él.
+"Debes ingresar un comentario de al menos 15 caracteres a nivel validador."
+Falta el comentario interno.
+Escribe al menos 15 caracteres en
+Comentarios nivel validador(no visibles para el usuario)
+.
+"Debes ingresar un comentario de al menos 15 caracteres en los comentarios para el usuario."
+Quieres regresar a revisión sin comentario para el joven. En progresión tiene que haber comentario en todos los objetivos de la etapa.
+Escribe el comentario (en cada objetivo si es progresión) y vuelve a dar
+En revisión
+.
+Los botones
+Asignar
+/
+En revisión
+/
+Retirar
+se ven grises y no responden
+Cambiaste la
+Sección
+a una que no es la actual del joven, o tu cargo no tiene el permiso específico (asignar, retirar o enviar a revisión).
+Vuelve a la sección actual del joven. Si siguen grises, pide al Jefe de Grupo que revise los permisos de tu cargo.
+"Ocurrio un problema, contacta al administrador del sistema." al validar
+Falló el guardado en el servidor. En IDS pasa si se validó sin tener abierto el reto.
+En IDS, vuelve a abrir el reto con
+Validar
+y repite. Si se repite, escribe al helpdesk con tu CUM, el CUM del joven, el tipo de insignia y la hora.
+"El usuario debe iniciar el objetivo." al guardar un comentario
+Intentaste comentar una especialidad o reto que el joven no ha empezado.
+Espera a que el joven lo inicie.
+Validé y el joven no ve la insignia en su manga
+Si lo validaste desde
+Reporte Scouter
+, revisa que el joven esté viendo la manga de su sección actual. Si la especialidad se validó desde otra pantalla puede haber quedado registrada sin activar (falla conocida).
+Pide al joven que recargue su inicio. Si sigue sin verse, escribe al helpdesk con el CUM del joven y el nombre exacto de la especialidad o insignia para que la activen.
+Retiré una insignia por error
+El retiro quita la insignia y le avisa al joven; no hay botón de deshacer.
+Vuelve a cargar la insignia y dale
+Asignar
+de nuevo (el joven recibe otra notificación de validada). Si el botón no aparece, escribe al helpdesk con el CUM del joven y la insignia.
+Validé una progresión y no salió correo al joven o al tutor
+En Manada y Tropa el correo va al tutor registrado; si el joven no tiene tutor en SISAS no se envía nada. Al regresar o retirar nunca sale correo.
+Es normal. La notificación en SISAS sí le llega.
+Cuando escribas al helpdesk incluye: tu CUM y cargo, el CUM del joven, su sección, el tipo (Progresiones, Especialidades, IDS, VAL), el nombre de la insignia y el mensaje exacto.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Puedo capturar o corregir los objetivos del joven?
+No. Desde Reporte Scouter todo lo del joven es de solo lectura; tú solo escribes comentarios y decides asignar, regresar o retirar. Lo único que editas es el nombre del Campo de Acción en Clan (
+Actualizar
+).
+Soy Jefe de Grupo, ¿puedo validar aunque no sea el scouter de la sección?
+Sí. El Jefe de Grupo ve todas las secciones del grupo en
+Reporte Scouter
+y puede validar. Si el grupo no tiene jefe de sección registrado, las notificaciones te llegan a ti.
+¿Qué pasa si el joven cambia de sección antes de que yo valide?
+El pendiente deja de aparecer en su Reporte Scouter porque ahí solo se muestra lo de su sección actual, y el nuevo scouter tampoco lo recibe como notificación. Lo capturado no se borra, pero ya no se puede validar desde esa pantalla.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+26
+Categoría:
+Para Jefes de Grupo
+Fecha de alta:
+2026-10-11 14:12:48
+Vistas:
+17
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo registrar mis avances: progresión, especialidades e insignias
+Jefe de Grupo: cambiar de sección a un miembro
+Jefe de Grupo: aprobar o rechazar un cambio de grupo
+Jefe de Grupo: cargos y permisos — por qué no veo a mi grupo
+Jefe de Grupo: consultar a mis miembros y descargar reportes
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

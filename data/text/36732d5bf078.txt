@@ -1,0 +1,521 @@
+GUÍA OFICIAL HELP DESK ASMAC: Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Categoría: Pagos, Reinscripción, Becas y Eventos
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=31
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Eventos y pagos
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+La primera parte es para miembros y papás: cómo saber si tienes beca y qué hace SISAS con ella al pagar. La segunda es para Jefes de Grupo y cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia): cómo se crea una beca, cómo se asigna a un CUM y cómo se quita.
+Tres cosas distintas que bajan lo que pagas
+Quién la da
+Qué tienes que hacer
+Dónde se ve
+Beca
+Tu Jefe de Grupo, tu provincia o la oficina nacional la asignan a tu CUM desde el módulo
+Becas
+.
+Nada. Al pagar, SISAS la descuenta sola.
+En el
+Desglose
+del pago, renglón
+Descuento por Beca
+. Después, en
+Mis pagos
+, columna
+Descuento Por Beca
+.
+Cupón
+Es saldo a favor de un pago anterior (un depósito que sobró). Lo genera Tesorería y te llega por correo "Nuevo cupon SISAS".
+Escribir el código en
+IngresarCupón
+y dar
+APLICAR
+en la pantalla
+Sistema de pagos
+.
+Pestaña
+Cupones
+de
+Mis pagos
+. Ver guía "Mis pagos".
+Descuento de Registro Familiar
+SISAS, por el número de miembros de tu familia que registras juntos.
+Registrar a la familia por Registro Familiar; no pasa por el módulo Becas ni por cupón.
+Guía "Registro Familiar".
+Beca y cupón se pueden usar en el mismo pago. Dos becas no: si tienes más de una para el mismo concepto, SISAS aplica solo una (la más reciente que te asignaron).
+Parte 1: si eres miembro o papá/mamá
+Antes de empezar
+Las becas se asignan a tu CUM; no hay nada que solicitar dentro de SISAS. Si crees que te corresponde una, habla con tu Jefe de Grupo.
+Cada beca sirve para
+un
+tipo de pago: inscripción, reinscripción, reinscripción vencida, o un evento en particular. Una beca de reinscripción no sirve para un campamento, y al revés.
+Cada beca tiene una vigencia (del día X al día Y) y se usa
+una sola vez
+. Al confirmarse el pago queda marcada como utilizada.
+Cómo saber si tengo beca
+SISAS no tiene una pantalla "Mis becas". La beca aparece hasta el momento de pagar:
+Entra a pagar como siempre: reinscripción desde la notificación o
+Mis pagos
+→
+Pagar
+(guía "Mi reinscripción"), o el evento desde
+Mis eventos
+→
+¡Asistir!
+(guía "Pagar un evento").
+En la pantalla
+Sistema de pagos
+, revisa el cuadro
+Desglose
+:
+Subtotal
+,
+Descuento por Beca
+,
+Comisión Plazos Fijos
+y
+Total
+. Si
+Descuento por Beca
+es mayor a $0.00, tienes beca y ya está aplicada.
+En un evento con paquetes, el descuento también aparece como "Descuento:" en el paquete.
+Si quieres saberlo antes de llegar a pagar, pregúntale a tu Jefe de Grupo: él sí tiene el reporte
+Miembros con beca
+con tu CUM, el nombre de la beca, la vigencia y si ya se usó.
+En la reinscripción, la primera pantalla (
+Selecciona tu programa
+) muestra la cuota completa. Es normal: por eso el aviso rojo dice que elijas "Plan Anual" y des clic en siguiente para ver el descuento.
+Cómo se aplica
+No haces nada. SISAS busca, en el momento en que abres el pago, una beca asignada a tu CUM que:
+sea del mismo tipo que lo que vas a pagar (y, si es de evento, del mismo evento),
+esté vigente ese día,
+no se haya usado.
+Si la encuentra, resta el descuento: un porcentaje o una cantidad fija sobre la cuota nacional y, en reinscripción, también sobre la cuota de tu provincia. Lo que ves en
+Total a pagar
+ya trae el descuento. Si la beca cubre el 100 %, SISAS registra el pago directo sin mandarte a Conekta y te llega el correo "Se acreditó tu pago." con monto $0.00.
+Qué pasa después
+Al confirmarse el pago la beca queda marcada como utilizada y no se vuelve a aplicar. En
+Mis pagos
+el renglón muestra
+Importe Esperado
+(la cuota completa),
+Descuento Por Beca
+y
+Total Abonado
+(lo que pagaste). No llega un correo aparte por la beca; solo el comprobante normal del pago.
+Si pagas con referencia bancaria (SPEI de evento), la referencia vence el mismo día que vence la beca, aunque la fecha límite del evento sea después.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+Descuento por Beca
+dice $0.00 y me dijeron que tengo beca
+SISAS no encontró una beca que cumpla las tres condiciones: mismo tipo (reinscripción, inscripción, reinscripción vencida o ese evento en particular), vigente hoy, sin usar. Lo más común: la beca es de reinscripción pero tu membresía ya venció (eso es "reinscripción vencida", otro tipo de beca); la beca es de otro evento; la vigencia ya pasó o todavía no empieza; o te la asignaron a otro CUM.
+No pagues todavía. Pide a tu Jefe de Grupo que revise en
+Becas
+→ ojo (
+Ver detalle
+) la pestaña
+Becas Asignadas
+y el
+Periodo de la beca
+. Si la beca está mal armada, él o quien la creó la corrige y vuelves a entrar a pagar.
+Ya pagué completo y la beca no se aplicó
+El pago ya está confirmado; SISAS no devuelve dinero solo.
+Escribe al helpdesk de Soporte SISAS con tu CUM, el nombre de la beca, el concepto que pagaste, fecha y monto. Lo atiende el helpdesk de Soporte SISAS, máximo 48 horas; la diferencia se resuelve con un cupón de saldo a favor para tu siguiente pago, no con reembolso automático.
+En
+Mis pagos
+la columna
+Descuento Por Beca
+está en $0.00 pero sí me descontaron al pagar
+Solo pasa si el pago lo hizo otra persona desde su cuenta (tu Jefe de Grupo o un papá con otra cuenta): ese pago no aparece en tu lista.
+Pide a quien pagó que revise en su
+Mis pagos
+. Si pagaste tú y no cuadra, helpdesk con CUM y captura del Desglose.
+Me cobró una cantidad distinta a la que esperaba
+El descuento puede ser porcentaje o cantidad fija, y puede ser distinto para la parte nacional y la parte de provincia.
+Compara con lo que te dijo tu Jefe de Grupo. Si no cuadra, él lo ve en
+Ver detalle
+de la beca.
+Tengo dos becas y solo me aplicó una
+Las becas no se suman. SISAS toma la más reciente que te asignaron para ese tipo.
+Es el comportamiento normal. Si la que aplicó no es la que querías, tu Jefe de Grupo puede quitar la otra asignación.
+Cuando escribas al helpdesk incluye: tu CUM, el nombre de la beca, el concepto o evento, la pantalla y el monto que te cobró.
+Parte 2: si eres Jefe de Grupo o cargo equivalente
+Esta parte es para Jefes de Grupo y cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia). El módulo aparece en el menú de administración solo si tu rol lo tiene; si no lo ves, revisa la guía "Cargos y permisos".
+Antes de empezar
+Entra como administrador:
+Hola,
+→
+Administrador
+. En el menú de la izquierda aparece
+Becas
+.
+Solo puedes asignar becas a miembros que están a tu cargo (tu grupo si eres nivel grupo; tu sección si eres jefe de sección; tu provincia si eres nivel provincia).
+Solo quien creó una beca puede editarla o borrarla. Las demás las ves y, si están vigentes y tienen cupo, puedes asignarlas.
+Para asignar necesitas un Excel con los CUM (o el ID) de las personas. El formato se descarga desde la misma pantalla.
+Qué es una beca en SISAS
+Una beca es una regla de descuento con:
+Nombre de la beca
+,
+Descripción corta
+y
+Periodo de la beca
+(
+Del
+/
+al
+): fuera de esas fechas no se aplica aunque esté asignada.
+Un descuento nacional:
+% Descuento Nacional / Evento
+o
+Importe Nacional / Evento
+(uno u otro, lo eliges con el botón
+Descuento Nacional
+/
+Importe nacional
+). Si pones importe, el importe manda sobre el porcentaje.
+Un descuento de provincia (
+% Descuento provincia
+o
+Importe provincia
+), solo para inscripción y reinscripción. En becas de evento o curso estos campos se ocultan.
+Un cupo:
+Cantidad de jovenes
+(menores de 18) y
+Cantidad de adultos
+.
+Un
+Tipo
+: inscripción, reinscripción, evento, curso o reinscripción vencida. Si es evento o curso, además eliges cuál en
+Evento / Curso
+.
+Beneficiarios:
+Sección
+y
+Calidad
+. Y, desde la pestaña de edición, la zona: provincia, localidad o grupo. Sin zona, la beca es nacional (cualquier grupo la ve).
+Pasos
+Ver las becas
+Becas
+en el menú de administración. La tabla tiene
+Tipo
+,
+Nombre
+,
+Vigencia
+,
+Total de becas
+(cupo),
+Becas asignadas
+,
+Becas utilizadas
+y
+Becas no utilizadas
+.
+Por defecto solo se listan las becas cuya vigencia empieza en el último mes y termina dentro del próximo mes. Si no ves una beca, cambia
+Fecha Inicial
+y
+Fecha Final
+y da
+Buscar
+. También puedes filtrar por
+Nombre de Beca
+.
+En cada renglón: lápiz (
+Modificar
+) y bote (
+Eliminar
+) solo si tú la creaste; el ojo (
+Ver detalle
+) siempre. El bote no aparece si la beca ya tiene becas utilizadas.
+Ves las becas nacionales (sin zona), las de tu provincia, las de tu localidad y las de tu grupo. Una beca de otro grupo o de otra provincia no aparece.
+Crear una beca
+Crear beca
+(botón verde arriba a la derecha). Llena
+Nombre de la beca
+,
+Periodo de la beca
+(no acepta fechas anteriores a hoy),
+Descripción corta
+.
+Elige el descuento: marca
+Descuento Nacional
+y escribe el porcentaje en
+% Descuento Nacional / Evento
+, o marca
+Importe nacional
+y escribe la cantidad en
+Importe Nacional / Evento
+. Igual para provincia con
+Descuento provincia
+/
+Importe provincia
+.
+Cantidad de jovenes
+,
+Cantidad de adultos
+,
+Tipo
+y, si es evento o curso,
+Evento / Curso
+(solo salen eventos "Próximamente" o "Disponible").
+En
+Beneficiarios
+marca
+Sección
+(obligatorio) y
+Calidad
+(opcional).
+Siguiente
+→ "¿Deseas crear Beca?" →
+Aceptar
+. Sale "¡Beca creada exitosamente!" y regresa a la lista.
+Mensajes que te detienen: "El total de usuarios a asignar debe ser mayor a 0" (jóvenes + adultos = 0) y "El total de descuentos a asignar debe ser mayor a 0" (todos los descuentos en blanco o en 0).
+Limitar la beca a una provincia, localidad o grupo
+Al crearla, la beca queda nacional. Para acotarla:
+Lápiz (
+Modificar
+) → pestaña
+Beca Zonas
+. Elige
+Provincia
+(una a la vez) y da
+Agregar Provincia
+; si quieres bajar más, elige
+Localidad
+→
+Agregar Localidad
+, o
+Grupo
+→
+Agregar Grupo
+. Cada uno queda en su tabla con botón
+Eliminar
+.
+Mensajes: "Provinca Agregada Correctamente", "Ya tiene Asignada esa Provincia", "Seleccione sólo una Provincia a la vez" (y los equivalentes para localidad y grupo).
+La zona solo se revisa al
+asignar
+: filtra qué CUM del Excel se aceptan. Al pagar, SISAS ya no vuelve a revisar grupo, sección ni calidad; solo que la asignación exista, el tipo coincida y la beca esté vigente.
+Asignar la beca a miembros
+Becas
+→
+Asignar beca
+(botón amarillo). En
+Seleccionar...
+solo aparecen becas vigentes hoy, con cupo libre y de tu alcance.
+Descargar formato de beca
+te baja
+Formato.xlsx
+: columna A = CUM, columna B = ID del miembro; la primera fila es encabezado. Llena una de las dos columnas por persona.
+Adjuntar
+el .xlsx (si no es .xlsx: "El tipo de archivo requerido no es el correcto, por favor intentalo nuevamente") y
+Siguiente
+.
+Pantalla
+Becas / Asignar beca /
+: tabla con
+Cum
+,
+Id Dinámico
+,
+Nombre
+,
+Edad
+,
+Provincia
+,
+Grupo
+,
+Sección
+y
+Detalles
+. Cada persona trae una palomita verde (asignar) y una X (no asignar); da clic en la X para dejar a alguien fuera. Si en
+Detalles
+sale el icono de prohibido, pasa el mouse: ahí dice por qué no se puede.
+Aceptar
+. Sale "¡La carga masiva se ha realizado con éxito!" y regresa a la lista.
+Rechazar
+cancela todo y vuelve a la pantalla de carga.
+Motivos por los que una persona sale bloqueada en
+Detalles
+:
+Texto
+Qué significa
+"El usuario presenta inconcistencias en su información, favor de verificar datos del perfil"
+El CUM o ID no existe, está mal escrito, o la ficha no se pudo cargar (sin grupo o sección). Revisa el dato en el Excel.
+"El usuario no esta a tu cargo"
+Es de otro grupo (o de otra sección, si eres jefe de sección).
+"El grupo asignado al usuario  no forma parte de las condiciones de la beca."
+La beca tiene zona (provincia/localidad/grupo) y el miembro está en otra.
+"La sección a la que pertenece el usuario  no forma parte de las condiciones de la beca."
+Su sección no está en
+Sección
+de la beca.
+"El usuario ya cuenta con la beca asignada."
+Ya está en esta beca.
+"El usuario no cuenta con la calidad indicada para esta beca."
+La beca pide una
+Calidad
+que la persona no tiene en su currículum.
+Si al dar
+Aceptar
+sale "El número de becas asignadas a personas adultas excede  los limites de la beca" o "...personas jovenes...", quita gente con la X o sube el cupo editando la beca. "Ninguno de los aspirantes cumple con las condiciones de la beca" significa que todos salieron bloqueados.
+Ver a quién se le asignó y si ya la usó
+Ojo (
+Ver detalle
+) → pestaña
+Becas Asignadas
+: CUM, ID, Nombre, Provincia, Grupo, Sección. Solo ves a los miembros a tu cargo, aunque la beca sea nacional.
+Para el corte completo usa
+Reportes
+→
+Miembros con beca
+: filtra por CUM, nombre, grupo, sección,
+Tipo de Beca
+,
+Nombre Beca
+,
+Utilizada
+(sí/no/todos) y
+Vigencia de beca
+; se exporta a Excel con el botón de Excel. La columna
+Utilizada
+te dice si ya pagó con ella.
+Quitar una beca
+Para quitarle la beca a una persona: lápiz (
+Modificar
+) → pestaña
+Becas Asignadas
+→ bote en su renglón → "¿Estas seguro que deseas eliminar el registro?" →
+Aceptar
+. El bote no aparece si ya la usó.
+Para borrar la beca completa: bote en la lista → "¿Estas seguro que deseas eliminar el registro?" →
+Aceptar
+. Solo si tú la creaste y nadie la ha usado. Se borran también todas las asignaciones.
+Para que deje de aplicar sin borrarla: lápiz → cambia la fecha
+al
+del
+Periodo de la beca
+a una fecha pasada →
+Guardar Cambios
+("¿Deseas guardar los cambios?" → "¡Información guardada con éxito!").
+Qué pasa después
+Al asignar, el miembro no recibe correo ni notificación. Avísale tú.
+La beca se descuenta sola cuando el miembro abre el pago del concepto correspondiente dentro de la vigencia. Al confirmarse el pago, la asignación pasa a utilizada y cuenta en
+Becas utilizadas
+.
+Si el miembro no paga dentro del periodo, la beca no se aplica y la asignación se queda sin usar. Puedes extender la fecha
+al
+editando la beca.
+Editar una beca que ya tiene asignaciones no las toca: siguen ahí con las nuevas reglas de descuento y fechas.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+No aparece
+Becas
+en el menú de administración
+Tu rol no tiene el módulo, o tu cargo no está vigente.
+Revisa la guía "Cargos y permisos". Si tienes cargo vigente y aun así no sale, cierra sesión y vuelve a entrar; si sigue igual, helpdesk con tu CUM y tu cargo.
+La lista de
+Becas
+sale vacía o no está la que busco
+El filtro de fechas por defecto es un mes atrás y un mes adelante.
+Amplía
+Fecha Inicial
+y
+Fecha Final
+y da
+Buscar
+.
+En
+Asignar beca
+la beca no sale en
+Seleccionar...
+No está vigente hoy, ya no tiene cupo (asignadas = total), o no es de tu alcance.
+Ajusta
+Periodo de la beca
+o el cupo con el lápiz (si tú la creaste), o pide a quien la creó que lo haga.
+No veo el lápiz ni el bote en una beca
+No la creaste tú.
+Pide el cambio a quien la creó (provincia o nacional) o al helpdesk con el nombre de la beca.
+Un miembro dice que tiene beca y al pagar le sale $0.00 de descuento
+Revisa en orden: ¿aparece en
+Becas Asignadas
+? ¿Está dentro del
+Periodo de la beca
+? ¿El
+Tipo
+es el del pago que intenta (si su membresía ya venció, necesita beca de reinscripción vencida, no de reinscripción)? ¿Si es de evento, es el mismo evento? ¿Ya la usó (columna
+Utilizada
+en el reporte)?
+Corrige lo que falle y que vuelva a entrar al pago. Si todo está bien y aun así no aplica, helpdesk con CUM, nombre de la beca y captura del Desglose.
+El mismo miembro aparece en
+Becas Asignadas
+de dos becas
+Se le asignó en dos becas distintas. Al pagar solo se aplica una (la asignada más recientemente para ese tipo).
+Quita la que no corresponde con el bote de
+Becas Asignadas
+.
+El mismo CUM aparece dos veces en la misma beca
+Se cargó dos veces el Excel con el mismo CUM; SISAS no lo bloqueó.
+Quita una con el bote. Solo se consume una al pagar.
+"La beca se eliminó con éxito" pero la beca sigue en la lista
+La beca tiene pagos registrados y SISAS no pudo borrarla; el mensaje sale antes de intentarlo. Sus asignaciones y zonas sí se borraron.
+No vuelvas a intentar. Déjala con fecha vencida (paso 20) y, si quieres que desaparezca, helpdesk con el nombre de la beca.
+Pantalla de error al dar
+Siguiente
+en el Excel
+El archivo no tiene el formato (CUM en A, ID en B, encabezado en fila 1) o está abierto en otro programa.
+Vuelve a bajar
+Descargar formato de beca
+, pégale los datos y súbelo.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM, el nombre de la beca y el CUM del miembro. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿Puedo asignar una beca nacional a gente de mi grupo?
+Sí, si aparece en
+Seleccionar...
+(vigente, con cupo). Lo que no puedes es editarla.
+¿La beca se suma al descuento de Registro Familiar?
+Son mecanismos separados: Registro Familiar calcula su propio precio por familia fuera del módulo Becas. Si una persona tiene beca y entra por Registro Familiar, la beca no entra en ese cálculo.
+¿Puedo reutilizar una beca del año pasado?
+Puedes editarla y moverle el periodo y el cupo. Las asignaciones ya utilizadas no se reinician, así que a esas personas habría que asignarlas de nuevo. Es más limpio crear una nueva.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+31
+Categoría:
+Eventos y pagos
+Fecha de alta:
+2026-10-11 14:32:34
+Vistas:
+15
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo reinscribirme (renovar mi membresía)
+Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Mis pagos: ver lo que he pagado, comprobantes y facturas
+Cómo inscribirme y pagar un evento
+Jefe de Grupo: consultar a mis miembros y descargar reportes
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

@@ -1,0 +1,491 @@
+GUÍA OFICIAL HELP DESK ASMAC: Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)
+Categoría: Guía para Jefes de Grupo y Scouters (SISAS)
+Fuente: https://helpdesk.scouts.org.mx/knowledgebase.php?article=28
+
+Help Desk de la Asociacion de Scouts de Mexico
+Español
+English
+Español
+Español
+English
+Helpdesk Oficina Scout Nacional
+Help Desk de la Asociacion de Scouts de Mexico
+Base de Conocimientos (KB)
+Para Jefes de Grupo
+Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)
+Buscar
+artículos sugeridos de la base de conocimiento (KB):
+Jefe de Grupo: dar de alta miembros nuevos (Reg. Express y carga masiva)
+Esta guía es para Jefes de Grupo y cargos equivalentes (Subjefe de Grupo Administrativo, Presidente/Vicepresidente de Provincia).
+Con esto registras tú a una persona nueva en tu grupo sin que ella pase por el pre-registro. SISAS le genera su CUM al momento, le crea su cuenta y le manda por correo su ID y una contraseña temporal. Un alta de uno toma un minuto; un Excel de varios, unos minutos más la revisión. Cómo se registra una persona por su cuenta está en la guía
+Cómo crear mi cuenta en SISAS
+; aquí solo va tu parte.
+Hay dos maneras:
+Reg. Express
+(también aparece como
+Carga Rápida
+): un formulario, una persona a la vez, siempre en tu grupo.
+Carga masiva de usuarios
+: subes un Excel con varias personas de un mismo grupo.
+Usa el alta tú mismo cuando ya tienes los datos del nuevo a la mano (CURP, fecha de nacimiento, correo) y quieres que entre a SISAS ya con CUM. Si no tienes sus datos o el papá prefiere capturar él, mándalo al pre-registro de la pantalla de acceso; después tú validas su perfil igual.
+Antes de empezar
+Estar en la vista
+Administrador
+. Entras con tu cuenta normal, abres el menú
+Hola, [tu nombre]
+arriba a la derecha y haces clic en
+Administrador
+. Si ya estás ahí, el menú dice
+Mi Perfil
+.
+Tener el permiso. Si en
+Consulta de miembros
+no ves los botones
+Carga masiva de usuarios
+y
+Carga Rápida
+, o en el menú de la izquierda no aparece
+Reg. Express
+, tu rol no lo tiene: pídelo al helpdesk con tu CUM y tu cargo.
+Los datos de cada persona nueva: nombre, primer apellido, segundo apellido, fecha de nacimiento, estado de nacimiento, género, CURP y
+un correo propio que no esté en ninguna otra cuenta de SISAS
+. Si es menor, el correo puede ser del papá o la mamá, pero un correo sirve para una sola cuenta: dos hermanos necesitan dos correos. El correo del tutor para la autorización se captura después y ese sí puede repetirse.
+La persona debe tener al menos 6 años cumplidos.
+SISAS calcula la CURP con nombre, apellidos, fecha, género y estado y la compara con la que escribes. Si un dato no cuadra con el acta de nacimiento, no pasa.
+Para Carga masiva: Excel
+.xlsx
+(el.xls viejo no se acepta) armado con el formato que se descarga en la misma pantalla.
+Pasos
+A. Reg. Express (una persona)
+En la vista
+Administrador
+, en el menú de la izquierda haz clic en
+Reg. Express
+. También llegas desde
+Consulta de miembros
+con el botón
+Carga Rápida
+.
+Se abre
+Miembros / Fast Charge
+. Arriba ves
+Provincia
+,
+Localidad
+y
+Grupo
+: son los tuyos y no se pueden cambiar. La persona queda en tu grupo.
+Llena
+Nombre
+,
+Primer Apellido
+y
+Segundo Apellido
+(este último es opcional; si no tiene, déjalo vacío).
+Elige
+Fecha Nacimiento
+en el calendario.
+Escribe el
+Email
+de la persona (o del papá o mamá). Revísalo dos veces: a ese correo le llega su contraseña.
+Escribe la
+CURP
+completa (18 caracteres).
+Elige
+Estado
+(estado de nacimiento;
+EXTRANJERO
+si nació fuera de México) y
+Género
+.
+Haz clic en
+Cargar
+.
+Si algo no pasa, la misma pantalla te muestra arriba un recuadro
+Error de captura:..
+con el motivo (ver "Si algo falla"). Corrige y vuelve a
+Cargar
+.
+Si pasa, SISAS te lleva a
+Consulta de miembros / Carga masiva
+con una tabla de un renglón y una palomita verde en
+Valido
+. Revisa los datos.
+Haz clic en
+Cargar
+(arriba a la derecha). Verás "Se cargarán 1 registros."; haz clic en
+Aceptar
+.
+Verás "La carga se realizó con éxito.";
+Aceptar
+te lleva a
+Consulta de miembros / Confirmación de carga masiva
+, donde ya aparece el
+Id
+y el
+CUM
+nuevos. Anótalos o usa
+Exportar
+para bajarlos a Excel.
+Si quieres pagar la inscripción en ese momento, sigue en el paso C. Si no,
+Regresar
+.
+B. Carga masiva (varias personas por Excel)
+En la vista
+Administrador
+, entra a
+Consulta de miembros
+y haz clic en
+Carga masiva de usuarios
+.
+Se abre
+Miembros / Carga Masiva
+. Haz clic en
+Descargar formato
+: baja
+LayoutCargaMasiva.xlsx
+. Úsalo tal cual; no cambies el orden de las columnas ni el nombre de la hoja.
+Llena la hoja
+Hoja1
+, un renglón por persona desde la fila 2 (la fila 1 son los encabezados; la fila 2 trae un ejemplo que debes borrar o sobrescribir):
+Columna
+Qué va
+Ejemplo
+Email
+Correo de la persona, único en SISAS. Un renglón sin correo se ignora.
+ejemplo@dominio.com
+Nombre
+Nombre(s)
+MARÍA FERNANDA
+Primer apellido
+LÓPEZ
+Segundo apellido
+Opcional
+RUIZ
+Id nacionalidad
+Número: 1 Mexicana, 2 Extranjera
+1Fecha de nacimiento
+Celda con formato de fecha de Excel, no texto. No puede ser la fecha de hoy.
+15/03/2015
+Estado de nacimiento
+Número del estado, según la hoja
+Ayuda
+(1 Aguascalientes.. 9 Ciudad de México.. 33 Extranjero)
+9CURP
+18 caracteres
+LOFM150315MDFPZR01
+Id Genero
+Número: 1 Masculino, 2 Femenino
+2La hoja
+Ayuda
+del mismo archivo tiene las tres listas de números.
+4. En SISAS deja
+Tipo de Usuarios
+en
+Miembro Scout
+. La opción
+Invitado (Solo autorizado por la OSN)
+no es para altas de grupo.
+5. Elige
+Provincia
+,
+Localidad
+y
+Grupo
+. Todas las personas del Excel quedan en ese grupo; si tienes nuevos de dos grupos, son dos archivos.
+6. Haz clic en
+Adjuntar
+, elige tu.xlsx y luego
+Siguiente
+.
+7. Espera. SISAS revisa el archivo renglón por renglón y durante ese rato la pantalla no cambia.
+No vuelvas a dar clic en Siguiente ni recargues
+: con archivos grandes puede tardar varios minutos y un segundo envío solo le carga más trabajo a SISAS. Sube lotes de pocas personas.
+8. Se abre
+Consulta de miembros / Carga masiva
+con la tabla de lo que leyó. Cada renglón trae en
+Valido
+una palomita verde (pasa) o una X roja (no pasa). Pasa el ratón sobre un renglón rojo: el globo te dice qué está mal, por ejemplo "Ya existe un registro con el valor  CURP" o "El CURP no coincide.".
+9. Si hay renglones rojos, decide:
+Cargar
+da de alta solo los verdes y deja fuera los rojos, o
+Regresar
+para corregir el Excel y volverlo a subir. Si los corriges después, sube un Excel solo con los que faltaron; los que ya entraron saldrán como "Ya existe".
+10. Haz clic en
+Cargar
+. Verás "Se cargarán N registros.";
+Aceptar
+.
+11. Verás "La carga se realizó con éxito." y, con
+Aceptar
+, la pantalla
+Consulta de miembros / Confirmación de carga masiva
+con
+Id
+,
+CUM
+y datos de cada persona que entró. Haz clic en
+Exportar
+y guarda ese Excel: es tu lista de CUM nuevos.
+C. Pagar la inscripción de los nuevos (opcional, lo puedes hacer después)
+Puedes pagar tú la inscripción de varios en una sola ficha, o dejar que cada persona pague la suya desde su cuenta (le aparece al terminar su registro, ver guía
+Cómo reinscribirme (renovar mi membresía)
+para los métodos de pago).
+Desde la pantalla de confirmación:
+En
+Consulta de miembros / Confirmación de carga masiva
+, marca a quién vas a pagar. La casilla de la cabecera
+Haz Click Aquí para Confirmar
+los marca a todos.
+Haz clic en
+Inscribir
+. Confirma "¿Está seguro de continuar con los usuarios seleccionados?" con
+Aceptar
+.
+Sigue en la ficha de pago múltiple con el concepto de inscripción ya elegido.
+Más tarde, desde el menú:
+En la vista
+Administrador
+, abre
+Pagos
+en el menú de la izquierda y haz clic en
+Consulta pago alta masiva
+.
+En
+Consulta de miembros (Alta masiva)
+haz clic en
+Filtros
+, elige
+Sección
+o escribe
+CUM
+o
+Nombre
+, y
+Buscar
+. Como Jefe de Grupo solo ves tu grupo.
+La tabla trae
+Id
+,
+CUM
+,
+Nombre
+,
+Provincia
+,
+Localidad
+,
+Grupo
+,
+Sección
+y
+Estatus
+. Marca las casillas de los que vas a pagar.
+Haz clic en
+Continuar con Tipo de Pago
+y confirma "¿Está seguro de continuar con los usuarios seleccionados?" con
+Aceptar
+.
+En
+Pago/Alta Masiva-Rápida
+elige
+Tipo de Pago
+,
+Concepto
+(inscripción) y
+Plan
+(
+Anual
+). Haz clic en
+Continuar
+.
+Verás "Continuarás con N usuarios.";
+Aceptar
+. Luego "Para continuar con el proceso elije el método de pago";
+Ir al pago
+te lleva a la pantalla de pago, igual que un pago de evento (guía
+Cómo inscribirme y pagar un evento
+).
+Qué pasa después
+En cuanto das
+Cargar
+, SISAS crea para cada persona su CUM (clave de provincia + año + sección por edad + consecutivo), su cuenta y su ficha con los datos que capturaste, la pone en tu grupo y en la sección que le toca por edad. Si tiene 18 o más, además queda con el cargo de Aspirante.
+A cada persona le llega el correo
+"Pre registro ASMAC"
+de
+Notificaciones SISAS
+(postmaster@sisas.scouts.org.mx), al correo que capturaste, con su
+ID Miembro
+y una
+Contraseña
+temporal. Sale en el momento; normalmente tarda unos minutos. Dile al papá o a la persona que revise spam.
+Lo que le dices al nuevo (o al papá):
+Entra a SISAS con el
+ID Miembro
+del correo (o con su CUM), su
+Primer Apellido
+y la contraseña del correo.
+SISAS le pide crear su contraseña definitiva y luego le muestra
+Datos generales
+ya llenos con lo que tú capturaste. Provincia, localidad y grupo vienen bloqueados; lo demás lo puede corregir. Tiene que adjuntar el archivo de la CURP.
+Si es menor de 18, sigue
+Datos del tutor
+(nombre, teléfono y un correo distinto del padre, madre o tutor); al tutor le llega el correo
+"Contraseña de autorización ASMAC"
+y el registro se detiene hasta que él lo complete. Si es mayor, genera su contraseña de autorización.
+Al terminar ve "Estamos validando tu información.." y a ti te llega la notificación para validar su perfil. Hasta que no lo valides, no avanza al pago ni a la credencial.
+No le digas que use "Tengo CUM pero no tengo una cuenta"
+: su cuenta ya existe. Ese botón solo le sirve si el correo nunca llegó o quedó mal escrito (ver "Si algo falla").
+La inscripción se puede pagar antes o después de que valides el perfil; la ficha múltiple no revisa eso. Hasta que no esté pagada, la persona no tiene vigencia ni credencial.
+Si algo falla
+Lo que ves
+Qué significa
+Qué hacer
+"Error de captura: Ya existe un registro con el valor  Email" (o el renglón rojo con ese texto)
+Ese correo ya está en otra cuenta de SISAS: otro hijo, el propio papá, o un registro anterior de esta misma persona.
+Usa otro correo. Si sospechas que la persona ya tiene cuenta, búscala en
+Consulta de miembros
+por nombre antes de darla de alta otra vez.
+"Error de captura: Ya existe un registro con el valor  CURP"
+Esa CURP ya está en SISAS. La persona ya fue dada de alta (quizá en otro grupo o por pre-registro).
+No la des de alta de nuevo. Búscala en
+Consulta de miembros
+; si está en otro grupo, que pida cambio de grupo (guía
+Cómo solicitar un cambio de grupo
+). Si no la encuentras, helpdesk con nombre completo y CURP: puede estar eliminada o en otra provincia.
+"Error de captura: El CURP no coincide."
+La CURP no corresponde a la fecha de nacimiento, género o estado que capturaste (SISAS compara esos datos, no consulta RENAPO).
+Revisa los tres datos contra la CURP impresa. La fecha al revés (mes/día) y el estado equivocado son lo más común.
+"Error de captura: El usuario debe tener 6 años 1 día"
+La persona tiene menos de 6 años.
+No se puede registrar todavía.
+"Error de captura: Los datos no cumplen con el formato correcto DD/MM/AAAA FechaNacimiento"
+En el Excel la fecha venía como texto o vacía (SISAS la lee como hoy).
+En Excel pon la celda en formato Fecha y escribe la fecha otra vez.
+"Error de captura: Debe ingresar un valor númerico Nacionalidad" / ".. EstadoNacimiento"
+En el Excel escribiste el nombre ("Mexicana", "Jalisco") en vez del número.
+Usa los números de la hoja
+Ayuda
+.
+"Error de captura: No hay registros con este parametro. Genero" (o Nacionalidad / EstadoNacimiento)
+Pusiste un número que no existe en la lista.
+Corrige con la hoja
+Ayuda
+: género 1 o 2, nacionalidad 1 o 2, estado 1 a 33.
+"Error de captura: El campo es obligatorio. Nombre" (o PrimerApellido / CURP)
+Celda vacía.
+Llénala.
+"Favor de capturar su Email correctamente." / "Favor de capturar su CURP" / "Favor de capturar su Nombre Completo" / "Favor de capturar su Primer Apellido" / "Favor de capturar la Fecha de Nacimiento"
+Un campo obligatorio de Reg. Express llegó vacío.
+Llénalo y vuelve a
+Cargar
+.
+"El formato que intentas agregar no es compatible"
+Subiste un.xls (Excel viejo).
+Guarda el archivo como.xlsx.
+"El tipo de archivo requerido no es el correcto, por favor intentalo nuevamente"
+No es un.xlsx (CSV, PDF, etc.).
+Usa el formato descargado.
+"Es necesario seleccionar un archivo."
+Diste
+Siguiente
+sin adjuntar.
+Adjunta el.xlsx.
+"Para avanzar debes seleccionar Provincia, Localidad y Grupo."
+Falta alguno de los tres.
+Elígelos.
+Diste
+Siguiente
+y no pasa nada después de varios minutos
+SISAS sigue leyendo el archivo, o se cayó a la mitad. El error no se muestra en pantalla.
+Espera 5 minutos sin recargar. Luego abre
+Consulta de miembros
+y busca por nombre si alguno ya entró. Si no, divide el Excel en lotes más chicos y súbelos uno por uno. Si vuelve a fallar, helpdesk con el archivo.
+La tabla sale vacía o faltan renglones que sí estaban en el Excel
+Renglones sin correo se ignoran; SISAS se detiene tras cinco renglones seguidos sin correo. Un renglón con un dato que no pudo leer se salta sin avisar.
+Revisa que todos tengan correo y que no haya renglones vacíos en medio. Vuelve a subir solo los que faltaron.
+"Los registros no cumplen con los datos mínimos y/o correctos para una carga masiva o ya se encuentran registrados."
+Todos los renglones salieron rojos.
+Corrige el Excel con lo que dice cada globo y súbelo de nuevo.
+"Ocurrio un error, consulta al administrador del sistema.." al dar
+Cargar
+Se perdió la lista (por ejemplo, tardaste mucho entre
+Siguiente
+y
+Cargar
+y la sesión caducó) o falló el alta.
+Vuelve a subir el Excel. Si el error se repite, helpdesk con la hora y el archivo.
+Dio "La carga se realizó con éxito." pero la confirmación sale vacía o con menos personas
+Para alguna persona el alta falló por dentro y SISAS no lo avisa.
+Búscala en
+Consulta de miembros
+. Si no está, inténtalo de nuevo con ella; si vuelve a fallar, helpdesk con sus datos.
+Al nuevo no le llegó "Pre registro ASMAC"
+Spam, o el correo quedó mal capturado.
+Que busque en spam. Si no está, dos salidas: (1) en la pantalla de acceso,
+He olvidado mi contraseña
+con su CUM y primer apellido: le llega "Reestablecer contraseña" al correo que capturaste; (2) si el correo quedó mal escrito,
+Tengo CUM pero no tengo una cuenta
+con su CUM, primer apellido y el correo correcto: SISAS cambia el correo y le manda otra contraseña. Esta segunda opción solo funciona una vez; si después sale "Este CUM ya ha iniciado el proceso de obtención de cuenta..", helpdesk con el CUM y el correo correcto.
+"Debes seleccionar al menos un registro."
+Diste
+Inscribir
+o
+Continuar con Tipo de Pago
+sin marcar a nadie.
+Marca las casillas.
+"No es posible realizar esta operación, la vigencia de la membresia no corresponde al concepto seleccionado o periodo de pago"
+Entre los marcados hay alguien que ya tiene vigencia (no es inscripción) o mezclaste conceptos.
+Marca solo a los nuevos sin pago y elige el concepto de inscripción.
+"Debes seleccionar un concepto de pago." / "Debes seleccionar un plan de pago."
+Falta elegir
+Concepto
+o
+Plan
+.
+Elígelos.
+"Alguno de tus cargos no cuenta con la asignación del nivel en el catalogo de roles, contacta por favor con Soporte en la OSN"
+Tu cargo no tiene nivel (grupo/provincia/nacional) asignado en SISAS.
+Helpdesk con tu CUM y cargo.
+Cuando escribas al helpdesk incluye: tu CUM y grupo, qué camino usaste (Reg. Express o carga masiva), el mensaje exacto, y los datos de la persona (nombre completo, CURP, correo capturado). Si fue Excel, adjúntalo.
+Si nada de esto lo resuelve, escribe al helpdesk de Soporte SISAS con tu CUM y el mensaje exacto que te salió. Responde en máximo 48 horas.
+Preguntas frecuentes
+¿El nuevo tiene que hacer algo con "Tengo CUM pero no tengo una cuenta"?
+No. Tú ya le creaste la cuenta; solo entra con el ID y la contraseña del correo. Ese botón es para quien tiene CUM de antes y nunca ha entrado.
+¿Quién paga la inscripción?
+Cualquiera de los dos. Tú puedes pagar a varios en una sola ficha (paso C) o cada persona paga la suya desde su cuenta al terminar su registro.
+Me equivoqué en un dato (fecha, CURP, correo). ¿Lo corrijo yo?
+El correo lo puede corregir la propia persona con
+Tengo CUM pero no tengo una cuenta
+(una sola vez). Fecha y CURP las puede corregir ella en
+Datos generales
+al entrar por primera vez. Si el error ya pasó la validación, helpdesk con el CUM y el dato correcto.
+¿Puedo dar de alta a alguien de otro grupo?
+Con Reg. Express no: siempre cae en tu grupo. Con carga masiva eliges el grupo, pero solo entre los que tu cargo alcanza.
+¿Le ha sido útil este artículo?
+Sí
+|
+No
+Detalles del articulo
+ID de artículo:
+28
+Categoría:
+Para Jefes de Grupo
+Fecha de alta:
+2026-10-11 14:12:48
+Vistas:
+12
+valoración                                         (Votar):
+(0)
+Volver atrás
+Artículos relacionados
+Cómo crear mi cuenta en SISAS (y qué hacer si no llega el correo de confirmación)
+Jefe de Grupo: inscribir y pagar un evento por varios miembros
+Becas y descuentos: cómo se asignan y cómo se aplican al pagar
+Jefe de Grupo: consultar a mis miembros y descargar reportes
+Cómo completar o corregir mis datos (mi ficha al 100 %)
+Powered by
+Help Desk Software
+HESK
+More IT firepower? Try
+SysAid

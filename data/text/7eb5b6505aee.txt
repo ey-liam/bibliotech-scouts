@@ -1,0 +1,20 @@
+DOCUMENTO OFICIAL ASMAC: Plantilla P10.4 — Anexo Horizontal para Ficha de Especialidad
+Archivo: P10.4_ESPECIALIDAD_Anexo_Horizontal.pdf
+Fecha de publicación en RECME: 23 Septiembre 2026
+Categoría RECME: Plantillas para FAES y especialidades
+
+[CAMPOS EDITABLES DEL FORMULARIO]
+
+    Cuadro de lista 6: 01
+    Cuadro de lista 7: 01
+
+--- Página 1 ---
+
+EJE TEMÁTICO
+TÍTULO
+INFORMACIÓN ADICIONAL
+FICHA DE ESPECIALIDAD SCOUT
+ ANEXO
+HOJA
+DE
+ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C., COMISIÓN NACIONAL DE PROGRAMA DE JÓVENES
