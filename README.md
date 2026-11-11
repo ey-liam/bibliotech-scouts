@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 03/11/2026 • **Versión:** BETA V5 - 2.0 Mobile (10/11/2026)  
+**Base de datos:** 03/11/2026 • **Versión:** BETA V6 - 2.1.0 Mobile (10/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -12,6 +12,23 @@
 **BiblioTech Scout** es una plataforma web pública, personal y sin fines de lucro diseñada para que niñas, niños, adolescentes, jóvenes y adultos de toda la membresía cuenten con acceso directo, ágil y de fácil comprensión a la documentación oficial de la **Asociación de Scouts de México, A.C. (ASMAC)** y de **World Scouting (WOSM)**.
 
 Todas las respuestas y resúmenes se fundamentan exclusivamente en los documentos oficiales, manuales, reglamentos, libros de la Colección Biblioteca del Centenario, revistas, formatos editables, comunicados nacionales y portales institucionales respaldados en la base de datos local (con corte al **03/11/2026**), priorizando siempre las ediciones vigentes (2024–2026).
+
+---
+
+## 2. Novedades de la Versión V6 (Edición "Game Feel & UI Unificada")
+
+- **Game Feel y Físicas Elásticas Spring:** Respuesta táctil y micro-interacciones suaves al presionar botones, fichas y tarjetas con transiciones cúbicas orgánicas.
+- **Lienzo Ambiental de Partículas (Fogata Scout & Polvo Cósmico):** Luciérnagas doradas en el inicio y biblioteca que transicionan suavemente a nebulosa cian/magenta interactiva en la sección de Agentes de Cambio.
+- **Modo Campamento / Visión Nocturna:** Filtro ámbar/rojo de baja luminosidad con fondo negro OLED puro (`#000000`) para uso en campo y campamentos nocturnos sin encandilar ni desgastar la batería.
+- **Fotos Flotantes 3D con Reflejo Dinámico (Glare):** Perspectiva orbital tridimensional y modo Spotlight al toque.
+- **Dock Inferior Unificado de Cristal:** Barra de navegación rápida móvil y tablet integrada con acceso a Inicio, Consulta, Biblioteca, Agentes y Mi Mochila Scout.
+- **Herramientas de Calidad de Vida (QoL) en el Lector:**
+  - **Narrador de Voz Offline (TTS):** Lectura en voz alta en español para estudiar manuales con manos libres.
+  - **Mi Mochila Scout:** Guardado de manuales y carnets favoritos en un toque con acceso persistente.
+  - **Notas de Campo:** Anotaciones personales directas en cada documento.
+  - **Buscador Interno Inline:** Búsqueda y resaltado fluido de términos dentro del documento.
+  - **Gesto Swipe-Down:** Deslizar hacia abajo para cerrar el visor en móviles.
+- **Resiliencia de PDF y Carga Rápida:** Fallback automático a modo lectura estructurada y service worker PWA offline (`sw.js`).
 
 ---
 
@@ -131,7 +148,7 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 - **«Abrir en pestaña» visual para PDFs:** Al pulsar «Abrir en pestaña» en un PDF, ya no se muestra texto plano simplificado; ahora abre la visualización completa del documento original con todas sus páginas y formatos.
 - **Descripción de contenido en cada archivo:** Cada documento incluye un resumen y descripción detallada de su contenido dentro del lector interactivo y como extracto de 2 líneas en las tarjetas de la Biblioteca Scout.
 - **Barra de herramientas y controles centrados:** El botón de cierre del modal se trasladó a la fila superior junto al título para evitar que se desplace debajo de la botonera; la barra de acciones se mantiene en una sola fila desplazable sin cortes. Se alinearon y nivelaron los selectores de búsqueda y filtros de estantes en la Biblioteca Scout.
-- **Rediseño cósmico interactivo de Agentes de Cambio.MX:** Rediseño completo inspirado en la plataforma oficial del CNRC para la Red Nacional de Caminantes, con fondo estelar cósmico, bordes cian neón, esquineros de carreras a cuadros, estrellas ✦, los 4 Ejes Temáticos con insignias en alta resolución (*Salud y Bienestar, Habilidades para la Vida, Paz y Participación Comunitaria, Medio Ambiente y Sustentabilidad*), los cuatro pilares de la educación y convocatoria oficial de registro de proyectos.
+- **Rediseño cósmico interactivo de Agentes de Cambio.MX:** Rediseño completo inspirado en la plataforma oficial del CNRC para la Red Nacional de Caminantes, con fondo estelar cósmico, bordes cian neón, esquineros de carreras a cuadros, estrellas vectoriales SVG, los 4 Ejes Temáticos con insignias en alta resolución (*Salud y Bienestar, Habilidades para la Vida, Paz y Participación Comunitaria, Medio Ambiente y Sustentabilidad*), los cuatro pilares de la educación y convocatoria oficial de registro de proyectos.
 - **Banco de preguntas ampliado:** Nuevas respuestas fundamentadas sobre proyectos scout, registro en Agentes de Cambio.MX, funciones de la Red Nacional de Caminantes y del CNRC.
 - **Instagram del creador:** Enlace directo verificado a [@liaadurg3](https://www.instagram.com/liaadurg3/) tanto en la sección Propósito / Creador como en el pie de página.
 

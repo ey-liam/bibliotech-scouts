@@ -7973,3 +7973,529 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
     align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   BIBLIOTECH SCOUT V6 — GAME FEEL, FOTOS FLOTANTES 3D & UI UNIFICADA
+   Autor: Liam Durán (ey-liam)
+   ========================================================================== */
+
+:root {
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --glass-surface: rgba(15, 23, 42, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.28);
+  --dock-height: 68px;
+}
+
+/* Lienzo ambiental de particulas (Luciernagas Scout / Polvo Cosmico) */
+#btAmbientCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+  transition: opacity 0.6s ease;
+}
+
+/* ==========================================================================
+   MODO CAMPAMENTO / VISION NOCTURNA (OLED + AMBAR ASTRONOMICO)
+   ========================================================================== */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-camp-mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  cursor: pointer;
+  transition: transform 0.25s var(--spring-bounce), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-camp-mode:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #facc15;
+}
+
+.btn-camp-mode:active {
+  transform: scale(0.92);
+}
+
+html[data-camp-mode="true"] .btn-camp-mode {
+  background: rgba(255, 120, 0, 0.2);
+  border-color: #ff7700;
+  color: #ff9933;
+  box-shadow: 0 0 12px rgba(255, 120, 0, 0.35);
+}
+
+html[data-camp-mode="true"] {
+  --bg-primary: #000000 !important;
+  --bg-secondary: #070300 !important;
+  --glass-surface: rgba(18, 8, 0, 0.92) !important;
+  --glass-border: rgba(255, 138, 0, 0.28) !important;
+  --text-primary: #ffb366 !important;
+  --text-secondary: #cc7a29 !important;
+  --accent-primary: #ff7700 !important;
+  background-color: #000000 !important;
+  color: #ffb366 !important;
+}
+
+html[data-camp-mode="true"] body {
+  background: #000000 !important;
+  color: #ffb366 !important;
+}
+
+html[data-camp-mode="true"] .site-header,
+html[data-camp-mode="true"] .main-header,
+html[data-camp-mode="true"] .site-footer,
+html[data-camp-mode="true"] .modal-container,
+html[data-camp-mode="true"] .bt-unified-dock,
+html[data-camp-mode="true"] .service-info-card,
+html[data-camp-mode="true"] .about-card,
+html[data-camp-mode="true"] .scout-sec-card,
+html[data-camp-mode="true"] .book-card {
+  background: rgba(12, 5, 0, 0.94) !important;
+  border-color: rgba(255, 120, 0, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 120, 0, 0.15) inset !important;
+}
+
+html[data-camp-mode="true"] a,
+html[data-camp-mode="true"] h1,
+html[data-camp-mode="true"] h2,
+html[data-camp-mode="true"] h3,
+html[data-camp-mode="true"] strong {
+  color: #ffcc80 !important;
+}
+
+html[data-camp-mode="true"] img,
+html[data-camp-mode="true"] .book-cover,
+html[data-camp-mode="true"] iframe {
+  filter: sepia(100%) hue-rotate(-35deg) saturate(180%) brightness(0.78) contrast(1.15);
+  transition: filter 0.4s ease;
+}
+
+/* ==========================================================================
+   REDISEÑO DE FOTOS FLOTANTES (CAPSULAS HOLOGRAFICAS / POLAROID 3D)
+   ========================================================================== */
+.floating-photo-stage {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.floating-photo,
+.hero-floating-card,
+.about-floating-photo,
+.adc-floating-badge {
+  position: relative;
+  border-radius: 22px 28px 20px 26px;
+  padding: 10px 10px 14px 10px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(15, 23, 42, 0.68));
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 20px 45px -12px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 12px 24px -8px rgba(56, 189, 248, 0.18);
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  animation: btOrbitalFloat var(--float-duration, 7.5s) ease-in-out infinite alternate;
+  animation-delay: var(--float-delay, 0s);
+  transition:
+    transform 0.45s var(--spring-bounce),
+    box-shadow 0.45s var(--spring-smooth),
+    border-color 0.35s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* Cinta translucida superior tipo memoria de campamento */
+.floating-photo::before,
+.hero-floating-card::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 54px;
+  height: 16px;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.35), rgba(250, 204, 21, 0.35));
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  backdrop-filter: blur(6px);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Reflejo especular dinamico (Glare) que sigue al dedo/cursor */
+.floating-photo::after,
+.book-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    360px circle at var(--glare-x, 50%) var(--glare-y, 30%),
+    rgba(255, 255, 255, 0.22),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.floating-photo:hover::after,
+.floating-photo.is-tilting::after,
+.book-card:hover::after,
+.book-card.is-tilting::after {
+  opacity: 1;
+}
+
+.floating-photo img,
+.hero-floating-card img {
+  border-radius: 14px 18px 12px 16px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(18px);
+  transition: transform 0.45s var(--spring-smooth);
+}
+
+.floating-photo:hover,
+.floating-photo:focus-visible,
+.floating-photo.is-spotlight {
+  z-index: 30 !important;
+  border-color: rgba(56, 189, 248, 0.75);
+  box-shadow:
+    0 30px 65px -10px rgba(0, 0, 0, 0.7),
+    0 0 28px rgba(56, 189, 248, 0.38);
+  animation-play-state: paused;
+  transform:
+    perspective(900px)
+    rotateX(var(--rx, 0deg))
+    rotateY(var(--ry, 0deg))
+    translateY(-10px)
+    scale(1.06);
+}
+
+@keyframes btOrbitalFloat {
+  0% {
+    transform: translate3d(0px, 0px, 0px) rotate(var(--rot-start, -2.5deg));
+  }
+  50% {
+    transform: translate3d(var(--drift-x, 6px), -12px, 12px) rotate(var(--rot-mid, 1.5deg));
+  }
+  100% {
+    transform: translate3d(calc(var(--drift-x, 6px) * -0.8), 6px, 4px) rotate(var(--rot-end, 3deg));
+  }
+}
+
+/* ==========================================================================
+   GAME FEEL EN BOTONES, PESTAÑAS Y TARJETAS DE LIBROS
+   ========================================================================== */
+button,
+.btn,
+.filter-chip,
+.shelf-tab,
+.nav-link,
+.adc-axis-card {
+  transition:
+    transform 0.28s var(--spring-bounce),
+    box-shadow 0.28s var(--spring-smooth),
+    background-color 0.2s ease,
+    border-color 0.2s ease !important;
+  will-change: transform;
+}
+
+button:active,
+.btn:active,
+.filter-chip:active,
+.shelf-tab:active,
+.adc-axis-card:active {
+  transform: scale(0.94) translateY(1px) !important;
+}
+
+.book-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.42s var(--spring-bounce),
+    box-shadow 0.42s var(--spring-smooth),
+    border-color 0.3s ease !important;
+  animation: btCardCascadeIn 0.5s var(--spring-smooth) backwards;
+  animation-delay: calc(var(--card-index, 0) * 28ms);
+}
+
+.book-card:hover {
+  transform:
+    perspective(800px)
+    rotateX(var(--rx, 2deg))
+    rotateY(var(--ry, -2deg))
+    translateY(-7px)
+    scale(1.02);
+  z-index: 5;
+}
+
+@keyframes btCardCascadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   DOCK FLOTANTE INFERIOR UNIFICADO (WEB MOVIL & ANDROID APP)
+   ========================================================================== */
+.bt-unified-dock {
+  position: fixed;
+  bottom: max(12px, env(safe-area-inset-bottom, 12px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 950;
+  display: none;
+  align-items: center;
+  justify-content: space-around;
+  gap: 4px;
+  padding: 6px 10px;
+  width: min(94vw, 460px);
+  height: var(--dock-height);
+  background: rgba(10, 16, 31, 0.84);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  box-shadow:
+    0 18px 40px -8px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 0 24px rgba(56, 189, 248, 0.16);
+}
+
+@media (max-width: 920px) {
+  .bt-unified-dock {
+    display: flex;
+  }
+  body {
+    padding-bottom: calc(var(--dock-height) + 28px) !important;
+  }
+}
+
+.bt-dock-item {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 54px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: rgba(226, 232, 240, 0.72);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  padding: 0 6px;
+  text-decoration: none;
+}
+
+.bt-dock-item svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s var(--spring-bounce), color 0.25s ease;
+}
+
+.bt-dock-item.is-active {
+  color: #38bdf8;
+  background: radial-gradient(circle at 50% 25%, rgba(56, 189, 248, 0.22), rgba(56, 189, 248, 0.05) 75%);
+}
+
+.bt-dock-item.is-active svg {
+  transform: translateY(-2px) scale(1.12);
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+}
+
+.bt-dock-badge {
+  position: absolute;
+  top: 4px;
+  right: 16%;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: #ffffff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.6);
+}
+
+/* ==========================================================================
+   BARRA DE CONTROLES QOL EN EL LECTOR (AUDIO TTS, PIN MOCHILA, NOTAS, BUSCADOR)
+   ========================================================================== */
+.sheet-drag-handle {
+  width: 44px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  margin: 6px auto 4px auto;
+  cursor: grab;
+}
+
+.bt-reader-qol-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(15, 23, 42, 0.78);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.bt-qol-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f8fafc;
+  cursor: pointer;
+}
+
+.bt-qol-pill.is-active {
+  background: rgba(56, 189, 248, 0.22);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.modal-search-inline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.modal-search-inline input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f8fafc;
+  font-size: 0.78rem;
+  width: 130px;
+  padding: 4px;
+}
+
+.btn-modal-search-arrow {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.btn-modal-search-arrow:hover {
+  color: #38bdf8;
+}
+
+.modal-search-count {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0 4px;
+}
+
+mark.doc-highlight {
+  background: rgba(250, 204, 21, 0.35);
+  color: #fef08a;
+  padding: 1px 4px;
+  border-radius: 4px;
+  border-bottom: 2px solid #facc15;
+}
+
+/* Caja de notas de campo */
+.modal-field-note-box {
+  padding: 10px 14px;
+  background: rgba(15, 23, 42, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.modal-field-note-box textarea {
+  width: 100%;
+  min-height: 70px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #f8fafc;
+  font-family: inherit;
+  font-size: 0.82rem;
+  resize: vertical;
+  outline: none;
+}
+
+.modal-field-note-box textarea:focus {
+  border-color: #38bdf8;
+}
+
+.field-note-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.btn-field-note-save {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-field-note-cancel {
+  background: rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.76rem;
+  cursor: pointer;
+}
