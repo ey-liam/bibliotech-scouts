@@ -9379,7 +9379,6 @@ html[data-camp-mode="true"] {
   --text-secondary: #cbd5e1 !important;
   --text-muted: #94a3b8 !important;
   --text-main: #ffffff !important;
-  --scout-navy: #ffffff !important;
   --accent-primary: #38bdf8 !important;
   background-color: #070514 !important;
   color: #ffffff !important;
@@ -9431,7 +9430,16 @@ html[data-camp-mode="true"] .nav-toggle {
   color: #ffffff !important;
 }
 
-html[data-camp-mode="true"] .nav-toggle span {
+html[data-camp-mode="true"] .nav-toggle-label {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .nav-toggle-icon {
+  background: transparent !important;
+}
+
+html[data-camp-mode="true"] .nav-toggle-icon span {
   background: #ffffff !important;
 }
 
@@ -9668,8 +9676,35 @@ html[data-camp-mode="true"] .shelf-pill[aria-selected="true"] {
   box-shadow: 0 4px 18px rgba(56, 189, 248, 0.45) !important;
 }
 
+/* BADGES E INSIGNIAS DE ARCHIVOS Y ESTANTES (ALTO CONTRASTE) */
+html[data-camp-mode="true"] .badge-ext,
+html[data-camp-mode="true"] .source-pill-ext {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 800 !important;
+}
+
+html[data-camp-mode="true"] .badge-year,
+html[data-camp-mode="true"] .source-pill-year {
+  background: rgba(2, 132, 199, 0.22) !important;
+  color: #7dd3fc !important;
+  border: 1px solid rgba(2, 132, 199, 0.45) !important;
+  font-weight: 800 !important;
+}
+
+html[data-camp-mode="true"] .badge-sec {
+  background: rgba(168, 85, 247, 0.22) !important;
+  color: #d8b4fe !important;
+  border: 1px solid rgba(168, 85, 247, 0.45) !important;
+  font-weight: 800 !important;
+}
+
+/* BOTONES DE ACCIÓN DE DOCUMENTOS (#biblioteca) */
+html[data-camp-mode="true"] .btn-doc-view,
 html[data-camp-mode="true"] .btn-open-read,
 html[data-camp-mode="true"] .doc-btn-read,
+html[data-camp-mode="true"] .book-read-btn,
 html[data-camp-mode="true"] .book-card .btn,
 html[data-camp-mode="true"] .book-card a.btn,
 html[data-camp-mode="true"] .doc-card .btn {
@@ -9678,6 +9713,45 @@ html[data-camp-mode="true"] .doc-card .btn {
   border: none !important;
   font-weight: 700 !important;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-camp-mode="true"] .btn-doc-view:hover,
+html[data-camp-mode="true"] .btn-open-read:hover,
+html[data-camp-mode="true"] .doc-btn-read:hover,
+html[data-camp-mode="true"] .book-read-btn:hover {
+  background: linear-gradient(135deg, #8b5cf6 0%, #0ea5e9 100%) !important;
+  box-shadow: 0 6px 24px rgba(56, 189, 248, 0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+html[data-camp-mode="true"] .btn-doc-dl {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #e2e8f0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  font-weight: 800 !important;
+}
+
+html[data-camp-mode="true"] .btn-doc-dl:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+}
+
+html[data-camp-mode="true"] .doc-card-top > span,
+html[data-camp-mode="true"] .doc-card-footer > span {
+  color: #94a3b8 !important;
+}
+
+html[data-camp-mode="true"] .btn-load-more {
+  background: rgba(139, 92, 246, 0.25) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.5) !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .btn-load-more:hover {
+  background: rgba(139, 92, 246, 0.4) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
 }
 
 html[data-camp-mode="true"] .book-page-count,
