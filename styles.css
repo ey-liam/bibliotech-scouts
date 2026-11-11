@@ -2607,29 +2607,72 @@ body.reader-fullscreen {
 
 .modal-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.1rem 1.5rem;
   border-bottom: 1px solid #e2e8f0;
   background: #f8fafc;
 }
 
+.modal-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.modal-title-group {
+  flex: 1;
+  min-width: 0;
+}
+
 .modal-title-group h3 {
-  font-size: 1.12rem;
+  font-size: 1.15rem;
+  font-weight: 800;
   color: var(--scout-navy);
+  margin: 0.25rem 0 0.15rem;
+  line-height: 1.35;
 }
 
 .modal-filename {
   font-size: 0.76rem;
   color: var(--text-muted);
+  display: block;
+}
+
+.modal-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding-bottom: 2px;
 }
 
 .modal-actions {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  flex-wrap: wrap;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.modal-doc-desc-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--scout-purple, #6d28d9);
+  border-radius: 8px;
+  padding: 0.65rem 0.95rem;
+  font-size: 0.83rem;
+  color: #334155;
+  line-height: 1.5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.modal-doc-desc-box:empty {
+  display: none;
 }
 
 .btn-modal-nav,
@@ -7344,5 +7387,584 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
 
   .app-download-btn:hover {
     transform: none;
+  }
+}
+
+/* ==========================================================================
+   MEJORAS V5: REDISEÑO AGENTES DE CAMBIO, LECTOR PDF, INSTAGRAM Y BIBLIOTECA
+   ========================================================================== */
+
+/* Redes sociales del creador (Liam Durán) */
+.creator-social-row {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-creator-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(220, 39, 67, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-creator-instagram:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 22px rgba(220, 39, 67, 0.4);
+  color: #ffffff;
+}
+
+.footer-creator-link {
+  color: #c084fc;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.15s ease;
+}
+
+.footer-creator-link:hover {
+  color: #f472b6;
+  text-decoration: underline;
+}
+
+/* Descripción de libros en estantes de Biblioteca Scout */
+.book-desc {
+  font-size: 0.76rem;
+  color: #64748b;
+  line-height: 1.4;
+  margin: 0.35rem 0 0.65rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Alineación y simetría de filtros y estantes en Biblioteca Scout */
+.library-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.lib-search-input,
+.lib-filter-select {
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.library-shelves-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Visor iframe responsive de PDF */
+.doc-viewer-iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 580px;
+  border: none;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+/* ==========================================================================
+   ESTILOS CÓSMICOS AGENTES DE CAMBIO.MX - RED NACIONAL DE CAMINANTES
+   ========================================================================== */
+.adc-top-banner-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.adc-top-banner-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #38bdf8;
+  font-family: 'Outfit', sans-serif;
+}
+
+.adc-btn-top-pill {
+  background: #ffffff;
+  color: #0369a1;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1.5px solid #38bdf8;
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.adc-btn-top-pill:hover {
+  background: #38bdf8;
+  color: #0f172a;
+  transform: translateY(-2px);
+}
+
+.adc-cosmic-card {
+  position: relative;
+  background: radial-gradient(circle at 85% 15%, rgba(56, 189, 248, 0.12), transparent 45%),
+              linear-gradient(135deg, #050b1a 0%, #0a1936 50%, #130e2e 100%);
+  border: 2px solid #38bdf8;
+  outline: 1.5px solid rgba(56, 189, 248, 0.35);
+  outline-offset: 4px;
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(2, 6, 23, 0.6), 0 0 28px rgba(56, 189, 248, 0.12);
+  color: #ffffff;
+  padding: 2.25rem 2.5rem;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.adc-corner-star {
+  position: absolute;
+  font-size: 1.3rem;
+  color: #38bdf8;
+  text-shadow: 0 0 12px #38bdf8;
+  pointer-events: none;
+  user-select: none;
+}
+
+.adc-star-tl { top: 12px; left: 14px; }
+.adc-star-tr { top: 12px; right: 14px; color: #fde047; text-shadow: 0 0 12px #fde047; }
+.adc-star-bl { bottom: 12px; left: 14px; }
+
+.adc-checkered-strip {
+  position: absolute;
+  width: 96px;
+  height: 16px;
+  background: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%) 50% / 12px 12px;
+  border: 1.5px solid #000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.adc-strip-br { bottom: 14px; right: 16px; }
+.adc-strip-tl { top: 14px; left: 16px; }
+
+.adc-corner-clips {
+  position: absolute;
+  bottom: 12px;
+  right: 18px;
+  display: flex;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.adc-clip {
+  width: 8px;
+  height: 24px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.clip-pink { background: #f43f5e; }
+.clip-yellow { background: #eab308; }
+.clip-green { background: #22c55e; }
+
+.adc-header-branding {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.85rem;
+}
+
+.adc-main-logo-glow {
+  max-height: 56px;
+  width: auto;
+  filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.4));
+}
+
+.adc-network-eyebrow {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+}
+
+.adc-hey-heading {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  font-family: 'Outfit', sans-serif;
+  margin: 0.5rem 0 0.75rem;
+  color: #ffffff;
+}
+
+.adc-lead-p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #f1f5f9;
+  margin-bottom: 0.75rem;
+  max-width: 900px;
+}
+
+.adc-sub-p {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin-bottom: 1.25rem;
+  max-width: 900px;
+}
+
+.adc-motto-box {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 12px;
+  padding: 0.95rem 1.4rem;
+  margin-bottom: 1.25rem;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.adc-motto-pre {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.adc-motto-bold {
+  font-size: 1.25rem;
+  color: #38bdf8;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+}
+
+.adc-quote-tagline {
+  border-left: 3px solid #38bdf8;
+  padding-left: 1rem;
+  margin: 1.2rem 0 0;
+  font-style: italic;
+  color: #94a3b8;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.adc-badge-official {
+  display: inline-block;
+  background: #0284c7;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.65rem;
+}
+
+.adc-projects-headline {
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.adc-projects-motor {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #38bdf8;
+  margin-bottom: 1.4rem;
+}
+
+.adc-register-cta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-radius: 14px;
+  padding: 1.25rem 1.6rem;
+}
+
+.adc-register-urgent {
+  display: block;
+  font-size: 1.2rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  color: #fde047;
+  letter-spacing: 0.03em;
+}
+
+.adc-contact-prompt {
+  display: block;
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  margin-top: 0.2rem;
+}
+
+.adc-register-btns-col {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.adc-btn-register-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  text-decoration: none;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.92rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.adc-btn-register-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(2, 132, 199, 0.5);
+  color: #ffffff;
+}
+
+.adc-btn-query-chip {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.adc-btn-query-chip:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.adc-ejes-header-box h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.adc-ejes-desc {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  line-height: 1.6;
+  max-width: 900px;
+}
+
+.adc-ejes-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1.4rem;
+  margin-top: 1.6rem;
+}
+
+.adc-eje-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.35rem 1rem;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: transform 0.25s var(--spring), background 0.2s, border-color 0.2s;
+  text-align: center;
+}
+
+.adc-eje-item:hover {
+  transform: translateY(-6px) scale(1.03);
+  background: rgba(15, 23, 42, 0.8);
+  border-color: #38bdf8;
+}
+
+.adc-eje-orb {
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s var(--spring);
+}
+
+.adc-eje-orb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.eje-salud .adc-eje-orb { box-shadow: 0 0 22px rgba(6, 182, 212, 0.4); }
+.eje-habilidades .adc-eje-orb { box-shadow: 0 0 22px rgba(249, 115, 22, 0.4); }
+.eje-sustentabilidad .adc-eje-orb { box-shadow: 0 0 22px rgba(132, 204, 22, 0.4); }
+.eje-paz .adc-eje-orb { box-shadow: 0 0 22px rgba(236, 72, 153, 0.4); }
+
+.adc-eje-item:hover .adc-eje-orb {
+  transform: scale(1.08);
+}
+
+.adc-eje-label {
+  display: inline-block;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #ffffff;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.adc-network-columns {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.adc-network-side h4 {
+  font-size: 1.35rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.adc-network-divider {
+  background: rgba(255, 255, 255, 0.2);
+  height: 80%;
+  width: 1px;
+}
+
+.adc-btn-network-pill {
+  border: 2px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.adc-btn-network-pill:hover {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.adc-official-cnrc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0 1rem;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.adc-cnrc-signature {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.adc-cnrc-banner-img {
+  max-height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.adc-cnrc-title {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #f1f5f9;
+}
+
+.adc-cnrc-email {
+  font-size: 0.82rem;
+  color: #38bdf8;
+}
+
+.adc-btn-portal {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.55rem 1.35rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.adc-btn-portal:hover {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.adc-creator-credit-strip {
+  text-align: center;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .adc-cosmic-card {
+    padding: 1.5rem 1.25rem;
+  }
+  .adc-network-columns {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .adc-network-divider {
+    display: none;
+  }
+  .adc-official-cnrc-footer {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
