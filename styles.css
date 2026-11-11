@@ -10073,6 +10073,119 @@ html[data-camp-mode="true"] .subcat-pill.active {
   color: #ffffff !important;
 }
 
+/* Tarjeta de respuesta del buscador en modo oscuro (evita blanco sobre blanco) */
+html[data-camp-mode="true"] .answer-card {
+  background: rgba(15, 10, 34, 0.96) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.42) !important;
+  color: #e2e8f0 !important;
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.65) !important;
+}
+
+html[data-camp-mode="true"] .answer-badge {
+  background: rgba(124, 58, 237, 0.28) !important;
+  border: 1px solid rgba(167, 139, 250, 0.45) !important;
+  color: #e9d5ff !important;
+}
+
+html[data-camp-mode="true"] .btn-close-answer {
+  background: rgba(30, 20, 60, 0.92) !important;
+  border-color: rgba(139, 92, 246, 0.45) !important;
+  color: #e2e8f0 !important;
+}
+
+html[data-camp-mode="true"] .btn-close-answer.btn-new-search {
+  background: linear-gradient(135deg, #7928ca, #0284c7) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .answer-question-title {
+  color: #ffffff !important;
+  border-bottom-color: rgba(139, 92, 246, 0.35) !important;
+}
+
+html[data-camp-mode="true"] .answer-markdown-body,
+html[data-camp-mode="true"] .answer-markdown-body p,
+html[data-camp-mode="true"] .answer-markdown-body li {
+  color: #e2e8f0 !important;
+}
+
+html[data-camp-mode="true"] .answer-markdown-body strong {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .answer-markdown-body a {
+  color: #38bdf8 !important;
+}
+
+html[data-camp-mode="true"] .answer-markdown-body blockquote {
+  background: rgba(14, 116, 144, 0.2) !important;
+  border-left-color: #38bdf8 !important;
+  color: #e0f2fe !important;
+}
+
+html[data-camp-mode="true"] .answer-markdown-body code {
+  background: rgba(30, 41, 59, 0.92) !important;
+  color: #7dd3fc !important;
+}
+
+html[data-camp-mode="true"] .answer-related {
+  border-top-color: rgba(139, 92, 246, 0.35) !important;
+}
+
+html[data-camp-mode="true"] .answer-related > p {
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .quick-chip,
+html[data-camp-mode="true"] .quick-q-chip {
+  background: rgba(24, 15, 50, 0.92) !important;
+  border-color: rgba(139, 92, 246, 0.38) !important;
+  color: #e2e8f0 !important;
+}
+
+html[data-camp-mode="true"] .quick-chip.chip-featured {
+  background: rgba(124, 58, 237, 0.25) !important;
+  border-color: rgba(167, 139, 250, 0.5) !important;
+  color: #f5f3ff !important;
+}
+
+html[data-camp-mode="true"] .quick-chip:hover,
+html[data-camp-mode="true"] .quick-q-chip:hover {
+  background: linear-gradient(135deg, #7928ca, #0284c7) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .answer-sources-footer {
+  background: rgba(10, 6, 24, 0.92) !important;
+  border-top-color: rgba(139, 92, 246, 0.35) !important;
+}
+
+html[data-camp-mode="true"] .sources-footer-label span {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .sources-footer-label small {
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .source-bottom-pill {
+  background: rgba(24, 15, 50, 0.94) !important;
+  border-color: rgba(139, 92, 246, 0.42) !important;
+  color: #f8fafc !important;
+}
+
+html[data-camp-mode="true"] .source-bottom-pill:hover {
+  background: rgba(124, 58, 237, 0.35) !important;
+  border-color: #38bdf8 !important;
+}
+
+html[data-camp-mode="true"] .source-pill-ext {
+  background: rgba(56, 189, 248, 0.22) !important;
+  color: #7dd3fc !important;
+}
+
 @media (max-width: 900px) {
   .btn-camp-mode {
     display: none !important;
