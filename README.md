@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 03/11/2026 • **Versión:** BETA V6 - 2.1.0 Mobile (10/11/2026)  
+**Base de datos:** 03/11/2026 • **Versión:** BETA V7 - 2.1.1 Mobile (11/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -15,7 +15,7 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 2. Novedades de la Versión V6 (Edición "Game Feel & UI Unificada")
+## 2. Novedades de la Versión V7 (Hero Inclinado, Guardados Híbridos & Dock Claro) (Edición "Game Feel & UI Unificada")
 
 - **Game Feel y Físicas Elásticas Spring:** Respuesta táctil y micro-interacciones suaves al presionar botones, fichas y tarjetas con transiciones cúbicas orgánicas.
 - **Lienzo Ambiental de Partículas (Fogata Scout & Polvo Cósmico):** Luciérnagas doradas en el inicio y biblioteca que transicionan suavemente a nebulosa cian/magenta interactiva en la sección de Agentes de Cambio.
