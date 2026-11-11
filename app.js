@@ -952,6 +952,7 @@ function renderLibraryShelf() {
           </div>
           <h3 class="book-title" title="${escapeHtml(d.title)}">${escapeHtml(d.title)}</h3>
           <span class="book-meta">${escapeHtml(d.section_label)}</span>
+          ${d.summary ? `<p class="book-desc">${escapeHtml(d.summary)}</p>` : ''}
           <button type="button" class="book-read-btn">Abrir lectura</button>
         </article>
       `;
@@ -2077,6 +2078,19 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     <span class="badge badge-sec">${escapeHtml(doc.section_label)}</span>
   `;
 
+  // Descripción y sinopsis del documento
+  const descEl = document.getElementById("modalDocDescBox");
+  if (descEl) {
+    const descContent = doc.summary || doc.full_excerpt || "";
+    if (descContent) {
+      descEl.innerHTML = `<strong>Contenido del documento:</strong> ${escapeHtml(descContent)}`;
+      descEl.classList.remove("hidden");
+    } else {
+      descEl.innerHTML = "";
+      descEl.classList.add("hidden");
+    }
+  }
+
   const viewUrl = buildFileUrl(doc, false);
   const dlUrl = buildFileUrl(doc, true);
   openTabBtn.href = viewUrl;
@@ -2130,50 +2144,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
         tab.document.close();
       }
     };
-  } else if (doc.ext === "PDF" && !doc.has_web_file) {
-    openTabBtn.onclick = (e) => {
-      e.preventDefault();
-      const tab = window.open("", "_blank");
-      if (tab) {
-        tab.document.write(`<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(doc.title)} — BiblioTech Scout</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
-    body { background: #f8fafc; color: #0f172a; line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
-    header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #dbeafe; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; z-index: 50; }
-    .title-group { max-width: 75%; }
-    .badge { display: inline-block; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #6d28d9; margin-bottom: 2px; }
-    h1 { font-size: 1.15rem; font-weight: 800; color: #0c1938; line-height: 1.3; }
-    .fname { font-size: 0.8rem; color: #64748b; }
-    .btn-dl { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px; background: #6d28d9; color: #fff; font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: transform 0.15s ease, background 0.15s ease; }
-    .btn-dl:hover { background: #581c87; transform: translateY(-1px); }
-    main { flex: 1; max-width: 860px; margin: 0 auto; width: 100%; padding: 2rem 1.5rem; }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="title-group">
-      <span class="badge">BiblioTech Scout • Lectura del Documento</span>
-      <h1>${escapeHtml(doc.title)}</h1>
-      <span class="fname">${escapeHtml(doc.filename)} • ${doc.year} • ${escapeHtml(doc.section_label)}</span>
-    </div>
-    <a href="${dlUrl}" download class="btn-dl">Descargar PDF Original</a>
-  </header>
-  <main>
-    ${renderWebReaderView(doc, fullTextContent, dlUrl)}
-  </main>
-</body>
-</html>`);
-        tab.document.close();
-      }
-    };
+
   } else {
     openTabBtn.onclick = null;
   }
@@ -2200,11 +2171,21 @@ async function openDocumentModal(docId, shelfIndex = -1) {
 
   const canEmbedNative = IS_LOCAL_SERVER || Boolean(doc.has_web_file);
 
-  if (canEmbedNative && (doc.ext === "PDF" || (IS_LOCAL_SERVER && doc.ext === "HTML"))) {
-    previewPane.innerHTML = `<iframe src="${viewUrl}" title="${escapeHtml(doc.title)}"></iframe>`;
+  if (doc.ext === "PDF") {
+    if (canEmbedNative) {
+      previewPane.innerHTML = `<iframe src="${viewUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;"></iframe>`;
+      openTabBtn.href = viewUrl;
+      openTabBtn.onclick = null;
+    } else {
+      // En la web pública, Google Docs Viewer renderiza el PDF original visual completo con todas sus páginas y formatos
+      const gDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(viewUrl)}&embedded=true`;
+      previewPane.innerHTML = `<iframe src="${gDocsUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;background:#ffffff;" allowfullscreen></iframe>`;
+      openTabBtn.onclick = (e) => {
+        e.preventDefault();
+        window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(viewUrl)}`, '_blank');
+      };
+    }
   } else if (["PNG", "JPG", "JPEG", "WEBP", "AVIF"].includes(doc.ext)) {
-    // Las imágenes se previsualizan aunque no tengan copia web: <img> ignora
-    // el Content-Disposition del archivo remoto y muestra la imagen igual.
     previewPane.innerHTML = `
       <figure style="display:flex;flex-direction:column;align-items:center;gap:0.75rem;height:100%;margin:0;padding:1.5rem;box-sizing:border-box;">
         <figcaption style="flex:0 0 auto;text-align:center;">
@@ -2215,6 +2196,10 @@ async function openDocumentModal(docId, shelfIndex = -1) {
         <p style="flex:0 0 auto;margin:0;font-size:0.82rem;color:#64748b;text-align:center;">Archivo: <strong>${escapeHtml(doc.filename)}</strong></p>
       </figure>
     `;
+  } else if (canEmbedNative && IS_LOCAL_SERVER && doc.ext === "HTML") {
+    previewPane.innerHTML = `<iframe src="${viewUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe"></iframe>`;
+    openTabBtn.href = viewUrl;
+    openTabBtn.onclick = null;
   } else {
     previewPane.innerHTML = renderWebReaderView(doc, fullTextContent, dlUrl);
   }
