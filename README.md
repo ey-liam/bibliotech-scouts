@@ -47,20 +47,20 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
   - El repositorio pasa de 5,457 a **11,254 preguntas y respuestas únicas** (`5,356` en `data/questions_bank.json`, `101` en `data/faq_v3.json` y **`5,797`** nuevas en `data/faq_v4.json`, generadas con `scripts/generate_faq_v4.js`).
   - Incluye explicaciones claras y directas sobre objetivos **SMART**, ciclo **PER** (*Planeo, Ejecuto, Reviso*), los **4 Ejes Temáticos**, sistemas nacionales (`SISAS`, `ExplorApp`, `CarpetApp`, `CDC`), artículos reales de normativas vigentes (`Reglamento 2023`, `Estatutos 2023`, `Manual del Uniforme junio 2026`, `Reglamento CNH 2025`), términos de **glosarios oficiales**, capítulos de manuales/políticas, los **39 libros de la Biblioteca del Centenario**, páginas HTML e infografías.
   - La ampliación V4 añade tres capas documentales: campos etiquetados de **convocatorias** (dirigido a, sede, fechas, cuotas, requisitos, contacto y modalidad), campos y actos de **formatos, actas y seguro** (asunto, datos solicitados, autorizaciones, documentos anexos y orden del día), y **menciones textuales con página y cita** en manuales, libros del Centenario e identidad gráfica.
-- **Nueva Portada Hero Cósmica Dinámica:**
-  - Lienzo poligonal estilizado con cinta diagonal en zigzag en gradiente morado a azul eléctrico y cian neón (`#7928ca` a `#06b6d4`) con resplandor suave.
+- **Reestructuración de la Interfaz de Inicio (V7):**
+  - Escenario geométrico estilizado con cinta diagonal continua en gradiente morado a azul eléctrico y cian neón (`#7928ca` a `#06b6d4`) con resplandor suave.
   - Tarjeta central inclinada destacando el título en gran formato `BIBLIOTECH SCOUT` y la firma de autoría centralizada `By Liam`.
-  - 10 doodles vectoriales en blanco puro (fogata, flor de lis, mundo, señalización, sol, hoja, destellos, brújula, nudo y carpa) flotando suavemente alrededor del escenario.
-- **Fondo Cósmico Continuo en el Buscador:**
-  - El fondo azul/morado profundo se extiende fluidamente hasta la sección del buscador (`#seccion-buscador`), integrando cubos geométricos flotantes 3D decorativos en tonalidades cósmicas.
+  - 10 iconos vectoriales en blanco puro flotando suavemente alrededor del escenario con animación optimizada.
+- **Continuidad Visual y Optimización del Buscador:**
+  - El fondo azul/morado profundo se extiende fluidamente hasta la sección del buscador (`#seccion-buscador`), integrando cubos geométricos decorativos.
   - Tarjeta de búsqueda con cristal translúcido oscuro de alto contraste y legibilidad impecable.
-- **Renovación del Buscador:**
+- **Mejora en Navegación de Preguntas:**
   - Encabezado simplificado a `Buscador:`.
   - Botón de recarga de preguntas con icono circular de actualización y leyenda `Mostrar más preguntas` para explorar preguntas aleatorias del banco documental.
-- **Estabilidad de Marca en Móviles:**
+- **Mayor Estabilidad de Marca en Móviles:**
   - Garantizada la visualización completa de `BiblioTech Scout` en teléfonos y pantallas pequeñas sin truncar el distintivo "Scout".
-- **Modo Noche / Visión Nocturna Limpio:**
-  - Reemplazo total del filtro ámbar/sepia por un modo oscuro limpio de alto contraste: fondos negros/índigo cósmicos profundos, texto blanco nítido y acentos cian, manteniendo imágenes, botones, badges y documentos legibles.
+- **Compatibilidad de Modo Oscuro / Modo Noche:**
+  - Modo oscuro limpio de alto contraste: fondos negros/índigo profundos, texto blanco nítido y acentos cian, manteniendo imágenes, botones, badges y documentos legibles.
   - Botón de modo noche visible en la cabecera de escritorio y oculto en móvil para evitar duplicación con el dock inferior.
 
 ---

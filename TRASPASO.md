@@ -44,9 +44,9 @@ El desarrollo actual de BiblioTech Scout es el resultado de un trabajo coordinad
 * **Prototipos de Motor de Respuestas:** Diseñó scripts de evaluación semántica local con stopwords y sinónimos para generar respuestas directas sin depender de APIs de IA de pago.
 
 ### Aportes de Antigravity
-* **Hero V7 (Portada Inclinada Estilo Jamboree 2027):**
+* **Reestructuración de la Interfaz de Inicio (V7):**
   - Diseñó el gran banner dinámico inclinado (`rotate(-2deg)`) con tipografía bold display (`BiblioTech Scout`) en la paleta azul-morada del proyecto, cinta horizontal de fondo (`.hero-band`), iconos scout en esquinas y subtítulo oficial de Liam Durán.
-  - Reestructuró el contenido inicial en dos columnas: descripción del sitio con estadísticas (`5,451 preguntas`, `498 documentos`, `104 temas`) y escenario fotográfico de la Comunidad de Caminantes.
+  - Reestructuró el contenido inicial en dos columnas: descripción del sitio optimizada para consultas rápidas y escenario visual continuo.
 * **Sustitución de «Mochila» por «Guardados» con Cookies y LocalStorage Híbrido:**
   - Retiró el sistema antiguo de mochila que presentaba fallos en PWA/iOS.
   - Implementó persistencia híbrida en `document.cookie` y `localStorage` (`bt_saved_docs` y `bt_note_`), asegurando que los documentos guardados y las notas persistan de forma confiable entre sesiones.
