@@ -9920,6 +9920,19 @@ html[data-camp-mode="true"] .cnrc-member-card .member-role {
   color: #38bdf8 !important;
 }
 
+html[data-camp-mode="true"] .app-download-btn,
+html[data-camp-mode="true"] a.app-download-btn,
+html[data-camp-mode="true"] .app-download-btn strong,
+html[data-camp-mode="true"] .app-download-btn small,
+html[data-camp-mode="true"] .app-download-btn span {
+  color: #0b1536 !important;
+}
+
+html[data-camp-mode="true"] .app-download-btn svg {
+  stroke: #0b1536 !important;
+  color: #0b1536 !important;
+}
+
 /* 12. TIPOGRAFÍA CONTEXTUAL (SIN SELECTORES GLOBALES QUE ROMPAN BOTONES) */
 html[data-camp-mode="true"] h1,
 html[data-camp-mode="true"] h2,
