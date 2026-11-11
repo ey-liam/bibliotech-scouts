@@ -9596,6 +9596,7 @@ html[data-camp-mode="true"] .modal-box,
 html[data-camp-mode="true"] .reader-modal,
 html[data-camp-mode="true"] .saved-panel-sheet,
 html[data-camp-mode="true"] .saved-card,
+html[data-camp-mode="true"] .catalog-filters-bar,
 html[data-camp-mode="true"] .service-info-card {
   background: rgba(20, 12, 42, 0.94) !important;
   border: 1.5px solid rgba(139, 92, 246, 0.38) !important;
@@ -9638,10 +9639,21 @@ html[data-camp-mode="true"] .lib-search-input,
 html[data-camp-mode="true"] .lib-filter-select,
 html[data-camp-mode="true"] .library-search-mini input,
 html[data-camp-mode="true"] .library-controls-bar input,
-html[data-camp-mode="true"] .library-controls-bar select {
+html[data-camp-mode="true"] .library-controls-bar select,
+html[data-camp-mode="true"] .catalog-filters-bar input,
+html[data-camp-mode="true"] .catalog-filters-bar select {
   background: rgba(14, 8, 32, 0.94) !important;
   border: 1.5px solid rgba(139, 92, 246, 0.45) !important;
   color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .catalog-filters-bar label {
+  color: #e2e8f0 !important;
+}
+
+html[data-camp-mode="true"] .catalog-filters-bar select option {
+  background: #140c2a;
+  color: #ffffff;
 }
 
 html[data-camp-mode="true"] .lib-search-input::placeholder,

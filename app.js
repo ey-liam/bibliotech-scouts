@@ -2271,11 +2271,14 @@ async function openDocumentModal(docId, shelfIndex = -1) {
       openTabBtn.onclick = null;
     } else {
       // En la web pública, Google Docs Viewer renderiza el PDF original visual completo con todas sus páginas y formatos
-      const gDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(viewUrl)}&embedded=true`;
+      const absPdfUrl = /^https?:\/\//i.test(viewUrl)
+        ? viewUrl
+        : new URL(viewUrl, window.location.href).href;
+      const gDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}&embedded=true`;
       previewPane.innerHTML = `<iframe id="gDocsIframe" src="${gDocsUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;background:#ffffff;" allowfullscreen></iframe>`;
       openTabBtn.onclick = (e) => {
         e.preventDefault();
-        window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(viewUrl)}`, '_blank');
+        window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}`, '_blank');
       };
 
       // Resiliencia: si el iframe no responde o está offline, ofrecer cambio rápido a lectura de texto
