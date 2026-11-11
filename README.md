@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 03/11/2026 • **Versión:** BETA V4.1 - 1.4 Mobile (10/11/2026)  
+**Base de datos:** 03/11/2026 • **Versión:** BETA V4.2 - 1.5 Mobile (10/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -85,7 +85,16 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 
 ---
 
-## 8. Novedades de la versión V4.1 - 1.4 Mobile (10/11/2026)
+## 8. Novedades de la versión V4.2 - 1.5 Mobile (10/11/2026)
+
+- **Rediseño completo e integración del menú de descargas:** el panel «Mi biblioteca y descargas» se integra armónicamente en la experiencia visual de BiblioTech Scout. Se añade un botón de acceso directo en el encabezado principal superior (con icono, texto y contador dinámico de archivos guardados), un acceso directo en el menú lateral móvil y un botón flotante estilizado con la estética Scout Aurora.
+- **Corrección de visualización de descargas en la app:** se corrige el orden de pestañas para que el usuario acceda por defecto a «Mis descargas» y vea sus archivos guardados de inmediato al abrir el panel o tras descargar un documento.
+- **Soporte de descarga para todo el catálogo (650 documentos):** se amplía el alcance de descargas offline a la totalidad de los 650 documentos oficiales del catálogo, incorporando soporte nativo tanto para archivos alojados en `files/` como para los 349 documentos distribuidos a través de GitHub Releases.
+- **Gestión y eliminación confiable de archivos guardados:** se reemplazan los botones antiguos por tarjetas legibles con formato, sección, peso y botones dedicados de «Abrir» y «Borrar». Se refuerza el diálogo de confirmación y el borrado seguro en el almacenamiento interno del dispositivo sin fallos silenciosos.
+- **Nuevo estado vacío con llamada a la acción:** cuando el usuario aún no tiene documentos guardados, se muestra una ilustración Scout de «mochila vacía» con orientación clara y un botón directo para explorar el catálogo.
+- **Sincronización de versión combinada:** se actualiza la leyenda unificada a `BETA V4.2 - 1.5 Mobile (10/11/2026)` en la web y la app móvil.
+
+### Versión V4.1 - 1.4 Mobile (10/11/2026)
 
 - **Motor de respuestas directas y concretas:** en lugar de presentar únicamente citas o listas de documentos cuando el usuario consulta una duda puntual («¿Cómo puedo inscribirme?», «¿Qué pasa si un scout se lastima en un campamento?», «¿Qué se necesita para ser scout?», «¿Cuánto cuesta la membresía?»), el motor de búsqueda analiza la intención, compara con sinónimos temáticos y extrae respuestas estructuradas, accionables y directas con sus fuentes oficiales asociadas.
 - **Sección oficial de descarga de la App Android (`#app`):** se añade el apartado «Lleva BiblioTech Scout en tu bolsillo» con botón de descarga permanente al APK oficial más reciente (`https://github.com/ey-liam/bibliotech-scouts-app/releases/latest/download/bibliotech-scout.apk`), guía de instalación en 3 pasos e indicación clara de que el archivo está libre de virus.
