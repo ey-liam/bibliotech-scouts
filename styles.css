@@ -7870,6 +7870,8 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
 }
 
 .adc-btn-network-pill {
+  display: inline-block;
+  text-decoration: none;
   border: 2px solid #ffffff;
   background: transparent;
   color: #ffffff;
@@ -7891,35 +7893,38 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 0 1rem;
+  padding: 1.5rem 0 0.5rem;
   flex-wrap: wrap;
   gap: 1.25rem;
 }
 
-.adc-cnrc-signature {
+.adc-cnrc-contact-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
+  font-size: 0.88rem;
 }
 
-.adc-cnrc-banner-img {
-  max-height: 48px;
-  width: auto;
-  object-fit: contain;
+.adc-contact-label {
+  color: #94a3b8;
+  font-weight: 600;
 }
 
-.adc-cnrc-title {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  color: #f1f5f9;
-}
-
-.adc-cnrc-email {
-  font-size: 0.82rem;
+.adc-contact-link {
   color: #38bdf8;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.15s ease;
+}
+
+.adc-contact-link:hover {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+
+.adc-contact-sep {
+  color: #64748b;
 }
 
 .adc-btn-portal {
