@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 03/11/2026 • **Versión:** BETA V7 - 2.1.1 Mobile (11/11/2026)  
+**Base de datos:** 03/11/2026 • **Versión:** V7 Oficial - 2.2.0 Mobile (11/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -15,20 +15,23 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 2. Novedades de la Versión V7 (Hero Inclinado, Guardados Híbridos & Dock Claro) (Edición "Game Feel & UI Unificada")
+## 2. Novedades de la Versión V7 (Hero Cósmico Fusión, Buscador Extendido & Modo Noche Limpio)
 
-- **Game Feel y Físicas Elásticas Spring:** Respuesta táctil y micro-interacciones suaves al presionar botones, fichas y tarjetas con transiciones cúbicas orgánicas.
-- **Lienzo Ambiental de Partículas (Fogata Scout & Polvo Cósmico):** Luciérnagas doradas en el inicio y biblioteca que transicionan suavemente a nebulosa cian/magenta interactiva en la sección de Agentes de Cambio.
-- **Modo Campamento / Visión Nocturna:** Filtro ámbar/rojo de baja luminosidad con fondo negro OLED puro (`#000000`) para uso en campo y campamentos nocturnos sin encandilar ni desgastar la batería.
-- **Fotos Flotantes 3D con Reflejo Dinámico (Glare):** Perspectiva orbital tridimensional y modo Spotlight al toque.
-- **Dock Inferior Unificado de Cristal:** Barra de navegación rápida móvil y tablet integrada con acceso a Inicio, Consulta, Biblioteca, Agentes y Mi Mochila Scout.
-- **Herramientas de Calidad de Vida (QoL) en el Lector:**
-  - **Narrador de Voz Offline (TTS):** Lectura en voz alta en español para estudiar manuales con manos libres.
-  - **Mi Mochila Scout:** Guardado de manuales y carnets favoritos en un toque con acceso persistente.
-  - **Notas de Campo:** Anotaciones personales directas en cada documento.
-  - **Buscador Interno Inline:** Búsqueda y resaltado fluido de términos dentro del documento.
-  - **Gesto Swipe-Down:** Deslizar hacia abajo para cerrar el visor en móviles.
-- **Resiliencia de PDF y Carga Rápida:** Fallback automático a modo lectura estructurada y service worker PWA offline (`sw.js`).
+- **Nueva Portada Hero Cósmica Dinámica:**
+  - Lienzo poligonal estilizado con cinta diagonal en zigzag en gradiente morado a azul eléctrico y cian neón (`#7928ca` a `#06b6d4`) con resplandor suave.
+  - Tarjeta central inclinada destacando el título en gran formato `BIBLIOTECH SCOUT` y la firma de autoría centralizada `By Liam`.
+  - 10 doodles vectoriales en blanco puro (fogata, flor de lis, mundo, señalización, sol, hoja, destellos, brújula, nudo y carpa) flotando suavemente alrededor del escenario.
+- **Fondo Cósmico Continuo en el Buscador:**
+  - El fondo azul/morado profundo se extiende fluidamente hasta la sección del buscador (`#seccion-buscador`), integrando cubos geométricos flotantes 3D decorativos en tonalidades cósmicas.
+  - Tarjeta de búsqueda con cristal translúcido oscuro de alto contraste y legibilidad impecable.
+- **Renovación del Buscador:**
+  - Encabezado simplificado a `Buscador:`.
+  - Botón de recarga de preguntas con icono circular de actualización `↻` y leyenda `Mostrar más preguntas` para explorar preguntas aleatorias del banco documental.
+- **Estabilidad de Marca en Móviles:**
+  - Garantizada la visualización completa de `BiblioTech Scout` en teléfonos y pantallas pequeñas sin truncar el distintivo "Scout".
+- **Modo Noche / Visión Nocturna Limpio e Invertido:**
+  - Reemplazo total del filtro ámbar/sepia por un modo oscuro limpio de alto contraste: fondos negros/índigo cósmicos profundos, texto blanco nítido y acentos cian, manteniendo imágenes y documentos limpios.
+  - Botón de modo noche visible en la cabecera de escritorio y oculto en móvil para evitar duplicación con el dock inferior.
 
 ---
 

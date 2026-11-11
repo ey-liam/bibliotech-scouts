@@ -48,7 +48,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=8" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -175,96 +175,112 @@
   </div>
 
   <main id="contenido-principal" tabindex="-1">
-  <!-- HERO DINÁMICO INSPIRADO EN JAMBOREE POLONIA 2027 CON 3 HEXÁGONOS ROTATORIOS SUPERPUESTOS -->
-  <section id="inicio" class="hero-section">
-    <!-- Ondas, auroras coloridas y destellos animados en el fondo -->
-    <div class="hero-backdrop" aria-hidden="true">
-      <div class="hero-glow glow-1"></div>
-      <div class="hero-glow glow-2"></div>
-      <div class="hero-glow glow-3"></div>
-      <div class="hero-glow glow-4"></div>
-
-      <!-- Cintas diagonales animadas -->
-      <div class="jamboree-diagonal-ribbon"></div>
-      <div class="jamboree-diagonal-ribbon ribbon-secondary"></div>
-
-      <!-- Destellos animados -->
-      <svg class="sparkle-star sp-1"><use href="#icon-sparkle"/></svg>
-      <svg class="sparkle-star sp-2"><use href="#icon-sparkle"/></svg>
-      <svg class="sparkle-star sp-3"><use href="#icon-sparkle"/></svg>
-      <svg class="sparkle-star sp-4"><use href="#icon-sparkle"/></svg>
-      <svg class="sparkle-star sp-5"><use href="#icon-sparkle"/></svg>
-      <svg class="sparkle-star sp-6"><use href="#icon-sparkle"/></svg>
-
-      <!-- Iconos vectoriales flotantes estilo Jamboree -->
-      <svg class="jamboree-floating-svg jsvg-campfire"><use href="#icon-campfire"/></svg>
-      <svg class="jamboree-floating-svg jsvg-fleur"><use href="#icon-fleur"/></svg>
-      <svg class="jamboree-floating-svg jsvg-globe"><use href="#icon-globe"/></svg>
-      <svg class="jamboree-floating-svg jsvg-signpost"><use href="#icon-signpost"/></svg>
-      <svg class="jamboree-floating-svg jsvg-leaf"><use href="#icon-leaf"/></svg>
-    </div>
-
-    <div class="container hero-container">
-      <div class="hero-showcase-grid hero-v7">
-        <!-- PORTADA PRINCIPAL: TÍTULO DE LA APP SOBRE PANEL INCLINADO -->
-        <div class="hero-title-stage">
-          <span class="hero-band" aria-hidden="true"></span>
-          <div class="hero-title-panel">
-            <svg class="hero-panel-icon hpi-fleur" aria-hidden="true"><use href="#icon-fleur"/></svg>
-            <svg class="hero-panel-icon hpi-globe" aria-hidden="true"><use href="#icon-globe"/></svg>
-            <svg class="hero-panel-icon hpi-fire" aria-hidden="true"><use href="#icon-campfire"/></svg>
-            <span class="hero-panel-kicker">Biblioteca digital scout</span>
-            <span class="hero-panel-title">BiblioTech<br />Scout</span>
-            <span class="hero-panel-sub">Creado por Liam Durán · Provincia TLXH</span>
-          </div>
-        </div>
-
-        <!-- DE QUÉ TRATA + FOTO -->
-        <div class="hero-intro-grid">
-          <div class="hero-top-copy">
-            <div class="hero-kicker-pill">
-              <img decoding="async" src="img/logo-flor.png" alt="" class="kicker-icon" />
-              <span>Documentos oficiales de ASMAC y World Scouting</span>
-            </div>
-            <h1 class="hero-title">
-              Explora, consulta y lee toda la información <span class="text-gradient">Scout</span> en un solo lugar
-            </h1>
-            <p class="hero-description">
-              Pregunta lo que necesites y obtén una respuesta directa con el documento exacto de donde sale.
-              Lee en línea o descarga manuales, guías, reglamentos y comunicados vigentes, pensados para niñas, niños, jóvenes y adultos.
-            </p>
-
-            <div class="hero-actions">
-              <a href="#buscador" class="btn-hero-primary">
-                <svg width="18" height="18" aria-hidden="true"><use href="#icon-search"/></svg>
-                Hacer una pregunta
-              </a>
-              <a href="#biblioteca" class="btn-hero-ghost">Explorar la biblioteca</a>
-            </div>
-
-            <dl class="hero-stats-row" aria-label="Contenido disponible en BiblioTech">
-              <div class="hero-stat"><dt>Preguntas</dt><dd>5,451</dd></div>
-              <div class="hero-stat"><dt>Documentos</dt><dd>498</dd></div>
-              <div class="hero-stat"><dt>Temas</dt><dd>104</dd></div>
-            </dl>
-          </div>
-
-          <div class="hero-photo-stage">
-            <div class="hero-photo" aria-labelledby="heroPhotoCaption" data-query="¿Qué es la Comunidad de Caminantes?" role="button" tabindex="0" title="Consultar sobre la Comunidad de Caminantes">
-              <img decoding="async" src="img/photos/p01.jpg" alt="Comunidad de Caminantes reunida en campamento" class="hero-photo-img" />
-              <span class="hero-photo-caption" id="heroPhotoCaption">Comunidad de Caminantes</span>
-            </div>
-            <span class="hero-sticker hero-sticker-a" aria-hidden="true">26° Jamboree · Polonia 2027</span>
-            <span class="hero-sticker hero-sticker-b" aria-hidden="true">Centenario Scout 1926–2026</span>
-          </div>
-        </div>
+    <!-- HERO FUSION: VIBES DINAMICAS ESTILO POLIGONAL ZIGZAG + IDENTIDAD BIBLIOTECH SCOUT -->
+  <section id="inicio" class="bts-hero-section">
+    <!-- ESCENARIO SUPERIOR: LIENZO DINAMICO CON ZIGZAG Y DOODLES -->
+    <div class="bts-hero-stage">
+      <!-- CINTA DIAGONAL ZIGZAG EN GRADIENTE PURPURA - CIAN -->
+      <div class="bts-ribbon-layer" aria-hidden="true">
+        <svg class="bts-zigzag-svg bts-zigzag--desktop" viewBox="0 0 8000 3335" fill="none" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="btsRibbonGrad" x1="0%" y1="20%" x2="100%" y2="80%">
+              <stop offset="0%" stop-color="#7928ca"/>
+              <stop offset="40%" stop-color="#4f46e5"/>
+              <stop offset="75%" stop-color="#0284c7"/>
+              <stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+            <filter id="btsGlow" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="16" stdDeviation="28" flood-color="#7928ca" flood-opacity="0.4"/>
+            </filter>
+          </defs>
+          <polygon points="8000 1362.4 8000 1935.2 6075.7 1756.2 3968.1 2781.9 1238.1 1699.9 0 2167 0 1594.3 1261.9 1127.1 3991.9 2209.1 6052 1183.4 8000 1362.4" fill="url(#btsRibbonGrad)" filter="url(#btsGlow)"/>
+        </svg>
+        <svg class="bts-zigzag-svg bts-zigzag--mobile" viewBox="0 0 1563 2048" fill="none" preserveAspectRatio="none">
+          <polygon points="1563 750 1563 1200 1150 1050 780 1600 250 1000 0 1300 0 900 250 600 780 1200 1150 650 1563 750" fill="url(#btsRibbonGrad)"/>
+        </svg>
       </div>
 
-      <!-- TARJETA DEL BUSCADOR INTUITIVO Y EXPLORADOR DE +5,350 PREGUNTAS -->
-      <div id="buscador" class="search-hub-card">
+      <!-- ICONOS DOODLE FLOTANTES ANIMADOS ALREDEDOR DE LA CINTA -->
+      <div class="bts-doodles-layer" aria-hidden="true">
+        <svg class="bts-doodle bts-doodle--campfire" title="Fogata"><use href="#icon-campfire"/></svg>
+        <svg class="bts-doodle bts-doodle--fleur" title="Flor de Lis"><use href="#icon-fleur"/></svg>
+        <svg class="bts-doodle bts-doodle--globe" title="Mundo"><use href="#icon-globe"/></svg>
+        <svg class="bts-doodle bts-doodle--signpost" title="Señalización"><use href="#icon-signpost"/></svg>
+        <svg class="bts-doodle bts-doodle--sun" title="Sol"><use href="#icon-sun"/></svg>
+        <svg class="bts-doodle bts-doodle--leaf" title="Hoja"><use href="#icon-leaf"/></svg>
+        <svg class="bts-doodle bts-doodle--sparkle" title="Destello"><use href="#icon-sparkle"/></svg>
+        <svg class="bts-doodle bts-doodle--compass" title="Brújula"><use href="#icon-compass"/></svg>
+        <svg class="bts-doodle bts-doodle--knot" title="Nudo"><use href="#icon-knot"/></svg>
+        <svg class="bts-doodle bts-doodle--tent" title="Campamento"><use href="#icon-tent"/></svg>
+      </div>
+
+      <!-- TARJETA POLIGONAL INCLINADA PRINCIPAL (TITULO DE LA APP COMO PRINCIPAL) -->
+      <div class="bts-card-polygon">
+        <div class="bts-card-inner">
+          <h1 class="bts-card-title">
+            <span class="bts-title-word bts-word-biblio">BIBLIOTECH</span>
+            <span class="bts-title-word bts-word-scout">SCOUT</span>
+          </h1>
+
+          <p class="bts-card-creator">By Liam</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEGUNDA PARTE: DE QUE TRATA Y LA FOTO CON ACCIONES ORIGINALES -->
+    <div class="container bts-hero-container">
+      <div class="hero-intro-grid">
+        <div class="hero-top-copy">
+          <div class="hero-kicker-pill">
+            <img decoding="async" src="img/logo-flor.png" alt="" class="kicker-icon" />
+            <span>Asociación de Scouts de México ASMAC y World Scouting WOSM</span>
+          </div>
+          <h2 class="hero-title">
+            Consulta información Scout basada en documentos oficiales con tus propias preguntas
+          </h2>
+          <p class="hero-description">
+            Una biblioteca interactiva e intuitiva diseñada para resolver tus dudas al instante a partir de manuales, fichas, reglamentos y publicaciones oficiales de la ASMAC y de World Scouting (WOSM). Un espacio neutral y accesible pensado para niñas, niños, adolescentes, jóvenes y adultos de todas las secciones.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#buscador" class="btn-hero-primary">
+              <svg width="18" height="18" aria-hidden="true"><use href="#icon-search"/></svg>
+              Hacer una pregunta
+            </a>
+            <a href="#biblioteca" class="btn-hero-ghost">Explorar los 648 archivos</a>
+            <a href="#comparador" class="btn-hero-ghost">Ver qué cambió año con año</a>
+          </div>
+
+          
+        </div>
+
+        <div class="hero-photo-stage">
+          <div class="hero-photo" aria-labelledby="heroPhotoCaption" data-query="¿Qué es la Comunidad de Caminantes?" role="button" tabindex="0" title="Consultar sobre la Comunidad de Caminantes">
+            <img decoding="async" src="img/photos/p01.jpg" alt="Comunidad de Caminantes reunida en campamento" class="hero-photo-img" />
+            <span class="hero-photo-caption" id="heroPhotoCaption">Comunidad de Caminantes</span>
+          </div>
+          <span class="hero-sticker hero-sticker-a" aria-hidden="true">Creado por: Liam Durán / Caminante</span>
+          <span class="hero-sticker hero-sticker-b" aria-hidden="true">Centenario Scout 1926–2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCION DE BUSQUEDA Y ASISTENTE INTELIGENTE CON FUENTES OFICIALES -->
+  <section id="seccion-buscador" class="search-section-wrap">
+    <!-- Formas geométricas de fondo estilo cósmico -->
+    <div class="search-section-cubes" aria-hidden="true">
+      <span class="cosmic-cube cc-1"></span>
+      <span class="cosmic-cube cc-2"></span>
+      <span class="cosmic-cube cc-3"></span>
+      <span class="cosmic-cube cc-4"></span>
+      <span class="cosmic-cube cc-5"></span>
+    </div>
+    <div class="container search-section-container">
+<div id="buscador" class="search-hub-card">
         <div class="search-hub-head">
           <div>
-            <span class="search-hub-kicker">Buscador con fuentes oficiales</span>
+            <span class="search-hub-kicker">Buscador:</span>
             <h2 class="search-hub-title">¿Qué quieres descubrir hoy?</h2>
           </div>
           <p class="search-hub-note">Escribe tu duda o elige una pregunta para ver la respuesta y el documento exacto de donde sale.</p>
@@ -322,8 +338,11 @@
               <button type="button" class="qcat-tab" data-qcat="Campismo, Nudos y Naturaleza">Meztitla, Eventos y Campismo</button>
               <button type="button" class="qcat-tab" data-qcat="Primeros Auxilios y Seguridad">Primeros Auxilios y Seguridad</button>
             </div>
-            <button type="button" id="shuffleQuestionsBtn" class="btn-shuffle-questions" title="Mostrar otras preguntas del banco de consulta">
-              Mostrar más preguntas (<span id="totalQuestionsCount">5,451</span>)
+            <button type="button" id="shuffleQuestionsBtn" class="btn-shuffle-questions" title="Cargar más preguntas aleatorias">
+              <svg class="ico-reload" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-1.19"/>
+              </svg>
+              <span>Mostrar más preguntas</span>
             </button>
           </div>
 
@@ -427,14 +446,8 @@
       </div>
     </div>
 
-    <!-- Divisor de onda animada inferior -->
-    <div class="wave-divider-bottom" aria-hidden="true">
-      <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
-        <path class="wave-path-1" d="M0,40 C320,95 620,0 960,48 C1200,82 1350,30 1440,18 L1440,90 L0,90 Z" fill="rgba(255,255,255,0.22)"></path>
-        <path class="wave-path-2" d="M0,58 C380,10 760,92 1140,42 C1300,22 1390,48 1440,56 L1440,90 L0,90 Z" fill="#ffffff"></path>
-      </svg>
-    </div>
-  </section>
+    </section>
+
 
   <!-- APARTADO DE PRIMEROS PASOS: GRUPOS, PLATAFORMAS, MEZTITLA, EVENTOS, CPRC/CNRC Y PROYECTOS -->
   <section id="guia-inicio" class="quickstart-section">
