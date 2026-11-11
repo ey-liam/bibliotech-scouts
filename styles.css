@@ -8031,77 +8031,24 @@ header.main-header.nav-open .nav-toggle-icon span:nth-child(3) {
   transform: scale(0.92);
 }
 
-html[data-camp-mode="true"] .btn-camp-mode {
-  background: rgba(255, 120, 0, 0.2);
-  border-color: #ff7700;
-  color: #ff9933;
-  box-shadow: 0 0 12px rgba(255, 120, 0, 0.35);
-}
+
 
 /* ==========================================================================
    MODO NOCHE LIMPIO (ALTO CONTRASTE Y CORES INVERTIDOS SIN TONO AMARILLENTO)
    ========================================================================== */
-html[data-camp-mode="true"] {
-  --bg-primary: #070412 !important;
-  --bg-secondary: #0c081e !important;
-  --glass-surface: rgba(18, 11, 40, 0.94) !important;
-  --glass-border: rgba(139, 92, 246, 0.35) !important;
-  --text-primary: #ffffff !important;
-  --text-secondary: #cbd5e1 !important;
-  --accent-primary: #38bdf8 !important;
-  background-color: #070412 !important;
-  color: #ffffff !important;
-}
 
-html[data-camp-mode="true"] body {
-  background: #070412 !important;
-  color: #ffffff !important;
-}
 
-html[data-camp-mode="true"] .site-header,
-html[data-camp-mode="true"] .main-header,
-html[data-camp-mode="true"] .site-footer,
-html[data-camp-mode="true"] .modal-container,
-html[data-camp-mode="true"] .bt-unified-dock,
-html[data-camp-mode="true"] .service-info-card,
-html[data-camp-mode="true"] .about-card,
-html[data-camp-mode="true"] .scout-sec-card,
-html[data-camp-mode="true"] .book-card,
-html[data-camp-mode="true"] .doc-card,
-html[data-camp-mode="true"] .quick-card {
-  background: rgba(18, 11, 40, 0.95) !important;
-  border-color: rgba(139, 92, 246, 0.4) !important;
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(139, 92, 246, 0.2) inset !important;
-  color: #ffffff !important;
-}
 
-html[data-camp-mode="true"] a,
-html[data-camp-mode="true"] h1,
-html[data-camp-mode="true"] h2,
-html[data-camp-mode="true"] h3,
-html[data-camp-mode="true"] h4,
-html[data-camp-mode="true"] strong {
-  color: #ffffff !important;
-}
 
-html[data-camp-mode="true"] p,
-html[data-camp-mode="true"] span,
-html[data-camp-mode="true"] li {
-  color: #e2e8f0;
-}
 
-html[data-camp-mode="true"] img,
-html[data-camp-mode="true"] .book-cover,
-html[data-camp-mode="true"] iframe {
-  filter: brightness(0.95) contrast(1.05) !important;
-}
 
-html[data-camp-mode="true"] .btn-camp-mode {
-  background: rgba(56, 189, 248, 0.25) !important;
-  border-color: #38bdf8 !important;
-  color: #38bdf8 !important;
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.45) !important;
-}
+
+
+
+
+
+
+
 
 /* En móvil, ocultar botón de campamento de la cabecera para no duplicar con el dock */
 @media (max-width: 900px) {
@@ -8892,27 +8839,7 @@ mark.doc-highlight {
 }
 
 /* Modo campamento en el panel de guardados */
-html[data-camp-mode="true"] .saved-panel-sheet {
-  background: #120902 !important;
-  color: #ffeedd !important;
-  border-top: 2px solid rgba(255, 120, 0, 0.4) !important;
-}
-html[data-camp-mode="true"] .saved-panel-head h3,
-html[data-camp-mode="true"] .saved-card-title {
-  color: #ffcc80 !important;
-}
-html[data-camp-mode="true"] .saved-card {
-  background: rgba(255, 120, 0, 0.08) !important;
-  border-color: rgba(255, 120, 0, 0.25) !important;
-}
-html[data-camp-mode="true"] .saved-card-fname,
-html[data-camp-mode="true"] .saved-panel-note {
-  color: #fed7aa !important;
-}
-html[data-camp-mode="true"] .saved-panel-close {
-  background: rgba(255, 120, 0, 0.18) !important;
-  color: #ffeedd !important;
-}
+/* saved panel camp mode unified */
 
 /* ==========================================================================
    AGENTES DE CAMBIO: CONTACTO SIMPLE
@@ -9434,4 +9361,302 @@ html[data-camp-mode="true"] .saved-panel-close {
   .bts-doodle--knot { display: none; }
   .bts-doodle--tent { display: none; }
   .btn-camp-mode { display: none !important; }
+}
+
+
+/* ==========================================================================
+   MODO NOCHE / MODO OSCURO GLOBAL COMPLETO (INVERSIÓN REAL Y LIMPIA DE TODO EL SITIO)
+   ========================================================================== */
+
+html[data-camp-mode="true"] {
+  --bg-primary: #070514 !important;
+  --bg-secondary: #0c0820 !important;
+  --bg-card: rgba(20, 12, 42, 0.94) !important;
+  --glass-surface: rgba(18, 11, 40, 0.94) !important;
+  --glass-border: rgba(139, 92, 246, 0.35) !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #cbd5e1 !important;
+  --text-muted: #94a3b8 !important;
+  --text-main: #ffffff !important;
+  --ink: #ffffff !important;
+  --ink-soft: #cbd5e1 !important;
+  --scout-navy: #ffffff !important;
+  --accent-primary: #38bdf8 !important;
+  background-color: #070514 !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] body,
+html[data-camp-mode="true"] main,
+html[data-camp-mode="true"] #contenido-principal {
+  background: #070514 !important;
+  color: #ffffff !important;
+}
+
+/* 1. SECCIONES: TODAS EN FONDO OSCURO CÓSMICO */
+html[data-camp-mode="true"] .quickstart-section,
+html[data-camp-mode="true"] .quickstart-3d-section,
+html[data-camp-mode="true"] .library-section,
+html[data-camp-mode="true"] .about-section,
+html[data-camp-mode="true"] .sections-section,
+html[data-camp-mode="true"] .evolution-section,
+html[data-camp-mode="true"] .catalog-section,
+html[data-camp-mode="true"] .app-download-section,
+html[data-camp-mode="true"] .official-services-section,
+html[data-camp-mode="true"] .agentes-cambio-section,
+html[data-camp-mode="true"] .site-footer {
+  background: radial-gradient(ellipse at 50% 20%, #150d30 0%, #0d0822 65%, #060410 100%) !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
+  color: #ffffff !important;
+}
+
+/* 2. TARJETAS Y CONTENEDORES: VIDRIO OSCURO DE ALTO CONTRASTE */
+html[data-camp-mode="true"] .starter-3d-card,
+html[data-camp-mode="true"] .quickstart-card,
+html[data-camp-mode="true"] .about-card,
+html[data-camp-mode="true"] .scout-sec-card,
+html[data-camp-mode="true"] .doc-card,
+html[data-camp-mode="true"] .book-card,
+html[data-camp-mode="true"] .change-card,
+html[data-camp-mode="true"] .app-download-shell,
+html[data-camp-mode="true"] .search-hub-card,
+html[data-camp-mode="true"] .modal-container,
+html[data-camp-mode="true"] .modal-box,
+html[data-camp-mode="true"] .reader-modal,
+html[data-camp-mode="true"] .saved-panel-sheet,
+html[data-camp-mode="true"] .saved-card,
+html[data-camp-mode="true"] .service-info-card {
+  background: rgba(20, 12, 42, 0.94) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.38) !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(139, 92, 246, 0.15) inset !important;
+  color: #ffffff !important;
+}
+
+/* 3. IMAGEN 1: BOTONES Y TEXTOS DE PRIMEROS PASOS (#guia-inicio) */
+html[data-camp-mode="true"] .starter-3d-card h3,
+html[data-camp-mode="true"] .starter-3d-card h4 {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .starter-3d-card p,
+html[data-camp-mode="true"] .starter-3d-card span,
+html[data-camp-mode="true"] .starter-3d-card small {
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .starter-3d-card button,
+html[data-camp-mode="true"] .starter-chip-btn,
+html[data-camp-mode="true"] .qs-query-btn,
+html[data-camp-mode="true"] .starter-chip-wrap button {
+  background: rgba(12, 7, 26, 0.88) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.38) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-camp-mode="true"] .starter-3d-card button:hover,
+html[data-camp-mode="true"] .starter-chip-btn:hover,
+html[data-camp-mode="true"] .qs-query-btn:hover {
+  background: rgba(121, 40, 202, 0.4) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35) !important;
+}
+
+/* 4. IMAGEN 2: CONTROLES, FILTROS Y ESTANTES DE BIBLIOTECA */
+html[data-camp-mode="true"] .lib-search-input,
+html[data-camp-mode="true"] .lib-filter-select,
+html[data-camp-mode="true"] .library-search-mini input,
+html[data-camp-mode="true"] .library-controls-bar input,
+html[data-camp-mode="true"] .library-controls-bar select {
+  background: rgba(14, 8, 32, 0.94) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.45) !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .lib-search-input::placeholder,
+html[data-camp-mode="true"] .library-search-mini input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html[data-camp-mode="true"] .cat-filter-pill,
+html[data-camp-mode="true"] .shelf-pill,
+html[data-camp-mode="true"] .lib-filter-pill,
+html[data-camp-mode="true"] .library-shelves-tabs button {
+  background: rgba(22, 13, 46, 0.88) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.35) !important;
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .cat-filter-pill:hover,
+html[data-camp-mode="true"] .shelf-pill:hover,
+html[data-camp-mode="true"] .lib-filter-pill:hover {
+  background: rgba(139, 92, 246, 0.3) !important;
+  border-color: #a855f7 !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .cat-filter-pill.active,
+html[data-camp-mode="true"] .shelf-pill.active,
+html[data-camp-mode="true"] .lib-filter-pill.active,
+html[data-camp-mode="true"] .shelf-pill[aria-selected="true"] {
+  background: linear-gradient(135deg, #7928ca, #0284c7) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 18px rgba(56, 189, 248, 0.45) !important;
+}
+
+/* 5. IMAGEN 3: BOTONES Y BADGES DE TARJETAS DE LECTURA */
+html[data-camp-mode="true"] .btn-open-read,
+html[data-camp-mode="true"] .doc-btn-read,
+html[data-camp-mode="true"] .book-card .btn,
+html[data-camp-mode="true"] .book-card a.btn,
+html[data-camp-mode="true"] .doc-card .btn {
+  background: linear-gradient(135deg, #7928ca 0%, #0284c7 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-camp-mode="true"] .btn-open-read:hover,
+html[data-camp-mode="true"] .doc-btn-read:hover,
+html[data-camp-mode="true"] .book-card .btn:hover {
+  background: linear-gradient(135deg, #8b5cf6 0%, #0ea5e9 100%) !important;
+  box-shadow: 0 6px 24px rgba(56, 189, 248, 0.5) !important;
+  transform: translateY(-2px) !important;
+}
+
+html[data-camp-mode="true"] .book-page-count,
+html[data-camp-mode="true"] .doc-pages-badge,
+html[data-camp-mode="true"] .doc-card-badge {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 6. IMAGEN 4: CAJA DE AUTOR / FIRMA Y CINTILLO (#acerca) */
+html[data-camp-mode="true"] .about-signature-box {
+  background: rgba(12, 7, 26, 0.92) !important;
+  border: 1.5px solid rgba(234, 179, 8, 0.5) !important;
+  border-left: 4px solid #eab308 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-camp-mode="true"] .about-signature-box .signature-main,
+html[data-camp-mode="true"] .about-signature-box strong {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .about-signature-box .signature-sub {
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .section-eyebrow,
+html[data-camp-mode="true"] .section-badge,
+html[data-camp-mode="true"] .about-badge-pill {
+  background: rgba(139, 92, 246, 0.25) !important;
+  border: 1px solid rgba(139, 92, 246, 0.5) !important;
+  color: #38bdf8 !important;
+}
+
+/* 7. IMAGEN 5: ETIQUETAS DE EDAD Y LEMA EN SECCIONES SCOUT (#secciones) */
+html[data-camp-mode="true"] .sec-age-tag,
+html[data-camp-mode="true"] .sec-tag {
+  background: rgba(139, 92, 246, 0.25) !important;
+  border: 1px solid rgba(139, 92, 246, 0.5) !important;
+  color: #38bdf8 !important;
+  font-weight: 800 !important;
+}
+
+html[data-camp-mode="true"] .sec-motto {
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .scout-sec-card h3 {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .scout-sec-card p {
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .sec-popout-photo {
+  background: rgba(20, 12, 42, 0.92) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.4) !important;
+}
+
+/* 8. GENERAL DE TEXTOS Y ENLACES EN MODO OSCURO */
+html[data-camp-mode="true"] h1,
+html[data-camp-mode="true"] h2,
+html[data-camp-mode="true"] h3,
+html[data-camp-mode="true"] h4,
+html[data-camp-mode="true"] h5,
+html[data-camp-mode="true"] h6,
+html[data-camp-mode="true"] strong {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] p,
+html[data-camp-mode="true"] li,
+html[data-camp-mode="true"] span,
+html[data-camp-mode="true"] label {
+  color: #e2e8f0;
+}
+
+html[data-camp-mode="true"] a {
+  color: #38bdf8;
+}
+
+html[data-camp-mode="true"] a:hover {
+  color: #7dd3fc;
+}
+
+/* 9. FOTOS Y DOCUMENTOS: LIMPIOS SIN TONO AMARILLENTO NI SEPIA */
+html[data-camp-mode="true"] img,
+html[data-camp-mode="true"] .book-cover,
+html[data-camp-mode="true"] iframe {
+  filter: brightness(0.96) contrast(1.04) !important;
+}
+
+/* 10. PANEL DE GUARDADOS Y NOTAS */
+html[data-camp-mode="true"] .saved-panel-sheet {
+  background: #0d0822 !important;
+  color: #ffffff !important;
+  border-top: 2px solid rgba(139, 92, 246, 0.5) !important;
+}
+
+html[data-camp-mode="true"] .saved-panel-head h3,
+html[data-camp-mode="true"] .saved-card-title {
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] .saved-card {
+  background: rgba(22, 13, 46, 0.85) !important;
+  border: 1px solid rgba(139, 92, 246, 0.35) !important;
+}
+
+html[data-camp-mode="true"] .saved-card-fname,
+html[data-camp-mode="true"] .saved-panel-note {
+  color: #cbd5e1 !important;
+}
+
+html[data-camp-mode="true"] .saved-panel-close {
+  background: rgba(139, 92, 246, 0.25) !important;
+  color: #ffffff !important;
+}
+
+/* 11. BOTÓN DE MODO NOCHE: VISIBLE EN ESCRITORIO Y OCULTO EN MÓVIL */
+html[data-camp-mode="true"] .btn-camp-mode {
+  background: rgba(56, 189, 248, 0.25) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.45) !important;
+}
+
+@media (max-width: 900px) {
+  .btn-camp-mode {
+    display: none !important;
+  }
 }
