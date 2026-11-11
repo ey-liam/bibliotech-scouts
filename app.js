@@ -102,9 +102,6 @@ function buildFileUrl(doc, download = false) {
     return `/raw-files/${encoded}${download ? "?download=1" : ""}`;
   }
   const extLow = (doc.ext || "pdf").toLowerCase();
-  if (doc.has_web_file && doc.sha12) {
-    return `files/${doc.sha12}.${extLow}`;
-  }
   if (doc.sha12) {
     return `${GITHUB_RELEASE_BASE}${doc.sha12}.${extLow}`;
   }
@@ -2194,7 +2191,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     } catch (_) {}
   }
 
-  const canEmbedNative = IS_LOCAL_SERVER || Boolean(doc.has_web_file);
+  const canEmbedNative = IS_LOCAL_SERVER;
 
   if (doc.ext === "PDF") {
     if (canEmbedNative) {
@@ -2954,42 +2951,230 @@ function toggleReaderTTS(textToRead) {
   BiblioFeel.pulse(12);
 }
 
-function updateBackpackBadge() {
-  const pins = getBackpackPins();
-  const countEl = document.getElementById("dockBackpackCount");
+// ============================================================================
+// GUARDADOS Y NOTAS EN ESTE NAVEGADOR (COOKIES + LOCALSTORAGE HÍBRIDO)
+// ============================================================================
+
+function setCookie(name, val, days = 365) {
+  try {
+    const d = new Date();
+    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(val)};${expires};path=/;SameSite=Lax`;
+  } catch (_) {}
+}
+
+function getCookie(name) {
+  try {
+    const cname = name + "=";
+    const decoded = decodeURIComponent(document.cookie);
+    const ca = decoded.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i].trim();
+      if (c.indexOf(cname) === 0) {
+        return c.substring(cname.length, c.length);
+      }
+    }
+  } catch (_) {}
+  return "";
+}
+
+function getSavedPins() {
+  try {
+    const fromLs = localStorage.getItem("bt_saved_docs");
+    if (fromLs) {
+      const parsed = JSON.parse(fromLs);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (_) {}
+  try {
+    const fromCookie = getCookie("bt_saved_docs");
+    if (fromCookie) {
+      const parsed = JSON.parse(fromCookie);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (_) {}
+  try {
+    const legacy = localStorage.getItem("bt_backpack_pins");
+    if (legacy) {
+      const parsed = JSON.parse(legacy);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        setSavedPins(parsed);
+        return parsed;
+      }
+    }
+  } catch (_) {}
+  return [];
+}
+
+function setSavedPins(pins) {
+  const json = JSON.stringify(pins);
+  try { localStorage.setItem("bt_saved_docs", json); } catch (_) {}
+  setCookie("bt_saved_docs", json);
+  updateSavedBadge();
+}
+
+function toggleSavedPin(docId) {
+  if (!docId) return false;
+  let pins = getSavedPins();
+  const idx = pins.indexOf(docId);
+  let isSaved = false;
+  if (idx >= 0) {
+    pins.splice(idx, 1);
+    isSaved = false;
+  } else {
+    pins.push(docId);
+    isSaved = true;
+  }
+  setSavedPins(pins);
+  BiblioFeel.pulse(isSaved ? [12, 30, 18] : 10);
+  return isSaved;
+}
+
+function getDocNote(docId) {
+  try {
+    const fromLs = localStorage.getItem("bt_note_" + docId);
+    if (fromLs) return fromLs;
+  } catch (_) {}
+  try {
+    const cookieNote = getCookie("bt_n_" + docId);
+    if (cookieNote) return cookieNote;
+  } catch (_) {}
+  return "";
+}
+
+function setDocNote(docId, noteText) {
+  const clean = (noteText || "").trim();
+  try {
+    if (clean) {
+      localStorage.setItem("bt_note_" + docId, clean);
+      setCookie("bt_n_" + docId, clean);
+    } else {
+      localStorage.removeItem("bt_note_" + docId);
+      setCookie("bt_n_" + docId, "", -1);
+    }
+  } catch (_) {}
+}
+
+function updateSavedBadge() {
+  const pins = getSavedPins();
+  const countEl = document.getElementById("dockSavedCount");
   if (countEl) {
     countEl.textContent = String(pins.length);
     countEl.classList.toggle("hidden", pins.length === 0);
   }
 }
 
-function getBackpackPins() {
-  try {
-    return JSON.parse(localStorage.getItem("bt_backpack_pins") || "[]");
-  } catch (_) {
-    return [];
+function openSavedPanel() {
+  const panel = document.getElementById("savedPanel");
+  const list = document.getElementById("savedPanelList");
+  if (!panel || !list) return;
+
+  const pins = getSavedPins();
+  if (pins.length === 0) {
+    list.innerHTML = `
+      <div class="saved-empty-state">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+        <p><strong>Aún no tienes documentos guardados</strong></p>
+        <span>Abre cualquier libro, manual o documento de la biblioteca y toca <strong>Guardar</strong> para tenerlo siempre a la mano en este dispositivo.</span>
+      </div>
+    `;
+  } else {
+    const savedDocs = STATE.documents.filter((d) => pins.includes(d.id));
+    list.innerHTML = savedDocs.map((doc) => {
+      const note = getDocNote(doc.id);
+      return `
+        <article class="saved-card" data-doc-id="${escapeHtml(doc.id)}">
+          <div class="saved-card-main">
+            <span class="badge badge-ext">${escapeHtml(doc.ext)}</span>
+            <span class="badge badge-sec">${escapeHtml(doc.section_label || 'General')}</span>
+            <span class="badge badge-year">${doc.year || '2026'}</span>
+            <h4 class="saved-card-title">${escapeHtml(doc.title)}</h4>
+            <span class="saved-card-fname">${escapeHtml(doc.filename)}</span>
+            ${note ? `<div class="saved-card-note"><strong>Notas:</strong> ${escapeHtml(note)}</div>` : ''}
+          </div>
+          <div class="saved-card-actions">
+            <button type="button" class="btn-saved-open" data-open-doc="${escapeHtml(doc.id)}">Abrir</button>
+            <button type="button" class="btn-saved-remove" data-remove-doc="${escapeHtml(doc.id)}" title="Quitar de guardados">Quitar</button>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    list.querySelectorAll("[data-open-doc]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-open-doc");
+        closeSavedPanel();
+        openDocumentModal(id);
+      });
+    });
+
+    list.querySelectorAll("[data-remove-doc]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-remove-doc");
+        toggleSavedPin(id);
+        openSavedPanel();
+      });
+    });
   }
+
+  panel.classList.remove("hidden");
+  document.documentElement.classList.add("modal-open");
+  document.body.classList.add("modal-open");
 }
 
-function toggleBackpackPin(docId) {
-  if (!docId) return false;
-  let pins = getBackpackPins();
-  const idx = pins.indexOf(docId);
-  let isPinned = false;
-  if (idx >= 0) {
-    pins.splice(idx, 1);
-    isPinned = false;
-  } else {
-    pins.push(docId);
-    isPinned = true;
+function closeSavedPanel() {
+  const panel = document.getElementById("savedPanel");
+  if (!panel) return;
+  panel.classList.add("hidden");
+  if (!document.querySelector(".modal-documento:not(.hidden)")) {
+    document.documentElement.classList.remove("modal-open");
+    document.body.classList.remove("modal-open");
   }
-  localStorage.setItem("bt_backpack_pins", JSON.stringify(pins));
-  updateBackpackBadge();
-  BiblioFeel.pulse(isPinned ? [12, 30, 18] : 10);
-  return isPinned;
 }
 
 function setupReaderQoLHandlers(doc, fullText) {
+  // Manejo de Zoom para tablets y pantallas grandes
+  const previewPane = document.getElementById("modalPreviewPane");
+  const textPane = document.getElementById("modalTextPane");
+  let currentZoom = 1.0;
+
+  const applyZoom = () => {
+    if (previewPane) {
+      const iframe = previewPane.querySelector("iframe");
+      if (iframe) {
+        iframe.style.transform = currentZoom === 1.0 ? "none" : `scale(${currentZoom})`;
+        iframe.style.transformOrigin = "top center";
+        iframe.style.width = currentZoom < 1.0 ? `${(100 / currentZoom).toFixed(1)}%` : "100%";
+      }
+    }
+    if (textPane) {
+      textPane.style.fontSize = `${(0.9 * currentZoom).toFixed(2)}rem`;
+    }
+  };
+
+  const btnZoomOut = document.getElementById("btnZoomOut");
+  if (btnZoomOut) {
+    btnZoomOut.onclick = () => {
+      if (currentZoom > 0.65) {
+        currentZoom = Math.max(0.65, Number((currentZoom - 0.15).toFixed(2)));
+        applyZoom();
+        BiblioFeel.pulse(8);
+      }
+    };
+  }
+
+  const btnZoomIn = document.getElementById("btnZoomIn");
+  if (btnZoomIn) {
+    btnZoomIn.onclick = () => {
+      if (currentZoom < 1.5) {
+        currentZoom = Math.min(1.5, Number((currentZoom + 0.15).toFixed(2)));
+        applyZoom();
+        BiblioFeel.pulse(8);
+      }
+    };
+  }
+
   const ttsBtn = document.getElementById("btnReaderTTS");
   if (ttsBtn) {
     ttsBtn.onclick = () => {
@@ -2997,19 +3182,25 @@ function setupReaderQoLHandlers(doc, fullText) {
     };
   }
 
-  const pinBtn = document.getElementById("btnPinBackpack");
+  // Botón Guardar en este navegador
+  const pinBtn = document.getElementById("btnPinDoc") || document.getElementById("btnPinBackpack");
   if (pinBtn) {
-    const pins = getBackpackPins();
-    const isPinned = pins.includes(doc.id);
-    pinBtn.classList.toggle("is-active", isPinned);
-    pinBtn.title = isPinned ? "Quitar de Mi Mochila" : "Guardar en Mi Mochila Scout";
+    const pins = getSavedPins();
+    const isSaved = pins.includes(doc.id);
+    pinBtn.classList.toggle("is-active", isSaved);
+    pinBtn.title = isSaved ? "Quitar de guardados" : "Guardar documento en este navegador";
+    const span = pinBtn.querySelector("span");
+    if (span) span.textContent = isSaved ? "Guardado" : "Guardar";
+
     pinBtn.onclick = () => {
-      const nowPinned = toggleBackpackPin(doc.id);
-      pinBtn.classList.toggle("is-active", nowPinned);
-      pinBtn.title = nowPinned ? "Quitar de Mi Mochila" : "Guardar en Mi Mochila Scout";
+      const nowSaved = toggleSavedPin(doc.id);
+      pinBtn.classList.toggle("is-active", nowSaved);
+      pinBtn.title = nowSaved ? "Quitar de guardados" : "Guardar documento en este navegador";
+      if (span) span.textContent = nowSaved ? "Guardado" : "Guardar";
     };
   }
 
+  // Botón Notas
   const fieldNoteBtn = document.getElementById("btnFieldNote");
   const fieldNoteBox = document.getElementById("modalFieldNoteBox");
   const fieldNoteText = document.getElementById("modalFieldNoteText");
@@ -3017,7 +3208,7 @@ function setupReaderQoLHandlers(doc, fullText) {
   const closeNoteBtn = document.getElementById("btnCloseFieldNote");
 
   if (fieldNoteBtn && fieldNoteBox && fieldNoteText) {
-    const savedNote = localStorage.getItem("bt_note_" + doc.id) || "";
+    const savedNote = getDocNote(doc.id);
     fieldNoteText.value = savedNote;
     fieldNoteBtn.classList.toggle("is-active", Boolean(savedNote));
 
@@ -3037,20 +3228,14 @@ function setupReaderQoLHandlers(doc, fullText) {
     if (saveNoteBtn) {
       saveNoteBtn.onclick = () => {
         const val = fieldNoteText.value.trim();
-        if (val) {
-          localStorage.setItem("bt_note_" + doc.id, val);
-          fieldNoteBtn.classList.add("is-active");
-        } else {
-          localStorage.removeItem("bt_note_" + doc.id);
-          fieldNoteBtn.classList.remove("is-active");
-        }
+        setDocNote(doc.id, val);
+        fieldNoteBtn.classList.toggle("is-active", Boolean(val));
         fieldNoteBox.classList.add("hidden");
         BiblioFeel.pulse([10, 30]);
       };
     }
   }
 
-  // Buscador interno de texto en el lector
   const searchInput = document.getElementById("modalInternalSearchInput");
   const prevBtn = document.getElementById("modalSearchPrevBtn");
   const nextBtn = document.getElementById("modalSearchNextBtn");
@@ -3331,22 +3516,20 @@ function setupUnifiedDock() {
       const action = item.getAttribute("data-action");
       const target = item.getAttribute("data-target");
 
-      if (action === "mochila") {
+      if (action === "saved") {
         e.preventDefault();
-        const pins = getBackpackPins();
-        if (!pins.length) {
-          alert("Tu Mochila Scout aún no tiene manuales guardados. En cualquier documento del lector, presiona 'Mochila' para tenerlo siempre a mano.");
-          return;
-        }
-        // Filtrar biblioteca por documentos guardados
-        STATE.libraryQuery = "";
-        STATE.librarySection = "all";
-        STATE.currentShelfDocs = STATE.documents.filter((d) => pins.includes(d.id));
-        renderLibraryShelfCards(STATE.currentShelfDocs);
-        const biblio = document.getElementById("biblioteca");
-        if (biblio) biblio.scrollIntoView({ behavior: "smooth", block: "start" });
+        openSavedPanel();
         items.forEach((i) => i.classList.remove("is-active"));
         item.classList.add("is-active");
+        return;
+      }
+
+      if (action === "night") {
+        e.preventDefault();
+        BiblioFeel.toggleCampMode();
+        const isNight = document.documentElement.getAttribute("data-camp-mode") === "true";
+        item.setAttribute("aria-pressed", isNight ? "true" : "false");
+        item.classList.toggle("is-active", isNight);
         return;
       }
 
@@ -3358,6 +3541,14 @@ function setupUnifiedDock() {
         item.classList.add("is-active");
       }
     });
+  });
+
+  // Cerrar panel de guardados al pulsar backdrop o botones con data-close-saved
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("[data-close-saved]")) {
+      e.preventDefault();
+      closeSavedPanel();
+    }
   });
 
   // Vincular scroll spy con los items del dock
@@ -3379,7 +3570,7 @@ function setupUnifiedDock() {
     }
   }, { passive: true });
 
-  updateBackpackBadge();
+  updateSavedBadge();
 }
 
 document.addEventListener("DOMContentLoaded", initApp);

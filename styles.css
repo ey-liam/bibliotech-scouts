@@ -8275,17 +8275,16 @@ button:active,
   justify-content: space-around;
   gap: 4px;
   padding: 6px 10px;
-  width: min(94vw, 460px);
-  height: var(--dock-height);
-  background: rgba(10, 16, 31, 0.84);
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  width: min(94vw, 480px);
+  height: var(--dock-height, 62px);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: 999px;
   box-shadow:
-    0 18px 40px -8px rgba(0, 0, 0, 0.65),
-    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-    0 0 24px rgba(56, 189, 248, 0.16);
+    0 14px 34px -6px rgba(15, 23, 42, 0.16),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
 }
 
 @media (max-width: 920px) {
@@ -8305,17 +8304,18 @@ button:active,
   align-items: center;
   justify-content: center;
   gap: 3px;
-  height: 54px;
+  height: 52px;
   border-radius: 999px;
   border: none;
   background: transparent;
-  color: rgba(226, 232, 240, 0.72);
+  color: #475569;
   font-size: 0.68rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  padding: 0 6px;
+  padding: 0 4px;
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 .bt-dock-item svg {
@@ -8325,13 +8325,13 @@ button:active,
 }
 
 .bt-dock-item.is-active {
-  color: #38bdf8;
-  background: radial-gradient(circle at 50% 25%, rgba(56, 189, 248, 0.22), rgba(56, 189, 248, 0.05) 75%);
+  color: #2563eb;
+  background: radial-gradient(circle at 50% 25%, rgba(37, 99, 235, 0.14), rgba(37, 99, 235, 0.03) 75%);
 }
 
 .bt-dock-item.is-active svg {
   transform: translateY(-2px) scale(1.12);
-  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+  filter: drop-shadow(0 2px 6px rgba(37, 99, 235, 0.35));
 }
 
 .bt-dock-badge {
@@ -8498,4 +8498,486 @@ mark.doc-highlight {
   padding: 5px 10px;
   font-size: 0.76rem;
   cursor: pointer;
+}
+
+
+/* ==========================================================================
+   HERO V7: PORTADA PRINCIPAL ESTILO JAMBOREE 2027 EN PALETA SCOUT AZUL-MORADA
+   ========================================================================== */
+.hero-showcase-grid.hero-v7 {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero-title-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem 0.5rem 2rem 0.5rem;
+  overflow: visible;
+}
+
+.hero-band {
+  position: absolute;
+  top: 50%;
+  left: -15vw;
+  right: -15vw;
+  height: 26px;
+  background: linear-gradient(90deg, transparent 0%, rgba(37, 99, 235, 0.25) 15%, rgba(124, 58, 237, 0.4) 50%, rgba(37, 99, 235, 0.25) 85%, transparent 100%);
+  transform: translateY(-50%) rotate(-3deg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-title-panel {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 780px);
+  padding: 2.2rem 2.5rem;
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 45%, #7c3aed 100%);
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 24px 50px -10px rgba(15, 23, 42, 0.75),
+    0 0 40px rgba(59, 130, 246, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  transform: rotate(-2deg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.hero-title-panel:hover {
+  transform: rotate(-0.5deg) scale(1.02);
+  box-shadow:
+    0 30px 65px -10px rgba(15, 23, 42, 0.85),
+    0 0 55px rgba(124, 58, 237, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+}
+
+.hero-panel-icon {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1.8;
+  pointer-events: none;
+}
+.hero-panel-icon.hpi-fleur {
+  top: 14px;
+  left: 20px;
+  transform: rotate(-10deg);
+}
+.hero-panel-icon.hpi-globe {
+  top: 16px;
+  right: 24px;
+  transform: rotate(12deg);
+}
+.hero-panel-icon.hpi-fire {
+  bottom: 14px;
+  left: 24px;
+  transform: rotate(-6deg);
+}
+
+.hero-panel-kicker {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #bfdbfe;
+  margin-bottom: 0.35rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-panel-title {
+  display: block;
+  font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow:
+    0 3px 0 rgba(15, 23, 42, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.55);
+  margin-bottom: 0.65rem;
+}
+
+.hero-panel-sub {
+  display: inline-block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  background: rgba(0, 0, 0, 0.24);
+  padding: 0.3rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.hero-intro-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  align-items: center;
+  gap: 2.8rem;
+}
+
+@media (max-width: 900px) {
+  .hero-intro-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .hero-title-panel {
+    padding: 1.6rem 1.4rem;
+    transform: rotate(-1.5deg);
+  }
+  .hero-panel-icon {
+    display: none;
+  }
+}
+
+/* En pantallas grandes (PC), ocultar el dock inferior siempre */
+@media (min-width: 921px) {
+  .bt-unified-dock {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   PANEL: DOCUMENTOS GUARDADOS Y NOTAS (SOLO EN ESTE NAVEGADOR)
+   ========================================================================== */
+.saved-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.saved-panel.hidden {
+  display: none !important;
+}
+
+.saved-panel-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.saved-panel-sheet {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 640px);
+  max-height: 85vh;
+  background: #ffffff;
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.4rem calc(1.4rem + env(safe-area-inset-bottom, 0px)) 1.4rem;
+  overflow: hidden;
+  animation: slideUpSaved 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpSaved {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.saved-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.saved-panel-kicker {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #2563eb;
+}
+
+.saved-panel-head h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.saved-panel-close {
+  background: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.saved-panel-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.saved-panel-note {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0.5rem 0 0.8rem 0;
+  line-height: 1.45;
+}
+
+.saved-panel-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-right: 4px;
+}
+
+.saved-empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: #64748b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.saved-empty-state svg {
+  color: #94a3b8;
+  margin-bottom: 0.4rem;
+}
+
+.saved-empty-state p {
+  margin: 0;
+  font-size: 0.98rem;
+  color: #1e293b;
+}
+
+.saved-empty-state span {
+  font-size: 0.82rem;
+  max-width: 380px;
+  line-height: 1.5;
+}
+
+.saved-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.saved-card:hover {
+  border-color: #cbd5e1;
+}
+
+.saved-card-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.saved-card-title {
+  margin: 0.3rem 0 0.15rem 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+}
+
+.saved-card-fname {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saved-card-note {
+  margin-top: 0.45rem;
+  padding: 0.4rem 0.65rem;
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  color: #334155;
+  line-height: 1.4;
+}
+
+.saved-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.btn-saved-open {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-saved-open:hover {
+  background: #1d4ed8;
+}
+
+.btn-saved-remove {
+  background: transparent;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-saved-remove:hover {
+  background: #fee2e2;
+}
+
+/* Modo campamento en el panel de guardados */
+html[data-camp-mode="true"] .saved-panel-sheet {
+  background: #120902 !important;
+  color: #ffeedd !important;
+  border-top: 2px solid rgba(255, 120, 0, 0.4) !important;
+}
+html[data-camp-mode="true"] .saved-panel-head h3,
+html[data-camp-mode="true"] .saved-card-title {
+  color: #ffcc80 !important;
+}
+html[data-camp-mode="true"] .saved-card {
+  background: rgba(255, 120, 0, 0.08) !important;
+  border-color: rgba(255, 120, 0, 0.25) !important;
+}
+html[data-camp-mode="true"] .saved-card-fname,
+html[data-camp-mode="true"] .saved-panel-note {
+  color: #fed7aa !important;
+}
+html[data-camp-mode="true"] .saved-panel-close {
+  background: rgba(255, 120, 0, 0.18) !important;
+  color: #ffeedd !important;
+}
+
+/* ==========================================================================
+   AGENTES DE CAMBIO: CONTACTO SIMPLE
+   ========================================================================== */
+.adc-contact-simple {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.adc-contact-link {
+  color: #93c5fd;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+.adc-contact-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.adc-contact-sep {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ==========================================================================
+   OPTIMIZACIÓN DE BARRA DE HERRAMIENTAS Y BOTONES DEL LECTOR Y BIBLIOTECA
+   ========================================================================== */
+.modal-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.btn-modal-close {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #f1f5f9;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.btn-modal-close:hover {
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.modal-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding: 4px 0;
+}
+
+.modal-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+/* En tablets horizontales, lectura a 2 columnas para simular libro abierto */
+@media (min-width: 768px) and (orientation: landscape) {
+  .modal-text-pane {
+    column-count: 2;
+    column-gap: 2.5rem;
+    column-rule: 1px dashed rgba(0, 0, 0, 0.12);
+  }
 }
