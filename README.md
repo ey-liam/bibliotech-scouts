@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 03/11/2026 • **Versión:** V7 Oficial - 2.2.0 Mobile (11/11/2026)  
+**Base de datos:** 11/11/2026 • **Versión:** V7 Oficial - 2.2.1 Mobile (11/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -11,12 +11,41 @@
 
 **BiblioTech Scout** es una plataforma web pública, personal y sin fines de lucro diseñada para que niñas, niños, adolescentes, jóvenes y adultos de toda la membresía cuenten con acceso directo, ágil y de fácil comprensión a la documentación oficial de la **Asociación de Scouts de México, A.C. (ASMAC)** y de **World Scouting (WOSM)**.
 
-Todas las respuestas y resúmenes se fundamentan exclusivamente en los documentos oficiales, manuales, reglamentos, libros de la Colección Biblioteca del Centenario, revistas, formatos editables, comunicados nacionales y portales institucionales respaldados en la base de datos local (con corte al **03/11/2026**), priorizando siempre las ediciones vigentes (2024–2026).
+Todas las respuestas y resúmenes se fundamentan exclusivamente en los documentos oficiales, manuales, reglamentos, libros de la Colección Biblioteca del Centenario, revistas, formatos editables, comunicados nacionales y portales institucionales respaldados en la base de datos local (con corte al **11/11/2026**), priorizando siempre las ediciones vigentes (2024–2026).
 
 ---
 
-## 2. Novedades de la Versión V7 (Hero Cósmico Fusión, Buscador Extendido & Modo Noche Limpio)
+## 2. Capturas de pantalla y cómo se usa (Escritorio y Móvil)
 
+### Sitio Web (Escritorio)
+
+| Portada Cósmica y Accesos Rápidos | Consultas Directas (ej. Metodología SMART) | Biblioteca Scout en Modo Noche |
+| :---: | :---: | :---: |
+| ![Portada escritorio BiblioTech Scout](docs/screenshots/web-hero.png) | ![Respuesta SMART en el buscador](docs/screenshots/web-buscador-smart.png) | ![Biblioteca Scout en modo noche](docs/screenshots/web-biblioteca-noche.png) |
+
+**Cómo usarlo en computadora:**
+1. Entra a `https://ey-liam.github.io/bibliotech-scouts/`.
+2. Haz clic en **Hacer una pregunta** (o ve directo a **Buscador:**) y escribe tu duda en lenguaje sencillo (por ejemplo: *"¿Qué es un proyecto SMART?"*, *"¿Qué dice el Reglamento sobre el Artículo 10?"*, *"¿Cómo funciona ExplorApp?"*). También puedes pulsar el botón de recarga para explorar preguntas aleatorias del banco o filtrar por sección (*Manada, Tropa, Comunidad, Clan, Adultos, World Scouting*).
+3. Al abrir una respuesta verás el texto fundamentado y, debajo, las fuentes oficiales exactas en **Documentos oficiales de donde se obtuvo esta información** para abrir el visor o descargar el archivo.
+4. Usa la barra superior para cambiar entre **Preguntar**, **Biblioteca** (con lector de PDF/imágenes integrado y los 39 libros del Centenario), **Propósito**, **Agentes de Cambio**, **Secciones**, **Evolución**, **Catálogo** y **App**, o pulsa el icono de llama/luna para alternar el **Modo Noche**.
+
+### Versión Móvil (Navegador en Teléfono)
+
+| Inicio con Dock Inferior Unificado | Lectura Clara de Respuestas en Móvil |
+| :---: | :---: |
+| ![Vista móvil de inicio en BiblioTech Scout](docs/screenshots/movil-inicio.png) | ![Consulta de Ejes Temáticos en pantalla móvil](docs/screenshots/movil-consulta.png) |
+
+**Cómo usarlo en teléfono:**
+1. En pantallas pequeñas el sitio muestra el dock inferior flotante con acceso de un toque a **Inicio**, **Consultar**, **Biblioteca**, **Agentes**, **Guardados** y **Noche**, además del botón **Menú** arriba para navegar por el resto de apartados y el Catálogo.
+2. Todas las tarjetas de respuesta, fuentes, estantes y lector de PDF se ajustan automáticamente al ancho de tu pantalla.
+
+---
+
+## 3. Novedades de la Versión V7 y Banco Ampliado V4 (11/11/2026)
+
+- **Duplicación del Banco de Preguntas (`faq_v4.json` — 11,060 preguntas totales):**
+  - El repositorio pasa de 5,457 a **11,060 preguntas y respuestas únicas** (`5,356` en `data/questions_bank.json`, `101` en `data/faq_v3.json` y **`5,603`** nuevas en `data/faq_v4.json`, generadas con `scripts/generate_faq_v4.js`).
+  - Incluye explicaciones claras y directas sobre objetivos **SMART**, ciclo **PER** (*Planeo, Ejecuto, Reviso*), los **4 Ejes Temáticos**, sistemas nacionales (`SISAS`, `ExplorApp`, `CarpetApp`, `CDC`), artículos reales de normativas vigentes (`Reglamento 2023`, `Estatutos 2023`, `Manual del Uniforme junio 2026`, `Reglamento CNH 2025`), términos de **glosarios oficiales**, capítulos de manuales/políticas, los **39 libros de la Biblioteca del Centenario**, páginas HTML e infografías.
 - **Nueva Portada Hero Cósmica Dinámica:**
   - Lienzo poligonal estilizado con cinta diagonal en zigzag en gradiente morado a azul eléctrico y cian neón (`#7928ca` a `#06b6d4`) con resplandor suave.
   - Tarjeta central inclinada destacando el título en gran formato `BIBLIOTECH SCOUT` y la firma de autoría centralizada `By Liam`.
@@ -26,16 +55,16 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
   - Tarjeta de búsqueda con cristal translúcido oscuro de alto contraste y legibilidad impecable.
 - **Renovación del Buscador:**
   - Encabezado simplificado a `Buscador:`.
-  - Botón de recarga de preguntas con icono circular de actualización `↻` y leyenda `Mostrar más preguntas` para explorar preguntas aleatorias del banco documental.
+  - Botón de recarga de preguntas con icono circular de actualización y leyenda `Mostrar más preguntas` para explorar preguntas aleatorias del banco documental.
 - **Estabilidad de Marca en Móviles:**
   - Garantizada la visualización completa de `BiblioTech Scout` en teléfonos y pantallas pequeñas sin truncar el distintivo "Scout".
-- **Modo Noche / Visión Nocturna Limpio e Invertido:**
-  - Reemplazo total del filtro ámbar/sepia por un modo oscuro limpio de alto contraste: fondos negros/índigo cósmicos profundos, texto blanco nítido y acentos cian, manteniendo imágenes y documentos limpios.
+- **Modo Noche / Visión Nocturna Limpio:**
+  - Reemplazo total del filtro ámbar/sepia por un modo oscuro limpio de alto contraste: fondos negros/índigo cósmicos profundos, texto blanco nítido y acentos cian, manteniendo imágenes, botones, badges y documentos legibles.
   - Botón de modo noche visible en la cabecera de escritorio y oculto en móvil para evitar duplicación con el dock inferior.
 
 ---
 
-## 2. Identidad e interfaz
+## 4. Identidad e interfaz
 
 - **Nombre del sitio:** BiblioTech Scout: By Liam.
 - **Menú superior:** sigue el orden real de las secciones de la página: *Preguntar → Biblioteca → Propósito → Agentes de Cambio → Secciones → Evolución → Catálogo*.
@@ -45,9 +74,9 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Contenido del acervo documental
+## 5. Contenido del acervo documental
 
-El sistema integra **104 temas enciclopédicos y literarios**, **5,451 preguntas y respuestas únicas de consulta directa** (desde preguntas básicas de iniciación hasta preguntas específicas por artículo, capítulo y página de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
+El sistema integra **110 temas enciclopédicos y literarios**, **11,060 preguntas y respuestas únicas de consulta directa** (`5,356` del banco base, `101` de `faq_v3.json` y `5,603` de `faq_v4.json`, abarcando desde preguntas básicas de iniciación hasta preguntas específicas por artículo, glosario, capítulo y extracto de cada libro, manual, guía y reglamento) y **498 documentos oficiales descargables** organizados en 8 categorías:
 
 1. **Colección Biblioteca del Centenario (39 volúmenes):** Los 39 libros oficiales numerados de la Colección Biblioteca del Centenario, incluyendo las obras clásicas de Robert Baden-Powell (*Escultismo para Muchachos, Manual de Lobatos, Guía para el Jefe de Tropa, Roverismo hacia el Éxito, Tropiezos de la Vida, Juegos Scouts*), obras históricas de Gilcraft y César Macazaga Ordoño, y publicaciones formativas y literarias (*Cuentos de la Selva, Francisco de Asís y el Lobo de Gubbio*).
 2. **Guías, Carnets y Programa de Jóvenes — PJOS (42 documentos):** Guías de sección actualizadas (*Mis Rastros en la Selva 2024, Pistas de Aventura 2024, El Desafío de ser Caminante 2024, Las Rutas del Rover, Las Rutas de la Precursora*), Carnets de *Aventuras en la Naturaleza 2024*, Guías de *Punta de Flecha 2025*, *Tribu de la Tierra*, *Campeones de la Naturaleza*, *Mensajeros de la Paz*, *Go Solar*, *Plastic Tide Turners*, *De FOROS a CASA* y *Agentes de Cambio.MX*.
@@ -62,10 +91,10 @@ Adicionalmente, el portal incorpora la información estructurada de las páginas
 
 ---
 
-## 4. Cómo utilizar BiblioTech Scout en el sitio web público
+## 6. Uso detallado de secciones del sitio web
 
 1. Ingresa a `https://ey-liam.github.io/bibliotech-scouts/`.
-2. En el **Buscador Principal**, escribe cualquier pregunta en lenguaje natural o selecciona una sección específica (*Manada, Tropa, Comunidad, Clan, Adultos o World Scouting*).
+2. En el **Buscador**, escribe cualquier pregunta en lenguaje natural o selecciona una sección específica (*Manada, Tropa, Comunidad, Clan, Adultos o World Scouting*).
 3. Revisa la respuesta obtenida de los documentos oficiales y, en la parte inferior del recuadro (`Documentos oficiales de donde se obtuvo esta información`), haz clic sobre cualquiera de las fuentes citadas para abrir el lector en la página correspondiente o descargar el archivo original.
 4. En el apartado **Biblioteca Scout**, utiliza la barra de búsqueda y el selector de sección (*Manada, Tropa, Comunidad, Clan, Adultos, Nacional o World Scouting*) o selecciona cualquiera de los estantes temáticos (incluyendo los **39 libros de la Colección Biblioteca del Centenario**) para leer los documentos página por página dentro del navegador.
 5. En el apartado **Catálogo Organizado por Categorías**, filtra por categoría, sección, formato (`PDF`, `DOCX`, `XLSX`, `IMAGE`) o año de publicación.
@@ -73,7 +102,7 @@ Adicionalmente, el portal incorpora la información estructurada de las páginas
 
 ---
 
-## 5. Aportes de documentos y reporte de temas faltantes
+## 7. Aportes de documentos y reporte de temas faltantes
 
 Cuando una consulta no cuenta con información suficiente dentro de los archivos respaldados, el sistema lo indica de manera transparente sin inventar datos.
 
@@ -85,13 +114,13 @@ Para aportar nuevos documentos, convocatorias, plantillas, actividades de progre
 
 ---
 
-## 6. Aviso de proyecto independiente y propiedad intelectual
+## 8. Aviso de proyecto independiente y propiedad intelectual
 
 **BiblioTech Scout** es un proyecto personal independiente y sin fines de lucro desarrollado con fines exclusivamente educativos, informativos y de consulta para la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la **Asociación de Scouts de México, A.C. (ASMAC)** ni de la **Organización Mundial del Movimiento Scout (WOSM / World Scouting)**. Todos los manuales, reglamentos, libros, logotipos, insignias, comunicados y documentos oficiales citados o recopilados pertenecen a sus respectivos titulares oficiales.
 
 ---
 
-## 7. Cómo colaborar y trabajar con agentes de IA
+## 9. Cómo colaborar y trabajar con agentes de IA
 
 El repositorio está preparado para que varias personas y agentes trabajen sin pisarse:
 
@@ -105,7 +134,7 @@ Regla principal: **una tarea = una rama = un pull request**. Los datos de `data/
 
 ---
 
-## 8. Novedades de la versión V4.2 - 1.5 Mobile (10/11/2026)
+## 10. Historial de versiones anteriores (V4.2 a V3)
 
 - **Rediseño completo e integración del menú de descargas:** el panel «Mi biblioteca y descargas» se integra armónicamente en la experiencia visual de BiblioTech Scout. Se añade un botón de acceso directo en el encabezado principal superior (con icono, texto y contador dinámico de archivos guardados), un acceso directo en el menú lateral móvil y un botón flotante estilizado con la estética Scout Aurora.
 - **Corrección de visualización de descargas en la app:** se corrige el orden de pestañas para que el usuario acceda por defecto a «Mis descargas» y vea sus archivos guardados de inmediato al abrir el panel o tras descargar un documento.

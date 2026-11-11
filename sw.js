@@ -4,7 +4,7 @@
 // Versión: V7
 // ============================================================================
 
-const CACHE_NAME = "bibliotech-scout-v13";
+const CACHE_NAME = "bibliotech-scout-v14";
 const STATIC_ASSETS = [
   "./",
   "index.html",
@@ -19,7 +19,8 @@ const STATIC_ASSETS = [
   "img/adc/sustentabilidad.png",
   "img/adc/paz.png",
   "data/catalog.json",
-  "data/faq_v3.json"
+  "data/faq_v3.json",
+  "data/faq_v4.json"
 ];
 
 self.addEventListener("install", (event) => {

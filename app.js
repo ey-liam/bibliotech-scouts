@@ -200,8 +200,8 @@ function loadQuestionBank() {
   if (STATE.questionBank.length) return Promise.resolve(STATE.questionBank);
   if (questionBankPromise) return questionBankPromise;
 
-  // El banco base y el banco ampliado V3 se descargan en paralelo. Si el V3
-  // falla, la página sigue funcionando con el banco base.
+  // El banco base y los bancos ampliados V3 y V4 se descargan en paralelo.
+  // Si alguno de los adicionales falla, la página sigue funcionando con lo disponible.
   const loadJsonBank = (url) =>
     fetch(url)
       .then((r) => (r.ok ? r.json() : null))
@@ -213,10 +213,11 @@ function loadQuestionBank() {
   questionBankPromise = Promise.all([
     loadJsonBank("data/questions_bank.json"),
     loadJsonBank("data/faq_v3.json"),
+    loadJsonBank("data/faq_v4.json"),
   ])
-    .then(([baseData, v3Data]) => {
+    .then(([baseData, v3Data, v4Data]) => {
       const base = (baseData && baseData.questions) || [];
-      const extra = (v3Data && v3Data.questions) || [];
+      const extra = ((v3Data && v3Data.questions) || []).concat((v4Data && v4Data.questions) || []);
       const seen = new Set();
       for (const item of base) {
         const key = normalizeQuestionKey(item.q || "");
