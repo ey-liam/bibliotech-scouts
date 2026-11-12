@@ -32,14 +32,14 @@ const STATE = {
   librarySubcategory: "all",
   librarySubcatOpen: false,
   libraryScope: "shelf",
-  libraryVisibleCount: 12,
+  libraryVisibleCount: 6,
   currentShelfDocs: [],
   currentReadingIndex: -1,
 
   // Catalogo general
   filteredDocs: [],
-  visibleCount: 24,
-  pageSize: 24,
+  visibleCount: 6,
+  pageSize: 12,
   searchQuery: "",
   categoryFilter: "all",
   subcategoryFilter: "all",
@@ -49,7 +49,8 @@ const STATE = {
   onlyLatest: false,
   sortOrder: "recent",
 
-  // Correo de contacto para recibir aportes e issues de otros caminantes/scouts
+  // Contexto de la última respuesta mostrada y correo de contacto
+  lastAnswerContext: null,
   contactEmail: "rdc.tlxh@gmail.com"
 };
 
@@ -361,6 +362,7 @@ function releaseDialogFocusTrap(dialogEl) {
 }
 
 async function initApp() {
+  initPrivacyAndTelemetry();
   setupIosExperience();
   setupHeaderUI();
   setupContactEmailUI();
@@ -1047,7 +1049,7 @@ function getDocsForShelf(shelf, filterText = "") {
     },
     (sub) => {
       STATE.librarySubcategory = sub;
-      STATE.libraryVisibleCount = 12;
+      STATE.libraryVisibleCount = resolveDefaultLibraryCount();
       renderLibraryShelf();
     }
   );
@@ -1059,6 +1061,16 @@ function getDocsForShelf(shelf, filterText = "") {
   return baseDocs;
 }
 
+function resolveDefaultLibraryCount() {
+  if (STATE.libraryQuery.trim() !== "") return Infinity;
+  const isDefaultView =
+    STATE.activeShelf === "featured" &&
+    STATE.librarySection === "all" &&
+    STATE.librarySubcategory === "all" &&
+    STATE.libraryScope === "shelf";
+  return isDefaultView ? 6 : 24;
+}
+
 function renderLibraryShelf() {
   const grid = document.getElementById("libraryBookshelfGrid");
   const moreBtn = document.getElementById("libraryShowMoreBtn");
@@ -1066,7 +1078,8 @@ function renderLibraryShelf() {
 
   const docs = getDocsForShelf(STATE.activeShelf, STATE.libraryQuery);
   STATE.currentShelfDocs = docs;
-  const slice = docs.slice(0, STATE.libraryVisibleCount);
+  const visibleLimit = STATE.libraryQuery.trim() !== "" ? docs.length : STATE.libraryVisibleCount;
+  const slice = docs.slice(0, visibleLimit);
 
   if (!slice.length) {
     grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:2rem;color:#64748b;">No se encontraron documentos con ese filtro en este estante.</p>`;
@@ -1108,9 +1121,9 @@ function renderLibraryShelf() {
     .join("");
 
   if (moreBtn) {
-    if (docs.length > STATE.libraryVisibleCount) {
+    if (docs.length > visibleLimit) {
       moreBtn.classList.remove("hidden");
-      moreBtn.textContent = `Ver más documentos de este estante (${docs.length - STATE.libraryVisibleCount} restantes)`;
+      moreBtn.textContent = `Ver más documentos de este estante (${docs.length - visibleLimit} restantes)`;
     } else {
       moreBtn.classList.add("hidden");
     }
@@ -1161,8 +1174,9 @@ async function submitQuestion(queryText, options = {}) {
       });
       if (res.ok) {
         const data = await res.json();
-        displayAnswer(data);
+        displayAnswer(data, q);
         renderRelatedQuestions(q);
+        recordQueryTelemetry(q, data);
         container.scrollIntoView({ behavior: "smooth", block: "start" });
         return;
       }
@@ -1178,8 +1192,9 @@ async function submitQuestion(queryText, options = {}) {
   } catch (_) {}
 
   const ans = answerLocallyInBrowser(q);
-  displayAnswer(ans);
+  displayAnswer(ans, q);
   renderRelatedQuestions(q);
+  recordQueryTelemetry(q, ans);
   container.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -1983,13 +1998,14 @@ function answerLocallyInBrowser(query) {
   };
 }
 
-function displayAnswer(data) {
+function displayAnswer(data, queryText = "") {
   const bodyEl = document.getElementById("answerBody");
   const sourcesEl = document.getElementById("answerSourcesGrid");
 
   bodyEl.innerHTML = renderMarkdown(data.answer_markdown || "");
 
   const sources = data.sources || [];
+  updateAnswerFeedbackUI(queryText, data, sources.length);
   if (!sources.length) {
     sourcesEl.innerHTML = `<span style="font-size:0.82rem;color:#64748b;">Consulta directa en el índice de documentos oficiales de BiblioTech.</span>`;
     return;
@@ -2202,7 +2218,14 @@ function applyCatalogFilters() {
   });
 
   STATE.filteredDocs = filtered;
-  STATE.visibleCount = STATE.pageSize;
+  const hasSearch = STATE.searchQuery.trim() !== "";
+  const hasNonSearchFilter =
+    STATE.categoryFilter !== "all" ||
+    STATE.subcategoryFilter !== "all" ||
+    STATE.sectionFilter !== "all" ||
+    STATE.extFilter !== "all" ||
+    STATE.onlyLatest;
+  STATE.visibleCount = hasSearch ? filtered.length : hasNonSearchFilter ? 24 : 6;
   syncCategoryPillsUI();
   renderCatalogGrid();
 }
@@ -2502,6 +2525,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   const doc = STATE.docsById[docId];
   if (!doc) return;
 
+  recordDocOpenTelemetry(doc);
   STATE.currentReadingIndex = shelfIndex;
 
   const modal = document.getElementById("docModal");
@@ -3034,7 +3058,7 @@ function bindEvents() {
       });
       STATE.activeShelf = targetShelf;
       STATE.librarySubcategory = "all";
-      STATE.libraryVisibleCount = 24;
+      STATE.libraryVisibleCount = resolveDefaultLibraryCount();
       renderLibraryShelf();
       revealLibraryResults();
     }
@@ -3069,7 +3093,7 @@ function bindEvents() {
       tab.classList.add("active");
       STATE.activeShelf = tab.dataset.shelf || "featured";
       STATE.librarySubcategory = "all";
-      STATE.libraryVisibleCount = 12;
+      STATE.libraryVisibleCount = resolveDefaultLibraryCount();
       renderLibraryShelf();
       revealLibraryResults();
     });
@@ -3081,8 +3105,9 @@ function bindEvents() {
       "input",
       debounce(() => {
         STATE.libraryQuery = libFilterInput.value;
-        STATE.libraryVisibleCount = 12;
+        STATE.libraryVisibleCount = resolveDefaultLibraryCount();
         renderLibraryShelf();
+        scheduleSearchTelemetry("biblioteca", STATE.libraryQuery, STATE.currentShelfDocs.length);
       }, 120)
     );
   }
@@ -3091,7 +3116,7 @@ function bindEvents() {
   if (libSecSelect) {
     libSecSelect.addEventListener("change", () => {
       STATE.librarySection = libSecSelect.value || "all";
-      STATE.libraryVisibleCount = 12;
+      STATE.libraryVisibleCount = resolveDefaultLibraryCount();
       renderLibraryShelf();
     });
   }
@@ -3100,7 +3125,7 @@ function bindEvents() {
   if (libScopeSelect) {
     libScopeSelect.addEventListener("change", () => {
       STATE.libraryScope = libScopeSelect.value || "shelf";
-      STATE.libraryVisibleCount = 12;
+      STATE.libraryVisibleCount = resolveDefaultLibraryCount();
       renderLibraryShelf();
     });
   }
@@ -3163,6 +3188,7 @@ function bindEvents() {
       debounce(() => {
         STATE.searchQuery = catSearch.value;
         applyCatalogFilters();
+        scheduleSearchTelemetry("catalogo", STATE.searchQuery, STATE.filteredDocs.length);
       }, 120)
     );
   }
@@ -4277,6 +4303,351 @@ function setupIosExperience() {
       }
     });
   }
+}
+
+// ============================================================================
+// PRIVACIDAD, COOKIES, PREGUNTAS RECIENTES Y TELEMETRÍA ANÓNIMA (V8.1)
+// - En la App Android (Capacitor) se acepta automáticamente sin mostrar banner.
+// - En Web solicita permiso claro; si el usuario acepta, recuerda sus últimas
+//   preguntas y envía resúmenes anónimos para detectar fallas sin pedir correo.
+// ============================================================================
+const BT_CONSENT_KEY = "bt_consent_v1";
+const BT_RECENT_QUERIES_KEY = "bt_recent_queries_v1";
+const BT_ANON_QUEUE_KEY = "bt_anon_queue_v1";
+const BT_LAST_SENT_KEY = "bt_last_telemetry_sent_v1";
+
+function hasTelemetryConsent() {
+  try {
+    if (window.Capacitor) return true;
+    return localStorage.getItem(BT_CONSENT_KEY) === "accepted";
+  } catch (_) {
+    return false;
+  }
+}
+
+function summarizeMarkdownPlain(mdText, maxLen = 280) {
+  const clean = String(mdText || "")
+    .replace(/[#>*_`~|\[\]()-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (clean.length <= maxLen) return clean;
+  return clean.slice(0, maxLen).trim() + "…";
+}
+
+function renderRecentQueriesUI() {
+  const row = document.getElementById("recentQueriesRow");
+  const chips = document.getElementById("recentQueriesChips");
+  if (!row || !chips) return;
+
+  if (!hasTelemetryConsent()) {
+    row.classList.add("hidden");
+    chips.innerHTML = "";
+    return;
+  }
+
+  let list = [];
+  try {
+    list = JSON.parse(localStorage.getItem(BT_RECENT_QUERIES_KEY) || "[]");
+  } catch (_) {
+    list = [];
+  }
+  if (!Array.isArray(list) || !list.length) {
+    row.classList.add("hidden");
+    chips.innerHTML = "";
+    return;
+  }
+
+  row.classList.remove("hidden");
+  chips.innerHTML = list
+    .slice(0, 8)
+    .map(
+      (q) =>
+        `<button type="button" class="recent-query-chip" data-recent-query="${escapeHtml(q)}">${escapeHtml(q)}</button>`
+    )
+    .join("");
+}
+
+function saveRecentQueryLocal(query) {
+  if (!hasTelemetryConsent()) return;
+  const q = String(query || "").trim();
+  if (q.length < 2) return;
+  try {
+    const prev = JSON.parse(localStorage.getItem(BT_RECENT_QUERIES_KEY) || "[]");
+    const normNew = normalizeStr(q);
+    const filtered = (Array.isArray(prev) ? prev : []).filter((item) => normalizeStr(item) !== normNew);
+    filtered.unshift(q);
+    localStorage.setItem(BT_RECENT_QUERIES_KEY, JSON.stringify(filtered.slice(0, 8)));
+    renderRecentQueriesUI();
+  } catch (_) {}
+}
+
+function enqueueAnonTelemetry(entry, flushNow = false) {
+  if (!hasTelemetryConsent()) return;
+  try {
+    const prev = JSON.parse(localStorage.getItem(BT_ANON_QUEUE_KEY) || "[]");
+    const queue = Array.isArray(prev) ? prev : [];
+    queue.push({
+      ...entry,
+      ts: new Date().toISOString().slice(0, 19).replace("T", " "),
+      plat: window.Capacitor ? "AndroidAPK" : IS_APPLE_TOUCH ? "iOSWeb" : "Web"
+    });
+    localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(queue.slice(-30)));
+  } catch (_) {}
+
+  if (flushNow) {
+    flushAnonymousTelemetry(true);
+  }
+}
+
+function recordQueryTelemetry(query, data) {
+  const q = String(query || "").trim();
+  if (!q) return;
+  saveRecentQueryLocal(q);
+  const sources = Array.isArray(data && data.sources) ? data.sources : [];
+  const answerPlain = summarizeMarkdownPlain(data && data.answer_markdown, 280);
+  const unmatched =
+    !sources.length && /no encontr[eé]|sin resultados|reformul|espec[ií]fica/i.test(answerPlain);
+  enqueueAnonTelemetry(
+    {
+      t: "pregunta",
+      q: q.slice(0, 180),
+      ans: answerPlain,
+      ok: unmatched ? "sin_coincidencia" : "respondida",
+      src: sources.length,
+      sec: STATE.activeAskSection || "all"
+    },
+    false
+  );
+}
+
+function recordDocOpenTelemetry(doc) {
+  if (!doc) return;
+  enqueueAnonTelemetry(
+    {
+      t: "doc_abierto",
+      doc: String(doc.title || "").slice(0, 120),
+      file: String(doc.filename || "").slice(0, 100),
+      cat: String(doc.category || "").slice(0, 60)
+    },
+    false
+  );
+}
+
+let btSearchTelemetryTimer = null;
+function scheduleSearchTelemetry(scope, queryText, resultCount) {
+  const term = String(queryText || "").trim();
+  if (!hasTelemetryConsent() || term.length < 3) return;
+  if (btSearchTelemetryTimer) clearTimeout(btSearchTelemetryTimer);
+  btSearchTelemetryTimer = setTimeout(() => {
+    enqueueAnonTelemetry(
+      {
+        t: "busqueda_archivo",
+        scope,
+        q: term.slice(0, 100),
+        hits: Number(resultCount || 0)
+      },
+      false
+    );
+  }, 1500);
+}
+
+function updateAnswerFeedbackUI(queryText, data, sourcesCount) {
+  const bar = document.getElementById("answerFeedbackBar");
+  const btnUseful = document.getElementById("btnFeedbackUseful");
+  const btnReport = document.getElementById("btnFeedbackReport");
+  if (!bar) return;
+
+  const titleEl = document.getElementById("answerQuestionTitle");
+  const effectiveQuery = String(queryText || (titleEl ? titleEl.textContent : "") || "").trim();
+  STATE.lastAnswerContext = {
+    query: effectiveQuery,
+    answerPreview: summarizeMarkdownPlain(data && data.answer_markdown, 260),
+    sourcesCount: Number(sourcesCount || 0),
+    ratingSent: ""
+  };
+
+  if (btnUseful) {
+    btnUseful.classList.remove("is-selected");
+    btnUseful.disabled = false;
+    btnUseful.textContent = "Útil";
+  }
+  if (btnReport) {
+    btnReport.classList.remove("is-selected");
+    btnReport.disabled = false;
+    btnReport.textContent = "Reportar fallo o falta info";
+  }
+  bar.classList.remove("hidden");
+}
+
+let btFlushInFlight = false;
+async function flushAnonymousTelemetry(forceImmediate = false) {
+  if (!hasTelemetryConsent() || btFlushInFlight) return;
+  // Nunca enviar telemetría externa durante pruebas en servidor local
+  const host = String((window.location && window.location.hostname) || "").toLowerCase();
+  if (host === "127.0.0.1" || host === "localhost" || host === "::1" || window.location.protocol === "file:") {
+    return;
+  }
+  if (typeof navigator !== "undefined" && navigator.onLine === false) return;
+
+  let queue = [];
+  try {
+    queue = JSON.parse(localStorage.getItem(BT_ANON_QUEUE_KEY) || "[]");
+  } catch (_) {
+    queue = [];
+  }
+  if (!Array.isArray(queue) || !queue.length) return;
+
+  const now = Date.now();
+  const lastSent = Number(localStorage.getItem(BT_LAST_SENT_KEY) || "0");
+  if (!forceImmediate && now - lastSent < 180000 && queue.length < 5) {
+    return;
+  }
+
+  btFlushInFlight = true;
+  try {
+    const batch = queue.slice(0, 15);
+    const lines = batch.map((ev, i) => {
+      if (ev.t === "pregunta") {
+        return `${i + 1}. [PREGUNTA ${ev.plat}] (${ev.sec}, ${ev.ok}, ${ev.src} fuentes)\n   Q: ${ev.q}\n   A: ${ev.ans}`;
+      }
+      if (ev.t === "feedback") {
+        return `${i + 1}. [VALORACIÓN: ${ev.rate}] ${ev.plat}\n   Q: ${ev.q}\n   A: ${ev.ans}`;
+      }
+      if (ev.t === "busqueda_archivo") {
+        return `${i + 1}. [BÚSQUEDA ${ev.scope}] "${ev.q}" -> ${ev.hits} docs (${ev.plat})`;
+      }
+      return `${i + 1}. [DOC ABIERTO] ${ev.doc} (${ev.file}) [${ev.cat}] (${ev.plat})`;
+    });
+
+    const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`;
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        _subject: `BiblioTech Scout — Uso anónimo (${batch.length} eventos)`,
+        _template: "table",
+        _captcha: "false",
+        plataforma: window.Capacitor ? "Android APK" : "Web",
+        total_eventos: String(batch.length),
+        resumen_anonimo: lines.join("\n\n")
+      }),
+      keepalive: true
+    });
+    if (res && res.ok) {
+      const remaining = queue.slice(batch.length);
+      localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(remaining));
+      localStorage.setItem(BT_LAST_SENT_KEY, String(Date.now()));
+    }
+  } catch (_) {
+    // Reintentar en la siguiente sesión si falla la red
+  } finally {
+    btFlushInFlight = false;
+  }
+}
+
+function initPrivacyAndTelemetry() {
+  const overlay = document.getElementById("cookieConsentBanner");
+  const acceptBtn = document.getElementById("consentAcceptBtn");
+  const declineBtn = document.getElementById("consentDeclineBtn");
+  const openPrefsBtn = document.getElementById("openConsentModalBtn");
+  const recentChips = document.getElementById("recentQueriesChips");
+  const btnUseful = document.getElementById("btnFeedbackUseful");
+  const btnReport = document.getElementById("btnFeedbackReport");
+
+  // En APK Android el sistema acepta automáticamente el uso anónimo sin interrumpir
+  if (window.Capacitor) {
+    try {
+      localStorage.setItem(BT_CONSENT_KEY, "accepted");
+    } catch (_) {}
+    if (overlay) overlay.classList.add("hidden");
+  } else {
+    let saved = null;
+    try {
+      saved = localStorage.getItem(BT_CONSENT_KEY);
+    } catch (_) {}
+    if (!saved && overlay) {
+      overlay.classList.remove("hidden");
+    }
+  }
+
+  const applyChoice = (choice) => {
+    try {
+      localStorage.setItem(BT_CONSENT_KEY, choice);
+      if (choice !== "accepted") {
+        localStorage.removeItem(BT_ANON_QUEUE_KEY);
+      }
+    } catch (_) {}
+    if (overlay) overlay.classList.add("hidden");
+    renderRecentQueriesUI();
+    if (choice === "accepted") {
+      showWebToast("Preferencias guardadas. Gracias por ayudar a mejorar BiblioTech.");
+      flushAnonymousTelemetry(false);
+    } else {
+      showWebToast("Solo almacenamiento esencial activado en este navegador.");
+    }
+  };
+
+  if (acceptBtn) acceptBtn.addEventListener("click", () => applyChoice("accepted"));
+  if (declineBtn) declineBtn.addEventListener("click", () => applyChoice("declined"));
+  if (openPrefsBtn && overlay) {
+    openPrefsBtn.addEventListener("click", () => overlay.classList.remove("hidden"));
+  }
+
+  if (recentChips) {
+    recentChips.addEventListener("click", (e) => {
+      const chip = e.target.closest("[data-recent-query]");
+      if (!chip) return;
+      const q = chip.getAttribute("data-recent-query");
+      if (q) submitQuestion(q, { syncInput: false });
+    });
+  }
+
+  const handleFeedback = (ratingType) => {
+    const ctx = STATE.lastAnswerContext;
+    if (!ctx || ctx.ratingSent) return;
+    ctx.ratingSent = ratingType;
+    if (btnUseful) {
+      btnUseful.classList.toggle("is-selected", ratingType === "useful");
+      btnUseful.disabled = true;
+    }
+    if (btnReport) {
+      btnReport.classList.toggle("is-selected", ratingType === "issue");
+      btnReport.disabled = true;
+    }
+    if (hasTelemetryConsent()) {
+      enqueueAnonTelemetry(
+        {
+          t: "feedback",
+          rate: ratingType === "issue" ? "FALLO_O_FALTA_INFO" : "UTIL",
+          q: ctx.query,
+          ans: ctx.answerPreview,
+          src: ctx.sourcesCount
+        },
+        true
+      );
+      showWebToast(
+        ratingType === "issue"
+          ? "Reporte anónimo registrado para revisión."
+          : "Valoración anónima registrada. Gracias."
+      );
+    } else {
+      showWebToast(
+        ratingType === "issue"
+          ? `Gracias por avisar. Puedes detallarlo en ${STATE.contactEmail}.`
+          : "Gracias por tu valoración."
+      );
+    }
+  };
+
+  if (btnUseful) btnUseful.addEventListener("click", () => handleFeedback("useful"));
+  if (btnReport) btnReport.addEventListener("click", () => handleFeedback("issue"));
+
+  renderRecentQueriesUI();
+  setTimeout(() => flushAnonymousTelemetry(false), 6000);
+  window.addEventListener("pagehide", () => flushAnonymousTelemetry(true));
 }
 
 document.addEventListener("DOMContentLoaded", initApp);

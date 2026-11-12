@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=27" />
+  <link rel="stylesheet" href="styles.css?v=28" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -372,6 +372,11 @@
             <button type="button" class="qcat-tab" data-qcat="Primeros Auxilios y Seguridad">Seguridad</button>
           </div>
 
+          <div id="recentQueriesRow" class="recent-queries-row hidden" aria-label="Tus preguntas recientes">
+            <span class="recent-queries-label">Recientes:</span>
+            <div id="recentQueriesChips" class="recent-queries-chips"></div>
+          </div>
+
           <div id="dynamicQuestionsChips" class="quick-chips">
             <button type="button" class="quick-chip chip-featured" data-query="¿En dónde encuentro un Grupo Scout?">
               ¿En dónde encuentro un Grupo Scout?
@@ -413,6 +418,15 @@
 
           <!-- CUERPO DE LA RESPUESTA -->
           <div id="answerBody" class="answer-markdown-body"></div>
+
+          <!-- RETROALIMENTACIÓN ANÓNIMA DE LA RESPUESTA -->
+          <div id="answerFeedbackBar" class="answer-feedback-bar hidden" aria-label="Valorar esta respuesta">
+            <span class="feedback-bar-label">¿Te sirvió esta respuesta?</span>
+            <div class="feedback-bar-actions">
+              <button type="button" id="btnFeedbackUseful" class="bt-feedback-btn" data-feedback="useful">Útil</button>
+              <button type="button" id="btnFeedbackReport" class="bt-feedback-btn is-report" data-feedback="issue">Reportar fallo o falta info</button>
+            </div>
+          </div>
 
           <!-- PREGUNTAS RELACIONADAS PARA SEGUIR EXPLORANDO -->
           <div id="answerRelated" class="answer-related hidden">
@@ -676,11 +690,10 @@
             <span class="centenario-kicker">COLECCIÓN NUMERADA OFICIAL DEL CENTENARIO SCOUT EN MÉXICO (1926 – 2026)</span>
             <h3>Colección Biblioteca del Centenario</h3>
             <p>
-              Explora los 39 volúmenes oficiales de la Colección Biblioteca del Centenario: desde <em>Escultismo para Muchachos</em>, <em>Manual de Lobatos</em>,
-              <em>Roverismo hacia el Éxito</em> y <em>Guía para el Jefe de Tropa</em> hasta <em>Tropiezos de la Vida</em>, <em>Juegos Scouts</em> y <em>Cuentos de la Selva</em>.
+              Los 39 volúmenes oficiales del Centenario (1926–2026): obras históricas de Baden-Powell, manuales de sección y literatura scout clásica.
             </p>
             <button type="button" class="btn-centenario-shelf" data-select-shelf="centenario">
-              Abrir los 39 libros de la Colección Biblioteca del Centenario
+              Ver los 39 libros del Centenario
             </button>
           </div>
         </div>
@@ -743,14 +756,15 @@
           </div>
         </div>
         <div class="about-text-col">
-          <span class="section-eyebrow">Proyecto personal · Sin fines de lucro</span>
-          <h2>Información Scout clara y accesible en un solo lugar</h2>
+          <span class="section-eyebrow">Proyecto sin fines de lucro</span>
+          <h2>Información Scout clara y accesible</h2>
           <p>
-            Consulta, lee en línea o descarga manuales, guías PJOS, libros del Centenario, reglamentos, formatos y comunicados vigentes para todas las edades.
+            Manuales, guías PJOS, Colección Centenario, reglamentos, formatos y comunicados vigentes en un solo lugar.
           </p>
           <div class="about-signature-box">
-            <p class="signature-main">Creador: <strong>Liam Durán - Provincia TLXH</strong></p>
-            <p class="signature-sub">Asociación de Scouts de México ASMAC y World Scouting WOSM</p>
+            <p class="signature-main">Creador: <strong>Liam Durán</strong></p>
+            <p class="signature-sub">Sección: <strong>Comunidad de Caminantes</strong></p>
+            <p class="signature-sub">Provincia: <strong>Tláhuac-Xochimilco</strong></p>
             <div class="creator-social-row">
               <a href="https://www.instagram.com/liaadurg3/" target="_blank" rel="noopener noreferrer" class="btn-creator-instagram">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -758,9 +772,17 @@
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
-                <span>Instagram: @liaadurg3</span>
+                <span>@liaadurg3</span>
+              </a>
+              <a href="mailto:rdc.tlxh@gmail.com?subject=Reporte%20o%20comentario%20BiblioTech%20Scout" class="btn-creator-mail" data-contact-mail="1">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>rdc.tlxh@gmail.com</span>
               </a>
             </div>
+            <p class="signature-help-note">Si alguna pregunta, respuesta o archivo falla, escríbeme por ese correo.</p>
           </div>
         </div>
       </div>
@@ -947,7 +969,7 @@
           </div>
           <h3>Manada de Lobatos</h3>
           <p>
-            <em>Mi Primer Rastro</em>, los 4 Cazaderos (<strong>Raksha, Bagheera, Baloo y Hermano Gris</strong>), Especialidades <em>Cabeza de Kaa</em>, Aventuras (<em>Mohwa, Dhak, Flor Roja y Tregua del agua</em>) e Insignia Final <strong>Alfa Jade y Obsidiana</strong>.
+            4 Cazaderos, Aventuras, Especialidades y Progresión Final <strong>Alfa Jade y Obsidiana</strong>.
           </p>
           <span class="sec-card-cta">Ver documentos de Manada →</span>
         </article>
@@ -964,7 +986,7 @@
           </div>
           <h3>Tropa de Scouts</h3>
           <p>
-            Los 4 Rumbos (<strong>Tortuga lora, Ocelote, Venado cola blanca y Quetzal</strong>), Especialidades de fauna endémica, Aventuras (<em>Ajolote, Jaguar, Mapache y Águila solitaria</em>) e Insignia Final <strong>Águila Real Jade y Obsidiana</strong>.
+            4 Rumbos, Aventuras, Especialidades y Progresión Final <strong>Águila Real Jade y Obsidiana</strong>.
           </p>
           <span class="sec-card-cta">Ver documentos de Tropa →</span>
         </article>
@@ -985,7 +1007,7 @@
           </div>
           <h3>Comunidad de Caminantes</h3>
           <p>
-            Los 4 Senderos (<strong>Cenit, Cumbre, Cúspide y Cima</strong>), Especialidades modulares, Aventuras (<em>Terra Nova, Kon-Tiki, Siete Cumbres y Discovery</em>), Red de Caminantes e Insignia Final <strong>Everest Jade y Obsidiana</strong>.
+            4 Senderos, proyectos, Red de Caminantes e Insignia Final <strong>Everest Jade y Obsidiana</strong>.
           </p>
           <span class="sec-card-cta">Ver documentos de Comunidad →</span>
         </article>
@@ -1002,7 +1024,7 @@
           </div>
           <h3>Clan de Rovers</h3>
           <p>
-            <em>Proyecto Personal de Vida (PPV)</em>, las 4 Rutas (<strong>Otomí, Maya, Wixárika y Kikapú</strong>), Aventuras (<em>Tierra, Viento, Fuego y Agua</em>) e Insignia Terminal <strong>Baden-Powell Jade y Obsidiana</strong>.
+            Proyecto Personal de Vida (PPV), 4 Rutas, Aventuras e Insignia <strong>Baden-Powell</strong>.
           </p>
           <span class="sec-card-cta">Ver documentos de Clan →</span>
         </article>
@@ -1023,7 +1045,7 @@
           </div>
           <h3>Adultos y Dirigentes</h3>
           <p>
-            Política Nacional AMS 2024, Modelo de Formación 2025, Modelo de Gestión de Adultos 2025, Insignia de Madera, Guías de Scouter y Corte Nacional de Honor.
+            Política AMS 2024, Formación y Gestión 2025, Insignia de Madera y Corte Nacional de Honor.
           </p>
           <span class="sec-card-cta">Ver documentos de Adultos →</span>
         </article>
@@ -1040,7 +1062,7 @@
           </div>
           <h3>World Scouting (WOSM)</h3>
           <p>
-            Marco Mundo Mejor (<em>Mensajeros de la Paz, Campeones de la Naturaleza, Tribu de la Tierra y Scouts por los ODS</em>), 26° Jamboree Polonia 2027 y 17° World Scout Moot Taiwán 2029.
+            Marco Mundo Mejor (4 programas globales), 26° Jamboree Polonia 2027 y 17° Moot Taiwán 2029.
           </p>
           <span class="sec-card-cta">Ver documentos WOSM →</span>
         </article>
@@ -1099,113 +1121,107 @@
       <div class="services-cards-grid">
         <article class="service-info-card">
           <span class="service-tag">UNIFORME E INSIGNIAS</span>
-          <h3>Tienda Scout Nacional en Línea y Sedes Autorizadas</h3>
+          <h3>Tienda Scout Nacional</h3>
           <p>
-            El portal oficial de comercio electrónico de la ASMAC es
-            <a href="https://tiendaenlinea.scouts.org.mx" target="_blank" rel="noopener">tiendaenlinea.scouts.org.mx</a>
-            (categorías: <em>Uniformes, Nuevas Insignias, Escudos, Literatura, Accesorios, Campismo, Meztitla, Mundial, Interamericana y Outlet</em>).
+            Compra uniformes, insignias y equipo oficial en
+            <a href="https://tiendaenlinea.scouts.org.mx" target="_blank" rel="noopener">tiendaenlinea.scouts.org.mx</a>.
           </p>
           <ul class="service-bullet-list">
-            <li><strong>Tienda Scout Nacional (Sede física):</strong> Córdoba 73, Col. Roma Norte, Cuauhtémoc, C.P. 06700, CDMX. Tel. <code>(55) 5208 7122 Ext. 148</code>.</li>
-            <li><strong>Distribuidores Nacionales Autorizados:</strong> Guadalajara (<em>La Tiendita Scout</em>), Estado de México (<em>Hermano Gris</em>) y Puebla (<em>Todo para el Scout</em>).</li>
+            <li><strong>Sede CDMX:</strong> Córdoba 73, Roma Norte, Tel. <code>(55) 5208 7122 Ext. 148</code>.</li>
+            <li><strong>Distribuidores:</strong> Guadalajara, Estado de México y Puebla.</li>
           </ul>
           <button type="button" class="service-query-btn" data-query="¿Dónde compro el uniforme scout?">
-            Ver detalle completo de compra de uniforme →
+            Consultar compra de uniforme →
           </button>
         </article>
 
         <article class="service-info-card">
           <span class="service-tag">PLATAFORMAS DIGITALES</span>
-          <h3>SISAS, Centro de Capacitación (CDC), ExplorApp y CarpetApp</h3>
+          <h3>SISAS, CDC, ExplorApp y CarpetApp</h3>
           <p>
-            Ecosistema tecnológico oficial para el registro de membresía, formación de adultos y seguimiento del Programa de Jóvenes:
+            Portales oficiales para membresía, cursos de adultos y seguimiento del PJOS.
           </p>
           <ul class="service-bullet-list">
-            <li><strong>SISAS (<a href="https://sisas.scouts.org.mx" target="_blank" rel="noopener">sisas.scouts.org.mx</a>):</strong> Administración de membresía, credencial digital QR, cambios de grupo y control de edades reglamentarias (<code>JSN 25.051</code>).</li>
-            <li><strong>CDC (<a href="https://cdc.scouts.org.mx" target="_blank" rel="noopener">cdc.scouts.org.mx</a>), ExplorApp y CarpetApp (<code>DNME-CNPJ 26.014</code>):</strong> Plataforma de cursos autogestivos/propedéuticos y aplicaciones oficiales lanzadas en febrero de 2026 para el seguimiento del PJOS.</li>
+            <li><strong>SISAS (<a href="https://sisas.scouts.org.mx" target="_blank" rel="noopener">sisas.scouts.org.mx</a>):</strong> Registro, credencial QR y edades reglamentarias.</li>
+            <li><strong>CDC (<a href="https://cdc.scouts.org.mx" target="_blank" rel="noopener">cdc.scouts.org.mx</a>), ExplorApp y CarpetApp:</strong> Capacitación y progresión 2026.</li>
           </ul>
           <button type="button" class="service-query-btn" data-query="Explicación del nuevo esquema PJOS 2026">
-            Ver funcionamiento de ExplorApp y PJOS →
+            Consultar ExplorApp y PJOS →
           </button>
         </article>
 
         <article class="service-info-card">
           <span class="service-tag">MEMBRESÍA Y SEGURO</span>
-          <h3>Cuotas Nacionales 2026, Registro Familiar y Seguro Scout</h3>
+          <h3>Cuotas 2026 y Seguro Scout</h3>
           <p>
-            Montos oficiales aprobados por el Consejo Nacional para el año 2026 y cobertura médica para miembros activos:
+            Cuotas vigentes aprobadas por el Consejo Nacional y cobertura médica en actividades.
           </p>
           <ul class="service-bullet-list">
-            <li><strong>Cuotas 2026 (<code>JSN 25.136</code>):</strong> <strong>$730.00 MXN</strong> para Reingreso y <strong>$890.00 MXN</strong> para Nuevo Ingreso (más cuota de Provincia).</li>
-            <li><strong>Registro Familiar (<a href="https://familiar.scouts.org.mx" target="_blank" rel="noopener">familiar.scouts.org.mx</a> · <code>JSN 25.009</code>):</strong> Portal para inscribir de 3 a 5 integrantes nucleares juntos con descuento sobre la cuota nacional de <strong>25 % (3 miembros)</strong>, <strong>30 % (4 miembros)</strong> y <strong>35 % (5 miembros)</strong> en reingreso.</li>
-            <li><strong>Seguro contra Accidentes:</strong> Póliza nacional activa para actividades scouts; los formatos de Aviso de Accidente, Informe Médico y Reembolso están en el catálogo.</li>
+            <li><strong>Cuotas 2026 (<code>JSN 25.136</code>):</strong> <strong>$730 MXN</strong> Reingreso · <strong>$890 MXN</strong> Nuevo Ingreso.</li>
+            <li><strong>Registro Familiar y Seguro:</strong> 25%–35% de descuento (3–5 integrantes) y póliza nacional.</li>
           </ul>
           <button type="button" class="service-query-btn" data-query="¿Cómo funciona el Registro Familiar en familiar.scouts.org.mx y qué descuentos aplica?">
-            Ver tabla de cuotas y Registro Familiar →
+            Consultar cuotas y descuentos →
           </button>
         </article>
 
         <article class="service-info-card">
           <span class="service-tag">PROTECCIÓN Y CONVIVENCIA</span>
-          <h3>Canal CONECTA, Diálogo Directo, Mediación y Corte de Honor</h3>
+          <h3>Canal CONECTA y Controversias</h3>
           <p>
-            Mecanismos institucionales para garantizar ambientes seguros y resolver controversias conforme a los Estatutos y el Código de Conducta 2025:
+            Atención confidencial de quejas o denuncias (<em>A Salvo del Peligro</em>) y mediación de conflictos.
           </p>
           <ul class="service-bullet-list">
-            <li><strong>Canal CONECTA (<a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener">conecta.scouts.org.mx</a>):</strong> Herramienta de atención oportuna y confidencial de quejas o denuncias (<em>A Salvo del Peligro</em>) para niños, jóvenes, adultos y familiares.</li>
-            <li><strong>Solución de Controversias:</strong> Formatos oficiales de <em>Diálogo Directo</em> (<code>DD.prov.2026.01</code>), <em>Mediación</em> (<code>MED.prov.2026.01</code>) y <em>Arbitraje / CNH</em> (<code>AR.2026.PROV.01</code>).</li>
+            <li><strong>Canal CONECTA (<a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener">conecta.scouts.org.mx</a>):</strong> Reportes confidenciales y seguimiento.</li>
+            <li><strong>MASC 2026:</strong> Formatos de <em>Diálogo Directo</em>, <em>Mediación</em> y <em>Arbitraje / CNH</em>.</li>
           </ul>
           <button type="button" class="service-query-btn" data-query="¿Qué es CONECTA y para qué sirve?">
-            Ver funcionamiento de CONECTA y conflictos →
+            Consultar Canal CONECTA →
           </button>
         </article>
 
         <article class="service-info-card">
-          <span class="service-tag">MÉTODO EDUCATIVO Y FORMATOS</span>
-          <h3>RECME: Recursos del Método Educativo y Especialidades (FES)</h3>
+          <span class="service-tag">MÉTODO EDUCATIVO</span>
+          <h3>RECME y Especialidades (FES)</h3>
           <p>
-            Portal oficial respaldado por la Subcomisión Nacional de Centros de Documentación (<code>SCNCD</code>) y la Comisión Nacional de Programa de Jóvenes (<code>CNPJ</code>):
-            <a href="https://recme.scouts.org.mx" target="_blank" rel="noopener">recme.scouts.org.mx</a>.
+            Repositorio oficial del método educativo en <a href="https://recme.scouts.org.mx" target="_blank" rel="noopener">recme.scouts.org.mx</a>.
           </p>
           <ul class="service-bullet-list">
-            <li><strong>Biblioteca Virtual (<a href="https://recme.scouts.org.mx/bibleoteca-virtual" target="_blank" rel="noopener">/bibleoteca-virtual</a>):</strong> Esquemas de progresión (<code>P3</code>), plantillas de eventos y proyectos (<code>P6</code>), seguimiento (<code>P7</code>), solicitudes de insignias terminales (<code>P9</code>), planillas <code>CNAMS</code> (<code>P10</code>) y guía <code>FAES</code>.</li>
-            <li><strong>Especialidades FES (<a href="https://recme.scouts.org.mx/especialidades" target="_blank" rel="noopener">/especialidades</a>):</strong> Fichas organizadas en 4 Ejes Temáticos y 17 ODS (<em>Descubro, Conozco, Aplico, Comparto, Seguridad, ODS y Reflexiono</em>).</li>
+            <li><strong>Plantillas P1–P10:</strong> Progresión, proyectos, seguimiento, FAES, planillas y Jade/Obsidiana.</li>
+            <li><strong>Especialidades FES:</strong> Fichas organizadas en 4 Ejes Temáticos y 17 ODS.</li>
           </ul>
           <button type="button" class="service-query-btn" data-query="¿Qué es la página RECME (recme.scouts.org.mx) y para qué sirve?">
-            Ver qué encontrarás en RECME →
+            Consultar portal RECME →
           </button>
         </article>
 
         <article class="service-info-card">
-          <span class="service-tag">SOPORTE Y MESA DE AYUDA</span>
-          <h3>Mesa de Ayuda Oficial ASMAC (Help Desk SISAS y Tickets)</h3>
+          <span class="service-tag">SOPORTE TÉCNICO</span>
+          <h3>Mesa de Ayuda (Help Desk)</h3>
           <p>
-            Centro oficial de soporte técnico y administrativo de la Oficina Scout Nacional en
+            Soporte oficial para dudas de cuentas, pagos y plataforma en
             <a href="https://helpdesk.scouts.org.mx" target="_blank" rel="noopener">helpdesk.scouts.org.mx</a>.
           </p>
           <ul class="service-bullet-list">
-            <li><strong>Base de Conocimientos (25 Guías Oficiales):</strong> Alta de cuenta, perfil en validación, cambios de grupo, recuperación de contraseña de autorización, pagos Conekta/OXXO, becas y reportes para Jefes de Grupo.</li>
-            <li><strong>11 Departamentos de Tickets:</strong> Sistemas/SISAS, Membresía, Seguros, Eventos, Comunicación, Medios Alternativos, Tienda Nacional, Métodos Educativos, Formación/ADMS, Meztitla y Bienes.</li>
+            <li><strong>25 Guías y 11 Departamentos:</strong> Alta SISAS, pagos Conekta/OXXO, becas y seguros.</li>
           </ul>
           <button type="button" class="service-query-btn" data-query="¿Qué es la Mesa de Ayuda (helpdesk.scouts.org.mx) y qué departamentos atienden tickets?">
-            Ver guías y departamentos de soporte →
+            Consultar Mesa de Ayuda →
           </button>
         </article>
 
         <article class="service-info-card">
           <span class="service-tag">CUOTAS FAMILIARES</span>
-          <h3>Portal Independiente de Registro Familiar</h3>
+          <h3>Registro Familiar Unificado</h3>
           <p>
-            Plataforma dedicada fuera del menú principal de SISAS en
-            <a href="https://familiar.scouts.org.mx" target="_blank" rel="noopener">familiar.scouts.org.mx</a>
-            para que una familia nuclear (papá, mamá e hijos) pague en un solo cargo.
+            Paga de 3 a 5 miembros nucleares en un solo cargo desde
+            <a href="https://familiar.scouts.org.mx" target="_blank" rel="noopener">familiar.scouts.org.mx</a>.
           </p>
           <ul class="service-bullet-list">
-            <li><strong>Requisitos y Tiempo:</strong> Ingresas con CUM y contraseña de SISAS; requiere 3 a 5 CUMs con ficha médica completa y cuenta con <code>20:00</code> minutos por sesión.</li>
-            <li><strong>Medios de Pago:</strong> Tarjeta de crédito o débito (una exhibición o plazos fijos), Apple Pay y Google Pay vía Conekta; las vigencias se reflejan en SISAS dentro de 48 h hábiles.</li>
+            <li><strong>Requisitos y pago:</strong> CUMs con ficha médica completa, tarjeta o Apple/Google Pay.</li>
           </ul>
           <button type="button" class="service-query-btn" data-query="¿Qué necesito para hacer el Registro Familiar en familiar.scouts.org.mx?">
-            Ver pasos del Registro Familiar →
+            Consultar Registro Familiar →
           </button>
         </article>
       </div>
@@ -1234,9 +1250,7 @@
           </div>
           <h3>Programa de Jóvenes, Progresiones e Insignias</h3>
           <p>
-            El <strong>31 de diciembre de 2025</strong> concluyó definitivamente el antiguo <em>ENPE</em> (<code>JSN 25.051</code> y <code>DNME-CNPJ 25.024</code>), aunque las insignias obtenidas en el ENPE pueden seguir portándose junto con las nuevas (<em>Manual del Uniforme junio 2026</em>, págs. 44, 56 y 67).
-            El <strong>PJOS</strong> estableció las progresiones por <strong>Cazaderos, Rumbos, Senderos y Rutas</strong>, las Insignias Finales <strong>Alfa, Águila Real, Everest y Baden-Powell (Jade y Obsidiana)</strong>
-            y las aplicaciones <strong>ExplorApp y CarpetApp</strong> (<code>DNME-CNPJ 26.014</code>).
+            El PJOS sustituyó al ENPE con Cazaderos, Rumbos, Senderos, Rutas e Insignias Jade/Obsidiana (las insignias ENPE previas siguen siendo portables) junto a <strong>ExplorApp y CarpetApp</strong>.
           </p>
         </article>
 
@@ -1248,9 +1262,7 @@
           </div>
           <h3>Manual del Uniforme Scout</h3>
           <p>
-            El <strong>Manual del Uniforme aprobado el 10 de junio de 2026</strong> suma 27 páginas nuevas: detalla la colocación exacta de los
-            Cazaderos, Rumbos, Senderos, Rutas, las 4 insignias del <strong>Marco Mundo Mejor</strong>, la <strong>Insignia de Compromiso Ciudadano</strong>
-            y las nuevas prendas oficiales (camisola tipo polo, camisola outdoor y uniforme de trabajo).
+            Edición vigente aprobada en junio 2026 con nuevas colocaciones PJOS, insignias del Marco Mundo Mejor, Compromiso Ciudadano y camisola outdoor/polo.
           </p>
         </article>
 
@@ -1262,9 +1274,7 @@
           </div>
           <h3>Edades de las Secciones en SISAS</h3>
           <p>
-            Durante 2024 (<code>JSN 24.004</code>) existió flexibilidad transitoria para enlaces de sección. Desde el <strong>1° de julio de 2025</strong>
-            (<code>JSN 25.051</code>), el sistema <strong>SISAS</strong> aplica de forma estricta las edades del Reglamento 2023:
-            Manada (6 a &lt;10), Tropa (10 a &lt;14), Comunidad (14 a &lt;18) y Clan (18 a &lt;22).
+            Desde julio de 2025 SISAS aplica estrictamente las edades del Reglamento 2023 en Manada, Tropa, Comunidad y Clan sin excepciones automáticas.
           </p>
         </article>
 
@@ -1276,9 +1286,7 @@
           </div>
           <h3>Cuotas Anuales de Registro</h3>
           <p>
-            En 2025 (<code>JSN 24.117</code>) la cuota nacional fue de $680 (reingreso) y $840 (nuevo ingreso). Para <strong>2026</strong>
-            (<code>JSN 25.136</code>), el Consejo Nacional aprobó <strong>$730.00 MXN para Reingreso</strong> y <strong>$890.00 MXN para Nuevo Ingreso</strong>,
-            manteniendo el beneficio de <strong>Registro Familiar</strong> (<code>JSN 25.009</code>).
+            Cuota nacional 2026 de <strong>$730 MXN</strong> (reingreso) y <strong>$890 MXN</strong> (nuevo ingreso), conservando descuentos de Registro Familiar.
           </p>
         </article>
 
@@ -1290,9 +1298,7 @@
           </div>
           <h3>Estatutos, Reglamento y Justicia Asociativa</h3>
           <p>
-            Los Estatutos y Declaración de Principios de 2018 fueron renovados en <strong>2023</strong> junto con el <strong>Reglamento 2023</strong>.
-            Posteriormente entraron en vigor la <strong>Política de Diversidad, Equidad e Inclusión 2024</strong>, el <strong>Código de Conducta 2025</strong>
-            y el <strong>Reglamento de la Corte Nacional de Honor 2025</strong>.
+            Renovación integral de Estatutos y Reglamento (2023), Política de Diversidad e Inclusión (2024), Código de Conducta y Corte de Honor (2025).
           </p>
         </article>
 
@@ -1304,9 +1310,7 @@
           </div>
           <h3>Adultos en el Movimiento e Identidad Centenario</h3>
           <p>
-            El Esquema de Adultos 2019 evolucionó a la <strong>Política Nacional AMS 2024</strong>, el <strong>Modelo de Formación 2025</strong> y
-            el <strong>Modelo de Gestión de Adultos 2025</strong>. Además, en 2026 se incorporó la identidad oficial del
-            <strong>Centenario Scout en México (1926–2026)</strong>.
+            Nuevos modelos AMS 2024 y Formación/Gestión 2025 para dirigentes, además de la identidad oficial del Centenario Scout en México (1926–2026).
           </p>
         </article>
 
@@ -1316,12 +1320,9 @@
             <span class="yr-arrow">→</span>
             <span class="yr-new">SISAS + Help Desk 2026</span>
           </div>
-          <h3>Trámites Digitales, Help Desk y Registro Familiar</h3>
+          <h3>Trámites Digitales y Help Desk</h3>
           <p>
-            El antiguo RegNal dio paso al ecosistema <strong>SISAS</strong> (<a href="https://sisas.scouts.org.mx" target="_blank" rel="noopener">sisas.scouts.org.mx</a>),
-            respaldado hoy por las <strong>25 guías de la Mesa de Ayuda</strong> (<a href="https://helpdesk.scouts.org.mx" target="_blank" rel="noopener">helpdesk.scouts.org.mx</a>) con 11 departamentos de tickets
-            y el portal <a href="https://familiar.scouts.org.mx" target="_blank" rel="noopener">familiar.scouts.org.mx</a> (3 a 5 miembros con 25 % / 30 % / 35 % sobre cuota nacional).
-            Se definieron además plazos claros: <strong>45 días</strong> para registro inicial, <strong>60 días</strong> de reinscripción anticipada y <strong>15 días por etapa</strong> en cambios de grupo.
+            Gestión en SISAS, 25 guías oficiales de Help Desk y plazos definidos de registro (45 días inicial, 60 reinscripción, 15 cambios).
           </p>
         </article>
 
@@ -1331,12 +1332,9 @@
             <span class="yr-arrow">→</span>
             <span class="yr-new">FES + RECME P1–P10 (2026)</span>
           </div>
-          <h3>Portal RECME, Fichas FES y Plantillas Oficiales P1–P10</h3>
+          <h3>Portal RECME y Fichas FES</h3>
           <p>
-            En <strong>2026</strong> la plataforma oficial <a href="https://recme.scouts.org.mx" target="_blank" rel="noopener">recme.scouts.org.mx</a> (<code>SCNCD / CNPJ</code>)
-            centralizó las nuevas <strong>Fichas de Especialidades Scout (FES)</strong> alineadas a los 4 Ejes Temáticos y 17 ODS, la guía <code>FAES</code>,
-            los esquemas de vida personal <strong>PPV SMART</strong> (<code>P3.4</code>), la familia completa de formatos unificados <strong>P1 a P10</strong> (versiones <code>v1.1</code> de junio–julio 2026),
-            las planillas <strong>CNAMS</strong> (<code>FPD</code>, <code>FPR</code>, <code>FD</code>) y las solicitudes <strong>Jade / Obsidiana</strong> de Insignias Finales y Terminales.
+            Centralización en <code>recme.scouts.org.mx</code> de Especialidades FES (4 Ejes / 17 ODS), guía FAES y formatos unificados P1–P10.
           </p>
         </article>
 
@@ -1346,12 +1344,9 @@
             <span class="yr-arrow">→</span>
             <span class="yr-new">CONECTA + MASC 2026</span>
           </div>
-          <h3>Canal CONECTA y Solución Alternativa de Controversias</h3>
+          <h3>Canal CONECTA y Mediación</h3>
           <p>
-            Junto con el <em>Código de Conducta 2025</em> y la política <em>A Salvo del Peligro</em>, se consolidó el canal digital
-            <a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener">conecta.scouts.org.mx</a> para atención oportuna de quejas y denuncias,
-            junto con los formatos estandarizados de <strong>Diálogo Directo</strong> (<code>DD.prov.2026.01</code>), <strong>Mediación</strong> (<code>MED.prov.2026.01</code>) y
-            <strong>Arbitraje</strong> (<code>AR.2026.PROV.01</code>).
+            Atención digital confidencial vía <a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener">conecta.scouts.org.mx</a> y formatos estandarizados de Diálogo, Mediación y Arbitraje.
           </p>
         </article>
       </div>
@@ -1483,7 +1478,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · V2.2.12 Mobile · Web V8.0</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · V2.2.13 Mobile · Web V8.1</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
             Instálala en Android (.apk) o úsala en iPhone y iPad desde Safari sin App Store, con las 13,516 preguntas y visores sin conexión.
@@ -1746,10 +1741,10 @@
     <div class="container footer-inner">
       <div class="footer-top-bar">
         <div class="footer-brand-row">
-          <img loading="lazy" decoding="async" src="img/logo-flor.png" alt="Flor de Lis Mundial" class="footer-logo" />
+          <img loading="lazy" decoding="async" src="img/logo-flor.png" alt="Logo BiblioTech Scout" class="footer-logo" />
           <div>
-            <strong>BiblioTech</strong> — Creador: Liam Durán - Provincia TLXH · <a href="https://www.instagram.com/liaadurg3/" target="_blank" rel="noopener noreferrer" class="footer-creator-link">@liaadurg3</a>
-            <p class="footer-sources">Asociación de Scouts de México ASMAC y World Scouting WOSM</p>
+            <strong>BiblioTech</strong> — Creador: Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco · <a href="https://www.instagram.com/liaadurg3/" target="_blank" rel="noopener noreferrer" class="footer-creator-link">@liaadurg3</a>
+            <p class="footer-sources">Contacto de soporte: <a href="mailto:rdc.tlxh@gmail.com" class="footer-creator-link">rdc.tlxh@gmail.com</a></p>
           </div>
         </div>
 
@@ -1777,14 +1772,43 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 12/11/2026 • BETA V8.0 - 2.2.12 Mobile (12/11/2026)
+          Base de datos: 12/11/2026 • BETA V8.1 - 2.2.13 Mobile (12/11/2026) ·
+          <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">
-          <strong>Aviso de proyecto independiente:</strong> BiblioTech es un proyecto personal, educativo y sin fines de lucro creado para facilitar la búsqueda y comprensión de los documentos oficiales a toda la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la Asociación de Scouts de México, A.C. (ASMAC) ni de la Organización Mundial del Movimiento Scout (World Scouting / WOSM); todos los documentos, manuales, reglamentos, logotipos y marcas citados pertenecen a sus respectivos titulares oficiales.
+          <strong>Aviso de proyecto independiente:</strong> BiblioTech es un proyecto sin fines de lucro creado para facilitar la búsqueda y comprensión de los documentos oficiales a toda la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la Asociación de Scouts de México, A.C. (ASMAC) ni de la Organización Mundial del Movimiento Scout (World Scouting / WOSM); todos los documentos, manuales, reglamentos, logotipos y marcas citados pertenecen a sus respectivos titulares oficiales.
         </p>
       </div>
     </div>
   </footer>
+
+  <!-- AVISO DE COOKIES, PREFERENCIAS LOCALES Y FEEDBACK ANÓNIMO (SOLO WEB; EN APK SE ACTIVA AUTOMÁTICAMENTE) -->
+  <div id="cookieConsentBanner" class="bt-consent-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="consentTitle">
+    <div class="bt-consent-card">
+      <div class="bt-consent-head">
+        <img src="img/logo-flor.png" alt="Logo BiblioTech Scout" class="bt-consent-logo" />
+        <div>
+          <span class="bt-consent-kicker">Privacidad y mejora continua</span>
+          <h3 id="consentTitle">Preferencias y análisis anónimo de uso</h3>
+        </div>
+      </div>
+      <p class="bt-consent-intro">
+        BiblioTech utiliza cookies y almacenamiento local en tu dispositivo para funcionar mejor. Tú decides qué autorizar:
+      </p>
+      <ul class="bt-consent-list">
+        <li>
+          <strong>Preferencias y biblioteca personal:</strong> guarda tus documentos marcados, notas de lectura, modo noche y tus preguntas recientes para retomarlas rápido sin volver a escribirlas.
+        </li>
+        <li>
+          <strong>Mejora continua sin registro:</strong> si aceptas, el sistema registra de forma <em>totalmente anónima</em> (sin nombres, correos ni datos personales) las preguntas consultadas, un resumen de la respuesta entregada y qué documentos se buscan o abren, ayudándonos a corregir respuestas incompletas o documentos faltantes sin que tengas que enviarnos un correo.
+        </li>
+      </ul>
+      <div class="bt-consent-actions">
+        <button type="button" id="consentDeclineBtn" class="bt-consent-btn is-secondary">Solo lo esencial</button>
+        <button type="button" id="consentAcceptBtn" class="bt-consent-btn is-primary">Aceptar y mejorar BiblioTech</button>
+      </div>
+    </div>
+  </div>
 
   <!-- DOCK INFERIOR UNIFICADO FLOTANTE (MÓVIL & APP ANDROID) -->
   <nav id="unifiedBottomDock" class="bt-unified-dock" aria-label="Navegación principal móvil">

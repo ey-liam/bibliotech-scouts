@@ -1,8 +1,8 @@
 # BiblioTech Scout — Biblioteca Digital y Buscador Documental Scout
 
-**Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
-**Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** V8.0 Oficial - 2.2.12 Mobile (12/11/2026)  
+**Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/)) · **Contacto:** `rdc.tlxh@gmail.com`  
+**Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
+**Base de datos:** 12/11/2026 • **Versión:** V8.1 Oficial - 2.2.13 Mobile (12/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,7 +41,18 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V8.0 — Menú Tipo App, Buscador Compacto y Textos Directos (12/11/2026)
+## 3. Novedades de la Versión V8.1 — Nuevo Logo, Botones Centrados, Vistas Iniciales Compactas y Privacidad (12/11/2026)
+
+- **Centrado de Botones/Pestañas y Nuevo Logo Oficial (`sw.js v29`, `styles.css?v=28`):**
+  - Actualización completa del logotipo oficial (`img/logo-flor.png`, `favicon.png`, `icon-192.png`, `icon-512.png`) con encuadre limpio en barra superior, tarjetas de respuesta y pie de página.
+  - Alineación uniforme mediante Flexbox (`inline-flex` centrado) y pistas horizontales estables en todas las pestañas de estantes, categorías, subcategorías, buscador y botones de acción.
+- **Vistas Iniciales Compactas + Búsqueda Completa + Descripciones Resumidas:**
+  - *Biblioteca Scout* y *Explorar catálogo* inician mostrando **6 documentos** en pantalla principal para no saturar, y al escribir una búsqueda despliegan automáticamente **todas las coincidencias**.
+  - Descripciones condensadas en *Colección Centenario*, *Acerca de*, *Secciones*, *Servicios y Trámites* y *Evolución 2018–2026*, actualizando la ficha de autor (*Proyecto sin fines de lucro*, *Comunidad de Caminantes*, *Provincia Tláhuac-Xochimilco*, botón `@liaadurg3` y correo `rdc.tlxh@gmail.com`).
+- **Preferencias Locales, Preguntas Recientes y Feedback Anónimo:**
+  - En Web muestra un aviso claro de cookies/almacenamiento local (en APK Android se habilita automáticamente sin interrumpir); al aceptar, recuerda tus preguntas recientes en `#buscador` y permite valorar respuestas (`Útil` / `Reportar fallo o falta info`) enviando resúmenes técnicos anónimos de consultas, respuestas resumidas y documentos buscados para mejora continua.
+
+## 4. Novedades de la Versión V8.0 — Menú Tipo App, Buscador Compacto y Textos Directos (12/11/2026)
 
 - **Menú y Navegación Intuitivos (`sw.js v28`, `styles.css?v=27`):**
   - Etiquetas cortas en barra superior (`Preguntar`, `Biblioteca`, `Guía`, `Agentes`, `Secciones`, `Cambios`, `Catálogo`, `App`) y menú desplegable móvil en cuadrícula de tarjetas redondeadas (`2` columnas), simple e inmediato.
