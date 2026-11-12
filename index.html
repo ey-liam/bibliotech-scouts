@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=28" />
+  <link rel="stylesheet" href="styles.css?v=29" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -118,15 +118,29 @@
         </span>
       </a>
 
-      <nav class="main-nav" id="navegacion-principal" aria-label="Navegación principal">
-        <a href="#buscador" class="nav-link active">Preguntar</a>
+      <nav class="desktop-quick-nav" aria-label="Accesos principales">
+        <a href="#buscador" class="nav-link active">Buscador</a>
         <a href="#biblioteca" class="nav-link">Biblioteca</a>
-        <a href="#guia-inicio" class="nav-link">Guía</a>
-        <a href="#agentes" class="nav-link">Agentes</a>
+        <a href="#guia-inicio" class="nav-link">Guía de Uso</a>
+        <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
         <a href="#secciones" class="nav-link">Secciones</a>
-        <a href="#cambios" class="nav-link">Cambios</a>
+        <a href="#cambios" class="nav-link">Cambios en Esquemas</a>
+        <a href="#app" class="nav-link nav-link-app">Descarga App</a>
+      </nav>
+
+      <nav class="main-nav" id="navegacion-principal" aria-label="Todos los apartados">
+        <a href="#inicio" class="nav-link">Inicio</a>
+        <a href="#buscador" class="nav-link active">Buscador</a>
+        <a href="#biblioteca" class="nav-link">Biblioteca</a>
+        <a href="#guia-inicio" class="nav-link">Guía de Uso</a>
+        <a href="#acerca" class="nav-link">El Proyecto</a>
+        <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
+        <a href="#secciones" class="nav-link">Secciones</a>
+        <a href="#servicios" class="nav-link">Servicios y Trámites</a>
+        <a href="#cambios" class="nav-link">Cambios en Esquemas</a>
         <a href="#explorar" class="nav-link">Catálogo</a>
-        <a href="#app" class="nav-link">App</a>
+        <a href="#app" class="nav-link">Descarga App</a>
+        <a href="#aportar" class="nav-link">Aportar y Contacto</a>
       </nav>
 
       <div class="header-actions">
@@ -148,7 +162,7 @@
           id="navToggle"
           aria-expanded="false"
           aria-controls="navegacion-principal"
-          aria-label="Abrir menú de navegación"
+          aria-label="Abrir todos los apartados"
         >
           <span class="nav-toggle-label">Menú</span>
           <span class="nav-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -275,12 +289,11 @@
         </div>
 
         <div class="hero-photo-stage">
-          <div class="hero-photo" aria-labelledby="heroPhotoCaption" data-query="¿Qué es la Comunidad de Caminantes?" role="button" tabindex="0" title="Consultar sobre la Comunidad de Caminantes">
-            <img decoding="async" src="img/photos/p01.jpg" alt="Comunidad de Caminantes reunida en campamento" class="hero-photo-img" />
-            <span class="hero-photo-caption" id="heroPhotoCaption">Comunidad de Caminantes</span>
+          <div class="hero-photo hero-photo-masked" aria-label="Comunidad de Caminantes reunida en campamento" data-query="¿Qué es la Comunidad de Caminantes?" role="button" tabindex="0" title="Consultar sobre la Comunidad de Caminantes">
+            <div class="hero-photo-clip-shell">
+              <img decoding="async" src="img/photos/p01.jpg" alt="Comunidad de Caminantes reunida en campamento" class="hero-photo-img" />
+            </div>
           </div>
-          <span class="hero-sticker hero-sticker-a" aria-hidden="true">Creado por: Liam Durán / Caminante</span>
-          <span class="hero-sticker hero-sticker-b" aria-hidden="true">Centenario Scout 1926–2026</span>
         </div>
       </div>
     </div>
@@ -450,185 +463,7 @@
     </section>
 
 
-  <!-- APARTADO DE PRIMEROS PASOS: GRUPOS, PLATAFORMAS, MEZTITLA, EVENTOS, CPRC/CNRC Y PROYECTOS -->
-  <section id="guia-inicio" class="quickstart-section">
-    <div class="container">
-      <div class="section-heading-row">
-        <div>
-          <span class="section-eyebrow">GUÍA RÁPIDA</span>
-          <h2 class="section-title">Accesos directos por tema</h2>
-          <p class="section-subtitle">
-            Toca una tarjeta o pregunta para abrir la respuesta oficial al instante.
-          </p>
-        </div>
-      </div>
-
-      <div class="starter-3d-grid">
-        <!-- TARJETA 1: PRIMEROS PASOS E INSCRIPCIÓN -->
-        <article class="starter-3d-card theme-emerald tilt-3d">
-          <div class="starter-3d-glare" aria-hidden="true"></div>
-          <div class="starter-3d-top">
-            <span class="starter-step-pill">01 • PRIMEROS PASOS</span>
-            <span class="starter-3d-floating-icon">
-              <svg width="24" height="24"><use href="#icon-signpost"/></svg>
-            </span>
-          </div>
-          <h3>Grupos, Registro y Permisos</h3>
-          <p>
-            Más de <strong>700 Grupos</strong> en México. Regístrate en <strong>SISAS</strong> (Cuota 2026: <strong>$890 Nuevo</strong> / <strong>$730 Reingreso</strong> o <em>Registro Familiar</em>).
-          </p>
-          <div class="starter-3d-chips">
-            <button type="button" class="starter-q-btn" data-query="¿En dónde encuentro un Grupo Scout?">¿Dónde hay un Grupo Scout?</button>
-            <button type="button" class="starter-q-btn" data-query="¿Cómo inscribo a mi hijo o hija en los Scouts, en dónde se registra y con quién tengo que hablar comúnmente del registro?">Cómo inscribir y con quién hablar</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué va a hacer mi hijo o hija en los Scouts según su edad?">Actividades por edad</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué permisos necesita mi hijo para inscribirse o ir de campamento y qué necesito llevar para asistir?">Permisos (JL304 / Ficha Médica)</button>
-          </div>
-          <div class="starter-3d-footer">
-            <a href="https://scouts.org.mx/grupos-scouts-en-mexico/" target="_blank" rel="noopener noreferrer" class="starter-ext-link">
-              Mapa de Grupos Scouts →
-            </a>
-          </div>
-        </article>
-
-        <!-- TARJETA 2: SISAS, EXPLORAPP Y CARPETAPP -->
-        <article class="starter-3d-card theme-cyan tilt-3d">
-          <div class="starter-3d-glare" aria-hidden="true"></div>
-          <div class="starter-3d-top">
-            <span class="starter-step-pill">02 • ECOSISTEMA DIGITAL</span>
-            <span class="starter-3d-floating-icon">
-              <svg width="24" height="24"><use href="#icon-fleur"/></svg>
-            </span>
-          </div>
-          <h3>SISAS, ExplorApp y CarpetApp</h3>
-          <p>
-            <strong>SISAS</strong> gestiona membresía y pagos; <strong>ExplorApp</strong> lleva el avance de NNAJ y <strong>CarpetApp</strong> valida insignias PJOS.
-          </p>
-          <div class="starter-3d-chips">
-            <button type="button" class="starter-q-btn" data-query="¿Qué es el SISAS y para qué sirve?">¿Qué es SISAS?</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué es ExplorApp y cómo funciona para los jóvenes?">¿Qué es ExplorApp?</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué es CarpetApp y para qué sirve a los Scouters?">¿Qué es CarpetApp?</button>
-            <button type="button" class="starter-q-btn" data-query="¿Cómo se vinculan SISAS, ExplorApp y CarpetApp?">Cómo se conectan las 3</button>
-          </div>
-          <div class="starter-3d-footer">
-            <a href="https://sisas.scouts.org.mx/" target="_blank" rel="noopener noreferrer" class="starter-ext-link">
-              Abrir SISAS →
-            </a>
-          </div>
-        </article>
-
-        <!-- TARJETA 3: CENTRO SCOUT MEZTITLA -->
-        <article class="starter-3d-card theme-amber tilt-3d">
-          <div class="starter-3d-glare" aria-hidden="true"></div>
-          <div class="starter-3d-top">
-            <span class="starter-step-pill">03 • CAMPO ESCUELA</span>
-            <span class="starter-3d-floating-icon">
-              <svg width="24" height="24"><use href="#icon-campfire"/></svg>
-            </span>
-          </div>
-          <h3>Centro Scout Meztitla</h3>
-          <p>
-            Campo Escuela Nacional en <strong>Tepoztlán, Morelos</strong> desde <strong>1956</strong> en terrenos donados por <strong>Paul Loewe</strong>.
-          </p>
-          <div class="starter-3d-chips">
-            <button type="button" class="starter-q-btn" data-query="¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?">Historia y ubicación</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué necesito para acampar en el Campo Escuela Scout Meztitla y qué instalaciones tiene?">Cómo acampar y servicios</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué es el EEAS?">¿Qué es el EEAS?</button>
-          </div>
-          <div class="starter-3d-footer">
-            <button type="button" class="starter-inline-trigger" data-query="¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?">
-              Ver guía de Meztitla →
-            </button>
-          </div>
-        </article>
-
-        <!-- TARJETA 4: JAMBOREE, WORLD SCOUT JAMBOREE, PHILIA Y MOOT -->
-        <article class="starter-3d-card theme-violet tilt-3d">
-          <div class="starter-3d-glare" aria-hidden="true"></div>
-          <div class="starter-3d-top">
-            <span class="starter-step-pill">04 • EVENTOS</span>
-            <span class="starter-3d-floating-icon">
-              <svg width="24" height="24"><use href="#icon-globe"/></svg>
-            </span>
-          </div>
-          <h3>Jamboree, Philia y Moot</h3>
-          <p>
-            <strong>WSJ Polonia 2027</strong> (14–17) y <strong>Moot Taiwán 2029</strong> (18–25) cada 4 años, más <strong>Jamboree Nacional</strong>, <strong>Philia</strong> y <strong>Foros</strong>.
-          </p>
-          <div class="starter-3d-chips">
-            <button type="button" class="starter-q-btn" data-query="¿Qué es el Jamboree Nacional y qué es el World Scout Jamboree (Jamboree Scout Mundial), dónde se hacen y cada cuánto?">Jamboree Nacional y Mundial</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué es el Philia Nacional en la Comunidad de Caminantes?">¿Qué es el Philia?</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué es el World Scout Moot, dónde se hace y cada cuánto?">¿Qué es el World Scout Moot?</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué son los Foros Nacionales de Jóvenes y cuál es su objetivo?">¿Qué son los Foros Nacionales?</button>
-          </div>
-          <div class="starter-3d-footer">
-            <button type="button" class="starter-inline-trigger" data-query="¿Qué son el Jamboree Nacional, el World Scout Jamboree, el Philia y el World Scout Moot, dónde se hacen y cada cuánto?">
-              Comparar eventos →
-            </button>
-          </div>
-        </article>
-
-        <!-- TARJETA 5: RED DE CAMINANTES, CPRC, CNRC, FOROS Y ASESORES -->
-        <article class="starter-3d-card theme-blue tilt-3d">
-          <div class="starter-3d-glare" aria-hidden="true"></div>
-          <div class="starter-3d-top">
-            <span class="starter-step-pill">05 • RED DE CAMINANTES</span>
-            <span class="starter-3d-floating-icon">
-              <svg width="24" height="24"><use href="#icon-fleur"/></svg>
-            </span>
-          </div>
-          <h3>CPRC, CNRC y Foros</h3>
-          <p>
-            El <strong>CPRC</strong> y el <strong>CNRC</strong> (Anamari Hernández, Kevin Axel Cantero, Ivone Ramos y Mariana Villamil) coordinan la Red de Caminantes.
-          </p>
-          <div class="starter-3d-chips">
-            <button type="button" class="starter-q-btn" data-query="¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?">Qué son CPRC y CNRC</button>
-            <button type="button" class="starter-q-btn" data-query="¿Cómo se hace la elección del CPRC y del CNRC y en dónde se eligen?">Cómo y dónde se eligen</button>
-            <button type="button" class="starter-q-btn" data-query="¿Cómo se hace un Foro Provincial paso a paso y quiénes son los encargados de organizarlo?">Cómo hacer un Foro Provincial</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué es el Asesor de la Red o Comité de Caminantes, cómo se elige, qué funciones y requisitos tiene y cómo se evalúa?">Asesor de la Red y requisitos</button>
-          </div>
-          <div class="starter-3d-footer">
-            <button type="button" class="starter-inline-trigger" data-query="¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?">
-              Ver Guía de la Red →
-            </button>
-          </div>
-        </article>
-
-        <!-- TARJETA 6: PROYECTOS DE CAMINANTES, AGENTES DE CAMBIO, FORMATOS Y ESPECIALIDADES -->
-        <article class="starter-3d-card theme-rose tilt-3d">
-          <div class="starter-3d-glare" aria-hidden="true"></div>
-          <div class="starter-3d-top">
-            <span class="starter-step-pill">06 • PROYECTOS E INSIGNIAS</span>
-            <span class="starter-3d-floating-icon">
-              <svg width="24" height="24"><use href="#icon-leaf"/></svg>
-            </span>
-          </div>
-          <h3>Proyectos, Formatos e Insignias</h3>
-          <p>
-            Registra tus proyectos en <strong>Agentes de Cambio.MX</strong>, <strong>ExplorApp</strong> y <strong>sdgs.scout.org</strong> con Cédula SMART y Bitácora.
-          </p>
-          <div class="starter-3d-chips">
-            <button type="button" class="starter-q-btn" data-query="¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?">Dónde subir proyectos y formatos</button>
-            <button type="button" class="starter-q-btn" data-query="¿Cómo sé a qué Eje Temático pertenece mi proyecto de Caminantes?">Cómo elegir Eje Temático</button>
-            <button type="button" class="starter-q-btn" data-query="¿Qué especialidades, reconocimientos e insignias puedo obtener con mis proyectos de Caminante?">Especialidades e Insignias</button>
-          </div>
-          <div class="starter-3d-footer">
-            <a href="#agentes" class="starter-ext-link">
-              Ir a Agentes de Cambio →
-            </a>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <!-- Separador ondulado animado hacia Biblioteca Scout -->
-    <div class="section-wave-separator" aria-hidden="true">
-      <svg viewBox="0 0 1440 54" preserveAspectRatio="none">
-        <path d="M0,18 C420,58 920,-6 1440,28 L1440,54 L0,54 Z" fill="#ffffff"></path>
-      </svg>
-    </div>
-  </section>
-
-  <!-- APARTADO DE BIBLIOTECA INTERACTIVA ORGANIZADO EN 8 CATEGORÍAS + COLECCIÓN DEL CENTENARIO -->
+  <!-- APARTADO DE BIBLIOTECA INTERACTIVA ORGANIZADO EN CATEGORÍAS + COLECCIÓN DEL CENTENARIO -->
   <section id="biblioteca" class="library-section">
     <div class="container">
       <div class="section-heading-row library-header-row">
@@ -665,7 +500,7 @@
         </div>
       </div>
 
-      <!-- ESTANTES DE LA BIBLIOTECA POR CATEGORÍA: JUNTO A LOS FILTROS DE BÚSQUEDA -->
+      <!-- ESTANTES DE LA BIBLIOTECA POR CATEGORÍA -->
       <div class="library-shelves-tabs" id="libraryShelfTabs" role="group" aria-label="Estantes de la biblioteca">
         <button type="button" class="shelf-tab active" data-shelf="featured">Destacados</button>
         <button type="button" class="shelf-tab" data-shelf="centenario">Centenario (39)</button>
@@ -682,7 +517,7 @@
       </div>
       <div class="subcat-bar-shell hidden" id="librarySubcategoryPills"></div>
 
-      <!-- BANNER DESTACADO DE LA COLECCIÓN BIBLIOTECA DEL CENTENARIO CON FOTOS EN HEXÁGONO Y POLAROID -->
+      <!-- BANNER DESTACADO DE LA COLECCIÓN BIBLIOTECA DEL CENTENARIO -->
       <div class="centenario-collection-banner">
         <div class="centenario-banner-left">
           <img loading="lazy" decoding="async" src="assets/scouts/logo_biblioteca_centenario.png" alt="Colección Biblioteca del Centenario" class="centenario-collection-logo" />
@@ -705,7 +540,7 @@
               </div>
             </div>
           </div>
-          <div class="mini-polaroid-card tilt-pos-right">
+          <div class="mini-polaroid-card bt-poly-photo tilt-pos-right">
             <img loading="lazy" decoding="async" src="img/photos/p09.jpg" alt="Foros Nacionales — Meztitla" />
             <span>Foros Nacionales</span>
           </div>
@@ -722,10 +557,224 @@
       </div>
     </div>
 
-    <!-- Separador dinámico entre Biblioteca y Propósito -->
+    <!-- Separador dinámico entre Biblioteca y Guía de Uso -->
     <div class="section-wave-separator" aria-hidden="true">
       <svg viewBox="0 0 1440 54" preserveAspectRatio="none">
         <path d="M0,24 C360,56 720,0 1080,32 C1260,48 1380,18 1440,12 L1440,54 L0,54 Z" fill="#f4f8ff"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- APARTADO DE PRIMEROS PASOS Y GUÍA DE USO (DESPLEGABLES CERRADOS POR DEFECTO) -->
+  <section id="guia-inicio" class="quickstart-section">
+    <div class="container">
+      <div class="section-heading-row">
+        <div>
+          <span class="section-eyebrow">GUÍA DE USO Y ACCESOS RÁPIDOS</span>
+          <h2 class="section-title">Accesos directos por tema</h2>
+          <p class="section-subtitle">
+            Toca cualquier tema numerado para desplegar sus preguntas rápidas y enlaces oficiales.
+          </p>
+        </div>
+      </div>
+
+      <div class="starter-3d-grid bt-accordion-grid">
+        <!-- 01: PRIMEROS PASOS E INSCRIPCIÓN -->
+        <details class="starter-3d-card theme-emerald bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="starter-3d-top">
+              <span class="starter-step-pill">01 • PRIMEROS PASOS</span>
+              <span class="starter-3d-floating-icon" aria-hidden="true">
+                <svg width="22" height="22"><use href="#icon-signpost"/></svg>
+              </span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Grupos, Registro y Permisos</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Más de <strong>700 Grupos</strong> en México. Regístrate en <strong>SISAS</strong> (Cuota 2026: <strong>$890 Nuevo</strong> / <strong>$730 Reingreso</strong> o <em>Registro Familiar</em>).
+            </p>
+            <div class="starter-3d-chips">
+              <button type="button" class="starter-q-btn" data-query="¿En dónde encuentro un Grupo Scout?">¿Dónde hay un Grupo Scout?</button>
+              <button type="button" class="starter-q-btn" data-query="¿Cómo inscribo a mi hijo o hija en los Scouts, en dónde se registra y con quién tengo que hablar comúnmente del registro?">Cómo inscribir y con quién hablar</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué va a hacer mi hijo o hija en los Scouts según su edad?">Actividades por edad</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué permisos necesita mi hijo para inscribirse o ir de campamento y qué necesito llevar para asistir?">Permisos (JL304 / Ficha Médica)</button>
+            </div>
+            <div class="starter-3d-footer">
+              <a href="https://scouts.org.mx/grupos-scouts-en-mexico/" target="_blank" rel="noopener noreferrer" class="starter-ext-link">
+                Mapa de Grupos Scouts →
+              </a>
+            </div>
+          </div>
+        </details>
+
+        <!-- 02: ECOSISTEMA DIGITAL -->
+        <details class="starter-3d-card theme-cyan bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="starter-3d-top">
+              <span class="starter-step-pill">02 • ECOSISTEMA DIGITAL</span>
+              <span class="starter-3d-floating-icon" aria-hidden="true">
+                <svg width="22" height="22"><use href="#icon-fleur"/></svg>
+              </span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>SISAS, ExplorApp y CarpetApp</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              <strong>SISAS</strong> gestiona membresía y pagos; <strong>ExplorApp</strong> lleva el avance de NNAJ y <strong>CarpetApp</strong> valida insignias PJOS.
+            </p>
+            <div class="starter-3d-chips">
+              <button type="button" class="starter-q-btn" data-query="¿Qué es el SISAS y para qué sirve?">¿Qué es SISAS?</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué es ExplorApp y cómo funciona para los jóvenes?">¿Qué es ExplorApp?</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué es CarpetApp y para qué sirve a los Scouters?">¿Qué es CarpetApp?</button>
+              <button type="button" class="starter-q-btn" data-query="¿Cómo se vinculan SISAS, ExplorApp y CarpetApp?">Cómo se conectan las 3</button>
+            </div>
+            <div class="starter-3d-footer">
+              <a href="https://sisas.scouts.org.mx/" target="_blank" rel="noopener noreferrer" class="starter-ext-link">
+                Abrir SISAS →
+              </a>
+            </div>
+          </div>
+        </details>
+
+        <!-- 03: CENTRO SCOUT MEZTITLA -->
+        <details class="starter-3d-card theme-amber bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="starter-3d-top">
+              <span class="starter-step-pill">03 • CAMPO ESCUELA</span>
+              <span class="starter-3d-floating-icon" aria-hidden="true">
+                <svg width="22" height="22"><use href="#icon-campfire"/></svg>
+              </span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Centro Scout Meztitla</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Campo Escuela Nacional en <strong>Tepoztlán, Morelos</strong> desde <strong>1956</strong> en terrenos donados por <strong>Paul Loewe</strong>.
+            </p>
+            <div class="starter-3d-chips">
+              <button type="button" class="starter-q-btn" data-query="¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?">Historia y ubicación</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué necesito para acampar en el Campo Escuela Scout Meztitla y qué instalaciones tiene?">Cómo acampar y servicios</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué es el EEAS?">¿Qué es el EEAS?</button>
+            </div>
+            <div class="starter-3d-footer">
+              <button type="button" class="starter-inline-trigger" data-query="¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?">
+                Ver guía de Meztitla →
+              </button>
+            </div>
+          </div>
+        </details>
+
+        <!-- 04: JAMBOREE, PHILIA Y MOOT -->
+        <details class="starter-3d-card theme-violet bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="starter-3d-top">
+              <span class="starter-step-pill">04 • EVENTOS</span>
+              <span class="starter-3d-floating-icon" aria-hidden="true">
+                <svg width="22" height="22"><use href="#icon-globe"/></svg>
+              </span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Jamboree, Philia y Moot</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              <strong>WSJ Polonia 2027</strong> (14–17) y <strong>Moot Taiwán 2029</strong> (18–25) cada 4 años, más <strong>Jamboree Nacional</strong>, <strong>Philia</strong> y <strong>Foros</strong>.
+            </p>
+            <div class="starter-3d-chips">
+              <button type="button" class="starter-q-btn" data-query="¿Qué es el Jamboree Nacional y qué es el World Scout Jamboree (Jamboree Scout Mundial), dónde se hacen y cada cuánto?">Jamboree Nacional y Mundial</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué es el Philia Nacional en la Comunidad de Caminantes?">¿Qué es el Philia?</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué es el World Scout Moot, dónde se hace y cada cuánto?">¿Qué es el World Scout Moot?</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué son los Foros Nacionales de Jóvenes y cuál es su objetivo?">¿Qué son los Foros Nacionales?</button>
+            </div>
+            <div class="starter-3d-footer">
+              <button type="button" class="starter-inline-trigger" data-query="¿Qué son el Jamboree Nacional, el World Scout Jamboree, el Philia y el World Scout Moot, dónde se hacen y cada cuánto?">
+                Comparar eventos →
+              </button>
+            </div>
+          </div>
+        </details>
+
+        <!-- 05: RED DE CAMINANTES, CPRC, CNRC -->
+        <details class="starter-3d-card theme-blue bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="starter-3d-top">
+              <span class="starter-step-pill">05 • RED DE CAMINANTES</span>
+              <span class="starter-3d-floating-icon" aria-hidden="true">
+                <svg width="22" height="22"><use href="#icon-fleur"/></svg>
+              </span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>CPRC, CNRC y Foros</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              El <strong>CPRC</strong> y el <strong>CNRC</strong> (Anamari Hernández, Kevin Axel Cantero, Ivone Ramos y Mariana Villamil) coordinan la Red de Caminantes.
+            </p>
+            <div class="starter-3d-chips">
+              <button type="button" class="starter-q-btn" data-query="¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?">Qué son CPRC y CNRC</button>
+              <button type="button" class="starter-q-btn" data-query="¿Cómo se hace la elección del CPRC y del CNRC y en dónde se eligen?">Cómo y dónde se eligen</button>
+              <button type="button" class="starter-q-btn" data-query="¿Cómo se hace un Foro Provincial paso a paso y quiénes son los encargados de organizarlo?">Cómo hacer un Foro Provincial</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué es el Asesor de la Red o Comité de Caminantes, cómo se elige, qué funciones y requisitos tiene y cómo se evalúa?">Asesor de la Red y requisitos</button>
+            </div>
+            <div class="starter-3d-footer">
+              <button type="button" class="starter-inline-trigger" data-query="¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?">
+                Ver Guía de la Red →
+              </button>
+            </div>
+          </div>
+        </details>
+
+        <!-- 06: PROYECTOS E INSIGNIAS -->
+        <details class="starter-3d-card theme-rose bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="starter-3d-top">
+              <span class="starter-step-pill">06 • PROYECTOS E INSIGNIAS</span>
+              <span class="starter-3d-floating-icon" aria-hidden="true">
+                <svg width="22" height="22"><use href="#icon-leaf"/></svg>
+              </span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Proyectos, Formatos e Insignias</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Registra tus proyectos en <strong>Agentes de Cambio.MX</strong>, <strong>ExplorApp</strong> y <strong>sdgs.scout.org</strong> con Cédula SMART y Bitácora.
+            </p>
+            <div class="starter-3d-chips">
+              <button type="button" class="starter-q-btn" data-query="¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?">Dónde subir proyectos y formatos</button>
+              <button type="button" class="starter-q-btn" data-query="¿Cómo sé a qué Eje Temático pertenece mi proyecto de Caminantes?">Cómo elegir Eje Temático</button>
+              <button type="button" class="starter-q-btn" data-query="¿Qué especialidades, reconocimientos e insignias puedo obtener con mis proyectos de Caminante?">Especialidades e Insignias</button>
+            </div>
+            <div class="starter-3d-footer">
+              <a href="#agentes" class="starter-ext-link">
+                Ir a Agentes de Cambio →
+              </a>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Separador ondulado animado hacia Acerca del Proyecto -->
+    <div class="section-wave-separator" aria-hidden="true">
+      <svg viewBox="0 0 1440 54" preserveAspectRatio="none">
+        <path d="M0,18 C420,58 920,-6 1440,28 L1440,54 L0,54 Z" fill="#ffffff"></path>
       </svg>
     </div>
   </section>
@@ -756,11 +805,17 @@
           </div>
         </div>
         <div class="about-text-col">
-          <span class="section-eyebrow">Proyecto sin fines de lucro</span>
-          <h2>Información Scout clara y accesible</h2>
+          <span class="section-eyebrow">El Proyecto · Sin fines de lucro</span>
+          <h2>¿Qué es BiblioTech Scout y para qué sirve?</h2>
           <p>
-            Manuales, guías PJOS, Colección Centenario, reglamentos, formatos y comunicados vigentes en un solo lugar.
+            <strong>BiblioTech Scout</strong> es una plataforma educativa, gratuita y de código abierto creada para acercar de forma rápida, clara y ordenada la documentación oficial vigente de la <strong>ASMAC</strong> y de <strong>World Scouting (WOSM)</strong> a scouts de todas las secciones, familias y dirigentes.
           </p>
+          <ul class="about-features-list">
+            <li><strong>Objetivo y utilidad:</strong> resuelve dudas en segundos sobre progresiones PJOS, especialidades FES, proyectos, reglamentos, uniforme, trámites SISAS y eventos sin tener que buscar página por página entre cientos de archivos.</li>
+            <li><strong>Buscador inteligente con fuentes:</strong> responde apoyándose en <strong>13,516 preguntas y respuestas</strong> verificadas e indica exactamente el libro, circular o página de donde salió cada dato.</li>
+            <li><strong>Biblioteca con visores integrados (599 archivos):</strong> abre al instante libros de la Colección del Centenario, PDFs, hojas Excel con filtro y exportación, guías HTML, presentaciones e imágenes, con favoritos, notas locales y Modo Noche.</li>
+            <li><strong>Web, iOS y App Android offline:</strong> funciona directo en el navegador sin descargas obligatorias, o como app instalable para consultar documentos sin conexión.</li>
+          </ul>
           <div class="about-signature-box">
             <p class="signature-main">Creador: <strong>Liam Durán</strong></p>
             <p class="signature-sub">Sección: <strong>Comunidad de Caminantes</strong></p>
@@ -1118,112 +1173,161 @@
         </div>
       </div>
 
-      <div class="services-cards-grid">
-        <article class="service-info-card">
-          <span class="service-tag">UNIFORME E INSIGNIAS</span>
-          <h3>Tienda Scout Nacional</h3>
-          <p>
-            Compra uniformes, insignias y equipo oficial en
-            <a href="https://tiendaenlinea.scouts.org.mx" target="_blank" rel="noopener">tiendaenlinea.scouts.org.mx</a>.
-          </p>
-          <ul class="service-bullet-list">
-            <li><strong>Sede CDMX:</strong> Córdoba 73, Roma Norte, Tel. <code>(55) 5208 7122 Ext. 148</code>.</li>
-            <li><strong>Distribuidores:</strong> Guadalajara, Estado de México y Puebla.</li>
-          </ul>
-          <button type="button" class="service-query-btn" data-query="¿Dónde compro el uniforme scout?">
-            Consultar compra de uniforme →
-          </button>
-        </article>
+      <div class="services-cards-grid bt-accordion-grid">
+        <details class="service-info-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <span class="service-tag">01 · UNIFORME E INSIGNIAS</span>
+            <div class="bt-acc-title-row">
+              <h3>Tienda Scout Nacional</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Compra uniformes, insignias y equipo oficial en
+              <a href="https://tiendaenlinea.scouts.org.mx" target="_blank" rel="noopener">tiendaenlinea.scouts.org.mx</a>.
+            </p>
+            <ul class="service-bullet-list">
+              <li><strong>Sede CDMX:</strong> Córdoba 73, Roma Norte, Tel. <code>(55) 5208 7122 Ext. 148</code>.</li>
+              <li><strong>Distribuidores:</strong> Guadalajara, Estado de México y Puebla.</li>
+            </ul>
+            <button type="button" class="service-query-btn" data-query="¿Dónde compro el uniforme scout?">
+              Consultar compra de uniforme →
+            </button>
+          </div>
+        </details>
 
-        <article class="service-info-card">
-          <span class="service-tag">PLATAFORMAS DIGITALES</span>
-          <h3>SISAS, CDC, ExplorApp y CarpetApp</h3>
-          <p>
-            Portales oficiales para membresía, cursos de adultos y seguimiento del PJOS.
-          </p>
-          <ul class="service-bullet-list">
-            <li><strong>SISAS (<a href="https://sisas.scouts.org.mx" target="_blank" rel="noopener">sisas.scouts.org.mx</a>):</strong> Registro, credencial QR y edades reglamentarias.</li>
-            <li><strong>CDC (<a href="https://cdc.scouts.org.mx" target="_blank" rel="noopener">cdc.scouts.org.mx</a>), ExplorApp y CarpetApp:</strong> Capacitación y progresión 2026.</li>
-          </ul>
-          <button type="button" class="service-query-btn" data-query="Explicación del nuevo esquema PJOS 2026">
-            Consultar ExplorApp y PJOS →
-          </button>
-        </article>
+        <details class="service-info-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <span class="service-tag">02 · PLATAFORMAS DIGITALES</span>
+            <div class="bt-acc-title-row">
+              <h3>SISAS, CDC, ExplorApp y CarpetApp</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Portales oficiales para membresía, cursos de adultos y seguimiento del PJOS.
+            </p>
+            <ul class="service-bullet-list">
+              <li><strong>SISAS (<a href="https://sisas.scouts.org.mx" target="_blank" rel="noopener">sisas.scouts.org.mx</a>):</strong> Registro, credencial QR y edades reglamentarias.</li>
+              <li><strong>CDC (<a href="https://cdc.scouts.org.mx" target="_blank" rel="noopener">cdc.scouts.org.mx</a>), ExplorApp y CarpetApp:</strong> Capacitación y progresión 2026.</li>
+            </ul>
+            <button type="button" class="service-query-btn" data-query="Explicación del nuevo esquema PJOS 2026">
+              Consultar ExplorApp y PJOS →
+            </button>
+          </div>
+        </details>
 
-        <article class="service-info-card">
-          <span class="service-tag">MEMBRESÍA Y SEGURO</span>
-          <h3>Cuotas 2026 y Seguro Scout</h3>
-          <p>
-            Cuotas vigentes aprobadas por el Consejo Nacional y cobertura médica en actividades.
-          </p>
-          <ul class="service-bullet-list">
-            <li><strong>Cuotas 2026 (<code>JSN 25.136</code>):</strong> <strong>$730 MXN</strong> Reingreso · <strong>$890 MXN</strong> Nuevo Ingreso.</li>
-            <li><strong>Registro Familiar y Seguro:</strong> 25%–35% de descuento (3–5 integrantes) y póliza nacional.</li>
-          </ul>
-          <button type="button" class="service-query-btn" data-query="¿Cómo funciona el Registro Familiar en familiar.scouts.org.mx y qué descuentos aplica?">
-            Consultar cuotas y descuentos →
-          </button>
-        </article>
+        <details class="service-info-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <span class="service-tag">03 · MEMBRESÍA Y SEGURO</span>
+            <div class="bt-acc-title-row">
+              <h3>Cuotas 2026 y Seguro Scout</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Cuotas vigentes aprobadas por el Consejo Nacional y cobertura médica en actividades.
+            </p>
+            <ul class="service-bullet-list">
+              <li><strong>Cuotas 2026 (<code>JSN 25.136</code>):</strong> <strong>$730 MXN</strong> Reingreso · <strong>$890 MXN</strong> Nuevo Ingreso.</li>
+              <li><strong>Registro Familiar y Seguro:</strong> 25%–35% de descuento (3–5 integrantes) y póliza nacional.</li>
+            </ul>
+            <button type="button" class="service-query-btn" data-query="¿Cómo funciona el Registro Familiar en familiar.scouts.org.mx y qué descuentos aplica?">
+              Consultar cuotas y descuentos →
+            </button>
+          </div>
+        </details>
 
-        <article class="service-info-card">
-          <span class="service-tag">PROTECCIÓN Y CONVIVENCIA</span>
-          <h3>Canal CONECTA y Controversias</h3>
-          <p>
-            Atención confidencial de quejas o denuncias (<em>A Salvo del Peligro</em>) y mediación de conflictos.
-          </p>
-          <ul class="service-bullet-list">
-            <li><strong>Canal CONECTA (<a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener">conecta.scouts.org.mx</a>):</strong> Reportes confidenciales y seguimiento.</li>
-            <li><strong>MASC 2026:</strong> Formatos de <em>Diálogo Directo</em>, <em>Mediación</em> y <em>Arbitraje / CNH</em>.</li>
-          </ul>
-          <button type="button" class="service-query-btn" data-query="¿Qué es CONECTA y para qué sirve?">
-            Consultar Canal CONECTA →
-          </button>
-        </article>
+        <details class="service-info-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <span class="service-tag">04 · PROTECCIÓN Y CONVIVENCIA</span>
+            <div class="bt-acc-title-row">
+              <h3>Canal CONECTA y Controversias</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Atención confidencial de quejas o denuncias (<em>A Salvo del Peligro</em>) y mediación de conflictos.
+            </p>
+            <ul class="service-bullet-list">
+              <li><strong>Canal CONECTA (<a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener">conecta.scouts.org.mx</a>):</strong> Reportes confidenciales y seguimiento.</li>
+              <li><strong>MASC 2026:</strong> Formatos de <em>Diálogo Directo</em>, <em>Mediación</em> y <em>Arbitraje / CNH</em>.</li>
+            </ul>
+            <button type="button" class="service-query-btn" data-query="¿Qué es CONECTA y para qué sirve?">
+              Consultar Canal CONECTA →
+            </button>
+          </div>
+        </details>
 
-        <article class="service-info-card">
-          <span class="service-tag">MÉTODO EDUCATIVO</span>
-          <h3>RECME y Especialidades (FES)</h3>
-          <p>
-            Repositorio oficial del método educativo en <a href="https://recme.scouts.org.mx" target="_blank" rel="noopener">recme.scouts.org.mx</a>.
-          </p>
-          <ul class="service-bullet-list">
-            <li><strong>Plantillas P1–P10:</strong> Progresión, proyectos, seguimiento, FAES, planillas y Jade/Obsidiana.</li>
-            <li><strong>Especialidades FES:</strong> Fichas organizadas en 4 Ejes Temáticos y 17 ODS.</li>
-          </ul>
-          <button type="button" class="service-query-btn" data-query="¿Qué es la página RECME (recme.scouts.org.mx) y para qué sirve?">
-            Consultar portal RECME →
-          </button>
-        </article>
+        <details class="service-info-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <span class="service-tag">05 · MÉTODO EDUCATIVO</span>
+            <div class="bt-acc-title-row">
+              <h3>RECME y Especialidades (FES)</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Repositorio oficial del método educativo en <a href="https://recme.scouts.org.mx" target="_blank" rel="noopener">recme.scouts.org.mx</a>.
+            </p>
+            <ul class="service-bullet-list">
+              <li><strong>Plantillas P1–P10:</strong> Progresión, proyectos, seguimiento, FAES, planillas y Jade/Obsidiana.</li>
+              <li><strong>Especialidades FES:</strong> Fichas organizadas en 4 Ejes Temáticos y 17 ODS.</li>
+            </ul>
+            <button type="button" class="service-query-btn" data-query="¿Qué es la página RECME (recme.scouts.org.mx) y para qué sirve?">
+              Consultar portal RECME →
+            </button>
+          </div>
+        </details>
 
-        <article class="service-info-card">
-          <span class="service-tag">SOPORTE TÉCNICO</span>
-          <h3>Mesa de Ayuda (Help Desk)</h3>
-          <p>
-            Soporte oficial para dudas de cuentas, pagos y plataforma en
-            <a href="https://helpdesk.scouts.org.mx" target="_blank" rel="noopener">helpdesk.scouts.org.mx</a>.
-          </p>
-          <ul class="service-bullet-list">
-            <li><strong>25 Guías y 11 Departamentos:</strong> Alta SISAS, pagos Conekta/OXXO, becas y seguros.</li>
-          </ul>
-          <button type="button" class="service-query-btn" data-query="¿Qué es la Mesa de Ayuda (helpdesk.scouts.org.mx) y qué departamentos atienden tickets?">
-            Consultar Mesa de Ayuda →
-          </button>
-        </article>
+        <details class="service-info-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <span class="service-tag">06 · SOPORTE TÉCNICO</span>
+            <div class="bt-acc-title-row">
+              <h3>Mesa de Ayuda (Help Desk)</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Soporte oficial para dudas de cuentas, pagos y plataforma en
+              <a href="https://helpdesk.scouts.org.mx" target="_blank" rel="noopener">helpdesk.scouts.org.mx</a>.
+            </p>
+            <ul class="service-bullet-list">
+              <li><strong>25 Guías y 11 Departamentos:</strong> Alta SISAS, pagos Conekta/OXXO, becas y seguros.</li>
+            </ul>
+            <button type="button" class="service-query-btn" data-query="¿Qué es la Mesa de Ayuda (helpdesk.scouts.org.mx) y qué departamentos atienden tickets?">
+              Consultar Mesa de Ayuda →
+            </button>
+          </div>
+        </details>
 
-        <article class="service-info-card">
-          <span class="service-tag">CUOTAS FAMILIARES</span>
-          <h3>Registro Familiar Unificado</h3>
-          <p>
-            Paga de 3 a 5 miembros nucleares en un solo cargo desde
-            <a href="https://familiar.scouts.org.mx" target="_blank" rel="noopener">familiar.scouts.org.mx</a>.
-          </p>
-          <ul class="service-bullet-list">
-            <li><strong>Requisitos y pago:</strong> CUMs con ficha médica completa, tarjeta o Apple/Google Pay.</li>
-          </ul>
-          <button type="button" class="service-query-btn" data-query="¿Qué necesito para hacer el Registro Familiar en familiar.scouts.org.mx?">
-            Consultar Registro Familiar →
-          </button>
-        </article>
+        <details class="service-info-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <span class="service-tag">07 · CUOTAS FAMILIARES</span>
+            <div class="bt-acc-title-row">
+              <h3>Registro Familiar Unificado</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Paga de 3 a 5 miembros nucleares en un solo cargo desde
+              <a href="https://familiar.scouts.org.mx" target="_blank" rel="noopener">familiar.scouts.org.mx</a>.
+            </p>
+            <ul class="service-bullet-list">
+              <li><strong>Requisitos y pago:</strong> CUMs con ficha médica completa, tarjeta o Apple/Google Pay.</li>
+            </ul>
+            <button type="button" class="service-query-btn" data-query="¿Qué necesito para hacer el Registro Familiar en familiar.scouts.org.mx?">
+              Consultar Registro Familiar →
+            </button>
+          </div>
+        </details>
       </div>
     </div>
   </section>
@@ -1241,114 +1345,177 @@
         </div>
       </div>
 
-      <div class="changes-timeline-grid">
-        <article class="change-card">
-          <div class="change-years">
-            <span class="yr-old">Hasta Dic 2025 (ENPE)</span>
-            <span class="yr-arrow">→</span>
-            <span class="yr-new">2025–2026 (PJOS)</span>
+      <div class="changes-timeline-grid bt-accordion-grid">
+        <details class="change-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="change-years">
+              <span class="yr-old">01 · Hasta Dic 2025 (ENPE)</span>
+              <span class="yr-arrow">→</span>
+              <span class="yr-new">2025–2026 (PJOS)</span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Programa de Jóvenes, Progresiones e Insignias</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              El PJOS sustituyó al ENPE con Cazaderos, Rumbos, Senderos, Rutas e Insignias Jade/Obsidiana (las insignias ENPE previas siguen siendo portables) junto a <strong>ExplorApp y CarpetApp</strong>.
+            </p>
           </div>
-          <h3>Programa de Jóvenes, Progresiones e Insignias</h3>
-          <p>
-            El PJOS sustituyó al ENPE con Cazaderos, Rumbos, Senderos, Rutas e Insignias Jade/Obsidiana (las insignias ENPE previas siguen siendo portables) junto a <strong>ExplorApp y CarpetApp</strong>.
-          </p>
-        </article>
+        </details>
 
-        <article class="change-card">
-          <div class="change-years">
-            <span class="yr-old">Marzo 2019 (80 págs.)</span>
-            <span class="yr-arrow">→</span>
-            <span class="yr-new">Junio 2026 (107 págs.)</span>
+        <details class="change-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="change-years">
+              <span class="yr-old">02 · Marzo 2019 (80 págs.)</span>
+              <span class="yr-arrow">→</span>
+              <span class="yr-new">Junio 2026 (107 págs.)</span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Manual del Uniforme Scout</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Edición vigente aprobada en junio 2026 con nuevas colocaciones PJOS, insignias del Marco Mundo Mejor, Compromiso Ciudadano y camisola outdoor/polo.
+            </p>
           </div>
-          <h3>Manual del Uniforme Scout</h3>
-          <p>
-            Edición vigente aprobada en junio 2026 con nuevas colocaciones PJOS, insignias del Marco Mundo Mejor, Compromiso Ciudadano y camisola outdoor/polo.
-          </p>
-        </article>
+        </details>
 
-        <article class="change-card">
-          <div class="change-years">
-            <span class="yr-old">2024 (Transición)</span>
-            <span class="yr-arrow">→</span>
-            <span class="yr-new">2025–2026 (Definitivo)</span>
+        <details class="change-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="change-years">
+              <span class="yr-old">03 · 2024 (Transición)</span>
+              <span class="yr-arrow">→</span>
+              <span class="yr-new">2025–2026 (Definitivo)</span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Edades de las Secciones en SISAS</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Desde julio de 2025 SISAS aplica estrictamente las edades del Reglamento 2023 en Manada, Tropa, Comunidad y Clan sin excepciones automáticas.
+            </p>
           </div>
-          <h3>Edades de las Secciones en SISAS</h3>
-          <p>
-            Desde julio de 2025 SISAS aplica estrictamente las edades del Reglamento 2023 en Manada, Tropa, Comunidad y Clan sin excepciones automáticas.
-          </p>
-        </article>
+        </details>
 
-        <article class="change-card">
-          <div class="change-years">
-            <span class="yr-old">2025 ($680 / $840)</span>
-            <span class="yr-arrow">→</span>
-            <span class="yr-new">2026 ($730 / $890)</span>
+        <details class="change-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="change-years">
+              <span class="yr-old">04 · 2025 ($680 / $840)</span>
+              <span class="yr-arrow">→</span>
+              <span class="yr-new">2026 ($730 / $890)</span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Cuotas Anuales de Registro</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Cuota nacional 2026 de <strong>$730 MXN</strong> (reingreso) y <strong>$890 MXN</strong> (nuevo ingreso), conservando descuentos de Registro Familiar.
+            </p>
           </div>
-          <h3>Cuotas Anuales de Registro</h3>
-          <p>
-            Cuota nacional 2026 de <strong>$730 MXN</strong> (reingreso) y <strong>$890 MXN</strong> (nuevo ingreso), conservando descuentos de Registro Familiar.
-          </p>
-        </article>
+        </details>
 
-        <article class="change-card">
-          <div class="change-years">
-            <span class="yr-old">2018–2022</span>
-            <span class="yr-arrow">→</span>
-            <span class="yr-new">2023–2025</span>
+        <details class="change-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="change-years">
+              <span class="yr-old">05 · 2018–2022</span>
+              <span class="yr-arrow">→</span>
+              <span class="yr-new">2023–2025</span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Estatutos, Reglamento y Justicia Asociativa</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Renovación integral de Estatutos y Reglamento (2023), Política de Diversidad e Inclusión (2024), Código de Conducta y Corte de Honor (2025).
+            </p>
           </div>
-          <h3>Estatutos, Reglamento y Justicia Asociativa</h3>
-          <p>
-            Renovación integral de Estatutos y Reglamento (2023), Política de Diversidad e Inclusión (2024), Código de Conducta y Corte de Honor (2025).
-          </p>
-        </article>
+        </details>
 
-        <article class="change-card">
-          <div class="change-years">
-            <span class="yr-old">2016–2019</span>
-            <span class="yr-arrow">→</span>
-            <span class="yr-new">2024–2026</span>
+        <details class="change-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="change-years">
+              <span class="yr-old">06 · 2016–2019</span>
+              <span class="yr-arrow">→</span>
+              <span class="yr-new">2024–2026</span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Adultos en el Movimiento e Identidad Centenario</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Nuevos modelos AMS 2024 y Formación/Gestión 2025 para dirigentes, además de la identidad oficial del Centenario Scout en México (1926–2026).
+            </p>
           </div>
-          <h3>Adultos en el Movimiento e Identidad Centenario</h3>
-          <p>
-            Nuevos modelos AMS 2024 y Formación/Gestión 2025 para dirigentes, además de la identidad oficial del Centenario Scout en México (1926–2026).
-          </p>
-        </article>
+        </details>
 
-        <article class="change-card">
-          <div class="change-years">
-            <span class="yr-old">RegNal / Correos</span>
-            <span class="yr-arrow">→</span>
-            <span class="yr-new">SISAS + Help Desk 2026</span>
+        <details class="change-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="change-years">
+              <span class="yr-old">07 · RegNal / Correos</span>
+              <span class="yr-arrow">→</span>
+              <span class="yr-new">SISAS + Help Desk 2026</span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Trámites Digitales y Help Desk</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Gestión en SISAS, 25 guías oficiales de Help Desk y plazos definidos de registro (45 días inicial, 60 reinscripción, 15 cambios).
+            </p>
           </div>
-          <h3>Trámites Digitales y Help Desk</h3>
-          <p>
-            Gestión en SISAS, 25 guías oficiales de Help Desk y plazos definidos de registro (45 días inicial, 60 reinscripción, 15 cambios).
-          </p>
-        </article>
+        </details>
 
-        <article class="change-card">
-          <div class="change-years">
-            <span class="yr-old">Especialidades Previas</span>
-            <span class="yr-arrow">→</span>
-            <span class="yr-new">FES + RECME P1–P10 (2026)</span>
+        <details class="change-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="change-years">
+              <span class="yr-old">08 · Especialidades Previas</span>
+              <span class="yr-arrow">→</span>
+              <span class="yr-new">FES + RECME P1–P10 (2026)</span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Portal RECME y Fichas FES</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Centralización en <code>recme.scouts.org.mx</code> de Especialidades FES (4 Ejes / 17 ODS), guía FAES y formatos unificados P1–P10.
+            </p>
           </div>
-          <h3>Portal RECME y Fichas FES</h3>
-          <p>
-            Centralización en <code>recme.scouts.org.mx</code> de Especialidades FES (4 Ejes / 17 ODS), guía FAES y formatos unificados P1–P10.
-          </p>
-        </article>
+        </details>
 
-        <article class="change-card">
-          <div class="change-years">
-            <span class="yr-old">Gestión Tradicional</span>
-            <span class="yr-arrow">→</span>
-            <span class="yr-new">CONECTA + MASC 2026</span>
+        <details class="change-card bt-acc-card">
+          <summary class="bt-acc-summary">
+            <div class="change-years">
+              <span class="yr-old">09 · Gestión Tradicional</span>
+              <span class="yr-arrow">→</span>
+              <span class="yr-new">CONECTA + MASC 2026</span>
+            </div>
+            <div class="bt-acc-title-row">
+              <h3>Canal CONECTA y Mediación</h3>
+              <span class="bt-acc-chevron" aria-hidden="true"></span>
+            </div>
+          </summary>
+          <div class="bt-acc-body">
+            <p>
+              Atención digital confidencial vía <a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener">conecta.scouts.org.mx</a> y formatos estandarizados de Diálogo, Mediación y Arbitraje.
+            </p>
           </div>
-          <h3>Canal CONECTA y Mediación</h3>
-          <p>
-            Atención digital confidencial vía <a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener">conecta.scouts.org.mx</a> y formatos estandarizados de Diálogo, Mediación y Arbitraje.
-          </p>
-        </article>
+        </details>
       </div>
 
       <!-- Comparador automático de familias de documentos -->
@@ -1478,11 +1645,12 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · V2.2.14 Mobile · Web V8.2</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · V2.2.15 Mobile · Web V8.3</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
-            Instálala en Android (.apk) o úsala en iPhone y iPad desde Safari sin App Store, con las 13,516 preguntas y visores sin conexión.
+            <strong>No es necesario descargar nada:</strong> puedes disfrutar de la mayoría de herramientas, el buscador de 13,516 preguntas y los visores directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
           </p>
+          <p id="appDetectedOsBadge" class="app-detected-os-pill hidden" aria-live="polite"></p>
 
           <div class="app-platform-tabs" role="tablist" aria-label="Elegir plataforma móvil">
             <button type="button" class="app-platform-tab active" id="tabAppAndroid" role="tab" aria-selected="true" aria-controls="paneAppAndroid">
@@ -1523,9 +1691,9 @@
             </p>
 
             <p class="app-download-safe">
-              <strong>Este APK no contiene virus.</strong> Está compilado desde el código público de
-              BiblioTech Scout y firmado con la clave oficial del proyecto. El aviso de Play Protect
-              es un falso positivo por instalar fuera de Play Store; mientras tanto puedes instalar con confianza siguiendo los pasos.
+              <strong>Aplicación segura y de código abierto.</strong> Está compilada desde el repositorio público de
+              BiblioTech Scout y firmada con la clave oficial del proyecto. Al analizarla con Play Protect normalmente
+              no marca ningún riesgo ni debería salir otra advertencia adicional.
             </p>
           </div>
 
@@ -1573,9 +1741,9 @@
           <div class="app-download-alert">
             <strong>Si aparece el aviso de Play Protect</strong>
             <p>
-              Android puede mostrar «Es posible que esta app sea dañina» porque la app se instala
-              fuera de Play Store. Verifica que el archivo venga de este enlace oficial y pulsa
-              <strong>Más detalles → Instalar de todos modos</strong>. No instales APK de otros sitios.
+              Android solo pregunta al instalar fuera de Play Store. Pulsa <strong>Analizar app</strong> para que la verifique
+              (ya revisada no debería saltar ninguna alerta); y si llegara a mostrarse un aviso preventivo, toca
+              <strong>Más detalles → Instalar de todos modos</strong>. Descarga únicamente desde este enlace oficial.
             </p>
           </div>
 
@@ -1609,7 +1777,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v28</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v31</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -1772,7 +1940,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 12/11/2026 • BETA V8.2 - 2.2.14 Mobile (12/11/2026) ·
+          Base de datos: 12/11/2026 • BETA V8.3 - 2.2.15 Mobile (12/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">

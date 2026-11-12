@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/)) · **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** V8.2 Oficial - 2.2.14 Mobile (12/11/2026)  
+**Base de datos:** 12/11/2026 • **Versión:** V8.3 Oficial - 2.2.15 Mobile (12/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,7 +41,16 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V8.2 — Telemetría Anónima Integral en Todas las Plataformas (12/11/2026)
+## 3. Novedades de la Versión V8.3 — Menú Ordenado, Acordeones Desplegables, Máscara Poligonal y El Proyecto (12/11/2026)
+
+- **Navegación Secuencial Completa (`sw.js v31`, `styles.css?v=29`):**
+  - Barra superior en escritorio limpia con los 7 apartados en su orden real de aparición (**Buscador**, **Biblioteca**, **Guía de Uso**, **Agentes de Cambio.MX**, **Secciones**, **Cambios en Esquemas**, **Descarga App**), más botón **Menú** universal en escritorio, tablet y móvil con el panel en cuadrícula hacia **todos los 12 apartados** (incluidos *El Proyecto*, *Servicios y Trámites*, *Catálogo* y *Aportar*).
+- **Acordeones Cerrados por Defecto y Contraste Nocturno:**
+  - *Guía de Uso* (`6`), *Servicios y Trámites* (`7`) y *Cambios en Esquemas* (`9`) ahora muestran tarjetas numeradas plegables cerradas al inicio para una lectura más ágil, y `#libraryShowMoreBtn` luce con alto contraste también en Modo Noche.
+- **Portada e Imágenes Dinámicas + El Proyecto + Descarga App Mejorada:**
+  - Retirados los letreros flotantes sobre la foto inicial y aplicado recorte poligonal dinámico (`clip-path` animado), sección `#acerca` ampliada explicando qué es, objetivo y funciones clave, y sección `#app` con autodetección de dispositivo, aclaración de uso web sin descarga obligatoria y guía Play Protect actualizada (*aplicación segura y de código abierto*).
+
+## 4. Novedades de la Versión V8.2 — Telemetría Anónima Integral en Todas las Plataformas (12/11/2026)
 
 - **Cobertura Total de Dispositivos y Vistas (`sw.js v30`):** Registra de forma anónima si el acceso proviene de App Android (APK), iOS App Web (pantalla de inicio), iOS Safari, Android/Desktop Chrome, Safari, Edge o Firefox, junto con tipo de vista (Móvil/Tablet/Escritorio), resolución y tema (Claro/Oscuro).
 - **Bitácora Completa de Actividad + Top Estadísticas Acumuladas:** Envía el registro cronológico de sesiones, secciones visitadas, filtros más usados, búsquedas en biblioteca/catálogo, archivos abiertos/leídos/descargados/guardados, enlaces externos y preguntas con la respuesta completa entregada y sus fuentes citadas (más envío confiable al ocultar o cerrar pestaña/app mediante `visibilitychange` y `pagehide`).

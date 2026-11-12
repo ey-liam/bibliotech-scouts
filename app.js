@@ -481,9 +481,7 @@ function setupHeaderUI() {
   });
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 1024 && header.classList.contains("nav-open")) {
-      closeNav();
-    }
+    // El menú desplegable funciona en todas las pantallas; solo cerramos al rotar/redimensionar mucho si se desea, sin forzar cierre en >1024px
   });
 
   let ticking = false;
@@ -539,12 +537,12 @@ function setupScrollAnimations() {
     docEl.dataset.scrollAnimReady = "1";
   }
 
-  // Barra flotante de acceso rapido + Scroll-Spy de navegacion
+  // Barra flotante de acceso rapido + Scroll-Spy de navegacion (en orden vertical exacto de la página)
   const quickBar = document.getElementById("floatingQuickBar");
   const askFab = document.getElementById("floatingAskBtn");
   const topFab = document.getElementById("floatingTopBtn");
-  const navLinks = Array.from(document.querySelectorAll(".main-nav .nav-link"));
-  const spyIds = ["buscador", "guia-inicio", "biblioteca", "agentes", "secciones", "cambios", "explorar", "app"];
+  const navLinks = Array.from(document.querySelectorAll(".desktop-quick-nav .nav-link, .main-nav .nav-link"));
+  const spyIds = ["buscador", "biblioteca", "guia-inicio", "acerca", "agentes", "secciones", "servicios", "cambios", "explorar", "app", "aportar"];
 
   if (askFab) {
     askFab.addEventListener("click", () => {
@@ -4297,6 +4295,22 @@ function setupIosExperience() {
   if (tabIos) tabIos.addEventListener("click", () => setPlatform("ios"));
   if (IS_APPLE_TOUCH) setPlatform("ios");
 
+  const osPill = document.getElementById("appDetectedOsBadge");
+  if (osPill) {
+    const ua = (navigator && navigator.userAgent) || "";
+    const isAndroidBrowser = /Android/i.test(ua);
+    if (IS_APPLE_TOUCH) {
+      osPill.textContent = isStandalone
+        ? "Detectado: iPhone / iPad en modo App Web activa"
+        : "Detectado: iPhone / iPad (iOS Safari) · Ambas guías siguen visibles";
+    } else if (isAndroidBrowser) {
+      osPill.textContent = "Detectado: Android · Recomendada la pestaña Android (.apk) para uso offline";
+    } else {
+      osPill.textContent = "Detectado: Navegador de escritorio · Puedes usar todo en web o elegir Android / iOS abajo";
+    }
+    osPill.classList.remove("hidden");
+  }
+
   const copyBtn = document.getElementById("copyIosUrlBtn");
   if (copyBtn) {
     copyBtn.addEventListener("click", async () => {
@@ -4895,6 +4909,20 @@ function setupFullActivityObservers() {
       enqueueAnonTelemetry({ t: "filtro_usado", filtro: trackedIds[el.id], valor: val }, false);
     }
   });
+
+  // 4. Despliegue de tarjetas/acordeones informativos
+  document.addEventListener(
+    "toggle",
+    (e) => {
+      const det = e.target;
+      if (det && det.matches && det.matches("details.bt-acc-card") && det.open) {
+        const title = (det.querySelector("h3") || {}).textContent || "";
+        bumpStatCounter("topFilters", `acordeon:${title}`, 25);
+        enqueueAnonTelemetry({ t: "filtro_usado", filtro: "acordeon_abierto", valor: title.trim() }, false);
+      }
+    },
+    true
+  );
 }
 
 function initPrivacyAndTelemetry() {
