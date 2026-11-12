@@ -1,5 +1,6 @@
 *.mp4
 *.webm
+recordings/
 assets/fonts/
 promo-render.html
 node_modules/
