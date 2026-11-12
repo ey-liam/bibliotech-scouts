@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** BETA `8.4.0` (Web) • `2.3.0` Mobile  
+**Base de datos:** 12/11/2026 • **Versión:** BETA `8.4.1` (Web) • `2.3.1` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -22,7 +22,7 @@
 
 ## 2. Convención de Versionado de 3 Dígitos (`MAJOR.MINOR.PATCH`)
 
-A partir de la versión **8.3.1** / **8.4.0** (Web) y **2.3.0** (Android), todo el ecosistema utiliza numeración semántica de tres dígitos:
+A partir de la versión **8.4.1** (Web) y **2.3.1** (Android), todo el ecosistema utiliza numeración semántica de tres dígitos:
 
 - **Primer dígito (`X.0.0`):** Cambio mayor, rediseño estructural completo o salto de arquitectura.
 - **Segundo dígito (`X.Y.0`):** Incorporación de nuevas funcionalidades relevantes, apartados o ampliaciones documentales significativas.
@@ -56,7 +56,7 @@ El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **M
 | :---: | :---: |
 | ![BiblioTech Scout en Tablet Web](docs/screenshots/web-tablet.png) | ![BiblioTech Scout en Safari iOS Web App](docs/screenshots/ios-safari-app-web.png) |
 
-### Teléfono y Tablet con App Android (APK `v2.3.0`)
+### Teléfono y Tablet con App Android (APK `v2.3.1`)
 
 | Teléfono Android (`APK`) | Tablet Android (`APK`) |
 | :---: | :---: |
@@ -103,9 +103,10 @@ El proyecto está construido evitando dependencias pesadas en el cliente y apoya
 
 ---
 
-## 8. Novedades Recientes (`8.4.0`)
+## 8. Novedades Recientes (`8.4.1`)
 
-- **Modo Offline real en iOS Safari / Web App (`sw.js v33`):** nuevo módulo interactivo en `#app` para descargar al caché local del iPhone/iPad o navegador las `13,516` preguntas, el catálogo y tablas Excel (~`11 MB`, con opción de incluir `chunks.json`), barra de progreso en tiempo real y aviso automático cuando trabajas sin señal.
+- **Telemetría conectada a Cloudflare Workers Free (`bibliotech-telemetry`) con respaldo automático:** envía actividad y errores JS al Worker con registro en *Observability Logs* y respaldo automático a `FormSubmit` si se alcanza el límite gratuito diario.
+- **Modo Offline real en iOS Safari / Web App (`sw.js v34`):** nuevo módulo interactivo en `#app` para descargar al caché local del iPhone/iPad o navegador las `13,516` preguntas, el catálogo y tablas Excel (~`11 MB`, con opción de incluir `chunks.json`), barra de progreso en tiempo real y aviso automático cuando trabajas sin señal.
 - **Depuración y minificación CSS/JS (`src/` -> raíz con `esbuild`):** reducción de `styles.css` (`~312 KB -> ~220 KB`) y `app.js` (`~206 KB -> ~128 KB`), separando la documentación técnica interna a `ARCHITECTURE.md` y limpiando `12` PNGs duplicados en `img/deco/` y `assets/scouts/agentes_cambio/`.
 - **Calidad automatizada en GitHub (`ci.yml`) y atajos de teclado:** validación automática en cada push/PR de sintaxis, JSONs, rutas, desbordes y flujo offline en Playwright, más atajo `/` o `Ctrl+K` para abrir el buscador al instante.
 - **Verificación `SHA-256` en Android y telemetría escalable:** enlace directo a `bibliotech-scout.apk.sha256` en la pestaña Android y soporte listo para conectar un Cloudflare Worker gratuito en `BT_TELEMETRY_CONFIG`.
@@ -119,7 +120,7 @@ bibliotech-scouts/
 ├── index.html                  # Estructura semántica principal (12 apartados ordenados)
 ├── src/                        # Fuente editable: styles.css y app.js
 ├── styles.css / app.js         # Salida depurada y minificada generada con npm run build
-├── sw.js                       # Service Worker PWA (bibliotech-scout-v33)
+├── sw.js                       # Service Worker PWA (bibliotech-scout-v34)
 ├── manifest.webmanifest        # Manifiesto Web App / PWA (iconos maskable y shortcuts)
 ├── data/                       # catalog.json, questions_bank.json, faq_v3.json, faq_v4.json, kb, chunks
 ├── covers/                     # Carátulas optimizadas en JPG (599 documentos)

@@ -44,6 +44,7 @@ def run_e2e(test_webkit: bool = False):
                 route.abort()
 
             ctx.route("**/formsubmit.co/**", trap_telemetry)
+            ctx.route("**/workers.dev/**", trap_telemetry)
             page = ctx.new_page()
             page.on("pageerror", lambda err: errors.append(f"pageerror: {err}"))
             page.on("console", lambda msg: errors.append(f"console.{msg.type}: {msg.text}") if msg.type == "error" else None)

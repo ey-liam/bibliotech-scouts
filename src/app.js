@@ -4330,7 +4330,7 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v33";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v34";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupGlobalShortcuts() {
@@ -4502,8 +4502,8 @@ function setupWebOfflineManager() {
 //   completas + valoraciones, con top acumulado de uso.
 // ============================================================================
 const BT_TELEMETRY_CONFIG = {
-  // Opcional: pega aquí la URL gratuita de tu Cloudflare Worker (ver scripts/cloudflare-worker-telemetry.js)
-  workerEndpoint: "",
+  // Endpoint gratuito en Cloudflare Workers (Observability Logs) con respaldo automático a FormSubmit
+  workerEndpoint: "https://bibliotech-telemetry.liamchuchundra1.workers.dev",
   emailFallback: `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`
 };
 
@@ -4966,30 +4966,45 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
       .filter((ev) => isCritical(ev) || (ev.t === "pregunta" && ev.ok === "sin_coincidencia"))
       .map((ev) => `- [${ev.t}] ${ev.q || ev.msg || ""}`);
 
-    const endpoint =
-      (BT_TELEMETRY_CONFIG.workerEndpoint || "").trim() ||
-      `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`;
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        _subject: issueLines.length
-          ? `[ALERTA/BUG] BiblioTech [${ctx.plat}] — ${batch.length} eventos (${BT_SESSION_ID})`
-          : `BiblioTech Scout [${ctx.plat}] — ${questionCount} preg / ${meaningfulEvents.length} acciones`,
-        _template: "table",
-        _captcha: "false",
-        plataforma: `${ctx.plat} · ${ctx.vista}`,
-        navegador_y_tema: `${ctx.browser} (${ctx.os}) · Tema ${ctx.tema}`,
-        alertas_bugs_o_sin_coincidencia: issueLines.length ? issueLines.join("\n") : "Ninguna falla ni pregunta sin respuesta en este lote",
-        resumen_mas_usado: statsBlock || "Primeros eventos acumulados",
-        actividad_completa: lines.join("\n\n")
-      }),
-      keepalive: true
+    const payloadBody = JSON.stringify({
+      _subject: issueLines.length
+        ? `[ALERTA/BUG] BiblioTech [${ctx.plat}] — ${batch.length} eventos (${BT_SESSION_ID})`
+        : `BiblioTech Scout [${ctx.plat}] — ${questionCount} preg / ${meaningfulEvents.length} acciones`,
+      _template: "table",
+      _captcha: "false",
+      plataforma: `${ctx.plat} · ${ctx.vista}`,
+      navegador_y_tema: `${ctx.browser} (${ctx.os}) · Tema ${ctx.tema}`,
+      alertas_bugs_o_sin_coincidencia: issueLines.length ? issueLines.join("\n") : "Ninguna falla ni pregunta sin respuesta en este lote",
+      resumen_mas_usado: statsBlock || "Primeros eventos acumulados",
+      actividad_completa: lines.join("\n\n")
     });
-    if (res && res.ok) {
+
+    const primaryEndpoint = (BT_TELEMETRY_CONFIG.workerEndpoint || "").trim();
+    const fallbackEndpoint = `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`;
+    const endpoints = primaryEndpoint ? [primaryEndpoint, fallbackEndpoint] : [fallbackEndpoint];
+
+    let sentOk = false;
+    for (const ep of endpoints) {
+      try {
+        const res = await fetch(ep, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: payloadBody,
+          keepalive: true
+        });
+        if (res && res.ok) {
+          sentOk = true;
+          break;
+        }
+      } catch (_) {
+        // Si Cloudflare alcanza su límite gratuito o falla red, pasa automáticamente al respaldo FormSubmit
+      }
+    }
+
+    if (sentOk) {
       markHashesAsSent(batch);
       const remaining = queue.slice(batch.length);
       localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(remaining));

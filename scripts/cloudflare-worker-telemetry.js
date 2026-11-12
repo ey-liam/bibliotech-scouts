@@ -64,11 +64,13 @@ export default {
       });
     }
 
-    // Guardar conteos diarios opcionales en KV gratuito si está enlazado
+    // Guardar conteos diarios opcionales en KV gratuito si está enlazado (con protección si rebasa 1,000 escrituras/día)
     if (env && env.TELEMETRY_KV) {
-      const day = new Date().toISOString().slice(0, 10);
-      const logKey = `log:${day}:${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
-      await env.TELEMETRY_KV.put(logKey, JSON.stringify(payload), { expirationTtl: 60 * 60 * 24 * 30 });
+      try {
+        const day = new Date().toISOString().slice(0, 10);
+        const logKey = `log:${day}:${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
+        await env.TELEMETRY_KV.put(logKey, JSON.stringify(payload), { expirationTtl: 60 * 60 * 24 * 30 });
+      } catch (_) {}
     }
 
     // Reenvío opcional gratis a Discord Webhook (alertas y resumen de uso)
@@ -103,6 +105,7 @@ export default {
       }).catch(() => {});
     }
 
+    console.log("BT_TELEMETRY", JSON.stringify(payload));
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
       headers: { ...headers, "Content-Type": "application/json" },
