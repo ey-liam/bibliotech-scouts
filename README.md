@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** V7.9 Oficial - 2.2.11 Mobile (12/11/2026)  
+**Base de datos:** 12/11/2026 • **Versión:** V8.0 Oficial - 2.2.12 Mobile (12/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,7 +41,16 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V7.9 y Optimización de Animaciones / Cinta Vertical (12/11/2026)
+## 3. Novedades de la Versión V8.0 — Menú Tipo App, Buscador Compacto y Textos Directos (12/11/2026)
+
+- **Menú y Navegación Intuitivos (`sw.js v28`, `styles.css?v=27`):**
+  - Etiquetas cortas en barra superior (`Preguntar`, `Biblioteca`, `Guía`, `Agentes`, `Secciones`, `Cambios`, `Catálogo`, `App`) y menú desplegable móvil en cuadrícula de tarjetas redondeadas (`2` columnas), simple e inmediato.
+- **Nuevo Buscador con Botón de Sección, Preguntas al Azar y Recarga Aleatoria Real:**
+  - Barra de herramientas compacta con botón **Sección** desplegable (filtro colapsable por Manada, Tropa, Comunidad, Clan, Adultos y WOSM), botón **Preguntas al azar** (mezcla aleatoria sobre todo el banco o sección activa) y botón **Recargar otras al azar** para refrescar 6 nuevas preguntas al instante sin repetir consecutivas.
+  - Pestañas temáticas en una sola fila deslizable y lista limpia de 6 preguntas estilo tarjetas redondeadas.
+- **Textos Directos en Todo el Sitio y la App:** Recorte de párrafos largos y etiquetas extensas en Portada, *Guía Rápida*, *Biblioteca*, *Propósito*, *Agentes de Cambio.MX*, *Secciones*, *Servicios*, *Evolución*, *Catálogo* y *App*.
+
+## 4. Novedades de la Versión V7.9 y Optimización de Animaciones / Cinta Vertical (12/11/2026)
 
 - **Cinta Diagonal Visible en Vertical y Movimiento Vivo en Portada (`sw.js v27`, `styles.css?v=26`):**
   - Dotada la cinta móvil `.bts-zigzag--mobile` de su propio gradiente y resplandor inline (`#btsRibbonGradMobile`) con trazo calibrado para pantallas verticales (web móvil y APK Android), evitando que desaparezca al ocultarse el SVG de escritorio.

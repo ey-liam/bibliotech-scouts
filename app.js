@@ -542,7 +542,7 @@ function setupScrollAnimations() {
   const askFab = document.getElementById("floatingAskBtn");
   const topFab = document.getElementById("floatingTopBtn");
   const navLinks = Array.from(document.querySelectorAll(".main-nav .nav-link"));
-  const spyIds = ["buscador", "biblioteca", "acerca", "agentes", "secciones", "cambios", "explorar", "app"];
+  const spyIds = ["buscador", "guia-inicio", "biblioteca", "agentes", "secciones", "cambios", "explorar", "app"];
 
   if (askFab) {
     askFab.addEventListener("click", () => {
@@ -604,74 +604,83 @@ function setupScrollAnimations() {
 // ============================================================================
 const DEFAULT_FEATURED_QUESTIONS = [
   "¿En dónde encuentro un Grupo Scout?",
-  "¿Qué son las Insignias Mundiales y cómo funciona el Marco Mundo Mejor (Better World Framework) de la OMMS?",
-  "¿Qué simbolizan los tres pétalos, la línea central, las dos estrellas de cinco puntas, la cuerda y el nudo llano de la Flor de Lis Mundial?",
-  "¿Qué es la iniciativa Mensajeros de la Paz (Messengers of Peace) de la Organización Mundial Scout?",
-  "¿Qué es la iniciativa Tribu de la Tierra (Earth Tribe) y cuál es su objetivo dentro de la OMMS y ASMAC?",
-  "¿Qué es el Pin de la Tribu de la Tierra, cómo se obtiene, dónde se coloca y cuánto tiempo se puede portar?",
-  "¿Qué es el Reconocimiento Scouts del Mundo (Scouts of the World Award - SWA) y quiénes pueden aspirar a él?",
-  "¿Qué es la Insignia de Madera (Wood Badge), cuándo fue creada por Baden-Powell y cuál es su significado mundial?",
-  "¿Qué es el Lobo de Bronce (Bronze Wolf Award) y por qué es la máxima y única condecoración del Comité Scout Mundial?",
   "¿Cómo inscribo a mi hijo o hija en los Scouts, en dónde se registra y con quién tengo que hablar comúnmente del registro?",
   "¿Qué es el SISAS, qué es ExplorApp y qué es CarpetApp?",
-  "¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?",
-  "¿Qué son el Jamboree Nacional, el World Scout Jamboree, el Philia y el World Scout Moot, dónde se hacen y cada cuánto?",
-  "¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?",
-  "¿Cómo se hace un Foro Provincial paso a paso y quiénes son los encargados de organizarlo?",
   "¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?",
-  "¿Qué especialidades, reconocimientos e insignias puedo obtener con mis proyectos de Caminante y cómo sé a qué Eje Temático pertenecen?",
+  "¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?",
   "¿Cómo se aplica el nuevo esquema PJOS y pueden combinarse las nuevas insignias con las antiguas?",
   "¿Dónde compro el uniforme scout?",
-  "¿Qué es la Política Nacional A Salvo del Peligro?",
+  "¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?",
   "¿Qué es la plataforma RECME y qué significan SCNCD y CNAMS?",
-  "¿Qué es el PPV (Proyecto Personal de Vida) en el Clan de Rovers y cómo usa el método SMART?",
-  "¿Cuál es la diferencia entre las versiones Obsidiana y Jade de la Insignia Final y Terminal?",
-  "¿Cómo funciona el Registro Familiar y qué descuentos aplica al pagar la membresía?"
+  "¿Qué es la Política Nacional A Salvo del Peligro?"
 ];
 
 function renderExplorerQuestions(cat, shuffle = false) {
   const container = document.getElementById("dynamicQuestionsChips");
   if (!container) return;
 
-  if (cat === "Destacadas" && !shuffle) {
-    container.innerHTML = DEFAULT_FEATURED_QUESTIONS.map(
-      (qText, idx) =>
-        `<button type="button" class="quick-q-chip" style="animation-delay:${idx * 24}ms" data-query="${escapeHtml(qText)}">${escapeHtml(qText)}</button>`
-    ).join("");
+  const isRandomAll = cat === "__RANDOM__";
+  const count = 6;
+
+  if (cat === "Destacadas" && !shuffle && (!STATE.activeAskSection || STATE.activeAskSection === "all")) {
+    container.innerHTML = DEFAULT_FEATURED_QUESTIONS.slice(0, count)
+      .map(
+        (qText, idx) =>
+          `<button type="button" class="quick-q-chip" style="animation-delay:${idx * 24}ms" data-query="${escapeHtml(qText)}">${escapeHtml(qText)}</button>`
+      )
+      .join("");
     return;
   }
 
   if (!STATE.questionBank.length) return;
 
+  const activeSec = STATE.activeAskSection || "all";
   let pool = STATE.questionBank.filter((item) => {
     const nq = normalizeStr(item.q || "");
-    if (nq.includes("falda")) return false;
+    if (!nq || nq.includes("falda")) return false;
+    if (!isQuestionMatchingAskSection(item, activeSec)) return false;
+    if (isRandomAll) return true;
     if (cat === "Destacadas") return !item.doc_id;
     return item.cat === cat;
   });
 
   if (!pool.length) {
+    pool = STATE.questionBank.filter(
+      (item) => !normalizeStr(item.q || "").includes("falda") && isQuestionMatchingAskSection(item, activeSec)
+    );
+  }
+  if (!pool.length) {
     pool = STATE.questionBank.filter((item) => !normalizeStr(item.q || "").includes("falda"));
   }
 
-  const count = 12;
   const selected = [];
-  if (shuffle) {
-    STATE.qShuffleOffset = (STATE.qShuffleOffset + 13) % Math.max(1, pool.length);
-  }
-  const step = Math.max(1, Math.floor(pool.length / count));
-  for (let i = 0; i < count && i < pool.length; i++) {
-    const idx = (STATE.qShuffleOffset + i * step + (shuffle ? Math.floor(Math.random() * 5) : 0)) % pool.length;
-    const candidate = pool[idx];
-    if (candidate && !selected.some((x) => x.q === candidate.q)) {
-      selected.push(candidate);
+  if (shuffle || isRandomAll) {
+    // Muestreo aleatorio real sin repetir los elementos consecutivos
+    const used = new Set();
+    const triesMax = Math.min(pool.length * 3, 180);
+    for (let t = 0; t < triesMax && selected.length < count; t++) {
+      const idx = Math.floor(Math.random() * pool.length);
+      const candidate = pool[idx];
+      if (candidate && !used.has(candidate.q)) {
+        used.add(candidate.q);
+        selected.push(candidate);
+      }
+    }
+  } else {
+    const step = Math.max(1, Math.floor(pool.length / count));
+    for (let i = 0; i < count && i < pool.length; i++) {
+      const idx = (STATE.qShuffleOffset + i * step) % pool.length;
+      const candidate = pool[idx];
+      if (candidate && !selected.some((x) => x.q === candidate.q)) {
+        selected.push(candidate);
+      }
     }
   }
 
   container.innerHTML = selected
     .map(
       (item, idx) =>
-        `<button type="button" class="quick-q-chip" style="animation-delay:${idx * 25}ms" data-query="${escapeHtml(item.q)}">${escapeHtml(item.q)}</button>`
+        `<button type="button" class="quick-q-chip" style="animation-delay:${idx * 24}ms" data-query="${escapeHtml(item.q)}">${escapeHtml(item.q)}</button>`
     )
     .join("");
 }
@@ -2906,9 +2915,24 @@ function bindEvents() {
     }
   });
 
+  const toggleSecBtn = document.getElementById("toggleAskSectionBtn");
+  const secDrawer = document.getElementById("askSectionDrawer");
+  const secBadge = document.getElementById("askSectionActiveBadge");
+  const randomPoolBtn = document.getElementById("randomPoolBtn");
+  const shuffleBtn = document.getElementById("shuffleQuestionsBtn");
+
+  if (toggleSecBtn && secDrawer) {
+    toggleSecBtn.addEventListener("click", () => {
+      const willOpen = secDrawer.classList.contains("hidden");
+      secDrawer.classList.toggle("hidden", !willOpen);
+      toggleSecBtn.setAttribute("aria-expanded", String(willOpen));
+    });
+  }
+
   document.querySelectorAll(".qcat-tab").forEach((tab) => {
     tab.addEventListener("click", async () => {
       document.querySelectorAll(".qcat-tab").forEach((t) => t.classList.remove("active"));
+      if (randomPoolBtn) randomPoolBtn.classList.remove("active");
       tab.classList.add("active");
       STATE.activeQCat = tab.getAttribute("data-qcat") || "Destacadas";
       await loadQuestionBank();
@@ -2916,11 +2940,20 @@ function bindEvents() {
     });
   });
 
-  const shuffleBtn = document.getElementById("shuffleQuestionsBtn");
+  if (randomPoolBtn) {
+    randomPoolBtn.addEventListener("click", async () => {
+      document.querySelectorAll(".qcat-tab").forEach((t) => t.classList.remove("active"));
+      randomPoolBtn.classList.add("active");
+      STATE.activeQCat = "__RANDOM__";
+      await loadQuestionBank();
+      renderExplorerQuestions("__RANDOM__", true);
+    });
+  }
+
   if (shuffleBtn) {
     shuffleBtn.addEventListener("click", async () => {
       await loadQuestionBank();
-      renderExplorerQuestions(STATE.activeQCat, true);
+      renderExplorerQuestions(STATE.activeQCat || "__RANDOM__", true);
     });
   }
 
@@ -2930,24 +2963,34 @@ function bindEvents() {
       btn.classList.add("active");
       const sec = btn.dataset.section || "all";
       STATE.activeAskSection = sec;
+      if (secBadge) secBadge.textContent = btn.getAttribute("data-short") || btn.textContent.trim();
+      if (secDrawer && toggleSecBtn) {
+        secDrawer.classList.add("hidden");
+        toggleSecBtn.setAttribute("aria-expanded", "false");
+      }
 
-      // Sincronizar las pestañas del explorador de preguntas con la sección seleccionada
-      const secToCat = {
-        comunidad: "Comunidad de Caminantes",
-        tropa: "Tropa de Scouts",
-        manada: "Manada de Lobatos",
-        clan: "Clan de Rovers",
-        adultos: "Manuales Oficiales y de Operación",
-        internacional: "Insignias Mundiales (WOSM)",
-        all: "Destacadas"
-      };
-      const targetCat = secToCat[sec] || "Destacadas";
-      document.querySelectorAll(".qcat-tab").forEach((t) => {
-        t.classList.toggle("active", t.dataset.qcat === targetCat);
-      });
-      STATE.activeQCat = targetCat;
-      await loadQuestionBank();
-      renderExplorerQuestions(targetCat, false);
+      // Si está en modo azar, recargar preguntas aleatorias de esa sección; si no, sincronizar pestaña
+      if (STATE.activeQCat === "__RANDOM__") {
+        await loadQuestionBank();
+        renderExplorerQuestions("__RANDOM__", true);
+      } else {
+        const secToCat = {
+          comunidad: "Comunidad de Caminantes",
+          tropa: "Tropa de Scouts",
+          manada: "Manada de Lobatos",
+          clan: "Clan de Rovers",
+          adultos: "Manuales Oficiales y de Operación",
+          internacional: "Insignias Mundiales (WOSM)",
+          all: "Destacadas"
+        };
+        const targetCat = secToCat[sec] || "Destacadas";
+        document.querySelectorAll(".qcat-tab").forEach((t) => {
+          t.classList.toggle("active", t.dataset.qcat === targetCat);
+        });
+        STATE.activeQCat = targetCat;
+        await loadQuestionBank();
+        renderExplorerQuestions(targetCat, false);
+      }
 
       // Si el buscador ya tiene texto, refrescar el autocompletado en vivo
       const askInput = document.getElementById("askInput");
