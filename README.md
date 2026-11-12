@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/)) · **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** V8.1 Oficial - 2.2.13 Mobile (12/11/2026)  
+**Base de datos:** 12/11/2026 • **Versión:** V8.2 Oficial - 2.2.14 Mobile (12/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,7 +41,12 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V8.1 — Nuevo Logo, Botones Centrados, Vistas Iniciales Compactas y Privacidad (12/11/2026)
+## 3. Novedades de la Versión V8.2 — Telemetría Anónima Integral en Todas las Plataformas (12/11/2026)
+
+- **Cobertura Total de Dispositivos y Vistas (`sw.js v30`):** Registra de forma anónima si el acceso proviene de App Android (APK), iOS App Web (pantalla de inicio), iOS Safari, Android/Desktop Chrome, Safari, Edge o Firefox, junto con tipo de vista (Móvil/Tablet/Escritorio), resolución y tema (Claro/Oscuro).
+- **Bitácora Completa de Actividad + Top Estadísticas Acumuladas:** Envía el registro cronológico de sesiones, secciones visitadas, filtros más usados, búsquedas en biblioteca/catálogo, archivos abiertos/leídos/descargados/guardados, enlaces externos y preguntas con la respuesta completa entregada y sus fuentes citadas (más envío confiable al ocultar o cerrar pestaña/app mediante `visibilitychange` y `pagehide`).
+
+## 4. Novedades de la Versión V8.1 — Nuevo Logo, Botones Centrados, Vistas Iniciales Compactas y Privacidad (12/11/2026)
 
 - **Centrado de Botones/Pestañas y Nuevo Logo Oficial (`sw.js v29`, `styles.css?v=28`):**
   - Actualización completa del logotipo oficial (`img/logo-flor.png`, `favicon.png`, `icon-192.png`, `icon-512.png`) con encuadre limpio en barra superior, tarjetas de respuesta y pie de página.

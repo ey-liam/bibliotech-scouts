@@ -1140,6 +1140,7 @@ async function submitQuestion(queryText, options = {}) {
   // Al abrir una pregunta sugerida no se escribe en la barra: la barra queda
   // libre para buscar otra cosa y la pregunta elegida se muestra en el panel.
   const syncInput = options.syncInput === true;
+  const querySource = options.source || (syncInput ? "manual" : "sugerencia");
 
   // Los fragmentos se necesitan para enriquecer respuestas, no para cargar la página.
   loadWebChunks();
@@ -1176,7 +1177,7 @@ async function submitQuestion(queryText, options = {}) {
         const data = await res.json();
         displayAnswer(data, q);
         renderRelatedQuestions(q);
-        recordQueryTelemetry(q, data);
+        recordQueryTelemetry(q, data, querySource);
         container.scrollIntoView({ behavior: "smooth", block: "start" });
         return;
       }
@@ -1194,7 +1195,7 @@ async function submitQuestion(queryText, options = {}) {
   const ans = answerLocallyInBrowser(q);
   displayAnswer(ans, q);
   renderRelatedQuestions(q);
-  recordQueryTelemetry(q, ans);
+  recordQueryTelemetry(q, ans, querySource);
   container.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -3669,6 +3670,13 @@ function toggleSavedPin(docId) {
   }
   setSavedPins(pins);
   BiblioFeel.pulse(isSaved ? [12, 30, 18] : 10);
+  const savedDoc = STATE.docsById && STATE.docsById[docId];
+  if (typeof window.btTrackEvent === "function") {
+    window.btTrackEvent("doc_guardado", {
+      accion: isSaved ? "guardado" : "quitado",
+      doc: savedDoc ? savedDoc.title : docId
+    });
+  }
   return isSaved;
 }
 
@@ -4306,15 +4314,20 @@ function setupIosExperience() {
 }
 
 // ============================================================================
-// PRIVACIDAD, COOKIES, PREGUNTAS RECIENTES Y TELEMETRÍA ANÓNIMA (V8.1)
-// - En la App Android (Capacitor) se acepta automáticamente sin mostrar banner.
-// - En Web solicita permiso claro; si el usuario acepta, recuerda sus últimas
-//   preguntas y envía resúmenes anónimos para detectar fallas sin pedir correo.
+// PRIVACIDAD, COOKIES, PREGUNTAS RECIENTES Y TELEMETRÍA ANÓNIMA INTEGRAL
+// - En App Android (Capacitor) se habilita automáticamente sin mostrar banner.
+// - En Web / iOS Safari / iOS App Web solicita autorización clara al entrar.
+// - Registra de forma 100 % anónima (sin nombres, correos ni datos personales):
+//   plataforma y vista, secciones vistas, filtros usados, búsquedas, archivos
+//   abiertos/leídos/descargados, enlaces externos, preguntas y respuestas
+//   completas + valoraciones, con top acumulado de uso.
 // ============================================================================
 const BT_CONSENT_KEY = "bt_consent_v1";
 const BT_RECENT_QUERIES_KEY = "bt_recent_queries_v1";
 const BT_ANON_QUEUE_KEY = "bt_anon_queue_v1";
+const BT_ANON_STATS_KEY = "bt_anon_stats_v1";
 const BT_LAST_SENT_KEY = "bt_last_telemetry_sent_v1";
+const BT_SESSION_ID = "ses_" + Math.random().toString(36).slice(2, 8);
 
 function hasTelemetryConsent() {
   try {
@@ -4325,13 +4338,95 @@ function hasTelemetryConsent() {
   }
 }
 
-function summarizeMarkdownPlain(mdText, maxLen = 280) {
+function summarizeMarkdownPlain(mdText, maxLen = 2500) {
   const clean = String(mdText || "")
     .replace(/[#>*_`~|\[\]()-]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
   if (clean.length <= maxLen) return clean;
   return clean.slice(0, maxLen).trim() + "…";
+}
+
+function detectClientContext() {
+  const ua = (typeof navigator !== "undefined" && navigator.userAgent) || "";
+  const w = window.innerWidth || 0;
+  const h = window.innerHeight || 0;
+  const isStandalone =
+    window.navigator.standalone === true ||
+    (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+
+  let os = "Desktop";
+  if (window.Capacitor) os = "Android";
+  else if (IS_APPLE_TOUCH || /iPhone|iPad|iPod/i.test(ua)) os = "iOS/iPadOS";
+  else if (/Android/i.test(ua)) os = "Android";
+  else if (/Mac OS X|Macintosh/i.test(ua)) os = "macOS";
+  else if (/Windows/i.test(ua)) os = "Windows";
+  else if (/Linux/i.test(ua)) os = "Linux";
+
+  let browser = "Navegador";
+  if (window.Capacitor) browser = "App Android APK";
+  else if (isStandalone && os === "iOS/iPadOS") browser = "iOS App Web (Pantalla inicio)";
+  else if (isStandalone && os === "Android") browser = "Android PWA";
+  else if (/EdgA?|EdgiOS/i.test(ua)) browser = "Edge";
+  else if (/OPR|Opera/i.test(ua)) browser = "Opera";
+  else if (/CriOS|Chrome/i.test(ua)) browser = "Chrome";
+  else if (/FxiOS|Firefox/i.test(ua)) browser = "Firefox";
+  else if (/Safari/i.test(ua)) browser = "Safari";
+
+  const viewMode = w <= 600 ? "Móvil" : w <= 1024 ? "Tablet" : "Escritorio";
+  const theme = document.documentElement.getAttribute("data-camp-mode") === "true" ? "Oscuro" : "Claro";
+
+  return {
+    plat: window.Capacitor ? "AndroidAPK" : isStandalone ? `${os}_AppWeb` : `${os}_${browser}`,
+    browser,
+    os,
+    vista: `${viewMode} (${w}x${h})`,
+    tema: theme,
+    idioma: (navigator && navigator.language) || "es"
+  };
+}
+
+function bumpStatCounter(bucketKey, itemKey, limit = 25) {
+  if (!hasTelemetryConsent() || !itemKey) return;
+  try {
+    const raw = JSON.parse(localStorage.getItem(BT_ANON_STATS_KEY) || "{}");
+    const stats = raw && typeof raw === "object" ? raw : {};
+    const bucket = stats[bucketKey] && typeof stats[bucketKey] === "object" ? stats[bucketKey] : {};
+    const cleanKey = String(itemKey).trim().slice(0, 120);
+    if (!cleanKey) return;
+    bucket[cleanKey] = Number(bucket[cleanKey] || 0) + 1;
+    // Conservar solo los elementos más frecuentes para mantener acotado localStorage
+    const entries = Object.entries(bucket).sort((a, b) => b[1] - a[1]).slice(0, limit);
+    stats[bucketKey] = Object.fromEntries(entries);
+    localStorage.setItem(BT_ANON_STATS_KEY, JSON.stringify(stats));
+  } catch (_) {}
+}
+
+function formatTopStatsBlock() {
+  try {
+    const stats = JSON.parse(localStorage.getItem(BT_ANON_STATS_KEY) || "{}");
+    const fmt = (title, obj) => {
+      const entries = Object.entries(obj || {}).sort((a, b) => b[1] - a[1]).slice(0, 6);
+      if (!entries.length) return "";
+      return `${title}:\n` + entries.map(([k, v]) => `  - ${k} (${v})`).join("\n");
+    };
+    const qaTotals = stats.qaTotals || {};
+    const qaSummary =
+      qaTotals.ok || qaTotals.miss
+        ? `Preguntas respondidas: ${qaTotals.ok || 0} | Sin coincidencia: ${qaTotals.miss || 0}`
+        : "";
+    return [
+      qaSummary,
+      fmt("Top archivos más vistos/descargados", stats.topDocs),
+      fmt("Top filtros más usados", stats.topFilters),
+      fmt("Top secciones visitadas", stats.topSections),
+      fmt("Top consultas repetidas", stats.topQueries)
+    ]
+      .filter(Boolean)
+      .join("\n");
+  } catch (_) {
+    return "";
+  }
 }
 
 function renderRecentQueriesUI() {
@@ -4381,53 +4476,91 @@ function saveRecentQueryLocal(query) {
   } catch (_) {}
 }
 
+let btBatchCheckScheduled = false;
 function enqueueAnonTelemetry(entry, flushNow = false) {
   if (!hasTelemetryConsent()) return;
+  const ctx = detectClientContext();
+  let qLen = 0;
   try {
     const prev = JSON.parse(localStorage.getItem(BT_ANON_QUEUE_KEY) || "[]");
     const queue = Array.isArray(prev) ? prev : [];
     queue.push({
       ...entry,
       ts: new Date().toISOString().slice(0, 19).replace("T", " "),
-      plat: window.Capacitor ? "AndroidAPK" : IS_APPLE_TOUCH ? "iOSWeb" : "Web"
+      ses: BT_SESSION_ID,
+      plat: ctx.plat,
+      vista: ctx.vista,
+      tema: ctx.tema
     });
-    localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(queue.slice(-30)));
+    const trimmed = queue.slice(-80);
+    qLen = trimmed.length;
+    localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(trimmed));
   } catch (_) {}
 
   if (flushNow) {
     flushAnonymousTelemetry(true);
+  } else if (qLen >= 8 && !btBatchCheckScheduled) {
+    btBatchCheckScheduled = true;
+    setTimeout(() => {
+      btBatchCheckScheduled = false;
+      flushAnonymousTelemetry(false);
+    }, 15000);
   }
 }
 
-function recordQueryTelemetry(query, data) {
+window.btTrackEvent = function btTrackEvent(type, payload = {}, flushNow = false) {
+  enqueueAnonTelemetry({ t: type, ...payload }, flushNow);
+};
+
+function recordQueryTelemetry(query, data, querySource = "manual") {
   const q = String(query || "").trim();
   if (!q) return;
   saveRecentQueryLocal(q);
   const sources = Array.isArray(data && data.sources) ? data.sources : [];
-  const answerPlain = summarizeMarkdownPlain(data && data.answer_markdown, 280);
+  const answerFull = summarizeMarkdownPlain(data && data.answer_markdown, 2500);
   const unmatched =
-    !sources.length && /no encontr[eé]|sin resultados|reformul|espec[ií]fica/i.test(answerPlain);
+    !sources.length && /no encontr[eé]|sin resultados|reformul|espec[ií]fica/i.test(answerFull);
+
+  bumpStatCounter("topQueries", q, 25);
+  try {
+    if (hasTelemetryConsent()) {
+      const stats = JSON.parse(localStorage.getItem(BT_ANON_STATS_KEY) || "{}");
+      const totals = stats.qaTotals || { ok: 0, miss: 0 };
+      if (unmatched) totals.miss = Number(totals.miss || 0) + 1;
+      else totals.ok = Number(totals.ok || 0) + 1;
+      stats.qaTotals = totals;
+      localStorage.setItem(BT_ANON_STATS_KEY, JSON.stringify(stats));
+    }
+  } catch (_) {}
+
   enqueueAnonTelemetry(
     {
       t: "pregunta",
-      q: q.slice(0, 180),
-      ans: answerPlain,
+      origen: querySource,
+      q,
+      ans: answerFull,
       ok: unmatched ? "sin_coincidencia" : "respondida",
       src: sources.length,
+      fuentes: sources.slice(0, 5).map((s) => s.title).join(" | "),
       sec: STATE.activeAskSection || "all"
     },
     false
   );
 }
 
-function recordDocOpenTelemetry(doc) {
+function recordDocOpenTelemetry(doc, sourceOrigin = "modal") {
   if (!doc) return;
+  bumpStatCounter("topDocs", `${doc.title} [${doc.ext || "DOC"}]`, 30);
   enqueueAnonTelemetry(
     {
       t: "doc_abierto",
-      doc: String(doc.title || "").slice(0, 120),
-      file: String(doc.filename || "").slice(0, 100),
-      cat: String(doc.category || "").slice(0, 60)
+      origen: sourceOrigin,
+      doc: String(doc.title || "").slice(0, 140),
+      file: String(doc.filename || "").slice(0, 120),
+      cat: String(doc.category || "").slice(0, 60),
+      subcat: String(doc.subcategory || "").slice(0, 60),
+      sec: String(doc.section_label || "").slice(0, 40),
+      year: doc.year || ""
     },
     false
   );
@@ -4436,19 +4569,20 @@ function recordDocOpenTelemetry(doc) {
 let btSearchTelemetryTimer = null;
 function scheduleSearchTelemetry(scope, queryText, resultCount) {
   const term = String(queryText || "").trim();
-  if (!hasTelemetryConsent() || term.length < 3) return;
+  if (!hasTelemetryConsent() || term.length < 2) return;
   if (btSearchTelemetryTimer) clearTimeout(btSearchTelemetryTimer);
   btSearchTelemetryTimer = setTimeout(() => {
+    bumpStatCounter("topFilters", `buscar:${scope}:${term.toLowerCase()}`, 25);
     enqueueAnonTelemetry(
       {
         t: "busqueda_archivo",
         scope,
-        q: term.slice(0, 100),
+        q: term.slice(0, 120),
         hits: Number(resultCount || 0)
       },
       false
     );
-  }, 1500);
+  }, 1200);
 }
 
 function updateAnswerFeedbackUI(queryText, data, sourcesCount) {
@@ -4461,7 +4595,7 @@ function updateAnswerFeedbackUI(queryText, data, sourcesCount) {
   const effectiveQuery = String(queryText || (titleEl ? titleEl.textContent : "") || "").trim();
   STATE.lastAnswerContext = {
     query: effectiveQuery,
-    answerPreview: summarizeMarkdownPlain(data && data.answer_markdown, 260),
+    answerPreview: summarizeMarkdownPlain(data && data.answer_markdown, 2500),
     sourcesCount: Number(sourcesCount || 0),
     ratingSent: ""
   };
@@ -4477,6 +4611,40 @@ function updateAnswerFeedbackUI(queryText, data, sourcesCount) {
     btnReport.textContent = "Reportar fallo o falta info";
   }
   bar.classList.remove("hidden");
+}
+
+function formatTelemetryEventLine(ev, idx) {
+  const head = `${idx + 1}. [${ev.ts} · ${ev.ses || ""}]`;
+  switch (ev.t) {
+    case "sesion":
+      return `${head} INICIO SESIÓN | ${ev.plat} | ${ev.vista} | Tema ${ev.tema} | Lang ${ev.idioma}`;
+    case "pregunta":
+      return `${head} PREGUNTA (${ev.origen || "manual"}, sec:${ev.sec}, ${ev.ok}, ${ev.src} fuentes)\n   P: ${ev.q}\n   R: ${ev.ans}${ev.fuentes ? `\n   Fuentes: ${ev.fuentes}` : ""}`;
+    case "feedback":
+      return `${head} VALORACIÓN: ${ev.rate}\n   P: ${ev.q}\n   R: ${ev.ans}`;
+    case "doc_abierto":
+      return `${head} DOC ABIERTO (${ev.origen}): ${ev.doc} (${ev.file}) [${ev.cat}${ev.subcat ? " / " + ev.subcat : ""} · ${ev.sec} · ${ev.year}]`;
+    case "doc_descarga":
+      return `${head} DOC DESCARGADO (${ev.origen || "web"}): ${ev.doc} (${ev.file || ""})`;
+    case "doc_offline_apk":
+      return `${head} APK DESCARGA OFFLINE: ${ev.doc} (${ev.ext || ""})`;
+    case "pdf_nativo_apk":
+      return `${head} APK LECTOR NATIVO: ${ev.doc} (${ev.ext || "pdf"})`;
+    case "doc_visor_accion":
+      return `${head} VISOR DOC (${ev.accion}): ${ev.doc || ""}`;
+    case "doc_guardado":
+      return `${head} GUARDADOS (${ev.accion}): ${ev.doc || ""}`;
+    case "busqueda_archivo":
+      return `${head} BÚSQUEDA [${ev.scope}]: "${ev.q}" -> ${ev.hits} docs`;
+    case "filtro_usado":
+      return `${head} FILTRO [${ev.filtro}]: ${ev.valor}`;
+    case "vista_seccion":
+      return `${head} SECCIÓN / MENÚ: ${ev.sec} (${ev.via || "scroll"})`;
+    case "enlace_externo":
+      return `${head} ENLACE EXTERNO: ${ev.label || ""} -> ${ev.url || ""}`;
+    default:
+      return `${head} ${ev.t}: ${JSON.stringify(ev).slice(0, 260)}`;
+  }
 }
 
 let btFlushInFlight = false;
@@ -4499,25 +4667,16 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
 
   const now = Date.now();
   const lastSent = Number(localStorage.getItem(BT_LAST_SENT_KEY) || "0");
-  if (!forceImmediate && now - lastSent < 180000 && queue.length < 5) {
+  if (!forceImmediate && now - lastSent < 45000 && queue.length < 10) {
     return;
   }
 
   btFlushInFlight = true;
   try {
-    const batch = queue.slice(0, 15);
-    const lines = batch.map((ev, i) => {
-      if (ev.t === "pregunta") {
-        return `${i + 1}. [PREGUNTA ${ev.plat}] (${ev.sec}, ${ev.ok}, ${ev.src} fuentes)\n   Q: ${ev.q}\n   A: ${ev.ans}`;
-      }
-      if (ev.t === "feedback") {
-        return `${i + 1}. [VALORACIÓN: ${ev.rate}] ${ev.plat}\n   Q: ${ev.q}\n   A: ${ev.ans}`;
-      }
-      if (ev.t === "busqueda_archivo") {
-        return `${i + 1}. [BÚSQUEDA ${ev.scope}] "${ev.q}" -> ${ev.hits} docs (${ev.plat})`;
-      }
-      return `${i + 1}. [DOC ABIERTO] ${ev.doc} (${ev.file}) [${ev.cat}] (${ev.plat})`;
-    });
+    const batch = queue.slice(0, 20);
+    const ctx = detectClientContext();
+    const lines = batch.map((ev, i) => formatTelemetryEventLine(ev, i));
+    const statsBlock = formatTopStatsBlock();
 
     const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`;
     const res = await fetch(endpoint, {
@@ -4527,12 +4686,14 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        _subject: `BiblioTech Scout — Uso anónimo (${batch.length} eventos)`,
+        _subject: `BiblioTech Scout [${ctx.plat}] — ${batch.length} acciones anónimas (${BT_SESSION_ID})`,
         _template: "table",
         _captcha: "false",
-        plataforma: window.Capacitor ? "Android APK" : "Web",
-        total_eventos: String(batch.length),
-        resumen_anonimo: lines.join("\n\n")
+        plataforma: `${ctx.plat} · ${ctx.vista}`,
+        navegador_y_tema: `${ctx.browser} (${ctx.os}) · Tema ${ctx.tema}`,
+        sesion_y_eventos: `${BT_SESSION_ID} (${batch.length} eventos en este envío)`,
+        resumen_mas_usado: statsBlock || "Primeros eventos acumulados",
+        actividad_completa: lines.join("\n\n")
       }),
       keepalive: true
     });
@@ -4542,10 +4703,198 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
       localStorage.setItem(BT_LAST_SENT_KEY, String(Date.now()));
     }
   } catch (_) {
-    // Reintentar en la siguiente sesión si falla la red
+    // Reintentar en el siguiente ciclo/sesión si falla la red
   } finally {
     btFlushInFlight = false;
   }
+}
+
+let btObserversInitialized = false;
+function setupFullActivityObservers() {
+  if (btObserversInitialized) return;
+  btObserversInitialized = true;
+
+  const ctx = detectClientContext();
+  enqueueAnonTelemetry(
+    {
+      t: "sesion",
+      idioma: ctx.idioma,
+      hash: (window.location && window.location.hash) || "#inicio"
+    },
+    false
+  );
+
+  // 1. Secciones visibles por scroll (deduplicadas una vez por sesión)
+  const seenSections = new Set();
+  if ("IntersectionObserver" in window) {
+    const secObs = new IntersectionObserver(
+      (entries) => {
+        for (const ent of entries) {
+          if (ent.isIntersecting && ent.target && ent.target.id && !seenSections.has(ent.target.id)) {
+            seenSections.add(ent.target.id);
+            bumpStatCounter("topSections", `#${ent.target.id}`, 20);
+            enqueueAnonTelemetry({ t: "vista_seccion", sec: `#${ent.target.id}`, via: "scroll" }, false);
+          }
+        }
+      },
+      { threshold: 0.25 }
+    );
+    document.querySelectorAll("main section[id], footer.site-footer").forEach((el) => {
+      if (el.id) secObs.observe(el);
+    });
+  }
+
+  // 2. Delegación única para clics en filtros, menú, dock, descargas, pestañas y enlaces
+  document.addEventListener(
+    "click",
+    (e) => {
+      const target = e.target && e.target.closest ? e.target : null;
+      if (!target) return;
+
+      const dlBtn = target.closest("[data-dl-doc]");
+      if (dlBtn) {
+        const doc = STATE.docsById[dlBtn.getAttribute("data-dl-doc")];
+        if (doc) {
+          bumpStatCounter("topDocs", `${doc.title} [${doc.ext || "DOC"}]`, 30);
+          enqueueAnonTelemetry({ t: "doc_descarga", origen: "catalogo", doc: doc.title, file: doc.filename }, false);
+        }
+        return;
+      }
+
+      const modalDl = target.closest("#modalDownloadBtn");
+      if (modalDl) {
+        const title = (document.getElementById("modalDocTitle") || {}).textContent || "";
+        bumpStatCounter("topDocs", `${title} [DESCARGA]`, 30);
+        enqueueAnonTelemetry({ t: "doc_descarga", origen: "visor_modal", doc: title }, false);
+        return;
+      }
+
+      const modalOpenTab = target.closest("#modalOpenTabBtn");
+      if (modalOpenTab) {
+        const title = (document.getElementById("modalDocTitle") || {}).textContent || "";
+        enqueueAnonTelemetry({ t: "doc_visor_accion", accion: "abrir_pestaña", doc: title }, false);
+        return;
+      }
+
+      const modalTab = target.closest(".modal-tab");
+      if (modalTab) {
+        const title = (document.getElementById("modalDocTitle") || {}).textContent || "";
+        enqueueAnonTelemetry({ t: "doc_visor_accion", accion: `tab_${modalTab.dataset.tab || "otra"}`, doc: title }, false);
+        return;
+      }
+
+      const ttsBtn = target.closest("#modalAudioReadBtn");
+      if (ttsBtn) {
+        const title = (document.getElementById("modalDocTitle") || {}).textContent || "";
+        enqueueAnonTelemetry({ t: "doc_visor_accion", accion: "audio_tts", doc: title }, false);
+        return;
+      }
+
+      const shelfTab = target.closest(".shelf-tab, [data-select-shelf]");
+      if (shelfTab) {
+        const val = shelfTab.dataset.shelf || shelfTab.getAttribute("data-select-shelf") || "";
+        bumpStatCounter("topFilters", `estante:${val}`, 25);
+        enqueueAnonTelemetry({ t: "filtro_usado", filtro: "estante", valor: val }, false);
+        return;
+      }
+
+      const catPill = target.closest(".cat-filter-pill");
+      if (catPill) {
+        const val = catPill.getAttribute("data-cat-val") || "";
+        bumpStatCounter("topFilters", `categoria:${val}`, 25);
+        enqueueAnonTelemetry({ t: "filtro_usado", filtro: "categoria_pill", valor: val }, false);
+        return;
+      }
+
+      const subPill = target.closest(".subcat-pill");
+      if (subPill) {
+        const val = subPill.textContent.trim();
+        bumpStatCounter("topFilters", `subcategoria:${val}`, 25);
+        enqueueAnonTelemetry({ t: "filtro_usado", filtro: "subcategoria", valor: val }, false);
+        return;
+      }
+
+      const qcatTab = target.closest(".qcat-tab");
+      if (qcatTab) {
+        const val = qcatTab.dataset.qcat || qcatTab.textContent.trim();
+        bumpStatCounter("topFilters", `tema_preguntas:${val}`, 25);
+        enqueueAnonTelemetry({ t: "filtro_usado", filtro: "tema_preguntas", valor: val }, false);
+        return;
+      }
+
+      const secPill = target.closest(".sec-pill");
+      if (secPill) {
+        const val = secPill.dataset.section || secPill.textContent.trim();
+        bumpStatCounter("topFilters", `seccion_buscador:${val}`, 25);
+        enqueueAnonTelemetry({ t: "filtro_usado", filtro: "seccion_buscador", valor: val }, false);
+        return;
+      }
+
+      if (target.closest("#randomPoolBtn")) {
+        bumpStatCounter("topFilters", "preguntas_al_azar", 25);
+        enqueueAnonTelemetry({ t: "filtro_usado", filtro: "preguntas_al_azar", valor: "activar" }, false);
+        return;
+      }
+
+      if (target.closest("#shuffleQuestionsBtn")) {
+        bumpStatCounter("topFilters", "recargar_preguntas_azar", 25);
+        enqueueAnonTelemetry({ t: "filtro_usado", filtro: "recargar_azar", valor: STATE.activeQCat || "random" }, false);
+        return;
+      }
+
+      if (target.closest("#btnToggleCampMode, #dockBtnNight")) {
+        enqueueAnonTelemetry({ t: "filtro_usado", filtro: "tema_visual", valor: "alternar_modo_noche" }, false);
+        return;
+      }
+
+      const dockItem = target.closest(".bt-dock-item, header nav a, #mobileNavMenu a");
+      if (dockItem) {
+        const dest = dockItem.getAttribute("data-target") || dockItem.getAttribute("href") || dockItem.getAttribute("data-action") || dockItem.textContent.trim();
+        bumpStatCounter("topSections", dest, 20);
+        enqueueAnonTelemetry({ t: "vista_seccion", sec: dest, via: "menu_o_dock" }, false);
+        return;
+      }
+
+      if (target.closest("#copyIosUrlBtn")) {
+        enqueueAnonTelemetry({ t: "enlace_externo", label: "Copiar enlace iOS Safari", url: "pwa-ios" }, false);
+        return;
+      }
+
+      const extLink = target.closest('a[href^="http"]');
+      if (extLink) {
+        enqueueAnonTelemetry(
+          {
+            t: "enlace_externo",
+            label: extLink.textContent.trim().slice(0, 60),
+            url: extLink.href
+          },
+          false
+        );
+      }
+    },
+    true
+  );
+
+  // 3. Delegación única para selectores <select> y checkboxes de filtros
+  document.addEventListener("change", (e) => {
+    const el = e.target;
+    if (!el || !el.id) return;
+    const trackedIds = {
+      librarySectionFilter: "bib_seccion",
+      libraryScopeSelect: "bib_alcance",
+      filterCategory: "cat_categoria",
+      filterSubcategory: "cat_subcategoria",
+      filterSection: "cat_seccion",
+      filterExt: "cat_formato",
+      sortOrderSelect: "cat_orden",
+      onlyLatestCheckbox: "cat_solo_vigentes"
+    };
+    if (trackedIds[el.id]) {
+      const val = el.type === "checkbox" ? String(el.checked) : String(el.value || "all");
+      bumpStatCounter("topFilters", `${trackedIds[el.id]}:${val}`, 25);
+      enqueueAnonTelemetry({ t: "filtro_usado", filtro: trackedIds[el.id], valor: val }, false);
+    }
+  });
 }
 
 function initPrivacyAndTelemetry() {
@@ -4557,7 +4906,7 @@ function initPrivacyAndTelemetry() {
   const btnUseful = document.getElementById("btnFeedbackUseful");
   const btnReport = document.getElementById("btnFeedbackReport");
 
-  // En APK Android el sistema acepta automáticamente el uso anónimo sin interrumpir
+  // En APK Android el sistema acepta automáticamente el análisis anónimo sin interrumpir
   if (window.Capacitor) {
     try {
       localStorage.setItem(BT_CONSENT_KEY, "accepted");
@@ -4578,11 +4927,13 @@ function initPrivacyAndTelemetry() {
       localStorage.setItem(BT_CONSENT_KEY, choice);
       if (choice !== "accepted") {
         localStorage.removeItem(BT_ANON_QUEUE_KEY);
+        localStorage.removeItem(BT_ANON_STATS_KEY);
       }
     } catch (_) {}
     if (overlay) overlay.classList.add("hidden");
     renderRecentQueriesUI();
     if (choice === "accepted") {
+      setupFullActivityObservers();
       showWebToast("Preferencias guardadas. Gracias por ayudar a mejorar BiblioTech.");
       flushAnonymousTelemetry(false);
     } else {
@@ -4601,7 +4952,7 @@ function initPrivacyAndTelemetry() {
       const chip = e.target.closest("[data-recent-query]");
       if (!chip) return;
       const q = chip.getAttribute("data-recent-query");
-      if (q) submitQuestion(q, { syncInput: false });
+      if (q) submitQuestion(q, { syncInput: false, source: "reciente" });
     });
   }
 
@@ -4646,8 +4997,18 @@ function initPrivacyAndTelemetry() {
   if (btnReport) btnReport.addEventListener("click", () => handleFeedback("issue"));
 
   renderRecentQueriesUI();
-  setTimeout(() => flushAnonymousTelemetry(false), 6000);
+  if (hasTelemetryConsent()) {
+    setupFullActivityObservers();
+  }
+
+  // Envío al pasar a segundo plano (muy confiable en iOS Safari, Chrome móvil y APK)
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      flushAnonymousTelemetry(true);
+    }
+  });
   window.addEventListener("pagehide", () => flushAnonymousTelemetry(true));
+  setTimeout(() => flushAnonymousTelemetry(false), 12000);
 }
 
 document.addEventListener("DOMContentLoaded", initApp);
