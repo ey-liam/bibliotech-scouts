@@ -42,10 +42,15 @@ html {
   color: var(--text-main);
   background-color: var(--bg-page);
   line-height: 1.6;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
+  max-width: 100%;
   overflow-x: hidden;
+  overflow-x: clip;
   padding-top: 78px;
   background-image:
     radial-gradient(circle at 12% 18%, rgba(0, 180, 216, 0.11), transparent 32%),
@@ -8238,17 +8243,21 @@ button:active,
    ========================================================================== */
 .bt-unified-dock {
   position: fixed;
-  bottom: max(12px, env(safe-area-inset-bottom, 12px));
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: max(10px, env(safe-area-inset-bottom, 10px));
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  transform: none;
   z-index: 950;
   display: none;
   align-items: center;
-  justify-content: space-around;
-  gap: 4px;
-  padding: 6px 10px;
-  width: min(94vw, 480px);
+  justify-content: space-between;
+  gap: 2px;
+  padding: 5px 6px;
+  width: calc(100% - 16px);
+  max-width: 480px;
   height: var(--dock-height, 62px);
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -8270,7 +8279,8 @@ button:active,
 
 .bt-dock-item {
   position: relative;
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8281,13 +8291,22 @@ button:active,
   border: none;
   background: transparent;
   color: #475569;
-  font-size: 0.68rem;
+  font-size: clamp(0.54rem, 2.35vw, 0.68rem);
   font-weight: 700;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   cursor: pointer;
-  padding: 0 4px;
+  padding: 0 2px;
+  overflow: hidden;
   text-decoration: none;
   transition: all 0.2s ease;
+}
+
+.bt-dock-item span:not(.bt-dock-badge) {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bt-dock-item svg {
@@ -8308,15 +8327,15 @@ button:active,
 
 .bt-dock-badge {
   position: absolute;
-  top: 4px;
-  right: 16%;
-  min-width: 17px;
-  height: 17px;
-  padding: 0 4px;
+  top: 2px;
+  right: 4px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
   border-radius: 999px;
   background: linear-gradient(135deg, #38bdf8, #2563eb);
   color: #ffffff;
-  font-size: 0.62rem;
+  font-size: 0.56rem;
   font-weight: 800;
   display: inline-flex;
   align-items: center;
@@ -10737,5 +10756,112 @@ html[data-camp-mode="true"] .html-quick-bar {
 @media (max-width: 900px) {
   .btn-camp-mode {
     display: none !important;
+  }
+}
+
+/* ==========================================================================
+   AJUSTE ESTRICTO DE VIEWPORT MOVIL Y ANDROID (CERO DESBORDAMIENTO / ZERO CUT)
+   ========================================================================== */
+.header-inner,
+.brand-logo,
+.brand-text,
+.container,
+.library-shell,
+.catalog-shell,
+.catalog-controls,
+.answer-container,
+.answer-card,
+.agentes-card,
+.about-card,
+.search-section-container,
+.search-hub-card,
+.quick-questions-row,
+.quick-header-bar,
+.quick-topic-tabs,
+.library-shelves-tabs,
+.catalog-category-cards,
+.hero-intro-grid > *,
+.library-header-row > *,
+.catalog-header-row > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.header-actions {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.quick-header-bar > *,
+.quick-questions-row > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+main,
+#contenido-principal,
+section {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+.bts-hero-stage {
+  overflow: hidden;
+}
+
+.global-animated-bg {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  header.main-header,
+  header.main-header.nav-open .main-nav,
+  .main-nav {
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .bts-card-polygon {
+    width: min(94%, 780px);
+    max-width: 100%;
+    padding: clamp(1.5rem, 5vw, 2.2rem) clamp(0.85rem, 3.8vw, 1.35rem);
+  }
+  .bts-card-title {
+    font-size: clamp(2rem, 10.2vw, 3.3rem);
+    max-width: 100%;
+  }
+  .bts-card-creator {
+    font-size: clamp(0.9rem, 3.6vw, 1.3rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .brand-author {
+    display: none;
+  }
+  .header-inner {
+    gap: 0.5rem;
+    padding-left: max(0.85rem, env(safe-area-inset-left, 0.85rem));
+    padding-right: max(0.85rem, env(safe-area-inset-right, 0.85rem));
+  }
+  .brand-logo {
+    gap: 0.55rem;
+    flex: 0 1 auto;
+  }
+  .brand-name {
+    font-size: clamp(1.1rem, 4.8vw, 1.36rem);
+  }
+  .nav-toggle-label {
+    display: none;
+  }
+  .nav-toggle {
+    padding: 0.52rem 0.62rem;
   }
 }
