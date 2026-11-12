@@ -10640,6 +10640,100 @@ html[data-camp-mode="true"] .xlsx-grid-table tbody tr:nth-child(even) td {
   background: rgba(255, 255, 255, 0.025) !important;
 }
 
+/* Carátulas en tarjetas de Catálogo + barra de imagen/HTML + toast de descarga */
+.doc-card-body-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.doc-card-thumb {
+  flex: 0 0 auto;
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  background: #f1f5f9;
+}
+
+.doc-card-text-col {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+html[data-camp-mode="true"] .doc-card-thumb {
+  border-color: rgba(139, 92, 246, 0.42);
+  background: #140c2b;
+}
+
+.img-quick-bar,
+.html-quick-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding: 0.48rem 0.9rem;
+  background: #f1f5f9;
+  border-bottom: 1px solid #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #334155;
+  border-radius: 10px 10px 0 0;
+}
+
+html[data-camp-mode="true"] .img-quick-bar,
+html[data-camp-mode="true"] .html-quick-bar {
+  background: rgba(18, 11, 38, 0.96) !important;
+  border-bottom-color: rgba(139, 92, 246, 0.38) !important;
+  color: #e2e8f0 !important;
+}
+
+.preview-image-stage {
+  overflow: auto;
+  padding: 0.65rem;
+  border-radius: 12px;
+}
+
+.preview-image-stage.is-checker {
+  background-color: #ffffff;
+  background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%),
+    linear-gradient(-45deg, #e2e8f0 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e2e8f0 75%),
+    linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}
+
+.bt-web-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 84px;
+  transform: translate(-50%, 16px);
+  z-index: 2500;
+  padding: 0.65rem 1.15rem;
+  border-radius: 999px;
+  background: #0f172a;
+  color: #ffffff;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  font-size: 0.84rem;
+  font-weight: 700;
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.bt-web-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 @media (max-width: 900px) {
   .btn-camp-mode {
     display: none !important;

@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 11/11/2026 • **Versión:** V7.2 Oficial - 2.2.4 Mobile (11/11/2026)  
+**Base de datos:** 11/11/2026 • **Versión:** V7.3 Oficial - 2.2.5 Mobile (11/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,11 +41,14 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V7.2 y Acervo RECME / Help Desk / FES (11/11/2026)
+## 3. Novedades de la Versión V7.3 y Acervo RECME / Help Desk / FES (11/11/2026)
 
-- **Ampliación RECME, Especialidades FES, Help Desk y Preguntas Universales (`13,494` preguntas totales):**
-  - El banco combinado alcanza **13,494 preguntas y respuestas únicas** (`5,356` en `data/questions_bank.json`, `101` en `data/faq_v3.json` y **`8,037`** en `data/faq_v4.json`, generadas con `scripts/generate_faq_v4.js`, `scripts/generate_recme_faq.js` y `scripts/generate_universal_basics_faq.js`).
-  - **Cobertura total (`599/599` documentos accesibles):** cada archivo del catálogo cuenta con preguntas básicas y coherentes sobre qué es, para qué sirve, cómo se llama, dónde descargarlo y quién lo llena, firma o es responsable, junto con un visor interactivo de hojas de cálculo Excel (`.xlsx`) desde `data/spreadsheets.json` (100 % offline).
+- **Carátulas 599/599, Descripciones Depuradas y Banco de `13,516` Preguntas:**
+  - El banco combinado alcanza **13,516 preguntas y respuestas únicas** (`5,356` en `data/questions_bank.json`, `101` en `data/faq_v3.json` y **`8,059`** en `data/faq_v4.json`, generadas con `scripts/generate_faq_v4.js`, `scripts/generate_recme_faq.js`, `scripts/generate_universal_basics_faq.js` y `scripts/generate_scouting_core_faq.js`).
+  - **100 % de carátulas y resúmenes limpios (`599/599`):** todos los documentos accesibles cuentan con portada JPG real o renderizada (PDF, HTML, XLSX, DOCX, PPTX e imágenes), miniaturas visibles también en el Catálogo y descripciones depuradas sin textos genéricos ni nombres técnicos sin título legible.
+  - **Preguntas fundamentales e identidad scout:** cobertura ampliada con sustento exacto sobre qué es el Movimiento Scout, su origen (Brownsea 1907 con Baden-Powell e ingreso de México en Kandersteg 1926), quiénes pueden integrarlo (*Estatutos 2023* y *Reglamento 2023*), igualdad de género y diversidad (*Política DEI 2024*, *SCNEG* y *JSN 21.007*), *Manual del Uniforme junio 2026*, *CONECTA* / *A Salvo del Peligro*, metodología paso a paso de proyectos scout, especialidades FES y portales oficiales ASMAC/WOSM.
+  - **Visores mejorados y descarga directa amigable:** visor PDF con carga directa en escritorio y alternador instantáneo a Google Docs Viewer, cuadrícula de transparencia y zoom interactivo en imágenes, barra rápida en guías HTML, visor multi-hoja para Excel con exportación CSV UTF-8, y descarga directa web con nombres legibles mediante `Blob` y notificación visual.
+  - **Cobertura documental (`599/599` archivos accesibles):** cada archivo del catálogo cuenta con preguntas básicas y coherentes sobre qué es, para qué sirve, cómo se llama, dónde descargarlo y quién lo llena, firma o es responsable, junto con un visor interactivo de hojas de cálculo Excel (`.xlsx`) desde `data/spreadsheets.json` (100 % offline).
   - Incorpora **65 nuevos PDFs canónicos** sin duplicados numerados (`(1)`, `(2)`): las **18 Especialidades FES de Comunidad de Caminantes**, **46 plantillas oficiales P1–P10 de RECME/CNAMS/CNPJ** (*Matrices de Diagnóstico Inicial*, *Cédulas Auxiliares de Evaluación*, *Mi Libro del Seeonee*, *Mapa de Exploraciones*, *Hoja de Caminata*, *Mi Pasaporte de Comunidad*, *Mapa de Rutas y PPV SMART*, *Plantillas FAES/FES/Eventos/Proyectos/Ciclos/Consejos*, *Registros Auxiliares*, *Solicitudes Mundo Mejor 2026*, *Solicitudes de Insignia Final/Terminal Obsidiana vs Jade*, *Fichas Didácticas y Cartas IM 3.0 CNAMS*) y el *Formato Oficial de Proyecto v1.1*.
   - Suma **32 guías HTML autónomas** (con capturas embebidas) y **4 emblemas/diagramas oficiales**: las **25 guías paso a paso y el directorio de 11 departamentos de Help Desk ASMAC (`SISAS` y `CONECTA`)**, los instructivos Genially de **FAES (*Masterchefsito*)** y **FES (*Primer Respondiente Junior*)**, y los catálogos oficiales RECME (230 FAES por Cazaderos, Rumbos, Senderos y Rutas + 8 especialidades de Manada Salud y Bienestar).
   - Mantiene transparencia total de cobertura: los PDFs de *Adultos/Plantillas PJOS* y *Comunidad de Caminantes (18 FES)* están completos; los PDFs individuales de especialidades FES de *Manada de Lobatos*, *Tropa de Scouts* y *Clan de Rovers* quedan indicados como pendientes por incorporar.
@@ -84,7 +87,7 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ## 5. Contenido del acervo documental
 
-El sistema integra **110 temas enciclopédicos y literarios**, **13,494 preguntas y respuestas únicas de consulta directa** (`5,356` del banco base, `101` de `faq_v3.json` y `8,037` de `faq_v4.json`), **751 documentos catalogados en total** y **599 documentos oficiales directamente accesibles y descargables** (`498` PDFs, `32` guías HTML autónomas, `18` DOCX, `17` XLSX, `33` imágenes y `1` PPTX) organizados en **11 categorías con subcategorías**:
+El sistema integra **110 temas enciclopédicos y literarios**, **13,516 preguntas y respuestas únicas de consulta directa** (`5,356` del banco base, `101` de `faq_v3.json` y `8,059` de `faq_v4.json`), **751 documentos catalogados en total** y **599 documentos oficiales directamente accesibles y descargables** (`498` PDFs, `32` guías HTML autónomas, `18` DOCX, `17` XLSX, `33` imágenes y `1` PPTX) organizados en **11 categorías con subcategorías**:
 
 1. **Colección Biblioteca del Centenario (39 volúmenes):** Los 39 libros oficiales numerados de la Colección Biblioteca del Centenario, incluyendo las obras clásicas de Robert Baden-Powell (*Escultismo para Muchachos, Manual de Lobatos, Guía para el Jefe de Tropa, Roverismo hacia el Éxito, Tropiezos de la Vida, Juegos Scouts*), obras históricas de Gilcraft y César Macazaga Ordoño, y publicaciones formativas y literarias (*Cuentos de la Selva, Francisco de Asís y el Lobo de Gubbio*).
 2. **Guías, Carnets y Programa de Jóvenes — PJOS (42 documentos):** Guías de sección actualizadas (*Mis Rastros en la Selva 2024, Pistas de Aventura 2024, El Desafío de ser Caminante 2024, Las Rutas del Rover, Las Rutas de la Precursora*), Carnets de *Aventuras en la Naturaleza 2024*, Guías de *Punta de Flecha 2025*, *Tribu de la Tierra*, *Campeones de la Naturaleza*, *Mensajeros de la Paz*, *Go Solar*, *Plastic Tide Turners*, *De FOROS a CASA* y *Agentes de Cambio.MX*.

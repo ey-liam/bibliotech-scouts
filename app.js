@@ -990,7 +990,7 @@ function renderLibraryShelf() {
 
   grid.innerHTML = slice
     .map((d, idx) => {
-      const coverUrl = d.ext === "PDF" && d.sha12 ? `covers/${d.sha12}.jpg` : "";
+      const coverUrl = d.sha12 ? `covers/${d.sha12}.jpg` : "";
       const pagesLabel = d.page_count > 1 ? `${d.page_count} págs.` : d.ext;
       return `
         <article class="book-card" data-doc-id="${escapeHtml(d.id)}" data-shelf-idx="${idx}">
@@ -2111,26 +2111,35 @@ function renderCatalogGrid() {
   grid.innerHTML = slice
     .map((d) => {
       const dlUrl = buildFileUrl(d, true);
+      const dlName = cleanDownloadFilename(d);
+      const coverUrl = d.sha12 ? `covers/${d.sha12}.jpg` : "";
       const sizeText = d.size_mb >= 1 ? `${d.size_mb} MB` : `${d.size_kb || 15} KB`;
       return `
         <article class="doc-card">
-          <div>
-            <div class="doc-card-top">
-              <div class="doc-badges">
-                <span class="badge badge-ext">${escapeHtml(d.ext)}</span>
-                <span class="badge badge-year">${d.year}</span>
-                <span class="badge badge-sec">${escapeHtml(d.section_label)}</span>
-              </div>
-              <span style="font-size:0.74rem;color:#64748b;font-weight:700;">${sizeText}</span>
+          <div class="doc-card-top">
+            <div class="doc-badges">
+              <span class="badge badge-ext">${escapeHtml(d.ext)}</span>
+              <span class="badge badge-year">${d.year}</span>
+              <span class="badge badge-sec">${escapeHtml(d.section_label)}</span>
             </div>
-            <h3 class="doc-title">${escapeHtml(d.title)}</h3>
-            <p class="doc-summary">${escapeHtml(d.summary || d.filename)}</p>
+            <span style="font-size:0.74rem;color:#64748b;font-weight:700;">${sizeText}</span>
+          </div>
+          <div class="doc-card-body-row">
+            ${
+              coverUrl
+                ? `<img src="${coverUrl}" alt="${escapeHtml(d.title)}" class="doc-card-thumb" loading="lazy" decoding="async" onerror="this.style.display='none'" />`
+                : ""
+            }
+            <div class="doc-card-text-col">
+              <h3 class="doc-title">${escapeHtml(d.title)}</h3>
+              <p class="doc-summary">${escapeHtml(d.summary || d.filename)}</p>
+            </div>
           </div>
           <div class="doc-card-footer">
             <span style="font-size:0.74rem;color:#64748b;font-weight:600;">${escapeHtml(d.category)}${d.subcategory ? ` · ${escapeHtml(d.subcategory)}` : ""}</span>
             <div class="doc-actions">
               <button type="button" class="btn-doc-view" data-open-doc="${escapeHtml(d.id)}">Leer</button>
-              <a href="${dlUrl}" download class="btn-doc-dl">Descargar</a>
+              <a href="${dlUrl}" download="${escapeHtml(dlName)}" data-dl-doc="${escapeHtml(d.id)}" class="btn-doc-dl">Descargar</a>
             </div>
           </div>
         </article>
@@ -2149,6 +2158,86 @@ function renderCatalogGrid() {
 // ============================================================================
 // LECTOR INTERACTIVO (MODO LECTURA LIBRE)
 // ============================================================================
+function cleanDownloadFilename(doc) {
+  const extLow = String((doc && doc.ext) || "pdf").toLowerCase();
+  let base = String((doc && (doc.filename || doc.title)) || "documento_scout").trim();
+  if (/^(?:1|ha-resource|pictures-and-videos|sdp-|diapositiva)/i.test(base) && doc && doc.title) {
+    base = doc.title;
+  }
+  base = base.replace(/\.[a-z0-9]{2,5}$/i, "");
+  base = base
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^A-Za-z0-9._ -]+/g, "_")
+    .replace(/\s+/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^[_\.]+|[_\.]+$/g, "")
+    .slice(0, 72);
+  return `${base || "documento_scout"}.${extLow}`;
+}
+
+function showWebToast(msg) {
+  let el = document.getElementById("btWebToast");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "btWebToast";
+    el.className = "bt-web-toast";
+    el.setAttribute("role", "status");
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add("is-visible");
+  clearTimeout(showWebToast._t);
+  showWebToast._t = setTimeout(() => el.classList.remove("is-visible"), 3200);
+}
+
+async function triggerWebDownload(doc, triggerEl) {
+  if (!doc) return false;
+  const dlUrl = buildFileUrl(doc, true);
+  const friendlyName = cleanDownloadFilename(doc);
+  const origText = triggerEl ? triggerEl.textContent : "";
+
+  // En archivos alojados dentro de la misma web (files/ o servidor local),
+  // descargar mediante Blob garantiza conservar el nombre legible y dar confirmación real.
+  if (doc.has_web_file || IS_LOCAL_SERVER) {
+    try {
+      if (triggerEl) triggerEl.textContent = "Descargando...";
+      const res = await fetch(dlUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = friendlyName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 8000);
+      showWebToast(`Descargado: ${friendlyName}`);
+      if (triggerEl) {
+        triggerEl.textContent = "Descargado";
+        setTimeout(() => {
+          triggerEl.textContent = origText;
+        }, 1800);
+      }
+      return true;
+    } catch (_) {
+      if (triggerEl) triggerEl.textContent = origText;
+    }
+  }
+
+  // Respaldo limpio para binarios en GitHub Releases v1.0
+  const a = document.createElement("a");
+  a.href = dlUrl;
+  a.download = friendlyName;
+  a.rel = "noopener";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  showWebToast(`Iniciando descarga: ${friendlyName}`);
+  return true;
+}
+
 async function ensureSpreadsheets() {
   if (STATE.spreadsheets) return STATE.spreadsheets;
   try {
@@ -2236,6 +2325,26 @@ function renderSpreadsheetReaderView(doc, sheetPkg, dlUrl, viewUrl, fullTextCont
     if (searchEl) {
       searchEl.addEventListener("input", refresh);
     }
+    const csvBtn = rootEl.querySelector("#xlsxExportCsvBtn");
+    if (csvBtn) {
+      csvBtn.addEventListener("click", () => {
+        const s = sheets[activeIdx];
+        if (!s || !Array.isArray(s.rows)) return;
+        const csvLines = s.rows.map((r) =>
+          r.map((cell) => `"${String(cell == null ? "" : cell).replace(/"/g, '""')}"`).join(",")
+        );
+        const bomBlob = new Blob(["\uFEFF" + csvLines.join("\r\n")], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(bomBlob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${cleanDownloadFilename(doc).replace(/\.xlsx$/i, "")}_${String(s.name || "hoja").replace(/[^\w-]+/g, "_")}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+        showWebToast(`Hoja exportada a CSV: ${s.name}`);
+      });
+    }
     refresh();
   }, 0);
 
@@ -2248,7 +2357,8 @@ function renderSpreadsheetReaderView(doc, sheetPkg, dlUrl, viewUrl, fullTextCont
           <p class="xlsx-reader-sub">${escapeHtml(doc.filename)} · Vista en tabla sin conexión lista para consultar</p>
         </div>
         <div class="xlsx-reader-actions">
-          <a href="${dlUrl}" download class="btn-modal-primary">Descargar .xlsx</a>
+          <a href="${dlUrl}" download="${escapeHtml(cleanDownloadFilename(doc))}" data-dl-doc="${escapeHtml(doc.id)}" class="btn-modal-primary">Descargar .xlsx</a>
+          <button type="button" id="xlsxExportCsvBtn" class="btn-modal-secondary">Exportar hoja CSV</button>
           <a href="${officeUrl}" target="_blank" rel="noopener" class="btn-modal-secondary">Vista Office Online</a>
         </div>
       </div>
@@ -2318,6 +2428,8 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   const dlUrl = buildFileUrl(doc, true);
   openTabBtn.href = viewUrl;
   dlBtn.href = dlUrl;
+  dlBtn.setAttribute("download", cleanDownloadFilename(doc));
+  dlBtn.setAttribute("data-dl-doc", doc.id);
 
   // Si es una imagen (PNG, JPG, WEBP, AVIF), 'Abrir en pestaña' abre un visor web
   // limpio en la nueva pestaña para evitar que el navegador la descargue forzosamente
@@ -2392,28 +2504,31 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     } catch (_) {}
   }
 
-  const canEmbedNative = IS_LOCAL_SERVER;
+  const isMobileUa = /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent || "") || window.innerWidth < 860;
+  const canEmbedDirectPdf = IS_LOCAL_SERVER || (doc.has_web_file === true && !isMobileUa);
 
   if (doc.ext === "PDF") {
-    if (canEmbedNative) {
-      previewPane.innerHTML = `<iframe src="${viewUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;"></iframe>`;
-      openTabBtn.href = viewUrl;
-      openTabBtn.onclick = null;
-    } else {
-      // En la web pública, Google Docs Viewer renderiza el PDF original visual completo con todas sus páginas y formatos
-      const absPdfUrl = /^https?:\/\//i.test(viewUrl)
-        ? viewUrl
-        : new URL(viewUrl, window.location.href).href;
-      const gDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}&embedded=true`;
+    const absPdfUrl = /^https?:\/\//i.test(viewUrl)
+      ? viewUrl
+      : new URL(viewUrl, window.location.href).href;
+    const gDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}&embedded=true`;
+    const initialMode = canEmbedDirectPdf ? "direct" : "gdocs";
+
+    const mountPdfMode = (mode) => {
+      const targetSrc = mode === "direct" ? `${absPdfUrl}#view=FitH` : gDocsUrl;
+      const modeLabel = mode === "direct" ? "Visor PDF directo (rápido)" : "Visor PDF en la nube (Google Docs)";
+      const toggleLabel = mode === "direct" ? "Usar Visor en la Nube" : "Usar Visor Directo";
+      const nextMode = mode === "direct" ? "gdocs" : "direct";
       previewPane.innerHTML = `
         <div class="pdf-quick-bar">
-          <span>Vista PDF en la nube</span>
+          <span>${modeLabel}</span>
           <div class="pdf-quick-actions">
+            ${doc.has_web_file || IS_LOCAL_SERVER ? `<button type="button" class="btn-pdf-toggle-mode">${toggleLabel}</button>` : ""}
             <a href="${absPdfUrl}" target="_blank" rel="noopener">Abrir PDF directo</a>
             <button type="button" class="btn-pdf-switch-text">Cambiar a Texto</button>
           </div>
         </div>
-        <iframe id="gDocsIframe" src="${gDocsUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:calc(100% - 38px);min-height:540px;border:none;background:#ffffff;" allowfullscreen></iframe>
+        <iframe id="gDocsIframe" src="${targetSrc}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:calc(100% - 40px);min-height:540px;border:none;background:#ffffff;" allowfullscreen></iframe>
       `;
       const swBtn = previewPane.querySelector(".btn-pdf-switch-text");
       if (swBtn) {
@@ -2423,12 +2538,24 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           document.getElementById("modalTextPane").classList.remove("hidden");
         };
       }
+      const toggleBtn = previewPane.querySelector(".btn-pdf-toggle-mode");
+      if (toggleBtn) {
+        toggleBtn.onclick = () => mountPdfMode(nextMode);
+      }
+    };
+
+    mountPdfMode(initialMode);
+    if (IS_LOCAL_SERVER || doc.has_web_file) {
+      openTabBtn.href = absPdfUrl;
+      openTabBtn.onclick = null;
+    } else {
       openTabBtn.onclick = (e) => {
         e.preventDefault();
-        window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}`, '_blank');
+        window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}`, "_blank");
       };
+    }
 
-      // Resiliencia: si el iframe no responde o está offline, ofrecer cambio rápido a lectura de texto
+    if (initialMode === "gdocs") {
       const gIframe = document.getElementById("gDocsIframe");
       let gIframeLoaded = false;
       if (gIframe) {
@@ -2443,7 +2570,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           const btn = banner.querySelector("button");
           if (btn) {
             btn.onclick = () => {
-              document.querySelectorAll(".modal-tab").forEach(t => t.classList.toggle("active", t.dataset.tab === "text"));
+              document.querySelectorAll(".modal-tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === "text"));
               previewPane.classList.add("hidden");
               document.getElementById("modalTextPane").classList.remove("hidden");
             };
@@ -2457,26 +2584,75 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   } else if (["PNG", "JPG", "JPEG", "WEBP", "AVIF"].includes(doc.ext)) {
     previewPane.innerHTML = `
       <figure class="preview-image-figure">
+        <div class="img-quick-bar">
+          <span>Imagen (${escapeHtml(doc.ext)})</span>
+          <div class="pdf-quick-actions">
+            <button type="button" id="imgBgToggleBtn">Fondo cuadrícula</button>
+            <button type="button" id="imgResetZoomBtn">Ajustar 100%</button>
+          </div>
+        </div>
         <figcaption class="preview-image-figcaption">
           <span class="preview-image-kicker">Vista previa de imagen (${escapeHtml(doc.ext)})</span>
           <span class="preview-image-title">${escapeHtml(doc.title)}</span>
         </figcaption>
-        <div class="preview-image-stage">
+        <div class="preview-image-stage" id="previewImageStage">
           <img src="${viewUrl}" alt="${escapeHtml(doc.title)}" loading="lazy" decoding="async" class="preview-image-el" onerror="this.alt='No se pudo cargar la vista previa. Usa el botón Descargar.'; this.style.minHeight='120px';" />
         </div>
         <p class="preview-image-meta">Archivo: <strong>${escapeHtml(doc.filename)}</strong></p>
       </figure>
     `;
-  } else if (doc.ext === "HTML" && ((canEmbedNative && IS_LOCAL_SERVER) || (doc.is_readable_html && doc.has_web_file))) {
-    previewPane.innerHTML = `<iframe src="${viewUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:100%;min-height:580px;border:none;background:#ffffff;"></iframe>`;
+    const imgStage = previewPane.querySelector("#previewImageStage");
+    const bgBtn = previewPane.querySelector("#imgBgToggleBtn");
+    const rstBtn = previewPane.querySelector("#imgResetZoomBtn");
+    if (bgBtn && imgStage) {
+      bgBtn.onclick = () => {
+        const next = imgStage.classList.toggle("is-checker");
+        bgBtn.textContent = next ? "Fondo normal" : "Fondo cuadrícula";
+      };
+    }
+    if (rstBtn) {
+      rstBtn.onclick = () => {
+        const imgEl = previewPane.querySelector(".preview-image-el");
+        if (imgEl) imgEl.style.transform = "none";
+      };
+    }
+  } else if (doc.ext === "HTML" && ((IS_LOCAL_SERVER) || (doc.is_readable_html && doc.has_web_file))) {
+    previewPane.innerHTML = `
+      <div class="html-quick-bar">
+        <span>Guía Web Interactiva (HTML Autónoma)</span>
+        <div class="pdf-quick-actions">
+          <a href="${viewUrl}" target="_blank" rel="noopener">Abrir guía en pestaña completa</a>
+          <button type="button" class="btn-pdf-switch-text">Cambiar a Texto</button>
+        </div>
+      </div>
+      <iframe src="${viewUrl}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:calc(100% - 40px);min-height:540px;border:none;background:#ffffff;"></iframe>
+    `;
+    const swBtn = previewPane.querySelector(".btn-pdf-switch-text");
+    if (swBtn) {
+      swBtn.onclick = () => {
+        document.querySelectorAll(".modal-tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === "text"));
+        previewPane.classList.add("hidden");
+        document.getElementById("modalTextPane").classList.remove("hidden");
+      };
+    }
     openTabBtn.href = viewUrl;
     openTabBtn.onclick = null;
   } else if (doc.ext === "XLSX") {
     const sheetsDb = await ensureSpreadsheets();
     const sheetPkg = sheetsDb ? sheetsDb[doc.sha12] : null;
     previewPane.innerHTML = renderSpreadsheetReaderView(doc, sheetPkg, dlUrl, viewUrl, fullTextContent);
+    if (!IS_LOCAL_SERVER) {
+      const absOffice = /^https?:\/\//i.test(viewUrl) ? viewUrl : new URL(viewUrl, window.location.href).href;
+      openTabBtn.href = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(absOffice)}`;
+      openTabBtn.onclick = null;
+    }
   } else {
     previewPane.innerHTML = renderWebReaderView(doc, fullTextContent, dlUrl, viewUrl);
+    if (!IS_LOCAL_SERVER && ["DOCX", "PPTX"].includes(doc.ext)) {
+      const absOffice = /^https?:\/\//i.test(viewUrl) ? viewUrl : new URL(viewUrl, window.location.href).href;
+      openTabBtn.href = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(absOffice)}`;
+      openTabBtn.onclick = null;
+    }
   }
 
   chunksContainer.innerHTML = `<div class="chunk-block" style="white-space:pre-wrap;">${escapeHtml(fullTextContent || doc.summary || doc.title)}</div>`;
@@ -2491,7 +2667,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
 }
 
 function renderWebReaderView(doc, fullTextContent, dlUrl, viewUrl = "") {
-  const coverUrl = doc.ext === "PDF" && doc.sha12 ? `covers/${doc.sha12}.jpg` : "";
+  const coverUrl = doc.sha12 ? `covers/${doc.sha12}.jpg` : "";
   const blocks = (fullTextContent || doc.summary || "")
     .split(/\n--- Página \d+ ---\n/)
     .map((b) => b.trim())
@@ -2517,7 +2693,7 @@ function renderWebReaderView(doc, fullTextContent, dlUrl, viewUrl = "") {
             <h2 class="web-reader-title">${escapeHtml(doc.title)}</h2>
             <p class="web-reader-meta">Archivo original: <code>${escapeHtml(doc.filename)}</code> (${doc.year})</p>
             <div class="web-reader-actions">
-              <a href="${dlUrl}" download class="btn-modal-primary">Descargar archivo original (${escapeHtml(doc.ext)})</a>
+              <a href="${dlUrl}" download="${escapeHtml(cleanDownloadFilename(doc))}" data-dl-doc="${escapeHtml(doc.id)}" class="btn-modal-primary">Descargar archivo original (${escapeHtml(doc.ext)})</a>
               ${officeBtn}
             </div>
           </div>
@@ -2673,6 +2849,13 @@ function bindEvents() {
     const openBtn = e.target.closest("[data-open-doc]");
     if (openBtn) {
       openDocumentModal(openBtn.getAttribute("data-open-doc"));
+      return;
+    }
+    const dlLink = e.target.closest("[data-dl-doc]");
+    if (dlLink && !window.Capacitor) {
+      e.preventDefault();
+      const targetDoc = STATE.docsById[dlLink.getAttribute("data-dl-doc")];
+      if (targetDoc) triggerWebDownload(targetDoc, dlLink);
       return;
     }
     const shelfBtn = e.target.closest("[data-select-shelf]");
@@ -3388,6 +3571,15 @@ function setupReaderQoLHandlers(doc, fullText) {
         iframe.style.transformOrigin = "top center";
         iframe.style.width = currentZoom < 1.0 ? `${(100 / currentZoom).toFixed(1)}%` : "100%";
       }
+      const imgEl = previewPane.querySelector(".preview-image-el");
+      if (imgEl) {
+        imgEl.style.transform = currentZoom === 1.0 ? "none" : `scale(${currentZoom})`;
+        imgEl.style.transformOrigin = "center center";
+      }
+      const xlsxTbl = previewPane.querySelector(".xlsx-grid-table");
+      if (xlsxTbl) {
+        xlsxTbl.style.fontSize = `${(0.81 * currentZoom).toFixed(2)}rem`;
+      }
     }
     if (textPane) {
       textPane.style.fontSize = `${(0.9 * currentZoom).toFixed(2)}rem`;
@@ -3936,7 +4128,7 @@ document.addEventListener("DOMContentLoaded", initApp);
  *   búsqueda profunda por términos.
  * - data/text/ (NO editar a mano): 650 archivos de texto plano indexados por
  *   su hash SHA-12 (<sha12>.txt) para lectura rápida y motor offline.
- * - covers/: 433 portadas de libros y manuales en formato JPG (<sha12>.jpg).
+ * - covers/: 599 portadas en formato JPG (<sha12>.jpg) cubriendo todos los formatos accesibles.
  * - img/ y assets/: Logotipos e imágenes optimizadas (incluido Liam.png APNG,
  *   Liam.webp estático, LiamFondo.jpg y assets/scouts/agentes_cambio/ para CNRC).
  * - README.md: Presentación pública y guía de uso del proyecto.

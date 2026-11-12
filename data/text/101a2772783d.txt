@@ -1,1 +1,3 @@
-Recurso visual oficial / infografía / plantilla: imagen-sisas-1 (WEBP).
+INFOGRAFÍA OFICIAL ASMAC: RegNal vs. SISAS.
+
+Diagrama radial comparativo que muestra todos los módulos integrados en el Sistema de Administración Scout (SISAS) respecto al anterior RegNal: Módulo Adultos en el Movimiento, Perfil, Eventos, Credencial, Cambio de Grupo, Pagos, Anuncios, Encuestas, Progresión, Reporte del Scouter y Contraseña de Autorización.

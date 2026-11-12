@@ -1846,6 +1846,10 @@ generateRecmeFaq({ fs, path, DATA, catalog, byId, textOf, add, norm, clean, shor
 const { generateUniversalBasicsFaq } = require("./generate_universal_basics_faq");
 generateUniversalBasicsFaq({ fs, path, DATA, catalog, byId, textOf, add, norm, clean, cutSentence, shortTitle, ubic, fmtSize, stats });
 
+/* ------------------------------------------- 10. Núcleo Scout: Origen, Membresía, Género, CONECTA y Proyectos */
+const { generateScoutingCoreFaq } = require("./generate_scouting_core_faq");
+generateScoutingCoreFaq({ fs, path, DATA, catalog, byId, textOf, add, norm, clean, shortTitle, ubic, fmtSize, stats });
+
 /* -------------------------------------------------------------------- Salida */
 const result = {
   version: "1.3",
