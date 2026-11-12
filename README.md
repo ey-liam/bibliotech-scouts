@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 11/11/2026 • **Versión:** V7.5 Oficial - 2.2.7 Mobile (11/11/2026)  
+**Base de datos:** 11/11/2026 • **Versión:** V7.6 Oficial - 2.2.8 Mobile (11/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,7 +41,11 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V7.5 y Acervo RECME / Help Desk / FES (11/11/2026)
+## 3. Novedades de la Versión V7.6 y Acervo RECME / Help Desk / FES (11/11/2026)
+
+- **Accesibilidad (a11y) y Rendimiento HTML/CSS/JS:**
+  - Trampa de foco por teclado (`Tab` / `Shift+Tab`) y restauración de foco al cerrar `#docModal` y `#savedPanel` (con cierre por `Escape`), anillos `:focus-visible` globales de alto contraste, `aria-live="polite"` en conteo de catálogo, y etiquetas accesibles en `#onlyLatestCheckbox` y `#modalFieldNoteText`.
+  - `debounce()` en búsqueda instantánea de Biblioteca y Catálogo y en redimensionado de canvas, pausa automática de `btAmbientCanvas` en pestañas ocultas (`visibilitychange`), throttle con `requestAnimationFrame` en el scroll spy del dock, `content-visibility: auto` en secciones estáticas fuera de pantalla y transiciones específicas aceleradas por GPU.
 
 - **Optimización Completa para iOS Safari, iPadOS y Web App (Pantalla de Inicio):**
   - Etiquetas iOS Web App (`apple-mobile-web-app-capable`, `black-translucent`, `apple-touch-icon` 192/512, `format-detection: telephone=no` y `theme-color` adaptativo claro/oscuro) junto con soporte automático de `env(safe-area-inset-*)` para Dynamic Island, notch y barra inferior en modo standalone (`100dvh`).

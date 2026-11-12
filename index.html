@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=22" />
+  <link rel="stylesheet" href="styles.css?v=23" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -1425,7 +1425,7 @@
         </div>
 
         <div class="catalog-Quick-controls">
-          <label class="toggle-latest-label">
+          <label class="toggle-latest-label" for="onlyLatestCheckbox">
             <input type="checkbox" id="onlyLatestCheckbox" />
             <span>Ocultar ediciones antiguas reemplazadas</span>
           </label>
@@ -1512,7 +1512,7 @@
       </div>
 
       <div class="catalog-results-meta">
-        <span id="catalogCountLabel">Cargando catálogo...</span>
+        <span id="catalogCountLabel" aria-live="polite">Cargando catálogo...</span>
         <button type="button" id="resetFiltersBtn" class="btn-text-reset hidden">Restablecer filtros</button>
       </div>
 
@@ -1531,7 +1531,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · V2.2.7 Mobile · Web V7.5</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · V2.2.8 Mobile · Web V7.6</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout en tu bolsillo</h2>
           <p class="app-download-subtitle">
             Úsala como app instalada en Android (.apk) o directamente en iPhone y iPad desde Safari como Web App sin App Store, con las mismas 13,516 preguntas y visores optimizados.
@@ -1662,7 +1662,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v23</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v24</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -1753,7 +1753,7 @@
 
         <!-- CAJA DESPLEGABLE DE NOTAS -->
         <div id="modalFieldNoteBox" class="modal-field-note-box hidden">
-          <textarea id="modalFieldNoteText" placeholder="Escribe tus notas sobre este documento. Se guardan solo en este navegador."></textarea>
+          <textarea id="modalFieldNoteText" aria-label="Notas de campo sobre este documento" placeholder="Escribe tus notas sobre este documento. Se guardan solo en este navegador."></textarea>
           <div class="field-note-actions">
             <button type="button" id="btnSaveFieldNote" class="btn-field-note-save">Guardar notas</button>
             <button type="button" id="btnCloseFieldNote" class="btn-field-note-cancel">Cerrar</button>
@@ -1825,7 +1825,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 11/11/2026 • BETA V7.5 - 2.2.7 Mobile (11/11/2026)
+          Base de datos: 11/11/2026 • BETA V7.6 - 2.2.8 Mobile (11/11/2026)
         </p>
         <p class="footer-non-affiliation">
           <strong>Aviso de proyecto independiente:</strong> BiblioTech es un proyecto personal, educativo y sin fines de lucro creado para facilitar la búsqueda y comprensión de los documentos oficiales a toda la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la Asociación de Scouts de México, A.C. (ASMAC) ni de la Organización Mundial del Movimiento Scout (World Scouting / WOSM); todos los documentos, manuales, reglamentos, logotipos y marcas citados pertenecen a sus respectivos titulares oficiales.

@@ -2175,7 +2175,7 @@ h1, h2, h3, h4 {
   padding: 0.48rem 0.95rem;
   border-radius: 999px;
   cursor: pointer;
-  transition: all 0.22s var(--spring);
+  transition: transform 0.22s var(--spring), background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
 }
 
 .cat-filter-pill:hover {
@@ -2284,7 +2284,7 @@ h1, h2, h3, h4 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.28s var(--spring);
+  transition: transform 0.28s var(--spring), border-color 0.22s ease, box-shadow 0.22s ease;
   box-shadow: var(--shadow-sm);
 }
 
@@ -11021,6 +11021,36 @@ footer.site-footer,
   .bts-card-creator {
     font-size: clamp(0.9rem, 3.6vw, 1.3rem);
   }
+}
+
+/* ==========================================================================
+   RENDIMIENTO DE RENDERIZADO Y ACCESIBILIDAD DE TECLADO (:focus-visible)
+   ========================================================================== */
+.about-section,
+.sections-overview,
+.services-section,
+.changes-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 650px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex="0"]:focus-visible {
+  outline: 2.5px solid #0284c7;
+  outline-offset: 2px;
+}
+
+html[data-camp-mode="true"] a:focus-visible,
+html[data-camp-mode="true"] button:focus-visible,
+html[data-camp-mode="true"] input:focus-visible,
+html[data-camp-mode="true"] select:focus-visible,
+html[data-camp-mode="true"] textarea:focus-visible,
+html[data-camp-mode="true"] [tabindex="0"]:focus-visible {
+  outline-color: #38bdf8;
 }
 
 /* ==========================================================================

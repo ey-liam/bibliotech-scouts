@@ -298,6 +298,68 @@ const IS_APPLE_TOUCH =
   /iPhone|iPad|iPod/i.test(navigator.userAgent || "") ||
   (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
+let __activeDialogTrap = null;
+
+function debounce(fn, delay = 120) {
+  let timer = null;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
+
+function getFocusableElements(root) {
+  if (!root) return [];
+  return Array.from(
+    root.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )
+  ).filter((el) => el.offsetParent !== null && !el.closest(".hidden"));
+}
+
+function activateDialogFocusTrap(dialogEl, initialFocusSelector) {
+  if (!dialogEl) return;
+  const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  if (__activeDialogTrap && __activeDialogTrap.cleanup) __activeDialogTrap.cleanup();
+
+  const onKeydown = (e) => {
+    if (e.key !== "Tab") return;
+    const focusables = getFocusableElements(dialogEl);
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+  dialogEl.addEventListener("keydown", onKeydown);
+  __activeDialogTrap = {
+    dialogEl,
+    previousFocus,
+    cleanup: () => dialogEl.removeEventListener("keydown", onKeydown),
+  };
+
+  const target = (initialFocusSelector && dialogEl.querySelector(initialFocusSelector)) || getFocusableElements(dialogEl)[0];
+  if (target && typeof target.focus === "function") {
+    requestAnimationFrame(() => target.focus({ preventScroll: true }));
+  }
+}
+
+function releaseDialogFocusTrap(dialogEl) {
+  if (!__activeDialogTrap) return;
+  if (dialogEl && __activeDialogTrap.dialogEl !== dialogEl) return;
+  const prev = __activeDialogTrap.previousFocus;
+  __activeDialogTrap.cleanup();
+  __activeDialogTrap = null;
+  if (prev && document.contains(prev) && typeof prev.focus === "function") {
+    prev.focus({ preventScroll: true });
+  }
+}
+
 async function initApp() {
   setupIosExperience();
   setupHeaderUI();
@@ -2752,6 +2814,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   document.body.classList.add("reader-open");
   const modalBody = modal.querySelector(".modal-body");
   if (modalBody) modalBody.scrollTop = 0;
+  activateDialogFocusTrap(modal, "#closeDocModalBtn");
 }
 
 function renderWebReaderView(doc, fullTextContent, dlUrl, viewUrl = "") {
@@ -2997,11 +3060,14 @@ function bindEvents() {
 
   const libFilterInput = document.getElementById("libraryFilterInput");
   if (libFilterInput) {
-    libFilterInput.addEventListener("input", () => {
-      STATE.libraryQuery = libFilterInput.value;
-      STATE.libraryVisibleCount = 12;
-      renderLibraryShelf();
-    });
+    libFilterInput.addEventListener(
+      "input",
+      debounce(() => {
+        STATE.libraryQuery = libFilterInput.value;
+        STATE.libraryVisibleCount = 12;
+        renderLibraryShelf();
+      }, 120)
+    );
   }
 
   const libSecSelect = document.getElementById("librarySectionFilter");
@@ -3075,10 +3141,13 @@ function bindEvents() {
   });
 
   if (catSearch) {
-    catSearch.addEventListener("input", () => {
-      STATE.searchQuery = catSearch.value;
-      applyCatalogFilters();
-    });
+    catSearch.addEventListener(
+      "input",
+      debounce(() => {
+        STATE.searchQuery = catSearch.value;
+        applyCatalogFilters();
+      }, 120)
+    );
   }
   if (filterCat) {
     filterCat.addEventListener("change", () => {
@@ -3171,6 +3240,7 @@ function bindEvents() {
     document.documentElement.classList.remove("reader-open");
     document.body.classList.remove("reader-open");
     document.getElementById("modalPreviewPane").innerHTML = "";
+    releaseDialogFocusTrap(docModal);
   };
 
   if (closeDocModalBtn) {
@@ -3361,10 +3431,14 @@ const BiblioFeel = {
     if (!ctx) return;
     let w = (canvas.width = window.innerWidth);
     let h = (canvas.height = window.innerHeight);
-    window.addEventListener("resize", () => {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }, { passive: true });
+    window.addEventListener(
+      "resize",
+      debounce(() => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }, 180),
+      { passive: true }
+    );
 
     const count = window.innerWidth < 768 ? 22 : 40;
     const particles = Array.from({ length: count }, () => ({
@@ -3377,36 +3451,42 @@ const BiblioFeel = {
       phase: Math.random() * Math.PI * 2
     }));
 
+    let rafId = null;
     const render = () => {
-      if (!document.hidden) {
-        ctx.clearRect(0, 0, w, h);
-        const agentesSection = document.getElementById("agentes");
-        let isCosmic = false;
-        if (agentesSection) {
-          const rect = agentesSection.getBoundingClientRect();
-          isCosmic = rect.top < h * 0.65 && rect.bottom > h * 0.15;
-        }
-        for (const p of particles) {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.phase += 0.03;
-          if (p.y < -10) p.y = h + 10;
-          if (p.x < -10) p.x = w + 10;
-          if (p.x > w + 10) p.x = -10;
-          const glow = 0.35 + Math.sin(p.phase) * 0.3;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = this.campMode
-            ? `rgba(255, 120, 0, ${glow})`
-            : isCosmic
-              ? `rgba(56, 189, 248, ${glow})`
-              : `rgba(250, 204, 21, ${glow})`;
-          ctx.fill();
-        }
+      rafId = null;
+      if (document.hidden) return;
+      ctx.clearRect(0, 0, w, h);
+      const agentesSection = document.getElementById("agentes");
+      let isCosmic = false;
+      if (agentesSection) {
+        const rect = agentesSection.getBoundingClientRect();
+        isCosmic = rect.top < h * 0.65 && rect.bottom > h * 0.15;
       }
-      requestAnimationFrame(render);
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.phase += 0.03;
+        if (p.y < -10) p.y = h + 10;
+        if (p.x < -10) p.x = w + 10;
+        if (p.x > w + 10) p.x = -10;
+        const glow = 0.35 + Math.sin(p.phase) * 0.3;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = this.campMode
+          ? `rgba(255, 120, 0, ${glow})`
+          : isCosmic
+            ? `rgba(56, 189, 248, ${glow})`
+            : `rgba(250, 204, 21, ${glow})`;
+        ctx.fill();
+      }
+      rafId = requestAnimationFrame(render);
     };
-    requestAnimationFrame(render);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && rafId === null) {
+        rafId = requestAnimationFrame(render);
+      }
+    });
+    rafId = requestAnimationFrame(render);
   }
 };
 
@@ -3644,6 +3724,7 @@ function openSavedPanel() {
   panel.classList.remove("hidden");
   document.documentElement.classList.add("modal-open");
   document.body.classList.add("modal-open");
+  activateDialogFocusTrap(panel, ".saved-panel-close");
 }
 
 function closeSavedPanel() {
@@ -3654,6 +3735,7 @@ function closeSavedPanel() {
     document.documentElement.classList.remove("modal-open");
     document.body.classList.remove("modal-open");
   }
+  releaseDialogFocusTrap(panel);
 }
 
 function setupReaderQoLHandlers(doc, fullText) {
@@ -4075,17 +4157,24 @@ function setupUnifiedDock() {
     });
   });
 
-  // Cerrar panel de guardados al pulsar backdrop o botones con data-close-saved
+  // Cerrar panel de guardados al pulsar backdrop, Escape o botones con data-close-saved
   document.addEventListener("click", (e) => {
     if (e.target.closest("[data-close-saved]")) {
       e.preventDefault();
       closeSavedPanel();
     }
   });
+  document.addEventListener("keydown", (e) => {
+    const panel = document.getElementById("savedPanel");
+    if (e.key === "Escape" && panel && !panel.classList.contains("hidden")) {
+      closeSavedPanel();
+    }
+  });
 
-  // Vincular scroll spy con los items del dock
+  // Vincular scroll spy con los items del dock (throttled con requestAnimationFrame)
   const dockSpyTargets = ["inicio", "buscador", "biblioteca", "agentes"];
-  window.addEventListener("scroll", () => {
+  let dockScrollTicking = false;
+  const updateDockSpy = () => {
     const sy = window.scrollY + 180;
     for (let i = dockSpyTargets.length - 1; i >= 0; i--) {
       const id = dockSpyTargets[i];
@@ -4100,7 +4189,17 @@ function setupUnifiedDock() {
         break;
       }
     }
-  }, { passive: true });
+    dockScrollTicking = false;
+  };
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (dockScrollTicking) return;
+      dockScrollTicking = true;
+      window.requestAnimationFrame(updateDockSpy);
+    },
+    { passive: true }
+  );
 
   updateSavedBadge();
 }
