@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=25" />
+  <link rel="stylesheet" href="styles.css?v=26" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -206,8 +206,19 @@
           </defs>
           <polygon points="8000 1362.4 8000 1935.2 6075.7 1756.2 3968.1 2781.9 1238.1 1699.9 0 2167 0 1594.3 1261.9 1127.1 3991.9 2209.1 6052 1183.4 8000 1362.4" fill="url(#btsRibbonGrad)" filter="url(#btsGlow)"/>
         </svg>
-        <svg class="bts-zigzag-svg bts-zigzag--mobile" viewBox="0 0 1563 2048" fill="none" preserveAspectRatio="none">
-          <polygon points="1563 750 1563 1200 1150 1050 780 1600 250 1000 0 1300 0 900 250 600 780 1200 1150 650 1563 750" fill="url(#btsRibbonGrad)"/>
+        <svg class="bts-zigzag-svg bts-zigzag--mobile" viewBox="0 0 1200 900" fill="none" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="btsRibbonGradMobile" x1="0%" y1="15%" x2="100%" y2="85%">
+              <stop offset="0%" stop-color="#7928ca"/>
+              <stop offset="40%" stop-color="#4f46e5"/>
+              <stop offset="75%" stop-color="#0284c7"/>
+              <stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+            <filter id="btsGlowMobile" x="-12%" y="-12%" width="124%" height="124%">
+              <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#7928ca" flood-opacity="0.45"/>
+            </filter>
+          </defs>
+          <polygon points="1240 270 1240 435 880 350 560 665 200 355 -40 530 -40 365 215 190 560 500 880 185 1240 270" fill="url(#btsRibbonGradMobile)" filter="url(#btsGlowMobile)"/>
         </svg>
       </div>
 
@@ -457,12 +468,6 @@
 
   <!-- APARTADO DE PRIMEROS PASOS: GRUPOS, PLATAFORMAS, MEZTITLA, EVENTOS, CPRC/CNRC Y PROYECTOS -->
   <section id="guia-inicio" class="quickstart-section">
-    <!-- Formas geométricas sutiles de fondo -->
-    <div class="section-floating-layer" aria-hidden="true">
-      <span class="floating-oct f3d-2"></span>
-      <span class="floating-ring-deco f3d-3"></span>
-    </div>
-
     <div class="container">
       <div class="section-heading-row">
         <div>
@@ -1125,19 +1130,6 @@
             Información recopilada directamente de los portales oficiales de la Asociación de Scouts de México, A.C. y sus comunicados nacionales 2025–2026.
           </p>
         </div>
-        <div class="services-header-photos" aria-hidden="true">
-          <div class="hex-cluster-item hex-size-sm hex-theme-orange">
-            <div class="hex-rotator">
-              <div class="hex-inner-mask">
-                <img loading="lazy" decoding="async" src="assets/scouts/foros_evento_3.jpg" alt="Foros Nacionales — Actividades al Aire Libre" class="hex-counter-img" />
-              </div>
-            </div>
-          </div>
-          <div class="mini-polaroid-card tilt-pos-left">
-            <img loading="lazy" decoding="async" src="assets/scouts/wosm_photo2.jpg" alt="World Scouting (WOSM)" />
-            <span>World Scouting (WOSM)</span>
-          </div>
-        </div>
       </div>
 
       <div class="services-cards-grid">
@@ -1658,7 +1650,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v26</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v27</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -1821,7 +1813,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 12/11/2026 • BETA V7.8 - 2.2.10 Mobile (12/11/2026)
+          Base de datos: 12/11/2026 • BETA V7.9 - 2.2.11 Mobile (12/11/2026)
         </p>
         <p class="footer-non-affiliation">
           <strong>Aviso de proyecto independiente:</strong> BiblioTech es un proyecto personal, educativo y sin fines de lucro creado para facilitar la búsqueda y comprensión de los documentos oficiales a toda la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la Asociación de Scouts de México, A.C. (ASMAC) ni de la Organización Mundial del Movimiento Scout (World Scouting / WOSM); todos los documentos, manuales, reglamentos, logotipos y marcas citados pertenecen a sus respectivos titulares oficiales.

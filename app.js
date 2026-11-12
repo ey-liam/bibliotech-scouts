@@ -532,7 +532,10 @@ function setupScrollAnimations() {
     });
   }
 
-  setup3DTiltInteractions();
+  const docEl = document.documentElement;
+  if (!docEl.dataset.scrollAnimReady) {
+    docEl.dataset.scrollAnimReady = "1";
+  }
 
   // Barra flotante de acceso rapido + Scroll-Spy de navegacion
   const quickBar = document.getElementById("floatingQuickBar");
@@ -593,35 +596,6 @@ function setupScrollAnimations() {
     if (!target) return;
     e.preventDefault();
     submitQuestion(target.getAttribute("data-query"));
-  });
-}
-
-function setup3DTiltInteractions() {
-  if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) return;
-  const tiltCards = document.querySelectorAll(
-    ".starter-3d-card, .scout-sec-card, .service-info-card, .change-card, .liam-depth-stage"
-  );
-  tiltCards.forEach((card) => {
-    card.addEventListener("pointermove", (e) => {
-      const rect = card.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      const ry = ((x - 0.5) * 10).toFixed(2);
-      const rx = ((0.5 - y) * 9).toFixed(2);
-      card.style.setProperty("--rx", `${rx}deg`);
-      card.style.setProperty("--ry", `${ry}deg`);
-      card.style.setProperty("--glare-x", `${(x * 100).toFixed(1)}%`);
-      card.style.setProperty("--glare-y", `${(y * 100).toFixed(1)}%`);
-      card.classList.add("is-tilting-3d");
-    });
-    const resetTilt = () => {
-      card.classList.remove("is-tilting-3d");
-      card.style.setProperty("--rx", "0deg");
-      card.style.setProperty("--ry", "0deg");
-    };
-    card.addEventListener("pointerleave", resetTilt);
-    card.addEventListener("pointercancel", resetTilt);
   });
 }
 
@@ -3380,33 +3354,34 @@ const BiblioFeel = {
   },
 
   init3DTilt() {
-    const selector = ".floating-photo, .hero-floating-card, .about-floating-photo, .book-card, .adc-axis-card, .adc-eje-item, .adc-cosmic-card";
-    document.addEventListener("pointermove", (e) => {
-      const card = e.target.closest(selector);
-      if (!card) return;
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const xc = rect.width / 2;
-      const yc = rect.height / 2;
-      const rx = ((y - yc) / yc) * -6;
-      const ry = ((x - xc) / xc) * 6;
-      card.style.setProperty("--rx", `${rx.toFixed(2)}deg`);
-      card.style.setProperty("--ry", `${ry.toFixed(2)}deg`);
-      card.style.setProperty("--glare-x", `${((x / rect.width) * 100).toFixed(1)}%`);
-      card.style.setProperty("--glare-y", `${((y / rect.height) * 100).toFixed(1)}%`);
-      card.classList.add("is-tilting");
-    }, { passive: true });
+    const coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    const selector = ".floating-photo, .hero-floating-card, .about-floating-photo, .book-card, .adc-axis-card, .adc-eje-item, .adc-cosmic-card, .starter-3d-card, .scout-sec-card, .service-info-card, .change-card, .liam-depth-stage";
 
-    document.addEventListener("pointerout", (e) => {
-      const card = e.target.closest(selector);
-      if (!card) return;
-      card.style.setProperty("--rx", "0deg");
-      card.style.setProperty("--ry", "0deg");
-      card.classList.remove("is-tilting");
-    }, { passive: true });
+    if (!coarse) {
+      document.addEventListener("pointermove", (e) => {
+        const card = e.target.closest(selector);
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        const nx = (e.clientX - rect.left) / rect.width;
+        const ny = (e.clientY - rect.top) / rect.height;
+        card.style.setProperty("--rx", `${((0.5 - ny) * 9).toFixed(2)}deg`);
+        card.style.setProperty("--ry", `${((nx - 0.5) * 10).toFixed(2)}deg`);
+        card.style.setProperty("--glare-x", `${(nx * 100).toFixed(1)}%`);
+        card.style.setProperty("--glare-y", `${(ny * 100).toFixed(1)}%`);
+        card.classList.add("is-tilting", "is-tilting-3d");
+      }, { passive: true });
 
-    // Fases orbitales aleatorias en fotos flotantes
+      document.addEventListener("pointerout", (e) => {
+        const card = e.target.closest(selector);
+        if (!card || (e.relatedTarget && card.contains(e.relatedTarget))) return;
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
+        card.classList.remove("is-tilting", "is-tilting-3d");
+      }, { passive: true });
+    }
+
+    // Fases orbitales en fotos flotantes
     document.querySelectorAll(".floating-photo, .hero-floating-card, .about-floating-photo, .sec-popout-photo").forEach((el, idx) => {
       el.style.setProperty("--float-duration", `${6.5 + (idx % 4) * 1.3}s`);
       el.style.setProperty("--float-delay", `${(idx * -1.4).toFixed(1)}s`);

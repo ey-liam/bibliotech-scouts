@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** V7.8 Oficial - 2.2.10 Mobile (12/11/2026)  
+**Base de datos:** 12/11/2026 • **Versión:** V7.9 Oficial - 2.2.11 Mobile (12/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,7 +41,16 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V7.8 y Fondo Unificado Claro / Oscuro (12/11/2026)
+## 3. Novedades de la Versión V7.9 y Optimización de Animaciones / Cinta Vertical (12/11/2026)
+
+- **Cinta Diagonal Visible en Vertical y Movimiento Vivo en Portada (`sw.js v27`, `styles.css?v=26`):**
+  - Dotada la cinta móvil `.bts-zigzag--mobile` de su propio gradiente y resplandor inline (`#btsRibbonGradMobile`) con trazo calibrado para pantallas verticales (web móvil y APK Android), evitando que desaparezca al ocultarse el SVG de escritorio.
+  - Añadida animación orgánica continua de onda/flotación a la cinta diagonal (`@keyframes btsRibbonWave`) y deformación poligonal suave al contenedor del título (`@keyframes btsCardMorph`), manteniendo soporte a `prefers-reduced-motion`.
+- **Limpieza Visual y Optimización CSS / JS:**
+  - Retiradas las dos fotografías sueltas sobre *Servicios* (`.services-header-photos`) y los adornos locales redundantes de *Primeros Pasos* (`.section-floating-layer`).
+  - Consolidadas 9 animaciones repetidas de flotación en un único `@keyframes btFloatBob` parametrizado con variables CSS, regla compartida para botones/píldoras interactivas y unificación de eventos de inclinación 3D por delegación dentro de `BiblioFeel.init3DTilt()` en [app.js](app.js).
+
+## 4. Novedades de la Versión V7.8 y Fondo Unificado Claro / Oscuro (12/11/2026)
 
 - **Fondo Animado Unificado Visible También en Modo Oscuro (`sw.js v26`, `styles.css?v=25`):**
   - Corregido el bloqueo opaco heredado en `html[data-camp-mode="true"] body` y `#contenido-principal` (`background: transparent !important`) junto con menor opacidad en los velos oscuros de sección (`0.22–0.34`), permitiendo que la aurora cósmica oscura, los **6 rectángulos redondeados flotantes** (`.bg-3d-cube`), los hexágonos, orbes y las partículas (`#btAmbientCanvas`) se vean con total claridad en todas las secciones al activar el Modo Noche.
