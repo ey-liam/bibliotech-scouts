@@ -3440,15 +3440,17 @@ const BiblioFeel = {
       { passive: true }
     );
 
-    const count = window.innerWidth < 768 ? 22 : 40;
-    const particles = Array.from({ length: count }, () => ({
+    const count = window.innerWidth < 768 ? 24 : 44;
+    const lightPalette = ["109, 40, 217", "2, 132, 199", "219, 39, 119"];
+    const darkPalette = ["56, 189, 248", "167, 139, 250", "250, 204, 21"];
+    const particles = Array.from({ length: count }, (_, i) => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      r: 1.2 + Math.random() * 2.2,
+      r: 1.4 + Math.random() * 2.1,
       vx: (Math.random() - 0.5) * 0.35,
-      vy: -0.25 - Math.random() * 0.55,
-      alpha: 0.2 + Math.random() * 0.6,
-      phase: Math.random() * Math.PI * 2
+      vy: -0.22 - Math.random() * 0.5,
+      phase: Math.random() * Math.PI * 2,
+      toneIdx: i % 3
     }));
 
     let rafId = null;
@@ -3456,12 +3458,8 @@ const BiblioFeel = {
       rafId = null;
       if (document.hidden) return;
       ctx.clearRect(0, 0, w, h);
-      const agentesSection = document.getElementById("agentes");
-      let isCosmic = false;
-      if (agentesSection) {
-        const rect = agentesSection.getBoundingClientRect();
-        isCosmic = rect.top < h * 0.65 && rect.bottom > h * 0.15;
-      }
+      const isDark = !!this.campMode;
+      const palette = isDark ? darkPalette : lightPalette;
       for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
@@ -3469,14 +3467,10 @@ const BiblioFeel = {
         if (p.y < -10) p.y = h + 10;
         if (p.x < -10) p.x = w + 10;
         if (p.x > w + 10) p.x = -10;
-        const glow = 0.35 + Math.sin(p.phase) * 0.3;
+        const glow = (isDark ? 0.42 : 0.32) + Math.sin(p.phase) * (isDark ? 0.28 : 0.18);
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = this.campMode
-          ? `rgba(255, 120, 0, ${glow})`
-          : isCosmic
-            ? `rgba(56, 189, 248, ${glow})`
-            : `rgba(250, 204, 21, ${glow})`;
+        ctx.fillStyle = `rgba(${palette[p.toneIdx]}, ${Math.max(0.12, glow).toFixed(2)})`;
         ctx.fill();
       }
       rafId = requestAnimationFrame(render);

@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 11/11/2026 • **Versión:** V7.6 Oficial - 2.2.8 Mobile (11/11/2026)  
+**Base de datos:** 12/11/2026 • **Versión:** V7.7 Oficial - 2.2.9 Mobile (12/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -11,7 +11,7 @@
 
 **BiblioTech Scout** es una plataforma web pública, personal y sin fines de lucro diseñada para que niñas, niños, adolescentes, jóvenes y adultos de toda la membresía cuenten con acceso directo, ágil y de fácil comprensión a la documentación oficial de la **Asociación de Scouts de México, A.C. (ASMAC)** y de **World Scouting (WOSM)**.
 
-Todas las respuestas y resúmenes se fundamentan exclusivamente en los documentos oficiales, manuales, reglamentos, libros de la Colección Biblioteca del Centenario, revistas, formatos editables, comunicados nacionales y portales institucionales respaldados en la base de datos local (con corte al **11/11/2026**), priorizando siempre las ediciones vigentes (2024–2026).
+Todas las respuestas y resúmenes se fundamentan exclusivamente en los documentos oficiales, manuales, reglamentos, libros de la Colección Biblioteca del Centenario, revistas, formatos editables, comunicados nacionales y portales institucionales respaldados en la base de datos local (con corte al **12/11/2026**), priorizando siempre las ediciones vigentes (2024–2026).
 
 ---
 
@@ -41,7 +41,19 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V7.6 y Acervo RECME / Help Desk / FES (11/11/2026)
+## 3. Novedades de la Versión V7.7 y Fondo Unificado Claro / Oscuro (12/11/2026)
+
+- **Fondo Animado Unificado en Toda la Página (`sw.js v25`, `styles.css?v=24`):**
+  - Se eliminó la capa duplicada `.search-section-cubes` en el Buscador para mantener **un único sistema de fondo animado continuo** (`.global-animated-bg` + partículas `#btAmbientCanvas`) detrás de todas las secciones, con **6 rectángulos redondeados flotantes** (`.bg-3d-cube`) visibles tanto en Modo Claro como en Modo Oscuro.
+  - Todas las secciones pasaron a ser translúcidas sobre `#contenido-principal` transparente, evitando bloques opacos que cortaran o taparan las partículas y rectángulos.
+- **Modo Claro 100 % Claro y Modo Oscuro 100 % Oscuro de Extremo a Extremo:**
+  - En el modo predeterminado (Modo Claro), Portada (`#inicio`), Buscador (`#buscador`), *Agentes de Cambio.MX* (`#agentes`), Descarga de App (`#app`), franja Beta (`#aportar`) y Pie de página (`footer`) utilizan superficies claras luminosas y pastel con tipografía oscura legible, además de partículas en tonos violeta, cian y magenta y botón de Modo Noche de alto contraste en la cabecera.
+  - Al activar el Modo Noche (`html[data-camp-mode="true"]`), todas las secciones y tarjetas pasan a superficies cósmicas oscuras translúcidas con texto claro nítido blanco/cian y rectángulos flotantes iluminados.
+- **Ajuste de Cabecera Escritorio (`1025px–1180px`):** Corregido el orden flex y espaciado de `.main-nav` para que los 8 enlaces quepan visibles sin recortarse ni mostrar bordes residuales en modo oscuro.
+
+---
+
+## 4. Novedades de la Versión V7.6 y Acervo RECME / Help Desk / FES (11/11/2026)
 
 - **Accesibilidad (a11y) y Rendimiento HTML/CSS/JS:**
   - Trampa de foco por teclado (`Tab` / `Shift+Tab`) y restauración de foco al cerrar `#docModal` y `#savedPanel` (con cierre por `Escape`), anillos `:focus-visible` globales de alto contraste, `aria-live="polite"` en conteo de catálogo, y etiquetas accesibles en `#onlyLatestCheckbox` y `#modalFieldNoteText`.
