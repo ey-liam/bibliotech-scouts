@@ -2304,7 +2304,7 @@ function renderCatalogGrid() {
 function cleanDownloadFilename(doc) {
   const extLow = String((doc && doc.ext) || "pdf").toLowerCase();
   let base = String((doc && (doc.filename || doc.title)) || "documento_scout").trim();
-  if (/^(?:1|ha-resource|pictures-and-videos|sdp-|diapositiva)/i.test(base) && doc && doc.title) {
+  if (/^(?:1|ha-resource|pictures-and-videos|sdp-|diapositiva|whatsapp)/i.test(base) && doc && doc.title) {
     base = doc.title;
   }
   base = base.replace(/\.[a-z0-9]{2,5}$/i, "");
@@ -4331,7 +4331,7 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v36";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v37";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupGlobalShortcuts() {

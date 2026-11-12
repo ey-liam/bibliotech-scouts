@@ -336,7 +336,7 @@
  * 5. Pendientes web heredados (issue #12): archivos alojados solo en releases
  *    (donde Content-Disposition: attachment fuerza descarga en «Abrir en
  *    pestaña», resoluble publicando copias web livianas en files/) y reemplazo
- *    de 7 portadas WhatsApp-Image de Identidad Gráfica.
+ *    saneamiento completado de los 7 registros de infografías de Membresía Nacional ASMAC con nombres de archivo limpios y textos estadísticos oficiales.
  *
  * ----------------------------------------------------------------------------
  * 6. ENLACES DE REFERENCIA TÉCNICA
