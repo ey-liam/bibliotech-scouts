@@ -6,11 +6,18 @@
   <title>BiblioTech Scout: By Liam</title>
   <meta name="description" content="Biblioteca digital y buscador documental scout: 599 documentos oficiales accesibles ASMAC y WOSM, 110 temas y 13,516 preguntas y respuestas con fuentes." />
   <meta name="author" content="Liam Durán - Provincia TLXH" />
-  <meta name="theme-color" content="#6d28d9" />
+  <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0a0616" media="(prefers-color-scheme: dark)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BiblioTech" />
+  <meta name="format-detection" content="telephone=no" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://ey-liam.github.io/bibliotech-scouts/" />
   <link rel="icon" type="image/png" href="img/favicon.png" />
-  <link rel="apple-touch-icon" href="img/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="img/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="img/icon-512.png" />
   <link rel="manifest" href="manifest.webmanifest" />
 
   <!-- Vista previa al compartir el enlace en redes sociales y mensajería -->
@@ -48,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=21" />
+  <link rel="stylesheet" href="styles.css?v=22" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -1519,56 +1526,88 @@
     </div>
   </section>
 
-  <!-- DESCARGA DE LA APP ANDROID (EL ENLACE SIEMPRE APUNTA A LA ÚLTIMA RELEASE) -->
+  <!-- DESCARGA DE LA APP ANDROID Y WEB APP EN IPHONE / IPAD -->
   <section id="app" class="app-download-section">
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · V2.2.6 Mobile · Web V7.4</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · V2.2.7 Mobile · Web V7.5</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout en tu bolsillo</h2>
           <p class="app-download-subtitle">
-            Biblioteca sin conexión, lector de PDF integrado, las mismas preguntas de la web y actualización automática.
-            Este botón descarga siempre el APK más reciente publicado.
+            Úsala como app instalada en Android (.apk) o directamente en iPhone y iPad desde Safari como Web App sin App Store, con las mismas 13,516 preguntas y visores optimizados.
           </p>
 
-          <div class="app-download-actions">
-            <a
-              class="app-download-btn"
-              href="https://github.com/ey-liam/bibliotech-scouts-app/releases/latest/download/bibliotech-scout.apk"
-              rel="noopener"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14" />
-              </svg>
-              <span>
-                <strong>Descargar APK</strong>
-                <small>Última versión · Android 7 o superior</small>
-              </span>
-            </a>
-            <a
-              class="app-download-releases"
-              href="https://github.com/ey-liam/bibliotech-scouts-app/releases/latest"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Ver notas de la versión ↗
-            </a>
+          <div class="app-platform-tabs" role="tablist" aria-label="Elegir plataforma móvil">
+            <button type="button" class="app-platform-tab active" id="tabAppAndroid" role="tab" aria-selected="true" aria-controls="paneAppAndroid">
+              Android (.apk)
+            </button>
+            <button type="button" class="app-platform-tab" id="tabAppIos" role="tab" aria-selected="false" aria-controls="paneAppIos">
+              iPhone / iPad (iOS)
+            </button>
           </div>
 
-          <p class="app-download-meta">
-            Archivo: <code>bibliotech-scout.apk</code> · Aprox. 46 MB · Firma oficial de BiblioTech Scout
-          </p>
+          <div id="paneAppAndroid" class="app-platform-pane" role="tabpanel" aria-labelledby="tabAppAndroid">
+            <div class="app-download-actions">
+              <a
+                class="app-download-btn"
+                href="https://github.com/ey-liam/bibliotech-scouts-app/releases/latest/download/bibliotech-scout.apk"
+                rel="noopener"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14" />
+                </svg>
+                <span>
+                  <strong>Descargar APK</strong>
+                  <small>Última versión · Android 7 o superior</small>
+                </span>
+              </a>
+              <a
+                class="app-download-releases"
+                href="https://github.com/ey-liam/bibliotech-scouts-app/releases/latest"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Ver notas de la versión ↗
+              </a>
+            </div>
 
-          <p class="app-download-safe">
-            <strong>Este APK no contiene virus.</strong> Está compilado desde el código público de
-            BiblioTech Scout y firmado con la clave oficial del proyecto. El aviso de Play Protect
-            es un falso positivo por instalar fuera de Play Store y se está corrigiendo; mientras
-            tanto, puedes instalar con confianza siguiendo los pasos de esta sección.
-          </p>
+            <p class="app-download-meta">
+              Archivo: <code>bibliotech-scout.apk</code> · Aprox. 53 MB · Firma oficial de BiblioTech Scout
+            </p>
+
+            <p class="app-download-safe">
+              <strong>Este APK no contiene virus.</strong> Está compilado desde el código público de
+              BiblioTech Scout y firmado con la clave oficial del proyecto. El aviso de Play Protect
+              es un falso positivo por instalar fuera de Play Store; mientras tanto puedes instalar con confianza siguiendo los pasos.
+            </p>
+          </div>
+
+          <div id="paneAppIos" class="app-platform-pane hidden" role="tabpanel" aria-labelledby="tabAppIos">
+            <p id="iosStandaloneStatus" class="app-ios-status-pill hidden">
+              Ya estás usando BiblioTech Scout en modo Web App de pantalla de inicio en iOS.
+            </p>
+            <div class="app-ios-actions">
+              <button type="button" id="copyIosUrlBtn" class="app-download-btn">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M9 9h10v10H9zM5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+                <span>
+                  <strong>Copiar enlace para Safari</strong>
+                  <small>Instalar gratis desde iPhone o iPad sin App Store</small>
+                </span>
+              </button>
+            </div>
+            <p class="app-download-meta">
+              Compatible con Safari en iOS / iPadOS (incluyendo modo «Abrir como app web» a pantalla completa y soporte offline PWA).
+            </p>
+            <p class="app-download-safe">
+              <strong>Ajustes para experiencia fluida en iPhone:</strong> esta versión ya respeta el notch / Dynamic Island, desactiva el zoom automático en buscadores y mantiene las preguntas en caché local. En iPhone ProMotion (120 Hz) puedes activar animaciones a 120 cps en <em>Ajustes → Apps → Safari → Avanzado → Cambios de función → desactivar «Prefer Page Rendering Updates near 60fps»</em>.
+            </p>
+          </div>
         </div>
 
-        <div class="app-download-guide">
-          <h3>Cómo descargarla e instalarla</h3>
+        <div class="app-download-guide" id="appGuideAndroid">
+          <h3>Cómo descargarla e instalarla en Android</h3>
           <ol class="app-download-steps">
             <li>
               <span class="app-download-step-num" aria-hidden="true">1</span>
@@ -1595,7 +1634,35 @@
 
           <p class="app-download-update-note">
             La app actualiza contenido e interfaz automáticamente cuando tienes internet. Para instalar una versión nueva del APK, vuelve aquí e instala encima sin desinstalar la versión anterior para conservar tus archivos.
+          </p>
+        </div>
 
+        <div class="app-download-guide hidden" id="appGuideIos">
+          <h3>Cómo instalarla en iPhone o iPad (Safari)</h3>
+          <ol class="app-download-steps">
+            <li>
+              <span class="app-download-step-num" aria-hidden="true">1</span>
+              <p><strong>Abre en Safari.</strong> Entra a <code>https://ey-liam.github.io/bibliotech-scouts/</code> directamente desde Safari en tu iPhone o iPad.</p>
+            </li>
+            <li>
+              <span class="app-download-step-num" aria-hidden="true">2</span>
+              <p><strong>Pulsa Compartir.</strong> Toca el botón de Compartir (cuadro con flecha hacia arriba) y selecciona <strong>Agregar a pantalla de inicio</strong>.</p>
+            </li>
+            <li>
+              <span class="app-download-step-num" aria-hidden="true">3</span>
+              <p><strong>Activa «Abrir como app web».</strong> Verifica que el interruptor esté activado y toca <strong>Agregar</strong> para tener el icono Scout y usarla a pantalla completa.</p>
+            </li>
+          </ol>
+
+          <div class="app-download-alert">
+            <strong>Lectura de PDFs y modo sin conexión en iOS</strong>
+            <p>
+              Al abrir cualquier PDF dentro del lector puedes usar <strong>Compartir / Guardar en Archivos</strong> o <strong>Abrir PDF directo</strong> para guardarlo en Apple Books o en la app Archivos. Todas las preguntas, fichas HTML y tablas Excel siguen disponibles incluso sin internet tras tu primera carga.
+            </p>
+          </div>
+
+          <p class="app-download-update-note">
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v23</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -1758,7 +1825,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 11/11/2026 • BETA V7.4 - 2.2.6 Mobile (11/11/2026)
+          Base de datos: 11/11/2026 • BETA V7.5 - 2.2.7 Mobile (11/11/2026)
         </p>
         <p class="footer-non-affiliation">
           <strong>Aviso de proyecto independiente:</strong> BiblioTech es un proyecto personal, educativo y sin fines de lucro creado para facilitar la búsqueda y comprensión de los documentos oficiales a toda la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la Asociación de Scouts de México, A.C. (ASMAC) ni de la Organización Mundial del Movimiento Scout (World Scouting / WOSM); todos los documentos, manuales, reglamentos, logotipos y marcas citados pertenecen a sus respectivos titulares oficiales.

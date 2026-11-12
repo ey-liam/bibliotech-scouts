@@ -294,7 +294,12 @@ function setupLazyDataWarmup() {
 // ============================================================================
 // CARGA INICIAL (CATALOGO DE 498 DOCUMENTOS + 104 TEMAS)
 // ============================================================================
+const IS_APPLE_TOUCH =
+  /iPhone|iPad|iPod/i.test(navigator.userAgent || "") ||
+  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
 async function initApp() {
+  setupIosExperience();
   setupHeaderUI();
   setupContactEmailUI();
   bindEvents();
@@ -2574,7 +2579,10 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     } catch (_) {}
   }
 
-  const isMobileUa = /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent || "") || window.innerWidth < 860;
+  const isMobileUa =
+    /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent || "") ||
+    IS_APPLE_TOUCH ||
+    window.innerWidth < 860;
   const canEmbedDirectPdf = IS_LOCAL_SERVER || (doc.has_web_file === true && !isMobileUa);
 
   if (doc.ext === "PDF") {
@@ -2583,6 +2591,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
       : new URL(viewUrl, window.location.href).href;
     const gDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}&embedded=true`;
     const initialMode = canEmbedDirectPdf ? "direct" : "gdocs";
+    const canWebShare = typeof navigator.share === "function" && !window.Capacitor;
 
     const mountPdfMode = (mode) => {
       const targetSrc = mode === "direct" ? `${absPdfUrl}#view=FitH` : gDocsUrl;
@@ -2595,6 +2604,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           <div class="pdf-quick-actions">
             ${doc.has_web_file || IS_LOCAL_SERVER ? `<button type="button" class="btn-pdf-toggle-mode">${toggleLabel}</button>` : ""}
             <a href="${absPdfUrl}" target="_blank" rel="noopener">Abrir PDF directo</a>
+            ${canWebShare ? `<button type="button" class="btn-pdf-share">Compartir / Guardar</button>` : ""}
             <button type="button" class="btn-pdf-switch-text">Cambiar a Texto</button>
           </div>
         </div>
@@ -2606,6 +2616,14 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           document.querySelectorAll(".modal-tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === "text"));
           previewPane.classList.add("hidden");
           document.getElementById("modalTextPane").classList.remove("hidden");
+        };
+      }
+      const shareBtn = previewPane.querySelector(".btn-pdf-share");
+      if (shareBtn) {
+        shareBtn.onclick = async () => {
+          try {
+            await navigator.share({ title: doc.title, url: absPdfUrl });
+          } catch (_) {}
         };
       }
       const toggleBtn = previewPane.querySelector(".btn-pdf-toggle-mode");
@@ -3275,6 +3293,7 @@ const BiblioFeel = {
     if (btn) {
       btn.setAttribute("aria-pressed", String(this.campMode));
     }
+    syncThemeColorMetas(this.campMode);
   },
 
   toggleCampMode() {
@@ -3285,6 +3304,7 @@ const BiblioFeel = {
     if (btn) {
       btn.setAttribute("aria-pressed", String(this.campMode));
     }
+    syncThemeColorMetas(this.campMode);
     this.pulse([12, 40, 12]);
     return this.campMode;
   },
@@ -4083,6 +4103,69 @@ function setupUnifiedDock() {
   }, { passive: true });
 
   updateSavedBadge();
+}
+
+function syncThemeColorMetas(isDark) {
+  const color = isDark ? "#0a0616" : "#f8fafc";
+  document.querySelectorAll('meta[name="theme-color"]').forEach((m) => {
+    m.setAttribute("content", color);
+  });
+}
+
+function setupIosExperience() {
+  const root = document.documentElement;
+  if (IS_APPLE_TOUCH) root.setAttribute("data-ios-safari", "true");
+  const isStandalone =
+    !window.Capacitor &&
+    (window.navigator.standalone === true ||
+      (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches));
+  if (isStandalone) {
+    root.setAttribute("data-ios-standalone", "true");
+    const statusPill = document.getElementById("iosStandaloneStatus");
+    if (statusPill) statusPill.classList.remove("hidden");
+  }
+
+  const tabAndroid = document.getElementById("tabAppAndroid");
+  const tabIos = document.getElementById("tabAppIos");
+  const paneAndroid = document.getElementById("paneAppAndroid");
+  const paneIos = document.getElementById("paneAppIos");
+  const guideAndroid = document.getElementById("appGuideAndroid");
+  const guideIos = document.getElementById("appGuideIos");
+
+  const setPlatform = (platform) => {
+    const isIos = platform === "ios";
+    if (tabAndroid) {
+      tabAndroid.classList.toggle("active", !isIos);
+      tabAndroid.setAttribute("aria-selected", String(!isIos));
+    }
+    if (tabIos) {
+      tabIos.classList.toggle("active", isIos);
+      tabIos.setAttribute("aria-selected", String(isIos));
+    }
+    if (paneAndroid) paneAndroid.classList.toggle("hidden", isIos);
+    if (paneIos) paneIos.classList.toggle("hidden", !isIos);
+    if (guideAndroid) guideAndroid.classList.toggle("hidden", isIos);
+    if (guideIos) guideIos.classList.toggle("hidden", !isIos);
+  };
+
+  if (tabAndroid) tabAndroid.addEventListener("click", () => setPlatform("android"));
+  if (tabIos) tabIos.addEventListener("click", () => setPlatform("ios"));
+  if (IS_APPLE_TOUCH) setPlatform("ios");
+
+  const copyBtn = document.getElementById("copyIosUrlBtn");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      const url = "https://ey-liam.github.io/bibliotech-scouts/";
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+        }
+        showWebToast("Enlace copiado. Ábrelo en Safari y toca Agregar a pantalla de inicio.");
+      } catch (_) {
+        showWebToast("Copia: https://ey-liam.github.io/bibliotech-scouts/");
+      }
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initApp);

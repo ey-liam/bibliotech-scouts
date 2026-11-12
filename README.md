@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 11/11/2026 • **Versión:** V7.4 Oficial - 2.2.6 Mobile (11/11/2026)  
+**Base de datos:** 11/11/2026 • **Versión:** V7.5 Oficial - 2.2.7 Mobile (11/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,7 +41,11 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V7.4 y Acervo RECME / Help Desk / FES (11/11/2026)
+## 3. Novedades de la Versión V7.5 y Acervo RECME / Help Desk / FES (11/11/2026)
+
+- **Optimización Completa para iOS Safari, iPadOS y Web App (Pantalla de Inicio):**
+  - Etiquetas iOS Web App (`apple-mobile-web-app-capable`, `black-translucent`, `apple-touch-icon` 192/512, `format-detection: telephone=no` y `theme-color` adaptativo claro/oscuro) junto con soporte automático de `env(safe-area-inset-*)` para Dynamic Island, notch y barra inferior en modo standalone (`100dvh`).
+  - Eliminación del zoom accidental en Safari iOS al tocar buscadores y selectores (`16px` mínimo en móvil `<= 900px`), detección de iPadOS en visor PDF con botón nativo **Compartir / Guardar** (`navigator.share`) y guía interactiva **iPhone / iPad (iOS)** dentro de `#app` con pasos para *Agregar a pantalla de inicio (Abrir como app web)* y consejo 120 Hz ProMotion.
 
 - **Subcategorías Plegables, Filtro Dedicado y Ajuste Móvil (iOS / Android):**
   - **Subcategorías organizadas sin saturar la vista:** tanto en **Biblioteca Scout** como en el **Catálogo**, las **49 subcategorías** ya no se despliegan en una lista interminable al inicio; ahora permanecen agrupadas dentro de una pestaña desplegable **Subcategorías (N)** (con chip de filtro activo de 1 clic) y dentro de un selector dedicado **Subcategoría** en la barra de filtros del Catálogo.

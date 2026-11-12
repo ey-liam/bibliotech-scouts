@@ -46,6 +46,11 @@ html {
   max-width: 100%;
   overflow-x: hidden;
   position: relative;
+  -webkit-text-size-adjust: 100%;
+}
+
+button, a, select, input {
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -2572,10 +2577,11 @@ h1, h2, h3, h4 {
   z-index: 2000;
   background: rgba(15, 23, 42, 0.72);
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem;
+  padding: max(1.25rem, env(safe-area-inset-top, 1.25rem)) max(1.25rem, env(safe-area-inset-right, 1.25rem)) max(1.25rem, env(safe-area-inset-bottom, 1.25rem)) max(1.25rem, env(safe-area-inset-left, 1.25rem));
   overscroll-behavior: contain;
 }
 
@@ -2583,7 +2589,8 @@ h1, h2, h3, h4 {
   background: #ffffff;
   width: 100%;
   max-width: 1180px;
-  height: 90vh;
+  height: 90dvh;
+  max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 1rem);
   border-radius: 24px;
   display: flex;
   flex-direction: column;
@@ -11014,6 +11021,139 @@ footer.site-footer,
   .bts-card-creator {
     font-size: clamp(0.9rem, 3.6vw, 1.3rem);
   }
+}
+
+/* ==========================================================================
+   OPTIMIZACIONES IOS SAFARI / IPADOS / WEB APP PANTALLA DE INICIO
+   ========================================================================== */
+header.main-header {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+html[data-ios-standalone="true"] body {
+  padding-top: calc(var(--header-h, 76px) + env(safe-area-inset-top, 0px));
+}
+
+@media (max-width: 1024px) {
+  .main-nav {
+    top: calc(var(--header-h) + env(safe-area-inset-top, 0px)) !important;
+    max-height: calc(100dvh - var(--header-h) - env(safe-area-inset-top, 0px)) !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  }
+}
+
+@media (max-width: 920px) {
+  body {
+    padding-bottom: calc(var(--dock-height) + 28px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* Prevenir auto-zoom de Safari iOS al tocar inputs o selectores (< 16px) */
+@media (max-width: 900px) {
+  input[type="text"],
+  input[type="search"],
+  textarea,
+  select,
+  .ask-input,
+  .lib-search-input,
+  .lib-filter-select,
+  .filter-group input,
+  .filter-group select,
+  .modal-search-inline input {
+    font-size: 16px !important;
+  }
+  .modal-overlay {
+    padding: max(0.5rem, env(safe-area-inset-top, 0px)) max(0.5rem, env(safe-area-inset-right, 0px)) max(0.5rem, env(safe-area-inset-bottom, 0px)) max(0.5rem, env(safe-area-inset-left, 0px));
+  }
+  .modal-container {
+    height: 94dvh;
+  }
+}
+
+.subcat-drawer-panel,
+.modal-body,
+.saved-panel-sheet {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+.section-title,
+.app-download-title,
+.bts-hero-subtitle {
+  text-wrap: balance;
+}
+
+.answer-body p,
+.doc-summary,
+.footer-non-affiliation {
+  text-wrap: pretty;
+}
+
+/* Selector Android / iPhone-iPad dentro de #app */
+.app-platform-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.15rem;
+  padding: 0.3rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.app-platform-tab {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 0.45rem 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.app-platform-tab.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+}
+
+.app-platform-pane.hidden,
+.app-download-guide.hidden {
+  display: none;
+}
+
+.app-ios-status-pill {
+  margin-top: 1rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(52, 211, 153, 0.55);
+  color: #a7f3d0;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.app-ios-status-pill.hidden {
+  display: none;
+}
+
+.app-ios-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
 }
 
 @media (max-width: 640px) {
