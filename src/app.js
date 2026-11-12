@@ -364,6 +364,7 @@ function releaseDialogFocusTrap(dialogEl) {
 async function initApp() {
   initPrivacyAndTelemetry();
   setupIosExperience();
+  setupBugReportModal();
   setupHeaderUI();
   setupContactEmailUI();
   bindEvents();
@@ -4330,7 +4331,7 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v34";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v35";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupGlobalShortcuts() {
@@ -4490,6 +4491,157 @@ function setupWebOfflineManager() {
   }
 
   refreshStatus();
+}
+
+function setupBugReportModal() {
+  const modal = document.getElementById("bugReportModal");
+  const form = document.getElementById("bugReportForm");
+  if (!modal || !form) return;
+
+  const openMenuBtn = document.getElementById("openBugReportMenuBtn");
+  const openFooterBtn = document.getElementById("openBugReportFooterBtn");
+  const closeBtn = document.getElementById("closeBugReportBtn");
+  const cancelBtn = document.getElementById("cancelBugReportBtn");
+  const platformSelect = document.getElementById("bugReportPlatform");
+  const sectionSelect = document.getElementById("bugReportSection");
+  const targetInput = document.getElementById("bugReportTarget");
+  const detailsInput = document.getElementById("bugReportDetails");
+  const statusEl = document.getElementById("bugReportStatus");
+  const submitBtn = document.getElementById("submitBugReportBtn");
+
+  const setStatus = (msg, type = "") => {
+    if (!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.className = "bt-bug-status" + (type ? ` is-${type}` : "");
+    statusEl.classList.toggle("hidden", !msg);
+  };
+
+  const preselectPlatform = () => {
+    if (!platformSelect) return;
+    const ua = (navigator && navigator.userAgent) || "";
+    const w = window.innerWidth || 0;
+    if (window.Capacitor) {
+      platformSelect.value = w >= 760 ? "Tablet (Web o App)" : "App Android (.apk)";
+    } else if (IS_APPLE_TOUCH) {
+      platformSelect.value = "iPhone / iPad (iOS Safari / Web App)";
+    } else if (/Android/i.test(ua)) {
+      platformSelect.value = w >= 760 ? "Tablet (Web o App)" : "Teléfono Android (Navegador)";
+    } else {
+      platformSelect.value = "Computadora (Navegador)";
+    }
+  };
+
+  const closeMenuIfOpen = () => {
+    const header = document.querySelector(".main-header");
+    const navToggle = document.getElementById("navToggle");
+    const navBackdrop = document.getElementById("navBackdrop");
+    if (header) header.classList.remove("nav-open");
+    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+    if (navBackdrop) navBackdrop.hidden = true;
+  };
+
+  const openModal = (triggerEl) => {
+    closeMenuIfOpen();
+    preselectPlatform();
+    setStatus("");
+    modal.classList.remove("hidden");
+    trapDialogFocus(modal, triggerEl || openMenuBtn);
+  };
+
+  const closeModal = () => {
+    modal.classList.add("hidden");
+    releaseDialogFocus(modal);
+  };
+
+  if (openMenuBtn) openMenuBtn.addEventListener("click", () => openModal(openMenuBtn));
+  if (openFooterBtn) openFooterBtn.addEventListener("click", () => openModal(openFooterBtn));
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const checked = Array.from(form.querySelectorAll('#bugReportReasons input[type="checkbox"]:checked')).map(
+      (el) => el.value
+    );
+    const details = (detailsInput ? detailsInput.value : "").trim();
+    const targetDoc = (targetInput ? targetInput.value : "").trim();
+    const plat = platformSelect ? platformSelect.value : "Desconocida";
+    const sec = sectionSelect ? sectionSelect.value : "Otro apartado";
+
+    if (!checked.length && !details) {
+      setStatus("Marca al menos una opción o describe brevemente qué falló.", "error");
+      return;
+    }
+    if (checked.includes("Otro problema específico") && details.length < 5) {
+      setStatus("Describe brevemente qué problema específico ocurrió.", "error");
+      if (detailsInput) detailsInput.focus();
+      return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+    setStatus("Enviando reporte anónimo...");
+
+    const ctx = detectClientContext();
+    const payloadBody = JSON.stringify({
+      _subject: `[REPORTE USUARIO / BUG] ${sec} (${plat})`,
+      _template: "table",
+      _captcha: "false",
+      plataforma: `${plat} · Real: ${ctx.plat} · ${ctx.vista}`,
+      navegador_y_tema: `${ctx.browser} (${ctx.os}) · Tema ${ctx.tema}`,
+      alertas_bugs_o_sin_coincidencia: checked.join(" | ") || "Reporte manual",
+      resumen_mas_usado: `Apartado: ${sec}${targetDoc ? ` · Ref: ${targetDoc}` : ""}`,
+      actividad_completa: [
+        `REPORTE EXPLÍCITO DEL USUARIO (${BT_SESSION_ID})`,
+        `Usa BiblioTech en: ${plat}`,
+        `Apartado: ${sec}`,
+        `Factores marcados: ${checked.join(", ") || "Ninguno"}`,
+        targetDoc ? `Documento / Pregunta: ${targetDoc}` : "",
+        details ? `Descripción: ${details}` : ""
+      ]
+        .filter(Boolean)
+        .join("\n")
+    });
+
+    const host = String((window.location && window.location.hostname) || "").toLowerCase();
+    const isLocal = host === "127.0.0.1" || host === "localhost" || host === "::1" || window.location.protocol === "file:";
+
+    let sentOk = isLocal;
+    if (!isLocal) {
+      const primaryEndpoint = (BT_TELEMETRY_CONFIG.workerEndpoint || "").trim();
+      const fallbackEndpoint = `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`;
+      const endpoints = primaryEndpoint ? [primaryEndpoint, fallbackEndpoint] : [fallbackEndpoint];
+      for (const ep of endpoints) {
+        try {
+          const res = await fetch(ep, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: payloadBody
+          });
+          if (res && res.ok) {
+            sentOk = true;
+            break;
+          }
+        } catch (_) {}
+      }
+    }
+
+    if (submitBtn) submitBtn.disabled = false;
+
+    if (sentOk) {
+      setStatus("¡Gracias! Tu reporte anónimo se envió correctamente.", "ok");
+      form.reset();
+      preselectPlatform();
+      setTimeout(() => closeModal(), 1400);
+    } else {
+      setStatus("No hay conexión ahora para enviarlo. Puedes escribir a rdc.tlxh@gmail.com.", "error");
+    }
+  });
 }
 
 // ============================================================================

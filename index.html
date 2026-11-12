@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="styles.css?v=33" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -141,6 +141,13 @@
         <a href="#explorar" class="nav-link">Catálogo</a>
         <a href="#app" class="nav-link">Descarga App</a>
         <a href="#aportar" class="nav-link">Aportar y Contacto</a>
+        <button type="button" id="openBugReportMenuBtn" class="nav-link nav-link-report">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+            <line x1="4" y1="22" x2="4" y2="15"></line>
+          </svg>
+          <span>Reportar error o bug</span>
+        </button>
       </nav>
 
       <div class="header-actions">
@@ -1642,7 +1649,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 2.3.1 Mobile · Web 8.4.1</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 2.3.2 Mobile · Web 8.4.2</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
             <strong>No es necesario descargar nada:</strong> puedes disfrutar de la mayoría de herramientas, el buscador de 13,516 preguntas y los visores directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
@@ -1802,7 +1809,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v34</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v35</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -1818,6 +1825,7 @@
           <strong>BiblioTech Scout está en fase Beta</strong> y puede contener detalles o errores imprevistos. Si detectas alguna falla, deseas enviar sugerencias, convocatorias, plantillas o aportar documentos oficiales:
           <a id="contributeMailLink" href="mailto:rdc.tlxh@gmail.com?subject=Aporte%20o%20Issue%20para%20BiblioTech%20Scout" class="discreet-mail-link">rdc.tlxh@gmail.com</a>
           <button type="button" id="copyMailBtn" class="discreet-mini-btn" title="Copiar correo">Copiar correo</button>
+          <button type="button" id="openBugReportFooterBtn" class="discreet-mini-btn is-report">Reportar error o bug</button>
         </p>
       </div>
     </div>
@@ -1965,7 +1973,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 12/11/2026 • BETA 8.4.1 - 2.3.1 Mobile (12/11/2026) ·
+          Base de datos: 12/11/2026 • BETA 8.4.2 - 2.3.2 Mobile (12/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">
@@ -2059,6 +2067,86 @@
       </div>
       <p class="saved-panel-note">Los documentos que guardes y tus notas se conservan en este dispositivo y navegador. Si borras los datos del sitio, se borran también.</p>
       <div id="savedPanelList" class="saved-panel-list"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: REPORTAR ERROR, FALLA O DOCUMENTO FALTANTE -->
+  <div id="bugReportModal" class="bt-consent-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="bugReportTitle">
+    <div class="bt-consent-card bt-bug-card">
+      <div class="bt-bug-head">
+        <div>
+          <span class="bt-consent-kicker">Mejora continua · Reporte anónimo</span>
+          <h3 id="bugReportTitle">Reportar error o falla</h3>
+        </div>
+        <button type="button" id="closeBugReportBtn" class="bt-bug-close" aria-label="Cerrar reporte">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="bugReportForm" class="bt-bug-form" novalidate>
+        <div class="bt-bug-row-grid">
+          <label class="bt-bug-field">
+            <span>¿Dónde usas BiblioTech?</span>
+            <select id="bugReportPlatform">
+              <option value="Computadora (Navegador)">Computadora (Navegador)</option>
+              <option value="Teléfono Android (Navegador)">Teléfono Android (Navegador)</option>
+              <option value="iPhone / iPad (iOS Safari / Web App)">iPhone / iPad (iOS Safari / Web App)</option>
+              <option value="App Android (.apk)">App Android (.apk)</option>
+              <option value="Tablet (Web o App)">Tablet (Web o App)</option>
+            </select>
+          </label>
+          <label class="bt-bug-field">
+            <span>Apartado donde pasó</span>
+            <select id="bugReportSection">
+              <option value="Buscador de preguntas">Buscador de preguntas</option>
+              <option value="Biblioteca Scout">Biblioteca Scout</option>
+              <option value="Lector / Visor PDF o Excel">Lector / Visor PDF o Excel</option>
+              <option value="Inicio / Portada">Inicio / Portada</option>
+              <option value="Guía de Uso">Guía de Uso</option>
+              <option value="Agentes de Cambio.MX">Agentes de Cambio.MX</option>
+              <option value="Secciones / Cambios / Catálogo">Secciones / Cambios / Catálogo</option>
+              <option value="Descarga App / Modo Offline">Descarga App / Modo Offline</option>
+              <option value="Otro apartado">Otro apartado</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset class="bt-bug-fieldset">
+          <legend>¿Qué está fallando? (puedes marcar varios)</legend>
+          <div class="bt-bug-chips" id="bugReportReasons">
+            <label class="bt-bug-chip"><input type="checkbox" value="Imágenes o portadas faltantes" /><span>Imágenes o portadas faltantes</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Error al abrir o leer PDF" /><span>Error en PDFs</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Faltan archivos o documentos" /><span>Faltan archivos</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Respuesta incorrecta o desactualizada" /><span>Respuesta incorrecta</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Inconsistencia de tema claro/oscuro" /><span>Inconsistencia de tema</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Botón, menú o filtro no responde" /><span>Botón o filtro no responde</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Error en Excel, PPTX o guía HTML" /><span>Error en Excel / HTML</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Falla de modo sin conexión (Offline)" /><span>Falla modo offline</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Diseño cortado o encimado" /><span>Diseño cortado / encimado</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Otro problema específico" /><span>Otro más específico</span></label>
+          </div>
+        </fieldset>
+
+        <label class="bt-bug-field">
+          <span>Documento o pregunta relacionada (opcional)</span>
+          <input type="text" id="bugReportTarget" maxlength="160" placeholder="Ej. Manual de Tropa, pregunta de insignias..." />
+        </label>
+
+        <label class="bt-bug-field">
+          <span>Describe qué ocurrió y cómo pasó</span>
+          <textarea id="bugReportDetails" rows="3" maxlength="1200" placeholder="Ej. Al abrir el PDF en modo oscuro sale en blanco, o falta el archivo..."></textarea>
+        </label>
+
+        <p id="bugReportStatus" class="bt-bug-status hidden" role="status" aria-live="polite"></p>
+
+        <div class="bt-consent-actions">
+          <button type="button" id="cancelBugReportBtn" class="bt-consent-btn is-secondary">Cancelar</button>
+          <button type="submit" id="submitBugReportBtn" class="bt-consent-btn is-primary">Enviar reporte</button>
+        </div>
+      </form>
     </div>
   </div>
 

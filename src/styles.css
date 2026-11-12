@@ -13716,3 +13716,243 @@ html[data-camp-mode="true"] .ios-offline-btn-secondary {
   border-color: rgba(255, 255, 255, 0.2);
   color: #f8fafc;
 }
+
+/* 7) Botón y Modal de Reporte de Errores / Bugs (Claro y Oscuro) */
+.nav-link-report {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.72rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(220, 38, 38, 0.28);
+  background: rgba(220, 38, 38, 0.08);
+  color: #b91c1c;
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+
+.nav-link-report:hover {
+  background: rgba(220, 38, 38, 0.15);
+}
+
+html[data-camp-mode="true"] .nav-link-report {
+  border-color: rgba(248, 113, 113, 0.35);
+  background: rgba(220, 38, 38, 0.2);
+  color: #fecaca;
+}
+
+.discreet-mini-btn.is-report {
+  border-color: rgba(220, 38, 38, 0.35);
+  color: #b91c1c;
+}
+
+html[data-camp-mode="true"] .discreet-mini-btn.is-report {
+  border-color: rgba(248, 113, 113, 0.42);
+  color: #fecaca;
+}
+
+.bt-bug-card {
+  width: min(640px, 100%);
+  max-height: 90dvh;
+  overflow-y: auto;
+  padding: 1.35rem 1.45rem;
+}
+
+.bt-bug-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.bt-bug-head h3 {
+  margin: 0.2rem 0 0;
+  font-size: 1.2rem;
+  color: var(--scout-navy);
+}
+
+html[data-camp-mode="true"] .bt-bug-head h3 {
+  color: #f8fafc;
+}
+
+.bt-bug-close {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  background: rgba(15, 23, 42, 0.05);
+  color: var(--scout-navy);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+html[data-camp-mode="true"] .bt-bug-close {
+  border-color: rgba(167, 139, 250, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+.bt-bug-form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.bt-bug-row-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .bt-bug-row-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bt-bug-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.bt-bug-field > span,
+.bt-bug-fieldset legend {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--scout-navy);
+}
+
+html[data-camp-mode="true"] .bt-bug-field > span,
+html[data-camp-mode="true"] .bt-bug-fieldset legend {
+  color: #e2e8f0;
+}
+
+.bt-bug-field select,
+.bt-bug-field input,
+.bt-bug-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid rgba(109, 40, 217, 0.24);
+  background: #ffffff;
+  color: #0f172a;
+  padding: 0.62rem 0.78rem;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+html[data-camp-mode="true"] .bt-bug-field select,
+html[data-camp-mode="true"] .bt-bug-field input,
+html[data-camp-mode="true"] .bt-bug-field textarea {
+  border-color: rgba(139, 92, 246, 0.42);
+  background: rgba(14, 9, 36, 0.92);
+  color: #f8fafc;
+}
+
+.bt-bug-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.bt-bug-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.45rem;
+}
+
+.bt-bug-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.bt-bug-chip input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.bt-bug-chip span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid rgba(109, 40, 217, 0.24);
+  background: rgba(109, 40, 217, 0.06);
+  color: #334155;
+  transition: all 0.15s ease;
+}
+
+.bt-bug-chip input:checked + span {
+  background: linear-gradient(135deg, #6d28d9, #4f46e5);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.28);
+}
+
+.bt-bug-chip input:focus-visible + span {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+html[data-camp-mode="true"] .bt-bug-chip span {
+  border-color: rgba(139, 92, 246, 0.38);
+  background: rgba(30, 19, 68, 0.78);
+  color: #e2e8f0;
+}
+
+html[data-camp-mode="true"] .bt-bug-chip input:checked + span {
+  background: linear-gradient(135deg, #7c3aed, #0284c7);
+  color: #ffffff;
+}
+
+.bt-bug-status {
+  margin: 0;
+  padding: 0.55rem 0.78rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: rgba(2, 132, 199, 0.12);
+  color: #0c4a6e;
+}
+
+.bt-bug-status.is-error {
+  background: rgba(220, 38, 38, 0.12);
+  color: #991b1b;
+}
+
+.bt-bug-status.is-ok {
+  background: rgba(16, 185, 129, 0.14);
+  color: #065f46;
+}
+
+html[data-camp-mode="true"] .bt-bug-status {
+  background: rgba(56, 189, 248, 0.18);
+  color: #e0f2fe;
+}
+
+html[data-camp-mode="true"] .bt-bug-status.is-error {
+  background: rgba(220, 38, 38, 0.25);
+  color: #fecaca;
+}
+
+html[data-camp-mode="true"] .bt-bug-status.is-ok {
+  background: rgba(16, 185, 129, 0.25);
+  color: #a7f3d0;
+}
