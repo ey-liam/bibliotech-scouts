@@ -1064,6 +1064,8 @@ h1, h2, h3, h4 {
   font-size: 1.04rem;
   color: #1e293b;
   line-height: 1.76;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .answer-markdown-body h3,

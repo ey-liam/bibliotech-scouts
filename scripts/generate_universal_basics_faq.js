@@ -89,18 +89,20 @@ const TOPIC_HINTS_FOR_FILENAME = [
 function stripDocPreamble(raw) {
   return String(raw || "")
     .replace(/\r\n/g, "\n")
-    .replace(/---\s*P[aá]gina\s*\d+\s*---/gi, "\n")
-    .replace(/^DOCUMENTO OFICIAL ASMAC:[^\n]*\n?/im, "")
+    .replace(/---\s*P[aá]gina\s*\d+\s*---/gi, " ")
+    .replace(/DOCUMENTO OFICIAL ASMAC:[\s\S]*?(?=\n\s*\n|Categor[ií]a RECME:|$)/i, "")
+    .replace(/Categor[ií]a RECME:[\s\S]{0,220}?(?=\s{2,}|---|\n|\[CONTENIDO|$)/gi, " ")
+    .replace(/Etiqueta tem[aá]tica[^\n:]*:[\s\S]{0,160}?(?=\n|---|$)/gi, " ")
+    .replace(/Fecha de publicaci[oó]n en RECME:[^\n]+(?:\n|$)/gi, " ")
+    .replace(/Archivo:\s*[^\s]+\.(?:pdf|docx|xlsx|html|png|jpg|webp|pptx)\b/gi, " ")
     .replace(/^GU[ÍI]A OFICIAL HELP DESK ASMAC:[^\n]*\n?/im, "")
     .replace(/^INFOGRAF[ÍI]A OFICIAL[^\n]*\n?/im, "")
     .replace(/^HOJA DE C[ÁA]LCULO OFICIAL[^\n]*\n?/im, "")
-    .replace(/^Archivo:[^\n]*\n?/im, "")
-    .replace(/^Fecha de publicaci[oó]n[^\n]*\n?/im, "")
-    .replace(/^Categor[ií]a[^\n]*\n?/im, "")
-    .replace(/^Etiqueta tem[aá]tica[^\n]*\n?/im, "")
-    .replace(/^Fuente:\s*https?:\/\/[^\n]*\n?/im, "")
+    .replace(/Categor[ií]a:\s*[^\n]*\n?/gi, "")
+    .replace(/Fuente:\s*https?:\/\/[^\s\n]+/gi, "")
     .replace(/Help Desk de la Asociacion de Scouts de Mexico[\s\S]{0,220}?Base de Conocimientos \(KB\)\s*/i, "")
     .replace(/Powered by\s+Help Desk Software[\s\S]*$/i, "")
+    .replace(/\[CONTENIDO VISUAL COMPLETO[^\]]*\]\s*/gi, "")
     .trim();
 }
 
@@ -118,15 +120,15 @@ function detectRolesAndContacts(raw) {
 }
 
 function buildCoherentSummary(d, raw, cutSentence, clean) {
-  const sumClean = clean(d.summary || "");
+  const sumRaw = clean(stripDocPreamble(d.summary || ""));
   if (
-    sumClean &&
-    sumClean.length >= 65 &&
-    !/Disponible para visualizaci[oó]n y descarga directa/i.test(sumClean) &&
-    !/Iniciar Sesi[oó]n CUM Contrase[nñ]a/i.test(sumClean) &&
-    !/Recurso visual oficial \/ infograf[ií]a/i.test(sumClean)
+    sumRaw &&
+    sumRaw.length >= 65 &&
+    !/Disponible para visualizaci[oó]n y descarga directa/i.test(sumRaw) &&
+    !/Iniciar Sesi[oó]n CUM Contrase[nñ]a/i.test(sumRaw) &&
+    !/Recurso visual oficial \/ infograf[ií]a/i.test(sumRaw)
   ) {
-    return cutSentence(sumClean, 460);
+    return cutSentence(sumRaw, 460);
   }
   const body = stripDocPreamble(raw);
   const cleaned = clean(body)

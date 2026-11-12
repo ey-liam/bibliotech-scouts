@@ -1272,11 +1272,21 @@ function tokenVariants(word) {
 }
 
 function baseTokenSet(text) {
+  const rawLower = String(text || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
   const all = normalizeStr(text).match(/[a-z0-9]{2,}/g) || [];
   const filtered = all.filter((w) => !ENGINE_STOPWORDS.has(w));
   const words = filtered.length ? filtered : all;
   const set = new Set();
   for (const word of words) for (const variant of tokenVariants(word)) set.add(variant);
+  // Preservar códigos con punto o guion como P6.2, P9.4, JSN 25.009, v1.1 para no colisionar P6.1 con P6.2
+  const compoundCodes = rawLower.match(/\b(?:[a-z]{1,4}\s*)?\d+(?:[._-]\d+)+\b|\b[a-z]+\d+(?:[._-]\d+)+\b/g) || [];
+  for (const code of compoundCodes) {
+    const joined = code.replace(/[^a-z0-9]/g, "");
+    if (joined.length >= 2) set.add(joined);
+  }
   return set;
 }
 
