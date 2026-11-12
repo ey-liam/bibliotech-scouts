@@ -30,6 +30,7 @@ const STATE = {
   libraryQuery: "",
   librarySection: "all",
   librarySubcategory: "all",
+  librarySubcatOpen: false,
   libraryScope: "shelf",
   libraryVisibleCount: 12,
   currentShelfDocs: [],
@@ -42,6 +43,7 @@ const STATE = {
   searchQuery: "",
   categoryFilter: "all",
   subcategoryFilter: "all",
+  catalogSubcatOpen: false,
   sectionFilter: "all",
   extFilter: "all",
   onlyLatest: false,
@@ -345,7 +347,10 @@ async function initApp() {
 
     // Registro de PWA Service Worker (solo en versión Web, fuera de Capacitor)
     if ("serviceWorker" in navigator && !window.Capacitor) {
-      navigator.serviceWorker.register("sw.js").catch(() => {});
+      navigator.serviceWorker
+        .register("sw.js", { updateViaCache: "none" })
+        .then((reg) => reg && typeof reg.update === "function" && reg.update())
+        .catch(() => {});
     }
   } catch (err) {
     console.error("Error cargando datos de BiblioTech:", err);
@@ -909,7 +914,7 @@ function filterDocsByShelfName(list, shelf) {
   }
 }
 
-function renderSubcategoryPills(containerId, docsPool, activeSub, onSelect) {
+function renderSubcategoryPills(containerId, docsPool, activeSub, isOpen, onToggleOpen, onSelect) {
   const wrap = document.getElementById(containerId);
   if (!wrap) return;
   const counts = {};
@@ -923,13 +928,34 @@ function renderSubcategoryPills(containerId, docsPool, activeSub, onSelect) {
     return;
   }
   wrap.classList.remove("hidden");
-  wrap.innerHTML = [
-    `<button type="button" class="subcat-pill${activeSub === "all" ? " active" : ""}" data-sub="all">Todas las subcategorías (${docsPool.length})</button>`,
-    ...subs.map(
-      ([sub, cnt]) =>
-        `<button type="button" class="subcat-pill${activeSub === sub ? " active" : ""}" data-sub="${escapeHtml(sub)}">${escapeHtml(sub)} (${cnt})</button>`
-    )
-  ].join("");
+  const hasActive = activeSub && activeSub !== "all";
+  wrap.innerHTML = `
+    <div class="subcat-toggle-row">
+      <button type="button" class="btn-subcat-toggle" aria-expanded="${isOpen ? "true" : "false"}">
+        <span>Subcategorías</span>
+        <span class="subcat-count-badge">${subs.length}</span>
+        <svg class="subcat-chevron" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      ${hasActive ? `<button type="button" class="subcat-active-chip" title="Quitar filtro de subcategoría"><span>${escapeHtml(activeSub)}</span><span aria-hidden="true">×</span></button>` : ""}
+    </div>
+    <div class="subcat-drawer-panel${isOpen ? "" : " hidden"}" role="group" aria-label="Subcategorías disponibles">
+      <button type="button" class="subcat-pill${!hasActive ? " active" : ""}" data-sub="all">Todas (${docsPool.length})</button>
+      ${subs
+        .map(
+          ([sub, cnt]) =>
+            `<button type="button" class="subcat-pill${activeSub === sub ? " active" : ""}" data-sub="${escapeHtml(sub)}">${escapeHtml(sub)} (${cnt})</button>`
+        )
+        .join("")}
+    </div>
+  `;
+  const toggleBtn = wrap.querySelector(".btn-subcat-toggle");
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => onToggleOpen(!isOpen));
+  }
+  const clearChip = wrap.querySelector(".subcat-active-chip");
+  if (clearChip) {
+    clearChip.addEventListener("click", () => onSelect("all"));
+  }
   wrap.querySelectorAll(".subcat-pill").forEach((btn) => {
     btn.addEventListener("click", () => onSelect(btn.getAttribute("data-sub") || "all"));
   });
@@ -960,11 +986,21 @@ function getDocsForShelf(shelf, filterText = "") {
     baseDocs = readable;
   }
 
-  renderSubcategoryPills("librarySubcategoryPills", baseDocs, STATE.librarySubcategory, (sub) => {
-    STATE.librarySubcategory = sub;
-    STATE.libraryVisibleCount = 12;
-    renderLibraryShelf();
-  });
+  renderSubcategoryPills(
+    "librarySubcategoryPills",
+    baseDocs,
+    STATE.librarySubcategory,
+    STATE.librarySubcatOpen,
+    (nextOpen) => {
+      STATE.librarySubcatOpen = nextOpen;
+      renderLibraryShelf();
+    },
+    (sub) => {
+      STATE.librarySubcategory = sub;
+      STATE.libraryVisibleCount = 12;
+      renderLibraryShelf();
+    }
+  );
 
   if (STATE.librarySubcategory && STATE.librarySubcategory !== "all") {
     const subFiltered = baseDocs.filter((d) => d.subcategory === STATE.librarySubcategory);
@@ -2032,6 +2068,28 @@ function syncCategoryPillsUI() {
   });
 }
 
+function syncCatalogSubcategoryDropdown(docsPool) {
+  const select = document.getElementById("filterSubcategory");
+  if (!select) return;
+  const counts = {};
+  for (const d of docsPool) {
+    if (d.subcategory) counts[d.subcategory] = (counts[d.subcategory] || 0) + 1;
+  }
+  const subs = Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "es"));
+  if (STATE.subcategoryFilter !== "all" && !counts[STATE.subcategoryFilter]) {
+    STATE.subcategoryFilter = "all";
+  }
+  select.innerHTML = `<option value="all">Todas las subcategorías (${docsPool.length})</option>`;
+  for (const [sub, cnt] of subs) {
+    const opt = document.createElement("option");
+    opt.value = sub;
+    opt.textContent = `${sub} (${cnt})`;
+    select.appendChild(opt);
+  }
+  select.value = STATE.subcategoryFilter || "all";
+  select.disabled = subs.length <= 1;
+}
+
 function applyCatalogFilters() {
   const q = normalizeStr(STATE.searchQuery.trim());
   const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
@@ -2059,10 +2117,22 @@ function applyCatalogFilters() {
     return true;
   });
 
-  renderSubcategoryPills("catalogSubcategoryPills", baseFiltered, STATE.subcategoryFilter, (sub) => {
-    STATE.subcategoryFilter = sub;
-    applyCatalogFilters();
-  });
+  syncCatalogSubcategoryDropdown(baseFiltered);
+
+  renderSubcategoryPills(
+    "catalogSubcategoryPills",
+    baseFiltered,
+    STATE.subcategoryFilter,
+    STATE.catalogSubcatOpen,
+    (nextOpen) => {
+      STATE.catalogSubcatOpen = nextOpen;
+      applyCatalogFilters();
+    },
+    (sub) => {
+      STATE.subcategoryFilter = sub;
+      applyCatalogFilters();
+    }
+  );
 
   let filtered = baseFiltered;
   if (STATE.subcategoryFilter && STATE.subcategoryFilter !== "all") {
@@ -2968,6 +3038,7 @@ function bindEvents() {
 
   const catSearch = document.getElementById("catalogSearchInput");
   const filterCat = document.getElementById("filterCategory");
+  const filterSubcat = document.getElementById("filterSubcategory");
   const filterSec = document.getElementById("filterSection");
   const filterExt = document.getElementById("filterExt");
   const sortSelect = document.getElementById("sortOrderSelect");
@@ -2995,6 +3066,12 @@ function bindEvents() {
     filterCat.addEventListener("change", () => {
       STATE.categoryFilter = filterCat.value;
       STATE.subcategoryFilter = "all";
+      applyCatalogFilters();
+    });
+  }
+  if (filterSubcat) {
+    filterSubcat.addEventListener("change", () => {
+      STATE.subcategoryFilter = filterSubcat.value || "all";
       applyCatalogFilters();
     });
   }
@@ -3027,11 +3104,13 @@ function bindEvents() {
       STATE.searchQuery = "";
       STATE.categoryFilter = "all";
       STATE.subcategoryFilter = "all";
+      STATE.catalogSubcatOpen = false;
       STATE.sectionFilter = "all";
       STATE.extFilter = "all";
       STATE.onlyLatest = false;
       if (catSearch) catSearch.value = "";
       if (filterCat) filterCat.value = "all";
+      if (filterSubcat) filterSubcat.value = "all";
       if (filterSec) filterSec.value = "all";
       if (filterExt) filterExt.value = "all";
       if (onlyLatestChk) onlyLatestChk.checked = false;

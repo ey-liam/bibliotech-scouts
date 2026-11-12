@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 11/11/2026 • **Versión:** V7.3 Oficial - 2.2.5 Mobile (11/11/2026)  
+**Base de datos:** 11/11/2026 • **Versión:** V7.4 Oficial - 2.2.6 Mobile (11/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,7 +41,11 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V7.3 y Acervo RECME / Help Desk / FES (11/11/2026)
+## 3. Novedades de la Versión V7.4 y Acervo RECME / Help Desk / FES (11/11/2026)
+
+- **Subcategorías Plegables, Filtro Dedicado y Ajuste Móvil (iOS / Android):**
+  - **Subcategorías organizadas sin saturar la vista:** tanto en **Biblioteca Scout** como en el **Catálogo**, las **49 subcategorías** ya no se despliegan en una lista interminable al inicio; ahora permanecen agrupadas dentro de una pestaña desplegable **Subcategorías (N)** (con chip de filtro activo de 1 clic) y dentro de un selector dedicado **Subcategoría** en la barra de filtros del Catálogo.
+  - **Ajuste estricto de pantalla móvil y Service Worker Network-First (`sw.js v22`):** eliminados desplazamientos laterales y cortes en Safari iOS / Android WebView mediante grids `minmax(0, 1fr)` en móvil y carga prioritaria de red en HTML/CSS/JS/JSON para evitar interfaces cacheadas.
 
 - **Carátulas 599/599, Descripciones Depuradas y Banco de `13,516` Preguntas:**
   - El banco combinado alcanza **13,516 preguntas y respuestas únicas** (`5,356` en `data/questions_bank.json`, `101` en `data/faq_v3.json` y **`8,059`** en `data/faq_v4.json`, generadas con `scripts/generate_faq_v4.js`, `scripts/generate_recme_faq.js`, `scripts/generate_universal_basics_faq.js` y `scripts/generate_scouting_core_faq.js`).

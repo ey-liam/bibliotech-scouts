@@ -2,7 +2,7 @@
 <html lang="es-MX">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>BiblioTech Scout: By Liam</title>
   <meta name="description" content="Biblioteca digital y buscador documental scout: 599 documentos oficiales accesibles ASMAC y WOSM, 110 temas y 13,516 preguntas y respuestas con fuentes." />
   <meta name="author" content="Liam Durán - Provincia TLXH" />
@@ -48,7 +48,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles.css?v=21" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -688,7 +688,7 @@
         <button type="button" class="shelf-tab" data-shelf="formatos">Formatos, Actas y Seguro (66)</button>
         <button type="button" class="shelf-tab" data-shelf="identidad">Identidad Gráfica (30)</button>
       </div>
-      <div class="subcategory-pills-bar hidden" id="librarySubcategoryPills" role="group" aria-label="Subcategorías del estante actual"></div>
+      <div class="subcat-bar-shell hidden" id="librarySubcategoryPills"></div>
 
       <!-- BANNER DESTACADO DE LA COLECCIÓN BIBLIOTECA DEL CENTENARIO CON FOTOS EN HEXÁGONO Y POLAROID -->
       <div class="centenario-collection-banner">
@@ -1440,7 +1440,7 @@
         <button type="button" class="cat-filter-pill" data-cat-val="Formatos, Actas y Seguro Scout">Formatos, Actas y Seguro (66)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Identidad Gráfica y Recursos Visuales">Identidad Gráfica (30)</button>
       </div>
-      <div class="subcategory-pills-bar hidden" id="catalogSubcategoryPills" role="group" aria-label="Filtrar por subcategoría"></div>
+      <div class="subcat-bar-shell hidden" id="catalogSubcategoryPills"></div>
 
       <!-- BARRA DE FILTROS DEL CATÁLOGO -->
       <div class="catalog-filters-bar">
@@ -1457,6 +1457,13 @@
           <label for="filterCategory">Categoría</label>
           <select id="filterCategory">
             <option value="all">Todas las categorías</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterSubcategory">Subcategoría</label>
+          <select id="filterSubcategory">
+            <option value="all">Todas las subcategorías</option>
           </select>
         </div>
 
@@ -1517,7 +1524,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · V2.2.5 Mobile · Web V7.3</span>
+          <span class="app-download-eyebrow">App Android · V2.2.6 Mobile · Web V7.4</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout en tu bolsillo</h2>
           <p class="app-download-subtitle">
             Biblioteca sin conexión, lector de PDF integrado, las mismas preguntas de la web y actualización automática.
@@ -1751,7 +1758,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 11/11/2026 • BETA V7.3 - 2.2.5 Mobile (11/11/2026)
+          Base de datos: 11/11/2026 • BETA V7.4 - 2.2.6 Mobile (11/11/2026)
         </p>
         <p class="footer-non-affiliation">
           <strong>Aviso de proyecto independiente:</strong> BiblioTech es un proyecto personal, educativo y sin fines de lucro creado para facilitar la búsqueda y comprensión de los documentos oficiales a toda la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la Asociación de Scouts de México, A.C. (ASMAC) ni de la Organización Mundial del Movimiento Scout (World Scouting / WOSM); todos los documentos, manuales, reglamentos, logotipos y marcas citados pertenecen a sus respectivos titulares oficiales.

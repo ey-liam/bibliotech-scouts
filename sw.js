@@ -1,10 +1,10 @@
 // ============================================================================
 // BiblioTech Scout — Service Worker PWA (Soporte Offline & Cache Resiliente)
 // Creador: Liam Durán - Provincia TLXH (ey-liam)
-// Versión: V7.3
+// Versión: V7.4
 // ============================================================================
 
-const CACHE_NAME = "bibliotech-scout-v21";
+const CACHE_NAME = "bibliotech-scout-v22";
 const STATIC_ASSETS = [
   "./",
   "index.html",
@@ -47,55 +47,63 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+function isFreshFirstRequest(req, url) {
+  if (req.mode === "navigate") return true;
+  const p = url.pathname;
+  return (
+    p.endsWith("/") ||
+    p.endsWith(".html") ||
+    p.endsWith(".css") ||
+    p.endsWith(".js") ||
+    p.endsWith(".webmanifest") ||
+    p.endsWith(".json")
+  );
+}
+
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // Solo cachear peticiones GET en el mismo origen o recursos directos
   if (req.method !== "GET") return;
+  if (url.origin !== self.location.origin) return;
 
-  // Stale-While-Revalidate para datos JSON críticos
-  if (url.pathname.endsWith("catalog.json") || url.pathname.endsWith("faq_v3.json")) {
+  // Network-First para HTML, CSS, JS y JSON: evita quedar atrapado en UI antigua
+  if (isFreshFirstRequest(req, url)) {
     event.respondWith(
-      caches.open(CACHE_NAME).then((cache) =>
-        cache.match(req).then((cachedResponse) => {
-          const fetchPromise = fetch(req)
-            .then((networkResponse) => {
-              if (networkResponse && networkResponse.status === 200) {
-                cache.put(req, networkResponse.clone());
-              }
-              return networkResponse;
-            })
-            .catch(() => cachedResponse);
-
-          return cachedResponse || fetchPromise;
+      fetch(req, { cache: "no-cache" })
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
+          }
+          return networkResponse;
         })
-      )
+        .catch(() =>
+          caches.match(req).then((cached) => {
+            if (cached) return cached;
+            if (req.mode === "navigate" || req.headers.get("accept")?.includes("text/html")) {
+              return caches.match("index.html");
+            }
+            return undefined;
+          })
+        )
     );
     return;
   }
 
-  // Cache-First para recursos estaticos
+  // Cache-First con llenado para portadas e imágenes estáticas
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
       return fetch(req)
         .then((response) => {
-          if (
-            response &&
-            response.status === 200 &&
-            (url.origin === self.location.origin || url.pathname.startsWith("/covers/"))
-          ) {
+          if (response && response.status === 200) {
             const clone = response.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
           }
           return response;
         })
-        .catch(() => {
-          if (req.headers.get("accept")?.includes("text/html")) {
-            return caches.match("index.html");
-          }
-        });
+        .catch(() => undefined);
     })
   );
 });
