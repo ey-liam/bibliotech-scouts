@@ -88,11 +88,12 @@ def run_e2e(test_webkit: bool = False):
             page.click("#navToggle")
             page.click("#openBugReportMenuBtn")
             page.wait_for_selector("#bugReportModal:not(.hidden)", timeout=4000)
-            page.locator("#bugReportReasons input[type='checkbox']").first.check(force=True)
+            page.locator("#bugReportReasons .bt-bug-chip").first.click()
+            assert page.locator("#bugReportReasons input[type='checkbox']").first.is_checked()
             page.fill("#bugReportDetails", "Prueba automatizada E2E de reporte")
             page.click("#submitBugReportBtn")
             page.wait_for_selector("#bugReportStatus.is-ok", timeout=4000)
-            page.wait_for_selector("#bugReportModal.hidden", timeout=4000)
+            page.locator("#bugReportModal").wait_for(state="hidden", timeout=4000)
 
             # Vista móvil 390x844 sin desborde
             mctx = browser.new_context(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
