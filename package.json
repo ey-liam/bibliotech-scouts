@@ -1,0 +1,14 @@
+{
+  "name": "bibliotech-scouts",
+  "version": "8.4.0",
+  "private": true,
+  "description": "Biblioteca digital y buscador documental scout de ASMAC y WOSM",
+  "scripts": {
+    "build": "node scripts/build-assets.mjs",
+    "check": "node scripts/build-assets.mjs --check",
+    "validate": "node scripts/validate-site.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
