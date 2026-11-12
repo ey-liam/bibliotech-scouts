@@ -4331,7 +4331,7 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v35";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v36";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupGlobalShortcuts() {
@@ -4540,21 +4540,21 @@ function setupBugReportModal() {
     if (navBackdrop) navBackdrop.hidden = true;
   };
 
-  const openModal = (triggerEl) => {
+  const openModal = () => {
     closeMenuIfOpen();
     preselectPlatform();
     setStatus("");
     modal.classList.remove("hidden");
-    trapDialogFocus(modal, triggerEl || openMenuBtn);
+    activateDialogFocusTrap(modal, "#bugReportPlatform");
   };
 
   const closeModal = () => {
     modal.classList.add("hidden");
-    releaseDialogFocus(modal);
+    releaseDialogFocusTrap(modal);
   };
 
-  if (openMenuBtn) openMenuBtn.addEventListener("click", () => openModal(openMenuBtn));
-  if (openFooterBtn) openFooterBtn.addEventListener("click", () => openModal(openFooterBtn));
+  if (openMenuBtn) openMenuBtn.addEventListener("click", () => openModal());
+  if (openFooterBtn) openFooterBtn.addEventListener("click", () => openModal());
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
   if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
   modal.addEventListener("click", (e) => {
