@@ -2,7 +2,7 @@
 
 **Creador:** Liam Durán - Provincia TLXH (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/))  
 **Fuentes documentales:** Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** V7.7 Oficial - 2.2.9 Mobile (12/11/2026)  
+**Base de datos:** 12/11/2026 • **Versión:** V7.8 Oficial - 2.2.10 Mobile (12/11/2026)  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
 
 ---
@@ -41,15 +41,11 @@ Todas las respuestas y resúmenes se fundamentan exclusivamente en los documento
 
 ---
 
-## 3. Novedades de la Versión V7.7 y Fondo Unificado Claro / Oscuro (12/11/2026)
+## 3. Novedades de la Versión V7.8 y Fondo Unificado Claro / Oscuro (12/11/2026)
 
-- **Fondo Animado Unificado en Toda la Página (`sw.js v25`, `styles.css?v=24`):**
-  - Se eliminó la capa duplicada `.search-section-cubes` en el Buscador para mantener **un único sistema de fondo animado continuo** (`.global-animated-bg` + partículas `#btAmbientCanvas`) detrás de todas las secciones, con **6 rectángulos redondeados flotantes** (`.bg-3d-cube`) visibles tanto en Modo Claro como en Modo Oscuro.
-  - Todas las secciones pasaron a ser translúcidas sobre `#contenido-principal` transparente, evitando bloques opacos que cortaran o taparan las partículas y rectángulos.
-- **Modo Claro 100 % Claro y Modo Oscuro 100 % Oscuro de Extremo a Extremo:**
-  - En el modo predeterminado (Modo Claro), Portada (`#inicio`), Buscador (`#buscador`), *Agentes de Cambio.MX* (`#agentes`), Descarga de App (`#app`), franja Beta (`#aportar`) y Pie de página (`footer`) utilizan superficies claras luminosas y pastel con tipografía oscura legible, además de partículas en tonos violeta, cian y magenta y botón de Modo Noche de alto contraste en la cabecera.
-  - Al activar el Modo Noche (`html[data-camp-mode="true"]`), todas las secciones y tarjetas pasan a superficies cósmicas oscuras translúcidas con texto claro nítido blanco/cian y rectángulos flotantes iluminados.
-- **Ajuste de Cabecera Escritorio (`1025px–1180px`):** Corregido el orden flex y espaciado de `.main-nav` para que los 8 enlaces quepan visibles sin recortarse ni mostrar bordes residuales en modo oscuro.
+- **Fondo Animado Unificado Visible También en Modo Oscuro (`sw.js v26`, `styles.css?v=25`):**
+  - Corregido el bloqueo opaco heredado en `html[data-camp-mode="true"] body` y `#contenido-principal` (`background: transparent !important`) junto con menor opacidad en los velos oscuros de sección (`0.22–0.34`), permitiendo que la aurora cósmica oscura, los **6 rectángulos redondeados flotantes** (`.bg-3d-cube`), los hexágonos, orbes y las partículas (`#btAmbientCanvas`) se vean con total claridad en todas las secciones al activar el Modo Noche.
+  - Mantiene las mejoras de **V7.7**: una sola capa animada continua (`.search-section-cubes` eliminada), Modo Claro 100 % claro con texto oscuro legible, Modo Oscuro 100 % oscuro y ajuste completo del menú de escritorio (`1025px–1180px`).
 
 ---
 

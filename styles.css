@@ -9418,7 +9418,7 @@ html[data-camp-mode="true"] {
 html[data-camp-mode="true"] body,
 html[data-camp-mode="true"] main,
 html[data-camp-mode="true"] #contenido-principal {
-  background: #070514 !important;
+  background: transparent !important;
   color: #ffffff !important;
 }
 
@@ -11824,14 +11824,45 @@ html[data-camp-mode="true"] {
   background-color: #070514 !important;
 }
 
+html[data-camp-mode="true"] body,
+html[data-camp-mode="true"] main,
+html[data-camp-mode="true"] #contenido-principal {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+html[data-camp-mode="true"] #btAmbientCanvas {
+  opacity: 0.95 !important;
+}
+
 html[data-camp-mode="true"] .global-animated-bg::before {
-  opacity: 0.78;
+  opacity: 0.92 !important;
+}
+
+html[data-camp-mode="true"] .global-animated-bg::after {
+  opacity: 0.72 !important;
+}
+
+html[data-camp-mode="true"] .global-animated-bg .bg-orb {
+  opacity: 0.44 !important;
+}
+
+html[data-camp-mode="true"] .global-animated-bg .bg-hex-float {
+  opacity: 0.16 !important;
 }
 
 html[data-camp-mode="true"] .global-animated-bg .bg-3d-cube {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.22), rgba(56, 189, 248, 0.14));
-  border-color: rgba(139, 92, 246, 0.38);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45), 0 0 22px rgba(56, 189, 248, 0.14);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.28), rgba(56, 189, 248, 0.18)) !important;
+  border: 1.5px solid rgba(139, 92, 246, 0.56) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55), 0 0 26px rgba(56, 189, 248, 0.22) !important;
+  opacity: 0.96 !important;
+}
+
+html[data-camp-mode="true"] .global-animated-bg .cube-2,
+html[data-camp-mode="true"] .global-animated-bg .cube-4,
+html[data-camp-mode="true"] .global-animated-bg .cube-6 {
+  border-color: rgba(56, 189, 248, 0.52) !important;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.24), rgba(139, 92, 246, 0.2)) !important;
 }
 
 html[data-camp-mode="true"] .btn-camp-mode {
@@ -11841,7 +11872,7 @@ html[data-camp-mode="true"] .btn-camp-mode {
 }
 
 html[data-camp-mode="true"] .bts-hero-section {
-  background: linear-gradient(180deg, rgba(13, 8, 34, 0.42) 0%, rgba(7, 5, 20, 0.5) 100%) !important;
+  background: linear-gradient(180deg, rgba(10, 6, 26, 0.26) 0%, rgba(7, 5, 20, 0.34) 100%) !important;
 }
 
 html[data-camp-mode="true"] .bts-doodle {
@@ -11896,7 +11927,7 @@ html[data-camp-mode="true"] .hero-description strong {
 }
 
 html[data-camp-mode="true"] .search-section-wrap {
-  background: rgba(9, 6, 24, 0.42) !important;
+  background: rgba(9, 6, 24, 0.24) !important;
 }
 
 html[data-camp-mode="true"] .search-hub-card {
@@ -11972,7 +12003,7 @@ html[data-camp-mode="true"] .quickstart-section,
 html[data-camp-mode="true"] .quickstart-3d-section,
 html[data-camp-mode="true"] .about-section,
 html[data-camp-mode="true"] .evolution-section {
-  background: rgba(11, 7, 28, 0.52) !important;
+  background: rgba(11, 7, 28, 0.26) !important;
 }
 
 html[data-camp-mode="true"] .library-section,
@@ -11982,7 +12013,7 @@ html[data-camp-mode="true"] .sections-showcase,
 html[data-camp-mode="true"] .official-services-section,
 html[data-camp-mode="true"] .catalog-section,
 html[data-camp-mode="true"] .app-download-section {
-  background: rgba(8, 5, 22, 0.46) !important;
+  background: rgba(8, 5, 22, 0.22) !important;
 }
 
 html[data-camp-mode="true"] .section-subtitle {
