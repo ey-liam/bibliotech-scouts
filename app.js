@@ -4340,6 +4340,7 @@ const BT_CONSENT_KEY = "bt_consent_v1";
 const BT_RECENT_QUERIES_KEY = "bt_recent_queries_v1";
 const BT_ANON_QUEUE_KEY = "bt_anon_queue_v1";
 const BT_ANON_STATS_KEY = "bt_anon_stats_v1";
+const BT_SENT_HASHES_KEY = "bt_sent_hashes_v1";
 const BT_LAST_SENT_KEY = "bt_last_telemetry_sent_v1";
 const BT_SESSION_ID = "ses_" + Math.random().toString(36).slice(2, 8);
 
@@ -4491,15 +4492,82 @@ function saveRecentQueryLocal(query) {
 }
 
 let btBatchCheckScheduled = false;
+function buildEventDedupKey(entry) {
+  if (!entry || !entry.t) return "";
+  switch (entry.t) {
+    case "pregunta":
+      return `q:${normalizeStr(entry.q || "")}`;
+    case "feedback":
+      return `fb:${entry.rate}:${normalizeStr(entry.q || "")}`;
+    case "error_js":
+      return `err:${String(entry.msg || "").slice(0, 80)}`;
+    case "doc_abierto":
+    case "doc_descarga":
+    case "doc_offline_apk":
+    case "pdf_nativo_apk":
+      return `${entry.t}:${normalizeStr(entry.doc || entry.file || "")}`;
+    case "busqueda_archivo":
+      return `s:${entry.scope}:${normalizeStr(entry.q || "")}`;
+    case "filtro_usado":
+      return `f:${entry.filtro}:${entry.valor}`;
+    case "vista_seccion":
+      return `v:${entry.sec}`;
+    default:
+      return `${entry.t}:${entry.doc || entry.url || ""}`;
+  }
+}
+
+function wasRecentlySentOrQueued(key, existingQueue) {
+  if (!key) return false;
+  if (Array.isArray(existingQueue) && existingQueue.some((it) => it && it.k === key)) {
+    return true;
+  }
+  // Para acciones pasivas o repetidas dentro de la misma ventana de 24h, evitar duplicar reportes
+  if (/^(v|f|q|doc_abierto|s|err):/.test(key)) {
+    try {
+      const cache = JSON.parse(localStorage.getItem(BT_SENT_HASHES_KEY) || "{}");
+      const now = Date.now();
+      if (cache && cache[key] && now - Number(cache[key]) < 86400000) {
+        return true;
+      }
+    } catch (_) {}
+  }
+  return false;
+}
+
+function markHashesAsSent(events) {
+  try {
+    const raw = JSON.parse(localStorage.getItem(BT_SENT_HASHES_KEY) || "{}");
+    const cache = raw && typeof raw === "object" ? raw : {};
+    const now = Date.now();
+    for (const ev of events || []) {
+      if (ev && ev.k) cache[ev.k] = now;
+    }
+    // Conservar únicamente las últimas 160 firmas válidas (< 24h)
+    const pruned = Object.entries(cache)
+      .filter(([, ts]) => now - Number(ts) < 86400000)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 160);
+    localStorage.setItem(BT_SENT_HASHES_KEY, JSON.stringify(Object.fromEntries(pruned)));
+  } catch (_) {}
+}
+
 function enqueueAnonTelemetry(entry, flushNow = false) {
   if (!hasTelemetryConsent()) return;
   const ctx = detectClientContext();
+  const dedupKey = buildEventDedupKey(entry);
   let qLen = 0;
+  let newQuestionCount = 0;
   try {
     const prev = JSON.parse(localStorage.getItem(BT_ANON_QUEUE_KEY) || "[]");
     const queue = Array.isArray(prev) ? prev : [];
+    // Evitar spam repetido del mismo evento en cola o ya enviado en 24h (salvo descargas / reportes explícitos)
+    if (entry.t !== "feedback" && wasRecentlySentOrQueued(dedupKey, queue)) {
+      return;
+    }
     queue.push({
       ...entry,
+      k: dedupKey,
       ts: new Date().toISOString().slice(0, 19).replace("T", " "),
       ses: BT_SESSION_ID,
       plat: ctx.plat,
@@ -4508,17 +4576,18 @@ function enqueueAnonTelemetry(entry, flushNow = false) {
     });
     const trimmed = queue.slice(-80);
     qLen = trimmed.length;
+    newQuestionCount = trimmed.filter((e) => e.t === "pregunta").length;
     localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(trimmed));
   } catch (_) {}
 
   if (flushNow) {
     flushAnonymousTelemetry(true);
-  } else if (qLen >= 8 && !btBatchCheckScheduled) {
+  } else if ((newQuestionCount >= 3 || qLen >= 12) && !btBatchCheckScheduled) {
     btBatchCheckScheduled = true;
     setTimeout(() => {
       btBatchCheckScheduled = false;
       flushAnonymousTelemetry(false);
-    }, 15000);
+    }, 30000);
   }
 }
 
@@ -4656,6 +4725,8 @@ function formatTelemetryEventLine(ev, idx) {
       return `${head} SECCIÓN / MENÚ: ${ev.sec} (${ev.via || "scroll"})`;
     case "enlace_externo":
       return `${head} ENLACE EXTERNO: ${ev.label || ""} -> ${ev.url || ""}`;
+    case "error_js":
+      return `${head} [BUG / ERROR JS]: ${ev.msg} (${ev.src || ""})`;
     default:
       return `${head} ${ev.t}: ${JSON.stringify(ev).slice(0, 260)}`;
   }
@@ -4679,18 +4750,50 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
   }
   if (!Array.isArray(queue) || !queue.length) return;
 
+  const isCritical = (e) => e && (e.t === "error_js" || (e.t === "feedback" && e.rate === "FALLO_O_FALTA_INFO"));
+  const isMeaningful = (e) =>
+    e &&
+    (isCritical(e) ||
+      e.t === "pregunta" ||
+      e.t === "feedback" ||
+      e.t === "doc_descarga" ||
+      e.t === "doc_offline_apk" ||
+      e.t === "pdf_nativo_apk" ||
+      e.t === "doc_abierto" ||
+      e.t === "busqueda_archivo");
+
+  const criticalCount = queue.filter(isCritical).length;
+  const meaningfulEvents = queue.filter(isMeaningful);
+  const questionCount = queue.filter((e) => e.t === "pregunta").length;
+
+  // No llenar la bandeja si solo hubo scroll pasivo sin preguntas, búsquedas ni documentos vistos
+  if (!criticalCount && !meaningfulEvents.length) {
+    return;
+  }
+
   const now = Date.now();
   const lastSent = Number(localStorage.getItem(BT_LAST_SENT_KEY) || "0");
-  if (!forceImmediate && now - lastSent < 45000 && queue.length < 10) {
-    return;
+  // En salida de app (forceImmediate), enviar si hay al menos 1 acción sustancial nueva y pasaron >= 25s
+  // En segundo plano periódico, exigir >= 3 preguntas o >= 3 minutos con actividad relevante
+  if (!criticalCount) {
+    if (forceImmediate) {
+      if (now - lastSent < 25000 && meaningfulEvents.length < 2) return;
+    } else {
+      const cooldownOk = now - lastSent >= 180000;
+      if (!cooldownOk && questionCount < 4) return;
+      if (questionCount < 1 && meaningfulEvents.length < 3) return;
+    }
   }
 
   btFlushInFlight = true;
   try {
-    const batch = queue.slice(0, 20);
+    const batch = queue.slice(0, 25);
     const ctx = detectClientContext();
     const lines = batch.map((ev, i) => formatTelemetryEventLine(ev, i));
     const statsBlock = formatTopStatsBlock();
+    const issueLines = batch
+      .filter((ev) => isCritical(ev) || (ev.t === "pregunta" && ev.ok === "sin_coincidencia"))
+      .map((ev) => `- [${ev.t}] ${ev.q || ev.msg || ""}`);
 
     const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`;
     const res = await fetch(endpoint, {
@@ -4700,24 +4803,27 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        _subject: `BiblioTech Scout [${ctx.plat}] — ${batch.length} acciones anónimas (${BT_SESSION_ID})`,
+        _subject: issueLines.length
+          ? `[ALERTA/BUG] BiblioTech [${ctx.plat}] — ${batch.length} eventos (${BT_SESSION_ID})`
+          : `BiblioTech Scout [${ctx.plat}] — ${questionCount} preg / ${meaningfulEvents.length} acciones`,
         _template: "table",
         _captcha: "false",
         plataforma: `${ctx.plat} · ${ctx.vista}`,
         navegador_y_tema: `${ctx.browser} (${ctx.os}) · Tema ${ctx.tema}`,
-        sesion_y_eventos: `${BT_SESSION_ID} (${batch.length} eventos en este envío)`,
+        alertas_bugs_o_sin_coincidencia: issueLines.length ? issueLines.join("\n") : "Ninguna falla ni pregunta sin respuesta en este lote",
         resumen_mas_usado: statsBlock || "Primeros eventos acumulados",
         actividad_completa: lines.join("\n\n")
       }),
       keepalive: true
     });
     if (res && res.ok) {
+      markHashesAsSent(batch);
       const remaining = queue.slice(batch.length);
       localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(remaining));
       localStorage.setItem(BT_LAST_SENT_KEY, String(Date.now()));
     }
   } catch (_) {
-    // Reintentar en el siguiente ciclo/sesión si falla la red
+    // Reintentar en la siguiente sesión si falla la red
   } finally {
     btFlushInFlight = false;
   }
@@ -4923,6 +5029,31 @@ function setupFullActivityObservers() {
     },
     true
   );
+
+  // 5. Captura anónima de errores JS / bugs reales de ejecución
+  window.addEventListener("error", (ev) => {
+    if (!hasTelemetryConsent() || !ev || !ev.message) return;
+    enqueueAnonTelemetry(
+      {
+        t: "error_js",
+        msg: String(ev.message).slice(0, 180),
+        src: `${String(ev.filename || "").split("/").pop()}:${ev.lineno || 0}`
+      },
+      true
+    );
+  });
+  window.addEventListener("unhandledrejection", (ev) => {
+    if (!hasTelemetryConsent() || !ev || !ev.reason) return;
+    const msg = ev.reason && ev.reason.message ? ev.reason.message : String(ev.reason);
+    enqueueAnonTelemetry(
+      {
+        t: "error_js",
+        msg: String(msg).slice(0, 180),
+        src: "promise_rejection"
+      },
+      true
+    );
+  });
 }
 
 function initPrivacyAndTelemetry() {

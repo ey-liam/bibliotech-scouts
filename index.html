@@ -16,8 +16,8 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://ey-liam.github.io/bibliotech-scouts/" />
   <link rel="icon" type="image/png" href="img/favicon.png" />
-  <link rel="apple-touch-icon" sizes="192x192" href="img/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="512x512" href="img/icon-512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="img/apple-touch-icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
 
   <!-- Vista previa al compartir el enlace en redes sociales y mensajería -->
@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=29" />
+  <link rel="stylesheet" href="styles.css?v=30" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -530,19 +530,6 @@
             <button type="button" class="btn-centenario-shelf" data-select-shelf="centenario">
               Ver los 39 libros del Centenario
             </button>
-          </div>
-        </div>
-        <div class="centenario-banner-photos" aria-hidden="true">
-          <div class="hex-cluster-item hex-size-sm hex-theme-green">
-            <div class="hex-rotator">
-              <div class="hex-inner-mask">
-                <img loading="lazy" decoding="async" src="img/photos/p03.jpg" alt="Encuentro de Expresión y Arte Scout (EEAS)" class="hex-counter-img" />
-              </div>
-            </div>
-          </div>
-          <div class="mini-polaroid-card bt-poly-photo tilt-pos-right">
-            <img loading="lazy" decoding="async" src="img/photos/p09.jpg" alt="Foros Nacionales — Meztitla" />
-            <span>Foros Nacionales</span>
           </div>
         </div>
       </div>
@@ -1029,11 +1016,15 @@
           <span class="sec-card-cta">Ver documentos de Manada →</span>
         </article>
 
-        <!-- TROPA (Polaroid dinámica) -->
+        <!-- TROPA (Hexágono rotatorio verde — estilo unificado) -->
         <article class="scout-sec-card card-tropa" data-sec-jump="tropa">
           <div class="sec-card-bg" style="background-image: url('img/bg/tropa.webp');"></div>
-          <div class="sec-popout-photo">
-            <img loading="lazy" decoding="async" src="img/photos/p08.jpg" alt="Tropa de Scouts" />
+          <div class="sec-popout-hex hex-theme-green">
+            <div class="hex-rotator">
+              <div class="hex-inner-mask">
+                <img loading="lazy" decoding="async" src="img/photos/p08.jpg" alt="Tropa de Scouts" class="hex-counter-img" />
+              </div>
+            </div>
           </div>
           <div class="sec-card-top">
             <span class="sec-age-tag">10 a &lt;14 años</span>
@@ -1067,11 +1058,15 @@
           <span class="sec-card-cta">Ver documentos de Comunidad →</span>
         </article>
 
-        <!-- CLAN DE ROVERS (Polaroid dinámica con foto oficial de Rovers p05.jpg) -->
+        <!-- CLAN DE ROVERS (Hexágono rotatorio rojo — estilo unificado) -->
         <article class="scout-sec-card card-clan" data-sec-jump="clan">
           <div class="sec-card-bg" style="background-image: url('img/bg/clan.webp');"></div>
-          <div class="sec-popout-photo">
-            <img loading="lazy" decoding="async" src="img/photos/p05.jpg" alt="Clan de Rovers" />
+          <div class="sec-popout-hex hex-theme-crimson">
+            <div class="hex-rotator">
+              <div class="hex-inner-mask">
+                <img loading="lazy" decoding="async" src="img/photos/p05.jpg" alt="Clan de Rovers" class="hex-counter-img" />
+              </div>
+            </div>
           </div>
           <div class="sec-card-top">
             <span class="sec-age-tag">18 a &lt;22 años</span>
@@ -1105,11 +1100,15 @@
           <span class="sec-card-cta">Ver documentos de Adultos →</span>
         </article>
 
-        <!-- WORLD SCOUTING (Polaroid dinámica) -->
+        <!-- WORLD SCOUTING (Hexágono rotatorio cian — estilo unificado) -->
         <article class="scout-sec-card card-wosm" data-sec-jump="internacional">
           <div class="sec-card-bg" style="background-image: url('img/bg/mundial.webp');"></div>
-          <div class="sec-popout-photo">
-            <img loading="lazy" decoding="async" src="img/photos/wosm1.jpg" alt="World Scouting WOSM" />
+          <div class="sec-popout-hex hex-theme-cyan">
+            <div class="hex-rotator">
+              <div class="hex-inner-mask">
+                <img loading="lazy" decoding="async" src="img/photos/wosm1.jpg" alt="World Scouting WOSM" class="hex-counter-img" />
+              </div>
+            </div>
           </div>
           <div class="sec-card-top">
             <span class="sec-age-tag">OMMS / WOSM</span>
@@ -1123,31 +1122,23 @@
         </article>
       </div>
 
-      <!-- FRANJA VISUAL DISTRIBUIDA (MEZCLA DE HEXÁGONOS ROTATORIOS Y POLAROIDS INTERACTIVOS CON TÍTULOS OFICIALES) -->
+      <!-- FRANJA VISUAL UNIFICADA DE TARJETAS POLAROID INTERACTIVAS -->
       <div class="distributed-photo-mosaic" aria-label="Galería de actividades scouts nacionales">
         <div class="mosaic-item mosaic-polaroid tilt-left" data-query="¿Cuáles son las secciones de un Grupo Scout y qué edades tienen?" role="button" tabindex="0" title="Consultar sobre las Secciones Scouts">
           <img loading="lazy" decoding="async" src="assets/scouts/foto_secciones_nac.png" alt="Secciones de la ASMAC" />
           <span>Secciones Scouts</span>
         </div>
-        <div class="mosaic-item mosaic-hex hex-theme-green" data-query="¿Qué eventos scouts existen?" role="button" tabindex="0" title="Consultar sobre eventos y Campo Escuela Scout Meztitla">
-          <div class="hex-rotator">
-            <div class="hex-inner-mask">
-              <img loading="lazy" decoding="async" src="img/photos/p07.jpg" alt="Campo Escuela Scout Meztitla" class="hex-counter-img" />
-            </div>
-          </div>
-          <span class="hex-floating-caption cap-green">Campo Escuela Meztitla</span>
+        <div class="mosaic-item mosaic-polaroid tilt-right" data-query="¿Qué eventos scouts existen?" role="button" tabindex="0" title="Consultar sobre eventos y Campo Escuela Scout Meztitla">
+          <img loading="lazy" decoding="async" src="img/photos/p07.jpg" alt="Campo Escuela Scout Meztitla" />
+          <span>Campo Escuela Meztitla</span>
         </div>
-        <div class="mosaic-item mosaic-polaroid tilt-right" data-query="¿Qué son los Foros Nacionales de Jóvenes y cómo funciona la guía «De FOROS a CASA»?" role="button" tabindex="0" title="Consultar sobre los Foros Nacionales">
+        <div class="mosaic-item mosaic-polaroid tilt-left" data-query="¿Qué son los Foros Nacionales de Jóvenes y cómo funciona la guía «De FOROS a CASA»?" role="button" tabindex="0" title="Consultar sobre los Foros Nacionales">
           <img loading="lazy" decoding="async" src="assets/scouts/foros_extra_2.jpg" alt="Foros Nacionales" />
           <span>Foros Nacionales</span>
         </div>
-        <div class="mosaic-item mosaic-hex hex-theme-orange" data-query="¿Qué es el EEAS?" role="button" tabindex="0" title="Consultar sobre el Encuentro de Expresión y Arte Scout (EEAS)">
-          <div class="hex-rotator">
-            <div class="hex-inner-mask">
-              <img loading="lazy" decoding="async" src="img/photos/p03.jpg" alt="Encuentro de Expresión y Arte Scout (EEAS)" class="hex-counter-img" />
-            </div>
-          </div>
-          <span class="hex-floating-caption cap-orange">EEAS Nacional</span>
+        <div class="mosaic-item mosaic-polaroid tilt-right" data-query="¿Qué es el EEAS?" role="button" tabindex="0" title="Consultar sobre el Encuentro de Expresión y Arte Scout (EEAS)">
+          <img loading="lazy" decoding="async" src="img/photos/p03.jpg" alt="Encuentro de Expresión y Arte Scout (EEAS)" />
+          <span>EEAS Nacional</span>
         </div>
       </div>
     </div>
@@ -1645,7 +1636,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · V2.2.15 Mobile · Web V8.3</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 2.2.16 Mobile · Web 8.3.1</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
             <strong>No es necesario descargar nada:</strong> puedes disfrutar de la mayoría de herramientas, el buscador de 13,516 preguntas y los visores directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
@@ -1777,7 +1768,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v31</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v32</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -1940,7 +1931,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 12/11/2026 • BETA V8.3 - 2.2.15 Mobile (12/11/2026) ·
+          Base de datos: 12/11/2026 • BETA 8.3.1 - 2.2.16 Mobile (12/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">

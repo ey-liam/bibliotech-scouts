@@ -236,6 +236,12 @@ h1, h2, h3, h4 {
 .hex-theme-purple .hex-rotator {
   background: linear-gradient(135deg, #6d28d9, #8b5cf6, #4c1d95);
 }
+.hex-theme-crimson .hex-rotator {
+  background: linear-gradient(135deg, #e11d48, #be123c, #fb7185);
+}
+.hex-theme-cyan .hex-rotator {
+  background: linear-gradient(135deg, #0891b2, #06b6d4, #2563eb);
+}
 
 /* =====================================================
    BARRA SUPERIOR FIJA (SIEMPRE VISIBLE AL DESPLAZARSE)
@@ -13334,26 +13340,22 @@ html[data-camp-mode="true"] .btn-load-more:hover {
   }
 }
 
-/* Imágenes flotantes dinámicas por el sitio con máscara orgánica */
-.bt-poly-photo,
-.mosaic-polaroid,
-.sec-popout-photo {
+/* Imágenes flotantes unificadas y protección estricta al cuadro blanco limpio de Liam */
+.liam-static-bg-box,
+.liam-depth-stage:hover .liam-static-bg-box {
+  clip-path: none !important;
+  border-radius: 26px !important;
+  border: 4px solid #ffffff !important;
+}
+
+.mosaic-polaroid {
   animation: btPolyFloatCard 7.5s ease-in-out infinite;
 }
 
-.bt-poly-photo img,
 .mosaic-polaroid img,
-.sec-popout-photo img,
-.liam-static-bg-box {
-  clip-path: polygon(4% 2%, 97% 0%, 98% 95%, 3% 98%);
-  transition: clip-path 0.5s ease, transform 0.35s var(--spring);
-}
-
-.mosaic-polaroid:hover img,
-.sec-popout-photo:hover img,
-.bt-poly-photo:hover img,
-.liam-depth-stage:hover .liam-static-bg-box {
-  clip-path: polygon(0% 4%, 98% 2%, 96% 98%, 2% 95%);
+.mosaic-polaroid:hover img {
+  clip-path: none !important;
+  border-radius: 12px !important;
 }
 
 /* 4) Acordeones desplegables (Guía de Uso, Servicios y Trámites, Cambios) */
@@ -13493,13 +13495,19 @@ html[data-camp-mode="true"] .about-features-list li strong {
   align-items: center;
   gap: 0.4rem;
   margin-top: 0.75rem;
-  padding: 0.4rem 0.9rem;
+  padding: 0.42rem 0.92rem;
   border-radius: 999px;
-  background: rgba(56, 189, 248, 0.16);
-  border: 1px solid rgba(56, 189, 248, 0.38);
-  color: #e0f2fe;
+  background: rgba(2, 132, 199, 0.11);
+  border: 1px solid rgba(2, 132, 199, 0.34);
+  color: #0c4a6e;
   font-size: 0.8rem;
   font-weight: 800;
+}
+
+html[data-camp-mode="true"] .app-detected-os-pill {
+  background: rgba(56, 189, 248, 0.16);
+  border-color: rgba(56, 189, 248, 0.42);
+  color: #e0f2fe;
 }
 
 .app-detected-os-pill.hidden {

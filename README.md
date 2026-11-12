@@ -1,264 +1,131 @@
 # BiblioTech Scout — Biblioteca Digital y Buscador Documental Scout
 
-**Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco (Instagram: [@liaadurg3](https://www.instagram.com/liaadurg3/)) · **Contacto:** `rdc.tlxh@gmail.com`  
+**Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
+**Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** V8.3 Oficial - 2.2.15 Mobile (12/11/2026)  
-**Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/
+**Base de datos:** 12/11/2026 • **Versión:** BETA `8.3.1` (Web) • `2.2.16` Mobile  
+**Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
+**App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
 ---
 
-## 1. Propósito del proyecto
+## 1. Qué es BiblioTech Scout y cómo funciona
 
-**BiblioTech Scout** es una plataforma web pública, personal y sin fines de lucro diseñada para que niñas, niños, adolescentes, jóvenes y adultos de toda la membresía cuenten con acceso directo, ágil y de fácil comprensión a la documentación oficial de la **Asociación de Scouts de México, A.C. (ASMAC)** y de **World Scouting (WOSM)**.
+**BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, plantillas RECME, reglamentos, libros históricos, avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta de donde proviene cada dato.
 
-Todas las respuestas y resúmenes se fundamentan exclusivamente en los documentos oficiales, manuales, reglamentos, libros de la Colección Biblioteca del Centenario, revistas, formatos editables, comunicados nacionales y portales institucionales respaldados en la base de datos local (con corte al **12/11/2026**), priorizando siempre las ediciones vigentes (2024–2026).
+- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`13,516` preguntas y respuestas verificadas), el catálogo completo (`599` documentos), el modo oscuro, los visores integrados y los recursos rápidos funcionan directamente desde cualquier navegador de escritorio, tablet o celular.
+- **Uso sin conexión (Offline):**
+  - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS / Liquid Glass (`img/apple-touch-icon.png`) y caché PWA (`sw.js`).
+  - En **Android (APK oficial):** la app nativa empaca las preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de hasta los `599` documentos.
 
 ---
 
-## 2. Capturas de pantalla y cómo se usa (Escritorio y Móvil)
+## 2. Convención de Versionado de 3 Dígitos (`MAJOR.MINOR.PATCH`)
 
-### Sitio Web (Escritorio)
+A partir de la versión **8.3.1** (Web) y **2.2.16** (Android), todo el ecosistema utiliza numeración semántica de tres dígitos:
 
-| Portada Cósmica y Accesos Rápidos | Consultas Directas (ej. Metodología SMART) | Biblioteca Scout en Modo Noche |
-| :---: | :---: | :---: |
-| ![Portada escritorio BiblioTech Scout](docs/screenshots/web-hero.png) | ![Respuesta SMART en el buscador](docs/screenshots/web-buscador-smart.png) | ![Biblioteca Scout en modo noche](docs/screenshots/web-biblioteca-noche.png) |
+- **Primer dígito (`X.0.0`):** Cambio mayor, rediseño estructural completo o salto de arquitectura.
+- **Segundo dígito (`X.Y.0`):** Incorporación de nuevas funcionalidades relevantes, apartados o ampliaciones documentales significativas.
+- **Tercer dígito (`X.Y.Z`):** Ajustes visuales, correcciones de errores, optimizaciones de rendimiento, accesibilidad o mejoras menores sin alterar el esquema principal.
 
-**Cómo usarlo en computadora:**
-1. Entra a `https://ey-liam.github.io/bibliotech-scouts/`.
-2. Haz clic en **Hacer una pregunta** (o ve directo a **Buscador:**) y escribe tu duda en lenguaje sencillo (por ejemplo: *"¿Qué es un proyecto SMART?"*, *"¿Qué dice el Reglamento sobre el Artículo 10?"*, *"¿Cómo funciona ExplorApp?"*). También puedes pulsar el botón de recarga para explorar preguntas aleatorias del banco o filtrar por sección (*Manada, Tropa, Comunidad, Clan, Adultos, World Scouting*).
-3. Al abrir una respuesta verás el texto fundamentado y, debajo, las fuentes oficiales exactas en **Documentos oficiales de donde se obtuvo esta información** para abrir el visor o descargar el archivo.
-4. Usa la barra superior para cambiar entre **Preguntar**, **Biblioteca** (con lector de PDF/imágenes integrado y los 39 libros del Centenario), **Propósito**, **Agentes de Cambio**, **Secciones**, **Evolución**, **Catálogo** y **App**, o pulsa el icono de llama/luna para alternar el **Modo Noche**.
+---
 
-### Versión Móvil (Navegador en Teléfono)
+## 3. Comparación: Modo Claro vs Modo Oscuro
 
-| Inicio con Dock Inferior Unificado | Lectura Clara de Respuestas en Móvil |
+El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **Modo Claro** (colores claros luminosos con texto oscuro de alto contraste para lectura diurna) y **Modo Oscuro** (fondos cósmicos oscuros unificados con animación ambiental coherente, tarjetas contrastadas y descanso visual nocturno).
+
+### Escritorio (`1366×860`)
+
+| Modo Claro (Predeterminado) | Modo Oscuro (Modo Noche) |
 | :---: | :---: |
-| ![Vista móvil de inicio en BiblioTech Scout](docs/screenshots/movil-inicio.png) | ![Consulta de Ejes Temáticos en pantalla móvil](docs/screenshots/movil-consulta.png) |
+| ![BiblioTech Scout Escritorio Modo Claro](docs/screenshots/web-desktop-claro.png) | ![BiblioTech Scout Escritorio Modo Oscuro](docs/screenshots/web-desktop-oscuro.png) |
 
-**Cómo usarlo en teléfono:**
-1. En pantallas pequeñas el sitio muestra el dock inferior flotante con acceso de un toque a **Inicio**, **Consultar**, **Biblioteca**, **Agentes**, **Guardados** y **Noche**, además del botón **Menú** arriba para navegar por el resto de apartados y el Catálogo.
-2. Todas las tarjetas de respuesta, fuentes, estantes y lector de PDF se ajustan automáticamente al ancho de tu pantalla.
+### Teléfono Móvil (`390×844`)
 
----
-
-## 3. Novedades de la Versión V8.3 — Menú Ordenado, Acordeones Desplegables, Máscara Poligonal y El Proyecto (12/11/2026)
-
-- **Navegación Secuencial Completa (`sw.js v31`, `styles.css?v=29`):**
-  - Barra superior en escritorio limpia con los 7 apartados en su orden real de aparición (**Buscador**, **Biblioteca**, **Guía de Uso**, **Agentes de Cambio.MX**, **Secciones**, **Cambios en Esquemas**, **Descarga App**), más botón **Menú** universal en escritorio, tablet y móvil con el panel en cuadrícula hacia **todos los 12 apartados** (incluidos *El Proyecto*, *Servicios y Trámites*, *Catálogo* y *Aportar*).
-- **Acordeones Cerrados por Defecto y Contraste Nocturno:**
-  - *Guía de Uso* (`6`), *Servicios y Trámites* (`7`) y *Cambios en Esquemas* (`9`) ahora muestran tarjetas numeradas plegables cerradas al inicio para una lectura más ágil, y `#libraryShowMoreBtn` luce con alto contraste también en Modo Noche.
-- **Portada e Imágenes Dinámicas + El Proyecto + Descarga App Mejorada:**
-  - Retirados los letreros flotantes sobre la foto inicial y aplicado recorte poligonal dinámico (`clip-path` animado), sección `#acerca` ampliada explicando qué es, objetivo y funciones clave, y sección `#app` con autodetección de dispositivo, aclaración de uso web sin descarga obligatoria y guía Play Protect actualizada (*aplicación segura y de código abierto*).
-
-## 4. Novedades de la Versión V8.2 — Telemetría Anónima Integral en Todas las Plataformas (12/11/2026)
-
-- **Cobertura Total de Dispositivos y Vistas (`sw.js v30`):** Registra de forma anónima si el acceso proviene de App Android (APK), iOS App Web (pantalla de inicio), iOS Safari, Android/Desktop Chrome, Safari, Edge o Firefox, junto con tipo de vista (Móvil/Tablet/Escritorio), resolución y tema (Claro/Oscuro).
-- **Bitácora Completa de Actividad + Top Estadísticas Acumuladas:** Envía el registro cronológico de sesiones, secciones visitadas, filtros más usados, búsquedas en biblioteca/catálogo, archivos abiertos/leídos/descargados/guardados, enlaces externos y preguntas con la respuesta completa entregada y sus fuentes citadas (más envío confiable al ocultar o cerrar pestaña/app mediante `visibilitychange` y `pagehide`).
-
-## 4. Novedades de la Versión V8.1 — Nuevo Logo, Botones Centrados, Vistas Iniciales Compactas y Privacidad (12/11/2026)
-
-- **Centrado de Botones/Pestañas y Nuevo Logo Oficial (`sw.js v29`, `styles.css?v=28`):**
-  - Actualización completa del logotipo oficial (`img/logo-flor.png`, `favicon.png`, `icon-192.png`, `icon-512.png`) con encuadre limpio en barra superior, tarjetas de respuesta y pie de página.
-  - Alineación uniforme mediante Flexbox (`inline-flex` centrado) y pistas horizontales estables en todas las pestañas de estantes, categorías, subcategorías, buscador y botones de acción.
-- **Vistas Iniciales Compactas + Búsqueda Completa + Descripciones Resumidas:**
-  - *Biblioteca Scout* y *Explorar catálogo* inician mostrando **6 documentos** en pantalla principal para no saturar, y al escribir una búsqueda despliegan automáticamente **todas las coincidencias**.
-  - Descripciones condensadas en *Colección Centenario*, *Acerca de*, *Secciones*, *Servicios y Trámites* y *Evolución 2018–2026*, actualizando la ficha de autor (*Proyecto sin fines de lucro*, *Comunidad de Caminantes*, *Provincia Tláhuac-Xochimilco*, botón `@liaadurg3` y correo `rdc.tlxh@gmail.com`).
-- **Preferencias Locales, Preguntas Recientes y Feedback Anónimo:**
-  - En Web muestra un aviso claro de cookies/almacenamiento local (en APK Android se habilita automáticamente sin interrumpir); al aceptar, recuerda tus preguntas recientes en `#buscador` y permite valorar respuestas (`Útil` / `Reportar fallo o falta info`) enviando resúmenes técnicos anónimos de consultas, respuestas resumidas y documentos buscados para mejora continua.
-
-## 4. Novedades de la Versión V8.0 — Menú Tipo App, Buscador Compacto y Textos Directos (12/11/2026)
-
-- **Menú y Navegación Intuitivos (`sw.js v28`, `styles.css?v=27`):**
-  - Etiquetas cortas en barra superior (`Preguntar`, `Biblioteca`, `Guía`, `Agentes`, `Secciones`, `Cambios`, `Catálogo`, `App`) y menú desplegable móvil en cuadrícula de tarjetas redondeadas (`2` columnas), simple e inmediato.
-- **Nuevo Buscador con Botón de Sección, Preguntas al Azar y Recarga Aleatoria Real:**
-  - Barra de herramientas compacta con botón **Sección** desplegable (filtro colapsable por Manada, Tropa, Comunidad, Clan, Adultos y WOSM), botón **Preguntas al azar** (mezcla aleatoria sobre todo el banco o sección activa) y botón **Recargar otras al azar** para refrescar 6 nuevas preguntas al instante sin repetir consecutivas.
-  - Pestañas temáticas en una sola fila deslizable y lista limpia de 6 preguntas estilo tarjetas redondeadas.
-- **Textos Directos en Todo el Sitio y la App:** Recorte de párrafos largos y etiquetas extensas en Portada, *Guía Rápida*, *Biblioteca*, *Propósito*, *Agentes de Cambio.MX*, *Secciones*, *Servicios*, *Evolución*, *Catálogo* y *App*.
-
-## 4. Novedades de la Versión V7.9 y Optimización de Animaciones / Cinta Vertical (12/11/2026)
-
-- **Cinta Diagonal Visible en Vertical y Movimiento Vivo en Portada (`sw.js v27`, `styles.css?v=26`):**
-  - Dotada la cinta móvil `.bts-zigzag--mobile` de su propio gradiente y resplandor inline (`#btsRibbonGradMobile`) con trazo calibrado para pantallas verticales (web móvil y APK Android), evitando que desaparezca al ocultarse el SVG de escritorio.
-  - Añadida animación orgánica continua de onda/flotación a la cinta diagonal (`@keyframes btsRibbonWave`) y deformación poligonal suave al contenedor del título (`@keyframes btsCardMorph`), manteniendo soporte a `prefers-reduced-motion`.
-- **Limpieza Visual y Optimización CSS / JS:**
-  - Retiradas las dos fotografías sueltas sobre *Servicios* (`.services-header-photos`) y los adornos locales redundantes de *Primeros Pasos* (`.section-floating-layer`).
-  - Consolidadas 9 animaciones repetidas de flotación en un único `@keyframes btFloatBob` parametrizado con variables CSS, regla compartida para botones/píldoras interactivas y unificación de eventos de inclinación 3D por delegación dentro de `BiblioFeel.init3DTilt()` en [app.js](app.js).
-
-## 4. Novedades de la Versión V7.8 y Fondo Unificado Claro / Oscuro (12/11/2026)
-
-- **Fondo Animado Unificado Visible También en Modo Oscuro (`sw.js v26`, `styles.css?v=25`):**
-  - Corregido el bloqueo opaco heredado en `html[data-camp-mode="true"] body` y `#contenido-principal` (`background: transparent !important`) junto con menor opacidad en los velos oscuros de sección (`0.22–0.34`), permitiendo que la aurora cósmica oscura, los **6 rectángulos redondeados flotantes** (`.bg-3d-cube`), los hexágonos, orbes y las partículas (`#btAmbientCanvas`) se vean con total claridad en todas las secciones al activar el Modo Noche.
-  - Mantiene las mejoras de **V7.7**: una sola capa animada continua (`.search-section-cubes` eliminada), Modo Claro 100 % claro con texto oscuro legible, Modo Oscuro 100 % oscuro y ajuste completo del menú de escritorio (`1025px–1180px`).
+| Móvil Web — Modo Claro | Móvil Web — Modo Oscuro |
+| :---: | :---: |
+| ![Vista Móvil Web en Modo Claro](docs/screenshots/web-movil-claro.png) | ![Vista Móvil Web en Modo Oscuro](docs/screenshots/web-movil-oscuro.png) |
 
 ---
 
-## 4. Novedades de la Versión V7.6 y Acervo RECME / Help Desk / FES (11/11/2026)
+## 4. Vistas por Dispositivo y Plataforma
 
-- **Accesibilidad (a11y) y Rendimiento HTML/CSS/JS:**
-  - Trampa de foco por teclado (`Tab` / `Shift+Tab`) y restauración de foco al cerrar `#docModal` y `#savedPanel` (con cierre por `Escape`), anillos `:focus-visible` globales de alto contraste, `aria-live="polite"` en conteo de catálogo, y etiquetas accesibles en `#onlyLatestCheckbox` y `#modalFieldNoteText`.
-  - `debounce()` en búsqueda instantánea de Biblioteca y Catálogo y en redimensionado de canvas, pausa automática de `btAmbientCanvas` en pestañas ocultas (`visibilitychange`), throttle con `requestAnimationFrame` en el scroll spy del dock, `content-visibility: auto` en secciones estáticas fuera de pantalla y transiciones específicas aceleradas por GPU.
+### Tablet (Navegador y App Android APK) vs iPhone / iPad (iOS Safari Web App)
 
-- **Optimización Completa para iOS Safari, iPadOS y Web App (Pantalla de Inicio):**
-  - Etiquetas iOS Web App (`apple-mobile-web-app-capable`, `black-translucent`, `apple-touch-icon` 192/512, `format-detection: telephone=no` y `theme-color` adaptativo claro/oscuro) junto con soporte automático de `env(safe-area-inset-*)` para Dynamic Island, notch y barra inferior en modo standalone (`100dvh`).
-  - Eliminación del zoom accidental en Safari iOS al tocar buscadores y selectores (`16px` mínimo en móvil `<= 900px`), detección de iPadOS en visor PDF con botón nativo **Compartir / Guardar** (`navigator.share`) y guía interactiva **iPhone / iPad (iOS)** dentro de `#app` con pasos para *Agregar a pantalla de inicio (Abrir como app web)* y consejo 120 Hz ProMotion.
+| Tablet Web (`820×1080`) | iPhone / iPad (`iOS Safari` Web App) |
+| :---: | :---: |
+| ![BiblioTech Scout en Tablet Web](docs/screenshots/web-tablet.png) | ![BiblioTech Scout en Safari iOS Web App](docs/screenshots/ios-safari-app-web.png) |
 
-- **Subcategorías Plegables, Filtro Dedicado y Ajuste Móvil (iOS / Android):**
-  - **Subcategorías organizadas sin saturar la vista:** tanto en **Biblioteca Scout** como en el **Catálogo**, las **49 subcategorías** ya no se despliegan en una lista interminable al inicio; ahora permanecen agrupadas dentro de una pestaña desplegable **Subcategorías (N)** (con chip de filtro activo de 1 clic) y dentro de un selector dedicado **Subcategoría** en la barra de filtros del Catálogo.
-  - **Ajuste estricto de pantalla móvil y Service Worker Network-First (`sw.js v22`):** eliminados desplazamientos laterales y cortes en Safari iOS / Android WebView mediante grids `minmax(0, 1fr)` en móvil y carga prioritaria de red en HTML/CSS/JS/JSON para evitar interfaces cacheadas.
+### Teléfono y Tablet con App Android (APK `v2.2.16`)
 
-- **Carátulas 599/599, Descripciones Depuradas y Banco de `13,516` Preguntas:**
-  - El banco combinado alcanza **13,516 preguntas y respuestas únicas** (`5,356` en `data/questions_bank.json`, `101` en `data/faq_v3.json` y **`8,059`** en `data/faq_v4.json`, generadas con `scripts/generate_faq_v4.js`, `scripts/generate_recme_faq.js`, `scripts/generate_universal_basics_faq.js` y `scripts/generate_scouting_core_faq.js`).
-  - **100 % de carátulas y resúmenes limpios (`599/599`):** todos los documentos accesibles cuentan con portada JPG real o renderizada (PDF, HTML, XLSX, DOCX, PPTX e imágenes), miniaturas visibles también en el Catálogo y descripciones depuradas sin textos genéricos ni nombres técnicos sin título legible.
-  - **Preguntas fundamentales e identidad scout:** cobertura ampliada con sustento exacto sobre qué es el Movimiento Scout, su origen (Brownsea 1907 con Baden-Powell e ingreso de México en Kandersteg 1926), quiénes pueden integrarlo (*Estatutos 2023* y *Reglamento 2023*), igualdad de género y diversidad (*Política DEI 2024*, *SCNEG* y *JSN 21.007*), *Manual del Uniforme junio 2026*, *CONECTA* / *A Salvo del Peligro*, metodología paso a paso de proyectos scout, especialidades FES y portales oficiales ASMAC/WOSM.
-  - **Visores mejorados y descarga directa amigable:** visor PDF con carga directa en escritorio y alternador instantáneo a Google Docs Viewer, cuadrícula de transparencia y zoom interactivo en imágenes, barra rápida en guías HTML, visor multi-hoja para Excel con exportación CSV UTF-8, y descarga directa web con nombres legibles mediante `Blob` y notificación visual.
-  - **Cobertura documental (`599/599` archivos accesibles):** cada archivo del catálogo cuenta con preguntas básicas y coherentes sobre qué es, para qué sirve, cómo se llama, dónde descargarlo y quién lo llena, firma o es responsable, junto con un visor interactivo de hojas de cálculo Excel (`.xlsx`) desde `data/spreadsheets.json` (100 % offline).
-  - Incorpora **65 nuevos PDFs canónicos** sin duplicados numerados (`(1)`, `(2)`): las **18 Especialidades FES de Comunidad de Caminantes**, **46 plantillas oficiales P1–P10 de RECME/CNAMS/CNPJ** (*Matrices de Diagnóstico Inicial*, *Cédulas Auxiliares de Evaluación*, *Mi Libro del Seeonee*, *Mapa de Exploraciones*, *Hoja de Caminata*, *Mi Pasaporte de Comunidad*, *Mapa de Rutas y PPV SMART*, *Plantillas FAES/FES/Eventos/Proyectos/Ciclos/Consejos*, *Registros Auxiliares*, *Solicitudes Mundo Mejor 2026*, *Solicitudes de Insignia Final/Terminal Obsidiana vs Jade*, *Fichas Didácticas y Cartas IM 3.0 CNAMS*) y el *Formato Oficial de Proyecto v1.1*.
-  - Suma **32 guías HTML autónomas** (con capturas embebidas) y **4 emblemas/diagramas oficiales**: las **25 guías paso a paso y el directorio de 11 departamentos de Help Desk ASMAC (`SISAS` y `CONECTA`)**, los instructivos Genially de **FAES (*Masterchefsito*)** y **FES (*Primer Respondiente Junior*)**, y los catálogos oficiales RECME (230 FAES por Cazaderos, Rumbos, Senderos y Rutas + 8 especialidades de Manada Salud y Bienestar).
-  - Mantiene transparencia total de cobertura: los PDFs de *Adultos/Plantillas PJOS* y *Comunidad de Caminantes (18 FES)* están completos; los PDFs individuales de especialidades FES de *Manada de Lobatos*, *Tropa de Scouts* y *Clan de Rovers* quedan indicados como pendientes por incorporar.
-- **Reestructuración de la Biblioteca en 11 Categorías y Subcategorías Dinámicas:**
-  - Se añaden los estantes **Especialidades Scouts FES (20)**, **Plantillas PJOS, FAES y RECME (51)** y **Guías SISAS, CONECTA y Help Desk (26)**, además de filtros dinámicos por **subcategoría** en Biblioteca, Catálogo y Buscador.
-- **Corrección de Descargas Web y Lector HTML Autónomo:**
-  - Los documentos con copia en el repositorio (`has_web_file: true`) se sirven directamente desde `files/<sha12>.<ext>`, mientras los archivos pesados permanecen en Releases (`v1.0`).
-  - Visor integrado en el sitio para guías HTML autónomas además de PDFs e imágenes.
-- **Reestructuración de la Interfaz de Inicio (V7):**
-  - Escenario geométrico estilizado con cinta diagonal continua en gradiente morado a azul eléctrico y cian neón (`#7928ca` a `#06b6d4`) con resplandor suave.
-  - Tarjeta central inclinada destacando el título en gran formato `BIBLIOTECH SCOUT` y la firma de autoría centralizada `By Liam`.
-  - 10 iconos vectoriales en blanco puro flotando suavemente alrededor del escenario con animación optimizada.
-- **Continuidad Visual y Optimización del Buscador:**
-  - El fondo azul/morado profundo se extiende fluidamente hasta la sección del buscador (`#seccion-buscador`), integrando cubos geométricos decorativos.
-  - Tarjeta de búsqueda con cristal translúcido oscuro de alto contraste y legibilidad impecable.
-- **Mejora en Navegación de Preguntas:**
-  - Encabezado simplificado a `Buscador:`.
-  - Botón de recarga de preguntas con icono circular de actualización y leyenda `Mostrar más preguntas` para explorar preguntas aleatorias del banco documental.
-- **Mayor Estabilidad de Marca en Móviles:**
-  - Garantizada la visualización completa de `BiblioTech Scout` en teléfonos y pantallas pequeñas sin truncar el distintivo "Scout".
-- **Compatibilidad de Modo Oscuro / Modo Noche:**
-  - Modo oscuro limpio de alto contraste: fondos negros/índigo profundos, texto blanco nítido y acentos cian, manteniendo imágenes, botones, badges y documentos legibles.
-  - Botón de modo noche visible en la cabecera de escritorio y oculto en móvil para evitar duplicación con el dock inferior.
+| Teléfono Android (`APK`) | Tablet Android (`APK`) |
+| :---: | :---: |
+| ![BiblioTech Scout App Teléfono Android](docs/screenshots/app-telefono-claro.png) | ![BiblioTech Scout App Tablet Android](docs/screenshots/app-tablet.png) |
 
 ---
 
-## 4. Identidad e interfaz
+## 5. Apartados del Sitio y Qué Puedes Hacer en Cada Uno
 
-- **Nombre del sitio:** BiblioTech Scout: By Liam.
-- **Menú superior:** sigue el orden real de las secciones de la página: *Preguntar → Biblioteca → Propósito → Agentes de Cambio → Secciones → Evolución → Catálogo*.
-- **Fondo animado:** una capa viva con malla de auras de color, orbes flotantes, haz de luz diagonal, hexágonos, cubos, anillos y destellos. Solo anima `transform` y `opacity` para no alterar el diseño ni el rendimiento.
-- **Secciones translúcidas:** dejan ver la aurora de fondo sin sacrificar la legibilidad; las tarjetas de contenido permanecen blancas.
-- **Accesibilidad:** con `prefers-reduced-motion` activo, todas las animaciones se detienen. El sitio conserva navegación por teclado, enlace para saltar al contenido y etiquetas ARIA.
+| Apartado | Función y qué puedes hacer ahí | Vista |
+| :--- | :--- | :---: |
+| **Buscador (`#buscador`)** | Escribe cualquier duda scout, filtra por sección (*Manada*, *Tropa*, *Comunidad*, *Clan*, etc.), abre el filtro rápido de **Sección**, genera **Preguntas al azar** o pulsa **Recargar otras al azar**, lee respuestas fundamentadas con fuente documental exacta y escúchalas con lectura en voz alta. | ![Buscador con metodología SMART](docs/screenshots/web-buscador-smart.png) |
+| **Biblioteca Scout (`#biblioteca`)** | Filtra por texto, sección, colección (*Centenario*, *Guías y PJOS*, *FES*, *RECME y FAES*, *SISAS y Help Desk*, *Manuales*, *Reglamentos*, *Comunicados*, etc.) o subcategoría entre los `599` documentos; guarda favoritos, toma notas locales y abre PDFs, hojas Excel con filtro/CSV, presentaciones, guías HTML o imágenes sin salir del sitio. | ![Biblioteca Scout en Modo Noche](docs/screenshots/web-biblioteca-noche.png) |
+| **Guía de Uso (`#guia`)** | Tarjetas plegables numeradas (*01 Primeros Pasos*, *02 Ecosistema Digital*, *03 Campo Escuela Meztitla*, etc.) con respuestas rápidas, cuotas de registro, permisos JL304 y enlaces oficiales al tocar cada tema. | ![Guía de Uso con acordeones desplegables](docs/screenshots/web-acordeones.png) |
+| **Secciones Scouts (`#secciones`)** | Acceso directo unificado por rango de edad (*Manada de Lobatos*, *Tropa de Scouts*, *Comunidad de Caminantes*, *Clan de Rovers*, *Adultos y Dirigentes* y *World Scouting WOSM*) para filtrar al instante sus documentos, progresiones e insignias. | ![Tarjetas unificadas de Secciones Scouts](docs/screenshots/web-secciones-unificadas.png) |
+| **El Proyecto (`#acerca`)** | Presentación transparente del proyecto sin fines de lucro, su objetivo educativo, resumen de capacidades, datos de autoría y correo de contacto para reportar preguntas o mejoras. | ![Sección El Proyecto y autoría](docs/screenshots/web-acerca-proyecto.png) |
 
----
-
-## 5. Contenido del acervo documental
-
-El sistema integra **110 temas enciclopédicos y literarios**, **13,516 preguntas y respuestas únicas de consulta directa** (`5,356` del banco base, `101` de `faq_v3.json` y `8,059` de `faq_v4.json`), **751 documentos catalogados en total** y **599 documentos oficiales directamente accesibles y descargables** (`498` PDFs, `32` guías HTML autónomas, `18` DOCX, `17` XLSX, `33` imágenes y `1` PPTX) organizados en **11 categorías con subcategorías**:
-
-1. **Colección Biblioteca del Centenario (39 volúmenes):** Los 39 libros oficiales numerados de la Colección Biblioteca del Centenario, incluyendo las obras clásicas de Robert Baden-Powell (*Escultismo para Muchachos, Manual de Lobatos, Guía para el Jefe de Tropa, Roverismo hacia el Éxito, Tropiezos de la Vida, Juegos Scouts*), obras históricas de Gilcraft y César Macazaga Ordoño, y publicaciones formativas y literarias (*Cuentos de la Selva, Francisco de Asís y el Lobo de Gubbio*).
-2. **Guías, Carnets y Programa de Jóvenes — PJOS (42 documentos):** Guías de sección actualizadas (*Mis Rastros en la Selva 2024, Pistas de Aventura 2024, El Desafío de ser Caminante 2024, Las Rutas del Rover, Las Rutas de la Precursora*), Carnets de *Aventuras en la Naturaleza 2024*, Guías de *Punta de Flecha 2025*, *Tribu de la Tierra*, *Campeones de la Naturaleza*, *Mensajeros de la Paz*, *Go Solar*, *Plastic Tide Turners*, *De FOROS a CASA* y *Agentes de Cambio.MX*.
-3. **Especialidades Scouts — FES (20 documentos):** Incluye las **18 Fichas de Especialidades Scout de Comunidad de Caminantes** en PDF (*Salud y Bienestar, Habilidades para la Vida, Paz y Participación Comunitaria, Medio Ambiente y Sustentabilidad*), el instructivo Genially *Primer Respondiente Junior* (Manada) y el catálogo oficial con las 8 especialidades de Manada Salud y Bienestar listadas en RECME.
-4. **Plantillas PJOS, FAES y RECME (51 documentos):** Todas las 46 plantillas oficiales de RECME (`P1.*` Diagnóstico, `P2.*` Evaluación, `P3.*` Libro Seeonee / Mapa Exploraciones / Hoja Caminata / Pasaporte Comunidad / Mapa Rutas PPV SMART, `P4.*–P5.*` Plantillas FAES/FES, `P6.* y P9.5` Eventos, Proyectos, Consejos de Nivel y Ciclos de Programa, `P7.*` Registros Auxiliares, `P8.*` Solicitudes Mundo Mejor 2026, `P9.1–P9.4` Insignia Final/Terminal Obsidiana y Jade, `P10.*` Formación Adultos CNAMS / IM 3.0), Formato de Proyecto v1.1, instructivo FAES *Masterchefsito* y catálogos RECME.
-5. **Guías SISAS, CONECTA y Soporte Digital (26 documentos HTML autónomos):** Las 25 guías paso a paso de Help Desk ASMAC (con capturas embebidas de SISAS sobre cuentas, contraseña de autorización, ficha al 100 %, Registro Familiar, pagos/facturas, becas, cambios de grupo, Mi Currículum y funciones de Jefe de Grupo) más el directorio de las 4 categorías KB y 11 departamentos de tickets + CONECTA.
-6. **Manuales Oficiales y de Operación (70 documentos):** Incluye el *Manual del Uniforme Actualizado Junio 2026* (107 páginas), el *Manual ExplorApp* (septiembre de 2026), el *Manual del Pie Tierno*, el *Manual Scout de Honores a la Bandera Nacional*, el *Manual Scout de Primeros Auxilios*, el *Manual de Apertura y Cierre de Grupo 2023* y los manuales de administración de grupo, provincia y gestión de adultos.
-7. **Reglamentos, Estatutos y Políticas (24 documentos):** *Estatutos 2023*, *Reglamento 2023*, *Código de Conducta 2025*, *Reglamento de la Corte Nacional de Honor (CNH) 2025*, *Política Nacional A Salvo del Peligro (SFH) 2024*, *Política Nacional de Diversidad, Equidad e Inclusión 2024*, *Política Nacional de Adultos en el Movimiento Scout (AMS) 2024* y *Política Nacional sobre Bullying*.
-8. **Convocatorias y Comunicados Nacionales (187 documentos):** Comunicados oficiales de la Jefatura Scout Nacional (`JSN`), Dirección Nacional de Métodos Educativos (`DNME`) y Comisión Nacional de Programa de Jóvenes (`CNPJ`) sobre la aplicación del esquema *PJOS 2026*, reglas de transición y combinación de insignias con el *ENPE* (`JSN 25.051`, `DNME-CNPJ 25.024`), conteo exacto de insignias por sección (`DNME 26.003–26.017`), *ExplorApp y CarpetApp* (`DNME-CNPJ 26.014`), cuotas nacionales 2026 (`JSN 25.136`), *EEAS 2026*, *Philia 2026* y eventos internacionales (*26° Jamboree Scout Mundial Polonia 2027* y *17° World Scout Moot Taiwán 2029*).
-9. **Revistas Foro Joven y Boletines (44 documentos):** Colección de ediciones de la revista oficial *Foro Joven* y boletines informativos.
-10. **Formatos, Actas y Seguro Scout (66 documentos):** Plantillas editables en Word (`.docx`) y Excel (`.xlsx`), actas de *Diálogo Directo* (`DD.prov.2026.01`), *Mediación Asociativa* (`MED.prov.2026.01`), *Arbitraje* (`AR.2026.PROV.01`), fichas médicas y formatos de aviso de accidente y reembolso de la póliza de Seguro Scout.
-11. **Identidad Gráfica y Recursos Visuales (30 documentos):** Manuales de identidad gráfica institucional, lineamientos de uso de marca del Centenario Scout en México (1926–2026), recursos visuales por sección y emblemas oficiales de RECME, FES, CNPJ y SISAS.
-
-Adicionalmente, el portal incorpora la información estructurada de las páginas oficiales de la ASMAC sobre el **Directorio Nacional y Órganos de Gobierno** (Jefe Scout Nacional, Presidente Nacional, Subcomisiones Nacionales de Sección, Dirección Internacional y Presidentes de Provincia), la **Tienda Scout Nacional en Línea** (`https://tiendaenlinea.scouts.org.mx`), la sede física en Córdoba 73 (Col. Roma Norte, CDMX), los Distribuidores Nacionales Autorizados, el sistema **SISAS**, el **Centro de Capacitación Digital (CDC)**, el **Fondo Scout Nacional**, **Servicio Social**, **Descuento Scout**, **Pago a Plazos**, **Office 365** y el canal **CONECTA**.
+*(Además, desde la barra superior o el botón **Menú** accedes de forma ordenada a **Agentes de Cambio.MX**, **Servicios y Trámites**, **Cambios en Esquemas** y **Descarga App**).*
 
 ---
 
-## 6. Uso detallado de secciones del sitio web
+## 6. Comparativa de Funciones: Web / iOS Web App vs App Android (APK)
 
-1. Ingresa a `https://ey-liam.github.io/bibliotech-scouts/`.
-2. En el **Buscador**, escribe cualquier pregunta en lenguaje natural o selecciona una sección específica (*Manada, Tropa, Comunidad, Clan, Adultos o World Scouting*).
-3. Revisa la respuesta obtenida de los documentos oficiales y, en la parte inferior del recuadro (`Documentos oficiales de donde se obtuvo esta información`), haz clic sobre cualquiera de las fuentes citadas para abrir el lector en la página correspondiente o descargar el archivo original.
-4. En el apartado **Biblioteca Scout**, utiliza la barra de búsqueda y el selector de sección (*Manada, Tropa, Comunidad, Clan, Adultos, Nacional o World Scouting*) o selecciona cualquiera de los estantes temáticos (incluyendo los **39 libros de la Colección Biblioteca del Centenario**) para leer los documentos página por página dentro del navegador.
-5. En el apartado **Catálogo Organizado por Categorías**, filtra por categoría, sección, formato (`PDF`, `DOCX`, `XLSX`, `IMAGE`) o año de publicación.
-6. Usa el menú superior para saltar entre secciones; el enlace activo se resalta automáticamente según el punto de la página en el que te encuentres.
-
----
-
-## 7. Aportes de documentos y reporte de temas faltantes
-
-Cuando una consulta no cuenta con información suficiente dentro de los archivos respaldados, el sistema lo indica de manera transparente sin inventar datos.
-
-> **Estado del proyecto (Fase Beta):** BiblioTech Scout se encuentra actualmente en **versión Beta**, por lo que podría contener detalles o errores imprevistos. Si detectas alguna falla, inconsistencia o deseas sugerir mejoras y aportar documentos oficiales, tu retroalimentación es muy valiosa a través del canal de contacto.
-
-Para aportar nuevos documentos, convocatorias, plantillas, actividades de progresión o reportar algún tema (issue) para su próxima incorporación, puedes escribir al correo:
-
-- **Correo de contacto y aportes:** `rdc.tlxh@gmail.com`
+| Capacidad | Sitio Web (Escritorio / Móvil) | iOS Safari Web App (iPhone / iPad) | App Android (APK Oficial) |
+| :--- | :---: | :---: | :---: |
+| Buscador con `13,516` preguntas y fuentes exactas | En línea | Caché PWA + En línea | 100% Offline nativo |
+| Biblioteca de `599` documentos con visores integrados | En línea | En línea | En línea + Descarga offline |
+| Favoritos (`Guardados`), historial reciente y notas locales | Cookies + `localStorage` | Cookies + `localStorage` | Guardados + Almacenamiento nativo |
+| Modo Claro y Modo Oscuro unificados | Incluido | Incluido | Incluido |
+| Lector PDF nativo (`PdfRenderer`) con zoom y modo noche | Visor web embebido | Visor Safari iOS | Nativo de Android por página |
+| Gestor de descargas por lote (25 o individuales) | Descarga individual | Descarga Safari | Nativo (`Mi biblioteca`) |
+| Actualizaciones en segundo plano (interfaz y `data/`) | Automática al recargar | Automática (`sw.js`) | Descarga atómica OTA integrada |
 
 ---
 
-## 8. Aviso de proyecto independiente y propiedad intelectual
+## 7. Herramientas y Tecnologías Utilizadas
 
-**BiblioTech Scout** es un proyecto personal independiente y sin fines de lucro desarrollado con fines exclusivamente educativos, informativos y de consulta para la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la **Asociación de Scouts de México, A.C. (ASMAC)** ni de la **Organización Mundial del Movimiento Scout (WOSM / World Scouting)**. Todos los manuales, reglamentos, libros, logotipos, insignias, comunicados y documentos oficiales citados o recopilados pertenecen a sus respectivos titulares oficiales.
+El proyecto está construido evitando dependencias pesadas en el cliente y apoyado en herramientas verificables en el repositorio:
+
+- **Frontend e Interfaz Web:** `HTML5` semántico, `CSS3` (variables personalizadas, animaciones GPU, diseño responsivo desktop/tablet/móvil y modos Claro/Oscuro), `JavaScript (ES6+)`.
+- **Web App y Accesibilidad:** PWA (`manifest.webmanifest`, `sw.js` con estrategia *Network-First*), ícono compatible con iOS (`img/apple-touch-icon.png`) y `Web Speech API` para lectura en voz alta.
+- **Procesamiento Documental y Datos (`scripts/`):** `Node.js` para validaciones y compilación de bancos JSON; `Python 3` con `pypdfium2` (extracción de texto PDF), `Pillow` (generación y optimización de portadas JPG e íconos) y `openpyxl` (procesamiento de hojas de cálculo Excel).
+- **Infraestructura y Distribución:** `GitHub Pages` para publicación automática del sitio web y `GitHub Releases` para activos pesados y compilación móvil.
 
 ---
 
-## 9. Historial de versiones anteriores (V4.2 a V3)
+## 8. Novedades Recientes (`8.3.1`)
 
-- **Rediseño completo e integración del menú de descargas:** el panel «Mi biblioteca y descargas» se integra armónicamente en la experiencia visual de BiblioTech Scout. Se añade un botón de acceso directo en el encabezado principal superior (con icono, texto y contador dinámico de archivos guardados), un acceso directo en el menú lateral móvil y un botón flotante estilizado con la estética Scout Aurora.
-- **Corrección de visualización de descargas en la app:** se corrige el orden de pestañas para que el usuario acceda por defecto a «Mis descargas» y vea sus archivos guardados de inmediato al abrir el panel o tras descargar un documento.
-- **Soporte de descarga para todo el catálogo (650 documentos):** se amplía el alcance de descargas offline a la totalidad de los 650 documentos oficiales del catálogo, incorporando soporte nativo tanto para archivos alojados en `files/` como para los 349 documentos distribuidos a través de GitHub Releases.
-- **Gestión y eliminación confiable de archivos guardados:** se reemplazan los botones antiguos por tarjetas legibles con formato, sección, peso y botones dedicados de «Abrir» y «Borrar». Se refuerza el diálogo de confirmación y el borrado seguro en el almacenamiento interno del dispositivo sin fallos silenciosos.
-- **Nuevo estado vacío con llamada a la acción:** cuando el usuario aún no tiene documentos guardados, se muestra una ilustración Scout de «mochila vacía» con orientación clara y un botón directo para explorar el catálogo.
-- **Sincronización de versión combinada:** se actualiza la leyenda unificada a `BETA V4.2 - 1.5 Mobile (10/11/2026)` en la web y la app móvil.
+- **Versionado semántico de 3 dígitos (`8.3.1` / `2.2.16`)** adoptado en todo el sitio, Service Worker (`v32`) y pies de página.
+- **Ícono iOS / Safari optimizado (`img/apple-touch-icon.png`):** icono cuadrado de `512×512` sin esquinas recortadas artificiales para que iOS Safari y *Liquid Glass* apliquen su máscara y refracción de forma nativa.
+- **Unificación visual de mosaicos y secciones:** seis tarjetas de `#secciones` unificadas con retratos hexagonales temáticos y cuatro polaroids consistentes en la galería institucional; se conservaron limpios los bordes redondeados de retrato en `#acerca` sin recortes poligonales y se eliminaron fotos sobrantes en la Colección Centenario.
+- **Contraste en avisos iOS/Android:** mayor legibilidad de `#appDetectedOsBadge` tanto en Modo Claro como en Modo Oscuro.
+- **Telemetría anónima optimizada:** deduplicación de `24` horas (`bt_sent_hashes_v1`), filtrado de sesiones sin interacción real y reporte automático de errores JS inesperados sin afectar navegación ni enviar datos personales.
 
-### Versión V4.1 - 1.4 Mobile (10/11/2026)
+---
 
-- **Motor de respuestas directas y concretas:** en lugar de presentar únicamente citas o listas de documentos cuando el usuario consulta una duda puntual («¿Cómo puedo inscribirme?», «¿Qué pasa si un scout se lastima en un campamento?», «¿Qué se necesita para ser scout?», «¿Cuánto cuesta la membresía?»), el motor de búsqueda analiza la intención, compara con sinónimos temáticos y extrae respuestas estructuradas, accionables y directas con sus fuentes oficiales asociadas.
-- **Sección oficial de descarga de la App Android (`#app`):** se añade el apartado «Lleva BiblioTech Scout en tu bolsillo» con botón de descarga permanente al APK oficial más reciente (`https://github.com/ey-liam/bibliotech-scouts-app/releases/latest/download/bibliotech-scout.apk`), guía de instalación en 3 pasos e indicación clara de que el archivo está libre de virus.
-- **Aviso sobre Play Protect y mitigación de falsos positivos:** aclaración oficial sobre las advertencias heurísticas de Google Play Protect al instalar APKs fuera de Play Store. La versión 1.4 retira el permiso innecesario `REQUEST_INSTALL_PACKAGES` y el autoinstalador interno, dejando la descarga en manos del navegador y reduciendo la superficie de alertas.
-- **Detección nativa inteligente:** cuando la web se ejecuta dentro del APK de Android (modo nativo Capacitor), la sección de descarga `#app` y el enlace «App» del menú superior se ocultan automáticamente para no redundar con la app ya instalada.
-- **Menú y scroll-spy:** se añade el acceso directo «App» en la barra de navegación superior con seguimiento automático de posición en la página.
-- **Sincronización de versión unificada:** se establece la leyenda combinada `BETA V4.1 - 1.4 Mobile (10/11/2026)` tanto en la web como en la app móvil.
+## 9. Estructura Principal del Repositorio
 
-### Versión V4 Beta (05/11/2026)
-
-- **Imagen principal única en el inicio:** en lugar del trío de tres fotos, la pantalla de inicio muestra una sola fotografía grande de «Comunidad de Caminantes» sin recuadro, fundida con el fondo del sitio. En PC se ancla a la esquina derecha y se difumina hacia el texto; en móvil aparece debajo del contenido con desvanecido por todos los lados. Incluye entrada desvanecida y una deriva lenta tipo Ken Burns, respeta `prefers-reduced-motion` y mantiene el clic hacia el buscador.
-
-- **Especialización en Insignias Mundiales y Marco Mundo Mejor (WOSM):** incorporación de 39 preguntas y respuestas exhaustivas fundamentadas en los HTMLs oficiales de World Scouting y el Manual del Uniforme Junio 2026 sobre la Flor de Lis Mundial (diseño Egipto 2024), Mensajeros de la Paz, Earth Tribe (Champions for Nature, Plastic Tide Turners, Scouts Go Solar), Scouts del Mundo (SWA), Insignia de Madera (Wood Badge de 2, 3 y 4 maderos, collar de Dinizulu y Pañoleta de Gilwell), Lobo de Bronce, Diálogo por la Paz (KAICIID), Diálogo Interreligioso, Patrimonito (UNESCO), Life Leaders, Health Allies, JOTA-JOTI, 26° Jamboree Polonia 2027 y 17° Moot Taiwán 2029.
-- **Nueva pestaña temática y pastilla de World Scouting:** se añadió la pestaña «Insignias Mundiales (WOSM)» en el explorador de preguntas y se vinculó directamente a la pastilla de World Scouting del buscador.
-- **Filtro estricto de sección en el buscador:** al seleccionar una sección (como *Comunidad*), el autocompletado en vivo y las preguntas relacionadas bajo cada respuesta se restringen o priorizan a esa sección específica, evitando que aparezcan preguntas o sugerencias de otras secciones (como *Tropa* o *Manada*).
-- **Sincronización instantánea de pestañas temáticas:** al hacer clic en las pastillas de sección del buscador (*Manada, Tropa, Comunidad, Clan, Adultos, World Scouting*), el explorador dinámico de preguntas cambia en tiempo real a las preguntas de esa sección.
-- **Títulos descriptivos para infografías de membresía (Issue #12):** los archivos de imagen previamente titulados `WhatsApp-Image` ahora cuentan con títulos oficiales e informativos sobre insignias de sección, progresión y requisitos de membresía nacional ASMAC.
-- **Apertura de documentos en pestaña nueva sin descarga forzada:** el botón «Abrir en pestaña» ahora abre un visor web limpio para imágenes y visualización adecuada para documentos PDF, evitando que GitHub Releases obligue al navegador a descargarlos.
-- **Modo de lectura optimizado y navegación fluida:** al abrir cualquier documento, el lector inicia siempre en la pestaña principal de lectura y bloquea el desplazamiento del fondo mientras el modal permanece activo.
-- **Buscador más claro:** al elegir una pregunta sugerida, la barra de búsqueda ya no se llena automáticamente; la consulta queda visible en el panel de respuesta y el buscador queda despejado para seguir navegando.
-- **Aviso visible de versión Beta:** incorporación de nota informativa en el bloque de aportes invitando a la membresía a reportar incidencias y compartir retroalimentación.
-- **Botón «Nueva búsqueda»** en el panel de respuesta para limpiar la barra, cerrar la respuesta y volver al buscador.
-- **Filtros de la biblioteca juntos:** los estantes por categoría están junto al buscador y los selectores, antes del banner del Centenario. Al elegir un estante, el foco y la vista pasan a los resultados.
-- **Vista previa de imágenes:** el lector muestra las imágenes remotas (PNG, JPG, WEBP y AVIF) en la pestaña de vista previa, aunque el archivo original se sirva como descarga. Cada imagen abre en esa pestaña con el título del documento y el nombre del archivo visibles.
-- **Pantalla completa del lector:** la barra de acciones (anterior, siguiente, abrir en pestaña, descargar y cerrar) permanece visible. Escape sale del modo o cierra el lector, y el fondo no se desplaza.
-- **Rueda del mouse:** siempre desplaza el documento abierto, incluso con el cursor sobre el encabezado, las pestañas o el fondo del modal, y también sin pantalla completa.
-- **Cambio de lectura:** al alternar entre «Lectura del Documento» y «Texto Extraído / Lectura Rápida», la vista empieza arriba y la rueda funciona de inmediato.
-- **Accesibilidad y rendimiento:** Lighthouse en 100 de accesibilidad, buenas prácticas y SEO; sin errores propios en consola.
-- El contador del sitio se mantiene en **5,451 preguntas y respuestas**.
-
-### Versión V5 (10/11/2026)
-
-- **Lectura directa e interactiva de archivos PDF:** El lector web ahora despliega el documento visual original completo (páginas, tipografía, gráficos e ilustraciones) tanto en archivos locales como en la web pública mediante visor interactivo integrado.
-- **«Abrir en pestaña» visual para PDFs:** Al pulsar «Abrir en pestaña» en un PDF, ya no se muestra texto plano simplificado; ahora abre la visualización completa del documento original con todas sus páginas y formatos.
-- **Descripción de contenido en cada archivo:** Cada documento incluye un resumen y descripción detallada de su contenido dentro del lector interactivo y como extracto de 2 líneas en las tarjetas de la Biblioteca Scout.
-- **Barra de herramientas y controles centrados:** El botón de cierre del modal se trasladó a la fila superior junto al título para evitar que se desplace debajo de la botonera; la barra de acciones se mantiene en una sola fila desplazable sin cortes. Se alinearon y nivelaron los selectores de búsqueda y filtros de estantes en la Biblioteca Scout.
-- **Rediseño cósmico interactivo de Agentes de Cambio.MX:** Rediseño completo inspirado en la plataforma oficial del CNRC para la Red Nacional de Caminantes, con fondo estelar cósmico, bordes cian neón, esquineros de carreras a cuadros, estrellas vectoriales SVG, los 4 Ejes Temáticos con insignias en alta resolución (*Salud y Bienestar, Habilidades para la Vida, Paz y Participación Comunitaria, Medio Ambiente y Sustentabilidad*), los cuatro pilares de la educación y convocatoria oficial de registro de proyectos.
-- **Banco de preguntas ampliado:** Nuevas respuestas fundamentadas sobre proyectos scout, registro en Agentes de Cambio.MX, funciones de la Red Nacional de Caminantes y del CNRC.
-- **Instagram del creador:** Enlace directo verificado a [@liaadurg3](https://www.instagram.com/liaadurg3/) tanto en la sección Propósito / Creador como en el pie de página.
-
-### Versión V3 (04/11/2026)
-
-- Menú superior reordenado según el recorrido real de la página.
-- Nuevo fondo aurora animado con auras, orbes, haz de luz, hexágonos, cubos, anillos y destellos.
-- Secciones translúcidas para integrar el fondo sin perder legibilidad.
-- Corrección del desplazamiento acumulado (CLS) al cargar: el fondo ahora no mueve el contenido.
-- **Banner de la Colección Biblioteca del Centenario:** el título usa texto blanco con sombra suave para garantizar contraste sobre el fondo oscuro, y el logo conserva su proporción real (320×131 px) en un marco rectangular, sin espacios blancos desperdiciados.
-- **Banco ampliado de preguntas frecuentes:** 56 nuevas respuestas fundamentadas, generadas con `scripts/build_faq_v3.js` a partir de `scripts/faq_v3_source.js` y publicadas en `data/faq_v3.json`. Cubren primeros auxilios y seguridad (16), campismo y naturaleza (18), ceremonial y símbolos (10), historia del escultismo mexicano (5), uniforme (4) y protección juvenil (3). El buscador carga ambos bancos en paralelo y elimina duplicados.
-- **Nueva pestaña «Primeros Auxilios y Seguridad»** en el explorador de preguntas, con chips destacados para atragantamiento, purificación de agua y la Política Nacional A Salvo del Peligro.
-- El contador del sitio y el README se actualizaron a **5,451 preguntas y respuestas**.
-
-### Pendientes conocidos
-
-- **«Abrir en pestaña» en archivos alojados solo en el release:** el servidor entrega esos archivos con `Content-Disposition: attachment`, por lo que el navegador los descarga en lugar de mostrarlos. La solución definitiva es publicar copias web en `files/`; se sigue en el issue #12.
-- **Portadas `WhatsApp-Image` de Identidad Gráfica:** 7 registros siguen pendientes de reemplazo por contenido documental útil; también se siguen en el issue #12.
+```text
+bibliotech-scouts/
+├── index.html                  # Estructura semántica principal (12 apartados ordenados)
+├── styles.css                  # Estilos unificados Claro/Oscuro, animaciones y responsive
+├── app.js                      # Buscador, filtros, visores, cookies y telemetría deduplicada
+├── sw.js                       # Service Worker PWA (bibliotech-scout-v32)
+├── manifest.webmanifest        # Manifiesto Web App / PWA
+├── data/                       # catalog.json, questions_bank.json, faq_v3.json, faq_v4.json, kb, chunks
+├── covers/                     # Carátulas optimizadas en JPG (599 documentos)
+├── img/                        # Logotipos, fondos temáticos, galería y apple-touch-icon.png
+├── assets/                     # Recursos gráficos y multimedia locales
+├── scripts/                    # Scripts Python (pypdfium2, Pillow, openpyxl) y Node.js
+└── docs/screenshots/           # Capturas verificadas de escritorio, tablet, móvil, iOS y Android
+```
