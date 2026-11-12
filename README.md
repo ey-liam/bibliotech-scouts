@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** BETA `8.3.1` (Web) • `2.2.16` Mobile  
+**Base de datos:** 12/11/2026 • **Versión:** BETA `8.4.0` (Web) • `2.3.0` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -22,7 +22,7 @@
 
 ## 2. Convención de Versionado de 3 Dígitos (`MAJOR.MINOR.PATCH`)
 
-A partir de la versión **8.3.1** (Web) y **2.2.16** (Android), todo el ecosistema utiliza numeración semántica de tres dígitos:
+A partir de la versión **8.3.1** / **8.4.0** (Web) y **2.3.0** (Android), todo el ecosistema utiliza numeración semántica de tres dígitos:
 
 - **Primer dígito (`X.0.0`):** Cambio mayor, rediseño estructural completo o salto de arquitectura.
 - **Segundo dígito (`X.Y.0`):** Incorporación de nuevas funcionalidades relevantes, apartados o ampliaciones documentales significativas.
@@ -56,7 +56,7 @@ El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **M
 | :---: | :---: |
 | ![BiblioTech Scout en Tablet Web](docs/screenshots/web-tablet.png) | ![BiblioTech Scout en Safari iOS Web App](docs/screenshots/ios-safari-app-web.png) |
 
-### Teléfono y Tablet con App Android (APK `v2.2.16`)
+### Teléfono y Tablet con App Android (APK `v2.3.0`)
 
 | Teléfono Android (`APK`) | Tablet Android (`APK`) |
 | :---: | :---: |
@@ -82,7 +82,7 @@ El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **M
 
 | Capacidad | Sitio Web (Escritorio / Móvil) | iOS Safari Web App (iPhone / iPad) | App Android (APK Oficial) |
 | :--- | :---: | :---: | :---: |
-| Buscador con `13,516` preguntas y fuentes exactas | En línea | Caché PWA + En línea | 100% Offline nativo |
+| Buscador con `13,516` preguntas y fuentes exactas | En línea / Offline opcional | Descarga offline iOS Safari/PWA (`11 MB` o completo) | 100% Offline nativo |
 | Biblioteca de `599` documentos con visores integrados | En línea | En línea | En línea + Descarga offline |
 | Favoritos (`Guardados`), historial reciente y notas locales | Cookies + `localStorage` | Cookies + `localStorage` | Guardados + Almacenamiento nativo |
 | Modo Claro y Modo Oscuro unificados | Incluido | Incluido | Incluido |
@@ -98,18 +98,17 @@ El proyecto está construido evitando dependencias pesadas en el cliente y apoya
 
 - **Frontend e Interfaz Web:** `HTML5` semántico, `CSS3` (variables personalizadas, animaciones GPU, diseño responsivo desktop/tablet/móvil y modos Claro/Oscuro), `JavaScript (ES6+)`.
 - **Web App y Accesibilidad:** PWA (`manifest.webmanifest`, `sw.js` con estrategia *Network-First*), ícono compatible con iOS (`img/apple-touch-icon.png`) y `Web Speech API` para lectura en voz alta.
-- **Procesamiento Documental y Datos (`scripts/`):** `Node.js` para validaciones y compilación de bancos JSON; `Python 3` con `pypdfium2` (extracción de texto PDF), `Pillow` (generación y optimización de portadas JPG e íconos) y `openpyxl` (procesamiento de hojas de cálculo Excel).
-- **Infraestructura y Distribución:** `GitHub Pages` para publicación automática del sitio web y `GitHub Releases` para activos pesados y compilación móvil.
+- **Procesamiento, Build y Calidad (`scripts/` y CI):** `Node.js` (`esbuild` para minificación CSS/JS desde `src/` y validaciones en GitHub Actions `ci.yml`); `Python 3` con `pypdfium2` (extracción de texto PDF), `Pillow` (generación y optimización de portadas JPG e íconos), `openpyxl` (procesamiento de hojas Excel) y `Playwright` (pruebas E2E en escritorio, móvil e iOS).
+- **Infraestructura y Distribución:** `GitHub Pages` para publicación automática del sitio web, `GitHub Actions` para CI automatizado y `Cloudflare Workers Free` (plantilla preparada en `scripts/cloudflare-worker-telemetry.js`).
 
 ---
 
-## 8. Novedades Recientes (`8.3.1`)
+## 8. Novedades Recientes (`8.4.0`)
 
-- **Versionado semántico de 3 dígitos (`8.3.1` / `2.2.16`)** adoptado en todo el sitio, Service Worker (`v32`) y pies de página.
-- **Ícono iOS / Safari optimizado (`img/apple-touch-icon.png`):** icono cuadrado de `512×512` sin esquinas recortadas artificiales para que iOS Safari y *Liquid Glass* apliquen su máscara y refracción de forma nativa.
-- **Unificación visual de mosaicos y secciones:** seis tarjetas de `#secciones` unificadas con retratos hexagonales temáticos y cuatro polaroids consistentes en la galería institucional; se conservaron limpios los bordes redondeados de retrato en `#acerca` sin recortes poligonales y se eliminaron fotos sobrantes en la Colección Centenario.
-- **Contraste en avisos iOS/Android:** mayor legibilidad de `#appDetectedOsBadge` tanto en Modo Claro como en Modo Oscuro.
-- **Telemetría anónima optimizada:** deduplicación de `24` horas (`bt_sent_hashes_v1`), filtrado de sesiones sin interacción real y reporte automático de errores JS inesperados sin afectar navegación ni enviar datos personales.
+- **Modo Offline real en iOS Safari / Web App (`sw.js v33`):** nuevo módulo interactivo en `#app` para descargar al caché local del iPhone/iPad o navegador las `13,516` preguntas, el catálogo y tablas Excel (~`11 MB`, con opción de incluir `chunks.json`), barra de progreso en tiempo real y aviso automático cuando trabajas sin señal.
+- **Depuración y minificación CSS/JS (`src/` -> raíz con `esbuild`):** reducción de `styles.css` (`~312 KB -> ~220 KB`) y `app.js` (`~206 KB -> ~128 KB`), separando la documentación técnica interna a `ARCHITECTURE.md` y limpiando `12` PNGs duplicados en `img/deco/` y `assets/scouts/agentes_cambio/`.
+- **Calidad automatizada en GitHub (`ci.yml`) y atajos de teclado:** validación automática en cada push/PR de sintaxis, JSONs, rutas, desbordes y flujo offline en Playwright, más atajo `/` o `Ctrl+K` para abrir el buscador al instante.
+- **Verificación `SHA-256` en Android y telemetría escalable:** enlace directo a `bibliotech-scout.apk.sha256` en la pestaña Android y soporte listo para conectar un Cloudflare Worker gratuito en `BT_TELEMETRY_CONFIG`.
 
 ---
 
@@ -118,14 +117,16 @@ El proyecto está construido evitando dependencias pesadas en el cliente y apoya
 ```text
 bibliotech-scouts/
 ├── index.html                  # Estructura semántica principal (12 apartados ordenados)
-├── styles.css                  # Estilos unificados Claro/Oscuro, animaciones y responsive
-├── app.js                      # Buscador, filtros, visores, cookies y telemetría deduplicada
-├── sw.js                       # Service Worker PWA (bibliotech-scout-v32)
-├── manifest.webmanifest        # Manifiesto Web App / PWA
+├── src/                        # Fuente editable: styles.css y app.js
+├── styles.css / app.js         # Salida depurada y minificada generada con npm run build
+├── sw.js                       # Service Worker PWA (bibliotech-scout-v33)
+├── manifest.webmanifest        # Manifiesto Web App / PWA (iconos maskable y shortcuts)
 ├── data/                       # catalog.json, questions_bank.json, faq_v3.json, faq_v4.json, kb, chunks
 ├── covers/                     # Carátulas optimizadas en JPG (599 documentos)
 ├── img/                        # Logotipos, fondos temáticos, galería y apple-touch-icon.png
 ├── assets/                     # Recursos gráficos y multimedia locales
-├── scripts/                    # Scripts Python (pypdfium2, Pillow, openpyxl) y Node.js
+├── scripts/                    # build-assets.mjs, validate-site.mjs, smoke_e2e.py, Cloudflare Worker y Python
+├── .github/workflows/ci.yml    # CI automatizado (validación + E2E Playwright)
+├── ARCHITECTURE.md             # Documentación técnica y traspaso interno
 └── docs/screenshots/           # Capturas verificadas de escritorio, tablet, móvil, iOS y Android
 ```

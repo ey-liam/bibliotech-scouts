@@ -1,10 +1,10 @@
 // ============================================================================
 // BiblioTech Scout — Service Worker PWA (Soporte Offline & Cache Resiliente)
 // Creador: Liam Durán - Provincia TLXH (ey-liam)
-// Versión: 8.3.1
+// Versión: 8.4.0
 // ============================================================================
 
-const CACHE_NAME = "bibliotech-scout-v32";
+const CACHE_NAME = "bibliotech-scout-v33";
 const STATIC_ASSETS = [
   "./",
   "index.html",
@@ -14,13 +14,15 @@ const STATIC_ASSETS = [
   "img/logo-flor.png",
   "img/logo-asmac.png",
   "img/logo-wosm.png",
+  "img/apple-touch-icon.png",
   "img/adc/salud.png",
   "img/adc/habilidades.png",
   "img/adc/sustentabilidad.png",
   "img/adc/paz.png",
   "data/catalog.json",
+  "data/knowledge_base.json",
   "data/faq_v3.json",
-  "data/faq_v4.json"
+  "data/spreadsheets.json"
 ];
 
 self.addEventListener("install", (event) => {
@@ -67,7 +69,7 @@ self.addEventListener("fetch", (event) => {
   if (req.method !== "GET") return;
   if (url.origin !== self.location.origin) return;
 
-  // Network-First para HTML, CSS, JS y JSON: evita quedar atrapado en UI antigua
+  // Network-First para HTML, CSS, JS y JSON con respaldo ignoreSearch en modo offline
   if (isFreshFirstRequest(req, url)) {
     event.respondWith(
       fetch(req, { cache: "no-cache" })
@@ -79,10 +81,10 @@ self.addEventListener("fetch", (event) => {
           return networkResponse;
         })
         .catch(() =>
-          caches.match(req).then((cached) => {
+          caches.match(req, { ignoreSearch: true }).then((cached) => {
             if (cached) return cached;
             if (req.mode === "navigate" || req.headers.get("accept")?.includes("text/html")) {
-              return caches.match("index.html");
+              return caches.match("index.html", { ignoreSearch: true });
             }
             return undefined;
           })
@@ -93,7 +95,7 @@ self.addEventListener("fetch", (event) => {
 
   // Cache-First con llenado para portadas e imágenes estáticas
   event.respondWith(
-    caches.match(req).then((cached) => {
+    caches.match(req, { ignoreSearch: true }).then((cached) => {
       if (cached) return cached;
       return fetch(req)
         .then((response) => {

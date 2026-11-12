@@ -2,3 +2,4 @@
 *.webm
 assets/fonts/
 promo-render.html
+node_modules/

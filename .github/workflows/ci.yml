@@ -1,0 +1,51 @@
+name: CI Web & Calidad
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-web-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias de build
+        run: npm ci
+
+      - name: Verificar sintaxis JS y minificados al día
+        run: |
+          node --check src/app.js
+          node --check app.js
+          node --check sw.js
+          node --check scripts/build-assets.mjs
+          node --check scripts/validate-site.mjs
+          npm run check
+
+      - name: Validar JSONs, Service Worker y enlaces locales
+        run: npm run validate
+
+      - name: Configurar Python y Playwright para E2E
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar Playwright Chromium
+        run: |
+          pip install playwright
+          playwright install chromium
+
+      - name: Ejecutar pruebas E2E (Escritorio, Móvil y Offline PWA)
+        run: python scripts/smoke_e2e.py

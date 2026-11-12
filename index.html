@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=30" />
+  <link rel="stylesheet" href="styles.css?v=31" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -172,6 +172,12 @@
     <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
   </header>
   <div class="nav-backdrop" id="navBackdrop" hidden></div>
+  <div id="webOfflineNetBanner" class="web-offline-net-banner hidden" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+      <path d="M1 1l22 22M16.72 11.06A10.94 10.94 0 0 1 19 12.55M5 12.55a10.94 10.94 0 0 1 5.17-2.39M10.71 5.05A16 16 0 0 1 22.58 9M1.42 9a15.91 15.91 0 0 1 4.7-2.88M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" />
+    </svg>
+    <span>Sin conexión a internet · Navegando con los datos guardados en caché local.</span>
+  </div>
 
   <!-- FONDO ANIMADO GLOBAL DE LA PÁGINA (BURBUJAS DE COLOR, ONDAS Y FORMAS GEOMÉTRICAS 3D EN MOVIMIENTO) -->
   <div class="global-animated-bg" aria-hidden="true">
@@ -1636,7 +1642,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 2.2.16 Mobile · Web 8.3.1</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 2.3.0 Mobile · Web 8.4.0</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
             <strong>No es necesario descargar nada:</strong> puedes disfrutar de la mayoría de herramientas, el buscador de 13,516 preguntas y los visores directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
@@ -1678,7 +1684,8 @@
             </div>
 
             <p class="app-download-meta">
-              Archivo: <code>bibliotech-scout.apk</code> · Aprox. 53 MB · Firma oficial de BiblioTech Scout
+              Archivo: <code>bibliotech-scout.apk</code> · Aprox. 53 MB · Firma oficial ·
+              <a href="https://github.com/ey-liam/bibliotech-scouts-app/releases/latest/download/bibliotech-scout.apk.sha256" target="_blank" rel="noopener noreferrer">Verificar SHA-256 ↗</a>
             </p>
 
             <p class="app-download-safe">
@@ -1709,6 +1716,33 @@
             <p class="app-download-safe">
               <strong>Ajustes para experiencia fluida en iPhone:</strong> esta versión ya respeta el notch / Dynamic Island, desactiva el zoom automático en buscadores y mantiene las preguntas en caché local. En iPhone ProMotion (120 Hz) puedes activar animaciones a 120 cps en <em>Ajustes → Apps → Safari → Avanzado → Cambios de función → desactivar «Prefer Page Rendering Updates near 60fps»</em>.
             </p>
+            <div id="iosOfflineCard" class="ios-offline-card">
+              <div class="ios-offline-card-head">
+                <strong>Modo sin conexión para iPhone / Navegador</strong>
+                <span id="iosOfflineStatusBadge" class="ios-offline-badge">Sin descargar</span>
+              </div>
+              <p class="ios-offline-desc">
+                Guarda las <strong>13,516 preguntas</strong>, el catálogo y las tablas Excel dentro de Safari (aprox. <code>11 MB</code>) para consultarlos en campamentos sin señal.
+              </p>
+              <label class="ios-offline-check">
+                <input type="checkbox" id="iosIncludeChunksToggle" />
+                <span>Incluir fragmentos de lectura profunda (<code>+13.5 MB</code> adicionales)</span>
+              </label>
+              <div id="iosOfflineProgressWrap" class="ios-offline-progress-wrap hidden" aria-live="polite">
+                <div class="ios-offline-progress-track">
+                  <div id="iosOfflineProgressBar" class="ios-offline-progress-bar" style="width:0%"></div>
+                </div>
+                <span id="iosOfflineProgressText" class="ios-offline-progress-text">Preparando caché offline...</span>
+              </div>
+              <div class="ios-offline-actions">
+                <button type="button" id="btnDownloadWebOffline" class="ios-offline-btn-primary">
+                  Descargar modo sin conexión
+                </button>
+                <button type="button" id="btnClearWebOffline" class="ios-offline-btn-secondary hidden">
+                  Liberar caché
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1768,7 +1802,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v32</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v33</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -1931,7 +1965,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 12/11/2026 • BETA 8.3.1 - 2.2.16 Mobile (12/11/2026) ·
+          Base de datos: 12/11/2026 • BETA 8.4.0 - 2.3.0 Mobile (12/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">

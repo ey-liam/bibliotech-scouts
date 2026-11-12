@@ -21,6 +21,32 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "img/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buscador Scout",
+      "short_name": "Buscar",
+      "url": "./#buscador",
+      "icons": [{ "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Biblioteca Scout",
+      "short_name": "Biblioteca",
+      "url": "./#biblioteca",
+      "icons": [{ "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Modo Offline iOS",
+      "short_name": "Offline",
+      "url": "./#app",
+      "icons": [{ "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }
