@@ -20,10 +20,20 @@ def start_server(port: int = 18775):
 
 def dismiss_consent(page):
     try:
+        wbtn = page.locator("#startWelcomeModalBtn")
+        if wbtn.is_visible(timeout=2500):
+            wbtn.click()
+            page.locator("#welcomeModal").wait_for(state="hidden", timeout=2000)
+    except Exception:
+        pass
+    try:
         btn = page.locator("#consentAcceptBtn")
-        btn.wait_for(state="visible", timeout=3500)
-        btn.click()
-        page.locator("#cookieConsentBanner").wait_for(state="hidden", timeout=2000)
+        if btn.is_visible(timeout=1000):
+            btn.click()
+            page.locator("#cookieConsentBanner").wait_for(state="hidden", timeout=2000)
+    except Exception:
+        pass
+    try:
         page.evaluate("document.querySelectorAll('.bt-web-toast').forEach(el => el.remove())")
     except Exception:
         pass
@@ -50,7 +60,19 @@ def run_e2e(test_webkit: bool = False):
             page.on("console", lambda msg: errors.append(f"console.{msg.type}: {msg.text}") if msg.type == "error" else None)
 
             page.goto("http://127.0.0.1:18775/", wait_until="networkidle")
+
+            # Verificar que el modal de bienvenida + QR aparece en la primera visita
+            page.wait_for_selector("#welcomeModal:not(.hidden)", timeout=4000)
+            qr_loaded = page.evaluate(
+                "() => { const img = document.querySelector('#welcomeModal img[src*=\"qr-bibliotech.png\"]'); return Boolean(img && img.complete && img.naturalWidth > 100); }"
+            )
+            assert qr_loaded, "El código QR de bienvenida no cargó correctamente"
             dismiss_consent(page)
+            assert page.evaluate("localStorage.getItem('bt_welcome_seen_v1') === '1'"), "No se guardó bt_welcome_seen_v1"
+
+            # Verificar que al recargar YA NO aparece automáticamente
+            page.reload(wait_until="networkidle")
+            assert page.locator("#welcomeModal").evaluate("el => el.classList.contains('hidden')"), "El modal de bienvenida volvió a salir tras recargar"
 
             assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Desktop horizontal overflow"
 
@@ -60,6 +82,13 @@ def run_e2e(test_webkit: bool = False):
             page.wait_for_selector("#answerContainer:not(.hidden)", timeout=15000)
             ans_text = page.locator("#answerBody").inner_text()
             assert len(ans_text.strip()) > 30, "Respuesta vacía en buscador"
+
+            # Probar pregunta con topic_id y pregunta sobre BiblioTech
+            page.fill("#askInput", "¿Qué es BiblioTech Scout y quién la creó?")
+            page.click("#askSubmitBtn")
+            page.wait_for_timeout(250)
+            ans_bt = page.locator("#answerBody").inner_text()
+            assert "Liam Durán" in ans_bt, "Respuesta sobre BiblioTech no incluyó autor"
 
             # Probar atajo '/' y modo oscuro
             page.keyboard.press("Escape")

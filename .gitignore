@@ -2,5 +2,7 @@
 *.webm
 recordings/
 assets/fonts/
+fuentes/
+HERRAMIENTAS_Y_TECNOLOGIAS.md
 promo-render.html
 node_modules/

@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** BETA `8.4.4` (Web) • `2.3.4` Mobile  
+**Base de datos:** 12/11/2026 • **Versión:** BETA `8.4.5` (Web) • `2.3.5` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -13,7 +13,7 @@
 
 **BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, plantillas RECME, reglamentos, libros históricos, avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta de donde proviene cada dato.
 
-- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`13,516` preguntas y respuestas verificadas), el catálogo completo (`599` documentos), el modo oscuro, los visores integrados y los recursos rápidos funcionan directamente desde cualquier navegador de escritorio, tablet o celular.
+- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`13,520` preguntas y respuestas verificadas), el catálogo completo (`599` documentos), el modo oscuro, los visores integrados y los recursos rápidos funcionan directamente desde cualquier navegador de escritorio, tablet o celular.
 - **Uso sin conexión (Offline):**
   - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS / Liquid Glass (`img/apple-touch-icon.png`) y caché PWA (`sw.js`).
   - En **Android (APK oficial):** la app nativa empaca las preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de hasta los `599` documentos.
@@ -22,7 +22,7 @@
 
 ## 2. Convención de Versionado de 3 Dígitos (`MAJOR.MINOR.PATCH`)
 
-A partir de la versión **8.4.4** (Web) y **2.3.4** (Android), todo el ecosistema utiliza numeración semántica de tres dígitos:
+A partir de la versión **8.4.5** (Web) y **2.3.5** (Android), todo el ecosistema utiliza numeración semántica de tres dígitos:
 
 - **Primer dígito (`X.0.0`):** Cambio mayor, rediseño estructural completo o salto de arquitectura.
 - **Segundo dígito (`X.Y.0`):** Incorporación de nuevas funcionalidades relevantes, apartados o ampliaciones documentales significativas.

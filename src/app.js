@@ -363,6 +363,7 @@ function releaseDialogFocusTrap(dialogEl) {
 
 async function initApp() {
   initPrivacyAndTelemetry();
+  setupWelcomeModal();
   setupIosExperience();
   setupBugReportModal();
   setupHeaderUI();
@@ -604,16 +605,46 @@ function setupScrollAnimations() {
 // EXPLORADOR DINAMICO DE LAS +5,412 PREGUNTAS + AUTOCOMPLETADO EN VIVO
 // ============================================================================
 const DEFAULT_FEATURED_QUESTIONS = [
-  "¿En dónde encuentro un Grupo Scout?",
-  "¿Cómo inscribo a mi hijo o hija en los Scouts, en dónde se registra y con quién tengo que hablar comúnmente del registro?",
-  "¿Qué es el SISAS, qué es ExplorApp y qué es CarpetApp?",
-  "¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?",
-  "¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?",
-  "¿Cómo se aplica el nuevo esquema PJOS y pueden combinarse las nuevas insignias con las antiguas?",
-  "¿Dónde compro el uniforme scout?",
-  "¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?",
-  "¿Qué es la plataforma RECME y qué significan SCNCD y CNAMS?",
-  "¿Qué es la Política Nacional A Salvo del Peligro?"
+  {
+    label: "¿En dónde encuentro un Grupo Scout?",
+    q: "¿En dónde encuentro un Grupo Scout?"
+  },
+  {
+    label: "¿Cómo inscribo a mi hijo y con quién hablo?",
+    q: "¿Cómo inscribo a mi hijo o hija en los Scouts, en dónde se registra y con quién tengo que hablar comúnmente del registro?"
+  },
+  {
+    label: "¿Qué son SISAS, ExplorApp y CarpetApp?",
+    q: "¿Qué es el SISAS, qué es ExplorApp y qué es CarpetApp?"
+  },
+  {
+    label: "¿Dónde subo mis proyectos y qué formatos ocupo?",
+    q: "¿En dónde puedo subir mis proyectos como Caminante (Agentes de Cambio.MX), cómo se hace un proyecto y qué formatos se necesitan?"
+  },
+  {
+    label: "¿Qué son el CPRC y el CNRC y quiénes lo integran?",
+    q: "¿Qué es el CPRC y qué es el CNRC (Comité Nacional de la Red de Caminantes) y quiénes son sus integrantes actuales?"
+  },
+  {
+    label: "¿Cómo aplicar el PJOS y combinar insignias?",
+    q: "¿Cómo se aplica el nuevo esquema PJOS y pueden combinarse las nuevas insignias con las antiguas?"
+  },
+  {
+    label: "¿Dónde compro el uniforme scout?",
+    q: "¿Dónde compro el uniforme scout?"
+  },
+  {
+    label: "¿Qué es Meztitla y dónde se ubica?",
+    q: "¿Qué es el Centro Scout o Campo Escuela Meztitla y dónde se ubica?"
+  },
+  {
+    label: "¿Qué es RECME y qué significan SCNCD y CNAMS?",
+    q: "¿Qué es la plataforma RECME y qué significan SCNCD y CNAMS?"
+  },
+  {
+    label: "¿Qué es la Política A Salvo del Peligro?",
+    q: "¿Qué es la Política Nacional A Salvo del Peligro?"
+  }
 ];
 
 function renderExplorerQuestions(cat, shuffle = false) {
@@ -625,10 +656,11 @@ function renderExplorerQuestions(cat, shuffle = false) {
 
   if (cat === "Destacadas" && !shuffle && (!STATE.activeAskSection || STATE.activeAskSection === "all")) {
     container.innerHTML = DEFAULT_FEATURED_QUESTIONS.slice(0, count)
-      .map(
-        (qText, idx) =>
-          `<button type="button" class="quick-q-chip" style="animation-delay:${idx * 24}ms" data-query="${escapeHtml(qText)}">${escapeHtml(qText)}</button>`
-      )
+      .map((item, idx) => {
+        const qText = typeof item === "string" ? item : item.q;
+        const label = typeof item === "string" ? item : item.label || item.q;
+        return `<button type="button" class="quick-chip chip-featured" style="animation-delay:${idx * 24}ms" data-query="${escapeHtml(qText)}">${escapeHtml(label)}</button>`;
+      })
       .join("");
     return;
   }
@@ -825,9 +857,17 @@ function updateAutocompleteDropdown(rawInput) {
 
 function findDocByFilename(fname) {
   const nf = normalizeStr(fname);
+  if (!nf) return null;
   if (STATE.docsByFilename[nf]) return STATE.docsByFilename[nf];
   for (const [k, d] of Object.entries(STATE.docsByFilename)) {
     if (k.includes(nf) || nf.includes(k)) return d;
+  }
+  const codeMatch = nf.match(/\b\d{2}\.\d{2,3}\b/);
+  if (codeMatch) {
+    const code = codeMatch[0];
+    for (const [k, d] of Object.entries(STATE.docsByFilename)) {
+      if (k.includes(code)) return d;
+    }
   }
   return null;
 }
@@ -1438,7 +1478,8 @@ function rankQuestionBank(query) {
   let bestBody = 0;
 
   for (const item of bank) {
-    if (!item.ans || !item._nq) continue;
+    const hasTopic = Boolean(item.topic_id && STATE.topicsById[item.topic_id]);
+    if ((!item.ans && !hasTopic) || !item._nq) continue;
     if (isGenericDocQuestion(item.q)) continue;
     let hits = 0;
     for (const token of qTokens) if (item._search.has(token)) hits++;
@@ -1450,7 +1491,8 @@ function rankQuestionBank(query) {
 
     // La respuesta se tokeniza solo para los candidatos que ya coinciden con la
     // pregunta. Así el índice inicial sigue siendo ligero en el teléfono.
-    const answerTokens = item._answer || (item._answer = expandTokenSet(item.ans || ""));
+    const bodySource = item.ans || (hasTopic ? STATE.topicsById[item.topic_id].content : "");
+    const answerTokens = item._answer || (item._answer = expandTokenSet(bodySource || ""));
     let bodyHits = 0;
     for (const token of qTokens) if (answerTokens.has(token)) bodyHits++;
     const bodyCoverage = bodyHits / Math.max(1, qSet.size);
@@ -1467,6 +1509,12 @@ function rankQuestionBank(query) {
       bestCoverage = coverage;
       bestBody = bodyCoverage;
     }
+  }
+  if (best && !best.ans && best.topic_id && STATE.topicsById[best.topic_id]) {
+    best = {
+      ...best,
+      ans: buildTopicAnswer(STATE.topicsById[best.topic_id], query, 1500)
+    };
   }
   return { item: best, score: bestScore, coverage: bestCoverage, bodyCoverage: bestBody };
 }
@@ -1706,6 +1754,11 @@ function buildAnswerLocally(query) {
   const exact = bank.find((item) => item._nq === qNorm);
   if (exact && exact.ans && !isGenericDocQuestion(exact.q)) {
     return { kind: "exact", text: exact.ans, item: exact };
+  }
+  if (exact && exact.topic_id && STATE.topicsById[exact.topic_id]) {
+    const tObj = STATE.topicsById[exact.topic_id];
+    const text = buildTopicAnswer(tObj, query, 1500);
+    return { kind: "topic", text, topic: tObj, score: 95, topics: [{ topic: tObj, score: 95 }] };
   }
 
   const topicRank = rankTopics(query);
@@ -4331,7 +4384,7 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v37";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v38";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupGlobalShortcuts() {
@@ -4399,6 +4452,8 @@ function setupWebOfflineManager() {
     "img/logo-asmac.png",
     "img/logo-wosm.png",
     "img/apple-touch-icon.png",
+    "img/qr-bibliotech.png",
+    "img/qr-bibliotech.svg",
     "data/catalog.json",
     "data/knowledge_base.json",
     "data/faq_v3.json",
@@ -4419,7 +4474,7 @@ function setupWebOfflineManager() {
       if (hasBank && hasFaq4) {
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (13,516 preg.)";
+          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (13,520 preg.)";
         }
         if (btnDownload) {
           btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
@@ -4491,6 +4546,118 @@ function setupWebOfflineManager() {
   }
 
   refreshStatus();
+}
+
+const BT_WELCOME_SEEN_KEY = "bt_welcome_seen_v1";
+
+function setupWelcomeModal() {
+  const modal = document.getElementById("welcomeModal");
+  if (!modal) return;
+
+  const openMenuBtn = document.getElementById("openWelcomeMenuBtn");
+  const openFooterBtn = document.getElementById("openWelcomeFooterBtn");
+  const closeBtn = document.getElementById("closeWelcomeModalBtn");
+  const skipBtn = document.getElementById("skipWelcomeModalBtn");
+  const startBtn = document.getElementById("startWelcomeModalBtn");
+  const shareQrBtn = document.getElementById("shareWelcomeQrBtn");
+  const downloadQrBtn = document.getElementById("downloadWelcomeQrBtn");
+  const openPrivacyBtn = document.getElementById("welcomeOpenPrivacyBtn");
+
+  const closeMenuIfOpen = () => {
+    const header = document.querySelector(".main-header");
+    const navToggle = document.getElementById("navToggle");
+    const navBackdrop = document.getElementById("navBackdrop");
+    if (header) header.classList.remove("nav-open");
+    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+    if (navBackdrop) navBackdrop.hidden = true;
+  };
+
+  const openWelcome = () => {
+    closeMenuIfOpen();
+    modal.classList.remove("hidden");
+    activateDialogFocusTrap(modal, "#startWelcomeModalBtn");
+  };
+
+  const dismissWelcome = (acceptConsentIfUnset = true) => {
+    try {
+      localStorage.setItem(BT_WELCOME_SEEN_KEY, "1");
+      if (acceptConsentIfUnset && !localStorage.getItem(BT_CONSENT_KEY)) {
+        localStorage.setItem(BT_CONSENT_KEY, "accepted");
+        renderRecentQueriesUI();
+        setupFullActivityObservers();
+      }
+    } catch (_) {}
+    modal.classList.add("hidden");
+    releaseDialogFocusTrap(modal);
+  };
+
+  let alreadySeen = false;
+  try {
+    alreadySeen = localStorage.getItem(BT_WELCOME_SEEN_KEY) === "1";
+  } catch (_) {}
+
+  if (!alreadySeen) {
+    openWelcome();
+  }
+
+  if (openMenuBtn) openMenuBtn.addEventListener("click", openWelcome);
+  if (openFooterBtn) openFooterBtn.addEventListener("click", openWelcome);
+  if (closeBtn) closeBtn.addEventListener("click", () => dismissWelcome(true));
+  if (skipBtn) skipBtn.addEventListener("click", () => dismissWelcome(true));
+  if (startBtn) {
+    startBtn.addEventListener("click", () => {
+      dismissWelcome(true);
+      showWebToast("¡Bienvenido a BiblioTech Scout! Siempre Listos.");
+    });
+  }
+
+  if (openPrivacyBtn) {
+    openPrivacyBtn.addEventListener("click", () => {
+      dismissWelcome(false);
+      const consentOverlay = document.getElementById("cookieConsentBanner");
+      if (consentOverlay) consentOverlay.classList.remove("hidden");
+    });
+  }
+
+  if (shareQrBtn) {
+    shareQrBtn.addEventListener("click", async () => {
+      const shareUrl = "https://ey-liam.github.io/bibliotech-scouts/";
+      const shareData = {
+        title: "BiblioTech Scout — Biblioteca e Inteligencia Documental Scout",
+        text: "Explora más de 750 documentos y 13,500 respuestas oficiales scouts en BiblioTech Scout:",
+        url: shareUrl
+      };
+      enqueueAnonTelemetry({ t: "enlace_externo", label: "Compartir QR / Sitio Bienvenida", url: shareUrl }, false);
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (_) {}
+      }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(shareUrl);
+          showWebToast("¡Enlace copiado! Compártelo con tu Grupo o Provincia.");
+          return;
+        }
+      } catch (_) {}
+      showWebToast(`Comparte el enlace: ${shareUrl}`);
+    });
+  }
+
+  if (downloadQrBtn) {
+    downloadQrBtn.addEventListener("click", () => {
+      enqueueAnonTelemetry({ t: "doc_descarga", origen: "bienvenida_qr", doc: "QR BiblioTech Scout" }, false);
+      showWebToast("Descargando código QR oficial para compartir...");
+    });
+  }
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) dismissWelcome(true);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) dismissWelcome(true);
+  });
 }
 
 function setupBugReportModal() {
@@ -4616,19 +4783,16 @@ function setupBugReportModal() {
       const primaryEndpoint = (BT_TELEMETRY_CONFIG.workerEndpoint || "").trim();
       const fallbackEndpoint = `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`;
       const endpoints = primaryEndpoint ? [primaryEndpoint, fallbackEndpoint] : [fallbackEndpoint];
-      for (const ep of endpoints) {
-        try {
-          const res = await fetch(ep, {
+      const results = await Promise.allSettled(
+        endpoints.map((ep) =>
+          fetch(ep, {
             method: "POST",
             headers: { "Content-Type": "application/json", Accept: "application/json" },
             body: payloadBody
-          });
-          if (res && res.ok) {
-            sentOk = true;
-            break;
-          }
-        } catch (_) {}
-      }
+          })
+        )
+      );
+      sentOk = results.some((r) => r.status === "fulfilled" && r.value && r.value.ok);
     }
 
     if (submitBtn) submitBtn.disabled = false;
@@ -5135,10 +5299,9 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
     const fallbackEndpoint = `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`;
     const endpoints = primaryEndpoint ? [primaryEndpoint, fallbackEndpoint] : [fallbackEndpoint];
 
-    let sentOk = false;
-    for (const ep of endpoints) {
-      try {
-        const res = await fetch(ep, {
+    const results = await Promise.allSettled(
+      endpoints.map((ep) =>
+        fetch(ep, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -5146,15 +5309,10 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
           },
           body: payloadBody,
           keepalive: true
-        });
-        if (res && res.ok) {
-          sentOk = true;
-          break;
-        }
-      } catch (_) {
-        // Si Cloudflare alcanza su límite gratuito o falla red, pasa automáticamente al respaldo FormSubmit
-      }
-    }
+        })
+      )
+    );
+    const sentOk = results.some((r) => r.status === "fulfilled" && r.value && r.value.ok);
 
     if (sentOk) {
       markHashesAsSent(batch);
@@ -5413,10 +5571,13 @@ function initPrivacyAndTelemetry() {
     if (overlay) overlay.classList.add("hidden");
   } else {
     let saved = null;
+    let welcomeSeen = false;
     try {
       saved = localStorage.getItem(BT_CONSENT_KEY);
+      welcomeSeen = localStorage.getItem(BT_WELCOME_SEEN_KEY) === "1";
     } catch (_) {}
-    if (!saved && overlay) {
+    const welcomeModal = document.getElementById("welcomeModal");
+    if (!saved && overlay && (!welcomeModal || welcomeSeen)) {
       overlay.classList.remove("hidden");
     }
   }
