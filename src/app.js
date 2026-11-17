@@ -363,9 +363,12 @@ function releaseDialogFocusTrap(dialogEl) {
 
 async function initApp() {
   initPrivacyAndTelemetry();
+  setupVersionAndUpdateChecker();
   setupWelcomeModal();
   setupIosExperience();
   setupBugReportModal();
+  setupAutofillVault();
+  setupScoutForum();
   setupHeaderUI();
   setupContactEmailUI();
   bindEvents();
@@ -420,7 +423,40 @@ async function initApp() {
     if ("serviceWorker" in navigator && !window.Capacitor) {
       navigator.serviceWorker
         .register("sw.js", { updateViaCache: "none" })
-        .then((reg) => reg && typeof reg.update === "function" && reg.update())
+        .then((reg) => {
+          if (!reg) return;
+          if (reg.waiting && typeof window.__btShowUpdateBanner === "function") {
+            window.__btShowUpdateBanner(
+              "Hay una nueva versión de archivos lista para aplicar en tu navegador o App Web.",
+              () => {
+                try {
+                  reg.waiting.postMessage({ type: "SKIP_WAITING" });
+                } catch (_) {}
+              }
+            );
+          }
+          reg.addEventListener("updatefound", () => {
+            const installing = reg.installing;
+            if (!installing) return;
+            installing.addEventListener("statechange", () => {
+              if (
+                installing.state === "installed" &&
+                navigator.serviceWorker.controller &&
+                typeof window.__btShowUpdateBanner === "function"
+              ) {
+                window.__btShowUpdateBanner(
+                  "Se detectaron cambios recientes en archivos y funciones. Actualiza para ver la última versión.",
+                  () => {
+                    try {
+                      if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+                    } catch (_) {}
+                  }
+                );
+              }
+            });
+          });
+          if (typeof reg.update === "function") reg.update();
+        })
         .catch(() => {});
     }
   } catch (err) {
@@ -456,7 +492,7 @@ function setupHeaderUI() {
     document.body.classList.add("nav-open");
     if (toggle) toggle.setAttribute("aria-expanded", "true");
     if (backdrop) backdrop.hidden = false;
-    if (firstNavLink) firstNavLink.focus();
+    if (firstNavLink) firstNavLink.focus({ preventScroll: true });
   };
 
   if (toggle) {
@@ -525,7 +561,7 @@ function setupScrollAnimations() {
           }
         });
       },
-      { threshold: 0.08, rootMargin: "0px 0px -24px 0px" }
+      { threshold: 0.01, rootMargin: "120px 0px 120px 0px" }
     );
     targets.forEach((el, idx) => {
       el.classList.add("reveal-on-scroll");
@@ -2996,7 +3032,6 @@ function bindEvents() {
   const secDrawer = document.getElementById("askSectionDrawer");
   const secBadge = document.getElementById("askSectionActiveBadge");
   const randomPoolBtn = document.getElementById("randomPoolBtn");
-  const shuffleBtn = document.getElementById("shuffleQuestionsBtn");
 
   if (toggleSecBtn && secDrawer) {
     toggleSecBtn.addEventListener("click", () => {
@@ -3024,13 +3059,6 @@ function bindEvents() {
       STATE.activeQCat = "__RANDOM__";
       await loadQuestionBank();
       renderExplorerQuestions("__RANDOM__", true);
-    });
-  }
-
-  if (shuffleBtn) {
-    shuffleBtn.addEventListener("click", async () => {
-      await loadQuestionBank();
-      renderExplorerQuestions(STATE.activeQCat || "__RANDOM__", true);
     });
   }
 
@@ -3894,6 +3922,16 @@ function setupReaderQoLHandlers(doc, fullText) {
     };
   }
 
+  const reportDocBtn = document.getElementById("btnReportDoc");
+  if (reportDocBtn) {
+    reportDocBtn.onclick = () => {
+      if (typeof window.__btOpenBugReport === "function") {
+        const docLabel = doc.filename ? `${doc.title || doc.id} (${doc.filename})` : (doc.title || doc.id);
+        window.__btOpenBugReport("Lector / Visor PDF o Excel", docLabel, false);
+      }
+    };
+  }
+
   // Botón Guardar en este navegador
   const pinBtn = document.getElementById("btnPinDoc") || document.getElementById("btnPinBackpack");
   if (pinBtn) {
@@ -4384,8 +4422,143 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v38";
+const APP_WEB_VERSION = "9.0.0";
+const APP_MOBILE_VERSION = "3.0.0";
+const APP_COOKIE_SCHEMA = "9.0";
+const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
+const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v39";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
+
+function setupVersionAndUpdateChecker() {
+  const banner = document.getElementById("updateAvailableBanner");
+  const textEl = document.getElementById("updateAvailableText");
+  const applyBtn = document.getElementById("btnApplyAppUpdate");
+  const dismissBtn = document.getElementById("btnDismissAppUpdate");
+  if (!banner || !textEl) return;
+
+  let pendingAction = null;
+
+  const showBanner = (message, onApplyFn = null, applyLabel = "Actualizar ahora") => {
+    textEl.textContent = message;
+    if (applyBtn) applyBtn.textContent = applyLabel;
+    pendingAction = typeof onApplyFn === "function" ? onApplyFn : null;
+    banner.classList.remove("hidden");
+  };
+
+  window.__btShowUpdateBanner = showBanner;
+
+  const markVersionSeen = () => {
+    try {
+      localStorage.setItem(BT_SEEN_VERSION_KEY, APP_WEB_VERSION);
+      localStorage.setItem(BT_COOKIE_SCHEMA_KEY, APP_COOKIE_SCHEMA);
+    } catch (_) {}
+  };
+
+  if (dismissBtn) {
+    dismissBtn.addEventListener("click", () => {
+      markVersionSeen();
+      banner.classList.add("hidden");
+    });
+  }
+
+  if (applyBtn) {
+    applyBtn.addEventListener("click", async () => {
+      markVersionSeen();
+      if (pendingAction) {
+        try {
+          await pendingAction();
+        } catch (_) {}
+      }
+      if ("caches" in window && !window.Capacitor) {
+        try {
+          const keys = await caches.keys();
+          await Promise.all(keys.filter((k) => k !== WEB_OFFLINE_CACHE).map((k) => caches.delete(k)));
+        } catch (_) {}
+      }
+      if ("serviceWorker" in navigator && !window.Capacitor) {
+        try {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg && reg.waiting) {
+            reg.waiting.postMessage({ type: "SKIP_WAITING" });
+          } else if (reg && typeof reg.update === "function") {
+            await reg.update();
+          }
+        } catch (_) {}
+      }
+      window.location.reload();
+    });
+  }
+
+  // 1) Detectar cambios importantes respecto a la última versión/cookies guardadas en este navegador o app
+  try {
+    const seenVersion = localStorage.getItem(BT_SEEN_VERSION_KEY);
+    const seenSchema = localStorage.getItem(BT_COOKIE_SCHEMA_KEY);
+    const hasPriorUserData = Boolean(
+      seenVersion ||
+      seenSchema ||
+      localStorage.getItem("bt_cookie_consent_v1") ||
+      localStorage.getItem("bt_saved_pins") ||
+      localStorage.getItem("bt_recent_questions") ||
+      localStorage.getItem("bt_autofill_profile_v1") ||
+      localStorage.getItem("bt_forum_state_v1") ||
+      localStorage.getItem(WEB_OFFLINE_META_KEY)
+    );
+
+    if (hasPriorUserData && (seenVersion !== APP_WEB_VERSION || seenSchema !== APP_COOKIE_SCHEMA)) {
+      let msg = `BiblioTech Scout se actualizó a la versión ${APP_WEB_VERSION} con La Fogata y cambios en archivos y preferencias locales.`;
+      try {
+        const offlineMetaRaw = localStorage.getItem(WEB_OFFLINE_META_KEY);
+        const offlineMeta = offlineMetaRaw ? JSON.parse(offlineMetaRaw) : null;
+        if (offlineMeta && offlineMeta.version !== APP_WEB_VERSION) {
+          msg = `Hay cambios importantes (versión ${APP_WEB_VERSION} con La Fogata). Actualiza para sincronizar archivos y tu paquete offline.`;
+        }
+      } catch (_) {}
+      showBanner(msg);
+    } else if (!hasPriorUserData) {
+      markVersionSeen();
+    }
+  } catch (_) {}
+
+  // 2) Comprobar contra el servidor si ya hay una versión más reciente publicada (Web, iOS Web App o Android)
+  if (navigator.onLine !== false) {
+    const remoteUrl = window.Capacitor
+      ? `https://ey-liam.github.io/bibliotech-scouts/version.json?t=${Date.now()}`
+      : `version.json?t=${Date.now()}`;
+    fetch(remoteUrl, { cache: "no-store" })
+      .then((res) => (res && res.ok ? res.json() : null))
+      .then((remote) => {
+        if (!remote || typeof remote !== "object") return;
+        const remoteWeb = String(remote.version || "").trim();
+        const remoteMobile = String(remote.mobileVersion || "").trim();
+        const remoteSchema = String(remote.schemaCookieVersion || "").trim();
+        const remoteCache = String(remote.cache || "").trim();
+
+        if (window.Capacitor) {
+          if (remoteMobile && remoteMobile !== APP_MOBILE_VERSION) {
+            showBanner(
+              `Nueva versión ${remoteMobile} disponible para BiblioTech Scout Mobile (Web ${remoteWeb || APP_WEB_VERSION}).`,
+              () => {
+                window.open("https://github.com/ey-liam/bibliotech-scouts-app/releases/latest", "_blank", "noopener");
+              },
+              "Ver actualización"
+            );
+          } else if ((remoteWeb && remoteWeb !== APP_WEB_VERSION) || (remoteSchema && remoteSchema !== APP_COOKIE_SCHEMA)) {
+            showBanner(`Hay cambios recientes disponibles en archivos y datos (Web ${remoteWeb || APP_WEB_VERSION}).`);
+          }
+        } else if (
+          (remoteWeb && remoteWeb !== APP_WEB_VERSION) ||
+          (remoteSchema && remoteSchema !== APP_COOKIE_SCHEMA) ||
+          (remoteCache && remoteCache !== WEB_OFFLINE_CACHE)
+        ) {
+          showBanner(
+            `Nueva versión disponible (${remoteWeb || APP_WEB_VERSION}) con cambios importantes en archivos y funciones. Actualiza ahora.`
+          );
+        }
+      })
+      .catch(() => {});
+  }
+}
 
 function setupGlobalShortcuts() {
   document.addEventListener("keydown", (e) => {
@@ -4447,6 +4620,7 @@ function setupWebOfflineManager() {
     "index.html",
     "styles.css",
     "app.js",
+    "version.json",
     "manifest.webmanifest",
     "img/logo-flor.png",
     "img/logo-asmac.png",
@@ -4474,7 +4648,7 @@ function setupWebOfflineManager() {
       if (hasBank && hasFaq4) {
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (13,520 preg.)";
+          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (13,525 preg.)";
         }
         if (btnDownload) {
           btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
@@ -4517,7 +4691,7 @@ function setupWebOfflineManager() {
         }
 
         const today = new Date().toLocaleDateString("es-MX");
-        localStorage.setItem(WEB_OFFLINE_META_KEY, JSON.stringify({ date: today, includeChunks }));
+        localStorage.setItem(WEB_OFFLINE_META_KEY, JSON.stringify({ date: today, includeChunks, version: APP_WEB_VERSION }));
         if (progressText) progressText.textContent = "Paquete guardado correctamente para uso sin conexión.";
         showWebToast("Modo sin conexión listo en este dispositivo.");
       } catch (err) {
@@ -4675,6 +4849,11 @@ function setupBugReportModal() {
   const detailsInput = document.getElementById("bugReportDetails");
   const statusEl = document.getElementById("bugReportStatus");
   const submitBtn = document.getElementById("submitBugReportBtn");
+  const bugTitleEl = document.getElementById("bugReportTitle");
+  const bugLegendEl = document.getElementById("bugReportLegend");
+  const bugDetailsLabelEl = document.getElementById("bugReportDetailsLabel");
+  const bugReasonsBox = document.getElementById("bugReportReasons");
+  const forumModReasonsBox = document.getElementById("forumModerationReasons");
 
   const setStatus = (msg, type = "") => {
     if (!statusEl) return;
@@ -4707,21 +4886,60 @@ function setupBugReportModal() {
     if (navBackdrop) navBackdrop.hidden = true;
   };
 
-  const openModal = () => {
+  const applyReportModeUI = (isForumModeration) => {
+    form.dataset.moderationMode = isForumModeration ? "1" : "";
+    if (bugReasonsBox) bugReasonsBox.classList.toggle("hidden", Boolean(isForumModeration));
+    if (forumModReasonsBox) forumModReasonsBox.classList.toggle("hidden", !isForumModeration);
+    form.querySelectorAll('input[type="checkbox"]').forEach((c) => {
+      c.checked = false;
+    });
+    if (bugTitleEl) {
+      bugTitleEl.textContent = isForumModeration
+        ? "Reportar contenido en La Fogata"
+        : "Reportar error o falla";
+    }
+    if (bugLegendEl) {
+      bugLegendEl.textContent = isForumModeration
+        ? "¿Por qué reportas esta publicación o comentario? (marca los motivos)"
+        : "¿Qué está fallando? (puedes marcar varios)";
+    }
+    if (bugDetailsLabelEl) {
+      bugDetailsLabelEl.textContent = isForumModeration
+        ? "Explica por qué reportas esto (obligatorio) *"
+        : "Describe qué ocurrió y cómo pasó";
+    }
+    if (detailsInput) {
+      detailsInput.placeholder = isForumModeration
+        ? "Ej. Contiene una falta de respeto, expone un número privado o da un consejo peligroso..."
+        : "Ej. Al abrir el PDF en modo oscuro sale en blanco, o falta el archivo...";
+    }
+  };
+
+  const openModal = (prefillSection = "", prefillTarget = "", isForumModeration = false) => {
     closeMenuIfOpen();
+    form.reset();
+    applyReportModeUI(Boolean(isForumModeration));
     preselectPlatform();
+    if (sectionSelect && prefillSection) {
+      sectionSelect.value = prefillSection;
+    }
+    if (targetInput && prefillTarget) {
+      targetInput.value = prefillTarget;
+    }
     setStatus("");
     modal.classList.remove("hidden");
-    activateDialogFocusTrap(modal, "#bugReportPlatform");
+    activateDialogFocusTrap(modal, isForumModeration ? "#bugReportDetails" : "#bugReportPlatform");
   };
+
+  window.__btOpenBugReport = openModal;
 
   const closeModal = () => {
     modal.classList.add("hidden");
     releaseDialogFocusTrap(modal);
   };
 
-  if (openMenuBtn) openMenuBtn.addEventListener("click", () => openModal());
-  if (openFooterBtn) openFooterBtn.addEventListener("click", () => openModal());
+  if (openMenuBtn) openMenuBtn.addEventListener("click", () => openModal("", "", false));
+  if (openFooterBtn) openFooterBtn.addEventListener("click", () => openModal("", "", false));
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
   if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
   modal.addEventListener("click", (e) => {
@@ -4733,30 +4951,46 @@ function setupBugReportModal() {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const checked = Array.from(form.querySelectorAll('#bugReportReasons input[type="checkbox"]:checked')).map(
-      (el) => el.value
-    );
+    const isModeration = form.dataset.moderationMode === "1";
+    const activeContainer = isModeration ? forumModReasonsBox : bugReasonsBox;
+    const checked = Array.from(
+      (activeContainer || form).querySelectorAll('input[type="checkbox"]:checked')
+    ).map((el) => el.value);
     const details = (detailsInput ? detailsInput.value : "").trim();
     const targetDoc = (targetInput ? targetInput.value : "").trim();
     const plat = platformSelect ? platformSelect.value : "Desconocida";
     const sec = sectionSelect ? sectionSelect.value : "Otro apartado";
 
-    if (!checked.length && !details) {
-      setStatus("Marca al menos una opción o describe brevemente qué falló.", "error");
-      return;
-    }
-    if (checked.includes("Otro problema específico") && details.length < 5) {
-      setStatus("Describe brevemente qué problema específico ocurrió.", "error");
-      if (detailsInput) detailsInput.focus();
-      return;
+    if (isModeration) {
+      if (!checked.length) {
+        setStatus("Selecciona al menos un motivo de por qué reportas este contenido.", "error");
+        return;
+      }
+      if (details.length < 6) {
+        setStatus("Explica brevemente el porqué de tu reporte (mínimo 6 caracteres).", "error");
+        if (detailsInput) detailsInput.focus();
+        return;
+      }
+    } else {
+      if (!checked.length && !details) {
+        setStatus("Marca al menos una opción o describe brevemente qué falló.", "error");
+        return;
+      }
+      if (checked.includes("Otro problema específico") && details.length < 5) {
+        setStatus("Describe brevemente qué problema específico ocurrió.", "error");
+        if (detailsInput) detailsInput.focus();
+        return;
+      }
     }
 
     if (submitBtn) submitBtn.disabled = true;
-    setStatus("Enviando reporte anónimo...");
+    setStatus(isModeration ? "Enviando reporte de moderación..." : "Enviando reporte anónimo...");
 
     const ctx = detectClientContext();
     const payloadBody = JSON.stringify({
-      _subject: `[REPORTE USUARIO / BUG] ${sec} (${plat})`,
+      _subject: isModeration
+        ? `[MODERACIÓN LA FOGATA] ${sec} (${plat})`
+        : `[REPORTE USUARIO / BUG] ${sec} (${plat})`,
       _template: "table",
       _captcha: "false",
       plataforma: `${plat} · Real: ${ctx.plat} · ${ctx.vista}`,
@@ -4764,12 +4998,14 @@ function setupBugReportModal() {
       alertas_bugs_o_sin_coincidencia: checked.join(" | ") || "Reporte manual",
       resumen_mas_usado: `Apartado: ${sec}${targetDoc ? ` · Ref: ${targetDoc}` : ""}`,
       actividad_completa: [
-        `REPORTE EXPLÍCITO DEL USUARIO (${BT_SESSION_ID})`,
+        isModeration
+          ? `REPORTE DE MODERACIÓN EN LA FOGATA (${BT_SESSION_ID})`
+          : `REPORTE EXPLÍCITO DEL USUARIO (${BT_SESSION_ID})`,
         `Usa BiblioTech en: ${plat}`,
         `Apartado: ${sec}`,
-        `Factores marcados: ${checked.join(", ") || "Ninguno"}`,
-        targetDoc ? `Documento / Pregunta: ${targetDoc}` : "",
-        details ? `Descripción: ${details}` : ""
+        `Motivos marcados: ${checked.join(", ") || "Ninguno"}`,
+        targetDoc ? `Referencia: ${targetDoc}` : "",
+        details ? `Porqué / Descripción: ${details}` : ""
       ]
         .filter(Boolean)
         .join("\n")
@@ -5669,6 +5905,1663 @@ function initPrivacyAndTelemetry() {
   });
   window.addEventListener("pagehide", () => flushAnonymousTelemetry(true));
   setTimeout(() => flushAnonymousTelemetry(false), 12000);
+}
+
+// ============================================================================
+// BÓVEDA LOCAL DE AUTOLLENADO SCOUT + PRÓXIMAMENTE EDITOR DE FORMATOS
+// ============================================================================
+
+const BT_AUTOFILL_PROFILE_KEY = "bt_autofill_profile_v1";
+
+function getAutofillProfile() {
+  try {
+    const raw = localStorage.getItem(BT_AUTOFILL_PROFILE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch (_) {
+    return {};
+  }
+}
+
+function setupAutofillVault() {
+  const form = document.getElementById("autofillProfileForm");
+  const statusBadge = document.getElementById("autofillStatusBadge");
+  const previewBtn = document.getElementById("btnPreviewAutofillDemo");
+  const clearBtn = document.getElementById("btnClearAutofillProfile");
+  const demoBox = document.getElementById("autofillDemoPreview");
+
+  const fields = {
+    name: document.getElementById("afName"),
+    cum: document.getElementById("afCum"),
+    age: document.getElementById("afAge"),
+    section: document.getElementById("afSection"),
+    group: document.getElementById("afGroup"),
+    province: document.getElementById("afProvince"),
+    blood: document.getElementById("afBlood"),
+    emergency: document.getElementById("afEmergency"),
+    scouter: document.getElementById("afScouter")
+  };
+
+  const readFormProfile = () => ({
+    name: (fields.name ? fields.name.value : "").trim(),
+    cum: (fields.cum ? fields.cum.value : "").trim().toUpperCase(),
+    age: (fields.age ? fields.age.value : "").trim(),
+    section: (fields.section ? fields.section.value : "Comunidad de Caminantes").trim(),
+    group: (fields.group ? fields.group.value : "").trim(),
+    province: (fields.province ? fields.province.value : "").trim(),
+    blood: (fields.blood ? fields.blood.value : "").trim(),
+    emergency: (fields.emergency ? fields.emergency.value : "").trim(),
+    scouter: (fields.scouter ? fields.scouter.value : "").trim()
+  });
+
+  const hasAnySavedData = (prof) =>
+    Boolean(
+      prof &&
+        (prof.name || prof.cum || prof.age || prof.group || prof.province || prof.blood || prof.emergency || prof.scouter)
+    );
+
+  const updateBadge = (prof) => {
+    if (!statusBadge) return;
+    const ready = hasAnySavedData(prof);
+    statusBadge.classList.toggle("is-ready", ready);
+    statusBadge.textContent = ready ? "Perfil listo en este dispositivo" : "Sin datos guardados";
+  };
+
+  const fillFormFromStorage = () => {
+    const prof = getAutofillProfile();
+    if (fields.name && prof.name) fields.name.value = prof.name;
+    if (fields.cum && prof.cum) fields.cum.value = prof.cum;
+    if (fields.age && prof.age) fields.age.value = prof.age;
+    if (fields.section && prof.section) fields.section.value = prof.section;
+    if (fields.group && prof.group) fields.group.value = prof.group;
+    if (fields.province && prof.province) fields.province.value = prof.province;
+    if (fields.blood && prof.blood) fields.blood.value = prof.blood;
+    if (fields.emergency && prof.emergency) fields.emergency.value = prof.emergency;
+    if (fields.scouter && prof.scouter) fields.scouter.value = prof.scouter;
+    updateBadge(prof);
+  };
+
+  const renderDemo = (profileData) => {
+    if (!demoBox) return;
+    const val = (k, fallback) => escapeHtml((profileData && profileData[k]) || fallback);
+    demoBox.innerHTML = `
+      <div class="autofill-demo-grid">
+        <div class="autofill-demo-doc">
+          <div class="autofill-demo-doc-head">Permiso de Salida (JL304)</div>
+          <div class="autofill-demo-rows">
+            <div class="autofill-demo-row"><span>Participante:</span><span class="autofill-demo-fill">${val("name", "(Nombre Scout)")}</span></div>
+            <div class="autofill-demo-row"><span>CUM / Edad:</span><span class="autofill-demo-fill">${val("cum", "—")} · ${val("age", "—")} años</span></div>
+            <div class="autofill-demo-row"><span>Grupo / Prov.:</span><span class="autofill-demo-fill">${val("group", "—")} · ${val("province", "—")}</span></div>
+            <div class="autofill-demo-row"><span>Autoriza:</span><span class="autofill-demo-fill">${val("emergency", "(Padre/Tutor)")}</span></div>
+            <div class="autofill-demo-row"><span>Responsable:</span><span class="autofill-demo-fill">${val("scouter", "(Scouter)")}</span></div>
+          </div>
+        </div>
+
+        <div class="autofill-demo-doc">
+          <div class="autofill-demo-doc-head">Ficha Médica y de Salud</div>
+          <div class="autofill-demo-rows">
+            <div class="autofill-demo-row"><span>Scout:</span><span class="autofill-demo-fill">${val("name", "(Nombre)")}</span></div>
+            <div class="autofill-demo-row"><span>Sección:</span><span class="autofill-demo-fill">${val("section", "Comunidad de Caminantes")}</span></div>
+            <div class="autofill-demo-row"><span>Sangre / Alergias:</span><span class="autofill-demo-fill">${val("blood", "(Sin completar)")}</span></div>
+            <div class="autofill-demo-row"><span>Contacto SOS:</span><span class="autofill-demo-fill">${val("emergency", "(Contacto)")}</span></div>
+          </div>
+        </div>
+
+        <div class="autofill-demo-doc">
+          <div class="autofill-demo-doc-head">Cédula SMART / RECME</div>
+          <div class="autofill-demo-rows">
+            <div class="autofill-demo-row"><span>Proponente:</span><span class="autofill-demo-fill">${val("name", "(Nombre)")}</span></div>
+            <div class="autofill-demo-row"><span>Sección:</span><span class="autofill-demo-fill">${val("section", "Comunidad de Caminantes")}</span></div>
+            <div class="autofill-demo-row"><span>Grupo / Provincia:</span><span class="autofill-demo-fill">${val("group", "—")} · ${val("province", "—")}</span></div>
+            <div class="autofill-demo-row"><span>Asesor / Scouter:</span><span class="autofill-demo-fill">${val("scouter", "(Sin asignar)")}</span></div>
+          </div>
+        </div>
+      </div>
+    `;
+  };
+
+  if (form) {
+    fillFormFromStorage();
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const prof = readFormProfile();
+      try {
+        localStorage.setItem(BT_AUTOFILL_PROFILE_KEY, JSON.stringify(prof));
+      } catch (_) {}
+      updateBadge(prof);
+      if (demoBox && !demoBox.classList.contains("hidden")) {
+        renderDemo(prof);
+      }
+      BiblioFeel.pulse([10, 24]);
+      showWebToast("Perfil local guardado. Se usará en La Fogata y en el futuro Editor.");
+      enqueueAnonTelemetry({ t: "ui_accion", label: "autofill_perfil_guardado" }, false);
+    });
+  }
+
+  if (previewBtn && demoBox) {
+    previewBtn.addEventListener("click", () => {
+      const willOpen = demoBox.classList.contains("hidden");
+      if (willOpen) {
+        const prof = readFormProfile();
+        renderDemo(prof);
+        demoBox.classList.remove("hidden");
+        previewBtn.textContent = "Ocultar demostración";
+      } else {
+        demoBox.classList.add("hidden");
+        previewBtn.textContent = "Ver demostración de autollenado";
+      }
+    });
+  }
+
+  if (clearBtn && form) {
+    clearBtn.addEventListener("click", () => {
+      try {
+        localStorage.removeItem(BT_AUTOFILL_PROFILE_KEY);
+      } catch (_) {}
+      form.reset();
+      if (fields.section) fields.section.value = "Comunidad de Caminantes";
+      updateBadge({});
+      if (demoBox) demoBox.classList.add("hidden");
+      if (previewBtn) previewBtn.textContent = "Ver demostración de autollenado";
+      showWebToast("Datos locales de autollenado borrados de este dispositivo.");
+    });
+  }
+
+  // Enlaces directos desde las 6 tarjetas "Próximamente" hacia el Catálogo actual
+  document.querySelectorAll("#editor-formatos .editor-jump-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const jumpCat = btn.getAttribute("data-jump-cat");
+      const jumpQuery = btn.getAttribute("data-jump-query");
+      const filterCat = document.getElementById("filterCategory");
+      const catSearch = document.getElementById("catalogSearchInput");
+      if (jumpCat) {
+        STATE.categoryFilter = jumpCat;
+        STATE.subcategoryFilter = "all";
+        STATE.searchQuery = "";
+        if (filterCat) filterCat.value = jumpCat;
+        if (catSearch) catSearch.value = "";
+      } else if (jumpQuery) {
+        STATE.categoryFilter = "all";
+        STATE.subcategoryFilter = "all";
+        STATE.searchQuery = jumpQuery;
+        if (filterCat) filterCat.value = "all";
+        if (catSearch) catSearch.value = jumpQuery;
+      }
+      applyCatalogFilters();
+      const catalogSec = document.getElementById("explorar");
+      if (catalogSec) catalogSec.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+// ============================================================================
+// FORO COMUNITARIO: LA FOGATA (#foro)
+// - Canales: Todos, Entre Jóvenes, Entre Scouters y Adultos, Mis Publicaciones
+// - Datos reales obligatorios para registro interno de seguridad (con opción
+//   pública 100 % Anónima o solo Sección/Grupo/Provincia)
+// - Respeto y Ley Scout, banderita de reporte en posts/comentarios, Likes y
+//   sincronización offline <-> Cloudflare Worker
+// ============================================================================
+
+const BT_FORUM_STATE_KEY = "bt_forum_state_v1";
+const BT_FORUM_AUTHOR_KEY = "bt_forum_author_id_v1";
+const BT_FORUM_IDENTITY_KEY = "bt_forum_identity_v1";
+const BT_FORUM_OUTBOX_KEY = "bt_forum_outbox_v1";
+
+function getForumIdentity() {
+  const auto = getAutofillProfile();
+  let saved = {};
+  try {
+    const raw = localStorage.getItem(BT_FORUM_IDENTITY_KEY);
+    if (raw) saved = JSON.parse(raw) || {};
+  } catch (_) {}
+  return {
+    realName: String(saved.realName || auto.name || "").trim(),
+    role: String(saved.role || auto.section || "Comunidad de Caminantes").trim(),
+    group: String(saved.group || auto.group || "").trim(),
+    province: String(saved.province || auto.province || "").trim(),
+    alias: String(saved.alias || "").trim(),
+    visibility: saved.visibility || "full",
+    cum: String(auto.cum || "").trim()
+  };
+}
+
+function saveForumIdentity(nextId) {
+  try {
+    const prev = getForumIdentity();
+    const merged = {
+      realName: String(nextId.realName ?? prev.realName ?? "").trim(),
+      role: String(nextId.role ?? prev.role ?? "Comunidad de Caminantes").trim(),
+      group: String(nextId.group ?? prev.group ?? "").trim(),
+      province: String(nextId.province ?? prev.province ?? "").trim(),
+      alias: String(nextId.alias ?? prev.alias ?? "").trim(),
+      visibility: nextId.visibility || prev.visibility || "full"
+    };
+    localStorage.setItem(BT_FORUM_IDENTITY_KEY, JSON.stringify(merged));
+    return merged;
+  } catch (_) {
+    return nextId;
+  }
+}
+
+const FORUM_PRESET_TAGS = [
+  "#campamento",
+  "#imprescindibles",
+  "#proyectos-smart",
+  "#supervision-adulta",
+  "#ambientes-seguros",
+  "#insignias-y-fes",
+  "#meztitla",
+  "#salud-y-permisos",
+  "#foros-y-red",
+  "#vida-de-seccion"
+];
+
+const STARTER_FORUM_POSTS = [
+  {
+    id: "seed-j-1",
+    channel: "jovenes",
+    role: "Tropa de Scouts",
+    author: "Patrulla Halcones",
+    province: "Grupo 53 · TLXH",
+    authorId: "seed",
+    title: "Checklist imprescindible para campamento en montaña o lluvias",
+    body: "Lo que nunca nos falla en Patrulla:\n1) Todo dentro de bolsa estanca o bolsas dobles dentro de la mochila (ropa, calcetines extras y sleeping).\n2) Lámpara frontal con pilas extra + bolsa impermeable para la linterna.\n3) Plástico/hule aislante debajo del piso de la casa de campaña, bien metido por debajo para que no junte agua.\n4) Muda térmica seca exclusiva para dormir y gorro de lana aunque no parezca hacer frío de tarde.",
+    tags: ["#campamento", "#imprescindibles", "#vida-de-seccion"],
+    docRef: "FES_CC_SYB_GESTION DE RIESGOS EN AREAS NATURALES.pdf",
+    likes: 42,
+    createdAt: 1794600000000,
+    comments: [
+      {
+        id: "seed-c-1",
+        author: "Mateo R.",
+        role: "Comunidad de Caminantes",
+        authorId: "seed",
+        body: "Sumaría llevar un par extra de agujetas y cinta gris (duct tape) enrollada en la cantimplora; salva bastones, carpas y suelas.",
+        likes: 18,
+        createdAt: 1794610000000
+      },
+      {
+        id: "seed-c-2",
+        author: "Sofía L.",
+        role: "Clan de Rovers",
+        authorId: "seed",
+        body: "¡Tip clave! Meter los tenis cerca de la entrada pero cubiertos en una bolsa, y nunca dormir con ropa húmeda aunque sea poco.",
+        likes: 9,
+        createdAt: 1794620000000
+      }
+    ]
+  },
+  {
+    id: "seed-j-2",
+    channel: "jovenes",
+    role: "Comunidad de Caminantes",
+    author: "Red TLXH Caminantes",
+    province: "Provincia Tláhuac-Xochimilco",
+    authorId: "seed",
+    title: "Cómo armar tu proyecto SMART y registrarlo en Agentes de Cambio.MX sin trabarte",
+    body: "Muchos compañeros se detienen en la Cédula porque quieren abarcar todo el mundo. Mejor define:\n- 1 problema real en tu escuela o colonia.\n- Meta medible (ej. recolectar 60 kg de tapitas o dar 4 talleres).\n- Revisa a qué Eje Temático pertenece (Salud, Habilidades, Sustentabilidad o Paz) y toma fotos y listas desde el día 1 para la bitácora y tu insignia Mundial o Jade/Obsidiana.",
+    tags: ["#proyectos-smart", "#insignias-y-fes", "#foros-y-red"],
+    docRef: "Catalogo_Plantillas_RECME_2026.html",
+    likes: 35,
+    createdAt: 1794580000000,
+    comments: [
+      {
+        id: "seed-c-3",
+        author: "Valeria M.",
+        role: "Comunidad de Caminantes",
+        authorId: "seed",
+        body: "En BiblioTech puedes buscar los formatos P1 a P10 de RECME para no batallar con qué apartado va primero.",
+        likes: 14,
+        createdAt: 1794585000000
+      }
+    ]
+  },
+  {
+    id: "seed-j-3",
+    channel: "jovenes",
+    role: "Comunidad de Caminantes",
+    author: "Diego P.",
+    province: "Provincia Sur CDMX",
+    authorId: "seed",
+    title: "Consejos si vas por primera vez al Campo Escuela Meztitla",
+    body: "Aunque en Tepoztlán hace calor a mediodía, en las madrugadas baja bastante la temperatura en Meztitla. Lleva:\n- Calzado con buena suela para piedra volcánica.\n- Cantimplora de al menos 1 litro (en subidas y rallies se agradece muchísimo).\n- Bloqueador y repelente biodegradables para cuidar las áreas verdes del campo.",
+    tags: ["#meztitla", "#campamento", "#imprescindibles"],
+    docRef: "Carta de Meztitla.pdf",
+    likes: 29,
+    createdAt: 1794560000000,
+    comments: [
+      {
+        id: "seed-c-4",
+        author: "Camila T.",
+        role: "Tropa de Scouts",
+        authorId: "seed",
+        body: "Confirmo lo del frío en la madrugada y llevar chamarra ligera impermeable por si chispea.",
+        likes: 7,
+        createdAt: 1794566000000
+      }
+    ]
+  },
+  {
+    id: "seed-j-4",
+    channel: "jovenes",
+    role: "Clan de Rovers",
+    author: "Área de Programa Juvenil",
+    province: "Grupo 12",
+    authorId: "seed",
+    title: "Tips para terminar tu primera Especialidad FES sin dejarla a medias en ExplorApp",
+    body: "Lee completa la ficha FES en la Biblioteca antes de empezar, acuerda con tu Scouter y Sinodal la evidencia exacta de cada reto (fotos, cuaderno o producto terminado) y fija una fecha realista de entrega. Empezar por una especialidad que ya te apasione multiplica tus ganas de seguir.",
+    tags: ["#insignias-y-fes", "#vida-de-seccion"],
+    docRef: "Catalogo_Especialidades_FES_Comunidad_y_Manada.html",
+    likes: 24,
+    createdAt: 1794540000000,
+    comments: []
+  },
+  {
+    id: "seed-a-1",
+    channel: "adultos",
+    role: "Scouter / Dirigente",
+    author: "Jefatura de Tropa",
+    province: "Consejo de Grupo",
+    authorId: "seed",
+    title: "Reglas de oro de supervisión segura (A Salvo del Peligro) en campamentos",
+    body: "Recordatorio práctico entre Scouters y dirigentes:\n1) Mantener siempre la regla de dos adultos responsables visibles en actividades y traslados.\n2) Zonas de pernocta claramente separadas por edades/sección y sin improvisar cambios de carpa.\n3) Guardias nocturnas rotativas con linterna y protocolo claro de canal CONECTA ante cualquier incidente.\n4) Comunicación transparente con madres y padres con horario de reportes antes de salir.",
+    tags: ["#ambientes-seguros", "#supervision-adulta", "#campamento"],
+    docRef: "01 Política Nacional A Salvo del Peligro.pdf",
+    likes: 51,
+    createdAt: 1794625000000,
+    comments: [
+      {
+        id: "seed-c-5",
+        author: "Scouter Alejandro V.",
+        role: "Scouter / Dirigente",
+        authorId: "seed",
+        body: "Excelente punto el #1. Además ayuda tener asignado un adulto específicamente como Responsable de Seguridad e Higiene durante todo el evento.",
+        likes: 21,
+        createdAt: 1794630000000
+      },
+      {
+        id: "seed-c-6",
+        author: "Comisionada de Grupo",
+        role: "Asesor de Red / Grupo",
+        authorId: "seed",
+        body: "También revisar con anticipación que todos los adultos en el campo tengan vigente su certificación de A Salvo del Peligro.",
+        likes: 15,
+        createdAt: 1794635000000
+      }
+    ]
+  },
+  {
+    id: "seed-a-2",
+    channel: "adultos",
+    role: "Asesor de Red / Grupo",
+    author: "Asesoría Red de Caminantes",
+    province: "Nacional / Provincia",
+    authorId: "seed",
+    title: "Cómo acompañar proyectos de Caminantes y Rovers sin quitarles el protagonismo",
+    body: "La tentación más común como adultos es resolver la logística por ellos. Funciona mejor preguntar: ¿Qué recurso te falta?, ¿Cuál es tu plan B si llueve?, ¿A quién vas a rendir cuentas? Así conservan la propiedad del proyecto, aprenden de tropiezos seguros y fortalecen el Método Scout.",
+    tags: ["#supervision-adulta", "#proyectos-smart", "#vida-de-seccion"],
+    docRef: "010 Guia Red de Caminantes.pdf",
+    likes: 38,
+    createdAt: 1794590000000,
+    comments: [
+      {
+        id: "seed-c-7",
+        author: "Jefa de Comunidad",
+        role: "Scouter / Dirigente",
+        authorId: "seed",
+        body: "Totalmente de acuerdo. Pasar de 'yo lo organizo' a 'qué necesitas para cotizarlo tú' cambia por completo su seguridad al liderar.",
+        likes: 12,
+        createdAt: 1794595000000
+      }
+    ]
+  },
+  {
+    id: "seed-a-3",
+    channel: "adultos",
+    role: "Scouter / Dirigente",
+    author: "Coordinación de Salud y Logística",
+    province: "Grupo 28",
+    authorId: "seed",
+    title: "Orden práctico de Fichas Médicas y Permisos JL304 antes de abordar transporte",
+    body: "Antes de subir al autobús:\n- Llevar un fólder rápido ordenado alfabéticamente por sección con Permisos JL304 firmados y Fichas de Salud.\n- Etiquetar medicamentos personales con nombre completo, dosis y horario dentro de bolsa sellada al cuidado del adulto responsable de salud.\n- Verificar altas vigentes en SISAS para cobertura de Seguro Scout.",
+    tags: ["#salud-y-permisos", "#supervision-adulta", "#campamento"],
+    docRef: "FICHA SALUD 2026 EDITABLE.pdf",
+    likes: 33,
+    createdAt: 1794550000000,
+    comments: []
+  },
+  {
+    id: "seed-a-4",
+    channel: "adultos",
+    role: "Padre / Madre / Tutor",
+    author: "Comité de Padres",
+    province: "Manada de Lobatos",
+    authorId: "seed",
+    title: "Guía para familias nuevas antes del primer acantonamiento de Manada",
+    body: "Para papás y mamás primerizos:\n1) Marcar toda la ropa, plato, taza y sleeping con nombre y grupo.\n2) Empacar junto con tu lobato o lobezna para que sepa exactamente en qué bolsa guardó cada prenda.\n3) Transmitirle confianza y emoción; evitar mensajes que generen ansiedad la noche previa.",
+    tags: ["#campamento", "#imprescindibles", "#vida-de-seccion"],
+    docRef: "Guia de Scouter de Manada de Lobatos 2024.pdf",
+    likes: 27,
+    createdAt: 1794520000000,
+    comments: []
+  }
+];
+
+function setupScoutForum() {
+  const grid = document.getElementById("forumPostsGrid");
+  if (!grid) return;
+
+  const channelTabs = document.getElementById("forumChannelTabs");
+  const tagBar = document.getElementById("forumTagBar");
+  const searchInput = document.getElementById("forumSearchInput");
+  const sortSelect = document.getElementById("forumSortSelect");
+  const countLabel = document.getElementById("forumCountLabel");
+  const syncBadge = document.getElementById("forumSyncBadge");
+  const resetBtn = document.getElementById("resetForumFiltersBtn");
+  const openComposerBtn = document.getElementById("btnOpenForumComposer");
+
+  // Modal compositor
+  const composerModal = document.getElementById("forumComposerModal");
+  const composerTitleEl = document.getElementById("forumComposerTitle");
+  const closeComposerBtn = document.getElementById("closeForumComposerBtn");
+  const cancelComposerBtn = document.getElementById("cancelForumComposerBtn");
+  const postForm = document.getElementById("forumPostForm");
+  const channelInput = document.getElementById("forumPostChannel");
+  const realNameInput = document.getElementById("forumPostRealName");
+  const roleInput = document.getElementById("forumPostRole");
+  const groupInput = document.getElementById("forumPostGroup");
+  const provinceInput = document.getElementById("forumPostProvince");
+  const visibilityInput = document.getElementById("forumPostVisibility");
+  const aliasInput = document.getElementById("forumPostAlias");
+  const titleInput = document.getElementById("forumPostTitle");
+  const bodyInput = document.getElementById("forumPostBody");
+  const presetTagsWrap = document.getElementById("forumPresetTags");
+  const customTagsInput = document.getElementById("forumCustomTags");
+  const docRefInput = document.getElementById("forumPostDocRef");
+  const composerStatusEl = document.getElementById("forumComposerStatus");
+  const submitPostBtn = document.getElementById("submitForumPostBtn");
+
+  const isLocalHostEnv = () => {
+    const host = String((window.location && window.location.hostname) || "").toLowerCase();
+    return host === "127.0.0.1" || host === "localhost" || host === "::1" || window.location.protocol === "file:";
+  };
+
+  const resolvePublicAuthorDisplay = ({ realName, alias, role, group, province, visibility }) => {
+    const loc = [group, province].filter(Boolean).join(" · ");
+    if (visibility === "anonymous") {
+      return {
+        displayAuthor: "Scout Anónimo",
+        displaySub: "Comunidad Scout · Identidad protegida",
+        initials: "SA"
+      };
+    }
+    if (visibility === "group_only") {
+      return {
+        displayAuthor: "Scout Anónimo",
+        displaySub: [role || "Miembro Scout", loc].filter(Boolean).join(" · "),
+        initials: "SA"
+      };
+    }
+    const pubName = (alias || realName || "Scout").trim();
+    return {
+      displayAuthor: pubName,
+      displaySub: [role || "Miembro Scout", loc].filter(Boolean).join(" · "),
+      initials: getInitials(pubName)
+    };
+  };
+
+  const getOutbox = () => {
+    try {
+      const arr = JSON.parse(localStorage.getItem(BT_FORUM_OUTBOX_KEY) || "[]");
+      return Array.isArray(arr) ? arr : [];
+    } catch (_) {
+      return [];
+    }
+  };
+
+  const setOutbox = (arr) => {
+    try {
+      localStorage.setItem(BT_FORUM_OUTBOX_KEY, JSON.stringify((arr || []).slice(-60)));
+    } catch (_) {}
+  };
+
+  const updateSyncBadge = (cloudOk = false) => {
+    if (!syncBadge) return;
+    const pending = getOutbox().length;
+    const isOffline = typeof navigator !== "undefined" && navigator.onLine === false;
+    syncBadge.classList.toggle("is-offline", isOffline);
+    if (isOffline) {
+      syncBadge.textContent = pending
+        ? `Sin internet · ${pending} cambio(s) en cola local`
+        : "Modo offline · Guardado en este dispositivo";
+    } else if (pending) {
+      syncBadge.textContent = `Respaldando ${pending} cambio(s) en comunidad...`;
+    } else if (cloudOk) {
+      syncBadge.textContent = "Conectado · Guardado local + nube comunitaria";
+    } else {
+      syncBadge.textContent = "Guardado en tu dispositivo + respaldo comunitario";
+    }
+  };
+
+  const flushForumOutbox = async () => {
+    const queue = getOutbox();
+    if (!queue.length) {
+      updateSyncBadge(false);
+      return;
+    }
+    if (isLocalHostEnv() || (typeof navigator !== "undefined" && navigator.onLine === false)) {
+      updateSyncBadge(false);
+      return;
+    }
+
+    const workerEp = (BT_TELEMETRY_CONFIG.workerEndpoint || "").trim();
+    const emailEp = `https://formsubmit.co/ajax/${encodeURIComponent(STATE.contactEmail || "rdc.tlxh@gmail.com")}`;
+    const remaining = [];
+
+    for (const item of queue) {
+      const sendEmail = item.actionType !== "foro_like";
+      const targets = workerEp ? (sendEmail ? [workerEp, emailEp] : [workerEp]) : sendEmail ? [emailEp] : [];
+      if (!targets.length) continue;
+      try {
+        const res = await Promise.allSettled(
+          targets.map((ep) =>
+            fetch(ep, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Accept: "application/json" },
+              body: JSON.stringify(item.payload)
+            })
+          )
+        );
+        const ok = res.some((r) => r.status === "fulfilled" && r.value && r.value.ok);
+        if (!ok) remaining.push(item);
+      } catch (_) {
+        remaining.push(item);
+      }
+    }
+    setOutbox(remaining);
+    updateSyncBadge(remaining.length === 0);
+  };
+
+  const sendForumSecurityRecord = (actionType, securityInfo, summaryText, publicData) => {
+    const ctx = detectClientContext();
+    const payload = {
+      _subject: `[LA FOGATA · ${actionType.toUpperCase()}] ${publicData.title || publicData.postId || "Actividad"}`,
+      _template: "table",
+      _captcha: "false",
+      canal_foro: "La Fogata",
+      actionType,
+      plataforma: `${ctx.plat} · ${ctx.vista}`,
+      navegador_y_tema: `${ctx.browser} (${ctx.os}) · Tema ${ctx.tema}`,
+      resumen_mas_usado: summaryText,
+      // Registro privado completo para moderación / seguridad
+      securityRecord: {
+        realName: securityInfo.realName || "",
+        role: securityInfo.role || "",
+        group: securityInfo.group || "",
+        province: securityInfo.province || "",
+        cum: securityInfo.cum || "",
+        visibility: securityInfo.visibility || "full",
+        authorId: LOCAL_AUTHOR_ID
+      },
+      // Objeto público (el Worker nunca expone securityRecord en GET ?channel=forum)
+      publicPost: publicData.publicPost || null,
+      publicComment: publicData.publicComment || null,
+      likeDelta: publicData.likeDelta || null,
+      actividad_completa: [
+        `EVENTO EN LA FOGATA: ${actionType}`,
+        `--- REGISTRO DE SEGURIDAD INTERNO (PRIVADO SI ELIGIÓ ANÓNIMO) ---`,
+        `Nombre real: ${securityInfo.realName || "No proporcionado"}`,
+        `Sección / Rol: ${securityInfo.role || "No proporcionado"}`,
+        `Grupo: ${securityInfo.group || "No proporcionado"}`,
+        `Provincia: ${securityInfo.province || "No proporcionado"}`,
+        securityInfo.cum ? `CUM guardado: ${securityInfo.cum}` : "",
+        `Visibilidad pública elegida: ${securityInfo.visibility || "full"}`,
+        `Author ID local: ${LOCAL_AUTHOR_ID}`,
+        `--- CONTENIDO ---`,
+        summaryText
+      ]
+        .filter(Boolean)
+        .join("\n")
+    };
+
+    const q = getOutbox();
+    q.push({ actionType, payload, queuedAt: Date.now() });
+    setOutbox(q);
+    updateSyncBadge(false);
+    flushForumOutbox();
+  };
+
+  const mergeCloudForumPosts = (remotePosts) => {
+    if (!Array.isArray(remotePosts) || !remotePosts.length) return;
+    const byId = new Map(forumState.posts.map((p) => [p.id, p]));
+    let changed = false;
+
+    for (const rp of remotePosts) {
+      if (!rp || !rp.id) continue;
+      const existing = byId.get(rp.id);
+      if (!existing) {
+        if (!rp.title || !rp.body || rp.isSeedDelta) continue;
+        byId.set(rp.id, rp);
+        changed = true;
+      } else {
+        // Actualizar likes si el remoto tiene mayor o si hay comentarios nuevos
+        if ((rp.likes || 0) > (existing.likes || 0)) {
+          existing.likes = rp.likes;
+          changed = true;
+        }
+        const existingCids = new Set((existing.comments || []).map((c) => c.id));
+        for (const rc of rp.comments || []) {
+          if (rc && rc.id && !existingCids.has(rc.id)) {
+            if (!Array.isArray(existing.comments)) existing.comments = [];
+            existing.comments.push(rc);
+            existingCids.add(rc.id);
+            changed = true;
+          }
+        }
+      }
+    }
+
+    if (changed) {
+      forumState.posts = Array.from(byId.values());
+      persistForumState();
+      renderForum();
+    }
+  };
+
+  const syncForumWithCloud = async () => {
+    if (isLocalHostEnv() || (typeof navigator !== "undefined" && navigator.onLine === false)) {
+      updateSyncBadge(false);
+      return;
+    }
+    const workerEp = (BT_TELEMETRY_CONFIG.workerEndpoint || "").trim();
+    if (!workerEp) return;
+    try {
+      const url = `${workerEp}${workerEp.includes("?") ? "&" : "?"}channel=forum`;
+      const res = await fetch(url, { method: "GET", headers: { Accept: "application/json" } });
+      if (res && res.ok) {
+        const data = await res.json().catch(() => null);
+        if (data && data.ok && Array.isArray(data.posts)) {
+          mergeCloudForumPosts(data.posts);
+        }
+        updateSyncBadge(true);
+      }
+    } catch (_) {
+      updateSyncBadge(false);
+    }
+  };
+
+  const getLocalAuthorId = () => {
+    try {
+      let id = localStorage.getItem(BT_FORUM_AUTHOR_KEY);
+      if (!id) {
+        id = `u_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
+        localStorage.setItem(BT_FORUM_AUTHOR_KEY, id);
+      }
+      return id;
+    } catch (_) {
+      return "u_local";
+    }
+  };
+  const LOCAL_AUTHOR_ID = getLocalAuthorId();
+
+  const cloneSeeds = () => JSON.parse(JSON.stringify(STARTER_FORUM_POSTS));
+
+  const loadForumState = () => {
+    try {
+      const raw = localStorage.getItem(BT_FORUM_STATE_KEY);
+      if (!raw) {
+        const fresh = { posts: cloneSeeds(), likedPostIds: [], likedCommentIds: [], savedPostIds: [] };
+        localStorage.setItem(BT_FORUM_STATE_KEY, JSON.stringify(fresh));
+        return fresh;
+      }
+      const parsed = JSON.parse(raw);
+      const posts = Array.isArray(parsed.posts) ? parsed.posts : cloneSeeds();
+      const existingIds = new Set(posts.map((p) => p.id));
+      for (const seed of STARTER_FORUM_POSTS) {
+        if (!existingIds.has(seed.id)) {
+          posts.push(JSON.parse(JSON.stringify(seed)));
+        }
+      }
+      return {
+        posts,
+        likedPostIds: Array.isArray(parsed.likedPostIds) ? parsed.likedPostIds : [],
+        likedCommentIds: Array.isArray(parsed.likedCommentIds) ? parsed.likedCommentIds : [],
+        savedPostIds: Array.isArray(parsed.savedPostIds) ? parsed.savedPostIds : []
+      };
+    } catch (_) {
+      return { posts: cloneSeeds(), likedPostIds: [], likedCommentIds: [], savedPostIds: [] };
+    }
+  };
+
+  let forumState = loadForumState();
+  const persistForumState = () => {
+    try {
+      localStorage.setItem(BT_FORUM_STATE_KEY, JSON.stringify(forumState));
+    } catch (_) {}
+  };
+
+  const viewState = {
+    channel: "all",
+    tag: "all",
+    query: "",
+    sort: "likes"
+  };
+  const expandedPosts = new Set();
+  let editingCommentKey = null; // "postId::commentId"
+
+  const validateScoutSafeText = (txt) => {
+    const raw = String(txt || "");
+    if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i.test(raw)) {
+      return { ok: false, reason: "Por seguridad (A Salvo del Peligro), evita publicar correos personales en el foro." };
+    }
+    if (/(?:\+?52\s*)?(?:\d[\s.-]*){10,}/.test(raw)) {
+      return { ok: false, reason: "Por seguridad, evita compartir números telefónicos privados en publicaciones públicas." };
+    }
+    const slurRe = /\b(pendej[oa]s?|put[oa]s?|chingad[oa]s?|verga|estupid[oa]s?|idiota|imbecil|culer[oa]s?|mierda)\b/i;
+    if (slurRe.test(normalizeStr(raw))) {
+      return { ok: false, reason: "Mantengamos el respeto de la Ley Scout: evita lenguaje ofensivo." };
+    }
+    return { ok: true };
+  };
+
+  const normalizeForumTag = (raw) => {
+    const clean = normalizeStr(String(raw || "").trim().replace(/^#+/, ""))
+      .replace(/[^a-z0-9-]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 28);
+    return clean ? `#${clean}` : "";
+  };
+
+  const parsePostTags = (presetArr, customStr) => {
+    const set = new Set();
+    for (const t of presetArr || []) {
+      const nt = normalizeForumTag(t);
+      if (nt) set.add(nt);
+    }
+    for (const part of String(customStr || "").split(/[\s,;]+/)) {
+      const nt = normalizeForumTag(part);
+      if (nt) set.add(nt);
+    }
+    if (!set.size) set.add("#campamento");
+    return Array.from(set).slice(0, 6);
+  };
+
+  const formatForumDate = (ts) => {
+    try {
+      return new Date(ts).toLocaleDateString("es-MX", { day: "2-digit", month: "short", year: "numeric" });
+    } catch (_) {
+      return "Reciente";
+    }
+  };
+
+  const getInitials = (name) => {
+    const parts = String(name || "SC").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return "SC";
+    return parts.length === 1 ? parts[0].slice(0, 2).toUpperCase() : `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  };
+
+  const findBestForumDocMatch = (docRef) => {
+    const q = String(docRef || "").trim();
+    if (!q || !STATE.documents || !STATE.documents.length) return null;
+    const direct = typeof findDocByFilename === "function" ? findDocByFilename(q) : null;
+    if (direct && STATE.documents.some((d) => d.id === direct.id)) return direct;
+    const normQ = normalizeStr(q);
+    return (
+      STATE.documents.find((d) => normalizeStr(d.title).includes(normQ) || normalizeStr(d.filename).includes(normQ)) ||
+      null
+    );
+  };
+
+  const updateChannelCounts = () => {
+    const allCount = forumState.posts.length;
+    const jovenesCount = forumState.posts.filter((p) => p.channel === "jovenes").length;
+    const adultosCount = forumState.posts.filter((p) => p.channel === "adultos").length;
+    const miosCount = forumState.posts.filter(
+      (p) => p.authorId === LOCAL_AUTHOR_ID || forumState.savedPostIds.includes(p.id)
+    ).length;
+
+    const map = { all: allCount, jovenes: jovenesCount, adultos: adultosCount, mios: miosCount };
+    Object.keys(map).forEach((k) => {
+      const el = document.querySelector(`[data-count-channel="${k}"]`);
+      if (el) el.textContent = String(map[k]);
+    });
+  };
+
+  const renderTagBar = () => {
+    if (!tagBar) return;
+    const counts = new Map();
+    for (const preset of FORUM_PRESET_TAGS) counts.set(preset, 0);
+    for (const post of forumState.posts) {
+      if (viewState.channel === "jovenes" && post.channel !== "jovenes") continue;
+      if (viewState.channel === "adultos" && post.channel !== "adultos") continue;
+      if (
+        viewState.channel === "mios" &&
+        post.authorId !== LOCAL_AUTHOR_ID &&
+        !forumState.savedPostIds.includes(post.id)
+      ) {
+        continue;
+      }
+      for (const tg of post.tags || []) {
+        counts.set(tg, (counts.get(tg) || 0) + 1);
+      }
+    }
+
+    const sortedTags = Array.from(counts.entries()).sort((a, b) => b[1] - a[1]);
+    const allTotal = sortedTags.reduce((acc, [, c]) => acc + c, 0);
+    let html = `<button type="button" class="forum-tag-pill${viewState.tag === "all" ? " active" : ""}" data-forum-tag="all">Todos los temas</button>`;
+    for (const [tg, cnt] of sortedTags) {
+      if (cnt === 0 && !FORUM_PRESET_TAGS.includes(tg) && viewState.tag !== tg) continue;
+      html += `<button type="button" class="forum-tag-pill${viewState.tag === tg ? " active" : ""}" data-forum-tag="${escapeHtml(tg)}">${escapeHtml(tg)} <span class="forum-tag-pill-count">${cnt}</span></button>`;
+    }
+    if (!allTotal && viewState.tag !== "all") {
+      html += `<button type="button" class="forum-tag-pill active" data-forum-tag="${escapeHtml(viewState.tag)}">${escapeHtml(viewState.tag)}</button>`;
+    }
+    tagBar.innerHTML = html;
+  };
+
+  const getFilteredPosts = () => {
+    const qNorm = normalizeStr(viewState.query.trim());
+    const list = forumState.posts.filter((p) => {
+      if (viewState.channel === "jovenes" && p.channel !== "jovenes") return false;
+      if (viewState.channel === "adultos" && p.channel !== "adultos") return false;
+      if (
+        viewState.channel === "mios" &&
+        p.authorId !== LOCAL_AUTHOR_ID &&
+        !forumState.savedPostIds.includes(p.id)
+      ) {
+        return false;
+      }
+      if (viewState.tag !== "all" && !(p.tags || []).includes(viewState.tag)) return false;
+      if (qNorm) {
+        const hay = normalizeStr(
+          `${p.title} ${p.body} ${p.author} ${p.displaySub || ""} ${p.role} ${p.group || ""} ${p.province} ${(p.tags || []).join(" ")} ${p.docRef || ""}`
+        );
+        if (!hay.includes(qNorm)) return false;
+      }
+      return true;
+    });
+
+    list.sort((a, b) => {
+      if (viewState.sort === "recent") return (b.createdAt || 0) - (a.createdAt || 0);
+      if (viewState.sort === "comments") return (b.comments || []).length - (a.comments || []).length;
+      const likeDiff = (b.likes || 0) - (a.likes || 0);
+      return likeDiff !== 0 ? likeDiff : (b.createdAt || 0) - (a.createdAt || 0);
+    });
+    return list;
+  };
+
+  const ROLE_OPTIONS = [
+    "Manada de Lobatos",
+    "Tropa de Scouts",
+    "Comunidad de Caminantes",
+    "Clan de Rovers",
+    "Scouter / Dirigente",
+    "Asesor de Red / Grupo",
+    "Padre / Madre / Tutor"
+  ];
+
+  const renderForum = () => {
+    updateChannelCounts();
+    renderTagBar();
+    const posts = getFilteredPosts();
+    const savedId = getForumIdentity();
+
+    if (countLabel) {
+      countLabel.textContent =
+        posts.length === 1
+          ? "Mostrando 1 publicación en La Fogata"
+          : `Mostrando ${posts.length} publicaciones en La Fogata`;
+    }
+    if (resetBtn) {
+      const hasFilters = viewState.channel !== "all" || viewState.tag !== "all" || Boolean(viewState.query.trim());
+      resetBtn.classList.toggle("hidden", !hasFilters);
+    }
+
+    if (!posts.length) {
+      grid.innerHTML = `
+        <div class="forum-empty-state">
+          <p><strong>No hay publicaciones que coincidan con ese filtro.</strong></p>
+          <p>Limpia los filtros o anima La Fogata abriendo el primer consejo sobre este tema.</p>
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = posts
+      .map((post) => {
+        const isAdult = post.channel === "adultos";
+        const isOwn = post.authorId === LOCAL_AUTHOR_ID;
+        const isLiked = forumState.likedPostIds.includes(post.id);
+        const isSaved = forumState.savedPostIds.includes(post.id);
+        const isExpanded = expandedPosts.has(post.id);
+        const comments = Array.isArray(post.comments) ? post.comments : [];
+        const maxCommentLikes = comments.reduce((mx, c) => Math.max(mx, c.likes || 0), 0);
+        const postSub =
+          post.displaySub ||
+          [post.role, post.group, post.province].filter(Boolean).join(" · ");
+
+        const roleSelectOpts = ROLE_OPTIONS.map(
+          (r) => `<option value="${escapeHtml(r)}"${savedId.role === r ? " selected" : ""}>${escapeHtml(r)}</option>`
+        ).join("");
+
+        const commentsHtml = isExpanded
+          ? `
+            <div class="forum-comments-drawer" data-comments-drawer="${escapeHtml(post.id)}">
+              <div class="forum-comments-list">
+                ${
+                  comments.length
+                    ? comments
+                        .map((c) => {
+                          const isOwnComment = c.authorId === LOCAL_AUTHOR_ID;
+                          const isCommentLiked = forumState.likedCommentIds.includes(c.id);
+                          const isBest = maxCommentLikes > 0 && (c.likes || 0) === maxCommentLikes;
+                          const isEditingThis = editingCommentKey === `${post.id}::${c.id}`;
+                          const cSub = c.displaySub || [c.role, c.group, c.province].filter(Boolean).join(" · ") || "Miembro Scout";
+                          return `
+                            <div class="forum-comment-item${isBest ? " forum-best-comment" : ""}" data-comment-id="${escapeHtml(c.id)}">
+                              <div class="forum-comment-head">
+                                <span>
+                                  <strong>${escapeHtml(c.author)}</strong>
+                                  <span style="opacity:0.78"> · ${escapeHtml(cSub)}</span>
+                                  ${c.editedAt ? ' <span class="forum-edited-pill">Editado</span>' : ""}
+                                </span>
+                                ${isBest ? '<span class="forum-best-badge">Respuesta más útil</span>' : ""}
+                              </div>
+                              ${
+                                isEditingThis
+                                  ? `
+                                    <form class="forum-comment-form forum-comment-inline-edit" data-save-comment-edit="${escapeHtml(post.id)}::${escapeHtml(c.id)}">
+                                      <input type="text" class="forum-comment-input" maxlength="500" value="${escapeHtml(c.body)}" required aria-label="Editar comentario" />
+                                      <div style="display:flex;gap:0.35rem;">
+                                        <button type="submit" class="forum-comment-submit">Guardar</button>
+                                        <button type="button" class="forum-action-btn" data-cancel-comment-edit="1">Cancelar</button>
+                                      </div>
+                                    </form>
+                                  `
+                                  : `<p class="forum-comment-body">${escapeHtml(c.body)}</p>`
+                              }
+                              <div class="forum-comment-actions">
+                                <button type="button" class="forum-like-btn${isCommentLiked ? " is-liked" : ""}" data-like-comment="${escapeHtml(post.id)}::${escapeHtml(c.id)}" aria-pressed="${String(isCommentLiked)}">
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                  <span>${c.likes || 0}</span>
+                                </button>
+                                ${
+                                  isOwnComment && !isEditingThis
+                                    ? `
+                                      <button type="button" class="forum-action-btn" data-edit-comment="${escapeHtml(post.id)}::${escapeHtml(c.id)}">Editar</button>
+                                      <button type="button" class="forum-action-btn is-danger" data-delete-comment="${escapeHtml(post.id)}::${escapeHtml(c.id)}">Borrar</button>
+                                    `
+                                    : ""
+                                }
+                                <button type="button" class="forum-flag-btn" data-report-comment="${escapeHtml(post.id)}::${escapeHtml(c.id)}" title="Reportar este comentario">
+                                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                                  <span>Reportar</span>
+                                </button>
+                              </div>
+                            </div>
+                          `;
+                        })
+                        .join("")
+                    : `<p class="forum-comment-body" style="opacity:0.8">Aún no hay respuestas. Comparte la primera recomendación útil.</p>`
+                }
+              </div>
+              <form class="forum-comment-form" data-add-comment-form="${escapeHtml(post.id)}" novalidate>
+                <div class="forum-comment-identity-bar" style="grid-column:1/-1;">
+                  <p class="forum-comment-identity-hint">Registro obligatorio por seguridad (elige abajo si sales con tu nombre o Anónimo):</p>
+                  <input type="text" class="fc-real-name" maxlength="70" placeholder="Nombre completo real *" value="${escapeHtml(savedId.realName)}" required aria-label="Nombre completo real obligatorio para responder" />
+                  <select class="fc-role" aria-label="Sección o rol">${roleSelectOpts}</select>
+                  <input type="text" class="fc-group" maxlength="50" placeholder="Grupo Scout *" value="${escapeHtml(savedId.group)}" required aria-label="Grupo Scout obligatorio" />
+                  <input type="text" class="fc-province" maxlength="60" placeholder="Provincia Scout *" value="${escapeHtml(savedId.province)}" required aria-label="Provincia Scout obligatoria" />
+                  <select class="fc-visibility" style="grid-column:1/-1;" aria-label="Cómo mostrarte en el comentario">
+                    <option value="full"${savedId.visibility === "full" ? " selected" : ""}>Mostrar mi nombre, sección, grupo y provincia</option>
+                    <option value="group_only"${savedId.visibility === "group_only" ? " selected" : ""}>Anónimo, mostrando solo mi sección, grupo y provincia</option>
+                    <option value="anonymous"${savedId.visibility === "anonymous" ? " selected" : ""}>100 % Anónimo (ocultar nombre, grupo y provincia)</option>
+                  </select>
+                </div>
+                <input type="text" class="forum-comment-input" maxlength="500" placeholder="Escribe un consejo o respuesta con respeto..." aria-label="Escribir respuesta en La Fogata" required />
+                <button type="submit" class="forum-comment-submit">Responder</button>
+              </form>
+            </div>
+          `
+          : "";
+
+        return `
+          <article class="forum-post-card${isAdult ? " is-adult" : ""}" data-post-id="${escapeHtml(post.id)}">
+            <div class="forum-post-head">
+              <div class="forum-author-meta">
+                <span class="forum-author-avatar" aria-hidden="true">${escapeHtml(post.initials || getInitials(post.author))}</span>
+                <div>
+                  <span class="forum-author-name">${escapeHtml(post.author)}</span>
+                  <span class="forum-author-sub">${escapeHtml(postSub)} · ${formatForumDate(post.createdAt)}</span>
+                </div>
+              </div>
+              <div class="forum-badges-wrap">
+                <span class="forum-channel-badge">${isAdult ? "Entre Scouters y Adultos" : "Entre Jóvenes"}</span>
+                ${post.editedAt ? '<span class="forum-edited-pill">Editado</span>' : ""}
+              </div>
+            </div>
+
+            <h3 class="forum-post-title">${escapeHtml(post.title)}</h3>
+            <p class="forum-post-body">${escapeHtml(post.body)}</p>
+
+            ${
+              post.docRef
+                ? `<button type="button" class="forum-doc-ref-btn" data-forum-doc="${escapeHtml(post.docRef)}">Ver recurso relacionado: ${escapeHtml(post.docRef)} →</button>`
+                : ""
+            }
+
+            <div class="forum-post-tags">
+              ${(post.tags || [])
+                .map(
+                  (tg) =>
+                    `<button type="button" class="forum-tag-chip" data-forum-tag-jump="${escapeHtml(tg)}">${escapeHtml(tg)}</button>`
+                )
+                .join("")}
+            </div>
+
+            <div class="forum-actions-bar">
+              <div class="forum-actions-left">
+                <button type="button" class="forum-like-btn${isLiked ? " is-liked" : ""}" data-like-post="${escapeHtml(post.id)}" aria-pressed="${String(isLiked)}">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                  <span>Útil (${post.likes || 0})</span>
+                </button>
+                <button type="button" class="forum-action-btn" data-toggle-comments="${escapeHtml(post.id)}" aria-expanded="${String(isExpanded)}">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  <span>Respuestas (${comments.length})</span>
+                </button>
+                <button type="button" class="forum-action-btn${isSaved ? " is-saved" : ""}" data-save-post="${escapeHtml(post.id)}" aria-pressed="${String(isSaved)}">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                  <span>${isSaved ? "Guardado" : "Guardar"}</span>
+                </button>
+              </div>
+              <div class="forum-owner-actions">
+                ${
+                  isOwn
+                    ? `
+                      <button type="button" class="forum-action-btn" data-edit-post="${escapeHtml(post.id)}">Editar</button>
+                      <button type="button" class="forum-action-btn is-danger" data-delete-post="${escapeHtml(post.id)}">Eliminar</button>
+                    `
+                    : ""
+                }
+                <button type="button" class="forum-flag-btn" data-report-post="${escapeHtml(post.id)}" title="Reportar publicación">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                  <span>Reportar</span>
+                </button>
+              </div>
+            </div>
+            ${commentsHtml}
+          </article>
+        `;
+      })
+      .join("");
+  };
+
+  const setComposerStatus = (msg, type = "") => {
+    if (!composerStatusEl) return;
+    composerStatusEl.textContent = msg;
+    composerStatusEl.className = "bt-bug-status" + (type ? ` is-${type}` : "");
+    composerStatusEl.classList.toggle("hidden", !msg);
+    if (msg && typeof composerStatusEl.scrollIntoView === "function") {
+      composerStatusEl.scrollIntoView({ block: "nearest" });
+    }
+  };
+
+  const openComposer = (editPost = null) => {
+    if (!composerModal || !postForm) return;
+    postForm.reset();
+    setComposerStatus("");
+    const savedId = getForumIdentity();
+
+    if (realNameInput) realNameInput.value = savedId.realName || "";
+    if (roleInput && savedId.role) roleInput.value = savedId.role;
+    if (groupInput) groupInput.value = savedId.group || "";
+    if (provinceInput) provinceInput.value = savedId.province || "";
+    if (visibilityInput) visibilityInput.value = savedId.visibility || "full";
+    if (aliasInput) aliasInput.value = savedId.alias || "";
+
+    if (editPost) {
+      postForm.dataset.editId = editPost.id;
+      if (composerTitleEl) composerTitleEl.textContent = "Editar publicación en La Fogata";
+      if (submitPostBtn) submitPostBtn.textContent = "Guardar cambios";
+      if (channelInput) channelInput.value = editPost.channel || "jovenes";
+      if (roleInput && editPost.role) roleInput.value = editPost.role;
+      if (visibilityInput && editPost.visibility) visibilityInput.value = editPost.visibility;
+      if (groupInput && editPost.group) groupInput.value = editPost.group;
+      if (provinceInput && editPost.province) provinceInput.value = editPost.province;
+      if (aliasInput && editPost.visibility === "full" && editPost.author) {
+        aliasInput.value = editPost.author === (savedId.realName || "") ? "" : editPost.author;
+      }
+      if (titleInput) titleInput.value = editPost.title || "";
+      if (bodyInput) bodyInput.value = editPost.body || "";
+      if (docRefInput) docRefInput.value = editPost.docRef || "";
+
+      const postTags = editPost.tags || [];
+      const customOnes = [];
+      if (presetTagsWrap) {
+        presetTagsWrap.querySelectorAll('input[type="checkbox"]').forEach((chk) => {
+          chk.checked = postTags.includes(chk.value);
+        });
+      }
+      for (const tg of postTags) {
+        if (!FORUM_PRESET_TAGS.includes(tg)) customOnes.push(tg);
+      }
+      if (customTagsInput) customTagsInput.value = customOnes.join(" ");
+    } else {
+      delete postForm.dataset.editId;
+      if (composerTitleEl) composerTitleEl.textContent = "Nueva recomendación en La Fogata";
+      if (submitPostBtn) submitPostBtn.textContent = "Publicar en La Fogata";
+      if (channelInput) {
+        if (viewState.channel === "adultos") channelInput.value = "adultos";
+        else if (savedId.role && (savedId.role.includes("Scouter") || savedId.role.includes("Padre") || savedId.role.includes("Asesor"))) {
+          channelInput.value = "adultos";
+        } else {
+          channelInput.value = "jovenes";
+        }
+      }
+    }
+
+    composerModal.classList.remove("hidden");
+    const firstEmpty =
+      realNameInput && !realNameInput.value.trim()
+        ? "#forumPostRealName"
+        : groupInput && !groupInput.value.trim()
+        ? "#forumPostGroup"
+        : provinceInput && !provinceInput.value.trim()
+        ? "#forumPostProvince"
+        : "#forumPostTitle";
+    activateDialogFocusTrap(composerModal, firstEmpty);
+  };
+
+  const closeComposer = () => {
+    if (!composerModal) return;
+    composerModal.classList.add("hidden");
+    releaseDialogFocusTrap(composerModal);
+  };
+
+  if (openComposerBtn) openComposerBtn.addEventListener("click", () => openComposer(null));
+  if (closeComposerBtn) closeComposerBtn.addEventListener("click", closeComposer);
+  if (cancelComposerBtn) cancelComposerBtn.addEventListener("click", closeComposer);
+  if (composerModal) {
+    composerModal.addEventListener("click", (e) => {
+      if (e.target === composerModal) closeComposer();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !composerModal.classList.contains("hidden")) closeComposer();
+    });
+  }
+
+  if (postForm) {
+    postForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const realName = (realNameInput ? realNameInput.value : "").trim();
+      const role = roleInput ? roleInput.value : "Comunidad de Caminantes";
+      const group = (groupInput ? groupInput.value : "").trim();
+      const province = (provinceInput ? provinceInput.value : "").trim();
+      const visibility = visibilityInput ? visibilityInput.value : "full";
+      const alias = (aliasInput ? aliasInput.value : "").trim();
+      const title = (titleInput ? titleInput.value : "").trim();
+      const body = (bodyInput ? bodyInput.value : "").trim();
+      const channel = channelInput ? channelInput.value : "jovenes";
+      const docRef = (docRefInput ? docRefInput.value : "").trim();
+
+      if (realName.length < 3) {
+        setComposerStatus("Por seguridad, escribe tu nombre completo real (no aparecerá si eliges Anónimo).", "error");
+        if (realNameInput) realNameInput.focus({ preventScroll: true });
+        return;
+      }
+      if (group.length < 2) {
+        setComposerStatus("Indica tu Grupo Scout (o escribe 'Independiente') para el registro de seguridad.", "error");
+        if (groupInput) groupInput.focus({ preventScroll: true });
+        return;
+      }
+      if (province.length < 2) {
+        setComposerStatus("Indica tu Provincia Scout para el registro de seguridad.", "error");
+        if (provinceInput) provinceInput.focus({ preventScroll: true });
+        return;
+      }
+      if (title.length < 6) {
+        setComposerStatus("Escribe un título más claro (al menos 6 caracteres).", "error");
+        if (titleInput) titleInput.focus({ preventScroll: true });
+        return;
+      }
+      if (body.length < 15) {
+        setComposerStatus("Comparte un poco más de detalle en tu consejo o duda.", "error");
+        if (bodyInput) bodyInput.focus({ preventScroll: true });
+        return;
+      }
+
+      const safetyCheck = validateScoutSafeText(`${realName} ${alias} ${group} ${province} ${title} ${body}`);
+      if (!safetyCheck.ok) {
+        setComposerStatus(safetyCheck.reason, "error");
+        return;
+      }
+
+      const savedIdentity = saveForumIdentity({ realName, role, group, province, alias, visibility });
+      const pubMeta = resolvePublicAuthorDisplay({ realName, alias, role, group, province, visibility });
+
+      const checkedTags = presetTagsWrap
+        ? Array.from(presetTagsWrap.querySelectorAll('input[type="checkbox"]:checked')).map((c) => c.value)
+        : [];
+      const tags = parsePostTags(checkedTags, customTagsInput ? customTagsInput.value : "");
+      const editId = postForm.dataset.editId;
+
+      if (editId) {
+        const targetPost = forumState.posts.find((p) => p.id === editId && p.authorId === LOCAL_AUTHOR_ID);
+        if (targetPost) {
+          targetPost.channel = channel;
+          targetPost.visibility = visibility;
+          targetPost.role = visibility === "anonymous" ? "Miembro Scout" : role;
+          targetPost.group = visibility === "anonymous" ? "" : group;
+          targetPost.province = visibility === "anonymous" ? "" : province;
+          targetPost.author = pubMeta.displayAuthor;
+          targetPost.displaySub = pubMeta.displaySub;
+          targetPost.initials = pubMeta.initials;
+          targetPost.title = title;
+          targetPost.body = body;
+          targetPost.tags = tags;
+          targetPost.docRef = docRef;
+          targetPost.editedAt = Date.now();
+          persistForumState();
+          closeComposer();
+          renderForum();
+          showWebToast("Publicación actualizada correctamente.");
+          sendForumSecurityRecord("foro_edicion", savedIdentity, `${title}\n${body}`, {
+            title,
+            publicPost: targetPost
+          });
+        }
+        return;
+      }
+
+      const newPost = {
+        id: `fp_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
+        channel,
+        visibility,
+        role: visibility === "anonymous" ? "Miembro Scout" : role,
+        group: visibility === "anonymous" ? "" : group,
+        province: visibility === "anonymous" ? "" : province,
+        author: pubMeta.displayAuthor,
+        displaySub: pubMeta.displaySub,
+        initials: pubMeta.initials,
+        authorId: LOCAL_AUTHOR_ID,
+        title,
+        body,
+        tags,
+        docRef,
+        likes: 1,
+        createdAt: Date.now(),
+        comments: []
+      };
+      forumState.posts.unshift(newPost);
+      if (!forumState.likedPostIds.includes(newPost.id)) forumState.likedPostIds.push(newPost.id);
+      persistForumState();
+      viewState.channel = "all";
+      viewState.tag = "all";
+      if (channelTabs) {
+        channelTabs.querySelectorAll(".forum-channel-tab").forEach((t) => {
+          const active = t.getAttribute("data-forum-channel") === "all";
+          t.classList.toggle("active", active);
+          t.setAttribute("aria-selected", String(active));
+        });
+      }
+      closeComposer();
+      renderForum();
+      BiblioFeel.pulse([10, 28]);
+      showWebToast("¡Tu recomendación se publicó en La Fogata!");
+      sendForumSecurityRecord("foro_post", savedIdentity, `${title}\n${body}\nEtiquetas: ${tags.join(" ")}`, {
+        title,
+        publicPost: newPost
+      });
+    });
+  }
+
+  if (channelTabs) {
+    channelTabs.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-forum-channel]");
+      if (!btn) return;
+      viewState.channel = btn.getAttribute("data-forum-channel") || "all";
+      channelTabs.querySelectorAll(".forum-channel-tab").forEach((t) => {
+        const active = t === btn;
+        t.classList.toggle("active", active);
+        t.setAttribute("aria-selected", String(active));
+      });
+      renderForum();
+    });
+  }
+
+  if (tagBar) {
+    tagBar.addEventListener("click", (e) => {
+      const pill = e.target.closest("[data-forum-tag]");
+      if (!pill) return;
+      viewState.tag = pill.getAttribute("data-forum-tag") || "all";
+      renderForum();
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener(
+      "input",
+      debounce(() => {
+        viewState.query = searchInput.value;
+        renderForum();
+      }, 120)
+    );
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener("change", () => {
+      viewState.sort = sortSelect.value || "likes";
+      renderForum();
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      viewState.channel = "all";
+      viewState.tag = "all";
+      viewState.query = "";
+      if (searchInput) searchInput.value = "";
+      if (channelTabs) {
+        channelTabs.querySelectorAll(".forum-channel-tab").forEach((t) => {
+          const active = t.getAttribute("data-forum-channel") === "all";
+          t.classList.toggle("active", active);
+          t.setAttribute("aria-selected", String(active));
+        });
+      }
+      renderForum();
+    });
+  }
+
+  grid.addEventListener("click", (e) => {
+    const tagJump = e.target.closest("[data-forum-tag-jump]");
+    if (tagJump) {
+      viewState.tag = tagJump.getAttribute("data-forum-tag-jump") || "all";
+      renderForum();
+      return;
+    }
+
+    const docBtn = e.target.closest("[data-forum-doc]");
+    if (docBtn) {
+      const ref = docBtn.getAttribute("data-forum-doc") || "";
+      const matchedDoc = findBestForumDocMatch(ref);
+      if (matchedDoc && typeof openDocumentModal === "function") {
+        openDocumentModal(matchedDoc.id);
+      } else {
+        const askInput = document.getElementById("askInput");
+        if (askInput) {
+          submitQuestion(ref, { syncInput: true });
+        }
+      }
+      return;
+    }
+
+    const likePostBtn = e.target.closest("[data-like-post]");
+    if (likePostBtn) {
+      const pid = likePostBtn.getAttribute("data-like-post");
+      const post = forumState.posts.find((p) => p.id === pid);
+      if (!post) return;
+      const idx = forumState.likedPostIds.indexOf(pid);
+      let delta = 1;
+      if (idx >= 0) {
+        forumState.likedPostIds.splice(idx, 1);
+        post.likes = Math.max(0, (post.likes || 0) - 1);
+        delta = -1;
+      } else {
+        forumState.likedPostIds.push(pid);
+        post.likes = (post.likes || 0) + 1;
+        BiblioFeel.pulse(10);
+      }
+      persistForumState();
+      renderForum();
+      sendForumSecurityRecord("foro_like", getForumIdentity(), `Like (${delta > 0 ? "+1" : "-1"}) en publicación: ${post.title}`, {
+        postId: pid,
+        title: post.title,
+        likeDelta: { postId: pid, delta, currentLikes: post.likes }
+      });
+      return;
+    }
+
+    const savePostBtn = e.target.closest("[data-save-post]");
+    if (savePostBtn) {
+      const pid = savePostBtn.getAttribute("data-save-post");
+      const idx = forumState.savedPostIds.indexOf(pid);
+      if (idx >= 0) {
+        forumState.savedPostIds.splice(idx, 1);
+        showWebToast("Publicación quitada de tus guardados.");
+      } else {
+        forumState.savedPostIds.push(pid);
+        showWebToast("Publicación guardada en Mis Publicaciones.");
+      }
+      persistForumState();
+      renderForum();
+      return;
+    }
+
+    const toggleCommentsBtn = e.target.closest("[data-toggle-comments]");
+    if (toggleCommentsBtn) {
+      const pid = toggleCommentsBtn.getAttribute("data-toggle-comments");
+      if (expandedPosts.has(pid)) expandedPosts.delete(pid);
+      else expandedPosts.add(pid);
+      renderForum();
+      return;
+    }
+
+    const editPostBtn = e.target.closest("[data-edit-post]");
+    if (editPostBtn) {
+      const pid = editPostBtn.getAttribute("data-edit-post");
+      const post = forumState.posts.find((p) => p.id === pid && p.authorId === LOCAL_AUTHOR_ID);
+      if (post) openComposer(post);
+      return;
+    }
+
+    const delPostBtn = e.target.closest("[data-delete-post]");
+    if (delPostBtn) {
+      const pid = delPostBtn.getAttribute("data-delete-post");
+      forumState.posts = forumState.posts.filter((p) => !(p.id === pid && p.authorId === LOCAL_AUTHOR_ID));
+      forumState.savedPostIds = forumState.savedPostIds.filter((id) => id !== pid);
+      persistForumState();
+      renderForum();
+      showWebToast("Publicación eliminada.");
+      return;
+    }
+
+    const reportBtn = e.target.closest("[data-report-post]");
+    if (reportBtn) {
+      const pid = reportBtn.getAttribute("data-report-post");
+      const post = forumState.posts.find((p) => p.id === pid);
+      if (typeof window.__btOpenBugReport === "function") {
+        window.__btOpenBugReport("La Fogata", `[Publicación] ${(post && post.title) || pid}`, true);
+      }
+      return;
+    }
+
+    const reportCommentBtn = e.target.closest("[data-report-comment]");
+    if (reportCommentBtn) {
+      const [pid, cid] = (reportCommentBtn.getAttribute("data-report-comment") || "").split("::");
+      const post = forumState.posts.find((p) => p.id === pid);
+      const comment = post && (post.comments || []).find((c) => c.id === cid);
+      const excerpt = (comment && comment.body ? comment.body.slice(0, 75) : cid);
+      if (typeof window.__btOpenBugReport === "function") {
+        window.__btOpenBugReport(
+          "La Fogata",
+          `[Comentario en "${(post && post.title) || pid}"] ${excerpt}`,
+          true
+        );
+      }
+      return;
+    }
+
+    const likeCommentBtn = e.target.closest("[data-like-comment]");
+    if (likeCommentBtn) {
+      const [pid, cid] = (likeCommentBtn.getAttribute("data-like-comment") || "").split("::");
+      const post = forumState.posts.find((p) => p.id === pid);
+      const comment = post && (post.comments || []).find((c) => c.id === cid);
+      if (!comment) return;
+      const key = cid;
+      const idx = forumState.likedCommentIds.indexOf(key);
+      let delta = 1;
+      if (idx >= 0) {
+        forumState.likedCommentIds.splice(idx, 1);
+        comment.likes = Math.max(0, (comment.likes || 0) - 1);
+        delta = -1;
+      } else {
+        forumState.likedCommentIds.push(key);
+        comment.likes = (comment.likes || 0) + 1;
+        BiblioFeel.pulse(8);
+      }
+      persistForumState();
+      renderForum();
+      sendForumSecurityRecord("foro_like", getForumIdentity(), `Like (${delta > 0 ? "+1" : "-1"}) en respuesta de ${post.title}`, {
+        postId: pid,
+        title: post.title,
+        likeDelta: { postId: pid, commentId: cid, delta, currentLikes: comment.likes }
+      });
+      return;
+    }
+
+    const editCommentBtn = e.target.closest("[data-edit-comment]");
+    if (editCommentBtn) {
+      editingCommentKey = editCommentBtn.getAttribute("data-edit-comment");
+      renderForum();
+      return;
+    }
+
+    if (e.target.closest("[data-cancel-comment-edit]")) {
+      editingCommentKey = null;
+      renderForum();
+      return;
+    }
+
+    const delCommentBtn = e.target.closest("[data-delete-comment]");
+    if (delCommentBtn) {
+      const [pid, cid] = (delCommentBtn.getAttribute("data-delete-comment") || "").split("::");
+      const post = forumState.posts.find((p) => p.id === pid);
+      if (post && Array.isArray(post.comments)) {
+        post.comments = post.comments.filter((c) => !(c.id === cid && c.authorId === LOCAL_AUTHOR_ID));
+        persistForumState();
+        renderForum();
+        showWebToast("Comentario eliminado.");
+      }
+    }
+  });
+
+  grid.addEventListener("submit", (e) => {
+    const addForm = e.target.closest("[data-add-comment-form]");
+    if (addForm) {
+      e.preventDefault();
+      const pid = addForm.getAttribute("data-add-comment-form");
+      const nameEl = addForm.querySelector(".fc-real-name");
+      const roleEl = addForm.querySelector(".fc-role");
+      const groupEl = addForm.querySelector(".fc-group");
+      const provEl = addForm.querySelector(".fc-province");
+      const visEl = addForm.querySelector(".fc-visibility");
+      const input = addForm.querySelector(".forum-comment-input");
+
+      const realName = (nameEl ? nameEl.value : "").trim();
+      const role = (roleEl ? roleEl.value : "Comunidad de Caminantes").trim();
+      const group = (groupEl ? groupEl.value : "").trim();
+      const province = (provEl ? provEl.value : "").trim();
+      const visibility = (visEl ? visEl.value : "full").trim();
+      const text = (input ? input.value : "").trim();
+
+      if (realName.length < 3) {
+        showWebToast("Por seguridad, escribe tu nombre completo real antes de responder.");
+        if (nameEl) nameEl.focus();
+        return;
+      }
+      if (group.length < 2) {
+        showWebToast("Indica tu Grupo Scout antes de responder (es obligatorio para registro).");
+        if (groupEl) groupEl.focus();
+        return;
+      }
+      if (province.length < 2) {
+        showWebToast("Indica tu Provincia Scout antes de responder (es obligatorio para registro).");
+        if (provEl) provEl.focus();
+        return;
+      }
+      if (text.length < 3) {
+        showWebToast("Escribe una respuesta de al menos 3 caracteres.");
+        if (input) input.focus();
+        return;
+      }
+
+      const safety = validateScoutSafeText(`${realName} ${group} ${province} ${text}`);
+      if (!safety.ok) {
+        showWebToast(safety.reason);
+        return;
+      }
+
+      const post = forumState.posts.find((p) => p.id === pid);
+      if (!post) return;
+
+      const savedIdentity = saveForumIdentity({ realName, role, group, province, visibility });
+      const pubMeta = resolvePublicAuthorDisplay({ realName, alias: "", role, group, province, visibility });
+      if (!Array.isArray(post.comments)) post.comments = [];
+
+      const newComment = {
+        id: `fc_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
+        author: pubMeta.displayAuthor,
+        displaySub: pubMeta.displaySub,
+        visibility,
+        role: visibility === "anonymous" ? "Miembro Scout" : role,
+        group: visibility === "anonymous" ? "" : group,
+        province: visibility === "anonymous" ? "" : province,
+        authorId: LOCAL_AUTHOR_ID,
+        body: text,
+        likes: 0,
+        createdAt: Date.now()
+      };
+      post.comments.push(newComment);
+      expandedPosts.add(pid);
+      persistForumState();
+      renderForum();
+      showWebToast("Respuesta publicada en La Fogata.");
+      sendForumSecurityRecord("foro_comentario", savedIdentity, `En "${post.title}": ${text}`, {
+        postId: pid,
+        title: post.title,
+        publicComment: { postId: pid, comment: newComment }
+      });
+      return;
+    }
+
+    const editForm = e.target.closest("[data-save-comment-edit]");
+    if (editForm) {
+      e.preventDefault();
+      const [pid, cid] = (editForm.getAttribute("data-save-comment-edit") || "").split("::");
+      const input = editForm.querySelector(".forum-comment-input");
+      const text = (input ? input.value : "").trim();
+      if (text.length < 3) return;
+      const safety = validateScoutSafeText(text);
+      if (!safety.ok) {
+        showWebToast(safety.reason);
+        return;
+      }
+      const post = forumState.posts.find((p) => p.id === pid);
+      const comment = post && (post.comments || []).find((c) => c.id === cid && c.authorId === LOCAL_AUTHOR_ID);
+      if (comment) {
+        comment.body = text;
+        comment.editedAt = Date.now();
+        editingCommentKey = null;
+        persistForumState();
+        renderForum();
+        showWebToast("Comentario actualizado.");
+      }
+    }
+  });
+
+  window.addEventListener("online", () => {
+    updateSyncBadge(false);
+    flushForumOutbox().then(() => syncForumWithCloud());
+  });
+  window.addEventListener("offline", () => updateSyncBadge(false));
+
+  renderForum();
+  updateSyncBadge(false);
+  flushForumOutbox();
+  syncForumWithCloud();
 }
 
 document.addEventListener("DOMContentLoaded", initApp);

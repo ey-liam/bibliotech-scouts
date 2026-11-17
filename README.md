@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 12/11/2026 • **Versión:** BETA `8.4.5` (Web) • `2.3.5` Mobile  
+**Base de datos:** 16/11/2026 • **Versión:** BETA `9.0.0` (Web) • `3.0.0` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -22,7 +22,7 @@
 
 ## 2. Convención de Versionado de 3 Dígitos (`MAJOR.MINOR.PATCH`)
 
-A partir de la versión **8.4.5** (Web) y **2.3.5** (Android), todo el ecosistema utiliza numeración semántica de tres dígitos:
+A partir de la versión **9.0.0** (Web) y **3.0.0** (Android), todo el ecosistema utiliza numeración semántica de tres dígitos:
 
 - **Primer dígito (`X.0.0`):** Cambio mayor, rediseño estructural completo o salto de arquitectura.
 - **Segundo dígito (`X.Y.0`):** Incorporación de nuevas funcionalidades relevantes, apartados o ampliaciones documentales significativas.
@@ -68,13 +68,13 @@ El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **M
 
 | Apartado | Función y qué puedes hacer ahí | Vista |
 | :--- | :--- | :---: |
-| **Buscador (`#buscador`)** | Escribe cualquier duda scout, filtra por sección (*Manada*, *Tropa*, *Comunidad*, *Clan*, etc.), abre el filtro rápido de **Sección**, genera **Preguntas al azar** o pulsa **Recargar otras al azar**, lee respuestas fundamentadas con fuente documental exacta y escúchalas con lectura en voz alta. | ![Buscador con metodología SMART](docs/screenshots/web-buscador-smart.png) |
-| **Biblioteca Scout (`#biblioteca`)** | Filtra por texto, sección, colección (*Centenario*, *Guías y PJOS*, *FES*, *RECME y FAES*, *SISAS y Help Desk*, *Manuales*, *Reglamentos*, *Comunicados*, etc.) o subcategoría entre los `599` documentos; guarda favoritos, toma notas locales y abre PDFs, hojas Excel con filtro/CSV, presentaciones, guías HTML o imágenes sin salir del sitio. | ![Biblioteca Scout en Modo Noche](docs/screenshots/web-biblioteca-noche.png) |
+| **Buscador (`#buscador`)** | Escribe cualquier duda scout, filtra por sección (*Manada*, *Tropa*, *Comunidad*, *Clan*, etc.), abre el filtro rápido de **Sección**, genera o recarga **Preguntas al azar**, lee respuestas fundamentadas con fuente documental exacta y escúchalas con lectura en voz alta. | ![Buscador con metodología SMART](docs/screenshots/web-buscador-smart.png) |
+| **Biblioteca Scout (`#biblioteca`)** | Filtra por texto, sección, colección (*Centenario*, *Guías y PJOS*, *FES*, *RECME y FAES*, *SISAS y Help Desk*, *Manuales*, *Reglamentos*, *Comunicados*, etc.) o subcategoría entre los `599` documentos; guarda favoritos, toma notas locales, reporta errores directo en el visor y abre PDFs, hojas Excel con filtro/CSV, presentaciones, guías HTML o imágenes sin salir del sitio. | ![Biblioteca Scout en Modo Noche](docs/screenshots/web-biblioteca-noche.png) |
 | **Guía de Uso (`#guia`)** | Tarjetas plegables numeradas (*01 Primeros Pasos*, *02 Ecosistema Digital*, *03 Campo Escuela Meztitla*, etc.) con respuestas rápidas, cuotas de registro, permisos JL304 y enlaces oficiales al tocar cada tema. | ![Guía de Uso con acordeones desplegables](docs/screenshots/web-acordeones.png) |
 | **Secciones Scouts (`#secciones`)** | Acceso directo unificado por rango de edad (*Manada de Lobatos*, *Tropa de Scouts*, *Comunidad de Caminantes*, *Clan de Rovers*, *Adultos y Dirigentes* y *World Scouting WOSM*) para filtrar al instante sus documentos, progresiones e insignias. | ![Tarjetas unificadas de Secciones Scouts](docs/screenshots/web-secciones-unificadas.png) |
-| **El Proyecto (`#acerca`)** | Presentación transparente del proyecto sin fines de lucro, su objetivo educativo, resumen de capacidades, datos de autoría y correo de contacto para reportar preguntas o mejoras. | ![Sección El Proyecto y autoría](docs/screenshots/web-acerca-proyecto.png) |
+| **¿Qué es BiblioTech? (`#acerca`)** | Presentación transparente del proyecto sin fines de lucro, su objetivo educativo, resumen de capacidades, datos de autoría y correo/reporte para mejoras o fallas. | ![Sección Proyecto sin fines de lucro y autoría](docs/screenshots/web-acerca-proyecto.png) |
 
-*(Además, desde la barra superior o el botón **Menú** accedes de forma ordenada a **Agentes de Cambio.MX**, **Servicios y Trámites**, **Cambios en Esquemas** y **Descarga App**).*
+*(Además, desde la barra superior o el botón **Menú** accedes de forma ordenada a **Agentes de Cambio.MX**, **Servicios y Trámites**, **Cambios en Esquemas**, **La Fogata**, **Editor de Formatos (Próximamente)** y **Descarga App**).*
 
 ---
 
@@ -103,15 +103,13 @@ El proyecto está construido evitando dependencias pesadas en el cliente y apoya
 
 ---
 
-## 8. Novedades Recientes (`8.4.4`)
+## 8. Novedades Recientes (`9.0.0`)
 
-- **Saneamiento oficial de infografías de Membresía Nacional ASMAC:** se asignaron nombres de archivo limpios, títulos oficiales, resúmenes estadísticos detallados y textos completos a las 7 infografías del censo nacional en `data/catalog.json`, `data/text/` y `data/faq_v4.json`, erradicando nombres genéricos heredados de WhatsApp.
-- **Botón y modal integrado de «Reportar error o bug»:** disponible directo en el menú desplegable (`#navegacion-principal`) y en el pie (`#aportar`), con lista predeterminada de fallas (imágenes faltantes, errores en PDFs, archivos faltantes, respuestas incorrectas, inconsistencia de temas, modo offline, etc.), selector del dispositivo donde usas BiblioTech y descripción libre con envío directo al Cloudflare Worker + respaldo `FormSubmit`.
-- **Telemetría conectada a Cloudflare Workers Free (`bibliotech-telemetry`) con respaldo automático:** envía actividad y errores JS al Worker con registro en *Observability Logs* y respaldo automático a `FormSubmit` si se alcanza el límite gratuito diario.
-- **Modo Offline real en iOS Safari / Web App (`sw.js v37`):** módulo interactivo en `#app` para descargar al caché local del iPhone/iPad o navegador las `13,516` preguntas, el catálogo y tablas Excel, barra de progreso en tiempo real y aviso automático cuando trabajas sin señal.
-- **Depuración y minificación CSS/JS (`src/` -> raíz con `esbuild`):** reducción de `styles.css` (`~312 KB -> ~220 KB`) y `app.js` (`~206 KB -> ~128 KB`), separando la documentación técnica interna a `ARCHITECTURE.md` y limpiando `12` PNGs duplicados en `img/deco/` y `assets/scouts/agentes_cambio/`.
-- **Calidad automatizada en GitHub (`ci.yml`) y atajos de teclado:** validación automática en cada push/PR de sintaxis, JSONs, rutas, desbordes y flujo offline en Playwright, más atajo `/` o `Ctrl+K` para abrir el buscador al instante.
-- **Verificación `SHA-256` en Android:** generación automática de `bibliotech-scout.apk.sha256` en Releases y optimización ProGuard/R8 activa en compilaciones de producción.
+- **Nuevo foro comunitario «La Fogata» (`#foro`):** espacio offline + sincronizado con Cloudflare KV para compartir consejos entre jóvenes (*Entre Jóvenes*) y *Entre Scouters y Adultos*, filtros por `#hashtags`, likes, edición, comentarios, registro obligatorio privado de seguridad (`A Salvo del Peligro`) con opción pública anónima y botón/banderita de reporte por moderación.
+- **Próximamente: Editor Inteligente de Formatos + Bóveda Local (`#editor-formatos`):** perfil local persistente en dispositivo para adelantar datos de autollenado (fichas médicas, JL304, FES/RECME, cédulas SMART, etc.).
+- **Detector automático de actualizaciones al iniciar (`version.json` + `sw.js v39`):** avisa hasta arriba cuando hay una nueva versión o cambios importantes en archivos/cookies en Web, iOS Safari y Android.
+- **Botón Reportar en el lector de documentos (`#btnReportDoc`):** permite reportar errores directamente desde cualquier PDF, hoja Excel o guía abierta.
+- **Limpieza visual total (cero emojis):** interfaz y base de conocimiento uniformadas únicamente con texto claro e iconos vectoriales SVG.
 
 ---
 
@@ -122,7 +120,7 @@ bibliotech-scouts/
 ├── index.html                  # Estructura semántica principal (12 apartados ordenados)
 ├── src/                        # Fuente editable: styles.css y app.js
 ├── styles.css / app.js         # Salida depurada y minificada generada con npm run build
-├── sw.js                       # Service Worker PWA (bibliotech-scout-v37)
+├── sw.js                       # Service Worker PWA (bibliotech-scout-v39)
 ├── manifest.webmanifest        # Manifiesto Web App / PWA (iconos maskable y shortcuts)
 ├── data/                       # catalog.json, questions_bank.json, faq_v3.json, faq_v4.json, kb, chunks
 ├── covers/                     # Carátulas optimizadas en JPG (599 documentos)

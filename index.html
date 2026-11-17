@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>BiblioTech Scout: By Liam</title>
-  <meta name="description" content="Biblioteca digital y buscador documental scout: 599 documentos oficiales accesibles ASMAC y WOSM, 111 temas y 13,520 preguntas y respuestas con fuentes." />
+  <meta name="description" content="Biblioteca digital y buscador documental scout: 599 documentos oficiales accesibles ASMAC y WOSM, 113 temas y 13,525 preguntas y respuestas con fuentes." />
   <meta name="author" content="Liam Durán - Provincia TLXH" />
   <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0a0616" media="(prefers-color-scheme: dark)" />
@@ -25,7 +25,7 @@
   <meta property="og:site_name" content="BiblioTech Scout" />
   <meta property="og:locale" content="es_MX" />
   <meta property="og:title" content="BiblioTech Scout: By Liam" />
-  <meta property="og:description" content="Consulta 599 documentos oficiales ASMAC y WOSM, especialidades FES, plantillas RECME, guías SISAS y 13,520 preguntas con fuentes." />
+  <meta property="og:description" content="Consulta 599 documentos oficiales ASMAC y WOSM, especialidades FES, plantillas RECME, guías SISAS y 13,525 preguntas con fuentes." />
   <meta property="og:url" content="https://ey-liam.github.io/bibliotech-scouts/" />
   <meta property="og:image" content="https://ey-liam.github.io/bibliotech-scouts/img/photos/p01.jpg" />
   <meta property="og:image:alt" content="Comunidad de Caminantes en un evento scout" />
@@ -33,7 +33,7 @@
   <meta property="og:image:height" content="731" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="BiblioTech Scout: By Liam" />
-  <meta name="twitter:description" content="Consulta 599 documentos oficiales ASMAC y WOSM, especialidades FES, plantillas RECME, guías SISAS y 13,520 preguntas con fuentes." />
+  <meta name="twitter:description" content="Consulta 599 documentos oficiales ASMAC y WOSM, especialidades FES, plantillas RECME, guías SISAS y 13,525 preguntas con fuentes." />
   <meta name="twitter:image" content="https://ey-liam.github.io/bibliotech-scouts/img/photos/p01.jpg" />
 
   <script type="application/ld+json">
@@ -125,6 +125,8 @@
         <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
         <a href="#secciones" class="nav-link">Secciones</a>
         <a href="#cambios" class="nav-link">Cambios en Esquemas</a>
+        <a href="#foro" class="nav-link">La Fogata</a>
+        <a href="#editor-formatos" class="nav-link">Editor Formatos</a>
         <a href="#app" class="nav-link nav-link-app">Descarga App</a>
       </nav>
 
@@ -133,11 +135,13 @@
         <a href="#buscador" class="nav-link active">Buscador</a>
         <a href="#biblioteca" class="nav-link">Biblioteca</a>
         <a href="#guia-inicio" class="nav-link">Guía de Uso</a>
-        <a href="#acerca" class="nav-link">El Proyecto</a>
+        <a href="#acerca" class="nav-link">¿Qué es BiblioTech?</a>
         <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
         <a href="#secciones" class="nav-link">Secciones</a>
         <a href="#servicios" class="nav-link">Servicios y Trámites</a>
         <a href="#cambios" class="nav-link">Cambios en Esquemas</a>
+        <a href="#foro" class="nav-link">La Fogata</a>
+        <a href="#editor-formatos" class="nav-link">Editor Formatos (Próx.)</a>
         <a href="#explorar" class="nav-link">Catálogo</a>
         <a href="#app" class="nav-link">Descarga App</a>
         <a href="#aportar" class="nav-link">Aportar y Contacto</a>
@@ -186,14 +190,29 @@
       </div>
     </div>
     <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
+    <div id="webOfflineNetBanner" class="web-offline-net-banner hidden" role="status" aria-live="polite">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <path d="M1 1l22 22M16.72 11.06A10.94 10.94 0 0 1 19 12.55M5 12.55a10.94 10.94 0 0 1 5.17-2.39M10.71 5.05A16 16 0 0 1 22.58 9M1.42 9a15.91 15.91 0 0 1 4.7-2.88M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" />
+      </svg>
+      <span>Sin conexión a internet · Navegando con los datos guardados en caché local.</span>
+    </div>
+    <div id="updateAvailableBanner" class="bt-update-banner hidden" role="status" aria-live="polite">
+      <div class="bt-update-banner-copy">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+          <path d="M3 3v5h5" />
+          <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+          <path d="M16 16h5v5" />
+        </svg>
+        <span id="updateAvailableText">Hay una nueva versión disponible de BiblioTech Scout. Actualiza para aplicar los cambios en archivos y funciones.</span>
+      </div>
+      <div class="bt-update-banner-actions">
+        <button type="button" id="btnApplyAppUpdate" class="bt-update-apply-btn">Actualizar ahora</button>
+        <button type="button" id="btnDismissAppUpdate" class="bt-update-dismiss-btn" aria-label="Ocultar aviso de actualización">Cerrar</button>
+      </div>
+    </div>
   </header>
   <div class="nav-backdrop" id="navBackdrop" hidden></div>
-  <div id="webOfflineNetBanner" class="web-offline-net-banner hidden" role="status" aria-live="polite">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-      <path d="M1 1l22 22M16.72 11.06A10.94 10.94 0 0 1 19 12.55M5 12.55a10.94 10.94 0 0 1 5.17-2.39M10.71 5.05A16 16 0 0 1 22.58 9M1.42 9a15.91 15.91 0 0 1 4.7-2.88M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" />
-    </svg>
-    <span>Sin conexión a internet · Navegando con los datos guardados en caché local.</span>
-  </div>
 
   <!-- FONDO ANIMADO GLOBAL DE LA PÁGINA (BURBUJAS DE COLOR, ONDAS Y FORMAS GEOMÉTRICAS 3D EN MOVIMIENTO) -->
   <div class="global-animated-bg" aria-hidden="true">
@@ -356,22 +375,21 @@
           <div id="askAutocomplete" class="ask-autocomplete-dropdown hidden"></div>
         </form>
 
-        <!-- CONTROLES COMPACTOS: FILTRAR POR SECCIÓN + PREGUNTAS AL AZAR + RECARGAR -->
+        <!-- CONTROLES COMPACTOS: FILTRAR POR SECCIÓN + PREGUNTAS AL AZAR -->
         <div class="search-action-toolbar">
           <button type="button" id="toggleAskSectionBtn" class="btn-ask-tool" aria-expanded="false" aria-controls="askSectionDrawer">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
             <span>Sección:</span>
             <strong id="askSectionActiveBadge">Todas</strong>
           </button>
-          <button type="button" id="randomPoolBtn" class="btn-ask-tool btn-random-pool" title="Mostrar preguntas aleatorias">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
-            <span>Preguntas al azar</span>
-          </button>
-          <button type="button" id="shuffleQuestionsBtn" class="btn-shuffle-questions" title="Recargar otras preguntas al azar">
+          <button type="button" id="randomPoolBtn" class="btn-shuffle-questions" title="Mostrar y recargar preguntas al azar">
             <svg class="ico-reload" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-1.19"/>
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+              <path d="M16 16h5v5" />
             </svg>
-            <span>Recargar otras al azar</span>
+            <span>Preguntas al azar</span>
           </button>
         </div>
 
@@ -814,14 +832,14 @@
           </div>
         </div>
         <div class="about-text-col">
-          <span class="section-eyebrow">El Proyecto · Sin fines de lucro</span>
+          <span class="section-eyebrow">Proyecto sin fines de lucro</span>
           <h2>¿Qué es BiblioTech Scout y para qué sirve?</h2>
           <p>
             <strong>BiblioTech Scout</strong> es una plataforma educativa, gratuita y de código abierto creada para acercar de forma rápida, clara y ordenada la documentación oficial vigente de la <strong>ASMAC</strong> y de <strong>World Scouting (WOSM)</strong> a scouts de todas las secciones, familias y dirigentes.
           </p>
           <ul class="about-features-list">
             <li><strong>Objetivo y utilidad:</strong> resuelve dudas en segundos sobre progresiones PJOS, especialidades FES, proyectos, reglamentos, uniforme, trámites SISAS y eventos sin tener que buscar página por página entre cientos de archivos.</li>
-            <li><strong>Buscador inteligente con fuentes:</strong> responde apoyándose en <strong>13,520 preguntas y respuestas</strong> verificadas e indica exactamente el libro, circular o página de donde salió cada dato.</li>
+            <li><strong>Buscador inteligente con fuentes:</strong> responde apoyándose en <strong>13,525 preguntas y respuestas</strong> verificadas e indica exactamente el libro, circular o página de donde salió cada dato.</li>
             <li><strong>Biblioteca con visores integrados (599 archivos):</strong> abre al instante libros de la Colección del Centenario, PDFs, hojas Excel con filtro y exportación, guías HTML, presentaciones e imágenes, con favoritos, notas locales y Modo Noche.</li>
             <li><strong>Web, iOS y App Android offline:</strong> funciona directo en el navegador sin descargas obligatorias, o como app instalable para consultar documentos sin conexión.</li>
           </ul>
@@ -846,7 +864,7 @@
                 <span>rdc.tlxh@gmail.com</span>
               </a>
             </div>
-            <p class="signature-help-note">Si alguna pregunta, respuesta o archivo falla, escríbeme por ese correo.</p>
+            <p class="signature-help-note">Si detectas algún error, archivo desactualizado o respuesta por mejorar, puedes reportarlo al correo <strong>rdc.tlxh@gmail.com</strong>, usando el botón <strong>Reportar</strong> dentro del visor de los archivos, debajo de cada respuesta del buscador o desde la barra de menú superior.</p>
           </div>
         </div>
       </div>
@@ -1539,6 +1557,255 @@
     </div>
   </section>
 
+  <!-- FORO COMUNITARIO: LA FOGATA (JÓVENES Y ADULTOS) -->
+  <section id="foro" class="forum-section" aria-labelledby="forumSectionTitle">
+    <div class="container">
+      <div class="forum-header-row">
+        <div>
+          <span class="section-eyebrow">COMUNIDAD SCOUT · JÓVENES Y ADULTOS</span>
+          <h2 id="forumSectionTitle" class="section-title">La Fogata: Recomendaciones y Comunidad</h2>
+          <p class="section-subtitle">
+            Comparte qué es imprescindible llevar a un campamento, consejos de vida de sección, ideas para proyectos SMART o experiencias entre Scouters sobre supervisión segura y acompañamiento juvenil.
+          </p>
+        </div>
+        <button type="button" id="btnOpenForumComposer" class="btn-forum-compose">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Nueva recomendación o duda</span>
+        </button>
+      </div>
+
+      <div class="forum-respect-banner" role="note">
+        <strong>Respeto y Ley Scout:</strong> Comparte consejos útiles con respeto, empatía y lenguaje apropiado. Por seguridad (<em>A Salvo del Peligro</em>), <strong>tus datos reales son obligatorios</strong> para el registro interno del administrador, pero puedes elegir aparecer como <strong>Anónimo</strong> o mostrar solo tu sección, grupo y provincia.
+      </div>
+
+      <!-- CANALES DEL FORO -->
+      <div id="forumChannelTabs" class="forum-channel-tabs" role="tablist" aria-label="Canales de La Fogata">
+        <button type="button" class="forum-channel-tab active" data-forum-channel="all" role="tab" aria-selected="true">
+          <span>Todos</span>
+          <span class="forum-tab-count" data-count-channel="all">0</span>
+        </button>
+        <button type="button" class="forum-channel-tab" data-forum-channel="jovenes" role="tab" aria-selected="false">
+          <span>Entre Jóvenes</span>
+          <span class="forum-tab-count" data-count-channel="jovenes">0</span>
+        </button>
+        <button type="button" class="forum-channel-tab" data-forum-channel="adultos" role="tab" aria-selected="false">
+          <span>Entre Scouters y Adultos</span>
+          <span class="forum-tab-count" data-count-channel="adultos">0</span>
+        </button>
+        <button type="button" class="forum-channel-tab" data-forum-channel="mios" role="tab" aria-selected="false">
+          <span>Mis Publicaciones y Guardados</span>
+          <span class="forum-tab-count" data-count-channel="mios">0</span>
+        </button>
+      </div>
+
+      <!-- BUSCADOR INTERNO Y ORDENAMIENTO -->
+      <div class="forum-toolbar">
+        <div class="forum-search-wrap">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="search"
+            id="forumSearchInput"
+            placeholder="Buscar tema, consejo, provincia, sección o #hashtag..."
+            aria-label="Buscar publicaciones en La Fogata"
+          />
+        </div>
+        <div class="forum-sort-wrap">
+          <label for="forumSortSelect">Ordenar por</label>
+          <select id="forumSortSelect">
+            <option value="likes">Más útiles (Más Likes)</option>
+            <option value="recent">Más recientes</option>
+            <option value="comments">Más comentadas</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- BARRA INTERACTIVA DE TEMAS / #HASHTAGS -->
+      <div id="forumTagBar" class="forum-tag-bar" aria-label="Filtrar publicaciones por tema o hashtag"></div>
+
+      <div class="forum-results-meta">
+        <span id="forumCountLabel" aria-live="polite">Cargando publicaciones...</span>
+        <div class="forum-meta-right">
+          <span id="forumSyncBadge" class="forum-sync-badge">Modo offline + respaldo comunitario</span>
+          <button type="button" id="resetForumFiltersBtn" class="btn-text-reset hidden">Limpiar filtros</button>
+        </div>
+      </div>
+
+      <div id="forumPostsGrid" class="forum-posts-grid"></div>
+    </div>
+  </section>
+
+  <!-- PRÓXIMAMENTE: EDITOR INTELIGENTE DE FORMATOS Y AUTOLLENADO LOCAL -->
+  <section id="editor-formatos" class="editor-coming-section" aria-labelledby="editorFormatosTitle">
+    <div class="container">
+      <div class="editor-coming-head">
+        <div class="editor-coming-copy">
+          <span class="editor-coming-badge">PRÓXIMAMENTE · NUEVA HERRAMIENTA EN DESARROLLO</span>
+          <h2 id="editorFormatosTitle" class="section-title">Editor Inteligente de Formatos y Autollenado Scout</h2>
+          <p class="section-subtitle">
+            Muy pronto podrás llenar, editar, firmar y descargar en PDF o Word tus documentos oficiales directamente dentro de BiblioTech Scout. Usará datos guardados localmente en tu dispositivo —como tus marcadores— para autocompletar tu nombre, edad, CUM, sección, grupo y provincia en cada archivo en segundos.
+          </p>
+        </div>
+      </div>
+
+      <div class="editor-formats-grid">
+        <article class="editor-format-card">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </span>
+            <span class="editor-soon-pill">Próximamente</span>
+          </div>
+          <h3>Fichas Médicas y de Salud</h3>
+          <p>Tipo de sangre, alergias, medicamentos, seguro médico/scout y contactos de emergencia pre-llenados para campamentos y excursiones.</p>
+          <button type="button" class="editor-jump-btn" data-jump-query="Ficha de Salud">Ver formatos actuales en Catálogo →</button>
+        </article>
+
+        <article class="editor-format-card">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 20h20L12 2z"/><path d="M12 2v18"/><path d="M8.5 20l3.5-6 3.5 6"/></svg>
+            </span>
+            <span class="editor-soon-pill">Próximamente</span>
+          </div>
+          <h3>Permisos de Actividad y Salida (JL304)</h3>
+          <p>Autorizaciones oficiales para salidas, acantonamientos y campamentos con datos de padre/tutor y Scouter responsable listos al instante.</p>
+          <button type="button" class="editor-jump-btn" data-jump-query="JL304">Ver guía JL304 en Catálogo →</button>
+        </article>
+
+        <article class="editor-format-card">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </span>
+            <span class="editor-soon-pill">Próximamente</span>
+          </div>
+          <h3>Especialidades FES y Plantillas RECME</h3>
+          <p>Llenado guiado de fichas FES (4 Ejes y 17 ODS), plantillas P1–P10, planillas PJOS 2026 y bitácoras de seguimiento FAES.</p>
+          <button type="button" class="editor-jump-btn" data-jump-cat="Plantillas PJOS, FAES y RECME">Ver plantillas RECME / FAES →</button>
+        </article>
+
+        <article class="editor-format-card">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </span>
+            <span class="editor-soon-pill">Próximamente</span>
+          </div>
+          <h3>Proyectos SMART e Insignias Mundiales</h3>
+          <p>Cédulas SMART y reportes para Agentes de Cambio.MX, Tribu de la Tierra, Campeones de la Naturaleza, Mensajeros de la Paz, Jade y Obsidiana.</p>
+          <button type="button" class="editor-jump-btn" data-jump-query="Cédula">Ver formatos de proyectos →</button>
+        </article>
+
+        <article class="editor-format-card">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+            </span>
+            <span class="editor-soon-pill">Próximamente</span>
+          </div>
+          <h3>Convocatorias y Programas de Campamento</h3>
+          <p>Fichas de inscripción a eventos, cronogramas de fin de semana, roles de intendencia de patrulla y listas de equipo imprimibles.</p>
+          <button type="button" class="editor-jump-btn" data-jump-cat="Convocatorias y Comunicados Nacionales">Ver convocatorias vigentes →</button>
+        </article>
+
+        <article class="editor-format-card">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </span>
+            <span class="editor-soon-pill">Próximamente</span>
+          </div>
+          <h3>Actas de Consejo, Corte de Honor y MASC</h3>
+          <p>Actas oficiales de Consejo de Grupo, sesiones de Corte de Honor y formatos de Diálogo Directo o Mediación con encabezados automáticos.</p>
+          <button type="button" class="editor-jump-btn" data-jump-cat="Formatos, Actas y Seguro Scout">Ver actas y seguro scout →</button>
+        </article>
+      </div>
+
+      <!-- BÓVEDA LOCAL FUNCIONAL DE AUTOLLENADO -->
+      <div class="autofill-vault-card">
+        <div class="autofill-vault-head">
+          <div>
+            <span class="bt-consent-kicker">Bóveda local en tu dispositivo · Ya disponible para adelantar tus datos</span>
+            <h3>Mi Perfil Local de Autollenado Scout</h3>
+          </div>
+          <span id="autofillStatusBadge" class="autofill-status-badge">Sin datos guardados</span>
+        </div>
+
+        <p class="autofill-vault-desc">
+          Al igual que tus documentos marcados y notas, estos datos se guardan <strong>únicamente en las cookies/almacenamiento local de este dispositivo</strong> (nunca se envían a internet por sí solos). Cuando se active el Editor de Formatos rellenarán tus archivos automáticamente, y desde hoy ya autocompletan tu registro de seguridad en <strong>La Fogata</strong>.
+        </p>
+
+        <form id="autofillProfileForm" class="autofill-profile-form" novalidate>
+          <div class="autofill-fields-grid">
+            <label class="autofill-field">
+              <span>Nombre completo o Alias Scout</span>
+              <input type="text" id="afName" maxlength="80" placeholder="Ej. Liam Durán" />
+            </label>
+            <label class="autofill-field">
+              <span>CUM (opcional)</span>
+              <input type="text" id="afCum" maxlength="24" placeholder="Ej. TLX0530123" />
+            </label>
+            <label class="autofill-field">
+              <span>Edad</span>
+              <input type="number" id="afAge" min="5" max="99" placeholder="Ej. 16" />
+            </label>
+            <label class="autofill-field">
+              <span>Sección o Rol</span>
+              <select id="afSection">
+                <option value="Manada de Lobatos">Manada de Lobatos</option>
+                <option value="Tropa de Scouts">Tropa de Scouts</option>
+                <option value="Comunidad de Caminantes" selected>Comunidad de Caminantes</option>
+                <option value="Clan de Rovers">Clan de Rovers</option>
+                <option value="Scouter / Dirigente">Scouter / Dirigente</option>
+                <option value="Padre / Madre / Tutor">Padre / Madre / Tutor</option>
+              </select>
+            </label>
+            <label class="autofill-field">
+              <span>Grupo Scout</span>
+              <input type="text" id="afGroup" maxlength="60" placeholder="Ej. Grupo 53" />
+            </label>
+            <label class="autofill-field">
+              <span>Provincia Scout</span>
+              <input type="text" id="afProvince" maxlength="60" placeholder="Ej. Tláhuac-Xochimilco" />
+            </label>
+            <label class="autofill-field">
+              <span>Tipo de sangre y alergias</span>
+              <input type="text" id="afBlood" maxlength="80" placeholder="Ej. O+ · Ninguna conocida" />
+            </label>
+            <label class="autofill-field">
+              <span>Tutor / Contacto de emergencia</span>
+              <input type="text" id="afEmergency" maxlength="80" placeholder="Ej. Madre / Tutor responsable" />
+            </label>
+            <label class="autofill-field">
+              <span>Scouter o Asesor responsable</span>
+              <input type="text" id="afScouter" maxlength="80" placeholder="Ej. Jefe de Tropa / Asesor" />
+            </label>
+          </div>
+
+          <div class="autofill-actions-row">
+            <button type="submit" id="btnSaveAutofillProfile" class="bt-consent-btn is-primary">
+              Guardar mis datos en este dispositivo
+            </button>
+            <button type="button" id="btnPreviewAutofillDemo" class="btn-autofill-demo">
+              Ver demostración de autollenado
+            </button>
+            <button type="button" id="btnClearAutofillProfile" class="bt-consent-btn is-secondary">
+              Borrar datos locales
+            </button>
+          </div>
+        </form>
+
+        <div id="autofillDemoPreview" class="autofill-demo-preview hidden" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- CATÁLOGO GENERAL Y DESCARGA DE ARCHIVOS (DIVIDIDO EN LAS 8 CATEGORÍAS OFICIALES) -->
   <section id="explorar" class="catalog-section">
     <div class="container">
@@ -1658,10 +1925,10 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 2.3.5 Mobile · Web 8.4.5</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 3.0.0 Mobile · Web 9.0.0</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
-            <strong>No es necesario descargar nada:</strong> puedes disfrutar de la mayoría de herramientas, el buscador de 13,520 preguntas y los visores directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
+            <strong>No es necesario descargar nada:</strong> puedes disfrutar de la mayoría de herramientas, el buscador de 13,525 preguntas y los visores directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
           </p>
           <p id="appDetectedOsBadge" class="app-detected-os-pill hidden" aria-live="polite"></p>
 
@@ -1738,7 +2005,7 @@
                 <span id="iosOfflineStatusBadge" class="ios-offline-badge">Sin descargar</span>
               </div>
               <p class="ios-offline-desc">
-                Guarda las <strong>13,520 preguntas</strong>, el catálogo y las tablas Excel dentro de Safari (aprox. <code>11 MB</code>) para consultarlos en campamentos sin señal.
+                Guarda las <strong>13,525 preguntas</strong>, el catálogo y las tablas Excel dentro de Safari (aprox. <code>11 MB</code>) para consultarlos en campamentos sin señal.
               </p>
               <label class="ios-offline-check">
                 <input type="checkbox" id="iosIncludeChunksToggle" />
@@ -1818,7 +2085,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v38</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v39</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -1896,6 +2163,13 @@
           <button type="button" id="btnZoomIn" class="bt-qol-pill" title="Aumentar tamaño">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
             <span>Zoom +</span>
+          </button>
+          <button type="button" id="btnReportDoc" class="bt-qol-pill bt-qol-pill-report" title="Reportar un error en este archivo">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+              <line x1="4" y1="22" x2="4" y2="15"></line>
+            </svg>
+            <span>Reportar</span>
           </button>
           <div class="modal-search-inline">
             <input type="text" id="modalInternalSearchInput" placeholder="Buscar en texto..." aria-label="Buscar en documento" />
@@ -1983,7 +2257,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 12/11/2026 • BETA 8.4.5 - 2.3.5 Mobile (12/11/2026) ·
+          Base de datos: 16/11/2026 · BETA 9.0.0 - 3.0.0 Mobile (16/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">
@@ -2118,6 +2392,8 @@
               <option value="Guía de Uso">Guía de Uso</option>
               <option value="Agentes de Cambio.MX">Agentes de Cambio.MX</option>
               <option value="Secciones / Cambios / Catálogo">Secciones / Cambios / Catálogo</option>
+              <option value="La Fogata">La Fogata</option>
+              <option value="Editor de Formatos (Próximamente)">Editor de Formatos (Próximamente)</option>
               <option value="Descarga App / Modo Offline">Descarga App / Modo Offline</option>
               <option value="Otro apartado">Otro apartado</option>
             </select>
@@ -2125,7 +2401,7 @@
         </div>
 
         <fieldset class="bt-bug-fieldset">
-          <legend>¿Qué está fallando? (puedes marcar varios)</legend>
+          <legend id="bugReportLegend">¿Qué está fallando? (puedes marcar varios)</legend>
           <div class="bt-bug-chips" id="bugReportReasons">
             <label class="bt-bug-chip"><input type="checkbox" value="Imágenes o portadas faltantes" /><span>Imágenes o portadas faltantes</span></label>
             <label class="bt-bug-chip"><input type="checkbox" value="Error al abrir o leer PDF" /><span>Error en PDFs</span></label>
@@ -2138,16 +2414,22 @@
             <label class="bt-bug-chip"><input type="checkbox" value="Diseño cortado o encimado" /><span>Diseño cortado / encimado</span></label>
             <label class="bt-bug-chip"><input type="checkbox" value="Otro problema específico" /><span>Otro más específico</span></label>
           </div>
+          <div class="bt-bug-chips hidden" id="forumModerationReasons">
+            <label class="bt-bug-chip"><input type="checkbox" value="Falta de respeto o lenguaje inapropiado" /><span>Falta de respeto o lenguaje inapropiado</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Recomendación peligrosa o incorrecta" /><span>Recomendación peligrosa o incorrecta</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Datos personales expuestos" /><span>Datos personales expuestos</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="Spam o fuera de tema" /><span>Spam o fuera de tema</span></label>
+          </div>
         </fieldset>
 
         <label class="bt-bug-field">
-          <span>Documento o pregunta relacionada (opcional)</span>
-          <input type="text" id="bugReportTarget" maxlength="160" placeholder="Ej. Manual de Tropa, pregunta de insignias..." />
+          <span>Documento o publicación relacionada (opcional)</span>
+          <input type="text" id="bugReportTarget" maxlength="160" placeholder="Ej. Manual de Tropa, pregunta o publicación de La Fogata..." />
         </label>
 
         <label class="bt-bug-field">
-          <span>Describe qué ocurrió y cómo pasó</span>
-          <textarea id="bugReportDetails" rows="3" maxlength="1200" placeholder="Ej. Al abrir el PDF en modo oscuro sale en blanco, o falta el archivo..."></textarea>
+          <span id="bugReportDetailsLabel">Describe qué ocurrió y cómo pasó</span>
+          <textarea id="bugReportDetails" rows="3" maxlength="1200" placeholder="Ej. Al abrir el PDF en modo oscuro sale en blanco, o explica el motivo del reporte..."></textarea>
         </label>
 
         <p id="bugReportStatus" class="bt-bug-status hidden" role="status" aria-live="polite"></p>
@@ -2219,8 +2501,8 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
           </span>
           <div>
-            <strong>Servicios Oficiales y Reportes</strong>
-            <p>Conecta con SISAS, ExplorApp, CarpetApp, RECME, Tienda Scout, Agentes de Cambio y reporta cualquier detalle para mejorar juntos.</p>
+            <strong>La Fogata y Editor (Próx.)</strong>
+            <p>Comparte tips de campamento entre jóvenes o supervisión para Scouters por #temas, y prepara tu perfil para el futuro Editor de Formatos.</p>
           </div>
         </div>
       </div>
@@ -2251,6 +2533,138 @@
           <button type="button" id="startWelcomeModalBtn" class="bt-consent-btn is-primary">Explorar BiblioTech</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL COMPOSITOR / EDITOR PARA LA FOGATA -->
+  <div id="forumComposerModal" class="bt-consent-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="forumComposerTitle">
+    <div class="bt-consent-card bt-bug-card bt-forum-modal-card">
+      <div class="bt-bug-head">
+        <div>
+          <span class="bt-consent-kicker">Comunidad · La Fogata</span>
+          <h3 id="forumComposerTitle">Nueva recomendación en La Fogata</h3>
+        </div>
+        <button type="button" id="closeForumComposerBtn" class="bt-bug-close" aria-label="Cerrar formulario de La Fogata">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="forumPostForm" class="bt-bug-form" novalidate>
+        <div class="forum-security-box">
+          <p class="forum-security-title">Registro de Seguridad Obligatorio (Privado para el administrador)</p>
+          <p class="forum-security-sub">Por seguridad (<em>A Salvo del Peligro</em>), necesitamos saber quién publica en el registro interno. Abajo eliges si esto se muestra al público o si sales como <strong>Scout Anónimo</strong>.</p>
+          <div class="bt-bug-row-grid">
+            <label class="bt-bug-field">
+              <span>Nombre completo real *</span>
+              <input type="text" id="forumPostRealName" maxlength="70" placeholder="Ej. Liam Durán" required />
+            </label>
+            <label class="bt-bug-field">
+              <span>Tu sección o rol *</span>
+              <select id="forumPostRole" required>
+                <option value="Manada de Lobatos">Manada de Lobatos</option>
+                <option value="Tropa de Scouts">Tropa de Scouts</option>
+                <option value="Comunidad de Caminantes" selected>Comunidad de Caminantes</option>
+                <option value="Clan de Rovers">Clan de Rovers</option>
+                <option value="Scouter / Dirigente">Scouter / Dirigente</option>
+                <option value="Asesor de Red / Grupo">Asesor de Red / Grupo</option>
+                <option value="Padre / Madre / Tutor">Padre / Madre / Tutor</option>
+              </select>
+            </label>
+          </div>
+          <div class="bt-bug-row-grid">
+            <label class="bt-bug-field">
+              <span>Grupo Scout *</span>
+              <input type="text" id="forumPostGroup" maxlength="50" placeholder="Ej. Grupo 53 (o Independiente)" required />
+            </label>
+            <label class="bt-bug-field">
+              <span>Provincia Scout *</span>
+              <input type="text" id="forumPostProvince" maxlength="60" placeholder="Ej. Tláhuac-Xochimilco" required />
+            </label>
+          </div>
+        </div>
+
+        <div class="bt-bug-row-grid">
+          <label class="bt-bug-field">
+            <span>¿Cómo quieres aparecer públicamente?</span>
+            <select id="forumPostVisibility">
+              <option value="full">Mostrar mi nombre, sección, grupo y provincia</option>
+              <option value="group_only">Anónimo, mostrando solo mi sección, grupo y provincia</option>
+              <option value="anonymous">100 % Anónimo (no mostrar nombre, grupo ni provincia)</option>
+            </select>
+          </label>
+          <label class="bt-bug-field">
+            <span>Alias público (opcional si te muestras)</span>
+            <input type="text" id="forumPostAlias" maxlength="50" placeholder="Ej. Patrulla Halcones (opcional)" />
+          </label>
+        </div>
+
+        <label class="bt-bug-field">
+          <span>Canal del consejo o tema</span>
+          <select id="forumPostChannel">
+            <option value="jovenes">Entre Jóvenes (Manada, Tropa, Comunidad, Clan)</option>
+            <option value="adultos">Entre Scouters y Adultos (Supervisión y Gestión)</option>
+          </select>
+        </label>
+
+        <label class="bt-bug-field">
+          <span>Título claro de tu recomendación o duda *</span>
+          <input type="text" id="forumPostTitle" maxlength="120" placeholder="Ej. Qué es imprescindible empacar para un campamento en temporada de lluvias" required />
+        </label>
+
+        <label class="bt-bug-field">
+          <span>Desarrollo, lista de consejos o experiencia (escribe con respeto) *</span>
+          <textarea id="forumPostBody" rows="4" maxlength="1600" placeholder="Comparte pasos concretos, tips que realmente te funcionaron o la duda en la que buscas apoyo de otros scouts..." required></textarea>
+        </label>
+
+        <fieldset class="bt-bug-fieldset">
+          <legend>Elige los temas (#hashtags) o añade nuevos abajo</legend>
+          <div id="forumPresetTags" class="bt-bug-chips">
+            <label class="bt-bug-chip"><input type="checkbox" value="#campamento" /><span>#campamento</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#imprescindibles" /><span>#imprescindibles</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#proyectos-smart" /><span>#proyectos-smart</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#supervision-adulta" /><span>#supervision-adulta</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#ambientes-seguros" /><span>#ambientes-seguros</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#insignias-y-fes" /><span>#insignias-y-fes</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#meztitla" /><span>#meztitla</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#salud-y-permisos" /><span>#salud-y-permisos</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#foros-y-red" /><span>#foros-y-red</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#vida-de-seccion" /><span>#vida-de-seccion</span></label>
+          </div>
+        </fieldset>
+
+        <div class="bt-bug-row-grid">
+          <label class="bt-bug-field">
+            <span>Otros #hashtags personalizados (opcional)</span>
+            <input type="text" id="forumCustomTags" maxlength="100" placeholder="Ej. #lluvia #botiquin #patrulla" />
+          </label>
+          <label class="bt-bug-field">
+            <span>Documento o manual relacionado (opcional)</span>
+            <input type="text" id="forumPostDocRef" maxlength="120" list="forumDocSuggestions" placeholder="Ej. JL304, Manual de Tropa, Meztitla..." />
+            <datalist id="forumDocSuggestions">
+              <option value="Manual de Campismo"></option>
+              <option value="JL304 Permiso de Salida"></option>
+              <option value="Manual del Uniforme Scout"></option>
+              <option value="A Salvo del Peligro (Safe from Harm)"></option>
+              <option value="Cédula SMART / RECME"></option>
+              <option value="Centro Scout Meztitla"></option>
+            </datalist>
+          </label>
+        </div>
+
+        <p class="forum-safety-helper">
+          Por seguridad y respeto (<strong>Ley Scout y A Salvo del Peligro</strong>), escribe siempre con respeto, sin lenguaje ofensivo y sin publicar teléfonos privados, correos personales o direcciones exactas.
+        </p>
+
+        <p id="forumComposerStatus" class="bt-bug-status hidden" role="status" aria-live="polite"></p>
+
+        <div class="bt-consent-actions">
+          <button type="button" id="cancelForumComposerBtn" class="bt-consent-btn is-secondary">Cancelar</button>
+          <button type="submit" id="submitForumPostBtn" class="bt-consent-btn is-primary">Publicar en La Fogata</button>
+        </div>
+      </form>
     </div>
   </div>
 
