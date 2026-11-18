@@ -370,6 +370,7 @@ async function initApp() {
   setupAutofillVault();
   setupScoutForum();
   setupHeaderUI();
+  setupWorkspaceViews();
   setupContactEmailUI();
   bindEvents();
   setupScrollAnimations();
@@ -546,6 +547,243 @@ function setupHeaderUI() {
   );
 }
 
+// ============================================================================
+// ARQUITECTURA POR ESPACIOS DEDICADOS (VISTAS LIMPIAS + RUTAS COMPARTIBLES)
+// ============================================================================
+const BT_SECTION_VIEW_MAP = {
+  inicio: { view: "inicio" },
+  buscador: { view: "inicio" },
+  "seccion-buscador": { view: "inicio" },
+  btWorkspaceHub: { view: "inicio" },
+  biblioteca: { view: "biblioteca", libMode: "shelves" },
+  explorar: { view: "biblioteca", libMode: "catalog" },
+  "guia-inicio": { view: "guia", guideTab: "guia-inicio" },
+  acerca: { view: "guia", guideTab: "acerca" },
+  agentes: { view: "guia", guideTab: "agentes" },
+  secciones: { view: "guia", guideTab: "secciones" },
+  servicios: { view: "guia", guideTab: "servicios" },
+  cambios: { view: "guia", guideTab: "cambios" },
+  app: { view: "guia", guideTab: "app" },
+  foro: { view: "fogata" },
+  "editor-formatos": { view: "formatos" }
+};
+
+STATE.activeWorkspaceView = "inicio";
+STATE.activeLibraryMode = "shelves";
+STATE.activeGuideTab = "all";
+
+function btSetLibraryMode(mode = "shelves") {
+  const safeMode = mode === "catalog" ? "catalog" : "shelves";
+  STATE.activeLibraryMode = safeMode;
+  document.querySelectorAll("#btLibraryModeBar [data-lib-mode]").forEach((btn) => {
+    const isAct = btn.getAttribute("data-lib-mode") === safeMode;
+    btn.classList.toggle("active", isAct);
+    btn.setAttribute("aria-selected", String(isAct));
+  });
+  document.querySelectorAll("[data-bt-lib-panel]").forEach((sec) => {
+    const matches = sec.getAttribute("data-bt-lib-panel") === safeMode;
+    sec.classList.toggle("bt-subpanel-hidden", !matches);
+  });
+}
+
+function btSetGuideTab(tab = "all") {
+  const safeTab = tab || "all";
+  STATE.activeGuideTab = safeTab;
+  document.querySelectorAll("#btGuideSubnav [data-guide-tab]").forEach((btn) => {
+    const isAct = btn.getAttribute("data-guide-tab") === safeTab;
+    btn.classList.toggle("active", isAct);
+    btn.setAttribute("aria-selected", String(isAct));
+  });
+  document.querySelectorAll("[data-bt-guide-panel]").forEach((sec) => {
+    const pName = sec.getAttribute("data-bt-guide-panel");
+    const visible = safeTab === "all" || pName === safeTab;
+    sec.classList.toggle("bt-subpanel-hidden", !visible);
+    if (visible) {
+      sec.querySelectorAll(".reveal-on-scroll").forEach((el) => el.classList.add("revealed"));
+    }
+  });
+}
+
+function btSwitchView(viewName, options = {}) {
+  const validViews = new Set(["inicio", "biblioteca", "guia", "fogata", "formatos"]);
+  const nextView = validViews.has(viewName) ? viewName : "inicio";
+  STATE.activeWorkspaceView = nextView;
+
+  document.documentElement.setAttribute("data-bt-active-view", nextView);
+  document.querySelectorAll("[data-bt-view]").forEach((el) => {
+    const isMatch = el.getAttribute("data-bt-view") === nextView;
+    el.classList.toggle("bt-view-hidden", !isMatch);
+    if (isMatch) {
+      el.querySelectorAll(".reveal-on-scroll").forEach((r) => r.classList.add("revealed"));
+    }
+  });
+
+  if (nextView === "biblioteca") {
+    btSetLibraryMode(options.libMode || STATE.activeLibraryMode || "shelves");
+  }
+  if (nextView === "guia") {
+    btSetGuideTab(options.guideTab !== undefined ? options.guideTab : (STATE.activeGuideTab || "all"));
+  }
+
+  // Sincronizar estado activo en barra superior desktop
+  document.querySelectorAll(".desktop-quick-nav [data-bt-go-view]").forEach((link) => {
+    const linkView = link.getAttribute("data-bt-go-view");
+    const guideJump = link.getAttribute("data-bt-guide-jump");
+    let isAct = false;
+    if (guideJump === "app") {
+      isAct = nextView === "guia" && STATE.activeGuideTab === "app";
+    } else if (linkView === "guia") {
+      isAct = nextView === "guia" && STATE.activeGuideTab !== "app";
+    } else {
+      isAct = linkView === nextView;
+    }
+    link.classList.toggle("active", isAct);
+  });
+
+  // Sincronizar dock inferior móvil / Android
+  document.querySelectorAll("#unifiedBottomDock .bt-dock-item[data-bt-go-view]").forEach((btn) => {
+    btn.classList.toggle("is-active", btn.getAttribute("data-bt-go-view") === nextView);
+  });
+
+  // Actualizar URL compartible (?vista=...) en web sin afectar Capacitor ni file://
+  if (
+    !window.Capacitor &&
+    (window.location.protocol === "http:" || window.location.protocol === "https:") &&
+    options.updateUrl !== false
+  ) {
+    try {
+      const url = new URL(window.location.href);
+      if (nextView === "inicio") {
+        url.searchParams.delete("vista");
+      } else {
+        url.searchParams.set("vista", nextView);
+      }
+      if (!options.keepHash) url.hash = "";
+      window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+    } catch (_) {}
+  }
+
+  if (options.scrollToId) {
+    const targetEl = document.getElementById(options.scrollToId);
+    if (targetEl) {
+      window.requestAnimationFrame(() => {
+        targetEl.scrollIntoView({ behavior: options.instant ? "instant" : "smooth", block: "start" });
+      });
+    }
+  } else if (options.scrollTop !== false) {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+}
+
+function btNavigateToSection(sectionId, options = {}) {
+  const cleanId = String(sectionId || "").replace(/^#/, "").trim();
+  if (!cleanId) return;
+  const mapping = BT_SECTION_VIEW_MAP[cleanId];
+  if (mapping) {
+    btSwitchView(mapping.view, {
+      libMode: options.libMode || mapping.libMode,
+      guideTab: options.guideTab !== undefined ? options.guideTab : mapping.guideTab,
+      scrollToId: cleanId === "inicio" ? "" : cleanId,
+      scrollTop: cleanId === "inicio",
+      instant: Boolean(options.instant)
+    });
+    return;
+  }
+  const el = document.getElementById(cleanId);
+  if (el) {
+    el.scrollIntoView({ behavior: options.instant ? "instant" : "smooth", block: "start" });
+  }
+}
+
+window.__btSwitchView = btSwitchView;
+window.__btNavigateToSection = btNavigateToSection;
+
+function setupWorkspaceViews() {
+  // Delegación global para botones/enlaces con data-bt-go-view o anclas internas #...
+  document.addEventListener("click", (e) => {
+    const openSavedTrigger = e.target.closest("[data-action-open-saved]");
+    if (openSavedTrigger) {
+      e.preventDefault();
+      openSavedPanel();
+      return;
+    }
+
+    const viewTrigger = e.target.closest("[data-bt-go-view]");
+    if (viewTrigger) {
+      e.preventDefault();
+      const targetView = viewTrigger.getAttribute("data-bt-go-view");
+      const libJump = viewTrigger.getAttribute("data-bt-lib-jump");
+      const guideJump = viewTrigger.getAttribute("data-bt-guide-jump");
+      const href = viewTrigger.getAttribute("href") || "";
+      const hashId = href.startsWith("#") ? href.slice(1) : "";
+
+      const opts = {
+        libMode: libJump || undefined,
+        guideTab: guideJump !== null ? guideJump : (targetView === "guia" ? "all" : undefined),
+        scrollToId: hashId === "buscador" ? "buscador" : ""
+      };
+      btSwitchView(targetView, opts);
+
+      // Cerrar menú desplegable si estaba abierto
+      const header = document.querySelector(".main-header");
+      if (header && header.classList.contains("nav-open")) {
+        header.classList.remove("nav-open");
+        document.body.classList.remove("nav-open");
+        const navToggle = document.getElementById("navToggle");
+        const navBackdrop = document.getElementById("navBackdrop");
+        if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+        if (navBackdrop) navBackdrop.hidden = true;
+      }
+      return;
+    }
+
+    const anchor = e.target.closest('a[href^="#"]');
+    if (anchor) {
+      const href = anchor.getAttribute("href") || "";
+      const targetId = href.slice(1);
+      if (targetId && BT_SECTION_VIEW_MAP[targetId]) {
+        e.preventDefault();
+        btNavigateToSection(targetId);
+      }
+    }
+  });
+
+  // Conmutador Estantes Visuales / Catálogo Avanzado en vista Biblioteca
+  document.querySelectorAll("#btLibraryModeBar [data-lib-mode]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btSetLibraryMode(btn.getAttribute("data-lib-mode"));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+
+  // Sub-pestañas en vista Guía y Movimiento Scout
+  document.querySelectorAll("#btGuideSubnav [data-guide-tab]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btSetGuideTab(btn.getAttribute("data-guide-tab"));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+
+  // Determinar vista inicial desde URL (?vista=... o #hash)
+  let initialApplied = false;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const vParam = (params.get("vista") || "").toLowerCase();
+    const hashId = (window.location.hash || "").replace(/^#/, "");
+    if (hashId && BT_SECTION_VIEW_MAP[hashId]) {
+      btNavigateToSection(hashId, { instant: true });
+      initialApplied = true;
+    } else if (vParam && ["inicio", "biblioteca", "guia", "fogata", "formatos"].includes(vParam)) {
+      btSwitchView(vParam, { instant: true, updateUrl: false });
+      initialApplied = true;
+    }
+  } catch (_) {}
+
+  if (!initialApplied) {
+    btSwitchView("inicio", { instant: true, scrollTop: false, updateUrl: false });
+  }
+}
+
 function setupScrollAnimations() {
   const targets = document.querySelectorAll(
     ".starter-3d-card, .scout-sec-card, .service-info-card, .change-card, .centenario-collection-banner, .agentes-card, .about-card, .mosaic-item"
@@ -579,15 +817,14 @@ function setupScrollAnimations() {
   const quickBar = document.getElementById("floatingQuickBar");
   const askFab = document.getElementById("floatingAskBtn");
   const topFab = document.getElementById("floatingTopBtn");
-  const navLinks = Array.from(document.querySelectorAll(".desktop-quick-nav .nav-link, .main-nav .nav-link"));
+  const navLinks = Array.from(document.querySelectorAll(".main-nav .nav-link"));
   const spyIds = ["buscador", "biblioteca", "guia-inicio", "acerca", "agentes", "secciones", "servicios", "cambios", "explorar", "app", "aportar"];
 
   if (askFab) {
     askFab.addEventListener("click", () => {
-      const searchCard = document.getElementById("buscador");
+      btSwitchView("inicio", { scrollToId: "buscador" });
       const input = document.getElementById("askInput");
-      if (searchCard) searchCard.scrollIntoView({ behavior: "smooth", block: "center" });
-      if (input) setTimeout(() => input.focus(), 380);
+      if (input) setTimeout(() => input.focus({ preventScroll: true }), 380);
     });
   }
   if (topFab) {
@@ -1211,6 +1448,9 @@ function renderLibraryShelf() {
 async function submitQuestion(queryText, options = {}) {
   const q = (queryText || "").trim();
   if (!q) return;
+  if (STATE.activeWorkspaceView !== "inicio") {
+    btSwitchView("inicio", { scrollTop: false });
+  }
 
   // Al abrir una pregunta sugerida no se escribe en la barra: la barra queda
   // libre para buscar otra cosa y la pregunta elegida se muestra en el panel.
@@ -2644,7 +2884,14 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     <span class="badge badge-sec">${escapeHtml(doc.section_label)}</span>
   `;
 
-  // Descripción y sinopsis del documento
+  // Descripción y sinopsis del documento (oculta por defecto en cajón Info para ganar espacio)
+  const infoDrawer = document.getElementById("modalDocInfoDrawer");
+  const infoToggleBtn = document.getElementById("btnToggleDocInfo");
+  if (infoDrawer) infoDrawer.classList.add("hidden");
+  if (infoToggleBtn) {
+    infoToggleBtn.setAttribute("aria-expanded", "false");
+    infoToggleBtn.classList.remove("is-active");
+  }
   const descEl = document.getElementById("modalDocDescBox");
   if (descEl) {
     const descContent = doc.summary || doc.full_excerpt || "";
@@ -2660,6 +2907,8 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   const viewUrl = buildFileUrl(doc, false);
   const dlUrl = buildFileUrl(doc, true);
   openTabBtn.href = viewUrl;
+  const openTabBtnMobile = document.getElementById("modalOpenTabBtnMobile");
+  if (openTabBtnMobile) openTabBtnMobile.href = viewUrl;
   dlBtn.href = dlUrl;
   dlBtn.setAttribute("download", cleanDownloadFilename(doc));
   dlBtn.setAttribute("data-dl-doc", doc.id);
@@ -2902,6 +3151,11 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   }
 
   chunksContainer.innerHTML = `<div class="chunk-block" style="white-space:pre-wrap;">${escapeHtml(fullTextContent || doc.summary || doc.title)}</div>`;
+  const openTabBtnMobileSync = document.getElementById("modalOpenTabBtnMobile");
+  if (openTabBtnMobileSync && openTabBtn) {
+    openTabBtnMobileSync.href = openTabBtn.href;
+    openTabBtnMobileSync.onclick = openTabBtn.onclick;
+  }
   setupReaderQoLHandlers(doc, fullTextContent);
   modal.classList.remove("hidden");
   // Mientras el lector está abierto, la página de fondo no debe desplazarse.
@@ -3238,7 +3492,7 @@ function bindEvents() {
         secSelect.value = sec;
         STATE.sectionFilter = sec;
         applyCatalogFilters();
-        document.getElementById("explorar").scrollIntoView({ behavior: "smooth" });
+        btNavigateToSection("explorar");
       }
     });
   });
@@ -3794,6 +4048,13 @@ function updateSavedBadge() {
   }
 }
 
+window.__btSavedBridge = {
+  getSavedPins,
+  toggleSavedPin,
+  getDocNote,
+  setDocNote
+};
+
 function openSavedPanel() {
   const panel = document.getElementById("savedPanel");
   const list = document.getElementById("savedPanelList");
@@ -3922,6 +4183,21 @@ function setupReaderQoLHandlers(doc, fullText) {
     };
   }
 
+  const infoToggleBtn = document.getElementById("btnToggleDocInfo");
+  const infoDrawer = document.getElementById("modalDocInfoDrawer");
+  if (infoToggleBtn && infoDrawer) {
+    infoToggleBtn.onclick = () => {
+      const willOpen = infoDrawer.classList.contains("hidden");
+      infoDrawer.classList.toggle("hidden", !willOpen);
+      infoToggleBtn.setAttribute("aria-expanded", String(willOpen));
+      infoToggleBtn.classList.toggle("is-active", willOpen);
+      if (willOpen) {
+        const noteBox = document.getElementById("modalFieldNoteBox");
+        if (noteBox) noteBox.classList.add("hidden");
+      }
+    };
+  }
+
   const reportDocBtn = document.getElementById("btnReportDoc");
   if (reportDocBtn) {
     reportDocBtn.onclick = () => {
@@ -3963,8 +4239,16 @@ function setupReaderQoLHandlers(doc, fullText) {
     fieldNoteBtn.classList.toggle("is-active", Boolean(savedNote));
 
     fieldNoteBtn.onclick = () => {
-      fieldNoteBox.classList.toggle("hidden");
-      if (!fieldNoteBox.classList.contains("hidden")) {
+      const willOpen = fieldNoteBox.classList.contains("hidden");
+      fieldNoteBox.classList.toggle("hidden", !willOpen);
+      if (willOpen) {
+        const infoDr = document.getElementById("modalDocInfoDrawer");
+        const infoBtn = document.getElementById("btnToggleDocInfo");
+        if (infoDr) infoDr.classList.add("hidden");
+        if (infoBtn) {
+          infoBtn.setAttribute("aria-expanded", "false");
+          infoBtn.classList.remove("is-active");
+        }
         fieldNoteText.focus();
       }
     };
@@ -4228,8 +4512,7 @@ function setupAdcEjesInteractivity() {
       const shelfJumpBtn = tray.querySelector(".btn-adc-shelf-jump");
       if (shelfJumpBtn) {
         shelfJumpBtn.onclick = () => {
-          const biblio = document.getElementById("biblioteca");
-          if (biblio) biblio.scrollIntoView({ behavior: "smooth", block: "start" });
+          btNavigateToSection("biblioteca");
         };
       }
 
@@ -4264,13 +4547,12 @@ function setupUnifiedDock() {
     item.addEventListener("click", (e) => {
       BiblioFeel.pulse(8);
       const action = item.getAttribute("data-action");
+      const viewName = item.getAttribute("data-bt-go-view");
       const target = item.getAttribute("data-target");
 
       if (action === "saved") {
         e.preventDefault();
         openSavedPanel();
-        items.forEach((i) => i.classList.remove("is-active"));
-        item.classList.add("is-active");
         return;
       }
 
@@ -4283,12 +4565,15 @@ function setupUnifiedDock() {
         return;
       }
 
+      if (viewName) {
+        e.preventDefault();
+        btSwitchView(viewName);
+        return;
+      }
+
       if (target) {
         e.preventDefault();
-        const el = document.getElementById(target);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        items.forEach((i) => i.classList.remove("is-active"));
-        item.classList.add("is-active");
+        btNavigateToSection(target);
       }
     });
   });
@@ -4306,36 +4591,6 @@ function setupUnifiedDock() {
       closeSavedPanel();
     }
   });
-
-  // Vincular scroll spy con los items del dock (throttled con requestAnimationFrame)
-  const dockSpyTargets = ["inicio", "buscador", "biblioteca", "agentes"];
-  let dockScrollTicking = false;
-  const updateDockSpy = () => {
-    const sy = window.scrollY + 180;
-    for (let i = dockSpyTargets.length - 1; i >= 0; i--) {
-      const id = dockSpyTargets[i];
-      const sec = document.getElementById(id);
-      if (sec && sec.offsetTop <= sy) {
-        items.forEach((item) => {
-          if (item.getAttribute("data-target") === id) {
-            items.forEach((it) => it.classList.remove("is-active"));
-            item.classList.add("is-active");
-          }
-        });
-        break;
-      }
-    }
-    dockScrollTicking = false;
-  };
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (dockScrollTicking) return;
-      dockScrollTicking = true;
-      window.requestAnimationFrame(updateDockSpy);
-    },
-    { passive: true }
-  );
 
   updateSavedBadge();
 }
@@ -4422,12 +4677,12 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.0.0";
-const APP_MOBILE_VERSION = "3.0.0";
-const APP_COOKIE_SCHEMA = "9.0";
+const APP_WEB_VERSION = "9.1.0";
+const APP_MOBILE_VERSION = "3.1.0";
+const APP_COOKIE_SCHEMA = "9.1";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v39";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v40";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -4576,6 +4831,7 @@ function setupGlobalShortcuts() {
     const askInput = document.getElementById("askInput");
     if (!askInput) return;
     e.preventDefault();
+    btSwitchView("inicio", { scrollTop: false });
     askInput.scrollIntoView({ behavior: "smooth", block: "center" });
     askInput.focus({ preventScroll: true });
     if (typeof askInput.select === "function") askInput.select();
@@ -6090,8 +6346,7 @@ function setupAutofillVault() {
         if (catSearch) catSearch.value = jumpQuery;
       }
       applyCatalogFilters();
-      const catalogSec = document.getElementById("explorar");
-      if (catalogSec) catalogSec.scrollIntoView({ behavior: "smooth", block: "start" });
+      btNavigateToSection("explorar");
     });
   });
 }

@@ -1,8 +1,8 @@
 {
-  "version": "9.0.0",
-  "mobileVersion": "3.0.0",
-  "cache": "bibliotech-scout-v39",
-  "releasedAt": "2026-11-16",
-  "schemaCookieVersion": "9.0",
-  "notes": "Nueva versión 9.0.0 con La Fogata (comunidad scout), Perfil Local de Autollenado y mejoras de estabilidad."
+  "version": "9.1.0",
+  "mobileVersion": "3.1.0",
+  "cache": "bibliotech-scout-v40",
+  "releasedAt": "2026-11-18",
+  "schemaCookieVersion": "9.1",
+  "notes": "Nueva versión 9.1.0 con 5 Espacios Dedicados (Inicio, Biblioteca y Catálogo, Guía Scout, La Fogata, Formatos) y Lector Compacto Ergonómico."
 }

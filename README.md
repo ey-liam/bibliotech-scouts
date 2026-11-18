@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 16/11/2026 • **Versión:** BETA `9.0.0` (Web) • `3.0.0` Mobile  
+**Base de datos:** 18/11/2026 • **Versión:** BETA `9.1.0` (Web) • `3.1.0` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -103,13 +103,13 @@ El proyecto está construido evitando dependencias pesadas en el cliente y apoya
 
 ---
 
-## 8. Novedades Recientes (`9.0.0`)
+## 8. Novedades Recientes (`9.1.0`)
 
-- **Nuevo foro comunitario «La Fogata» (`#foro`):** espacio offline + sincronizado con Cloudflare KV para compartir consejos entre jóvenes (*Entre Jóvenes*) y *Entre Scouters y Adultos*, filtros por `#hashtags`, likes, edición, comentarios, registro obligatorio privado de seguridad (`A Salvo del Peligro`) con opción pública anónima y botón/banderita de reporte por moderación.
-- **Próximamente: Editor Inteligente de Formatos + Bóveda Local (`#editor-formatos`):** perfil local persistente en dispositivo para adelantar datos de autollenado (fichas médicas, JL304, FES/RECME, cédulas SMART, etc.).
-- **Detector automático de actualizaciones al iniciar (`version.json` + `sw.js v39`):** avisa hasta arriba cuando hay una nueva versión o cambios importantes en archivos/cookies en Web, iOS Safari y Android.
-- **Botón Reportar en el lector de documentos (`#btnReportDoc`):** permite reportar errores directamente desde cualquier PDF, hoja Excel o guía abierta.
-- **Limpieza visual total (cero emojis):** interfaz y base de conocimiento uniformadas únicamente con texto claro e iconos vectoriales SVG.
+- **Arquitectura en 5 Espacios Dedicados (`Inicio`, `Biblioteca y Catálogo`, `Guía Scout`, `La Fogata`, `Formatos`):** separa la navegación en vistas limpias con URLs compartibles (`?vista=...`), manteniendo las cookies locales, favoritos y modo offline unificados.
+- **Lector de Documentos Compacto y Ergonómico (`#docModal`):** cabecera de 1 fila con cajón `Info` plegable para ganar espacio de lectura, selector `Documento / Texto rápido` integrado y barra inferior fija al pulgar en móvil/iOS.
+- **Biblioteca y Catálogo unificados:** conmutador superior entre *Estantes Visuales (599)* y *Catálogo Avanzado* (filtros expertos por formato, subcategoría y ediciones recientes) más acceso directo a *Mis Guardados y Notas*.
+- **Sub-navegación en Guía Scout:** barra superior para ver todo o enfocarse en *Guía de Uso*, *Secciones*, *Agentes de Cambio.MX*, *Servicios y Trámites*, *Cambios en Esquemas*, *¿Qué es BiblioTech?* o *App y Offline*.
+- **Dock móvil equilibrado (5 botones):** *Inicio*, *Biblioteca*, *Fogata*, *Formatos* y *Guardados*.
 
 ---
 
@@ -120,7 +120,7 @@ bibliotech-scouts/
 ├── index.html                  # Estructura semántica principal (12 apartados ordenados)
 ├── src/                        # Fuente editable: styles.css y app.js
 ├── styles.css / app.js         # Salida depurada y minificada generada con npm run build
-├── sw.js                       # Service Worker PWA (bibliotech-scout-v39)
+├── sw.js                       # Service Worker PWA (bibliotech-scout-v40)
 ├── manifest.webmanifest        # Manifiesto Web App / PWA (iconos maskable y shortcuts)
 ├── data/                       # catalog.json, questions_bank.json, faq_v3.json, faq_v4.json, kb, chunks
 ├── covers/                     # Carátulas optimizadas en JPG (599 documentos)

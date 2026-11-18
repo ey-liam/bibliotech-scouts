@@ -118,32 +118,29 @@
         </span>
       </a>
 
-      <nav class="desktop-quick-nav" aria-label="Accesos principales">
-        <a href="#buscador" class="nav-link active">Buscador</a>
-        <a href="#biblioteca" class="nav-link">Biblioteca</a>
-        <a href="#guia-inicio" class="nav-link">Guía de Uso</a>
-        <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
-        <a href="#secciones" class="nav-link">Secciones</a>
-        <a href="#cambios" class="nav-link">Cambios en Esquemas</a>
-        <a href="#foro" class="nav-link">La Fogata</a>
-        <a href="#editor-formatos" class="nav-link">Editor Formatos</a>
-        <a href="#app" class="nav-link nav-link-app">Descarga App</a>
+      <nav class="desktop-quick-nav" aria-label="Espacios principales">
+        <a href="#inicio" class="nav-link active" data-bt-go-view="inicio">Inicio</a>
+        <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca">Biblioteca</a>
+        <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia">Guía Scout</a>
+        <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
+        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Formatos</a>
+        <a href="#app" class="nav-link nav-link-app" data-bt-go-view="guia" data-bt-guide-jump="app">App / Offline</a>
       </nav>
 
       <nav class="main-nav" id="navegacion-principal" aria-label="Todos los apartados">
-        <a href="#inicio" class="nav-link">Inicio</a>
-        <a href="#buscador" class="nav-link active">Buscador</a>
-        <a href="#biblioteca" class="nav-link">Biblioteca</a>
-        <a href="#guia-inicio" class="nav-link">Guía de Uso</a>
-        <a href="#acerca" class="nav-link">¿Qué es BiblioTech?</a>
-        <a href="#agentes" class="nav-link">Agentes de Cambio.MX</a>
-        <a href="#secciones" class="nav-link">Secciones</a>
-        <a href="#servicios" class="nav-link">Servicios y Trámites</a>
-        <a href="#cambios" class="nav-link">Cambios en Esquemas</a>
-        <a href="#foro" class="nav-link">La Fogata</a>
-        <a href="#editor-formatos" class="nav-link">Editor Formatos (Próx.)</a>
-        <a href="#explorar" class="nav-link">Catálogo</a>
-        <a href="#app" class="nav-link">Descarga App</a>
+        <a href="#inicio" class="nav-link" data-bt-go-view="inicio">Inicio</a>
+        <a href="#buscador" class="nav-link active" data-bt-go-view="inicio">Buscador</a>
+        <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca" data-bt-lib-jump="shelves">Biblioteca (Estantes)</a>
+        <a href="#explorar" class="nav-link" data-bt-go-view="biblioteca" data-bt-lib-jump="catalog">Catálogo Avanzado</a>
+        <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="guia-inicio">Guía de Uso</a>
+        <a href="#acerca" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="acerca">¿Qué es BiblioTech?</a>
+        <a href="#agentes" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="agentes">Agentes de Cambio.MX</a>
+        <a href="#secciones" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="secciones">Secciones</a>
+        <a href="#servicios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="servicios">Servicios y Trámites</a>
+        <a href="#cambios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="cambios">Cambios en Esquemas</a>
+        <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
+        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor Formatos (Próx.)</a>
+        <a href="#app" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="app">Descarga App / Offline</a>
         <a href="#aportar" class="nav-link">Aportar y Contacto</a>
         <button type="button" id="openWelcomeMenuBtn" class="nav-link nav-link-welcome">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -242,7 +239,7 @@
 
   <main id="contenido-principal" tabindex="-1">
     <!-- HERO FUSION: VIBES DINAMICAS ESTILO POLIGONAL ZIGZAG + IDENTIDAD BIBLIOTECH SCOUT -->
-  <section id="inicio" class="bts-hero-section">
+  <section id="inicio" class="bts-hero-section" data-bt-view="inicio">
     <!-- ESCENARIO SUPERIOR: LIENZO DINAMICO CON ZIGZAG Y DOODLES -->
     <div class="bts-hero-stage">
       <!-- CINTA DIAGONAL ZIGZAG EN GRADIENTE PURPURA - CIAN -->
@@ -341,7 +338,7 @@
   </section>
 
   <!-- SECCION DE BUSQUEDA Y ASISTENTE INTELIGENTE CON FUENTES OFICIALES -->
-  <section id="seccion-buscador" class="search-section-wrap">
+  <section id="seccion-buscador" class="search-section-wrap" data-bt-view="inicio">
     <div class="container search-section-container">
 <div id="buscador" class="search-hub-card">
         <div class="search-hub-head">
@@ -502,9 +499,83 @@
 
     </section>
 
+  <!-- HUB DE ESPACIOS DEDICADOS (VISTA INICIO) -->
+  <section id="btWorkspaceHub" class="bt-workspace-hub" data-bt-view="inicio" aria-label="Explorar espacios de BiblioTech Scout">
+    <div class="container">
+      <div class="bt-workspace-hub-head">
+        <span class="section-eyebrow">ESPACIOS DEDICADOS</span>
+        <h2 class="section-title">¿A dónde quieres ir ahora?</h2>
+        <p class="section-subtitle">Cada herramienta tiene su propio espacio limpio para consultar sin distracciones y conservar tus datos locales.</p>
+      </div>
+      <div class="bt-workspace-grid">
+        <button type="button" class="bt-workspace-card" data-bt-go-view="biblioteca">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          </span>
+          <span class="bt-workspace-title">Biblioteca y Catálogo</span>
+          <span class="bt-workspace-desc">599 libros, manuales, FES, RECME, PDFs y hojas Excel con filtros avanzados.</span>
+          <span class="bt-workspace-cta">Abrir Biblioteca →</span>
+        </button>
+
+        <button type="button" class="bt-workspace-card" data-bt-go-view="guia">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          </span>
+          <span class="bt-workspace-title">Guía y Movimiento Scout</span>
+          <span class="bt-workspace-desc">Accesos rápidos, Secciones, Agentes de Cambio.MX, Trámites, Cambios y Acerca.</span>
+          <span class="bt-workspace-cta">Explorar Guía →</span>
+        </button>
+
+        <button type="button" class="bt-workspace-card" data-bt-go-view="fogata">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </span>
+          <span class="bt-workspace-title">La Fogata</span>
+          <span class="bt-workspace-desc">Foro comunitario de recomendaciones entre jóvenes y Scouters con respaldo offline.</span>
+          <span class="bt-workspace-cta">Entrar a La Fogata →</span>
+        </button>
+
+        <button type="button" class="bt-workspace-card" data-bt-go-view="formatos">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          </span>
+          <span class="bt-workspace-title">Editor de Formatos</span>
+          <span class="bt-workspace-desc">Bóveda local de autollenado scout y futuro editor de fichas, JL304 y proyectos.</span>
+          <span class="bt-workspace-cta">Abrir Formatos →</span>
+        </button>
+
+        <button type="button" class="bt-workspace-card is-accent" data-bt-go-view="guia" data-bt-guide-jump="app">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </span>
+          <span class="bt-workspace-title">App Android y Modo Offline</span>
+          <span class="bt-workspace-desc">Instala el APK oficial o descarga las 13,525 preguntas para usar sin señal en iOS.</span>
+          <span class="bt-workspace-cta">Configurar Offline →</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BARRA SUPERIOR DEL ESPACIO BIBLIOTECA Y CATÁLOGO -->
+  <div id="btLibraryModeBar" class="bt-subview-bar bt-view-hidden" data-bt-view="biblioteca">
+    <div class="container bt-subview-bar-inner">
+      <div class="bt-segmented-control" role="tablist" aria-label="Modo de exploración documental">
+        <button type="button" class="bt-seg-btn active" data-lib-mode="shelves" role="tab" aria-selected="true">
+          Estantes (599)
+        </button>
+        <button type="button" class="bt-seg-btn" data-lib-mode="catalog" role="tab" aria-selected="false">
+          Catálogo y Filtros
+        </button>
+      </div>
+      <button type="button" id="btnOpenSavedFromLib" class="bt-subview-action-btn" data-action-open-saved="1">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+        <span>Mis Guardados y Notas</span>
+      </button>
+    </div>
+  </div>
 
   <!-- APARTADO DE BIBLIOTECA INTERACTIVA ORGANIZADO EN CATEGORÍAS + COLECCIÓN DEL CENTENARIO -->
-  <section id="biblioteca" class="library-section">
+  <section id="biblioteca" class="library-section bt-view-hidden" data-bt-view="biblioteca" data-bt-lib-panel="shelves">
     <div class="container">
       <div class="section-heading-row library-header-row">
         <div>
@@ -592,8 +663,24 @@
     </div>
   </section>
 
+  <!-- SUB-NAVEGACIÓN EXPERTA DEL ESPACIO GUÍA Y MOVIMIENTO SCOUT -->
+  <div id="btGuideSubnav" class="bt-subview-bar bt-guide-subnav bt-view-hidden" data-bt-view="guia">
+    <div class="container bt-subview-bar-inner">
+      <div class="bt-guide-pills" role="tablist" aria-label="Apartados de Guía y Movimiento Scout">
+        <button type="button" class="bt-guide-pill active" data-guide-tab="all" role="tab" aria-selected="true">Todo</button>
+        <button type="button" class="bt-guide-pill" data-guide-tab="guia-inicio" role="tab" aria-selected="false">Guía de Uso</button>
+        <button type="button" class="bt-guide-pill" data-guide-tab="secciones" role="tab" aria-selected="false">Secciones</button>
+        <button type="button" class="bt-guide-pill" data-guide-tab="agentes" role="tab" aria-selected="false">Agentes de Cambio.MX</button>
+        <button type="button" class="bt-guide-pill" data-guide-tab="servicios" role="tab" aria-selected="false">Servicios y Trámites</button>
+        <button type="button" class="bt-guide-pill" data-guide-tab="cambios" role="tab" aria-selected="false">Cambios en Esquemas</button>
+        <button type="button" class="bt-guide-pill" data-guide-tab="acerca" role="tab" aria-selected="false">¿Qué es BiblioTech?</button>
+        <button type="button" class="bt-guide-pill" data-guide-tab="app" role="tab" aria-selected="false">App y Offline</button>
+      </div>
+    </div>
+  </div>
+
   <!-- APARTADO DE PRIMEROS PASOS Y GUÍA DE USO (DESPLEGABLES CERRADOS POR DEFECTO) -->
-  <section id="guia-inicio" class="quickstart-section">
+  <section id="guia-inicio" class="quickstart-section bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="guia-inicio">
     <div class="container">
       <div class="section-heading-row">
         <div>
@@ -807,7 +894,7 @@
   </section>
 
   <!-- ACERCA DEL PROYECTO Y AUTOR (JUSTO DESPUÉS DE BIBLIOTECA SCOUT Y ANTES DE AGENTES DE CAMBIO.MX) -->
-  <section id="acerca" class="about-section">
+  <section id="acerca" class="about-section bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="acerca">
     <div class="container">
       <div class="about-card">
         <div class="about-photo-col">
@@ -872,7 +959,7 @@
   </section>
 
   <!-- PROYECTO DESTACADO PARA CAMINANTES: AGENTES DE CAMBIO.MX - RED NACIONAL DE CAMINANTES -->
-  <section id="agentes" class="agentes-cambio-section">
+  <section id="agentes" class="agentes-cambio-section bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="agentes">
     <div class="container">
 
       <!-- BARRA SUPERIOR CTA: COMPARTE TU PROYECTO -->
@@ -1022,7 +1109,7 @@
   </section>
 
   <!-- EXPLORACIÓN RÁPIDA POR SECCIÓN SCOUT (ALTERNANDO HEXÁGONOS ROTATORIOS Y POLAROIDS) -->
-  <section id="secciones" class="sections-showcase">
+  <section id="secciones" class="sections-showcase bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="secciones">
     <div class="container">
       <div class="section-heading-row">
         <div>
@@ -1192,7 +1279,7 @@
   </section>
 
   <!-- SERVICIOS, PLATAFORMAS Y DIRECTORIO OFICIAL (INFORMACIÓN EXTRAÍDA DE LAS PÁGINAS WEB OFICIALES) -->
-  <section id="servicios" class="official-services-section">
+  <section id="servicios" class="official-services-section bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="servicios">
     <div class="container">
       <div class="services-header-grid">
         <div>
@@ -1364,7 +1451,7 @@
   </section>
 
   <!-- ¿QUÉ COSAS CAMBIARON AÑO CON AÑO? -->
-  <section id="cambios" class="evolution-section">
+  <section id="cambios" class="evolution-section bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="cambios">
     <div class="container">
       <div class="section-heading-row">
         <div>
@@ -1558,7 +1645,7 @@
   </section>
 
   <!-- FORO COMUNITARIO: LA FOGATA (JÓVENES Y ADULTOS) -->
-  <section id="foro" class="forum-section" aria-labelledby="forumSectionTitle">
+  <section id="foro" class="forum-section bt-view-hidden" data-bt-view="fogata" aria-labelledby="forumSectionTitle">
     <div class="container">
       <div class="forum-header-row">
         <div>
@@ -1641,7 +1728,7 @@
   </section>
 
   <!-- PRÓXIMAMENTE: EDITOR INTELIGENTE DE FORMATOS Y AUTOLLENADO LOCAL -->
-  <section id="editor-formatos" class="editor-coming-section" aria-labelledby="editorFormatosTitle">
+  <section id="editor-formatos" class="editor-coming-section bt-view-hidden" data-bt-view="formatos" aria-labelledby="editorFormatosTitle">
     <div class="container">
       <div class="editor-coming-head">
         <div class="editor-coming-copy">
@@ -1807,7 +1894,7 @@
   </section>
 
   <!-- CATÁLOGO GENERAL Y DESCARGA DE ARCHIVOS (DIVIDIDO EN LAS 8 CATEGORÍAS OFICIALES) -->
-  <section id="explorar" class="catalog-section">
+  <section id="explorar" class="catalog-section bt-view-hidden" data-bt-view="biblioteca" data-bt-lib-panel="catalog">
     <div class="container">
       <div class="catalog-header-row">
         <div>
@@ -1921,11 +2008,11 @@
   </section>
 
   <!-- DESCARGA DE LA APP ANDROID Y WEB APP EN IPHONE / IPAD -->
-  <section id="app" class="app-download-section">
+  <section id="app" class="app-download-section bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="app">
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 3.0.0 Mobile · Web 9.0.0</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 3.1.0 Mobile · Web 9.1.0</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
             <strong>No es necesario descargar nada:</strong> puedes disfrutar de la mayoría de herramientas, el buscador de 13,525 preguntas y los visores directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
@@ -2085,7 +2172,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v39</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v40</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -2109,78 +2196,46 @@
   </section>
   </main>
 
-  <!-- MODAL LECTOR INTERACTIVO (MODO LECTURA LIBRE Y VISTA PREVIA) -->
+  <!-- MODAL LECTOR INTERACTIVO (DISEÑO COMPACTO Y ERGONÓMICO) -->
   <div id="docModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalDocTitle">
-    <div id="docModalContainer" class="modal-container">
+    <div id="docModalContainer" class="modal-container bt-reader-v2">
       <div class="sheet-drag-handle" aria-hidden="true"></div>
-      <div class="modal-header">
-        <div class="modal-header-top">
-          <div class="modal-title-group">
+      <div class="modal-header bt-reader-head-compact">
+        <div class="modal-header-top bt-reader-top-row">
+          <div class="modal-title-group bt-reader-title-wrap">
             <div class="modal-badges" id="modalDocBadges"></div>
             <h3 id="modalDocTitle">Título del documento</h3>
-            <span id="modalDocFilename" class="modal-filename"></span>
           </div>
-          <button type="button" id="closeDocModalBtn" class="btn-modal-close" aria-label="Cerrar lector">
-            <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-
-        <div class="modal-toolbar-row">
-          <div class="modal-actions">
-            <button type="button" id="modalPrevBookBtn" class="btn-modal-nav hidden" title="Documento anterior">← Anterior</button>
-            <button type="button" id="modalNextBookBtn" class="btn-modal-nav hidden" title="Siguiente documento">Siguiente →</button>
-            <button type="button" id="modalFullscreenBtn" class="btn-modal-secondary" title="Alternar pantalla completa" aria-pressed="false">Pantalla completa</button>
-            <a id="modalOpenTabBtn" href="#" target="_blank" rel="noopener" class="btn-modal-secondary">
+          <div class="bt-reader-primary-actions">
+            <button type="button" id="btnToggleDocInfo" class="bt-reader-icon-pill" title="Ver detalles y sinopsis del archivo" aria-expanded="false" aria-controls="modalDocInfoDrawer">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span>Info</span>
+            </button>
+            <button type="button" id="modalFullscreenBtn" class="btn-modal-secondary bt-hide-xs" title="Alternar pantalla completa" aria-pressed="false">Pantalla completa</button>
+            <a id="modalOpenTabBtn" href="#" target="_blank" rel="noopener" class="btn-modal-secondary bt-hide-xs">
               Abrir en pestaña
             </a>
             <a id="modalDownloadBtn" href="#" download class="btn-modal-primary">
               Descargar
             </a>
+            <button type="button" id="closeDocModalBtn" class="btn-modal-close" aria-label="Cerrar lector">
+              <svg class="icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
           </div>
         </div>
 
-        <!-- BARRA QOL DE HERRAMIENTAS: AUDIO, GUARDAR, NOTAS Y BÚSQUEDA INTERNA -->
-        <div class="bt-reader-qol-bar" aria-label="Herramientas del lector">
-          <button type="button" id="btnReaderTTS" class="bt-qol-pill" title="Escuchar lectura en voz alta">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-            <span>Escuchar</span>
-          </button>
-          <button type="button" id="btnPinDoc" class="bt-qol-pill" title="Guardar documento en este navegador">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-            <span>Guardar</span>
-          </button>
-          <button type="button" id="btnFieldNote" class="bt-qol-pill" title="Escribir notas">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-            <span>Notas</span>
-          </button>
-          <button type="button" id="btnZoomOut" class="bt-qol-pill" title="Reducir tamaño (quitar zoom)">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-            <span>Zoom -</span>
-          </button>
-          <button type="button" id="btnZoomIn" class="bt-qol-pill" title="Aumentar tamaño">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-            <span>Zoom +</span>
-          </button>
-          <button type="button" id="btnReportDoc" class="bt-qol-pill bt-qol-pill-report" title="Reportar un error en este archivo">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
-              <line x1="4" y1="22" x2="4" y2="15"></line>
-            </svg>
-            <span>Reportar</span>
-          </button>
-          <div class="modal-search-inline">
-            <input type="text" id="modalInternalSearchInput" placeholder="Buscar en texto..." aria-label="Buscar en documento" />
-            <button type="button" id="modalSearchPrevBtn" class="btn-modal-search-arrow" aria-label="Anterior" title="Coincidencia anterior">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>
-            </button>
-            <button type="button" id="modalSearchNextBtn" class="btn-modal-search-arrow" aria-label="Siguiente" title="Siguiente coincidencia">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </button>
-            <span id="modalSearchMatchesCount" class="modal-search-count"></span>
+        <!-- CAJÓN PLEGABLE DE INFO Y SINOPSIS (OCULTO POR DEFECTO PARA GANAR ESPACIO DE LECTURA) -->
+        <div id="modalDocInfoDrawer" class="bt-reader-info-drawer hidden">
+          <div class="bt-reader-info-meta-row">
+            <span id="modalDocFilename" class="modal-filename"></span>
+            <div class="bt-reader-info-links-mobile">
+              <a id="modalOpenTabBtnMobile" href="#" target="_blank" rel="noopener" class="bt-qol-pill">Abrir en pestaña</a>
+            </div>
           </div>
+          <div id="modalDocDescBox" class="modal-doc-desc-box"></div>
         </div>
 
         <!-- CAJA DESPLEGABLE DE NOTAS -->
@@ -2191,14 +2246,53 @@
             <button type="button" id="btnCloseFieldNote" class="btn-field-note-cancel">Cerrar</button>
           </div>
         </div>
-
-        <!-- SINOPSIS / CONTENIDO DEL DOCUMENTO -->
-        <div id="modalDocDescBox" class="modal-doc-desc-box"></div>
       </div>
 
-      <div class="modal-tabs-bar">
-        <button type="button" class="modal-tab active" data-tab="preview">Lectura del Documento</button>
-        <button type="button" class="modal-tab" data-tab="text">Texto Extraído / Lectura Rápida</button>
+      <!-- BARRA UNIFICADA DE LECTURA (ARRIBA EN ESCRITORIO · ABAJO PARA EL PULGAR EN MÓVIL) -->
+      <div class="bt-reader-qol-bar bt-reader-unified-bar" aria-label="Herramientas del lector">
+        <div class="bt-reader-mode-switch modal-tabs-bar" role="tablist" aria-label="Modo de lectura">
+          <button type="button" class="modal-tab active" data-tab="preview" role="tab" aria-selected="true">Documento</button>
+          <button type="button" class="modal-tab" data-tab="text" role="tab" aria-selected="false">Texto rápido</button>
+        </div>
+
+        <div class="bt-reader-nav-group">
+          <button type="button" id="modalPrevBookBtn" class="bt-qol-pill btn-modal-nav hidden" title="Documento anterior">← Anterior</button>
+          <button type="button" id="modalNextBookBtn" class="bt-qol-pill btn-modal-nav hidden" title="Siguiente documento">Siguiente →</button>
+        </div>
+
+        <button type="button" id="btnPinDoc" class="bt-qol-pill" title="Guardar documento en este navegador">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          <span>Guardar</span>
+        </button>
+        <button type="button" id="btnFieldNote" class="bt-qol-pill" title="Escribir notas">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          <span>Notas</span>
+        </button>
+        <button type="button" id="btnReaderTTS" class="bt-qol-pill" title="Escuchar lectura en voz alta">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          <span>Escuchar</span>
+        </button>
+        <div class="bt-reader-zoom-group" role="group" aria-label="Zoom">
+          <button type="button" id="btnZoomOut" class="bt-qol-pill bt-qol-zoom-btn" title="Reducir tamaño (quitar zoom)" aria-label="Reducir zoom">−</button>
+          <button type="button" id="btnZoomIn" class="bt-qol-pill bt-qol-zoom-btn" title="Aumentar tamaño" aria-label="Aumentar zoom">+</button>
+        </div>
+        <button type="button" id="btnReportDoc" class="bt-qol-pill bt-qol-pill-report" title="Reportar un error en este archivo">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+            <line x1="4" y1="22" x2="4" y2="15"></line>
+          </svg>
+          <span>Reportar</span>
+        </button>
+        <div class="modal-search-inline">
+          <input type="text" id="modalInternalSearchInput" placeholder="Buscar en texto..." aria-label="Buscar en documento" />
+          <button type="button" id="modalSearchPrevBtn" class="btn-modal-search-arrow" aria-label="Anterior" title="Coincidencia anterior">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>
+          </button>
+          <button type="button" id="modalSearchNextBtn" class="btn-modal-search-arrow" aria-label="Siguiente" title="Siguiente coincidencia">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <span id="modalSearchMatchesCount" class="modal-search-count"></span>
+        </div>
       </div>
 
       <div class="modal-body">
@@ -2257,7 +2351,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 16/11/2026 · BETA 9.0.0 - 3.0.0 Mobile (16/11/2026) ·
+          Base de datos: 18/11/2026 · BETA 9.1.0 - 3.1.0 Mobile (18/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">
@@ -2295,43 +2389,41 @@
     </div>
   </div>
 
-  <!-- DOCK INFERIOR UNIFICADO FLOTANTE (MÓVIL & APP ANDROID) -->
+  <!-- DOCK INFERIOR UNIFICADO FLOTANTE (MÓVIL & APP ANDROID — 5 ACCESOS EQUILIBRADOS) -->
   <nav id="unifiedBottomDock" class="bt-unified-dock" aria-label="Navegación principal móvil">
-    <button type="button" class="bt-dock-item is-active" data-target="inicio" aria-label="Ir a Inicio">
+    <button type="button" class="bt-dock-item is-active" data-bt-go-view="inicio" data-target="inicio" aria-label="Ir a Inicio y Buscador">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
         <polyline points="9 22 9 12 15 12 15 22"></polyline>
       </svg>
       <span>Inicio</span>
     </button>
-    <button type="button" class="bt-dock-item" data-target="buscador" aria-label="Ir a Preguntar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
-      <span>Consultar</span>
-    </button>
-    <button type="button" class="bt-dock-item" data-target="biblioteca" aria-label="Ir a Biblioteca">
+    <button type="button" class="bt-dock-item" data-bt-go-view="biblioteca" data-target="biblioteca" aria-label="Ir a Biblioteca y Catálogo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
       </svg>
       <span>Biblioteca</span>
     </button>
-    <button type="button" class="bt-dock-item" data-target="agentes" aria-label="Ir a Agentes de Cambio">
+    <button type="button" class="bt-dock-item" data-bt-go-view="fogata" data-target="foro" aria-label="Ir a La Fogata">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
       </svg>
-      <span>Agentes</span>
+      <span>Fogata</span>
+    </button>
+    <button type="button" class="bt-dock-item" data-bt-go-view="formatos" data-target="editor-formatos" aria-label="Ir a Editor de Formatos">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+      </svg>
+      <span>Formatos</span>
     </button>
     <button type="button" class="bt-dock-item" id="dockBtnSaved" data-action="saved" aria-label="Ver documentos guardados">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
       <span>Guardados</span>
       <span id="dockSavedCount" class="bt-dock-badge hidden">0</span>
-    </button>
-    <button type="button" class="bt-dock-item" id="dockBtnNight" data-action="night" aria-label="Activar modo noche" aria-pressed="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      <span>Noche</span>
     </button>
   </nav>
 

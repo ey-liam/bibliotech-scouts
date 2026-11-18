@@ -79,8 +79,12 @@ def run_e2e(test_webkit: bool = False):
 
             assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Desktop horizontal overflow"
 
-            # Verificar v9.0.0: cero emojis visibles, botón único Preguntas al azar con clase btn-shuffle-questions,
-            # enlace ¿Qué es BiblioTech?, Proyecto sin fines de lucro, #btnReportDoc en lector y banner de actualización
+            # Verificar v9.1.0: Espacios dedicados (inicio activo por defecto), cero emojis visibles,
+            # botón único Preguntas al azar con clase btn-shuffle-questions, menú ¿Qué es BiblioTech?, banner y Lector compacto
+            assert page.evaluate("document.documentElement.getAttribute('data-bt-active-view') === 'inicio'"), "Vista inicial no es inicio"
+            assert page.locator("#btWorkspaceHub").is_visible(), "Hub de espacios en Inicio no visible"
+            assert not page.locator("#foro").is_visible(), "La Fogata no debe mostrarse en la vista Inicio"
+
             body_text = page.evaluate("document.body.innerText")
             bad_emojis = [ch for ch in EMOJI_RE.findall(body_text) if ch not in ("✓", "✕", "✔", "→", "←", "↗", "–", "—", "•", "·")]
             assert not bad_emojis, f"Se encontraron emojis visibles en el DOM: {set(bad_emojis)}"
@@ -96,23 +100,12 @@ def run_e2e(test_webkit: bool = False):
             assert (page.locator("#acerca .section-eyebrow").text_content() or "").strip() == "Proyecto sin fines de lucro", "Eyebrow #acerca incorrecto"
 
             # Probar banner superior de actualización disponible
-            page.evaluate("window.__btShowUpdateBanner('Prueba E2E de actualización 9.0.0')")
+            page.evaluate("window.__btShowUpdateBanner('Prueba E2E de actualización 9.1.0')")
             assert not page.locator("#updateAvailableBanner").evaluate("el => el.classList.contains('hidden')"), "Banner de actualización no se mostró"
             page.click("#btnDismissAppUpdate")
             assert page.locator("#updateAvailableBanner").evaluate("el => el.classList.contains('hidden')"), "Banner de actualización no se cerró"
 
-            # Probar botón Reportar dentro del visor de archivos (#docModal -> #btnReportDoc)
-            page.locator("#libraryBookshelfGrid .book-read-btn").first.click()
-            page.wait_for_selector("#docModal:not(.hidden)", timeout=4000)
-            page.click("#btnReportDoc")
-            page.wait_for_selector("#bugReportModal:not(.hidden)", timeout=4000)
-            assert page.locator("#bugReportSection").input_value() == "Lector / Visor PDF o Excel", "No prellenó apartado Lector"
-            page.click("#closeBugReportBtn")
-            page.locator("#bugReportModal").wait_for(state="hidden", timeout=2000)
-            page.click("#closeDocModalBtn")
-            page.locator("#docModal").wait_for(state="hidden", timeout=2000)
-
-            # Probar búsqueda
+            # Probar búsqueda en Inicio
             page.fill("#askInput", "SMART")
             page.click("#askSubmitBtn")
             page.wait_for_selector("#answerContainer:not(.hidden)", timeout=15000)
@@ -126,10 +119,43 @@ def run_e2e(test_webkit: bool = False):
             ans_bt = page.locator("#answerBody").inner_text()
             assert "Liam Durán" in ans_bt, "Respuesta sobre BiblioTech no incluyó autor"
 
-            # Probar atajo '/' y modo oscuro
+            # Navegar al espacio Biblioteca y Catálogo unificados
+            page.click('.desktop-quick-nav [data-bt-go-view="biblioteca"]')
+            assert page.locator("#btLibraryModeBar").is_visible(), "Barra de modos de Biblioteca no visible"
+            assert page.locator("#biblioteca").is_visible(), "Estantes Visuales no visibles"
+            assert not page.locator("#explorar").is_visible(), "Catálogo Avanzado debe iniciar oculto en modo Estantes"
+            page.click('#btLibraryModeBar [data-lib-mode="catalog"]')
+            assert page.locator("#explorar").is_visible(), "Catálogo Avanzado no se mostró al cambiar pestaña"
+            page.click('#btLibraryModeBar [data-lib-mode="shelves"]')
+            assert page.locator("#biblioteca").is_visible(), "Estantes Visuales no volvieron al cambiar pestaña"
+
+            # Probar Lector compacto (#docModal): cajón Info oculto por defecto + botón Reportar
+            page.locator("#libraryBookshelfGrid .book-read-btn").first.click()
+            page.wait_for_selector("#docModal:not(.hidden)", timeout=4000)
+            assert page.locator("#modalDocInfoDrawer").evaluate("el => el.classList.contains('hidden')"), "Cajón Info debe iniciar oculto"
+            page.click("#btnToggleDocInfo")
+            assert not page.locator("#modalDocInfoDrawer").evaluate("el => el.classList.contains('hidden')"), "Cajón Info no se desplegó"
+            page.click("#btnReportDoc")
+            page.wait_for_selector("#bugReportModal:not(.hidden)", timeout=4000)
+            assert page.locator("#bugReportSection").input_value() == "Lector / Visor PDF o Excel", "No prellenó apartado Lector"
+            page.click("#closeBugReportBtn")
+            page.locator("#bugReportModal").wait_for(state="hidden", timeout=2000)
+            page.click("#closeDocModalBtn")
+            page.locator("#docModal").wait_for(state="hidden", timeout=2000)
+
+            # Probar modo oscuro
             page.keyboard.press("Escape")
             page.click("#btnToggleCampMode")
             assert page.evaluate("document.documentElement.getAttribute('data-camp-mode') === 'true'"), "Dark mode failed"
+
+            # Navegar al espacio Guía Scout -> sub-pestaña App y Modo Offline
+            page.click('.desktop-quick-nav [data-bt-guide-jump="app"]')
+            assert page.locator("#btGuideSubnav").is_visible(), "Sub-barra de Guía Scout no visible"
+            assert page.locator("#app").is_visible(), "Sección App / Offline no visible en Guía -> App"
+            assert not page.locator("#guia-inicio").is_visible(), "Guía de Uso debe estar oculta en sub-pestaña App"
+            page.click('#btGuideSubnav [data-guide-tab="acerca"]')
+            assert page.locator("#acerca").is_visible(), "Sección ¿Qué es BiblioTech? no visible"
+            page.click('#btGuideSubnav [data-guide-tab="app"]')
 
             # Probar descarga Modo Offline iOS / Web y verificación offline real
             page.click("#tabAppIos")
@@ -160,7 +186,9 @@ def run_e2e(test_webkit: bool = False):
             page.wait_for_selector("#bugReportStatus.is-ok", state="attached", timeout=4000)
             page.locator("#bugReportModal").wait_for(state="hidden", timeout=4000)
 
-            # Probar Bóveda Local de Autollenado y vista previa (#editor-formatos)
+            # Navegar al espacio Formatos y probar Bóveda Local de Autollenado
+            page.click('.desktop-quick-nav [data-bt-go-view="formatos"]')
+            assert page.locator("#editor-formatos").is_visible(), "Espacio Formatos no visible"
             page.fill("#afName", "Liam Durán Prueba")
             page.fill("#afAge", "16")
             page.fill("#afGroup", "Grupo 53")
@@ -171,7 +199,9 @@ def run_e2e(test_webkit: bool = False):
             page.wait_for_selector("#autofillDemoPreview:not(.hidden)", timeout=3000)
             assert "Liam Durán Prueba" in page.locator("#autofillDemoPreview").inner_text(), "Demo autofill sin datos"
 
-            # Probar Foro La Fogata (#foro): filtros, datos reales obligatorios, modo anónimo, edición, comentarios, likes y banderita de reporte
+            # Navegar al espacio La Fogata (#foro) y probar flujo completo
+            page.click('.desktop-quick-nav [data-bt-go-view="fogata"]')
+            assert page.locator("#foro").is_visible(), "Espacio La Fogata no visible"
             assert "La Fogata: Recomendaciones" in page.locator("#forumSectionTitle").inner_text(), "Título La Fogata incorrecto"
             assert "Todos" in page.locator('#forumChannelTabs [data-forum-channel="all"]').inner_text(), "Pestaña Todos faltante"
             page.click('#forumChannelTabs [data-forum-channel="adultos"]')
@@ -241,18 +271,26 @@ def run_e2e(test_webkit: bool = False):
             page.wait_for_timeout(150)
             assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Desktop 1200px horizontal overflow"
 
-            # Vista móvil 390x844 sin desborde
+            # Vista móvil 390x844 sin desborde y prueba del Dock inferior de 5 botones
             mctx = browser.new_context(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
             mpage = mctx.new_page()
             mpage.on("pageerror", lambda err: errors.append(f"mobile pageerror: {err}"))
             mpage.goto("http://127.0.0.1:18775/", wait_until="networkidle")
             dismiss_consent(mpage)
-            assert mpage.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Mobile horizontal overflow"
-            mpage.locator("#foro").scroll_into_view_if_needed()
+            assert mpage.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Mobile horizontal overflow (inicio)"
+            assert mpage.locator("#unifiedBottomDock .bt-dock-item").count() == 5, "Dock móvil debe tener 5 botones"
+            mpage.click('#unifiedBottomDock [data-bt-go-view="fogata"]')
+            assert mpage.locator("#foro").is_visible(), "Dock móvil no abrió La Fogata"
             forum_fit = mpage.evaluate(
-                "() => Array.from(document.querySelectorAll('#foro .forum-post-card, #editor-formatos .editor-format-card')).every(el => el.getBoundingClientRect().right <= window.innerWidth + 1)"
+                "() => Array.from(document.querySelectorAll('#foro .forum-post-card')).every(el => el.getBoundingClientRect().right <= window.innerWidth + 1)"
             )
-            assert forum_fit, "Tarjetas de foro o editor exceden el ancho móvil"
+            assert forum_fit, "Tarjetas de foro exceden el ancho móvil"
+            mpage.click('#unifiedBottomDock [data-bt-go-view="formatos"]')
+            assert mpage.locator("#editor-formatos").is_visible(), "Dock móvil no abrió Formatos"
+            editor_fit = mpage.evaluate(
+                "() => Array.from(document.querySelectorAll('#editor-formatos .editor-format-card')).every(el => el.getBoundingClientRect().right <= window.innerWidth + 1)"
+            )
+            assert editor_fit, "Tarjetas de editor exceden el ancho móvil"
             mctx.close()
             ctx.close()
             browser.close()
@@ -266,7 +304,7 @@ def run_e2e(test_webkit: bool = False):
                 )
                 wpage = wctx.new_page()
                 wpage.on("pageerror", lambda err: errors.append(f"webkit pageerror: {err}"))
-                wpage.goto("http://127.0.0.1:18775/", wait_until="networkidle")
+                wpage.goto("http://127.0.0.1:18775/#app", wait_until="networkidle")
                 dismiss_consent(wpage)
                 badge = wpage.locator("#appDetectedOsBadge").inner_text()
                 assert "iPhone / iPad" in badge, f"iOS detection failed: {badge}"
