@@ -16195,3 +16195,87 @@ html[data-camp-mode="true"] .bt-reader-info-drawer {
   min-width: 0;
   flex: 1 1 0;
 }
+
+/* ============================================================
+   V9.2.0 — OPTIMIZACIÓN MÓVIL, CERO SOLAPAMIENTOS Y SIN DUPLICADOS
+   ============================================================ */
+html.bt-modal-open #floatingQuickBar,
+html.bt-viewer-open #floatingQuickBar,
+body.modal-open #floatingQuickBar,
+body.reader-open #floatingQuickBar {
+  display: none !important;
+}
+
+/* En la App Android nativa: no mostrar invitaciones para instalar el APK dentro del propio APK */
+html.bt-native [data-bt-web-only="1"],
+html.bt-native .bt-guide-pill[data-guide-tab="app"],
+html.bt-native #app {
+  display: none !important;
+}
+
+@media (max-width: 960px) {
+  /* En móvil ya existe el botón Guardados fijo en el dock inferior: no duplicarlo arriba en Biblioteca */
+  #btnOpenSavedFromLib {
+    display: none !important;
+  }
+
+  /* En móvil el dock ya incluye Inicio/Buscador: dejar solo el botón compacto ↑ encima del dock a la derecha */
+  #floatingAskBtn {
+    display: none !important;
+  }
+
+  #floatingQuickBar,
+  .floating-quick-bar {
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+    right: calc(12px + env(safe-area-inset-right, 0px)) !important;
+    z-index: 940 !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* Evitar que los toasts choquen o se peguen al dock inferior */
+  .bt-web-toast {
+    bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
+    max-width: calc(100vw - 28px) !important;
+    white-space: normal !important;
+    text-align: center !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Espacio inferior suficiente para que el último botón o contenido nunca quede tapado por el dock */
+  .site-footer {
+    padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  #btLibraryModeBar .bt-subview-bar-inner {
+    justify-content: center;
+  }
+}
+
+/* Optimización GPU/batería en móviles y App Android: menos partículas 3D en segundo plano */
+@media (max-width: 768px) {
+  .global-animated-bg .bg-3d-cube,
+  .global-animated-bg .bg-3d-ring,
+  .global-animated-bg .bg-spark {
+    display: none !important;
+  }
+
+  .global-animated-bg .bg-hex-float {
+    animation-duration: 32s !important;
+    will-change: auto !important;
+  }
+}
+
+html.bt-native .global-animated-bg .bg-3d-cube,
+html.bt-native .global-animated-bg .bg-3d-ring,
+html.bt-native .global-animated-bg .bg-spark {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .global-animated-bg *,
+  .bts-doodle {
+    animation: none !important;
+    transition: none !important;
+  }
+}

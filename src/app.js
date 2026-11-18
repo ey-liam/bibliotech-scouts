@@ -361,6 +361,43 @@ function releaseDialogFocusTrap(dialogEl) {
   }
 }
 
+function btFetchWithTimeout(url, options = {}, timeoutMs = 7000) {
+  if (typeof AbortController !== "function" || !timeoutMs || timeoutMs <= 0) {
+    return fetch(url, options);
+  }
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => {
+    try {
+      ctrl.abort();
+    } catch (_) {}
+  }, timeoutMs);
+  return fetch(url, { ...options, signal: ctrl.signal }).finally(() => clearTimeout(timer));
+}
+
+function btEnsureLibraryRendered() {
+  if (!STATE.documents || !STATE.documents.length) return;
+  if (!STATE._libraryRendered) {
+    STATE._libraryRendered = true;
+    renderLibraryShelf();
+  }
+}
+
+function btEnsureCatalogRendered() {
+  if (!STATE.documents || !STATE.documents.length) return;
+  if (!STATE._catalogRendered) {
+    STATE._catalogRendered = true;
+    applyCatalogFilters();
+  }
+}
+
+function btEnsureVersionChainsRendered() {
+  if (!STATE.versionChains) return;
+  if (!STATE._versionChainsRendered) {
+    STATE._versionChainsRendered = true;
+    renderVersionChains();
+  }
+}
+
 async function initApp() {
   initPrivacyAndTelemetry();
   setupVersionAndUpdateChecker();
@@ -376,13 +413,23 @@ async function initApp() {
   setupScrollAnimations();
 
   try {
-    let catRes;
-    if (IS_LOCAL_SERVER) {
-      catRes = await fetch("/api/catalog").catch(() => null);
-    }
-    if (!catRes || !catRes.ok) {
-      catRes = await fetch("data/catalog.json");
-    }
+    const fetchCatalog = async () => {
+      let res = null;
+      if (IS_LOCAL_SERVER) {
+        res = await fetch("/api/catalog").catch(() => null);
+      }
+      if (!res || !res.ok) {
+        res = await fetch("data/catalog.json");
+      }
+      return res;
+    };
+
+    // Cargar catálogo y base de conocimiento en paralelo (elimina waterfall en móvil)
+    const [catRes, kbRes] = await Promise.all([
+      fetchCatalog(),
+      fetch("data/knowledge_base.json").catch(() => null),
+    ]);
+
     const data = await catRes.json();
     STATE.catalog = data;
     STATE.allDocuments = data.documents || [];
@@ -401,19 +448,31 @@ async function initApp() {
     }
 
     populateCategoryDropdown();
-    renderVersionChains();
-    renderLibraryShelf();
-    applyCatalogFilters();
 
-    // Cargar Base de Conocimiento Enciclopedica (104 temas maestros)
-    const kbRes = await fetch("data/knowledge_base.json").catch(() => null);
     if (kbRes && kbRes.ok) {
-      const kbData = await kbRes.json();
-      STATE.topics = kbData.topics || [];
-      STATE.topicsById = {};
-      for (const t of STATE.topics) {
-        if (t.id) STATE.topicsById[t.id] = t;
+      const kbData = await kbRes.json().catch(() => null);
+      if (kbData && Array.isArray(kbData.topics)) {
+        STATE.topics = kbData.topics;
+        STATE.topicsById = {};
+        for (const t of STATE.topics) {
+          if (t.id) STATE.topicsById[t.id] = t;
+        }
       }
+    }
+
+    // Si arrancamos directo en biblioteca o guía, renderizar ya; si estamos en Inicio, diferir a tiempo ocioso
+    if (STATE.activeWorkspaceView === "biblioteca") {
+      btEnsureLibraryRendered();
+      btEnsureCatalogRendered();
+    } else if (STATE.activeWorkspaceView === "guia") {
+      btEnsureVersionChainsRendered();
+    } else {
+      const scheduleIdle = window.requestIdleCallback || ((fn) => setTimeout(fn, 180));
+      scheduleIdle(() => {
+        btEnsureLibraryRendered();
+        btEnsureCatalogRendered();
+        btEnsureVersionChainsRendered();
+      });
     }
 
     // El banco de preguntas y los fragmentos se cargan de forma diferida:
@@ -619,9 +678,12 @@ function btSwitchView(viewName, options = {}) {
   });
 
   if (nextView === "biblioteca") {
+    if (typeof btEnsureLibraryRendered === "function") btEnsureLibraryRendered();
+    if (typeof btEnsureCatalogRendered === "function") btEnsureCatalogRendered();
     btSetLibraryMode(options.libMode || STATE.activeLibraryMode || "shelves");
   }
   if (nextView === "guia") {
+    if (typeof btEnsureVersionChainsRendered === "function") btEnsureVersionChainsRendered();
     btSetGuideTab(options.guideTab !== undefined ? options.guideTab : (STATE.activeGuideTab || "all"));
   }
 
@@ -843,20 +905,6 @@ function setupScrollAnimations() {
         const sy = window.scrollY || document.documentElement.scrollTop || 0;
         if (quickBar) {
           quickBar.classList.toggle("hidden", sy < 460);
-        }
-        let currentId = "buscador";
-        for (const id of spyIds) {
-          const el = document.getElementById(id);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= 165) {
-              currentId = id;
-            }
-          }
-        }
-        for (const link of navLinks) {
-          const href = link.getAttribute("href") || "";
-          link.classList.toggle("active", href === `#${currentId}`);
         }
         ticking = false;
       });
@@ -4677,12 +4725,12 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.1.0";
-const APP_MOBILE_VERSION = "3.1.0";
-const APP_COOKIE_SCHEMA = "9.1";
+const APP_WEB_VERSION = "9.2.0";
+const APP_MOBILE_VERSION = "3.2.0";
+const APP_COOKIE_SCHEMA = "9.2";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v40";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v41";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -4780,7 +4828,7 @@ function setupVersionAndUpdateChecker() {
     const remoteUrl = window.Capacitor
       ? `https://ey-liam.github.io/bibliotech-scouts/version.json?t=${Date.now()}`
       : `version.json?t=${Date.now()}`;
-    fetch(remoteUrl, { cache: "no-store" })
+    btFetchWithTimeout(remoteUrl, { cache: "no-store" }, 6000)
       .then((res) => (res && res.ok ? res.json() : null))
       .then((remote) => {
         if (!remote || typeof remote !== "object") return;
@@ -6835,15 +6883,18 @@ function setupScoutForum() {
     if (!workerEp) return;
     try {
       const url = `${workerEp}${workerEp.includes("?") ? "&" : "?"}channel=forum`;
-      const res = await fetch(url, { method: "GET", headers: { Accept: "application/json" } });
+      const res = await btFetchWithTimeout(url, { method: "GET", headers: { Accept: "application/json" } }, 7500);
       if (res && res.ok) {
         const data = await res.json().catch(() => null);
         if (data && data.ok && Array.isArray(data.posts)) {
           mergeCloudForumPosts(data.posts);
         }
         updateSyncBadge(true);
+      } else {
+        updateSyncBadge(false);
       }
-    } catch (_) {
+    } catch (err) {
+      console.warn("[BiblioTech] La Fogata en modo respaldo local:", err && err.message ? err.message : err);
       updateSyncBadge(false);
     }
   };

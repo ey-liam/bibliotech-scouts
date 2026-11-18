@@ -1,8 +1,8 @@
 {
-  "version": "9.1.0",
-  "mobileVersion": "3.1.0",
-  "cache": "bibliotech-scout-v40",
+  "version": "9.2.0",
+  "mobileVersion": "3.2.0",
+  "cache": "bibliotech-scout-v41",
   "releasedAt": "2026-11-18",
-  "schemaCookieVersion": "9.1",
-  "notes": "Nueva versión 9.1.0 con 5 Espacios Dedicados (Inicio, Biblioteca y Catálogo, Guía Scout, La Fogata, Formatos) y Lector Compacto Ergonómico."
+  "schemaCookieVersion": "9.2",
+  "notes": "Versión 9.2.0: optimización móvil (arranque paralelo, render diferido, menor carga GPU), cero botones encimados sobre el dock y limpieza de botones duplicados entre apartados."
 }
