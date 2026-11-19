@@ -144,12 +144,13 @@ def run_e2e(test_webkit: bool = False):
             page.click('#btLibraryModeBar [data-lib-mode="shelves"]')
             assert page.locator("#biblioteca").is_visible(), "Estantes Visuales no volvieron al cambiar pestaña"
 
-            # Probar Lector compacto (#docModal): cajón Info oculto por defecto + botón Reportar
+            # Probar Lector compacto (#docModal): cajón Info oculto por defecto + Guardar + botón Reportar
             page.locator("#libraryBookshelfGrid .book-read-btn").first.click()
             page.wait_for_selector("#docModal:not(.hidden)", timeout=4000)
             assert page.locator("#modalDocInfoDrawer").evaluate("el => el.classList.contains('hidden')"), "Cajón Info debe iniciar oculto"
             page.click("#btnToggleDocInfo")
             assert not page.locator("#modalDocInfoDrawer").evaluate("el => el.classList.contains('hidden')"), "Cajón Info no se desplegó"
+            page.click("#btnPinDoc")
             page.click("#btnReportDoc")
             page.wait_for_selector("#bugReportModal:not(.hidden)", timeout=4000)
             assert page.locator("#bugReportSection").input_value() == "Lector / Visor PDF o Excel", "No prellenó apartado Lector"
@@ -157,6 +158,16 @@ def run_e2e(test_webkit: bool = False):
             page.locator("#bugReportModal").wait_for(state="hidden", timeout=2000)
             page.click("#closeDocModalBtn")
             page.locator("#docModal").wait_for(state="hidden", timeout=2000)
+
+            # Verificar acceso directo a Guardados en la barra superior de escritorio desde cualquier vista
+            page.click('.desktop-quick-nav [data-bt-go-view="inicio"]')
+            assert page.locator("#btnHeaderSaved").is_visible(), "Botón Guardados en barra superior desktop no visible"
+            assert page.locator("#headerSavedCount").inner_text().strip() == "1", "Contador de guardados en cabecera desktop no actualizó"
+            page.click("#btnHeaderSaved")
+            page.wait_for_selector("#savedPanel:not(.hidden)", timeout=3000)
+            assert page.locator("#savedPanelList .saved-card").count() == 1, "Panel de guardados no mostró el archivo guardado en escritorio"
+            page.click("#savedPanel .saved-panel-close")
+            page.locator("#savedPanel").wait_for(state="hidden", timeout=2000)
 
             # Probar modo oscuro
             page.keyboard.press("Escape")

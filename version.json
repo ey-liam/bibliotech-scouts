@@ -1,8 +1,8 @@
 {
-  "version": "9.6.0",
-  "mobileVersion": "3.6.0",
-  "cache": "bibliotech-scout-v46",
+  "version": "9.6.1",
+  "mobileVersion": "3.6.1",
+  "cache": "bibliotech-scout-v47",
   "releasedAt": "2026-11-19",
   "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.6.0: Sistema visual unificado en todos los apartados (misma tipografía, botones, píldoras, tarjetas, radios, márgenes y animaciones suaves), Biblioteca y Catálogo con 12 archivos por defecto y botón «Cargar más archivos» (+12), subcategorías inteligentes, renombrado a «Editor de Archivos», eliminación de leyendas redundantes y corrección del espaciado superior en todas las vistas."
+  "notes": "Versión 9.6.1: Acceso directo siempre visible a «Mis guardados y notas» en escritorio (botón con contador en la barra superior + acceso en el menú), modal centrado en PC, soporte para documentos con notas locales y borradores del Editor de Archivos."
 }

@@ -766,6 +766,15 @@ function setupWorkspaceViews() {
     const openSavedTrigger = e.target.closest("[data-action-open-saved]");
     if (openSavedTrigger) {
       e.preventDefault();
+      const header = document.querySelector(".main-header");
+      if (header && header.classList.contains("nav-open")) {
+        header.classList.remove("nav-open");
+        document.body.classList.remove("nav-open");
+        const navToggle = document.getElementById("navToggle");
+        const navBackdrop = document.getElementById("navBackdrop");
+        if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+        if (navBackdrop) navBackdrop.hidden = true;
+      }
       openSavedPanel();
       return;
     }
@@ -4343,14 +4352,44 @@ function setDocNote(docId, noteText) {
       setCookie("bt_n_" + docId, "", -1);
     }
   } catch (_) {}
+  updateSavedBadge();
+}
+
+function getSavedAndNotedDocIds() {
+  const pins = getSavedPins();
+  const idSet = new Set(pins);
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("bt_note_")) {
+        const val = (localStorage.getItem(k) || "").trim();
+        if (val) idSet.add(k.slice("bt_note_".length));
+      }
+    }
+  } catch (_) {}
+  return Array.from(idSet);
+}
+
+function getSavedEditorDraftsForPanel() {
+  try {
+    const raw = localStorage.getItem("bt_sf_named_drafts_v2");
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (_) {
+    return [];
+  }
 }
 
 function updateSavedBadge() {
-  const pins = getSavedPins();
-  const countEl = document.getElementById("dockSavedCount");
-  if (countEl) {
-    countEl.textContent = String(pins.length);
-    countEl.classList.toggle("hidden", pins.length === 0);
+  const ids = getSavedAndNotedDocIds();
+  const drafts = getSavedEditorDraftsForPanel();
+  const total = ids.length + drafts.length;
+  for (const elId of ["dockSavedCount", "headerSavedCount", "menuSavedCount", "libSavedCount"]) {
+    const countEl = document.getElementById(elId);
+    if (countEl) {
+      countEl.textContent = String(total);
+      countEl.classList.toggle("hidden", total === 0);
+    }
   }
 }
 
@@ -4367,35 +4406,65 @@ function openSavedPanel() {
   if (!panel || !list) return;
 
   const pins = getSavedPins();
-  if (pins.length === 0) {
+  const allDocIds = getSavedAndNotedDocIds();
+  const savedDocs = STATE.documents.filter((d) => allDocIds.includes(d.id));
+  const drafts = getSavedEditorDraftsForPanel();
+
+  if (savedDocs.length === 0 && drafts.length === 0) {
     list.innerHTML = `
       <div class="saved-empty-state">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-        <p><strong>Aún no tienes documentos guardados</strong></p>
-        <span>Abre cualquier libro, manual o documento de la biblioteca y toca <strong>Guardar</strong> para tenerlo siempre a la mano en este dispositivo.</span>
+        <p><strong>Aún no tienes archivos guardados</strong></p>
+        <span>Abre cualquier libro, manual, FAES o especialidad de la biblioteca y toca <strong>Guardar</strong> (o escribe una nota) para tenerlo siempre a la mano en este dispositivo.</span>
       </div>
     `;
   } else {
-    const savedDocs = STATE.documents.filter((d) => pins.includes(d.id));
-    list.innerHTML = savedDocs.map((doc) => {
+    const docsHtml = savedDocs.map((doc) => {
       const note = getDocNote(doc.id);
+      const isPinned = pins.includes(doc.id);
       return `
         <article class="saved-card" data-doc-id="${escapeHtml(doc.id)}">
           <div class="saved-card-main">
             <span class="badge badge-ext">${escapeHtml(doc.ext)}</span>
             <span class="badge badge-sec">${escapeHtml(doc.section_label || 'General')}</span>
             <span class="badge badge-year">${doc.year || '2026'}</span>
+            ${!isPinned && note ? '<span class="badge badge-ext">Con nota</span>' : ''}
             <h4 class="saved-card-title">${escapeHtml(doc.title)}</h4>
             <span class="saved-card-fname">${escapeHtml(doc.filename)}</span>
             ${note ? `<div class="saved-card-note"><strong>Notas:</strong> ${escapeHtml(note)}</div>` : ''}
           </div>
           <div class="saved-card-actions">
             <button type="button" class="btn-saved-open" data-open-doc="${escapeHtml(doc.id)}">Abrir</button>
-            <button type="button" class="btn-saved-remove" data-remove-doc="${escapeHtml(doc.id)}" title="Quitar de guardados">Quitar</button>
+            ${
+              isPinned
+                ? `<button type="button" class="btn-saved-remove" data-remove-doc="${escapeHtml(doc.id)}" title="Quitar de guardados">Quitar</button>`
+                : `<button type="button" class="btn-saved-remove" data-clear-note="${escapeHtml(doc.id)}" title="Borrar nota">Borrar nota</button>`
+            }
           </div>
         </article>
       `;
     }).join("");
+
+    const draftsHtml = drafts.length
+      ? `
+        <div class="saved-drafts-divider">Borradores del Editor de Archivos (${drafts.length})</div>
+        ${drafts.map((dr) => `
+          <article class="saved-card">
+            <div class="saved-card-main">
+              <span class="badge badge-ext">BORRADOR</span>
+              <span class="badge badge-sec">${escapeHtml(dr.templateTitle || dr.templateId || 'Archivo')}</span>
+              <h4 class="saved-card-title">${escapeHtml(dr.name || 'Borrador guardado')}</h4>
+              ${dr.updatedAt ? `<span class="saved-card-fname">Guardado: ${escapeHtml(dr.updatedAt)}</span>` : ''}
+            </div>
+            <div class="saved-card-actions">
+              <button type="button" class="btn-saved-open" data-open-editor-draft="1">Ir al Editor</button>
+            </div>
+          </article>
+        `).join("")}
+      `
+      : "";
+
+    list.innerHTML = docsHtml + draftsHtml;
 
     list.querySelectorAll("[data-open-doc]").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -4410,6 +4479,21 @@ function openSavedPanel() {
         const id = btn.getAttribute("data-remove-doc");
         toggleSavedPin(id);
         openSavedPanel();
+      });
+    });
+
+    list.querySelectorAll("[data-clear-note]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-clear-note");
+        setDocNote(id, "");
+        openSavedPanel();
+      });
+    });
+
+    list.querySelectorAll("[data-open-editor-draft]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        closeSavedPanel();
+        btSwitchView("formatos");
       });
     });
   }
@@ -4983,13 +5067,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.6.0";
-const APP_MOBILE_VERSION = "3.6.0";
+const APP_WEB_VERSION = "9.6.1";
+const APP_MOBILE_VERSION = "3.6.1";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v46";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v47";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -7349,6 +7433,7 @@ function setupSmartFormsEngine(readFormProfileFn) {
     try {
       localStorage.setItem(BT_SF_DRAFTS_KEY, JSON.stringify((arr || []).slice(0, 30)));
     } catch (_) {}
+    if (typeof updateSavedBadge === "function") updateSavedBadge();
   };
 
   const getCurrentProfile = () => {

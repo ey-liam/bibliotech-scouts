@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=39" />
+  <link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -142,6 +142,13 @@
         <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor de Archivos</a>
         <a href="#app" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">App / Modo Offline</a>
         <a href="#aportar" class="nav-link">Aportar y Contacto</a>
+        <button type="button" id="openSavedMenuBtn" class="nav-link nav-link-saved" data-action-open-saved="1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Mis guardados y notas</span>
+          <span id="menuSavedCount" class="bt-inline-saved-badge hidden">0</span>
+        </button>
         <button type="button" id="openWelcomeMenuBtn" class="nav-link nav-link-welcome">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="3" width="7" height="7"></rect>
@@ -161,6 +168,20 @@
       </nav>
 
       <div class="header-actions">
+        <button
+          type="button"
+          class="btn-header-saved"
+          id="btnHeaderSaved"
+          data-action-open-saved="1"
+          title="Mis archivos guardados y notas"
+          aria-label="Mis archivos guardados y notas"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span id="headerSavedCount" class="bt-header-saved-badge hidden">0</span>
+        </button>
+
         <button
           type="button"
           class="btn-camp-mode"
@@ -587,6 +608,7 @@
       <button type="button" id="btnOpenSavedFromLib" class="bt-subview-action-btn" data-action-open-saved="1">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
         <span>Mis Guardados y Notas</span>
+        <span id="libSavedCount" class="bt-inline-saved-badge hidden">0</span>
       </button>
     </div>
   </div>
@@ -2091,7 +2113,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 3.6.0 Mobile · Web 9.6.0</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 3.6.1 Mobile · Web 9.6.1</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
             <strong>No es necesario descargar nada:</strong> puedes disfrutar de todas las herramientas, el buscador de 14,816 preguntas, los 882 documentos (incluyendo 220 FAES y 82 FES) y el Editor de Archivos directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
@@ -2251,7 +2273,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v46</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v47</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -2431,7 +2453,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 18/11/2026 (882 documentos · 14,816 preguntas) · BETA 9.6.0 - 3.6.0 Mobile (19/11/2026) ·
+          Base de datos: 18/11/2026 (882 documentos · 14,816 preguntas) · BETA 9.6.1 - 3.6.1 Mobile (19/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">
