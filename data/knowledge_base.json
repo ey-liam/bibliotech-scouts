@@ -2690,6 +2690,104 @@
         "Catalogo_Plantillas_RECME_2026.html"
       ],
       "content": "### Próximamente: Editor Inteligente de Formatos y Autollenado Scout (`#editor-formatos`)\nBiblioTech Scout está desarrollando un **Editor en línea**para que muy pronto puedas llenar, editar y descargar listos para firmar tus documentos oficiales sin escribir tus mismos datos una y otra vez.\n\n#### Formatos que incluirá próximamente\n1. **Fichas Médicas y de Salud:**Tipo de sangre, alergias, medicamentos y contactos de emergencia.\n2. **Permisos de Actividad y Salida (`JL304`):**Autorizaciones de campamentos y salidas con datos de tutor y responsable.\n3. **Especialidades FES y Plantillas RECME (`P1–P10`):**Fichas de seguimiento PJOS y bitácoras FAES.\n4. **Proyectos SMART e Insignias Mundiales (`WOSM`/ `Agentes de Cambio.MX`):**Cédulas de proyecto, *Tribu de la Tierra*, *Mensajeros de la Paz*, Jade y Obsidiana.\n5. **Convocatorias, Programas de Campamento y Actas:**Fichas técnicas, cronogramas, actas de Consejo y Corte de Honor.\n\n#### Ya disponible hoy: Mi Perfil Local de Autollenado Scout\n- Al igual que tus documentos marcados y notas de lectura, tus datos (nombre o alias, CUM, edad, sección, grupo, provincia, tipo de sangre/alergias y contacto de emergencia) se guardan **exclusivamente de forma local en tu navegador o app**(nunca salen de tu dispositivo).\n- Ya puedes guardarlos desde la sección `#editor-formatos`, probar la **demostración en vivo de autollenado**sobre tres plantillas y usarlos automáticamente al publicar o responder en el **Foro «La Fogata Scout»**."
+    },
+    {
+      "id": "faes_recme_completo",
+      "title": "Fichas de Acciones Educativas Scouts (FAES) — RECME",
+      "category": "FAES y Actividades",
+      "summary": "220 Fichas de Acciones Educativas Scouts (FAES) oficiales de RECME organizadas en los 4 ejes por sección: Manada (Cazaderos Raksha, Baloo, Bagheera y Hermano Gris: 73), Tropa (Rumbos Tortuga Lora, Venado cola blanca, Ocelote y Quetzal: 53), Comunidad (Senderos Cenit, Cúspide, Cima y Cumbre: 51) y Clan (Rutas Kikapú, Otomí, Maya y Wixárica: 43).",
+      "keywords": [
+        "faes",
+        "recme",
+        "cazadero",
+        "raksha",
+        "baloo",
+        "bagheera",
+        "hermano gris",
+        "rumbo",
+        "tortuga lora",
+        "venado",
+        "ocelote",
+        "quetzal",
+        "sendero",
+        "cenit",
+        "cuspide",
+        "cima",
+        "cumbre",
+        "ruta",
+        "kikapu",
+        "otomi",
+        "maya",
+        "wixarica",
+        "actividades",
+        "ciclo de programa"
+      ],
+      "doc_ids": [
+        "doc-0815",
+        "doc-0816",
+        "doc-0817",
+        "doc-0818",
+        "doc-0819",
+        "doc-0820",
+        "doc-0821",
+        "doc-0822",
+        "doc-0823",
+        "doc-0824",
+        "doc-0825",
+        "doc-0826"
+      ]
+    },
+    {
+      "id": "especialidades_fes_completo",
+      "title": "Especialidades Scouts (FES) — 4 Secciones y 4 Ejes RECME",
+      "category": "Especialidades FES",
+      "summary": "82 Fichas de Especialidades Scouts (FES) oficiales de Manada (29), Tropa (16), Comunidad (18), Clan (18) y Guía general (1), organizadas en los 4 ejes oficiales de RECME: Salud y Bienestar, Habilidades para la Vida, Medio Ambiente y Sustentabilidad, y Paz y Participación Comunitaria, con metodología Conozco, Aplico y Comparto, medidas de seguridad y ODS.",
+      "keywords": [
+        "fes",
+        "especialidades",
+        "conozco",
+        "aplico",
+        "comparto",
+        "salud y bienestar",
+        "habilidades para la vida",
+        "medio ambiente",
+        "paz y participacion comunitaria",
+        "recme"
+      ],
+      "doc_ids": [
+        "doc-0651",
+        "doc-0652",
+        "doc-0653",
+        "doc-0654",
+        "doc-0655",
+        "doc-0656",
+        "doc-0657",
+        "doc-0658",
+        "doc-0659",
+        "doc-0660",
+        "doc-0661",
+        "doc-0662"
+      ]
+    },
+    {
+      "id": "intercultural_challenge_2026",
+      "title": "Intercultural Challenge 2026 y JOTA-JOTI 2026",
+      "category": "Eventos y Convocatorias",
+      "summary": "Convocatoria Embajador México para el Intercultural Challenge 2026 (sábado 17 de octubre 2026, 07:00 am hora del Centro de México, formato virtual en inglés, presentación de 20 minutos, dirigido a Tropa, Comunidad y Clan; contacto intercultural@scoutsmex.org.mx) y JOTA-JOTI 2026 (inicia 16 de octubre, estación 4A0ASM, áreas Intercultural y STEM).",
+      "keywords": [
+        "intercultural challenge",
+        "embajador mexico",
+        "jota",
+        "joti",
+        "2026",
+        "4a0asm",
+        "stem",
+        "internacional"
+      ],
+      "doc_ids": [
+        "doc-0752"
+      ]
     }
-  ]
+  ],
+  "updated_at": "2026-11-18"
 }

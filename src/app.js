@@ -30,7 +30,7 @@ const STATE = {
   libraryQuery: "",
   librarySection: "all",
   librarySubcategory: "all",
-  librarySubcatOpen: false,
+  librarySubcatOpen: true,
   libraryScope: "shelf",
   libraryVisibleCount: 6,
   currentShelfDocs: [],
@@ -43,7 +43,7 @@ const STATE = {
   searchQuery: "",
   categoryFilter: "all",
   subcategoryFilter: "all",
-  catalogSubcatOpen: false,
+  catalogSubcatOpen: true,
   sectionFilter: "all",
   extFilter: "all",
   onlyLatest: false,
@@ -617,8 +617,8 @@ const BT_SECTION_VIEW_MAP = {
   biblioteca: { view: "biblioteca", libMode: "shelves" },
   explorar: { view: "biblioteca", libMode: "catalog" },
   "guia-inicio": { view: "guia", guideTab: "guia-inicio" },
-  acerca: { view: "guia", guideTab: "acerca" },
-  agentes: { view: "guia", guideTab: "agentes" },
+  acerca: { view: "acerca" },
+  agentes: { view: "agentes" },
   secciones: { view: "guia", guideTab: "secciones" },
   servicios: { view: "guia", guideTab: "servicios" },
   cambios: { view: "guia", guideTab: "cambios" },
@@ -664,7 +664,7 @@ function btSetGuideTab(tab = "all") {
 }
 
 function btSwitchView(viewName, options = {}) {
-  const validViews = new Set(["inicio", "biblioteca", "guia", "fogata", "formatos"]);
+  const validViews = new Set(["inicio", "biblioteca", "guia", "agentes", "fogata", "formatos", "acerca"]);
   const nextView = validViews.has(viewName) ? viewName : "inicio";
   STATE.activeWorkspaceView = nextView;
 
@@ -835,7 +835,7 @@ function setupWorkspaceViews() {
     if (hashId && BT_SECTION_VIEW_MAP[hashId]) {
       btNavigateToSection(hashId, { instant: true });
       initialApplied = true;
-    } else if (vParam && ["inicio", "biblioteca", "guia", "fogata", "formatos"].includes(vParam)) {
+    } else if (vParam && ["inicio", "biblioteca", "guia", "agentes", "fogata", "formatos", "acerca"].includes(vParam)) {
       btSwitchView(vParam, { instant: true, updateUrl: false });
       initialApplied = true;
     }
@@ -1303,6 +1303,8 @@ function filterDocsByShelfName(list, shelf) {
         .sort((a, b) => a.filename.localeCompare(b.filename, "es", { numeric: true }));
     case "guias_pjos":
       return list.filter((d) => d.category === "Guías, Carnets y Programa de Jóvenes (PJOS)");
+    case "faes":
+      return list.filter((d) => d.category === "Fichas de Acciones Educativas Scouts (FAES)");
     case "especialidades_fes":
       return list.filter((d) => d.category === "Especialidades Scouts (FES)");
     case "plantillas_recme":
@@ -1385,7 +1387,9 @@ function getDocsForShelf(shelf, filterText = "") {
       if (!secs.includes(secFilter)) return false;
     }
     if (tokens.length) {
-      const hay = normalizeStr(`${d.title} ${d.filename} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""} ${d.code || ""}`);
+      const tagsStr = Array.isArray(d.tags) ? d.tags.join(" ") : "";
+      const odsStr = Array.isArray(d.ods) ? d.ods.join(" ") : "";
+      const hay = normalizeStr(`${d.title} ${d.filename} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""} ${d.code || ""} ${tagsStr} ${odsStr}`);
       for (const tk of tokens) {
         if (!hay.includes(tk)) return false;
       }
@@ -1474,6 +1478,14 @@ function renderLibraryShelf() {
           <h3 class="book-title" title="${escapeHtml(d.title)}">${escapeHtml(d.title)}</h3>
           <span class="book-meta">${escapeHtml(d.section_label)}${d.subcategory ? ` · ${escapeHtml(d.subcategory)}` : ""}</span>
           ${d.summary ? `<p class="book-desc">${escapeHtml(d.summary)}</p>` : ''}
+          ${
+            Array.isArray(d.tags) && d.tags.length
+              ? `<div class="book-tags-row" aria-label="Etiquetas RECME">${d.tags
+                  .slice(0, 3)
+                  .map((t) => `<span class="book-tag-pill">${escapeHtml(String(t).replace(/_/g, " "))}</span>`)
+                  .join("")}</div>`
+              : ""
+          }
           <button type="button" class="book-read-btn">Abrir lectura</button>
         </article>
       `;
@@ -2692,7 +2704,9 @@ function applyCatalogFilters() {
       }
     }
     if (tokens.length) {
-      const hay = normalizeStr(`${d.title} ${d.filename} ${d.code || ""} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""}`);
+      const tagsStr = Array.isArray(d.tags) ? d.tags.join(" ") : "";
+      const odsStr = Array.isArray(d.ods) ? d.ods.join(" ") : "";
+      const hay = normalizeStr(`${d.title} ${d.filename} ${d.code || ""} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""} ${tagsStr} ${odsStr}`);
       for (const tk of tokens) {
         if (!hay.includes(tk)) return false;
       }
@@ -2793,6 +2807,14 @@ function renderCatalogGrid() {
             <div class="doc-card-text-col">
               <h3 class="doc-title">${escapeHtml(d.title)}</h3>
               <p class="doc-summary">${escapeHtml(d.summary || d.filename)}</p>
+              ${
+                Array.isArray(d.tags) && d.tags.length
+                  ? `<div class="book-tags-row" aria-label="Etiquetas RECME">${d.tags
+                      .slice(0, 4)
+                      .map((t) => `<span class="book-tag-pill">${escapeHtml(String(t).replace(/_/g, " "))}</span>`)
+                      .join("")}</div>`
+                  : ""
+              }
             </div>
           </div>
           <div class="doc-card-footer">
@@ -3083,8 +3105,25 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   const descEl = document.getElementById("modalDocDescBox");
   if (descEl) {
     const descContent = doc.summary || doc.full_excerpt || "";
+    const metaParts = [];
     if (descContent) {
-      descEl.innerHTML = `<strong>Contenido del documento:</strong> ${escapeHtml(descContent)}`;
+      metaParts.push(`<div><strong>Contenido del documento:</strong> ${escapeHtml(descContent)}</div>`);
+    }
+    if (doc.recme_date) {
+      metaParts.push(`<div class="modal-doc-meta-line"><strong>Fecha oficial en RECME:</strong> ${escapeHtml(doc.recme_date)}</div>`);
+    }
+    if (Array.isArray(doc.ods) && doc.ods.length) {
+      metaParts.push(`<div class="modal-doc-meta-line"><strong>ODS a los que abona:</strong> ${escapeHtml(doc.ods.join(" · "))}</div>`);
+    }
+    if (Array.isArray(doc.tags) && doc.tags.length) {
+      metaParts.push(
+        `<div class="book-tags-row modal-doc-tags">${doc.tags
+          .map((t) => `<span class="book-tag-pill">${escapeHtml(String(t).replace(/_/g, " "))}</span>`)
+          .join("")}</div>`
+      );
+    }
+    if (metaParts.length) {
+      descEl.innerHTML = metaParts.join("");
       descEl.classList.remove("hidden");
     } else {
       descEl.innerHTML = "";
@@ -4922,13 +4961,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.4.0";
-const APP_MOBILE_VERSION = "3.4.0";
-const APP_COOKIE_SCHEMA = "9.4";
+const APP_WEB_VERSION = "9.5.0";
+const APP_MOBILE_VERSION = "3.5.0";
+const APP_COOKIE_SCHEMA = "9.5";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v44";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v45";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -5137,7 +5176,7 @@ function setupWebOfflineManager() {
       if (hasBank && hasFaq4) {
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (13,525 preg.)";
+          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (14,816 preg.)";
         }
         if (btnDownload) {
           btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
@@ -5287,7 +5326,7 @@ function setupWelcomeModal() {
       const shareUrl = "https://ey-liam.github.io/bibliotech-scouts/";
       const shareData = {
         title: "BiblioTech Scout — Biblioteca e Inteligencia Documental Scout",
-        text: "Explora más de 750 documentos y 13,500 respuestas oficiales scouts en BiblioTech Scout:",
+        text: "Explora 882 documentos oficiales (incluyendo 220 FAES y 82 FES) y 14,816 respuestas scouts en BiblioTech Scout:",
         url: shareUrl
       };
       enqueueAnonTelemetry({ t: "enlace_externo", label: "Compartir QR / Sitio Bienvenida", url: shareUrl }, false);
@@ -5523,12 +5562,12 @@ function setupBugReportModal() {
     if (submitBtn) submitBtn.disabled = false;
 
     if (sentOk) {
-      setStatus("¡Gracias! Tu reporte anónimo se envió correctamente.", "ok");
+      setStatus("¡Gracias! Tu reporte se envió correctamente. Estoy trabajando duro y revisando cada aviso de forma constante; quedará solucionado en aproximadamente 2 a 7 días como máximo.", "ok");
       form.reset();
       preselectPlatform();
-      setTimeout(() => closeModal(), 1400);
+      setTimeout(() => closeModal(), 3200);
     } else {
-      setStatus("No hay conexión ahora para enviarlo. Puedes escribir a rdc.tlxh@gmail.com.", "error");
+      setStatus("No hay conexión ahora para enviarlo. Puedes escribir a rdc.tlxh@gmail.com (revisión constante, solución en aprox. 2 a 7 días como máximo).", "error");
     }
   });
 }
@@ -6366,15 +6405,19 @@ function initPrivacyAndTelemetry() {
       );
       showWebToast(
         ratingType === "issue"
-          ? "Reporte anónimo registrado para revisión."
-          : "Valoración anónima registrada. Gracias."
+          ? "Reporte registrado. Estoy revisando constantemente cada aviso para mejorar las respuestas; quedará atendido en aprox. 2 a 7 días como máximo."
+          : "Valoración anónima registrada. Gracias por ayudar a mejorar BiblioTech."
       );
     } else {
-      showWebToast(
-        ratingType === "issue"
-          ? `Gracias por avisar. Puedes detallarlo en ${STATE.contactEmail}.`
-          : "Gracias por tu valoración."
-      );
+      if (ratingType === "issue" && typeof window.__btOpenBugReport === "function") {
+        window.__btOpenBugReport("Buscador de preguntas", ctx.query || "", false);
+      } else {
+        showWebToast(
+          ratingType === "issue"
+            ? `Gracias por avisar. Puedes detallarlo en ${STATE.contactEmail} (atención en aprox. 2 a 7 días como máximo).`
+            : "Gracias por tu valoración."
+        );
+      }
     }
   };
 
@@ -8043,12 +8086,22 @@ function setupSmartFormsEngine(readFormProfileFn) {
 
   const pngBtn = document.getElementById("btnSfDownloadOfficialPng");
   const openBaseBtn = document.getElementById("btnSfOpenBaseDoc");
+  const reportFormatBtn = document.getElementById("btnSfReportFormat");
 
   if (openBaseBtn) {
     openBaseBtn.addEventListener("click", () => {
       const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
       if (tpl.baseDocId && typeof openDocumentModal === "function") {
         openDocumentModal(tpl.baseDocId);
+      }
+    });
+  }
+
+  if (reportFormatBtn) {
+    reportFormatBtn.addEventListener("click", () => {
+      const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+      if (typeof window.__btOpenBugReport === "function") {
+        window.__btOpenBugReport("Editor de Formatos", tpl ? tpl.title : "Editor de Formatos", false);
       }
     });
   }

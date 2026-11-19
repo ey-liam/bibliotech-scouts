@@ -2,7 +2,7 @@
   "name": "BiblioTech Scout: By Liam",
   "short_name": "BiblioTech Scout",
   "id": "./",
-  "description": "Biblioteca digital y buscador documental scout con documentos oficiales ASMAC y WOSM.",
+  "description": "Biblioteca digital y buscador documental scout con 882 documentos oficiales ASMAC y WOSM (220 FAES, 82 FES) y 14,816 preguntas con fuentes.",
   "lang": "es-MX",
   "start_url": "./",
   "scope": "./",

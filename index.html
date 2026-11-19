@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>BiblioTech Scout: By Liam</title>
-  <meta name="description" content="Biblioteca digital y buscador documental scout: 599 documentos oficiales accesibles ASMAC y WOSM, 113 temas y 13,525 preguntas y respuestas con fuentes." />
+  <meta name="description" content="Biblioteca digital y buscador documental scout: 882 documentos oficiales accesibles ASMAC y WOSM (incluyendo 220 FAES y 82 FES), 116 temas y 14,816 preguntas y respuestas con fuentes." />
   <meta name="author" content="Liam Durán - Provincia TLXH" />
   <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0a0616" media="(prefers-color-scheme: dark)" />
@@ -25,7 +25,7 @@
   <meta property="og:site_name" content="BiblioTech Scout" />
   <meta property="og:locale" content="es_MX" />
   <meta property="og:title" content="BiblioTech Scout: By Liam" />
-  <meta property="og:description" content="Consulta 599 documentos oficiales ASMAC y WOSM, especialidades FES, plantillas RECME, guías SISAS y 13,525 preguntas con fuentes." />
+  <meta property="og:description" content="Consulta 882 documentos oficiales ASMAC y WOSM, 220 FAES, 82 especialidades FES, plantillas RECME, guías SISAS y 14,816 preguntas con fuentes." />
   <meta property="og:url" content="https://ey-liam.github.io/bibliotech-scouts/" />
   <meta property="og:image" content="https://ey-liam.github.io/bibliotech-scouts/img/photos/p01.jpg" />
   <meta property="og:image:alt" content="Comunidad de Caminantes en un evento scout" />
@@ -33,7 +33,7 @@
   <meta property="og:image:height" content="731" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="BiblioTech Scout: By Liam" />
-  <meta name="twitter:description" content="Consulta 599 documentos oficiales ASMAC y WOSM, especialidades FES, plantillas RECME, guías SISAS y 13,525 preguntas con fuentes." />
+  <meta name="twitter:description" content="Consulta 882 documentos oficiales ASMAC y WOSM, 220 FAES, 82 especialidades FES, plantillas RECME, guías SISAS y 14,816 preguntas con fuentes." />
   <meta name="twitter:image" content="https://ey-liam.github.io/bibliotech-scouts/img/photos/p01.jpg" />
 
   <script type="application/ld+json">
@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=37" />
+  <link rel="stylesheet" href="styles.css?v=38" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -122,8 +122,10 @@
         <a href="#inicio" class="nav-link active" data-bt-go-view="inicio">Inicio</a>
         <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca">Biblioteca</a>
         <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia">Guía Scout</a>
+        <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio.MX</a>
         <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
         <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Formatos</a>
+        <a href="#acerca" class="nav-link" data-bt-go-view="acerca">¿Qué es BiblioTech?</a>
         <a href="#app" class="nav-link nav-link-app" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">App / Offline</a>
       </nav>
 
@@ -131,8 +133,8 @@
         <a href="#inicio" class="nav-link active" data-bt-go-view="inicio">Inicio y Buscador</a>
         <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca" data-bt-lib-jump="shelves">Biblioteca y Catálogo</a>
         <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="guia-inicio">Guía de Uso</a>
-        <a href="#acerca" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="acerca">¿Qué es BiblioTech?</a>
-        <a href="#agentes" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="agentes">Agentes de Cambio.MX</a>
+        <a href="#acerca" class="nav-link" data-bt-go-view="acerca">¿Qué es BiblioTech?</a>
+        <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio.MX</a>
         <a href="#secciones" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="secciones">Secciones</a>
         <a href="#servicios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="servicios">Servicios y Trámites</a>
         <a href="#cambios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="cambios">Cambios en Esquemas</a>
@@ -311,7 +313,7 @@
             Consulta dudas Scout en documentos oficiales
           </h2>
           <p class="hero-description">
-            Manuales, fichas FES, plantillas RECME, reglamentos y avisos vigentes con su fuente exacta. Pensado para todas las secciones y adultos.
+            Manuales, 220 fichas FAES, 82 especialidades FES, plantillas RECME, reglamentos y convocatorias vigentes con su fuente exacta. Pensado para todas las secciones y adultos.
           </p>
 
           <div class="hero-actions">
@@ -404,6 +406,7 @@
             <button type="button" class="qcat-tab" data-qcat="Basicas y Secciones">Primeros Pasos</button>
             <button type="button" class="qcat-tab" data-qcat="Comunidad de Caminantes">Comunidad y CNRC</button>
             <button type="button" class="qcat-tab" data-qcat="Progresion, Proyectos y PJOS">Proyectos y PJOS</button>
+            <button type="button" class="qcat-tab" data-qcat="FAES y Actividades">FAES (Actividades)</button>
             <button type="button" class="qcat-tab" data-qcat="Especialidades Scouts (FES)">Especialidades FES</button>
             <button type="button" class="qcat-tab" data-qcat="Plantillas PJOS, FAES y RECME">Plantillas RECME</button>
             <button type="button" class="qcat-tab" data-qcat="Guías SISAS, CONECTA y Soporte Digital">Help Desk y SISAS</button>
@@ -509,7 +512,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
           </span>
           <span class="bt-workspace-title">Biblioteca y Catálogo</span>
-          <span class="bt-workspace-desc">599 libros, manuales, FES, RECME, PDFs y hojas Excel con filtros avanzados.</span>
+          <span class="bt-workspace-desc">882 libros, manuales, 220 FAES, 82 especialidades FES, RECME, PDFs y hojas Excel con filtros por sección y eje.</span>
           <span class="bt-workspace-cta">Abrir Biblioteca →</span>
         </button>
 
@@ -518,8 +521,17 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
           </span>
           <span class="bt-workspace-title">Guía y Movimiento Scout</span>
-          <span class="bt-workspace-desc">Accesos rápidos, Secciones, Agentes de Cambio.MX, Trámites, Cambios y Acerca.</span>
+          <span class="bt-workspace-desc">Accesos directos desplegados por tema, Secciones PJOS, Servicios, Trámites y Cambios en Esquemas.</span>
           <span class="bt-workspace-cta">Explorar Guía →</span>
+        </button>
+
+        <button type="button" class="bt-workspace-card" data-bt-go-view="agentes">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </span>
+          <span class="bt-workspace-title">Agentes de Cambio.MX</span>
+          <span class="bt-workspace-desc">Plataforma del CNRC y Red de Caminantes: convocatoria, registro de proyectos, 4 Ejes Temáticos y comité.</span>
+          <span class="bt-workspace-cta">Ir a Agentes de Cambio →</span>
         </button>
 
         <button type="button" class="bt-workspace-card" data-bt-go-view="fogata">
@@ -536,8 +548,17 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
           </span>
           <span class="bt-workspace-title">Editor de Formatos</span>
-          <span class="bt-workspace-desc">Llena, autollena con tu perfil local y descarga en PDF o Word fichas, JL304, FES y proyectos.</span>
+          <span class="bt-workspace-desc">Llena sobre los archivos oficiales (Ficha Médica, JL304, FES, proyectos) y descarga en PDF oficial.</span>
           <span class="bt-workspace-cta">Abrir Editor →</span>
+        </button>
+
+        <button type="button" class="bt-workspace-card" data-bt-go-view="acerca">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          </span>
+          <span class="bt-workspace-title">¿Qué es BiblioTech?</span>
+          <span class="bt-workspace-desc">Conoce el propósito del proyecto, cómo funciona la biblioteca, el creador y los canales de contacto.</span>
+          <span class="bt-workspace-cta">Conocer el proyecto →</span>
         </button>
 
         <button type="button" class="bt-workspace-card is-accent" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-web-only="1">
@@ -545,7 +566,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
           </span>
           <span class="bt-workspace-title">App Android y Modo Offline</span>
-          <span class="bt-workspace-desc">Instala el APK oficial o descarga las 13,525 preguntas para usar sin señal en iOS.</span>
+          <span class="bt-workspace-desc">Instala el APK oficial o descarga las 14,816 preguntas para usar sin señal en iOS o campamento.</span>
           <span class="bt-workspace-cta">Configurar Offline →</span>
         </button>
       </div>
@@ -557,7 +578,7 @@
     <div class="container bt-subview-bar-inner">
       <div class="bt-segmented-control" role="tablist" aria-label="Modo de exploración documental">
         <button type="button" class="bt-seg-btn active" data-lib-mode="shelves" role="tab" aria-selected="true">
-          Estantes (599)
+          Estantes (882)
         </button>
         <button type="button" class="bt-seg-btn" data-lib-mode="catalog" role="tab" aria-selected="false">
           Catálogo y Filtros
@@ -577,7 +598,7 @@
         <div>
           <h2 class="section-title">Biblioteca Scout</h2>
           <p class="section-subtitle">
-            Filtra por sección, colección o subcategoría y lee los 599 documentos oficiales.
+            Filtra por sección, colección, eje temático o etiquetas RECME y lee los 882 documentos oficiales (incluyendo 220 FAES y 82 especialidades FES).
           </p>
         </div>
         <div class="library-controls-bar">
@@ -586,7 +607,7 @@
               type="text"
               id="libraryFilterInput"
               class="lib-search-input"
-              placeholder="Buscar documento por título, código o tema..."
+              placeholder="Buscar documento por título, código, eje, ODS o etiqueta..."
               aria-label="Buscar documentos en la Biblioteca Scout"
             />
           </div>
@@ -602,7 +623,7 @@
           </select>
           <select id="libraryScopeSelect" class="lib-filter-select" aria-label="Alcance de búsqueda en biblioteca">
             <option value="shelf">Estante actual</option>
-            <option value="all">Todos los estantes (599)</option>
+            <option value="all">Todos los estantes (882)</option>
           </select>
         </div>
       </div>
@@ -610,17 +631,18 @@
       <!-- ESTANTES DE LA BIBLIOTECA POR CATEGORÍA -->
       <div class="library-shelves-tabs" id="libraryShelfTabs" role="group" aria-label="Estantes de la biblioteca">
         <button type="button" class="shelf-tab active" data-shelf="featured">Destacados</button>
+        <button type="button" class="shelf-tab" data-shelf="faes">FAES (220)</button>
+        <button type="button" class="shelf-tab" data-shelf="especialidades_fes">Especialidades FES (82)</button>
         <button type="button" class="shelf-tab" data-shelf="centenario">Centenario (39)</button>
         <button type="button" class="shelf-tab" data-shelf="guias_pjos">Guías y PJOS (42)</button>
-        <button type="button" class="shelf-tab" data-shelf="especialidades_fes">FES (20)</button>
-        <button type="button" class="shelf-tab" data-shelf="plantillas_recme">RECME y FAES (51)</button>
+        <button type="button" class="shelf-tab" data-shelf="plantillas_recme">Plantillas RECME (51)</button>
         <button type="button" class="shelf-tab" data-shelf="soporte_sisas">SISAS y Help Desk (26)</button>
-        <button type="button" class="shelf-tab" data-shelf="manuales">Manuales (70)</button>
+        <button type="button" class="shelf-tab" data-shelf="manuales">Manuales (63)</button>
         <button type="button" class="shelf-tab" data-shelf="reglamentos">Reglamentos (24)</button>
-        <button type="button" class="shelf-tab" data-shelf="convocatorias">Comunicados (187)</button>
+        <button type="button" class="shelf-tab" data-shelf="convocatorias">Comunicados (188)</button>
         <button type="button" class="shelf-tab" data-shelf="revistas">Revistas (44)</button>
         <button type="button" class="shelf-tab" data-shelf="formatos">Formatos (66)</button>
-        <button type="button" class="shelf-tab" data-shelf="identidad">Identidad (30)</button>
+        <button type="button" class="shelf-tab" data-shelf="identidad">Identidad (37)</button>
       </div>
       <div class="subcat-bar-shell hidden" id="librarySubcategoryPills"></div>
 
@@ -666,16 +688,14 @@
         <button type="button" class="bt-guide-pill active" data-guide-tab="all" role="tab" aria-selected="true">Todo</button>
         <button type="button" class="bt-guide-pill" data-guide-tab="guia-inicio" role="tab" aria-selected="false">Guía de Uso</button>
         <button type="button" class="bt-guide-pill" data-guide-tab="secciones" role="tab" aria-selected="false">Secciones</button>
-        <button type="button" class="bt-guide-pill" data-guide-tab="agentes" role="tab" aria-selected="false">Agentes de Cambio.MX</button>
         <button type="button" class="bt-guide-pill" data-guide-tab="servicios" role="tab" aria-selected="false">Servicios y Trámites</button>
         <button type="button" class="bt-guide-pill" data-guide-tab="cambios" role="tab" aria-selected="false">Cambios en Esquemas</button>
-        <button type="button" class="bt-guide-pill" data-guide-tab="acerca" role="tab" aria-selected="false">¿Qué es BiblioTech?</button>
         <button type="button" class="bt-guide-pill" data-guide-tab="app" role="tab" aria-selected="false">App y Offline</button>
       </div>
     </div>
   </div>
 
-  <!-- APARTADO DE PRIMEROS PASOS Y GUÍA DE USO (DESPLEGABLES CERRADOS POR DEFECTO) -->
+  <!-- APARTADO DE PRIMEROS PASOS Y GUÍA DE USO (DESPLEGADO POR DEFECTO CON OPCIÓN DE CONTRAER) -->
   <section id="guia-inicio" class="quickstart-section bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="guia-inicio">
     <div class="container">
       <div class="section-heading-row">
@@ -683,14 +703,14 @@
           <span class="section-eyebrow">GUÍA DE USO Y ACCESOS RÁPIDOS</span>
           <h2 class="section-title">Accesos directos por tema</h2>
           <p class="section-subtitle">
-            Toca cualquier tema numerado para desplegar sus preguntas rápidas y enlaces oficiales.
+            Cada bloque se muestra desplegado para consulta inmediata; toca su encabezado o el botón −/+ si prefieres contraerlo o volverlo a abrir.
           </p>
         </div>
       </div>
 
       <div class="starter-3d-grid bt-accordion-grid">
         <!-- 01: PRIMEROS PASOS E INSCRIPCIÓN -->
-        <details class="starter-3d-card theme-emerald bt-acc-card">
+        <details class="starter-3d-card theme-emerald bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="starter-3d-top">
               <span class="starter-step-pill">01 • PRIMEROS PASOS</span>
@@ -722,7 +742,7 @@
         </details>
 
         <!-- 02: ECOSISTEMA DIGITAL -->
-        <details class="starter-3d-card theme-cyan bt-acc-card">
+        <details class="starter-3d-card theme-cyan bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="starter-3d-top">
               <span class="starter-step-pill">02 • ECOSISTEMA DIGITAL</span>
@@ -754,7 +774,7 @@
         </details>
 
         <!-- 03: CENTRO SCOUT MEZTITLA -->
-        <details class="starter-3d-card theme-amber bt-acc-card">
+        <details class="starter-3d-card theme-amber bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="starter-3d-top">
               <span class="starter-step-pill">03 • CAMPO ESCUELA</span>
@@ -785,7 +805,7 @@
         </details>
 
         <!-- 04: JAMBOREE, PHILIA Y MOOT -->
-        <details class="starter-3d-card theme-violet bt-acc-card">
+        <details class="starter-3d-card theme-violet bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="starter-3d-top">
               <span class="starter-step-pill">04 • EVENTOS</span>
@@ -817,7 +837,7 @@
         </details>
 
         <!-- 05: RED DE CAMINANTES, CPRC, CNRC -->
-        <details class="starter-3d-card theme-blue bt-acc-card">
+        <details class="starter-3d-card theme-blue bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="starter-3d-top">
               <span class="starter-step-pill">05 • RED DE CAMINANTES</span>
@@ -849,7 +869,7 @@
         </details>
 
         <!-- 06: PROYECTOS E INSIGNIAS -->
-        <details class="starter-3d-card theme-rose bt-acc-card">
+        <details class="starter-3d-card theme-rose bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="starter-3d-top">
               <span class="starter-step-pill">06 • PROYECTOS E INSIGNIAS</span>
@@ -889,8 +909,8 @@
     </div>
   </section>
 
-  <!-- ACERCA DEL PROYECTO Y AUTOR (JUSTO DESPUÉS DE BIBLIOTECA SCOUT Y ANTES DE AGENTES DE CAMBIO.MX) -->
-  <section id="acerca" class="about-section bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="acerca">
+  <!-- ACERCA DEL PROYECTO Y AUTOR (APARTADO PROPIO EN BARRA SUPERIOR) -->
+  <section id="acerca" class="about-section bt-view-hidden" data-bt-view="acerca">
     <div class="container">
       <div class="about-card">
         <div class="about-photo-col">
@@ -921,10 +941,10 @@
             <strong>BiblioTech Scout</strong> es una plataforma educativa, gratuita y de código abierto creada para acercar de forma rápida, clara y ordenada la documentación oficial vigente de la <strong>ASMAC</strong> y de <strong>World Scouting (WOSM)</strong> a scouts de todas las secciones, familias y dirigentes.
           </p>
           <ul class="about-features-list">
-            <li><strong>Objetivo y utilidad:</strong> resuelve dudas en segundos sobre progresiones PJOS, especialidades FES, proyectos, reglamentos, uniforme, trámites SISAS y eventos sin tener que buscar página por página entre cientos de archivos.</li>
-            <li><strong>Buscador inteligente con fuentes:</strong> responde apoyándose en <strong>13,525 preguntas y respuestas</strong> verificadas e indica exactamente el libro, circular o página de donde salió cada dato.</li>
-            <li><strong>Biblioteca con visores integrados (599 archivos):</strong> abre al instante libros de la Colección del Centenario, PDFs, hojas Excel con filtro y exportación, guías HTML, presentaciones e imágenes, con favoritos, notas locales y modo oscuro automático.</li>
-            <li><strong>Web, iOS y App Android offline:</strong> funciona directo en el navegador sin descargas obligatorias, o como app instalable para consultar documentos sin conexión.</li>
+            <li><strong>Objetivo y utilidad:</strong> resuelve dudas en segundos sobre progresiones PJOS, 220 Fichas de Acciones Educativas Scouts (FAES), 82 Especialidades Scouts (FES), proyectos, reglamentos, uniforme, trámites SISAS y eventos sin tener que buscar página por página entre cientos de archivos.</li>
+            <li><strong>Buscador inteligente con fuentes:</strong> responde apoyándose en <strong>14,816 preguntas y respuestas</strong> basadas literalmente en los documentos oficiales e indica exactamente el libro, ficha, circular o página de donde salió cada dato.</li>
+            <li><strong>Biblioteca con visores integrados (882 archivos):</strong> abre al instante libros de la Colección del Centenario, FAES, FES, PDFs, hojas Excel con filtro y exportación, guías HTML, presentaciones e imágenes, con favoritos, notas locales y modo oscuro automático según tu dispositivo.</li>
+            <li><strong>Editor de Formatos, La Fogata y Modo Offline:</strong> llena formatos oficiales directamente sobre las plantillas reales, comparte consejos con la comunidad y úsala en navegador web, iOS o App Android sin conexión en campamentos.</li>
           </ul>
           <div class="about-signature-box">
             <p class="signature-main">Creador: <strong>Liam Durán</strong></p>
@@ -947,15 +967,15 @@
                 <span>rdc.tlxh@gmail.com</span>
               </a>
             </div>
-            <p class="signature-help-note">Si detectas algún error, archivo desactualizado o respuesta por mejorar, puedes reportarlo al correo <strong>rdc.tlxh@gmail.com</strong>, usando el botón <strong>Reportar</strong> dentro del visor de los archivos, debajo de cada respuesta del buscador o desde la barra de menú superior.</p>
+            <p class="signature-help-note">Si detectas algún error, archivo desactualizado, detalle en un formato o respuesta por mejorar, puedes reportarlo al correo <strong>rdc.tlxh@gmail.com</strong>, usando el botón <strong>Reportar</strong> dentro del visor, debajo de cada respuesta, en el Editor de Formatos o desde el menú. Estoy trabajando duro y revisando constantemente cada reporte para solucionarlo en aproximadamente <strong>2 a 7 días como máximo</strong>.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROYECTO DESTACADO PARA CAMINANTES: AGENTES DE CAMBIO.MX - RED NACIONAL DE CAMINANTES -->
-  <section id="agentes" class="agentes-cambio-section bt-view-hidden" data-bt-view="guia" data-bt-guide-panel="agentes">
+  <!-- PROYECTO DESTACADO PARA CAMINANTES: AGENTES DE CAMBIO.MX (APARTADO PROPIO EN BARRA SUPERIOR) -->
+  <section id="agentes" class="agentes-cambio-section bt-view-hidden" data-bt-view="agentes">
     <div class="container">
 
       <!-- BARRA SUPERIOR CTA: COMPARTE TU PROYECTO -->
@@ -1282,13 +1302,13 @@
           <span class="section-eyebrow">PORTALES OFICIALES ASMAC Y WOSM</span>
           <h2 class="section-title">Servicios y Trámites</h2>
           <p class="section-subtitle">
-            Accesos directos a tiendas, plataformas y trámites vigentes 2025–2026.
+            Accesos directos a tiendas, plataformas oficiales y trámites vigentes 2025–2026. Todas las tarjetas están desplegadas para lectura rápida; toca cualquier encabezado para contraerla.
           </p>
         </div>
       </div>
 
       <div class="services-cards-grid bt-accordion-grid">
-        <details class="service-info-card bt-acc-card">
+        <details class="service-info-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <span class="service-tag">01 · UNIFORME E INSIGNIAS</span>
             <div class="bt-acc-title-row">
@@ -1311,7 +1331,7 @@
           </div>
         </details>
 
-        <details class="service-info-card bt-acc-card">
+        <details class="service-info-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <span class="service-tag">02 · PLATAFORMAS DIGITALES</span>
             <div class="bt-acc-title-row">
@@ -1333,7 +1353,7 @@
           </div>
         </details>
 
-        <details class="service-info-card bt-acc-card">
+        <details class="service-info-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <span class="service-tag">03 · MEMBRESÍA Y SEGURO</span>
             <div class="bt-acc-title-row">
@@ -1355,7 +1375,7 @@
           </div>
         </details>
 
-        <details class="service-info-card bt-acc-card">
+        <details class="service-info-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <span class="service-tag">04 · PROTECCIÓN Y CONVIVENCIA</span>
             <div class="bt-acc-title-row">
@@ -1377,7 +1397,7 @@
           </div>
         </details>
 
-        <details class="service-info-card bt-acc-card">
+        <details class="service-info-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <span class="service-tag">05 · MÉTODO EDUCATIVO</span>
             <div class="bt-acc-title-row">
@@ -1387,19 +1407,19 @@
           </summary>
           <div class="bt-acc-body">
             <p>
-              Repositorio oficial del método educativo en <a href="https://recme.scouts.org.mx" target="_blank" rel="noopener">recme.scouts.org.mx</a>.
+              Repositorio colaborativo oficial del método educativo en <a href="https://recme.scouts.org.mx" target="_blank" rel="noopener">recme.scouts.org.mx</a>.
             </p>
             <ul class="service-bullet-list">
-              <li><strong>Plantillas P1–P10:</strong> Progresión, proyectos, seguimiento, FAES, planillas y Jade/Obsidiana.</li>
-              <li><strong>Especialidades FES:</strong> Fichas organizadas en 4 Ejes Temáticos y 17 ODS.</li>
+              <li><strong>220 FAES y Plantillas P1–P10:</strong> Cazaderos, Rumbos, Senderos, Rutas, Ciclo de Programa, seguimiento y solicitudes.</li>
+              <li><strong>82 Especialidades FES:</strong> Fichas de Manada, Tropa, Comunidad y Clan en 4 Ejes Temáticos y 17 ODS (Conozco, Aplico y Comparto).</li>
             </ul>
-            <button type="button" class="service-query-btn" data-query="¿Qué es la página RECME (recme.scouts.org.mx) y para qué sirve?">
-              Consultar portal RECME →
+            <button type="button" class="service-query-btn" data-query="¿Qué es RECME, cuál es su objetivo y quiénes pueden participar?">
+              Consultar portal RECME y FAES →
             </button>
           </div>
         </details>
 
-        <details class="service-info-card bt-acc-card">
+        <details class="service-info-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <span class="service-tag">06 · SOPORTE TÉCNICO</span>
             <div class="bt-acc-title-row">
@@ -1421,7 +1441,7 @@
           </div>
         </details>
 
-        <details class="service-info-card bt-acc-card">
+        <details class="service-info-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <span class="service-tag">07 · CUOTAS FAMILIARES</span>
             <div class="bt-acc-title-row">
@@ -1454,13 +1474,13 @@
           <span class="section-eyebrow">COMPARATIVA 2018 – 2026</span>
           <h2 class="section-title">¿Qué cambió año con año?</h2>
           <p class="section-subtitle">
-            Resumen directo de los cambios entre ediciones anteriores y 2026.
+            Comparativa directa entre ediciones anteriores y los documentos oficiales vigentes 2025–2026. Puedes contraer cualquier tarjeta tocando su título.
           </p>
         </div>
       </div>
 
       <div class="changes-timeline-grid bt-accordion-grid">
-        <details class="change-card bt-acc-card">
+        <details class="change-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="change-years">
               <span class="yr-old">01 · Hasta Dic 2025 (ENPE)</span>
@@ -1479,7 +1499,7 @@
           </div>
         </details>
 
-        <details class="change-card bt-acc-card">
+        <details class="change-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="change-years">
               <span class="yr-old">02 · Marzo 2019 (80 págs.)</span>
@@ -1498,7 +1518,7 @@
           </div>
         </details>
 
-        <details class="change-card bt-acc-card">
+        <details class="change-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="change-years">
               <span class="yr-old">03 · 2024 (Transición)</span>
@@ -1517,7 +1537,7 @@
           </div>
         </details>
 
-        <details class="change-card bt-acc-card">
+        <details class="change-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="change-years">
               <span class="yr-old">04 · 2025 ($680 / $840)</span>
@@ -1536,7 +1556,7 @@
           </div>
         </details>
 
-        <details class="change-card bt-acc-card">
+        <details class="change-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="change-years">
               <span class="yr-old">05 · 2018–2022</span>
@@ -1555,7 +1575,7 @@
           </div>
         </details>
 
-        <details class="change-card bt-acc-card">
+        <details class="change-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="change-years">
               <span class="yr-old">06 · 2016–2019</span>
@@ -1574,7 +1594,7 @@
           </div>
         </details>
 
-        <details class="change-card bt-acc-card">
+        <details class="change-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="change-years">
               <span class="yr-old">07 · RegNal / Correos</span>
@@ -1593,7 +1613,7 @@
           </div>
         </details>
 
-        <details class="change-card bt-acc-card">
+        <details class="change-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="change-years">
               <span class="yr-old">08 · Especialidades Previas</span>
@@ -1612,7 +1632,7 @@
           </div>
         </details>
 
-        <details class="change-card bt-acc-card">
+        <details class="change-card bt-acc-card" open>
           <summary class="bt-acc-summary">
             <div class="change-years">
               <span class="yr-old">09 · Gestión Tradicional</span>
@@ -1633,7 +1653,7 @@
       </div>
 
       <!-- Comparador automático de familias de documentos -->
-      <details class="version-chains-details">
+      <details class="version-chains-details" open>
         <summary>Ver desglose detallado de documentos con ediciones anteriores y recientes</summary>
         <div id="versionChainsGrid" class="version-chains-grid"></div>
       </details>
@@ -1731,8 +1751,14 @@
           <span class="editor-coming-badge is-live">HERRAMIENTA ACTIVA · 100% LOCAL Y OFFLINE</span>
           <h2 id="editorFormatosTitle" class="section-title">Editor Inteligente de Formatos y Autollenado Scout</h2>
           <p class="section-subtitle">
-            Elige cualquiera de los 6 formatos editables, rellénalo en 1 toque con los datos de tu Perfil Local, guarda borradores en tu dispositivo y descárgalo listo para imprimir, guardar en PDF o editar en Word.
+            Elige cualquiera de los 6 formatos editables, llena tus datos directamente sobre el documento oficial de base, autollena en 1 toque con tu Perfil Local, guarda borradores en tu dispositivo y descárgalo listo en PDF oficial, imagen o para imprimir.
           </p>
+          <div class="bt-sf-device-tip" role="note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <p>
+              <strong>Sugerencia para una mejor experiencia:</strong> cuando llenes archivos largos o con mucha información (como la Ficha Médica completa de 2 hojas o una Cédula SMART detallada), resulta más cómodo trabajar desde una <strong>computadora</strong>. Sin embargo, <strong>no es obligatorio</strong>: puedes llenar, guardar borradores y descargar todos los formatos sin problema también desde tu celular o tablet.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -1872,6 +1898,7 @@
                   <span>Imprimir</span>
                 </button>
                 <button type="button" id="btnSfOpenBaseDoc" class="bt-sf-export-btn" title="Abrir el archivo oficial original en blanco">Ver base original</button>
+                <button type="button" id="btnSfReportFormat" class="bt-sf-export-btn is-report" title="Reportar algún error o detalle de alineación en este formato">Reportar detalle</button>
               </div>
             </div>
             <div class="bt-sf-sheet-scroll">
@@ -1966,10 +1993,10 @@
     <div class="container">
       <div class="catalog-header-row">
         <div>
-          <span class="section-eyebrow">ARCHIVO DESCARGABLE (599)</span>
+          <span class="section-eyebrow">ARCHIVO DESCARGABLE (882)</span>
           <h2 class="section-title">Catálogo por Categorías</h2>
           <p class="section-subtitle">
-            Filtra por categoría, subcategoría, sección o formato para leer o descargar.
+            Filtra por categoría, eje o subcategoría, sección, etiqueta RECME o formato para leer o descargar.
           </p>
         </div>
 
@@ -1981,20 +2008,21 @@
         </div>
       </div>
 
-      <!-- BOTONES RÁPIDOS DE LAS 11 CATEGORÍAS DEL CATÁLOGO -->
+      <!-- BOTONES RÁPIDOS DE LAS 12 CATEGORÍAS DEL CATÁLOGO -->
       <div class="catalog-category-cards" id="catalogCategoryPills">
-        <button type="button" class="cat-filter-pill active" data-cat-val="all">Todas (599)</button>
+        <button type="button" class="cat-filter-pill active" data-cat-val="all">Todas (882)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Fichas de Acciones Educativas Scouts (FAES)">FAES (220)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Especialidades Scouts (FES)">Especialidades FES (82)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Colección Biblioteca del Centenario">Centenario (39)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Guías, Carnets y Programa de Jóvenes (PJOS)">PJOS (42)</button>
-        <button type="button" class="cat-filter-pill" data-cat-val="Especialidades Scouts (FES)">FES (20)</button>
-        <button type="button" class="cat-filter-pill" data-cat-val="Plantillas PJOS, FAES y RECME">RECME / FAES (51)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Plantillas PJOS, FAES y RECME">Plantillas RECME (51)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Guías SISAS, CONECTA y Soporte Digital">Help Desk SISAS (26)</button>
-        <button type="button" class="cat-filter-pill" data-cat-val="Manuales Oficiales y de Operación">Manuales (70)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Manuales Oficiales y de Operación">Manuales (63)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Reglamentos, Estatutos y Políticas">Reglamentos (24)</button>
-        <button type="button" class="cat-filter-pill" data-cat-val="Convocatorias y Comunicados Nacionales">Comunicados (187)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Convocatorias y Comunicados Nacionales">Comunicados (188)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Revistas Foro Joven y Boletines">Revistas (44)</button>
         <button type="button" class="cat-filter-pill" data-cat-val="Formatos, Actas y Seguro Scout">Formatos (66)</button>
-        <button type="button" class="cat-filter-pill" data-cat-val="Identidad Gráfica y Recursos Visuales">Identidad (30)</button>
+        <button type="button" class="cat-filter-pill" data-cat-val="Identidad Gráfica y Recursos Visuales">Identidad (37)</button>
       </div>
       <div class="subcat-bar-shell hidden" id="catalogSubcategoryPills"></div>
 
@@ -2080,10 +2108,10 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 3.3.0 Mobile · Web 9.3.0</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 3.5.0 Mobile · Web 9.5.0</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
-            <strong>No es necesario descargar nada:</strong> puedes disfrutar de la mayoría de herramientas, el buscador de 13,525 preguntas y los visores directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
+            <strong>No es necesario descargar nada:</strong> puedes disfrutar de todas las herramientas, el buscador de 14,816 preguntas, los 882 documentos (incluyendo 220 FAES y 82 FES) y el Editor de Formatos directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
           </p>
           <p id="appDetectedOsBadge" class="app-detected-os-pill hidden" aria-live="polite"></p>
 
@@ -2160,11 +2188,11 @@
                 <span id="iosOfflineStatusBadge" class="ios-offline-badge">Sin descargar</span>
               </div>
               <p class="ios-offline-desc">
-                Guarda las <strong>13,525 preguntas</strong>, el catálogo y las tablas Excel dentro de Safari (aprox. <code>11 MB</code>) para consultarlos en campamentos sin señal.
+                Guarda las <strong>14,816 preguntas</strong>, el catálogo completo de 882 documentos y las tablas Excel dentro de Safari (aprox. <code>17 MB</code>) para consultarlos en campamentos sin señal.
               </p>
               <label class="ios-offline-check">
                 <input type="checkbox" id="iosIncludeChunksToggle" />
-                <span>Incluir fragmentos de lectura profunda (<code>+13.5 MB</code> adicionales)</span>
+                <span>Incluir fragmentos de lectura profunda (<code>+14.5 MB</code> adicionales)</span>
               </label>
               <div id="iosOfflineProgressWrap" class="ios-offline-progress-wrap hidden" aria-live="polite">
                 <div class="ios-offline-progress-track">
@@ -2240,7 +2268,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v42</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v45</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -2252,9 +2280,10 @@
     <div class="container discreet-contribute-inner">
       <div class="discreet-contribute-text">
         <p>
-          <span class="beta-badge" style="display:inline-block;background:#6d28d9;color:#ffffff;font-size:0.72rem;font-weight:800;padding:2px 8px;border-radius:999px;margin-right:6px;text-transform:uppercase;letter-spacing:0.04em;">Versión Beta</span>
-          <strong>BiblioTech Scout está en fase Beta</strong> y puede contener detalles o errores imprevistos. Si detectas alguna falla, deseas enviar sugerencias, convocatorias, plantillas o aportar documentos oficiales:
+          <span class="beta-badge" style="display:inline-block;background:#6d28d9;color:#ffffff;font-size:0.72rem;font-weight:800;padding:2px 8px;border-radius:999px;margin-right:6px;text-transform:uppercase;letter-spacing:0.04em;">Mejora continua</span>
+          <strong>BiblioTech Scout evoluciona constantemente gracias a toda la comunidad.</strong> Si encuentras un error en respuestas, formatos, La Fogata, guías, documentos, la página web o la App APK, o quieres aportar un documento oficial, escríbenos a
           <a id="contributeMailLink" href="mailto:rdc.tlxh@gmail.com?subject=Aporte%20o%20Issue%20para%20BiblioTech%20Scout" class="discreet-mail-link">rdc.tlxh@gmail.com</a>
+          o manda un reporte: estoy trabajando duro revisando cada aviso para dejarlo solucionado en aprox. <strong>2 a 7 días como máximo</strong>.
           <button type="button" id="copyMailBtn" class="discreet-mini-btn" title="Copiar correo">Copiar correo</button>
           <button type="button" id="openWelcomeFooterBtn" class="discreet-mini-btn is-welcome">Compartir QR / Bienvenida</button>
           <button type="button" id="openBugReportFooterBtn" class="discreet-mini-btn is-report">Reportar error o bug</button>
@@ -2419,7 +2448,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 18/11/2026 · BETA 9.3.0 - 3.3.0 Mobile (18/11/2026) ·
+          Base de datos: 18/11/2026 (882 documentos · 14,816 preguntas) · BETA 9.5.0 - 3.5.0 Mobile (18/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">
@@ -2545,16 +2574,16 @@
           <label class="bt-bug-field">
             <span>Apartado donde pasó</span>
             <select id="bugReportSection">
-              <option value="Buscador de preguntas">Buscador de preguntas</option>
-              <option value="Biblioteca Scout">Biblioteca Scout</option>
+              <option value="Buscador de preguntas">Buscador y respuestas</option>
+              <option value="Editor de Formatos">Editor y llenado de formatos</option>
+              <option value="La Fogata">La Fogata (publicaciones y comentarios)</option>
+              <option value="Biblioteca Scout">Biblioteca, FAES, FES y documentos</option>
               <option value="Lector / Visor PDF o Excel">Lector / Visor PDF o Excel</option>
-              <option value="Inicio / Portada">Inicio / Portada</option>
-              <option value="Guía de Uso">Guía de Uso</option>
+              <option value="Guía de Uso">Guía de Uso, Secciones y Trámites</option>
               <option value="Agentes de Cambio.MX">Agentes de Cambio.MX</option>
-              <option value="Secciones / Cambios / Catálogo">Secciones / Cambios / Catálogo</option>
-              <option value="La Fogata">La Fogata</option>
-              <option value="Editor de Formatos">Editor de Formatos</option>
-              <option value="Descarga App / Modo Offline">Descarga App / Modo Offline</option>
+              <option value="¿Qué es BiblioTech?">¿Qué es BiblioTech?</option>
+              <option value="Inicio / Portada">Sitio Web / Portada / Diseño</option>
+              <option value="Descarga App / Modo Offline">App Android (.apk) / Modo Offline</option>
               <option value="Otro apartado">Otro apartado</option>
             </select>
           </label>
@@ -2592,6 +2621,10 @@
           <textarea id="bugReportDetails" rows="3" maxlength="1200" placeholder="Ej. Al abrir el PDF en modo oscuro sale en blanco, o explica el motivo del reporte..."></textarea>
         </label>
 
+        <div class="bt-bug-sla-note" role="note">
+          <strong>Revisión constante y compromiso de mejora:</strong> estoy trabajando duro y revisando continuamente todos los reportes que llegan sobre respuestas, llenado de formatos, publicaciones en La Fogata, guías, documentos, sitio web y App Android (.apk). Cada detalle que reportes quedará atendido y solucionado en aproximadamente <strong>2 a 7 días como máximo</strong>.
+        </div>
+
         <p id="bugReportStatus" class="bt-bug-status hidden" role="status" aria-live="polite"></p>
 
         <div class="bt-consent-actions">
@@ -2622,7 +2655,7 @@
       </div>
 
       <p class="bt-welcome-lead">
-        Tu biblioteca e inteligencia documental scout creada para toda la membresía. Descubre todo lo que puedes hacer dentro del sitio y la App:
+        Tu biblioteca e inteligencia documental scout hecha para toda la membresía. Un espacio vivo que crece y mejora con cada consulta, cada sugerencia y cada scout que lo usa:
       </p>
 
       <div class="bt-welcome-grid">
@@ -2631,8 +2664,8 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </span>
           <div>
-            <strong>Buscador de 13,525 preguntas</strong>
-            <p>Escribe tu duda sobre el nuevo esquema PJOS 2026, insignias, secciones, campismo o trámites y obtén respuesta con su fuente oficial.</p>
+            <strong>Buscador de 14,816 preguntas</strong>
+            <p>Consulta tus dudas sobre PJOS 2026, 220 FAES, 82 especialidades FES, insignias, secciones, campismo o trámites con su fuente oficial exacta.</p>
           </div>
         </div>
 
@@ -2641,8 +2674,8 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
           </span>
           <div>
-            <strong>Biblioteca y Visores (599 archivos)</strong>
-            <p>Lee y descarga libros de la Biblioteca del Centenario, manuales, carnets, comunicados y plantillas Excel sin salir de la plataforma.</p>
+            <strong>Biblioteca y Visores (882 archivos)</strong>
+            <p>Explora libros de la Biblioteca del Centenario, FAES por Cazadero, Rumbo, Sendero y Ruta, FES, manuales, convocatorias y hojas Excel.</p>
           </div>
         </div>
 
@@ -2662,7 +2695,7 @@
           </span>
           <div>
             <strong>La Fogata y Editor de Formatos</strong>
-            <p>Comparte recomendaciones entre jóvenes y Scouters por #temas, y rellena fichas de salud, permisos JL304, FES y proyectos con autollenado local.</p>
+            <p>Comparte recomendaciones entre jóvenes y Scouters, y llena Ficha de Salud, JL304, FES y proyectos directamente sobre los documentos oficiales.</p>
           </div>
         </div>
       </div>
@@ -2672,10 +2705,10 @@
           <img src="img/qr-bibliotech.png" alt="Código QR oficial de BiblioTech Scout para compartir" width="136" height="136" loading="eager" />
         </div>
         <div class="bt-welcome-qr-info">
-          <span class="bt-welcome-qr-badge">¡Compártelo con tu Grupo y Provincia!</span>
-          <h4>Ayuda a que BiblioTech siga creciendo y mejorando</h4>
+          <span class="bt-welcome-qr-badge">Hecho por y para toda la comunidad Scout</span>
+          <h4>Entre más scouts la usen, mejor será para todas y todos</h4>
           <p>
-            Escanea o comparte este código QR con tu Seisena, Patrulla, Comunidad, Clan o Scouters. Mientras más personas lo utilicen y aporten sugerencias, el acervo seguirá mejorando para todos.
+            BiblioTech Scout se fortalece cada día con el uso y la colaboración de quienes forman parte del Movimiento. Entre más personas consulten, compartan este QR con su Seisena, Patrulla, Comunidad, Clan o Scouters y envíen sus sugerencias o reportes, más precisas serán las respuestas, más completo el acervo y mejores las herramientas: <strong>cada mejora que logramos juntos termina sirviendo para toda la comunidad.</strong>
           </p>
           <div class="bt-welcome-qr-actions">
             <button type="button" id="shareWelcomeQrBtn" class="bt-welcome-mini-btn is-primary">Compartir enlace</button>

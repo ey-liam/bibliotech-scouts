@@ -1,8 +1,8 @@
 {
-  "version": "9.4.0",
-  "mobileVersion": "3.4.0",
-  "cache": "bibliotech-scout-v44",
+  "version": "9.5.0",
+  "mobileVersion": "3.5.0",
+  "cache": "bibliotech-scout-v45",
   "releasedAt": "2026-11-18",
-  "schemaCookieVersion": "9.4",
-  "notes": "Versión 9.4.0: Editor Inteligente de Formatos 100% oficial (Ficha de Salud completa con IMC automático, 24+13 antecedentes con check, Inmunología, Contactos 1 y 2; Permiso JL304 con fechas por casilla, nombres separados y check de medios; exportación directa PDF/PNG como «Ficha de Salud [Nombre] BiblioTech») y directorio de las 49 Provincias Scouts en el buscador."
+  "schemaCookieVersion": "9.5",
+  "notes": "Versión 9.5.0: +283 documentos oficiales de RECME y ASMAC (220 FAES por Cazaderos/Rumbos/Senderos/Rutas, 62 nuevas Especialidades FES de Manada/Tropa/Clan hasta 82 totales y Convocatoria Intercultural Challenge 2026), +1,240 nuevas preguntas y respuestas literales (14,816 totales), base de datos fechada al 18/11/2026, apartados propios en barra superior para Agentes de Cambio.MX y ¿Qué es BiblioTech?, acordeones desplegados por defecto con opción de contraer, sugerencia PC/Móvil en Editor de Formatos, compromiso de atención de reportes en 2 a 7 días y bienvenida comunitaria renovada."
 }

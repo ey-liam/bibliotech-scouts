@@ -1,0 +1,62 @@
+FICHA DE ACCIÓN EDUCATIVA SCOUT (FAES): Pasando corriente de forma segura
+Archivo oficial: FAES_CR_HPV_PASANDO CORRIENTE DE FORMA SEGURA.pdf
+Sección: Clan de Rovers
+Carpeta / Eje RECME: Ruta Otomí (Habilidades para la Vida)
+Descripción del eje: Las y los Rovers dominan competencias como liderazgo ético, resiliencia, gestión de proyectos y toma de decisiones, aplicándolas en contextos diversos para generar impacto positivo.
+Fecha en RECME: 2026
+Duración: 45 MINUTOS
+Rango de edad: 18-21 AÑOS
+Número de participantes: 1 a 12
+Etiquetas RECME: Local, 30-60minutos, Técnicas, Sección, Responsabilidad
+Palabras clave: clan, habilidades, pasarcorriente, tránsito
+
+OBJETIVO:
+Que los jóvenes aprendan a pasar corriente entre vehículos correctamente, entendiendo los riesgos eléctricos y las medidas de seguridad necesarias para evitar accidentes.
+
+RECURSOS MATERIALES:
+Dos vehículos con baterías (una descargada preferentemente y otra en buen estado).
+Juego de cables pasa-corriente con pinzas aisladas
+Guantes dieléctricos o de seguridad
+Chalecos reflejantes
+Conos para delimitar el área.
+
+PREPARACIÓN:
+Ubicar ambos vehículos en un área segura y ventilada.
+Colocarlos uno frente al otro, sin que se toquen.
+Revisar el estado de las baterías y cables.
+
+DESARROLLO:
+Explicación inicial (10 min)
+Hablar sobre la función de la batería y los riesgos de una conexión incorrecta.
+Mostrar el código de colores: rojo = positivo (+), negro = negativo (–).2. 
+Demostración paso a paso (15 min)
+El scouter o instructor muestra el procedimiento:
+Apagar ambos vehículos.
+Colocar las pinzas en el siguiente orden:
+Pinza roja (+) al terminal positivo de la batería descargada.Pinza roja (+) al terminal positivo de la batería buena.
+Pinza negra (–) al terminal negativo de la batería buena.
+Pinza negra (–) a una parte metálica sin pintura del motor del vehículo descargado (masa).
+Encender el vehículo con batería buena y esperar 2–3 minutos.Intentar encender el vehículo descargado.
+Retirar las pinzas en orden inverso.
+Práctica (15 min)
+Los jóvenes realizan la conexión y desconexión bajo supervisión, rotando los roles.
+
+PREGUNTAS O REFLEXIÓN:
+¿Qué errores podrían ser peligrosos al pasar corriente?
+¿Por qué es importante seguir el orden correcto de conexión?
+¿En qué situaciones prácticas puede servir esta habilidad?
+
+VARIANTES (SECCIÓN, DESAFÍO, ACCESIBILIDAD):
+Realizar la práctica con diferentes tipos de vehículos.
+Complementar con una cápsula sobre “Cómo revisar la presión y el desgaste del neumático”.
+
+MEDIDAS DE SEGURIDAD:
+No fumar ni encender fuego cerca del área.
+Verificar que los vehículos estén apagados antes de conectar.
+No permitir que las pinzas se toquen entre sí.
+Usar guantes y evitar tocar partes metálicas directamente.
+
+ENLACES Y RECURSOS DIGITALES:
+https://www.youtube.com/watch?v=4mxCc07uLOk&t=32s
+
+Elaboración / Fuente: Maggy Malpica

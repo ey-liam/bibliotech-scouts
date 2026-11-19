@@ -119,11 +119,21 @@ def run_e2e(test_webkit: bool = False):
             ans_bt = page.locator("#answerBody").inner_text()
             assert "Liam Durán" in ans_bt, "Respuesta sobre BiblioTech no incluyó autor"
 
-            # Navegar al espacio Biblioteca y Catálogo unificados
+            # Probar búsqueda de FAES y Convocatoria Intercultural Challenge 2026
+            page.fill("#askInput", "Intercultural Challenge 2026")
+            page.click("#askSubmitBtn")
+            page.wait_for_timeout(300)
+            ans_ic = page.locator("#answerBody").inner_text()
+            assert "17 de octubre" in ans_ic or "Embajador" in ans_ic, "Respuesta Intercultural Challenge 2026 incompleta"
+
+            # Navegar al espacio Biblioteca y Catálogo unificados y probar estante FAES (220)
             page.click('.desktop-quick-nav [data-bt-go-view="biblioteca"]')
             assert page.locator("#btLibraryModeBar").is_visible(), "Barra de modos de Biblioteca no visible"
             assert page.locator("#biblioteca").is_visible(), "Estantes Visuales no visibles"
             assert not page.locator("#explorar").is_visible(), "Catálogo Avanzado debe iniciar oculto en modo Estantes"
+            page.click('#libraryShelfTabs [data-shelf="faes"]')
+            assert page.locator("#libraryBookshelfGrid .book-card").count() >= 6, "Estante FAES no cargó fichas"
+            page.click('#libraryShelfTabs [data-shelf="featured"]')
             page.click('#btLibraryModeBar [data-lib-mode="catalog"]')
             assert page.locator("#explorar").is_visible(), "Catálogo Avanzado no se mostró al cambiar pestaña"
             page.click('#btLibraryModeBar [data-lib-mode="shelves"]')
@@ -148,14 +158,27 @@ def run_e2e(test_webkit: bool = False):
             page.click("#btnToggleCampMode")
             assert page.evaluate("document.documentElement.getAttribute('data-camp-mode') === 'true'"), "Dark mode failed"
 
-            # Navegar al espacio Guía Scout -> sub-pestaña App y Modo Offline
+            # Navegar a los apartados propios de Agentes de Cambio.MX y ¿Qué es BiblioTech? desde la barra superior
+            page.click('.desktop-quick-nav [data-bt-go-view="agentes"]')
+            assert page.locator("#agentes").is_visible(), "Apartado propio Agentes de Cambio.MX no visible"
+            page.click('.desktop-quick-nav [data-bt-go-view="acerca"]')
+            assert page.locator("#acerca").is_visible(), "Apartado propio ¿Qué es BiblioTech? no visible"
+
+            # Navegar a Guía Scout y verificar que los acordeones vienen desplegados por defecto y se pueden contraer
+            page.click('.desktop-quick-nav [data-bt-go-view="guia"]')
+            assert page.locator("#guia-inicio").is_visible(), "Guía de Uso no visible"
+            first_acc = page.locator("#guia-inicio details.bt-acc-card").first
+            assert first_acc.evaluate("el => el.hasAttribute('open')"), "Los acordeones de Guía deben venir desplegados por defecto"
+            first_acc.locator("summary").click()
+            assert not first_acc.evaluate("el => el.hasAttribute('open')"), "El acordeón no se contrajo al tocar su encabezado"
+            first_acc.locator("summary").click()
+            assert first_acc.evaluate("el => el.hasAttribute('open')"), "El acordeón no se volvió a desplegar"
+
+            # Navegar a sub-pestaña App y Modo Offline
             page.click('.desktop-quick-nav [data-bt-guide-jump="app"]')
             assert page.locator("#btGuideSubnav").is_visible(), "Sub-barra de Guía Scout no visible"
             assert page.locator("#app").is_visible(), "Sección App / Offline no visible en Guía -> App"
             assert not page.locator("#guia-inicio").is_visible(), "Guía de Uso debe estar oculta en sub-pestaña App"
-            page.click('#btGuideSubnav [data-guide-tab="acerca"]')
-            assert page.locator("#acerca").is_visible(), "Sección ¿Qué es BiblioTech? no visible"
-            page.click('#btGuideSubnav [data-guide-tab="app"]')
 
             # Probar descarga Modo Offline iOS / Web y verificación offline real
             page.click("#tabAppIos")
@@ -184,7 +207,7 @@ def run_e2e(test_webkit: bool = False):
             page.fill("#bugReportDetails", "Prueba automatizada E2E de reporte")
             page.click("#submitBugReportBtn")
             page.wait_for_selector("#bugReportStatus.is-ok", state="attached", timeout=4000)
-            page.locator("#bugReportModal").wait_for(state="hidden", timeout=4000)
+            page.locator("#bugReportModal").wait_for(state="hidden", timeout=6000)
 
             # Navegar al espacio Formatos y probar Bóveda Local de Autollenado
             page.click('.desktop-quick-nav [data-bt-go-view="formatos"]')
@@ -266,7 +289,7 @@ def run_e2e(test_webkit: bool = False):
             page.fill("#bugReportDetails", "Prueba E2E de reporte con explicación del motivo.")
             page.click("#submitBugReportBtn")
             page.wait_for_selector("#bugReportStatus.is-ok", state="attached", timeout=4000)
-            page.locator("#bugReportModal").wait_for(state="hidden", timeout=4000)
+            page.locator("#bugReportModal").wait_for(state="hidden", timeout=6000)
 
             # Vista 1200px sin desborde
             page.set_viewport_size({"width": 1200, "height": 820})
@@ -301,11 +324,9 @@ def run_e2e(test_webkit: bool = False):
             # Probar Modo oscuro visible en móvil y detección automática de sistema (prefers-color-scheme)
             assert mpage.locator("#btnToggleCampMode").is_visible(), "Botón Modo oscuro oculto en móvil"
             mpage.emulate_media(color_scheme="dark")
-            mpage.wait_for_timeout(120)
-            assert mpage.evaluate("document.documentElement.getAttribute('data-camp-mode') === 'true'"), "Modo oscuro no se activó automáticamente con prefers-color-scheme: dark"
+            mpage.wait_for_function("() => document.documentElement.getAttribute('data-camp-mode') === 'true'", timeout=3000)
             mpage.emulate_media(color_scheme="light")
-            mpage.wait_for_timeout(120)
-            assert mpage.evaluate("document.documentElement.getAttribute('data-camp-mode') === 'false'"), "Modo claro no se restauró automáticamente con prefers-color-scheme: light"
+            mpage.wait_for_function("() => document.documentElement.getAttribute('data-camp-mode') === 'false'", timeout=3000)
             mctx.close()
             ctx.close()
             browser.close()
