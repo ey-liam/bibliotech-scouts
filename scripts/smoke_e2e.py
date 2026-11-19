@@ -126,16 +126,21 @@ def run_e2e(test_webkit: bool = False):
             ans_ic = page.locator("#answerBody").inner_text()
             assert "17 de octubre" in ans_ic or "Embajador" in ans_ic, "Respuesta Intercultural Challenge 2026 incompleta"
 
-            # Navegar al espacio Biblioteca y Catálogo unificados y probar estante FAES (220)
+            # Navegar al espacio Biblioteca y Catálogo unificados, verificar 12 archivos por defecto y carga progresiva (+12)
             page.click('.desktop-quick-nav [data-bt-go-view="biblioteca"]')
             assert page.locator("#btLibraryModeBar").is_visible(), "Barra de modos de Biblioteca no visible"
             assert page.locator("#biblioteca").is_visible(), "Estantes Visuales no visibles"
             assert not page.locator("#explorar").is_visible(), "Catálogo Avanzado debe iniciar oculto en modo Estantes"
+            assert page.locator("#libraryBookshelfGrid .book-card").count() == 12, "Biblioteca debe mostrar 12 archivos por defecto"
+            assert "Cargar más archivos" in page.locator("#libraryShowMoreBtn").inner_text(), "Botón Cargar más archivos no visible"
+            page.click("#libraryShowMoreBtn")
+            assert page.locator("#libraryBookshelfGrid .book-card").count() == 24, "Cargar más archivos no cargó +12 en Biblioteca"
             page.click('#libraryShelfTabs [data-shelf="faes"]')
-            assert page.locator("#libraryBookshelfGrid .book-card").count() >= 6, "Estante FAES no cargó fichas"
+            assert page.locator("#libraryBookshelfGrid .book-card").count() == 12, "Estante FAES debe mostrar 12 archivos inicialmente"
             page.click('#libraryShelfTabs [data-shelf="featured"]')
             page.click('#btLibraryModeBar [data-lib-mode="catalog"]')
             assert page.locator("#explorar").is_visible(), "Catálogo Avanzado no se mostró al cambiar pestaña"
+            assert page.locator("#catalogGrid .doc-card").count() == 12, "Catálogo debe mostrar 12 archivos por defecto"
             page.click('#btLibraryModeBar [data-lib-mode="shelves"]')
             assert page.locator("#biblioteca").is_visible(), "Estantes Visuales no volvieron al cambiar pestaña"
 
@@ -209,9 +214,11 @@ def run_e2e(test_webkit: bool = False):
             page.wait_for_selector("#bugReportStatus.is-ok", state="attached", timeout=4000)
             page.locator("#bugReportModal").wait_for(state="hidden", timeout=6000)
 
-            # Navegar al espacio Formatos y probar Bóveda Local de Autollenado
+            # Navegar al espacio Editor de Archivos y probar Bóveda Local de Autollenado
             page.click('.desktop-quick-nav [data-bt-go-view="formatos"]')
-            assert page.locator("#editor-formatos").is_visible(), "Espacio Formatos no visible"
+            assert page.locator("#editor-formatos").is_visible(), "Espacio Editor de Archivos no visible"
+            assert page.locator("#editorFormatosTitle").inner_text().strip() == "Editor de Archivos", "Título de Editor de Archivos incorrecto"
+            assert "HERRAMIENTA ACTIVA" not in page.locator("#editor-formatos").inner_text(), "Leyenda HERRAMIENTA ACTIVA no se eliminó"
             page.fill("#afName", "Liam Durán Prueba")
             page.fill("#afAge", "16")
             page.fill("#afGroup", "Grupo 53")
@@ -227,6 +234,7 @@ def run_e2e(test_webkit: bool = False):
             # Navegar al espacio La Fogata (#foro) y probar flujo completo
             page.click('.desktop-quick-nav [data-bt-go-view="fogata"]')
             assert page.locator("#foro").is_visible(), "Espacio La Fogata no visible"
+            assert "COMUNIDAD SCOUT" not in page.locator("#foro").inner_text(), "Leyenda COMUNIDAD SCOUT no se eliminó"
             assert "La Fogata: Recomendaciones" in page.locator("#forumSectionTitle").inner_text(), "Título La Fogata incorrecto"
             assert "Todos" in page.locator('#forumChannelTabs [data-forum-channel="all"]').inner_text(), "Pestaña Todos faltante"
             page.click('#forumChannelTabs [data-forum-channel="adultos"]')

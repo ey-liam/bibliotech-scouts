@@ -30,20 +30,20 @@ const STATE = {
   libraryQuery: "",
   librarySection: "all",
   librarySubcategory: "all",
-  librarySubcatOpen: true,
+  librarySubcatOpen: false,
   libraryScope: "shelf",
-  libraryVisibleCount: 6,
+  libraryVisibleCount: 12,
   currentShelfDocs: [],
   currentReadingIndex: -1,
 
   // Catalogo general
   filteredDocs: [],
-  visibleCount: 6,
+  visibleCount: 12,
   pageSize: 12,
   searchQuery: "",
   categoryFilter: "all",
   subcategoryFilter: "all",
-  catalogSubcatOpen: true,
+  catalogSubcatOpen: false,
   sectionFilter: "all",
   extFilter: "all",
   onlyLatest: false,
@@ -1426,27 +1426,39 @@ function getDocsForShelf(shelf, filterText = "") {
 }
 
 function resolveDefaultLibraryCount() {
-  if (STATE.libraryQuery.trim() !== "") return Infinity;
-  const isDefaultView =
-    STATE.activeShelf === "featured" &&
-    STATE.librarySection === "all" &&
-    STATE.librarySubcategory === "all" &&
-    STATE.libraryScope === "shelf";
-  return isDefaultView ? 6 : 24;
+  if (STATE.libraryQuery.trim() !== "") return 24;
+  return 12;
 }
 
 function renderLibraryShelf() {
   const grid = document.getElementById("libraryBookshelfGrid");
   const moreBtn = document.getElementById("libraryShowMoreBtn");
+  const countLabel = document.getElementById("libraryCountLabel");
+  const resetBtn = document.getElementById("resetLibraryFiltersBtn");
   if (!grid) return;
 
   const docs = getDocsForShelf(STATE.activeShelf, STATE.libraryQuery);
   STATE.currentShelfDocs = docs;
-  const visibleLimit = STATE.libraryQuery.trim() !== "" ? docs.length : STATE.libraryVisibleCount;
+  const visibleLimit = STATE.libraryVisibleCount || 12;
   const slice = docs.slice(0, visibleLimit);
 
+  if (countLabel) {
+    countLabel.textContent = docs.length
+      ? `Mostrando ${slice.length} de ${docs.length} archivos oficiales`
+      : "0 archivos encontrados con este filtro";
+  }
+  if (resetBtn) {
+    const hasFilter =
+      STATE.libraryQuery.trim() !== "" ||
+      STATE.librarySection !== "all" ||
+      STATE.librarySubcategory !== "all" ||
+      STATE.libraryScope !== "shelf" ||
+      STATE.activeShelf !== "featured";
+    resetBtn.classList.toggle("hidden", !hasFilter);
+  }
+
   if (!slice.length) {
-    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:2rem;color:#64748b;">No se encontraron documentos con ese filtro en este estante.</p>`;
+    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:2rem;color:#64748b;">No se encontraron archivos con ese filtro en este estante.</p>`;
     if (moreBtn) moreBtn.classList.add("hidden");
     return;
   }
@@ -1493,9 +1505,9 @@ function renderLibraryShelf() {
     .join("");
 
   if (moreBtn) {
-    if (docs.length > visibleLimit) {
+    if (docs.length > slice.length) {
       moreBtn.classList.remove("hidden");
-      moreBtn.textContent = `Ver más documentos de este estante (${docs.length - visibleLimit} restantes)`;
+      moreBtn.textContent = `Cargar más archivos (${docs.length - slice.length} restantes)`;
     } else {
       moreBtn.classList.add("hidden");
     }
@@ -2750,13 +2762,7 @@ function applyCatalogFilters() {
 
   STATE.filteredDocs = filtered;
   const hasSearch = STATE.searchQuery.trim() !== "";
-  const hasNonSearchFilter =
-    STATE.categoryFilter !== "all" ||
-    STATE.subcategoryFilter !== "all" ||
-    STATE.sectionFilter !== "all" ||
-    STATE.extFilter !== "all" ||
-    STATE.onlyLatest;
-  STATE.visibleCount = hasSearch ? filtered.length : hasNonSearchFilter ? 24 : 6;
+  STATE.visibleCount = hasSearch ? 24 : 12;
   syncCategoryPillsUI();
   renderCatalogGrid();
 }
@@ -2831,7 +2837,7 @@ function renderCatalogGrid() {
 
   if (total > STATE.visibleCount) {
     loadMoreBtn.classList.remove("hidden");
-    loadMoreBtn.textContent = `Mostrar más documentos (${total - STATE.visibleCount} restantes)`;
+    loadMoreBtn.textContent = `Cargar más archivos (${total - STATE.visibleCount} restantes)`;
   } else {
     loadMoreBtn.classList.add("hidden");
   }
@@ -3620,6 +3626,7 @@ function bindEvents() {
       });
       STATE.activeShelf = targetShelf;
       STATE.librarySubcategory = "all";
+      STATE.librarySubcatOpen = targetShelf !== "featured";
       STATE.libraryVisibleCount = resolveDefaultLibraryCount();
       renderLibraryShelf();
       revealLibraryResults();
@@ -3655,11 +3662,35 @@ function bindEvents() {
       tab.classList.add("active");
       STATE.activeShelf = tab.dataset.shelf || "featured";
       STATE.librarySubcategory = "all";
+      STATE.librarySubcatOpen = STATE.activeShelf !== "featured";
       STATE.libraryVisibleCount = resolveDefaultLibraryCount();
       renderLibraryShelf();
       revealLibraryResults();
     });
   });
+
+  const resetLibBtn = document.getElementById("resetLibraryFiltersBtn");
+  if (resetLibBtn) {
+    resetLibBtn.addEventListener("click", () => {
+      STATE.activeShelf = "featured";
+      STATE.libraryQuery = "";
+      STATE.librarySection = "all";
+      STATE.librarySubcategory = "all";
+      STATE.librarySubcatOpen = false;
+      STATE.libraryScope = "shelf";
+      STATE.libraryVisibleCount = 12;
+      const lIn = document.getElementById("libraryFilterInput");
+      const lSec = document.getElementById("librarySectionFilter");
+      const lScp = document.getElementById("libraryScopeSelect");
+      if (lIn) lIn.value = "";
+      if (lSec) lSec.value = "all";
+      if (lScp) lScp.value = "shelf";
+      document.querySelectorAll(".shelf-tab").forEach((t) => {
+        t.classList.toggle("active", t.dataset.shelf === "featured");
+      });
+      renderLibraryShelf();
+    });
+  }
 
   const libFilterInput = document.getElementById("libraryFilterInput");
   if (libFilterInput) {
@@ -3739,6 +3770,7 @@ function bindEvents() {
       const val = pill.getAttribute("data-cat-val") || "all";
       STATE.categoryFilter = val;
       STATE.subcategoryFilter = "all";
+      STATE.catalogSubcatOpen = val !== "all";
       if (filterCat) filterCat.value = val;
       applyCatalogFilters();
     });
@@ -4043,9 +4075,12 @@ const BiblioFeel = {
 
   init3DTilt() {
     const coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-    const selector = ".floating-photo, .hero-floating-card, .about-floating-photo, .book-card, .adc-axis-card, .adc-eje-item, .adc-cosmic-card, .starter-3d-card, .scout-sec-card, .service-info-card, .change-card, .liam-depth-stage";
+    const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Solo un micro-relieve suave en el retrato de autor; las tarjetas de lectura y botones
+    // conservan un hover plano y consistente sin inclinaciones 3D incongruentes.
+    const selector = ".liam-depth-stage";
 
-    if (!coarse) {
+    if (!coarse && !reduced) {
       document.addEventListener("pointermove", (e) => {
         const card = e.target.closest(selector);
         if (!card) return;
@@ -4053,11 +4088,9 @@ const BiblioFeel = {
         if (!rect.width || !rect.height) return;
         const nx = (e.clientX - rect.left) / rect.width;
         const ny = (e.clientY - rect.top) / rect.height;
-        card.style.setProperty("--rx", `${((0.5 - ny) * 9).toFixed(2)}deg`);
-        card.style.setProperty("--ry", `${((nx - 0.5) * 10).toFixed(2)}deg`);
-        card.style.setProperty("--glare-x", `${(nx * 100).toFixed(1)}%`);
-        card.style.setProperty("--glare-y", `${(ny * 100).toFixed(1)}%`);
-        card.classList.add("is-tilting", "is-tilting-3d");
+        card.style.setProperty("--rx", `${((0.5 - ny) * 3.5).toFixed(2)}deg`);
+        card.style.setProperty("--ry", `${((nx - 0.5) * 4).toFixed(2)}deg`);
+        card.classList.add("is-tilting");
       }, { passive: true });
 
       document.addEventListener("pointerout", (e) => {
@@ -4065,20 +4098,9 @@ const BiblioFeel = {
         if (!card || (e.relatedTarget && card.contains(e.relatedTarget))) return;
         card.style.setProperty("--rx", "0deg");
         card.style.setProperty("--ry", "0deg");
-        card.classList.remove("is-tilting", "is-tilting-3d");
+        card.classList.remove("is-tilting");
       }, { passive: true });
     }
-
-    // Fases orbitales en fotos flotantes
-    document.querySelectorAll(".floating-photo, .hero-floating-card, .about-floating-photo, .sec-popout-photo").forEach((el, idx) => {
-      el.style.setProperty("--float-duration", `${6.5 + (idx % 4) * 1.3}s`);
-      el.style.setProperty("--float-delay", `${(idx * -1.4).toFixed(1)}s`);
-      el.style.setProperty("--drift-x", `${(idx % 2 === 0 ? 1 : -1) * (5 + (idx % 3) * 3)}px`);
-      el.addEventListener("click", () => {
-        this.pulse(12);
-        el.classList.toggle("is-spotlight");
-      });
-    });
   },
 
   initAmbientCanvas() {
@@ -4961,13 +4983,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.5.0";
-const APP_MOBILE_VERSION = "3.5.0";
-const APP_COOKIE_SCHEMA = "9.5";
+const APP_WEB_VERSION = "9.6.0";
+const APP_MOBILE_VERSION = "3.6.0";
+const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v45";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v46";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {

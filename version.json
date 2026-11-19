@@ -1,8 +1,8 @@
 {
-  "version": "9.5.0",
-  "mobileVersion": "3.5.0",
-  "cache": "bibliotech-scout-v45",
-  "releasedAt": "2026-11-18",
-  "schemaCookieVersion": "9.5",
-  "notes": "Versión 9.5.0: +283 documentos oficiales de RECME y ASMAC (220 FAES por Cazaderos/Rumbos/Senderos/Rutas, 62 nuevas Especialidades FES de Manada/Tropa/Clan hasta 82 totales y Convocatoria Intercultural Challenge 2026), +1,240 nuevas preguntas y respuestas literales (14,816 totales), base de datos fechada al 18/11/2026, apartados propios en barra superior para Agentes de Cambio.MX y ¿Qué es BiblioTech?, acordeones desplegados por defecto con opción de contraer, sugerencia PC/Móvil en Editor de Formatos, compromiso de atención de reportes en 2 a 7 días y bienvenida comunitaria renovada."
+  "version": "9.6.0",
+  "mobileVersion": "3.6.0",
+  "cache": "bibliotech-scout-v46",
+  "releasedAt": "2026-11-19",
+  "schemaCookieVersion": "9.6",
+  "notes": "Versión 9.6.0: Sistema visual unificado en todos los apartados (misma tipografía, botones, píldoras, tarjetas, radios, márgenes y animaciones suaves), Biblioteca y Catálogo con 12 archivos por defecto y botón «Cargar más archivos» (+12), subcategorías inteligentes, renombrado a «Editor de Archivos», eliminación de leyendas redundantes y corrección del espaciado superior en todas las vistas."
 }

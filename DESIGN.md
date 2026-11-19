@@ -61,25 +61,28 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
 
 ---
 
-## 4. Arquitectura de los 5 Espacios y Navegación
+## 4. Arquitectura de los 7 Espacios y Navegación
 
-- **Espacios (`data-bt-view`):** `inicio`, `biblioteca`, `guia`, `fogata`, `formatos`.
-- **Barra superior escritorio (`.desktop-quick-nav`):** exactamente 6 accesos (`Inicio`, `Biblioteca`, `Guía Scout`, `La Fogata`, `Formatos`, `App / Offline`) + modo campamento + `Menú`.
-- **Dock inferior móvil (`#unifiedBottomDock`):** exactamente 5 botones equilibrados (`Inicio`, `Biblioteca`, `Fogata`, `Formatos`, `Guardados`) con `flex: 1 1 0; min-width: 0`.
+- **Espacios (`data-bt-view`):** `inicio`, `biblioteca`, `guia`, `agentes`, `fogata`, `formatos`, `acerca`.
+- **Barra superior escritorio (`.desktop-quick-nav`):** 8 accesos en 1 sola línea (`Inicio`, `Biblioteca`, `Guía Scout`, `Agentes de Cambio.MX`, `La Fogata`, `Editor de Archivos`, `¿Qué es BiblioTech?`, `App / Offline`) + modo oscuro + `Menú`.
+- **Dock inferior móvil (`#unifiedBottomDock`):** exactamente 5 botones equilibrados (`Inicio`, `Biblioteca`, `Fogata`, `Archivos`, `Guardados`) con `flex: 1 1 0; min-width: 0`.
 - **Controles de sub-vista:**
-  - Biblioteca (`#btLibraryModeBar`): segmented control corto (`Estantes (599)` / `Catálogo y Filtros`) + botón `Mis Guardados y Notas`.
-  - Guía Scout (`#btGuideSubnav`): barra de píldoras desplazable con 8 sub-pestañas (`Todo`, `Guía de Uso`, `Secciones`, `Agentes de Cambio.MX`, `Servicios y Trámites`, `Cambios en Esquemas`, `¿Qué es BiblioTech?`, `App y Offline`).
+  - Biblioteca (`#btLibraryModeBar`): segmented control corto (`Estantes (882)` / `Catálogo y Filtros`) + botón `Mis Guardados y Notas`. Paginación uniforme de **12 archivos por defecto** y carga progresiva de `+12` con botón `Cargar más archivos`. Subcategorías contraídas en `Destacados`/`Todas` y abiertas automáticamente al entrar en un estante/categoría específica (`FAES`, `Especialidades FES`, etc.).
+  - Guía Scout (`#btGuideSubnav`): barra de píldoras desplazable con 6 sub-pestañas (`Todo`, `Guía de Uso`, `Secciones`, `Servicios y Trámites`, `Cambios en Esquemas`, `App y Offline`), con acordeones `<details class="bt-acc-card">` desplegados por defecto y contraíbles.
 
 ---
 
 ## 5. Estándar del Lector y Herramientas Productivas
 
+- **Sistema unificado de controles y animaciones (v9.6.0):**
+  - Todos los `<button>`, `<input>`, `<select>` y `<textarea>` usan `Plus Jakarta Sans`; todos los títulos de sección usan `Outfit` con escala fluida única `clamp(1.72rem, 2.85vw, 2.38rem)`.
+  - Botones primarios y píldoras activas usan el mismo gradiente de marca (`linear-gradient(135deg, #6d28d9, #0284c7)`), radio uniforme (`12px` botones, `999px` píldoras, `20px` tarjetas, `24px` contenedores principales) y transición limpia (`0.2s cubic-bezier(0.22, 1, 0.36, 1)`) sin inclinaciones 3D bruscas en tarjetas ni figuras 3D distractoras en el fondo.
 - **Web/iOS (`#docModal.bt-reader-v2`):**
-  - Cabecera en 1 sola fila compacta con título (máximo 2 líneas), botón `Info` plegable (`#btnToggleDocInfo`), guardado, reporte y cerrar.
+  - Cabecera en 1 sola fila compacta con título (máximo 2 líneas), botón `Info` plegable (`#btnToggleDocInfo` con descripción, fecha RECME, ODS y etiquetas), guardado, reporte y cerrar.
   - Metadatos y etiquetas viven dentro del cajón `#modalDocInfoDrawer` (cerrado por defecto) y nunca compiten con `#modalFieldNoteBox` (cierre mutuo).
   - Barra unificada (`.bt-reader-unified-bar`) arriba en escritorio y **al pie del modal en móvil (`<= 768px`)** respetando `env(safe-area-inset-bottom)`.
 - **App Android nativa (`#bt-pdf-viewer`):**
   - Controles esenciales siempre a mano: volver, título, salto a página `#`, zoom, Guardar (`bt_saved_docs`), Notas (`bt_note_<id>`), Reportar y descarga/abrir externo.
   - Modo lectura inmersivo (`.is-immersive`) alternado con toque simple en el centro de la página.
-- **Editor Inteligente de Formatos (Espacio `formatos`):**
-  - Seguir estética de herramienta profesional limpia: barra de estado de perfil local (autorelleno), formulario estructurado por pasos o bloques claros, vista previa fiel del documento y exportación/impresión en un clic, funcionando 100% offline.
+- **Editor de Archivos (Espacio `formatos`):**
+  - Herramienta profesional limpia 100% local y offline sobre los formatos oficiales de base (Ficha de Salud 2 hojas, Permiso JL304, Especialidades FES, Cédula SMART, Convocatoria/Programa y Acta de Consejo/MASC), con autollenado de perfil local, borradores y exportación directa a PDF/PNG/Impresión.

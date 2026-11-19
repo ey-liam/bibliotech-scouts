@@ -15716,12 +15716,12 @@ html[data-camp-mode="true"] .forum-flag-btn {
 }
 
 html[data-bt-active-view]:not([data-bt-active-view="inicio"]) main#contenido-principal {
-  padding-top: calc(var(--header-h, 72px) + 0.35rem);
+  padding-top: 0 !important;
 }
 
 /* Hub de Espacios Dedicados en Inicio */
 .bt-workspace-hub {
-  padding: 2.2rem 0 3.2rem;
+  padding: 2rem 0 3.25rem;
 }
 
 .bt-workspace-hub-head {
@@ -15730,8 +15730,8 @@ html[data-bt-active-view]:not([data-bt-active-view="inicio"]) main#contenido-pri
 
 .bt-workspace-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.9rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
 }
 
 @media (max-width: 1120px) {
@@ -15740,10 +15740,10 @@ html[data-bt-active-view]:not([data-bt-active-view="inicio"]) main#contenido-pri
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 720px) {
   .bt-workspace-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.65rem;
+    gap: 0.75rem;
   }
 }
 
@@ -15986,22 +15986,32 @@ html[data-camp-mode="true"] .bt-guide-pill.active {
 /* Mejor espaciado del navbar desktop ahora con 8 apartados dedicados limpios */
 @media (min-width: 1200px) {
   .desktop-quick-nav {
-    gap: 0.14rem !important;
+    gap: 0.1rem !important;
     flex-wrap: nowrap !important;
   }
   .desktop-quick-nav .nav-link {
-    padding: 0.36rem 0.5rem !important;
-    font-size: 0.73rem !important;
+    padding: 0.35rem 0.42rem !important;
+    font-size: 0.71rem !important;
   }
 }
 
-@media (min-width: 1380px) {
+@media (min-width: 1360px) {
   .desktop-quick-nav {
-    gap: 0.2rem !important;
+    gap: 0.18rem !important;
+  }
+  .desktop-quick-nav .nav-link {
+    padding: 0.4rem 0.56rem !important;
+    font-size: 0.76rem !important;
+  }
+}
+
+@media (min-width: 1480px) {
+  .desktop-quick-nav {
+    gap: 0.24rem !important;
   }
   .desktop-quick-nav .nav-link {
     padding: 0.42rem 0.64rem !important;
-    font-size: 0.78rem !important;
+    font-size: 0.79rem !important;
   }
 }
 
@@ -17373,4 +17383,524 @@ html[data-camp-mode="true"] .book-tag-pill {
 
 .modal-doc-tags {
   margin-top: 0.5rem;
+}
+
+/* ============================================================================
+   V9.6: SISTEMA DE DISEÑO UNIFICADO (ESPACIADOS, BOTONES, TIPOGRAFÍA,
+   SUPERFICIES, GRIDS DE 12 ARCHIVOS Y ANIMACIONES COHERENTES)
+   ============================================================================ */
+:root {
+  --bt-ui-font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --bt-display-font: "Outfit", "Plus Jakarta Sans", sans-serif;
+  --bt-brand-grad: linear-gradient(135deg, #6d28d9, #0284c7);
+  --bt-brand-grad-hover: linear-gradient(135deg, #5b21b6, #0369a1);
+  --bt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --bt-radius-btn: 12px;
+  --bt-radius-card: 20px;
+  --bt-radius-panel: 24px;
+  --bt-surface-card: rgba(255, 255, 255, 0.94);
+  --bt-border-card: rgba(15, 23, 42, 0.09);
+  --bt-shadow-card: 0 10px 28px -16px rgba(15, 23, 42, 0.18);
+  --bt-shadow-card-hover: 0 18px 36px -18px rgba(109, 40, 217, 0.28);
+}
+
+html[data-camp-mode="true"] {
+  --bt-surface-card: rgba(18, 13, 40, 0.9);
+  --bt-border-card: rgba(139, 92, 246, 0.28);
+  --bt-shadow-card: 0 12px 30px -16px rgba(0, 0, 0, 0.55);
+  --bt-shadow-card-hover: 0 18px 38px -16px rgba(56, 189, 248, 0.28);
+}
+
+/* 1) Tipografía 100% consistente en todos los controles (cero Arial colado) */
+button,
+input,
+select,
+textarea {
+  font-family: var(--bt-ui-font);
+}
+
+/* 2) Escala tipográfica única para títulos y subtítulos en todos los apartados */
+.section-title,
+.adc-hey-heading,
+.app-download-title,
+#acerca .about-text-col h2,
+.search-hub-title {
+  font-family: var(--bt-display-font) !important;
+  font-size: clamp(1.72rem, 2.85vw, 2.38rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.025em !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.section-subtitle,
+.app-download-subtitle {
+  font-family: var(--bt-ui-font) !important;
+  font-size: 0.96rem !important;
+  line-height: 1.6 !important;
+  max-width: 72ch;
+}
+
+.section-eyebrow,
+.app-download-eyebrow {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.42rem !important;
+  padding: 0.28rem 0.78rem !important;
+  border-radius: 999px !important;
+  font-family: var(--bt-ui-font) !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.65rem !important;
+  background: rgba(109, 40, 217, 0.08) !important;
+  border: 1px solid rgba(109, 40, 217, 0.18) !important;
+  color: #5b21b6 !important;
+}
+
+html[data-camp-mode="true"] .section-eyebrow,
+html[data-camp-mode="true"] .app-download-eyebrow {
+  background: rgba(139, 92, 246, 0.16) !important;
+  border-color: rgba(167, 139, 250, 0.32) !important;
+  color: #ddd6fe !important;
+}
+
+/* 3) Ritmo vertical unificado y fondos sin cortes abruptos entre vistas */
+#biblioteca,
+#explorar,
+#guia-inicio,
+#secciones,
+#servicios,
+#cambios,
+#agentes,
+#foro,
+#editor-formatos,
+#acerca,
+#app {
+  background: transparent !important;
+  padding: 2rem 0 3.25rem !important;
+}
+
+#biblioteca,
+#explorar,
+#guia-inicio {
+  padding-top: 1.15rem !important;
+}
+
+.bt-subview-bar {
+  padding: 1rem 0 0.25rem !important;
+}
+
+@media (max-width: 768px) {
+  #biblioteca,
+  #explorar,
+  #guia-inicio,
+  #secciones,
+  #servicios,
+  #cambios,
+  #agentes,
+  #foro,
+  #editor-formatos,
+  #acerca,
+  #app {
+    padding: 1.25rem 0 2.5rem !important;
+  }
+
+  #biblioteca,
+  #explorar,
+  #guia-inicio {
+    padding-top: 0.75rem !important;
+  }
+
+  .bt-subview-bar {
+    padding: 0.7rem 0 0.15rem !important;
+  }
+}
+
+/* 4) Fondo ambiental limpio y elegante (sin figuras 3D raras girando detrás del texto) */
+.global-animated-bg .bg-3d-cube,
+.global-animated-bg .bg-3d-ring,
+.global-animated-bg .bg-spark {
+  display: none !important;
+}
+
+.global-animated-bg .bg-hex-float {
+  opacity: 0.07 !important;
+}
+
+@media (max-width: 768px) {
+  .global-animated-bg .bg-hex-float {
+    opacity: 0.04 !important;
+  }
+}
+
+/* Quitar inclinaciones forzadas en galería polaroid y hover 3D brusco en tarjetas */
+.mosaic-polaroid,
+.mosaic-polaroid.tilt-left,
+.mosaic-polaroid.tilt-right {
+  transform: none !important;
+  border-radius: 16px !important;
+  transition: transform 0.22s var(--bt-ease), box-shadow 0.22s var(--bt-ease) !important;
+}
+
+.mosaic-polaroid:hover {
+  transform: translateY(-4px) !important;
+}
+
+.book-card,
+.doc-card,
+.starter-3d-card,
+.service-info-card,
+.change-card,
+.forum-post-card,
+.editor-format-card,
+.bt-workspace-card,
+.scout-sec-card {
+  transform-style: flat !important;
+  transition: transform 0.2s var(--bt-ease), box-shadow 0.2s var(--bt-ease), border-color 0.2s ease !important;
+}
+
+.book-card:hover,
+.doc-card:hover,
+.editor-format-card:hover,
+.bt-workspace-card:hover,
+.forum-post-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: var(--bt-shadow-card-hover) !important;
+}
+
+/* 5) Superficies de tarjetas uniformes en claro y oscuro */
+.book-card,
+.doc-card,
+.starter-3d-card,
+.service-info-card,
+.change-card,
+.forum-post-card,
+.editor-format-card,
+.bt-workspace-card {
+  border-radius: var(--bt-radius-card) !important;
+  background: var(--bt-surface-card) !important;
+  border: 1px solid var(--bt-border-card) !important;
+  box-shadow: var(--bt-shadow-card) !important;
+}
+
+.about-card,
+.app-download-shell,
+.adc-cosmic-card {
+  border-radius: var(--bt-radius-panel) !important;
+  border: 1px solid var(--bt-border-card) !important;
+  box-shadow: var(--bt-shadow-card) !important;
+}
+
+html[data-camp-mode="true"] .about-card,
+html[data-camp-mode="true"] .app-download-shell,
+html[data-camp-mode="true"] .adc-cosmic-card {
+  background: var(--bt-surface-card) !important;
+}
+
+/* 6) Botones primarios unificados en TODO el sitio */
+.btn-forum-compose,
+.bt-open-template-btn,
+.adc-btn-register-action,
+.app-download-btn,
+.ios-offline-btn-primary,
+.bt-consent-btn.is-primary,
+.bt-sf-export-btn.is-primary,
+.btn-centenario-shelf {
+  font-family: var(--bt-ui-font) !important;
+  font-weight: 700 !important;
+  border-radius: var(--bt-radius-btn) !important;
+  min-height: 44px !important;
+  background: var(--bt-brand-grad) !important;
+  color: #ffffff !important;
+  border: 1px solid transparent !important;
+  box-shadow: 0 10px 22px -12px rgba(109, 40, 217, 0.55) !important;
+  transition: transform 0.2s var(--bt-ease), box-shadow 0.2s var(--bt-ease), filter 0.2s ease !important;
+}
+
+.btn-forum-compose:hover,
+.bt-open-template-btn:hover,
+.adc-btn-register-action:hover,
+.app-download-btn:hover,
+.ios-offline-btn-primary:hover,
+.bt-consent-btn.is-primary:hover,
+.bt-sf-export-btn.is-primary:hover,
+.btn-centenario-shelf:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.04);
+  box-shadow: 0 14px 28px -12px rgba(109, 40, 217, 0.62) !important;
+}
+
+.app-download-btn {
+  padding: 0.72rem 1.25rem !important;
+  min-height: 52px !important;
+}
+
+.app-download-btn strong,
+.app-download-btn small,
+.app-download-btn svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+.app-download-btn small {
+  opacity: 0.88;
+}
+
+/* Botones secundarios y "Cargar más archivos" unificados */
+.btn-outline-joy,
+.btn-load-more,
+.adc-btn-query-chip,
+.ios-offline-btn-secondary,
+.bt-consent-btn.is-secondary,
+.bt-subview-action-btn {
+  font-family: var(--bt-ui-font) !important;
+  font-size: 0.86rem !important;
+  font-weight: 700 !important;
+  border-radius: var(--bt-radius-btn) !important;
+  min-height: 42px !important;
+  padding: 0.58rem 1.25rem !important;
+  transition: transform 0.2s var(--bt-ease), border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+#libraryShowMoreBtn,
+#loadMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: min(320px, 100%);
+  min-height: 46px !important;
+  padding: 0.72rem 1.6rem !important;
+  background: var(--bt-surface-card) !important;
+  border: 1.5px solid rgba(109, 40, 217, 0.34) !important;
+  color: #5b21b6 !important;
+  box-shadow: 0 8px 20px -14px rgba(109, 40, 217, 0.35) !important;
+}
+
+#libraryShowMoreBtn:hover,
+#loadMoreBtn:hover {
+  background: var(--bt-brand-grad) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+}
+
+html[data-camp-mode="true"] #libraryShowMoreBtn,
+html[data-camp-mode="true"] #loadMoreBtn {
+  background: rgba(24, 17, 52, 0.92) !important;
+  border-color: rgba(167, 139, 250, 0.5) !important;
+  color: #f8fafc !important;
+}
+
+html[data-camp-mode="true"] #libraryShowMoreBtn:hover,
+html[data-camp-mode="true"] #loadMoreBtn:hover {
+  background: var(--bt-brand-grad) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+}
+
+/* 7) Píldoras y pestañas unificadas (MISMO tamaño, radio y estado activo en todo el sitio) */
+.shelf-tab,
+.cat-filter-pill,
+.forum-channel-tab,
+.forum-tag-pill,
+.bt-guide-pill,
+.app-platform-tab,
+.qcat-tab,
+.subcat-pill {
+  font-family: var(--bt-ui-font) !important;
+  border-radius: 999px !important;
+  min-height: 36px !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s var(--bt-ease) !important;
+}
+
+.shelf-tab.active,
+.cat-filter-pill.active,
+.forum-channel-tab.active,
+.forum-tag-pill.active,
+.bt-guide-pill.active,
+.app-platform-tab.active,
+.qcat-tab.active,
+.subcat-pill.active,
+.bt-seg-btn.active {
+  background: var(--bt-brand-grad) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 8px 18px -10px rgba(109, 40, 217, 0.58) !important;
+}
+
+.shelf-tab.active span,
+.forum-channel-tab.active span,
+.forum-tag-pill.active span {
+  color: #ffffff !important;
+}
+
+/* En escritorio, envolver pestañas de Biblioteca y Catálogo para que NO se corten a la derecha */
+@media (min-width: 1024px) {
+  .library-shelves-tabs,
+  .catalog-category-cards {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+    gap: 0.48rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+}
+
+/* 8) Biblioteca Scout: controles sin cortes, barra meta y grid limpio de 12 archivos */
+.library-header-row {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 1rem !important;
+}
+
+.library-controls-bar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 0.65rem !important;
+  width: 100% !important;
+}
+
+.library-controls-bar .lib-search-input,
+.library-controls-bar .lib-filter-select {
+  height: 42px !important;
+  border-radius: var(--bt-radius-btn) !important;
+  font-size: 0.86rem !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+@media (max-width: 720px) {
+  .library-controls-bar {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+.library-results-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin: 1rem 0 0.85rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+html[data-camp-mode="true"] .library-results-meta {
+  color: #cbd5e1;
+}
+
+/* Grid de 12 archivos (4 cols desktop -> 3 filas, 3 cols tablet -> 4 filas, 2 cols móvil -> 6 filas) */
+.bookshelf-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 1.15rem !important;
+  align-items: stretch !important;
+}
+
+@media (max-width: 1120px) {
+  .bookshelf-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .bookshelf-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.78rem !important;
+  }
+}
+
+.bookshelf-grid .book-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  padding: 0.85rem !important;
+}
+
+.bookshelf-grid .book-desc {
+  flex: 1 1 auto;
+}
+
+.bookshelf-grid .book-read-btn {
+  margin-top: auto !important;
+  border-radius: 10px !important;
+  min-height: 38px !important;
+  font-weight: 700 !important;
+}
+
+/* 9) Editor de Archivos: tarjetas de igual altura con botón alineado abajo */
+.editor-formats-grid {
+  align-items: stretch !important;
+}
+
+.editor-format-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  padding: 1.2rem !important;
+  gap: 0.55rem !important;
+}
+
+.editor-format-card p {
+  flex: 1 1 auto !important;
+  margin: 0 0 0.5rem !important;
+}
+
+.editor-format-card .bt-open-template-btn {
+  margin-top: auto !important;
+  width: 100% !important;
+  min-height: 42px !important;
+  font-size: 0.86rem !important;
+}
+
+/* 10) Agentes de Cambio.MX: evitar choque de estrellitas con el logo en móvil y alinear botones */
+.adc-corner-star {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+@media (max-width: 768px) {
+  .adc-corner-star.adc-star-tl {
+    display: none !important;
+  }
+}
+
+.adc-register-btns-col {
+  gap: 0.65rem !important;
+}
+
+.adc-btn-register-action,
+.adc-btn-query-chip {
+  min-height: 44px !important;
+  padding: 0.65rem 1.2rem !important;
+}
+
+/* 11) Inputs y selects consistentes en Catálogo y La Fogata */
+.catalog-filters-bar input,
+.catalog-filters-bar select,
+.forum-toolbar input,
+.forum-toolbar select {
+  min-height: 42px !important;
+  border-radius: var(--bt-radius-btn) !important;
+}
+
+/* 12) Acordeones desplegados con separación uniforme */
+.bt-accordion-grid {
+  gap: 1.1rem !important;
+}
+
+details.bt-acc-card > summary.bt-acc-summary {
+  padding: 1.15rem 1.25rem !important;
+}
+
+.bt-acc-body {
+  padding: 0.9rem 1.25rem 1.2rem !important;
 }

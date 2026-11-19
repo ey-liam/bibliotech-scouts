@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=38" />
+  <link rel="stylesheet" href="styles.css?v=39" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -124,7 +124,7 @@
         <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia">Guía Scout</a>
         <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio.MX</a>
         <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
-        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Formatos</a>
+        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor de Archivos</a>
         <a href="#acerca" class="nav-link" data-bt-go-view="acerca">¿Qué es BiblioTech?</a>
         <a href="#app" class="nav-link nav-link-app" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">App / Offline</a>
       </nav>
@@ -139,7 +139,7 @@
         <a href="#servicios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="servicios">Servicios y Trámites</a>
         <a href="#cambios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="cambios">Cambios en Esquemas</a>
         <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
-        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor de Formatos</a>
+        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor de Archivos</a>
         <a href="#app" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">App / Modo Offline</a>
         <a href="#aportar" class="nav-link">Aportar y Contacto</a>
         <button type="button" id="openWelcomeMenuBtn" class="nav-link nav-link-welcome">
@@ -547,8 +547,8 @@
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
           </span>
-          <span class="bt-workspace-title">Editor de Formatos</span>
-          <span class="bt-workspace-desc">Llena sobre los archivos oficiales (Ficha Médica, JL304, FES, proyectos) y descarga en PDF oficial.</span>
+          <span class="bt-workspace-title">Editor de Archivos</span>
+          <span class="bt-workspace-desc">Llena sobre los documentos oficiales (Ficha Médica, JL304, FES, proyectos) y descarga tu PDF oficial.</span>
           <span class="bt-workspace-cta">Abrir Editor →</span>
         </button>
 
@@ -663,21 +663,20 @@
         </div>
       </div>
 
-      <!-- ESTANTERÍA VISUAL CON PORTADAS -->
+      <!-- CONTADOR Y ACCIONES RÁPIDAS DEL ESTANTE -->
+      <div class="library-results-meta">
+        <span id="libraryCountLabel" aria-live="polite">Cargando biblioteca...</span>
+        <button type="button" id="resetLibraryFiltersBtn" class="btn-text-reset hidden">Limpiar filtros</button>
+      </div>
+
+      <!-- ESTANTERÍA VISUAL CON PORTADAS (12 POR DEFECTO + CARGA PROGRESIVA) -->
       <div id="libraryBookshelfGrid" class="bookshelf-grid" role="region" aria-label="Resultados de la biblioteca" tabindex="-1"></div>
 
       <div class="bookshelf-more-row">
         <button type="button" id="libraryShowMoreBtn" class="btn-outline-joy">
-          Ver más documentos de este estante
+          Cargar más archivos
         </button>
       </div>
-    </div>
-
-    <!-- Separador dinámico entre Biblioteca y Guía de Uso -->
-    <div class="section-wave-separator" aria-hidden="true">
-      <svg viewBox="0 0 1440 54" preserveAspectRatio="none">
-        <path d="M0,24 C360,56 720,0 1080,32 C1260,48 1380,18 1440,12 L1440,54 L0,54 Z" fill="#f4f8ff"></path>
-      </svg>
     </div>
   </section>
 
@@ -900,13 +899,6 @@
         </details>
       </div>
     </div>
-
-    <!-- Separador ondulado animado hacia Acerca del Proyecto -->
-    <div class="section-wave-separator" aria-hidden="true">
-      <svg viewBox="0 0 1440 54" preserveAspectRatio="none">
-        <path d="M0,18 C420,58 920,-6 1440,28 L1440,54 L0,54 Z" fill="#ffffff"></path>
-      </svg>
-    </div>
   </section>
 
   <!-- ACERCA DEL PROYECTO Y AUTOR (APARTADO PROPIO EN BARRA SUPERIOR) -->
@@ -944,7 +936,7 @@
             <li><strong>Objetivo y utilidad:</strong> resuelve dudas en segundos sobre progresiones PJOS, 220 Fichas de Acciones Educativas Scouts (FAES), 82 Especialidades Scouts (FES), proyectos, reglamentos, uniforme, trámites SISAS y eventos sin tener que buscar página por página entre cientos de archivos.</li>
             <li><strong>Buscador inteligente con fuentes:</strong> responde apoyándose en <strong>14,816 preguntas y respuestas</strong> basadas literalmente en los documentos oficiales e indica exactamente el libro, ficha, circular o página de donde salió cada dato.</li>
             <li><strong>Biblioteca con visores integrados (882 archivos):</strong> abre al instante libros de la Colección del Centenario, FAES, FES, PDFs, hojas Excel con filtro y exportación, guías HTML, presentaciones e imágenes, con favoritos, notas locales y modo oscuro automático según tu dispositivo.</li>
-            <li><strong>Editor de Formatos, La Fogata y Modo Offline:</strong> llena formatos oficiales directamente sobre las plantillas reales, comparte consejos con la comunidad y úsala en navegador web, iOS o App Android sin conexión en campamentos.</li>
+            <li><strong>Editor de Archivos, La Fogata y Modo Offline:</strong> llena documentos oficiales directamente sobre las plantillas reales, comparte consejos con la comunidad y úsala en navegador web, iOS o App Android sin conexión en campamentos.</li>
           </ul>
           <div class="about-signature-box">
             <p class="signature-main">Creador: <strong>Liam Durán</strong></p>
@@ -967,7 +959,7 @@
                 <span>rdc.tlxh@gmail.com</span>
               </a>
             </div>
-            <p class="signature-help-note">Si detectas algún error, archivo desactualizado, detalle en un formato o respuesta por mejorar, puedes reportarlo al correo <strong>rdc.tlxh@gmail.com</strong>, usando el botón <strong>Reportar</strong> dentro del visor, debajo de cada respuesta, en el Editor de Formatos o desde el menú. Estoy trabajando duro y revisando constantemente cada reporte para solucionarlo en aproximadamente <strong>2 a 7 días como máximo</strong>.</p>
+            <p class="signature-help-note">Si detectas algún error, archivo desactualizado, detalle en un documento o respuesta por mejorar, puedes reportarlo al correo <strong>rdc.tlxh@gmail.com</strong>, usando el botón <strong>Reportar</strong> dentro del visor, debajo de cada respuesta, en el Editor de Archivos o desde el menú. Estoy trabajando duro y revisando constantemente cada reporte para solucionarlo en aproximadamente <strong>2 a 7 días como máximo</strong>.</p>
           </div>
         </div>
       </div>
@@ -1284,13 +1276,6 @@
           <span>EEAS Nacional</span>
         </div>
       </div>
-    </div>
-
-    <!-- Separador dinámico entre Secciones y Servicios Oficiales -->
-    <div class="section-wave-separator" aria-hidden="true">
-      <svg viewBox="0 0 1440 54" preserveAspectRatio="none">
-        <path d="M0,36 C420,4 840,52 1440,16 L1440,54 L0,54 Z" fill="#f0f7ff"></path>
-      </svg>
     </div>
   </section>
 
@@ -1665,7 +1650,6 @@
     <div class="container">
       <div class="forum-header-row">
         <div>
-          <span class="section-eyebrow">COMUNIDAD SCOUT · JÓVENES Y ADULTOS</span>
           <h2 id="forumSectionTitle" class="section-title">La Fogata: Recomendaciones y Comunidad</h2>
           <p class="section-subtitle">
             Comparte qué es imprescindible llevar a un campamento, consejos de vida de sección, ideas para proyectos SMART o experiencias entre Scouters sobre supervisión segura y acompañamiento juvenil.
@@ -1743,20 +1727,19 @@
     </div>
   </section>
 
-  <!-- EDITOR INTELIGENTE DE FORMATOS Y AUTOLLENADO LOCAL (100% FUNCIONAL Y OFFLINE) -->
+  <!-- EDITOR DE ARCHIVOS Y AUTOLLENADO LOCAL (100% FUNCIONAL Y OFFLINE) -->
   <section id="editor-formatos" class="editor-coming-section bt-view-hidden" data-bt-view="formatos" aria-labelledby="editorFormatosTitle">
     <div class="container">
       <div class="editor-coming-head">
         <div class="editor-coming-copy">
-          <span class="editor-coming-badge is-live">HERRAMIENTA ACTIVA · 100% LOCAL Y OFFLINE</span>
-          <h2 id="editorFormatosTitle" class="section-title">Editor Inteligente de Formatos y Autollenado Scout</h2>
+          <h2 id="editorFormatosTitle" class="section-title">Editor de Archivos</h2>
           <p class="section-subtitle">
-            Elige cualquiera de los 6 formatos editables, llena tus datos directamente sobre el documento oficial de base, autollena en 1 toque con tu Perfil Local, guarda borradores en tu dispositivo y descárgalo listo en PDF oficial, imagen o para imprimir.
+            Elige cualquiera de los 6 archivos editables, llena tus datos directamente sobre el documento oficial de base, autollena en 1 toque con tu Perfil Local, guarda borradores en tu dispositivo y descárgalo listo en PDF oficial, imagen o para imprimir.
           </p>
           <div class="bt-sf-device-tip" role="note">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
             <p>
-              <strong>Sugerencia para una mejor experiencia:</strong> cuando llenes archivos largos o con mucha información (como la Ficha Médica completa de 2 hojas o una Cédula SMART detallada), resulta más cómodo trabajar desde una <strong>computadora</strong>. Sin embargo, <strong>no es obligatorio</strong>: puedes llenar, guardar borradores y descargar todos los formatos sin problema también desde tu celular o tablet.
+              <strong>Sugerencia para una mejor experiencia:</strong> cuando llenes archivos largos o con mucha información (como la Ficha Médica completa de 2 hojas o una Cédula SMART detallada), resulta más cómodo trabajar desde una <strong>computadora</strong>. Sin embargo, <strong>no es obligatorio</strong>: puedes llenar, guardar borradores y descargar todos los archivos sin problema también desde tu celular o tablet.
             </p>
           </div>
         </div>
@@ -1768,11 +1751,11 @@
             <span class="editor-format-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
             </span>
-            <span class="editor-soon-pill is-ready">Editable · Autollenado</span>
+            <span class="editor-soon-pill is-ready">2 Hojas · Oficial</span>
           </div>
           <h3>Ficha Médica y de Salud</h3>
-          <p>Tipo de sangre, alergias, medicamentos, seguro médico/scout y contactos de emergencia listos para campamentos y salidas.</p>
-          <button type="button" class="bt-open-template-btn" data-open-template="salud">Abrir y llenar formato</button>
+          <p>Tipo de sangre, alergias, medicamentos, antecedentes, inmunología y contactos de emergencia listos para campamentos y salidas.</p>
+          <button type="button" class="bt-open-template-btn" data-open-template="salud">Abrir y llenar archivo</button>
         </article>
 
         <article class="editor-format-card" data-template-card="jl304">
@@ -1780,11 +1763,11 @@
             <span class="editor-format-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 20h20L12 2z"/><path d="M12 2v18"/><path d="M8.5 20l3.5-6 3.5 6"/></svg>
             </span>
-            <span class="editor-soon-pill is-ready">Editable · Autollenado</span>
+            <span class="editor-soon-pill is-ready">Autorización · JL304</span>
           </div>
           <h3>Permiso de Actividad y Salida (JL304)</h3>
           <p>Autorización para salidas, acantonamientos y campamentos con datos del participante, padre/tutor y Scouter responsable.</p>
-          <button type="button" class="bt-open-template-btn" data-open-template="jl304">Abrir y llenar formato</button>
+          <button type="button" class="bt-open-template-btn" data-open-template="jl304">Abrir y llenar archivo</button>
         </article>
 
         <article class="editor-format-card" data-template-card="fes">
@@ -1792,11 +1775,11 @@
             <span class="editor-format-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
             </span>
-            <span class="editor-soon-pill is-ready">Editable · Autollenado</span>
+            <span class="editor-soon-pill is-ready">RECME · 17 ODS</span>
           </div>
           <h3>Especialidades FES y Seguimiento RECME</h3>
           <p>Llenado guiado de fichas FES (4 Ejes y 17 ODS), nivel, sinodal/asesor, objetivos de aprendizaje y evidencias logradas.</p>
-          <button type="button" class="bt-open-template-btn" data-open-template="fes">Abrir y llenar formato</button>
+          <button type="button" class="bt-open-template-btn" data-open-template="fes">Abrir y llenar archivo</button>
         </article>
 
         <article class="editor-format-card" data-template-card="smart">
@@ -1804,11 +1787,11 @@
             <span class="editor-format-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             </span>
-            <span class="editor-soon-pill is-ready">Editable · Autollenado</span>
+            <span class="editor-soon-pill is-ready">Proyecto SMART</span>
           </div>
           <h3>Cédula de Proyecto SMART e Insignias Mundiales</h3>
           <p>Cédula para Agentes de Cambio.MX, Tribu de la Tierra, Campeones de la Naturaleza, Mensajeros de la Paz, Jade y Obsidiana.</p>
-          <button type="button" class="bt-open-template-btn" data-open-template="smart">Abrir y llenar formato</button>
+          <button type="button" class="bt-open-template-btn" data-open-template="smart">Abrir y llenar archivo</button>
         </article>
 
         <article class="editor-format-card" data-template-card="programa">
@@ -1816,11 +1799,11 @@
             <span class="editor-format-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
             </span>
-            <span class="editor-soon-pill is-ready">Editable · Autollenado</span>
+            <span class="editor-soon-pill is-ready">Campamento</span>
           </div>
           <h3>Convocatoria y Programa de Campamento</h3>
           <p>Convocatoria de evento, horarios, sede, objetivos educativos, lista de equipo indispensable y cronograma por bloques.</p>
-          <button type="button" class="bt-open-template-btn" data-open-template="programa">Abrir y llenar formato</button>
+          <button type="button" class="bt-open-template-btn" data-open-template="programa">Abrir y llenar archivo</button>
         </article>
 
         <article class="editor-format-card" data-template-card="acta">
@@ -1828,11 +1811,11 @@
             <span class="editor-format-icon" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </span>
-            <span class="editor-soon-pill is-ready">Editable · Autollenado</span>
+            <span class="editor-soon-pill is-ready">Consejo / MASC</span>
           </div>
           <h3>Acta de Consejo, Corte de Honor y MASC</h3>
           <p>Actas de Consejo de Grupo, Corte de Honor, Asamblea de Comunidad, Consejo de Clan o acuerdos de Diálogo Directo.</p>
-          <button type="button" class="bt-open-template-btn" data-open-template="acta">Abrir y llenar formato</button>
+          <button type="button" class="bt-open-template-btn" data-open-template="acta">Abrir y llenar archivo</button>
         </article>
       </div>
 
@@ -2097,7 +2080,7 @@
 
       <div class="load-more-container">
         <button type="button" id="loadMoreBtn" class="btn-load-more hidden">
-          Mostrar más documentos
+          Cargar más archivos
         </button>
       </div>
     </div>
@@ -2108,10 +2091,10 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 3.5.0 Mobile · Web 9.5.0</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 3.6.0 Mobile · Web 9.6.0</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
-            <strong>No es necesario descargar nada:</strong> puedes disfrutar de todas las herramientas, el buscador de 14,816 preguntas, los 882 documentos (incluyendo 220 FAES y 82 FES) y el Editor de Formatos directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
+            <strong>No es necesario descargar nada:</strong> puedes disfrutar de todas las herramientas, el buscador de 14,816 preguntas, los 882 documentos (incluyendo 220 FAES y 82 FES) y el Editor de Archivos directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
           </p>
           <p id="appDetectedOsBadge" class="app-detected-os-pill hidden" aria-live="polite"></p>
 
@@ -2268,7 +2251,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v45</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v46</code>) cada vez que abres la app con conexión.
           </p>
         </div>
       </div>
@@ -2448,7 +2431,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 18/11/2026 (882 documentos · 14,816 preguntas) · BETA 9.5.0 - 3.5.0 Mobile (18/11/2026) ·
+          Base de datos: 18/11/2026 (882 documentos · 14,816 preguntas) · BETA 9.6.0 - 3.6.0 Mobile (19/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
         </p>
         <p class="footer-non-affiliation">
@@ -2508,14 +2491,14 @@
       </svg>
       <span>Fogata</span>
     </button>
-    <button type="button" class="bt-dock-item" data-bt-go-view="formatos" data-target="editor-formatos" aria-label="Ir a Editor de Formatos">
+    <button type="button" class="bt-dock-item" data-bt-go-view="formatos" data-target="editor-formatos" aria-label="Ir a Editor de Archivos">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
         <polyline points="14 2 14 8 20 8"></polyline>
         <line x1="16" y1="13" x2="8" y2="13"></line>
         <line x1="16" y1="17" x2="8" y2="17"></line>
       </svg>
-      <span>Formatos</span>
+      <span>Archivos</span>
     </button>
     <button type="button" class="bt-dock-item" id="dockBtnSaved" data-action="saved" aria-label="Ver documentos guardados">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
@@ -2575,7 +2558,7 @@
             <span>Apartado donde pasó</span>
             <select id="bugReportSection">
               <option value="Buscador de preguntas">Buscador y respuestas</option>
-              <option value="Editor de Formatos">Editor y llenado de formatos</option>
+              <option value="Editor de Formatos">Editor de Archivos (llenado de formatos)</option>
               <option value="La Fogata">La Fogata (publicaciones y comentarios)</option>
               <option value="Biblioteca Scout">Biblioteca, FAES, FES y documentos</option>
               <option value="Lector / Visor PDF o Excel">Lector / Visor PDF o Excel</option>
@@ -2694,7 +2677,7 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
           </span>
           <div>
-            <strong>La Fogata y Editor de Formatos</strong>
+            <strong>La Fogata y Editor de Archivos</strong>
             <p>Comparte recomendaciones entre jóvenes y Scouters, y llena Ficha de Salud, JL304, FES y proyectos directamente sobre los documentos oficiales.</p>
           </div>
         </div>
