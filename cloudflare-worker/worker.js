@@ -1,25 +1,73 @@
 // ============================================================================
-// BiblioTech Scout — Cloudflare Worker (Telemetría, Moderación y La Fogata)
-// - Pega este código en https://dash.cloudflare.com -> Workers -> bibliotech-telemetry
-// - Binding KV recomendado: FORUM_KV -> bibliotech_fogata_kv
+// BiblioTech Scout — Cloudflare Worker v2.0 (Telemetría, Moderación y La Fogata)
+// - Worker en Cloudflare: bibliotech-telemetry
+// - Binding KV: FORUM_KV -> bibliotech_fogata_kv
 // - Opcional para moderación remota: Variable secreta ADMIN_TOKEN
+// - Observabilidad: Workers Logs + Traces habilitados
 // ============================================================================
 
+const WORKER_VERSION = "2.0";
 const FORUM_CACHE_KEY = "https://bibliotech-forum-cache.internal/v1/posts.json";
 const KV_POSTS_KEY = "fogata_posts_v1";
 const KV_DELETED_KEY = "fogata_deleted_v1";
 const KV_REPORTS_KEY = "fogata_reports_v1";
 const KV_AUDIT_KEY = "fogata_audit_v1";
+const KV_QUESTIONS_KEY = "bt_questions_log_v1";
+const KV_BUGS_KEY = "bt_bugs_log_v1";
 const MAX_BODY_BYTES = 48 * 1024;
 const RATE_WINDOW_MS = 60 * 1000;
-const RATE_MAX_WRITES = 10;
+const RATE_MAX_WRITES = 12;
 const ipWriteBuckets = new Map();
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Accept, X-Admin-Token",
+  "X-Content-Type-Options": "nosniff",
 };
+
+function jsonResponse(body, status = 200, extraHeaders = {}) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      ...CORS_HEADERS,
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store",
+      ...extraHeaders,
+    },
+  });
+}
+
+async function hashShort(input) {
+  if (!input) return "";
+  try {
+    const data = new TextEncoder().encode(`bt-v2:${input}`);
+    const digest = await crypto.subtle.digest("SHA-256", data);
+    const bytes = new Uint8Array(digest);
+    let hex = "";
+    for (let i = 0; i < 6; i++) {
+      hex += bytes[i].toString(16).padStart(2, "0");
+    }
+    return hex;
+  } catch (_) {
+    return "";
+  }
+}
+
+function timingSafeMatch(a, b) {
+  if (!a || !b || typeof a !== "string" || typeof b !== "string") return false;
+  const enc = new TextEncoder();
+  const ba = enc.encode(a);
+  const bb = enc.encode(b);
+  if (ba.byteLength !== bb.byteLength) return false;
+  try {
+    return crypto.subtle.timingSafeEqual(ba, bb);
+  } catch (_) {
+    let diff = 0;
+    for (let i = 0; i < ba.length; i++) diff |= ba[i] ^ bb[i];
+    return diff === 0;
+  }
+}
 
 function checkRateLimit(ip, actionType) {
   if (!ip || actionType === "foro_like") return true;
@@ -145,30 +193,123 @@ async function writeStoredPosts(env, posts) {
   } catch (_) {}
 }
 
+function extractQuestionsFromActivity(activityText, platform, nowIso) {
+  if (!activityText || typeof activityText !== "string") return [];
+  const lines = activityText.split(/\r?\n/);
+  const extracted = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line.includes("PREGUNTA (") && !line.toUpperCase().includes("SIN COINCIDENCIA")) continue;
+    let q = "";
+    let sources = "";
+    for (let j = i + 1; j < Math.min(i + 6, lines.length); j++) {
+      const nl = lines[j].trim();
+      if (/^\d+\.\s*\[/.test(nl)) break;
+      if (nl.startsWith("P:")) q = nl.slice(2).trim();
+      else if (nl.startsWith("Fuentes:")) sources = nl.slice(8).trim();
+    }
+    if (!q) continue;
+    const lowerMeta = line.toLowerCase();
+    const matched = !lowerMeta.includes("sin coincidencia") && !lowerMeta.includes("0 fuentes");
+    const mode = lowerMeta.includes("(manual") ? "manual" : "sugerencia";
+    extracted.push({
+      at: nowIso,
+      q: q.slice(0, 280),
+      matched,
+      mode,
+      sources: sources.slice(0, 280),
+      platform: String(platform || "").slice(0, 60),
+    });
+  }
+  return extracted;
+}
+
 async function recordPrivateAudit(env, payload, ip) {
   if (!env || !env.FORUM_KV || !payload || payload.actionType === "foro_like") return;
   try {
+    const nowIso = new Date().toISOString();
+    const ipHash = await hashShort(ip);
+    const subject = String(payload._subject || "").slice(0, 160);
+    const platform = String(payload.plataforma || "").slice(0, 80);
+    const alerts = String(payload.alertas_bugs_o_sin_coincidencia || "").slice(0, 800);
+    const summary = String(payload.resumen_mas_usado || "").slice(0, 1500);
+    const activity = String(payload.actividad_completa || "");
+
     const entry = {
-      at: new Date().toISOString(),
+      at: nowIso,
       actionType: String(payload.actionType || "evento").slice(0, 40),
-      subject: String(payload._subject || "").slice(0, 140),
+      subject,
+      platform,
+      alerts: alerts && !alerts.includes("Ninguna falla") ? alerts : "",
       securityRecord: payload.securityRecord || null,
-      summary: String(payload.resumen_mas_usado || "").slice(0, 500),
-      ipHash: ip ? String(ip).slice(0, 24) : "",
+      summary,
+      ipHash,
     };
+
     const audits = await readKvArray(env, KV_AUDIT_KEY);
     audits.unshift(entry);
     await writeKvArray(env, KV_AUDIT_KEY, audits, 400);
 
+    // Log persistente de preguntas reales (evita pérdida al expirar logs de 7 días)
+    const parsedQs = extractQuestionsFromActivity(activity, platform, nowIso);
+    if (parsedQs.length) {
+      const qLog = await readKvArray(env, KV_QUESTIONS_KEY);
+      for (let i = parsedQs.length - 1; i >= 0; i--) {
+        qLog.unshift(parsedQs[i]);
+      }
+      await writeKvArray(env, KV_QUESTIONS_KEY, qLog, 600);
+    }
+
+    // Log persistente de alertas, bugs JS y consultas sin coincidencia
+    const isAlertOrBug =
+      subject.toUpperCase().includes("ALERTA") ||
+      subject.toUpperCase().includes("BUG") ||
+      (alerts && !alerts.includes("Ninguna falla")) ||
+      parsedQs.some((x) => !x.matched);
+
+    if (isAlertOrBug) {
+      const bugs = await readKvArray(env, KV_BUGS_KEY);
+      bugs.unshift({
+        at: nowIso,
+        subject,
+        platform,
+        alerts,
+        activityExcerpt: activity.slice(0, 1200),
+        ipHash,
+      });
+      await writeKvArray(env, KV_BUGS_KEY, bugs, 300);
+    }
+
     if (
       payload.actionType === "foro_reporte" ||
-      String(payload._subject || "").toLowerCase().includes("reporte")
+      subject.toLowerCase().includes("reporte")
     ) {
       const reports = await readKvArray(env, KV_REPORTS_KEY);
       reports.unshift(entry);
       await writeKvArray(env, KV_REPORTS_KEY, reports, 250);
     }
   } catch (_) {}
+}
+
+async function sendExternalWebhooks(env, payload) {
+  if (!env || !payload || payload.actionType === "foro_like") return;
+  if (env.DISCORD_WEBHOOK_URL) {
+    const content = `**${payload._subject || "BiblioTech Scout"}**\n${payload.plataforma || ""}\n\`\`\`\n${String(payload.actividad_completa || "").slice(0, 1750)}\n\`\`\``;
+    await fetch(env.DISCORD_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: content.slice(0, 1950) }),
+    }).catch(() => {});
+  }
+
+  if (env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID) {
+    const msg = `${payload._subject || "BiblioTech Scout"}\n${payload.plataforma || ""}\n${String(payload.actividad_completa || "").slice(0, 3500)}`;
+    await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: msg }),
+    }).catch(() => {});
+  }
 }
 
 async function applyForumEvent(env, payload, isAdmin) {
@@ -279,7 +420,7 @@ async function applyForumEvent(env, payload, isAdmin) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
@@ -287,104 +428,110 @@ export default {
     const url = new URL(request.url);
     const reqAdminToken =
       request.headers.get("X-Admin-Token") || url.searchParams.get("token") || "";
-    const isAdmin = Boolean(env && env.ADMIN_TOKEN && reqAdminToken && reqAdminToken === env.ADMIN_TOKEN);
+    const isAdmin = Boolean(env && env.ADMIN_TOKEN && timingSafeMatch(reqAdminToken, env.ADMIN_TOKEN));
 
     if (request.method === "GET") {
-      if (url.searchParams.get("channel") === "forum") {
+      const channel = url.searchParams.get("channel") || "";
+
+      if (channel === "forum") {
         const [posts, deletedIds] = await Promise.all([
           readStoredPosts(env),
           readKvArray(env, KV_DELETED_KEY),
         ]);
-        return new Response(
-          JSON.stringify({
-            ok: true,
-            posts,
-            deletedIds,
-            storage: env && env.FORUM_KV ? "kv" : "edge_cache",
-          }),
-          {
-            status: 200,
-            headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-          }
-        );
-      }
-      if (url.searchParams.get("channel") === "admin" && isAdmin) {
-        const [reports, audits] = await Promise.all([
-          readKvArray(env, KV_REPORTS_KEY),
-          readKvArray(env, KV_AUDIT_KEY),
-        ]);
-        return new Response(JSON.stringify({ ok: true, reports, audits }), {
-          status: 200,
-          headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        return jsonResponse({
+          ok: true,
+          posts,
+          deletedIds,
+          storage: env && env.FORUM_KV ? "kv" : "edge_cache",
         });
       }
-      return new Response(JSON.stringify({ ok: true, service: "bibliotech-telemetry" }), {
-        status: 200,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+
+      if (channel === "stats") {
+        const [posts, qLog, bugs, reports] = await Promise.all([
+          readStoredPosts(env),
+          readKvArray(env, KV_QUESTIONS_KEY),
+          readKvArray(env, KV_BUGS_KEY),
+          readKvArray(env, KV_REPORTS_KEY),
+        ]);
+        const commentCount = posts.reduce((acc, p) => acc + (Array.isArray(p.comments) ? p.comments.length : 0), 0);
+        return jsonResponse(
+          {
+            ok: true,
+            service: "bibliotech-telemetry",
+            version: WORKER_VERSION,
+            storage: env && env.FORUM_KV ? "kv" : "edge_cache",
+            forumPosts: posts.filter((p) => !p.isSeedDelta).length,
+            forumComments: commentCount,
+            questionsLogged: qLog.length,
+            bugsLogged: bugs.length,
+            reportsLogged: reports.length,
+          },
+          200,
+          { "Cache-Control": "public, max-age=15" }
+        );
+      }
+
+      if (channel === "admin" && isAdmin) {
+        const [reports, bugs, questions, audits] = await Promise.all([
+          readKvArray(env, KV_REPORTS_KEY),
+          readKvArray(env, KV_BUGS_KEY),
+          readKvArray(env, KV_QUESTIONS_KEY),
+          readKvArray(env, KV_AUDIT_KEY),
+        ]);
+        return jsonResponse({ ok: true, version: WORKER_VERSION, reports, bugs, questions, audits });
+      }
+
+      return jsonResponse({
+        ok: true,
+        service: "bibliotech-telemetry",
+        version: WORKER_VERSION,
+        storage: env && env.FORUM_KV ? "kv" : "edge_cache",
+        timestamp: new Date().toISOString(),
       });
     }
 
     if (request.method !== "POST") {
-      return new Response(JSON.stringify({ ok: false, error: "Method Not Allowed" }), {
-        status: 405,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-      });
+      return jsonResponse({ ok: false, error: "Method Not Allowed" }, 405);
+    }
+
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (contentLength > MAX_BODY_BYTES) {
+      return jsonResponse({ ok: false, error: "Payload demasiado grande" }, 413);
     }
 
     const rawText = await request.text().catch(() => "");
     if (!rawText || rawText.length > MAX_BODY_BYTES) {
-      return new Response(JSON.stringify({ ok: false, error: "Payload invalido o demasiado grande" }), {
-        status: 413,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-      });
+      return jsonResponse({ ok: false, error: "Payload invalido o demasiado grande" }, 413);
     }
 
     let payload = {};
     try {
       payload = JSON.parse(rawText);
     } catch (_) {
-      return new Response(JSON.stringify({ ok: false, error: "Invalid JSON" }), {
-        status: 400,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-      });
+      return jsonResponse({ ok: false, error: "Invalid JSON" }, 400);
     }
 
     const clientIp = request.headers.get("CF-Connecting-IP") || "";
     if (!checkRateLimit(clientIp, payload.actionType)) {
-      return new Response(JSON.stringify({ ok: false, error: "Too Many Requests" }), {
-        status: 429,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-      });
+      return jsonResponse({ ok: false, error: "Too Many Requests" }, 429);
     }
 
     console.log("BT_TELEMETRY", JSON.stringify(payload));
-    await recordPrivateAudit(env, payload, clientIp);
 
     if (payload && payload.canal_foro === "La Fogata") {
       await applyForumEvent(env, payload, isAdmin);
     }
 
-    if (env && env.DISCORD_WEBHOOK_URL && payload.actionType !== "foro_like") {
-      const content = `**${payload._subject || "BiblioTech Scout"}**\n${payload.plataforma || ""}\n\`\`\`\n${String(payload.actividad_completa || "").slice(0, 1750)}\n\`\`\``;
-      await fetch(env.DISCORD_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: content.slice(0, 1950) }),
-      }).catch(() => {});
+    const bgWork = Promise.all([
+      recordPrivateAudit(env, payload, clientIp),
+      sendExternalWebhooks(env, payload),
+    ]);
+    if (ctx && typeof ctx.waitUntil === "function") {
+      ctx.waitUntil(bgWork);
+    } else {
+      await bgWork;
     }
 
-    if (env && env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID && payload.actionType !== "foro_like") {
-      const msg = `${payload._subject || "BiblioTech Scout"}\n${payload.plataforma || ""}\n${String(payload.actividad_completa || "").slice(0, 3500)}`;
-      await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: msg }),
-      }).catch(() => {});
-    }
-
-    return new Response(JSON.stringify({ ok: true }), {
-      status: 200,
-      headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-    });
+    return jsonResponse({ ok: true, version: WORKER_VERSION });
   },
 };

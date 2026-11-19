@@ -18130,3 +18130,243 @@ html[data-camp-mode="true"] .source-pill-code {
   border-color: rgba(56, 189, 248, 0.38);
   color: #bae6fd;
 }
+
+/* ============================================================================
+   PREGUNTAS RELACIONADAS EN EL LECTOR DE DOCUMENTOS + PUENTE DE BÚSQUEDA VACÍA
+   ============================================================================ */
+.bt-reader-v2 .bt-reader-related-bar {
+  order: 4;
+  flex: 0 0 auto;
+  background: linear-gradient(180deg, #0d152a 0%, #090f1f 100%);
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  padding: 0.58rem 0.95rem 0.7rem;
+  color: #e2e8f0;
+}
+
+.bt-reader-related-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.bt-reader-related-title-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  color: #cbd5e1;
+}
+
+.bt-reader-related-title-group svg {
+  flex: 0 0 auto;
+  color: #38bdf8;
+}
+
+.bt-reader-related-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #f1f5f9;
+}
+
+.bt-reader-related-count {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.12rem 0.48rem;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #bae6fd;
+  white-space: nowrap;
+}
+
+.bt-reader-related-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bt-reader-related-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.68rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(30, 41, 59, 0.85);
+  color: #e2e8f0;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.15s ease;
+}
+
+.bt-reader-related-action:hover {
+  background: rgba(109, 40, 217, 0.28);
+  border-color: rgba(167, 139, 250, 0.55);
+  color: #ffffff;
+}
+
+.bt-reader-related-action:active {
+  transform: scale(0.97);
+}
+
+.bt-reader-related-toggle {
+  background: transparent;
+  color: #94a3b8;
+}
+
+.bt-reader-related-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(148, 163, 184, 0.45);
+  color: #f8fafc;
+}
+
+@keyframes btSpinOnce {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bt-reload-icon.is-spinning {
+  animation: btSpinOnce 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bt-reader-related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-top: 0.52rem;
+}
+
+.bt-reader-related-bar.is-collapsed .bt-reader-related-grid {
+  display: none;
+}
+
+.bt-reader-related-bar.is-collapsed {
+  padding-bottom: 0.5rem;
+}
+
+.bt-reader-related-loading {
+  grid-column: 1 / -1;
+  font-size: 0.76rem;
+  color: #94a3b8;
+  padding: 0.35rem 0;
+}
+
+.bt-reader-related-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.48rem 0.72rem;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(30, 41, 59, 0.72);
+  color: #f1f5f9;
+  font-family: inherit;
+  font-size: 0.77rem;
+  font-weight: 600;
+  line-height: 1.32;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.14s ease;
+}
+
+.bt-reader-related-btn:hover {
+  background: rgba(109, 40, 217, 0.24);
+  border-color: rgba(167, 139, 250, 0.55);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.bt-reader-related-q-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.bt-reader-related-arrow {
+  flex: 0 0 auto;
+  color: #38bdf8;
+  font-weight: 800;
+  font-size: 0.85rem;
+  transition: transform 0.16s ease;
+}
+
+.bt-reader-related-btn:hover .bt-reader-related-arrow {
+  transform: translateX(2px);
+}
+
+@media (max-width: 768px) {
+  .bt-reader-v2 .bt-reader-related-bar {
+    order: 3;
+    padding: 0.48rem 0.65rem 0.52rem;
+  }
+
+  .bt-reader-related-grid {
+    grid-template-columns: 1fr;
+    gap: 0.36rem;
+    max-height: 148px;
+    overflow-y: auto;
+  }
+
+  .bt-reader-related-title {
+    font-size: 0.73rem;
+  }
+
+  .bt-reader-related-btn {
+    padding: 0.42rem 0.62rem;
+    font-size: 0.74rem;
+  }
+}
+
+.bt-empty-ask-bridge {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.bt-empty-ask-hint {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #475569;
+}
+
+.bt-empty-ask-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.58rem 1.05rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #6d28d9, #0284c7);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(109, 40, 217, 0.22);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.bt-empty-ask-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(109, 40, 217, 0.3);
+}
+
+html[data-camp-mode="true"] .bt-empty-ask-hint {
+  color: #cbd5e1;
+}

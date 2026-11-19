@@ -242,9 +242,21 @@ function loadQuestionBank() {
 
       STATE.questionBank = merged;
       STATE.qBankByNorm = {};
+      STATE.qBankByDocId = {};
+      STATE.qBankByTopicId = {};
       for (const qObj of STATE.questionBank) {
         const nk = normalizeQuestionKey(qObj.q || "");
         if (nk) STATE.qBankByNorm[nk] = qObj;
+        const did = (qObj.doc_id || "").trim();
+        if (did) {
+          if (!STATE.qBankByDocId[did]) STATE.qBankByDocId[did] = [];
+          STATE.qBankByDocId[did].push(qObj);
+        }
+        const tid = (qObj.topic_id || "").trim();
+        if (tid) {
+          if (!STATE.qBankByTopicId[tid]) STATE.qBankByTopicId[tid] = [];
+          STATE.qBankByTopicId[tid].push(qObj);
+        }
       }
       const badge = document.getElementById("totalQuestionsCount");
       if (badge && STATE.questionBank.length) {
@@ -515,7 +527,9 @@ async function initApp() {
               }
             });
           });
-          if (typeof reg.update === "function") reg.update();
+          if (reg && (reg.active || reg.installing || reg.waiting) && typeof reg.update === "function") {
+            Promise.resolve(reg.update()).catch(() => {});
+          }
         })
         .catch(() => {});
     }
@@ -1469,7 +1483,15 @@ function renderLibraryShelf() {
   }
 
   if (!slice.length) {
-    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:2rem;color:#64748b;">No se encontraron archivos con ese filtro en este estante.</p>`;
+    const rawQ = STATE.libraryQuery.trim();
+    const askBridgeHtml =
+      rawQ.length >= 4
+        ? `<div class="bt-empty-ask-bridge">
+            <p class="bt-empty-ask-hint">¿Buscabas resolver una duda sobre <strong>«${escapeHtml(rawQ)}»</strong>?</p>
+            <button type="button" class="bt-empty-ask-btn" data-ask-from-empty="${escapeHtml(rawQ)}">Preguntar esto en el Buscador Scout →</button>
+          </div>`
+        : "";
+    grid.innerHTML = `<div class="bt-empty-filter-box" style="grid-column:1/-1;text-align:center;padding:2rem 1rem;color:#64748b;"><p>No se encontraron archivos con ese filtro en este estante.</p>${askBridgeHtml}</div>`;
     if (moreBtn) moreBtn.classList.add("hidden");
     return;
   }
@@ -2805,6 +2827,19 @@ function renderCatalogGrid() {
   resetBtn.classList.toggle("hidden", !hasActiveFilter);
 
   const slice = STATE.filteredDocs.slice(0, STATE.visibleCount);
+  if (!slice.length) {
+    const rawQ = STATE.searchQuery.trim();
+    const askBridgeHtml =
+      rawQ.length >= 4
+        ? `<div class="bt-empty-ask-bridge">
+            <p class="bt-empty-ask-hint">¿Buscabas responder una pregunta sobre <strong>«${escapeHtml(rawQ)}»</strong>?</p>
+            <button type="button" class="bt-empty-ask-btn" data-ask-from-empty="${escapeHtml(rawQ)}">Preguntar esto en el Buscador Scout →</button>
+          </div>`
+        : "";
+    grid.innerHTML = `<div class="bt-empty-filter-box" style="grid-column:1/-1;text-align:center;padding:2rem 1rem;color:#64748b;"><p>No se encontraron documentos oficiales con esos filtros.</p>${askBridgeHtml}</div>`;
+    loadMoreBtn.classList.add("hidden");
+    return;
+  }
   grid.innerHTML = slice
     .map((d) => {
       const dlUrl = buildFileUrl(d, true);
@@ -3412,6 +3447,9 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     openTabBtnMobileSync.onclick = openTabBtn.onclick;
   }
   setupReaderQoLHandlers(doc, fullTextContent);
+  STATE.currentModalDoc = doc;
+  STATE.modalRelatedSeen = new Set();
+  renderModalRelatedQuestions(doc, false);
   modal.classList.remove("hidden");
   // Mientras el lector está abierto, la página de fondo no debe desplazarse.
   // Esto aplica también al modo normal, no solo a pantalla completa.
@@ -3420,6 +3458,168 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   const modalBody = modal.querySelector(".modal-body");
   if (modalBody) modalBody.scrollTop = 0;
   activateDialogFocusTrap(modal, "#closeDocModalBtn");
+}
+
+function shuffleArrayCopy(list) {
+  const arr = list.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
+  }
+  return arr;
+}
+
+function getRelatedQuestionsPoolForDoc(doc) {
+  if (!doc || !Array.isArray(STATE.questionBank) || !STATE.questionBank.length) {
+    return { direct: [], combined: [] };
+  }
+  const seenNorm = new Set();
+  const direct = [];
+  const pushItem = (targetArr, qObj, isDirect) => {
+    const qText = (qObj && qObj.q ? String(qObj.q) : "").trim();
+    if (!qText) return;
+    const nk = normalizeQuestionKey(qText);
+    if (!nk || seenNorm.has(nk)) return;
+    seenNorm.add(nk);
+    targetArr.push({ q: qText, isDirect });
+  };
+
+  // 1. Coincidencias directas por doc_id
+  const byDoc = (STATE.qBankByDocId && STATE.qBankByDocId[doc.id]) || [];
+  for (const item of byDoc) pushItem(direct, item, true);
+
+  // 2. Coincidencias por temas KB que citan exactamente este archivo
+  const docFileLow = (doc.filename || "").trim().toLowerCase();
+  const docTitleLow = (doc.title || "").trim().toLowerCase();
+  const kbTopics = (STATE.knowledgeBase && STATE.knowledgeBase.topics) || [];
+  if (docFileLow && kbTopics.length && STATE.qBankByTopicId) {
+    for (const topic of kbTopics) {
+      const sfiles = Array.isArray(topic.source_files) ? topic.source_files : [];
+      const matchesTopic = sfiles.some((sf) => {
+        const low = String(sf || "").trim().toLowerCase();
+        return low === docFileLow || (docTitleLow.length >= 8 && low.includes(docTitleLow));
+      });
+      if (matchesTopic) {
+        const topicQs = STATE.qBankByTopicId[topic.id] || [];
+        for (const item of topicQs) pushItem(direct, item, true);
+      }
+    }
+  }
+
+  // 3. Si hay menos de 8 directas, complementar con documentos hermanos de la misma subcategoría/sección
+  const extra = [];
+  if (direct.length < 8 && STATE.qBankByDocId) {
+    const siblings = STATE.documents.filter((other) => {
+      if (!other || other.id === doc.id) return false;
+      if (doc.subcategory && other.subcategory === doc.subcategory && other.section === doc.section) return true;
+      if (doc.subcategory && other.subcategory === doc.subcategory) return true;
+      return other.category === doc.category && other.section === doc.section;
+    });
+    for (const sib of shuffleArrayCopy(siblings).slice(0, 12)) {
+      const sibQs = STATE.qBankByDocId[sib.id] || [];
+      for (const item of sibQs.slice(0, 3)) {
+        pushItem(extra, item, false);
+        if (direct.length + extra.length >= 16) break;
+      }
+      if (direct.length + extra.length >= 16) break;
+    }
+  }
+
+  return { direct, combined: direct.concat(extra) };
+}
+
+async function renderModalRelatedQuestions(doc, isReload = false) {
+  const bar = document.getElementById("modalRelatedQuestionsBar");
+  const listEl = document.getElementById("modalRelatedQuestionsList");
+  const countEl = document.getElementById("modalRelatedCount");
+  const reloadBtn = document.getElementById("btnReloadModalRelated");
+  const toggleBtn = document.getElementById("btnToggleModalRelated");
+  if (!bar || !listEl || !doc) return;
+
+  if (!STATE.questionBank || !STATE.questionBank.length) {
+    bar.classList.remove("hidden");
+    listEl.innerHTML = `<div class="bt-reader-related-loading">Cargando preguntas relacionadas...</div>`;
+    await loadQuestionBank();
+    if (STATE.currentModalDoc !== doc) return;
+  }
+
+  const { direct, combined } = getRelatedQuestionsPoolForDoc(doc);
+  if (!combined.length) {
+    bar.classList.add("hidden");
+    listEl.innerHTML = "";
+    return;
+  }
+
+  const batchSize = window.innerWidth <= 640 ? 3 : 4;
+  if (!(STATE.modalRelatedSeen instanceof Set)) {
+    STATE.modalRelatedSeen = new Set();
+  }
+
+  // Elegir primero preguntas no vistas (priorizando directas del documento)
+  let unseenDirect = direct.filter((it) => !STATE.modalRelatedSeen.has(it.q));
+  let unseenCombined = combined.filter((it) => !STATE.modalRelatedSeen.has(it.q));
+
+  if (!unseenCombined.length) {
+    STATE.modalRelatedSeen.clear();
+    unseenDirect = direct.slice();
+    unseenCombined = combined.slice();
+  }
+
+  let picked = [];
+  if (!isReload && direct.length) {
+    picked = shuffleArrayCopy(unseenDirect).slice(0, batchSize);
+  } else if (unseenDirect.length >= batchSize) {
+    picked = shuffleArrayCopy(unseenDirect).slice(0, batchSize);
+  } else {
+    picked = shuffleArrayCopy(unseenDirect);
+    const needed = batchSize - picked.length;
+    if (needed > 0) {
+      const pickedSet = new Set(picked.map((x) => x.q));
+      const rest = shuffleArrayCopy(unseenCombined.filter((x) => !pickedSet.has(x.q)));
+      picked = picked.concat(rest.slice(0, needed));
+    }
+  }
+
+  // Si en un ciclo casi terminado faltan para llenar el lote, completar sin repetir dentro del mismo lote
+  if (picked.length < Math.min(batchSize, combined.length)) {
+    const pickedSet = new Set(picked.map((x) => x.q));
+    const refill = shuffleArrayCopy(combined.filter((x) => !pickedSet.has(x.q)));
+    picked = picked.concat(refill.slice(0, batchSize - picked.length));
+    STATE.modalRelatedSeen.clear();
+  }
+
+  picked.forEach((it) => STATE.modalRelatedSeen.add(it.q));
+
+  if (countEl) {
+    const totalLabel = direct.length >= batchSize ? `${direct.length} directas` : `${combined.length} disponibles`;
+    countEl.textContent = totalLabel;
+  }
+  if (reloadBtn) {
+    reloadBtn.classList.toggle("hidden", combined.length <= picked.length);
+  }
+
+  const collapsed = Boolean(STATE.modalRelatedCollapsed);
+  bar.classList.toggle("is-collapsed", collapsed);
+  if (toggleBtn) {
+    toggleBtn.setAttribute("aria-expanded", String(!collapsed));
+    const span = toggleBtn.querySelector("span");
+    if (span) span.textContent = collapsed ? "Mostrar" : "Ocultar";
+  }
+
+  listEl.innerHTML = picked
+    .map(
+      (it) => `
+      <button type="button" class="bt-reader-related-btn" data-modal-related-q="${escapeHtml(it.q)}" title="Consultar respuesta oficial">
+        <span class="bt-reader-related-q-text">${escapeHtml(it.q)}</span>
+        <span class="bt-reader-related-arrow" aria-hidden="true">→</span>
+      </button>
+    `
+    )
+    .join("");
+
+  bar.classList.remove("hidden");
 }
 
 function renderWebReaderView(doc, fullTextContent, dlUrl, viewUrl = "") {
@@ -3626,6 +3826,30 @@ function bindEvents() {
     if (qBtn) {
       const q = qBtn.getAttribute("data-query");
       submitQuestion(q);
+      return;
+    }
+    const emptyAskBtn = e.target.closest("[data-ask-from-empty]");
+    if (emptyAskBtn) {
+      const q = emptyAskBtn.getAttribute("data-ask-from-empty") || "";
+      if (q.trim()) {
+        loadQuestionBank();
+        submitQuestion(q, { syncInput: true, source: "puente_biblioteca" });
+        const ans = document.getElementById("answerContainer");
+        if (ans) setTimeout(() => ans.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+      }
+      return;
+    }
+    const modalRelBtn = e.target.closest("[data-modal-related-q]");
+    if (modalRelBtn) {
+      const q = modalRelBtn.getAttribute("data-modal-related-q") || "";
+      const closeBtn = document.getElementById("closeDocModalBtn");
+      if (closeBtn) closeBtn.click();
+      if (q.trim()) {
+        loadQuestionBank();
+        submitQuestion(q, { syncInput: true, source: "lector_relacionada" });
+        const ans = document.getElementById("answerContainer");
+        if (ans) setTimeout(() => ans.scrollIntoView({ behavior: "smooth", block: "start" }), 140);
+      }
       return;
     }
     const openBtn = e.target.closest("[data-open-doc]");
@@ -3904,6 +4128,36 @@ function bindEvents() {
 
   if (closeDocModalBtn) {
     closeDocModalBtn.addEventListener("click", closeReader);
+  }
+
+  const reloadModalRelatedBtn = document.getElementById("btnReloadModalRelated");
+  if (reloadModalRelatedBtn) {
+    reloadModalRelatedBtn.addEventListener("click", () => {
+      if (!STATE.currentModalDoc) return;
+      const icon = reloadModalRelatedBtn.querySelector(".bt-reload-icon");
+      if (icon) {
+        icon.classList.remove("is-spinning");
+        void icon.offsetWidth;
+        icon.classList.add("is-spinning");
+      }
+      if (STATE.modalRelatedCollapsed) {
+        STATE.modalRelatedCollapsed = false;
+      }
+      renderModalRelatedQuestions(STATE.currentModalDoc, true);
+    });
+  }
+
+  const toggleModalRelatedBtn = document.getElementById("btnToggleModalRelated");
+  if (toggleModalRelatedBtn) {
+    toggleModalRelatedBtn.addEventListener("click", () => {
+      const bar = document.getElementById("modalRelatedQuestionsBar");
+      if (!bar) return;
+      STATE.modalRelatedCollapsed = !STATE.modalRelatedCollapsed;
+      bar.classList.toggle("is-collapsed", STATE.modalRelatedCollapsed);
+      toggleModalRelatedBtn.setAttribute("aria-expanded", String(!STATE.modalRelatedCollapsed));
+      const span = toggleModalRelatedBtn.querySelector("span");
+      if (span) span.textContent = STATE.modalRelatedCollapsed ? "Mostrar" : "Ocultar";
+    });
   }
 
   if (fullscreenBtn && docModalContainer) {
@@ -5080,13 +5334,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.6.3";
+const APP_WEB_VERSION = "9.6.4";
 const APP_MOBILE_VERSION = "3.6.3";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v49";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v50";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {

@@ -1,7 +1,7 @@
 {
   "version": "1.3",
   "generated_from": "scripts/generate_faq_v4.js",
-  "total_questions": 9366,
+  "total_questions": 9370,
   "questions": [
     {
       "q": "¿Qué hace un scout?",
@@ -67727,6 +67727,38 @@
       "topic_id": "insignia_mundial_no_llega_errores_y_seguimiento",
       "doc_id": "doc-1035",
       "ans": "Según el punto 3 del comunicado **`ASMAC/DNME/CNPJ/26.005`** (5 de marzo de 2026, pág. 2):\n\n- Si la coordinación solicita ajustes o información adicional, se cuenta con **30 días naturales** a partir de esa solicitud para realizar las correcciones y **reenviar la información al mismo correo**.\n- **«De no recibirse respuesta dentro de este periodo, el proceso quedará anulado definitivamente, sin posibilidad de retomar el trámite.»**"
+    },
+    {
+      "q": "¿Qué es Patrimonito, cómo es su insignia y dónde va en el uniforme?",
+      "cat": "Insignias Mundiales (WOSM)",
+      "topic_id": "patrimonito_mundo_mejor",
+      "doc_id": "doc-0128",
+      "doc": "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+      "ans": "Según el **Artículo 67 del Manual del Uniforme Actualizado Junio 2026 (`ASMAC/DEN/NM200/26.002`, pág. 72)**:\n- **Qué es:** Insignia Mundial del Marco Mundo Mejor en alianza entre la **UNESCO** y la **OMMS** enfocada en la preservación del patrimonio cultural y natural del mundo.\n- **Dimensiones y diseño:** Rombo de **40 x 40 mm** con el personaje *Patrimonito* al centro, colores azul, morado, naranja, rojo y verde, y borde del color de la Sección (**amarillo** Manada, **verde** Tropa, **morado** Rama Mayor).\n- **Ubicación:** Se coloca **arriba de la bolsa derecha de la camisola, arriba del emblema de Scouts de México**.\n- **Nota documental:** El Manual remite a consultar las actividades en la guía vigente; actualmente no existe en el repositorio una guía nacional propia de ASMAC para Patrimonito (confirmar vigencia en `mundo.mejor@scouts.org.mx`)."
+    },
+    {
+      "q": "¿Dónde va el certificado o Pin distintivo de Punta de Flecha en el uniforme?",
+      "cat": "Punta de Flecha y Liderazgo",
+      "topic_id": "puntas_de_flecha",
+      "doc_id": "doc-0128",
+      "doc": "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+      "ans": "Según el **Artículo 72 del Manual del Uniforme Actualizado Junio 2026 (`ASMAC/DEN/NM200/26.002`, págs. 78–79)**, el **Pin distintivo de Punta de Flecha (25 x 25 mm)** funciona en conjunto con el certificado firmado (con código QR emitido en CDC) como el **certificado oficial del curso**:\n- **En Tropa de Scouts:** se coloca en las **Cintas de Patrulla**.\n- **En Comunidad de Caminantes y Clan de Rovers:** se coloca al frente de la camisola, en la **solapa de la bolsa derecha y del lado izquierdo**.\n- **Al pasar de Tropa a Comunidad:** el pin pasa de las Cintas de Patrulla a la solapa de la bolsa derecha.\n- **Vigencia:** se porta durante toda la vida en Sección hasta cumplir los 22 años y salir del Clan de Rovers."
+    },
+    {
+      "q": "¿Dónde va el certificado en el uniforme scout (Punta de Flecha, Safe from Harm y cursos)?",
+      "cat": "Uniforme e Insignias",
+      "topic_id": "donde_va_certificado_en_uniforme",
+      "doc_id": "doc-0128",
+      "doc": "01 Manual del Uniforme Actualizado Junio 2026.pdf",
+      "ans": "Los certificados en papel o PDF con código QR (como *Safe from Harm* o cursos de CDC) no se colocan sobre el uniforme; se resguardan o validan en SISAS/CDC. En el uniforme solo se porta su distintivo oficial: en el caso del **Curso de Liderazgo Juvenil Punta de Flecha** (Art. 72, Manual del Uniforme 2026), el **Pin distintivo de 25 x 25 mm** funciona junto con el certificado firmado como certificado oficial y se coloca en las **Cintas de Patrulla** (Tropa) o en la **solapa de la bolsa derecha, lado izquierdo** (Comunidad y Clan)."
+    },
+    {
+      "q": "¿Qué es la guía oficial «El Desafío de ser Caminante» (2024) y qué incluye?",
+      "cat": "Comunidad de Caminantes",
+      "topic_id": "el_desafio_de_ser_caminante_guia",
+      "doc_id": "doc-0405",
+      "doc": "El desafio de ser Caminante 2024.pdf",
+      "ans": "**«El Desafío de ser Caminante» (2024)** (`ASMAC/DNME/CNPJ/NM200/22/APJ-CC`) es la guía oficial PJOS para jóvenes de la **Comunidad de Caminantes** (14 a antes de cumplir 18 años). Explica el Marco Simbólico (*«El desafío de vivir mi propia aventura»*, lema *«Siempre Adelante»*), la vida en Equipos y Congreso de Comunidad, los 4 Ejes Temáticos y Senderos (*Cumbre, Cenit, Horizonte, Travesía*), Especialidades, Proyectos (*Agentes de Cambio.MX*), Aventuras en la Naturaleza y la Insignia Final **Everest**."
     }
   ],
   "updated_at": "2026-11-19"
