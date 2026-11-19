@@ -5067,13 +5067,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.6.1";
-const APP_MOBILE_VERSION = "3.6.1";
+const APP_WEB_VERSION = "9.6.2";
+const APP_MOBILE_VERSION = "3.6.2";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v47";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v48";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -5282,7 +5282,7 @@ function setupWebOfflineManager() {
       if (hasBank && hasFaq4) {
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (14,816 preg.)";
+          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (14,828 preg.)";
         }
         if (btnDownload) {
           btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
@@ -5432,7 +5432,7 @@ function setupWelcomeModal() {
       const shareUrl = "https://ey-liam.github.io/bibliotech-scouts/";
       const shareData = {
         title: "BiblioTech Scout — Biblioteca e Inteligencia Documental Scout",
-        text: "Explora 882 documentos oficiales (incluyendo 220 FAES y 82 FES) y 14,816 respuestas scouts en BiblioTech Scout:",
+        text: "Explora 882 documentos oficiales (incluyendo 220 FAES y 82 FES) y 14,828 respuestas scouts en BiblioTech Scout:",
         url: shareUrl
       };
       enqueueAnonTelemetry({ t: "enlace_externo", label: "Compartir QR / Sitio Bienvenida", url: shareUrl }, false);

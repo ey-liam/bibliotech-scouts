@@ -1,8 +1,8 @@
 {
-  "version": "9.6.1",
-  "mobileVersion": "3.6.1",
-  "cache": "bibliotech-scout-v47",
+  "version": "9.6.2",
+  "mobileVersion": "3.6.2",
+  "cache": "bibliotech-scout-v48",
   "releasedAt": "2026-11-19",
   "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.6.1: Acceso directo siempre visible a «Mis guardados y notas» en escritorio (botón con contador en la barra superior + acceso en el menú), modal centrado en PC, soporte para documentos con notas locales y borradores del Editor de Archivos."
+  "notes": "Versión 9.6.2: Nuevas respuestas documentales oficiales sobre Insignias Mundiales (Marco Mundo Mejor): qué evitar para que no rechacen o cierren tu trámite, plazos de 15/30 días y 6 meses, validación en SISAS y canales oficiales de seguimiento si tu insignia no llega (14,828 preguntas verificadas)."
 }
