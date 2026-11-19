@@ -1,8 +1,8 @@
 {
-  "version": "9.7.0",
-  "mobileVersion": "3.7.0",
-  "cache": "bibliotech-scout-v51",
+  "version": "9.8.0",
+  "mobileVersion": "3.8.0",
+  "cache": "bibliotech-scout-v52",
   "releasedAt": "2026-11-19",
   "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.7.0: Rediseño visual profesional y motor de rendimiento para dispositivos de baja gama (sin compresión ni pérdida de calidad en imágenes), expansión de +42.5 % a 21,134 preguntas verificadas cubriendo los 883 documentos oficiales y enlaces cruzados entre archivos relacionados en respuestas y lector."
+  "notes": "Versión 9.8.0: Visor PDF interactivo por página con streaming HTTP 206 para archivos pesados (50 MB a 300+ MB sin límite de 25 MB) vía Cloudflare Worker v2.1, pulido visual en los 7 espacios (claro y oscuro), banco de 21,134 preguntas verificadas con enlaces cruzados y depuración de más de 133 MB de recursos obsoletos sin comprimir activos activos."
 }

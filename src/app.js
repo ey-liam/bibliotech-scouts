@@ -7,6 +7,95 @@ const IS_LOCAL_SERVER = false;
 
 const GITHUB_RELEASE_BASE =
   "https://github.com/ey-liam/bibliotech-scouts/releases/download/v1.0/";
+const PDF_STREAM_WORKER_BASE =
+  "https://bibliotech-telemetry.liamchuchundra1.workers.dev";
+const PDFJS_CDN_PRIMARY =
+  "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js";
+const PDFJS_WORKER_PRIMARY =
+  "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+const PDFJS_CDN_FALLBACK =
+  "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js";
+const PDFJS_WORKER_FALLBACK =
+  "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+
+let pdfJsLoadPromise = null;
+
+function loadScriptOnce(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.async = true;
+    script.crossOrigin = "anonymous";
+    script.onload = () => resolve();
+    script.onerror = () => {
+      script.remove();
+      reject(new Error(`No se pudo cargar ${src}`));
+    };
+    document.head.appendChild(script);
+  });
+}
+
+function ensurePdfJsLoaded() {
+  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  if (pdfJsLoadPromise) return pdfJsLoadPromise;
+  pdfJsLoadPromise = loadScriptOnce(PDFJS_CDN_PRIMARY)
+    .then(() => {
+      if (!window.pdfjsLib) throw new Error("pdfjsLib no disponible");
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_PRIMARY;
+      return window.pdfjsLib;
+    })
+    .catch(() =>
+      loadScriptOnce(PDFJS_CDN_FALLBACK).then(() => {
+        if (!window.pdfjsLib) throw new Error("pdfjsLib fallback no disponible");
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_FALLBACK;
+        return window.pdfjsLib;
+      })
+    )
+    .catch((err) => {
+      pdfJsLoadPromise = null;
+      throw err;
+    });
+  return pdfJsLoadPromise;
+}
+
+function destroyActivePdfViewer() {
+  STATE.pdfViewerToken = (STATE.pdfViewerToken || 0) + 1;
+  const active = STATE.activePdfViewer;
+  STATE.activePdfViewer = null;
+  if (!active) return;
+  if (active.onKeyDown) {
+    document.removeEventListener("keydown", active.onKeyDown);
+  }
+  if (active.timeoutId) {
+    clearTimeout(active.timeoutId);
+  }
+  if (active.renderTask && typeof active.renderTask.cancel === "function") {
+    try {
+      active.renderTask.cancel();
+    } catch (_) {}
+  }
+  if (active.pdfDoc && typeof active.pdfDoc.destroy === "function") {
+    try {
+      Promise.resolve(active.pdfDoc.destroy()).catch(() => {});
+    } catch (_) {}
+  }
+  const canvas = document.getElementById("btPdfCanvas");
+  if (canvas) {
+    canvas.width = 1;
+    canvas.height = 1;
+  }
+}
+
+function buildPdfStreamUrl(doc, absPdfUrl) {
+  if (!doc) return absPdfUrl;
+  if (IS_LOCAL_SERVER || doc.has_web_file === true) {
+    return absPdfUrl;
+  }
+  if (doc.sha12 && /^[a-f0-9]{12}$/i.test(doc.sha12)) {
+    return `${PDF_STREAM_WORKER_BASE}/pdf/${doc.sha12.toLowerCase()}.pdf`;
+  }
+  return absPdfUrl;
+}
 
 const STATE = {
   catalog: null,
@@ -315,7 +404,7 @@ function setupLazyDataWarmup() {
 }
 
 // ============================================================================
-// CARGA INICIAL (CATALOGO DE 498 DOCUMENTOS + 104 TEMAS)
+// CARGA INICIAL (CATALOGO DE 883 DOCUMENTOS OFICIALES + 105 TEMAS + 21,134 PREGUNTAS)
 // ============================================================================
 const IS_APPLE_TOUCH =
   /iPhone|iPad|iPod/i.test(navigator.userAgent || "") ||
@@ -1766,18 +1855,6 @@ const PHRASE_SYNONYMS = [
   { rx: /\bagentes de cambio\b|\bred de caminantes\b/, add: ["cnrc", "proyectos", "salud", "sustentabilidad", "paz", "habilidades"] }
 ];
 
-function expandScoutQueryTokens(tokens) {
-  const expanded = new Set(tokens);
-  for (const token of tokens) {
-    if (SYNONYMS[token]) {
-      for (const syn of SYNONYMS[token]) {
-        syn.split(/\s+/).forEach((w) => expanded.add(canonicalToken(w)));
-      }
-    }
-  }
-  return Array.from(expanded).filter(Boolean);
-}
-
 function canonicalToken(word) {
   let x = normalizeStr(word).replace(/[^a-z0-9]/g, "");
   if (!x) return "";
@@ -2021,10 +2098,6 @@ function rankTopics(query) {
   }
   ranked.sort((a, b) => b.score - a.score);
   return ranked;
-}
-
-function matchTopicsInBrowser(query) {
-  return rankTopics(query).slice(0, 2).map((entry) => entry.topic);
 }
 
 function phraseLine(excerpt, query) {
@@ -2737,7 +2810,7 @@ function renderRelatedQuestions(query) {
 }
 
 // ============================================================================
-// CATALOGO GENERAL Y FILTROS (498 DOCUMENTOS DESCARGABLES)
+// CATALOGO GENERAL Y FILTROS (883 DOCUMENTOS OFICIALES DESCARGABLES)
 // ============================================================================
 function syncCategoryPillsUI() {
   document.querySelectorAll("#catalogCategoryPills .cat-filter-pill").forEach((btn) => {
@@ -3310,45 +3383,157 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     } catch (_) {}
   }
 
+  destroyActivePdfViewer();
+
   const isMobileUa =
     /Android|iPhone|iPad|Mobile/i.test(navigator.userAgent || "") ||
     IS_APPLE_TOUCH ||
     window.innerWidth < 860;
-  const canEmbedDirectPdf = IS_LOCAL_SERVER || (doc.has_web_file === true && !isMobileUa);
+  const sizeMb = Number(doc.size_mb || 0);
+  const sizeLabel = sizeMb >= 0.1 ? `${sizeMb.toFixed(1)} MB` : `${Math.max(1, Math.round(Number(doc.size_kb || 100)))} KB`;
+  const isHeavyOrExternalPdf = !IS_LOCAL_SERVER && (doc.has_web_file !== true || sizeMb >= 12);
+  const canEmbedDirectPdf = IS_LOCAL_SERVER || (doc.has_web_file === true && !isMobileUa && sizeMb < 12);
 
   if (doc.ext === "PDF") {
     const absPdfUrl = /^https?:\/\//i.test(viewUrl)
       ? viewUrl
       : new URL(viewUrl, window.location.href).href;
+    const streamPdfUrl = buildPdfStreamUrl(doc, absPdfUrl);
     const gDocsUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}&embedded=true`;
-    const initialMode = canEmbedDirectPdf ? "direct" : "gdocs";
+    const canUseGDocs = !IS_LOCAL_SERVER && sizeMb < 24;
+    const initialMode = canEmbedDirectPdf ? "direct" : "pdfjs";
     const canWebShare = typeof navigator.share === "function" && !window.Capacitor;
+    const coverUrl = doc.sha12 ? `covers/${doc.sha12}.jpg` : "";
+
+    const switchToTextTab = () => {
+      document.querySelectorAll(".modal-tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === "text"));
+      previewPane.classList.add("hidden");
+      document.getElementById("modalTextPane").classList.remove("hidden");
+    };
 
     const mountPdfMode = (mode) => {
-      const targetSrc = mode === "direct" ? `${absPdfUrl}#view=FitH` : gDocsUrl;
-      const modeLabel = mode === "direct" ? "Visor PDF directo (rápido)" : "Visor PDF en la nube (Google Docs)";
-      const toggleLabel = mode === "direct" ? "Usar Visor en la Nube" : "Usar Visor Directo";
-      const nextMode = mode === "direct" ? "gdocs" : "direct";
+      destroyActivePdfViewer();
+
+      if (mode === "direct" || mode === "gdocs") {
+        const targetSrc = mode === "direct" ? `${streamPdfUrl}#view=FitH` : gDocsUrl;
+        const modeLabel =
+          mode === "direct"
+            ? `Visor PDF nativo (${sizeLabel})`
+            : `Visor en la nube (${sizeLabel})`;
+        previewPane.innerHTML = `
+          <div class="pdf-quick-bar">
+            <span class="pdf-quick-title">${escapeHtml(modeLabel)}</span>
+            <div class="pdf-quick-actions">
+              <button type="button" class="btn-pdf-toggle-mode" data-target-mode="pdfjs">Visor por Página (HD)</button>
+              ${mode === "direct" && canUseGDocs ? `<button type="button" class="btn-pdf-toggle-mode" data-target-mode="gdocs">Google Docs</button>` : ""}
+              ${mode === "gdocs" && !isMobileUa ? `<button type="button" class="btn-pdf-toggle-mode" data-target-mode="direct">Visor Nativo</button>` : ""}
+              <a href="${streamPdfUrl}" target="_blank" rel="noopener">Abrir PDF en pestaña</a>
+              ${canWebShare ? `<button type="button" class="btn-pdf-share">Compartir</button>` : ""}
+              <button type="button" class="btn-pdf-switch-text">Cambiar a Texto</button>
+            </div>
+          </div>
+          <iframe id="gDocsIframe" src="${targetSrc}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:calc(100% - 44px);min-height:540px;border:none;background:#ffffff;" allowfullscreen></iframe>
+        `;
+        const swBtn = previewPane.querySelector(".btn-pdf-switch-text");
+        if (swBtn) swBtn.onclick = switchToTextTab;
+        const shareBtn = previewPane.querySelector(".btn-pdf-share");
+        if (shareBtn) {
+          shareBtn.onclick = async () => {
+            try {
+              await navigator.share({ title: doc.title, url: absPdfUrl });
+            } catch (_) {}
+          };
+        }
+        previewPane.querySelectorAll(".btn-pdf-toggle-mode").forEach((btn) => {
+          btn.onclick = () => mountPdfMode(btn.getAttribute("data-target-mode") || "pdfjs");
+        });
+        return;
+      }
+
+      // Modo "pdfjs": Visor interactivo por página con streaming HTTP Range (soporta archivos de 50 a 300+ MB)
+      const token = (STATE.pdfViewerToken || 0) + 1;
+      STATE.pdfViewerToken = token;
+      const viewerState = {
+        token,
+        pdfDoc: null,
+        loadingTask: null,
+        renderTask: null,
+        page: 1,
+        numPages: Number(doc.page_count || 0) || 1,
+        zoom: 1,
+        timeoutId: null,
+        onKeyDown: null,
+      };
+      STATE.activePdfViewer = viewerState;
+
       previewPane.innerHTML = `
-        <div class="pdf-quick-bar">
-          <span>${modeLabel}</span>
+        <div class="pdf-quick-bar pdf-quick-bar-interactive">
+          <div class="bt-pdfjs-nav-group">
+            <span class="bt-pdfjs-mode-pill">${isHeavyOrExternalPdf ? `Streaming HD · ${escapeHtml(sizeLabel)}` : `Visor por Página · ${escapeHtml(sizeLabel)}`}</span>
+            <div class="bt-pdfjs-pager" role="group" aria-label="Navegación de páginas">
+              <button type="button" id="btPdfPrevBtn" class="bt-pdfjs-ctrl-btn" disabled aria-label="Página anterior" title="Página anterior">Anterior</button>
+              <label class="bt-pdfjs-page-label" for="btPdfPageInput">
+                <span>Pág.</span>
+                <input type="number" id="btPdfPageInput" class="bt-pdfjs-page-input" min="1" value="1" inputmode="numeric" aria-label="Ir a página" disabled />
+                <span id="btPdfPageTotal">/ ${viewerState.numPages > 1 ? viewerState.numPages : "..."}</span>
+              </label>
+              <button type="button" id="btPdfNextBtn" class="bt-pdfjs-ctrl-btn" disabled aria-label="Página siguiente" title="Página siguiente">Siguiente</button>
+            </div>
+            <div class="bt-pdfjs-zoom-group" role="group" aria-label="Zoom de página">
+              <button type="button" id="btPdfZoomOutBtn" class="bt-pdfjs-ctrl-btn bt-pdfjs-icon-btn" aria-label="Alejar página" title="Alejar">−</button>
+              <button type="button" id="btPdfZoomResetBtn" class="bt-pdfjs-ctrl-btn bt-pdfjs-zoom-label" title="Ajustar al 100%">100%</button>
+              <button type="button" id="btPdfZoomInBtn" class="bt-pdfjs-ctrl-btn bt-pdfjs-icon-btn" aria-label="Acercar página" title="Acercar">+</button>
+            </div>
+          </div>
           <div class="pdf-quick-actions">
-            ${doc.has_web_file || IS_LOCAL_SERVER ? `<button type="button" class="btn-pdf-toggle-mode">${toggleLabel}</button>` : ""}
-            <a href="${absPdfUrl}" target="_blank" rel="noopener">Abrir PDF directo</a>
-            ${canWebShare ? `<button type="button" class="btn-pdf-share">Compartir / Guardar</button>` : ""}
-            <button type="button" class="btn-pdf-switch-text">Cambiar a Texto</button>
+            ${!isMobileUa ? `<button type="button" class="btn-pdf-toggle-mode" data-target-mode="direct" title="Abrir en el visor PDF integrado del navegador">Visor Nativo</button>` : ""}
+            ${canUseGDocs ? `<button type="button" class="btn-pdf-toggle-mode" data-target-mode="gdocs" title="Abrir con Google Docs Viewer">Google Docs</button>` : ""}
+            <a href="${streamPdfUrl}" target="_blank" rel="noopener">Abrir en pestaña</a>
+            ${canWebShare ? `<button type="button" class="btn-pdf-share">Compartir</button>` : ""}
+            <button type="button" class="btn-pdf-switch-text">Texto</button>
           </div>
         </div>
-        <iframe id="gDocsIframe" src="${targetSrc}" title="${escapeHtml(doc.title)}" class="doc-viewer-iframe" style="width:100%;height:calc(100% - 40px);min-height:540px;border:none;background:#ffffff;" allowfullscreen></iframe>
+        <div class="bt-pdfjs-stage" id="btPdfStage">
+          <div class="bt-pdfjs-status-card" id="btPdfStatusCard">
+            ${coverUrl ? `<img src="${coverUrl}" alt="Portada de ${escapeHtml(doc.title)}" class="bt-pdfjs-status-cover" decoding="async" onerror="this.style.display='none'" />` : ""}
+            <div class="bt-pdfjs-status-body">
+              <span class="bt-pdfjs-status-kicker">VISTA PREVIA POR STREAMING · ${escapeHtml(sizeLabel)}</span>
+              <h4 class="bt-pdfjs-status-title">${escapeHtml(doc.title)}</h4>
+              <p class="bt-pdfjs-status-msg" id="btPdfStatusMsg">Cargando la primera página en alta definición sin descargar el archivo completo...</p>
+              <div class="bt-pdfjs-progress-track" id="btPdfProgressTrack">
+                <div class="bt-pdfjs-progress-fill" id="btPdfProgressFill" style="width: 18%;"></div>
+              </div>
+              <div class="bt-pdfjs-status-actions">
+                <button type="button" class="btn-modal-secondary bt-pdfjs-instant-text">Leer Texto Completo ahora</button>
+                <a href="${streamPdfUrl}" target="_blank" rel="noopener" class="btn-modal-secondary">Abrir PDF en pestaña</a>
+                <a href="${dlUrl}" download="${escapeHtml(cleanDownloadFilename(doc))}" data-dl-doc="${escapeHtml(doc.id)}" class="btn-modal-primary">Descargar PDF (${escapeHtml(sizeLabel)})</a>
+              </div>
+            </div>
+          </div>
+          <div class="bt-pdfjs-canvas-wrap hidden" id="btPdfCanvasWrap">
+            <canvas id="btPdfCanvas" class="bt-pdfjs-canvas"></canvas>
+          </div>
+        </div>
       `;
-      const swBtn = previewPane.querySelector(".btn-pdf-switch-text");
-      if (swBtn) {
-        swBtn.onclick = () => {
-          document.querySelectorAll(".modal-tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === "text"));
-          previewPane.classList.add("hidden");
-          document.getElementById("modalTextPane").classList.remove("hidden");
-        };
-      }
+
+      const prevPageBtn = previewPane.querySelector("#btPdfPrevBtn");
+      const nextPageBtn = previewPane.querySelector("#btPdfNextBtn");
+      const pageInput = previewPane.querySelector("#btPdfPageInput");
+      const pageTotalEl = previewPane.querySelector("#btPdfPageTotal");
+      const zoomOutBtn = previewPane.querySelector("#btPdfZoomOutBtn");
+      const zoomResetBtn = previewPane.querySelector("#btPdfZoomResetBtn");
+      const zoomInBtn = previewPane.querySelector("#btPdfZoomInBtn");
+      const statusCard = previewPane.querySelector("#btPdfStatusCard");
+      const statusMsg = previewPane.querySelector("#btPdfStatusMsg");
+      const progressFill = previewPane.querySelector("#btPdfProgressFill");
+      const progressTrack = previewPane.querySelector("#btPdfProgressTrack");
+      const canvasWrap = previewPane.querySelector("#btPdfCanvasWrap");
+      const canvas = previewPane.querySelector("#btPdfCanvas");
+      const stageEl = previewPane.querySelector("#btPdfStage");
+
+      previewPane.querySelectorAll(".btn-pdf-switch-text, .bt-pdfjs-instant-text").forEach((b) => {
+        b.onclick = switchToTextTab;
+      });
       const shareBtn = previewPane.querySelector(".btn-pdf-share");
       if (shareBtn) {
         shareBtn.onclick = async () => {
@@ -3357,49 +3542,254 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           } catch (_) {}
         };
       }
-      const toggleBtn = previewPane.querySelector(".btn-pdf-toggle-mode");
-      if (toggleBtn) {
-        toggleBtn.onclick = () => mountPdfMode(nextMode);
+      previewPane.querySelectorAll(".btn-pdf-toggle-mode").forEach((btn) => {
+        btn.onclick = () => mountPdfMode(btn.getAttribute("data-target-mode") || "direct");
+      });
+
+      const showFallbackError = (reasonText) => {
+        if (STATE.pdfViewerToken !== token) return;
+        if (progressTrack) progressTrack.classList.add("hidden");
+        if (statusCard) {
+          statusCard.classList.remove("hidden");
+          statusCard.classList.add("is-fallback");
+        }
+        if (statusMsg) {
+          statusMsg.textContent =
+            reasonText ||
+            `Este documento pesa ${sizeLabel}. Puedes leer su texto completo aquí mismo al instante, abrir el PDF en una pestaña dedicada o descargarlo completo.`;
+        }
+        const actionsBox = statusCard ? statusCard.querySelector(".bt-pdfjs-status-actions") : null;
+        if (actionsBox && !actionsBox.querySelector(".bt-pdfjs-retry-btn")) {
+          const retryBtn = document.createElement("button");
+          retryBtn.type = "button";
+          retryBtn.className = "btn-modal-secondary bt-pdfjs-retry-btn";
+          retryBtn.textContent = "Reintentar vista previa";
+          retryBtn.onclick = () => mountPdfMode("pdfjs");
+          actionsBox.prepend(retryBtn);
+
+          if (typeof window.__btOpenBugReport === "function") {
+            const repBtn = document.createElement("button");
+            repBtn.type = "button";
+            repBtn.className = "btn-modal-secondary bt-pdfjs-report-btn";
+            repBtn.textContent = "Reportar problema";
+            repBtn.onclick = () =>
+              window.__btOpenBugReport({
+                category: "Visor de archivos / PDF pesado",
+                context: `Archivo: ${doc.title} (${doc.id}, ${sizeLabel})`,
+              });
+            actionsBox.appendChild(repBtn);
+          }
+        }
+      };
+
+      const updateNavControls = () => {
+        if (!viewerState.pdfDoc) return;
+        if (prevPageBtn) prevPageBtn.disabled = viewerState.page <= 1;
+        if (nextPageBtn) nextPageBtn.disabled = viewerState.page >= viewerState.numPages;
+        if (pageInput) {
+          pageInput.disabled = false;
+          pageInput.max = String(viewerState.numPages);
+          pageInput.value = String(viewerState.page);
+        }
+        if (pageTotalEl) pageTotalEl.textContent = `/ ${viewerState.numPages}`;
+        if (zoomResetBtn) zoomResetBtn.textContent = `${Math.round(viewerState.zoom * 100)}%`;
+      };
+
+      const renderCurrentPage = async (pageNum) => {
+        if (STATE.pdfViewerToken !== token || !viewerState.pdfDoc || !canvas) return;
+        const clamped = Math.max(1, Math.min(viewerState.numPages, Number(pageNum) || 1));
+        viewerState.page = clamped;
+        updateNavControls();
+        try {
+          sessionStorage.setItem(`bt_pdf_page_${doc.id}`, String(clamped));
+        } catch (_) {}
+
+        if (viewerState.renderTask && typeof viewerState.renderTask.cancel === "function") {
+          try {
+            viewerState.renderTask.cancel();
+          } catch (_) {}
+        }
+
+        try {
+          if (statusMsg && !canvasWrap.classList.contains("hidden")) {
+            // Indicador discreto al cambiar de página
+          } else if (statusMsg) {
+            statusMsg.textContent = `Renderizando página ${clamped} de ${viewerState.numPages}...`;
+            if (progressFill) progressFill.style.width = "78%";
+          }
+
+          const pdfPage = await viewerState.pdfDoc.getPage(clamped);
+          if (STATE.pdfViewerToken !== token) return;
+
+          const baseViewport = pdfPage.getViewport({ scale: 1 });
+          const availWidth = Math.max(
+            280,
+            Math.min(1040, (stageEl ? stageEl.clientWidth : window.innerWidth) - (window.innerWidth < 640 ? 20 : 48))
+          );
+          const fitScale = availWidth / Math.max(1, baseViewport.width);
+          const isLite = document.documentElement.getAttribute("data-bt-perf") === "lite";
+          const maxDpr = isLite ? 1.35 : Math.min(window.devicePixelRatio || 1, 2);
+          const cssScale = fitScale * viewerState.zoom;
+          const renderViewport = pdfPage.getViewport({ scale: cssScale * maxDpr });
+
+          canvas.width = Math.max(1, Math.floor(renderViewport.width));
+          canvas.height = Math.max(1, Math.floor(renderViewport.height));
+          canvas.style.width = `${Math.floor(baseViewport.width * cssScale)}px`;
+          canvas.style.height = `${Math.floor(baseViewport.height * cssScale)}px`;
+
+          const ctx = canvas.getContext("2d", { alpha: false });
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          const task = pdfPage.render({
+            canvasContext: ctx,
+            viewport: renderViewport,
+          });
+          viewerState.renderTask = task;
+          await task.promise;
+          if (STATE.pdfViewerToken !== token) return;
+
+          if (viewerState.timeoutId) {
+            clearTimeout(viewerState.timeoutId);
+            viewerState.timeoutId = null;
+          }
+          if (statusCard) statusCard.classList.add("hidden");
+          if (canvasWrap) canvasWrap.classList.remove("hidden");
+          if (stageEl) stageEl.scrollTop = 0;
+        } catch (err) {
+          if (err && err.name === "RenderingCancelledException") return;
+          if (STATE.pdfViewerToken !== token) return;
+          console.warn("[BiblioTech PDF]", err);
+          if (canvasWrap && canvasWrap.classList.contains("hidden")) {
+            showFallbackError(
+              `No se pudo renderizar la página (${sizeLabel}). Puedes leer el texto completo de inmediato o abrir el PDF en una pestaña nueva.`
+            );
+          }
+        }
+      };
+
+      if (prevPageBtn) {
+        prevPageBtn.onclick = () => {
+          if (viewerState.page > 1) renderCurrentPage(viewerState.page - 1);
+        };
       }
+      if (nextPageBtn) {
+        nextPageBtn.onclick = () => {
+          if (viewerState.page < viewerState.numPages) renderCurrentPage(viewerState.page + 1);
+        };
+      }
+      if (pageInput) {
+        pageInput.onchange = () => {
+          const val = parseInt(pageInput.value, 10);
+          if (Number.isFinite(val)) renderCurrentPage(val);
+        };
+        pageInput.onkeydown = (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            const val = parseInt(pageInput.value, 10);
+            if (Number.isFinite(val)) renderCurrentPage(val);
+          }
+        };
+      }
+      const changePdfZoom = (nextZoom) => {
+        viewerState.zoom = Math.max(0.65, Math.min(2.25, Number(nextZoom.toFixed(2))));
+        updateNavControls();
+        renderCurrentPage(viewerState.page);
+      };
+      if (zoomOutBtn) zoomOutBtn.onclick = () => changePdfZoom(viewerState.zoom - 0.2);
+      if (zoomInBtn) zoomInBtn.onclick = () => changePdfZoom(viewerState.zoom + 0.2);
+      if (zoomResetBtn) zoomResetBtn.onclick = () => changePdfZoom(1);
+
+      viewerState.changeZoom = changePdfZoom;
+      viewerState.getZoom = () => viewerState.zoom;
+
+      viewerState.onKeyDown = (e) => {
+        const modalEl = document.getElementById("docModal");
+        if (!modalEl || modalEl.classList.contains("hidden")) return;
+        const tag = (e.target && e.target.tagName) || "";
+        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+        if (e.key === "ArrowLeft" && viewerState.page > 1) {
+          e.preventDefault();
+          renderCurrentPage(viewerState.page - 1);
+        } else if (e.key === "ArrowRight" && viewerState.page < viewerState.numPages) {
+          e.preventDefault();
+          renderCurrentPage(viewerState.page + 1);
+        }
+      };
+      document.addEventListener("keydown", viewerState.onKeyDown);
+
+      if (!navigator.onLine && !doc.has_web_file && !IS_LOCAL_SERVER) {
+        showFallbackError(
+          `Estás sin conexión y este PDF (${sizeLabel}) se aloja en la nube. Puedes leer todo su Texto Extraído sin conexión ahora mismo.`
+        );
+        return;
+      }
+
+      viewerState.timeoutId = setTimeout(() => {
+        if (STATE.pdfViewerToken === token && canvasWrap && canvasWrap.classList.contains("hidden")) {
+          showFallbackError(
+            `El documento es muy pesado (${sizeLabel}) y la conexión está tardando en responder. Puedes leer el texto completo al instante, abrir el PDF en pestaña o reintentar.`
+          );
+        }
+      }, 18000);
+
+      ensurePdfJsLoaded()
+        .then((pdfjsLib) => {
+          if (STATE.pdfViewerToken !== token) return;
+          if (statusMsg) statusMsg.textContent = `Abriendo estructura del PDF (${sizeLabel}) por bloques...`;
+          if (progressFill) progressFill.style.width = "45%";
+
+          const loadingTask = pdfjsLib.getDocument({
+            url: streamPdfUrl,
+            disableAutoFetch: true,
+            disableStream: false,
+            rangeChunkSize: 262144,
+            isEvalSupported: false,
+          });
+          viewerState.loadingTask = loadingTask;
+          loadingTask.promise
+            .then((loadedDoc) => {
+              if (STATE.pdfViewerToken !== token && loadedDoc && typeof loadedDoc.destroy === "function") {
+                Promise.resolve(loadedDoc.destroy()).catch(() => {});
+              }
+            })
+            .catch(() => {});
+          loadingTask.onProgress = (prog) => {
+            if (STATE.pdfViewerToken !== token || !progressFill) return;
+            if (prog && prog.loaded) {
+              const kb = Math.round(prog.loaded / 1024);
+              if (statusMsg && canvasWrap.classList.contains("hidden")) {
+                statusMsg.textContent = `Recibiendo página 1 por streaming (${kb} KB descargados de ${sizeLabel})...`;
+              }
+            }
+          };
+          return loadingTask.promise;
+        })
+        .then((pdfDoc) => {
+          if (!pdfDoc || STATE.pdfViewerToken !== token) return;
+          viewerState.pdfDoc = pdfDoc;
+          viewerState.numPages = pdfDoc.numPages || 1;
+          let savedPage = 1;
+          try {
+            const rawSaved = parseInt(sessionStorage.getItem(`bt_pdf_page_${doc.id}`) || "1", 10);
+            if (Number.isFinite(rawSaved) && rawSaved >= 1 && rawSaved <= viewerState.numPages) {
+              savedPage = rawSaved;
+            }
+          } catch (_) {}
+          return renderCurrentPage(savedPage);
+        })
+        .catch((err) => {
+          if (STATE.pdfViewerToken !== token) return;
+          console.warn("[BiblioTech PDF Load]", err);
+          showFallbackError(
+            `No se pudo iniciar la vista previa interactiva (${sizeLabel}). Usa «Leer Texto Completo ahora» o «Abrir PDF en pestaña».`
+          );
+        });
     };
 
     mountPdfMode(initialMode);
-    if (IS_LOCAL_SERVER || doc.has_web_file) {
-      openTabBtn.href = absPdfUrl;
-      openTabBtn.onclick = null;
-    } else {
-      openTabBtn.onclick = (e) => {
-        e.preventDefault();
-        window.open(`https://docs.google.com/viewer?url=${encodeURIComponent(absPdfUrl)}`, "_blank");
-      };
-    }
-
-    if (initialMode === "gdocs") {
-      const gIframe = document.getElementById("gDocsIframe");
-      let gIframeLoaded = false;
-      if (gIframe) {
-        gIframe.onload = () => { gIframeLoaded = true; };
-      }
-      setTimeout(() => {
-        if (!gIframeLoaded && (!navigator.onLine || !gIframe || !gIframe.contentWindow)) {
-          const banner = document.createElement("div");
-          banner.className = "viewer-resilience-banner";
-          banner.style.cssText = "padding:10px 14px;background:rgba(245,158,11,0.18);border:1px solid rgba(245,158,11,0.4);color:#fef3c7;border-radius:10px;margin:8px 0;font-size:0.82rem;display:flex;justify-content:space-between;align-items:center;gap:10px;";
-          banner.innerHTML = `<span>El visor en la nube está demorando. ¿Deseas leer el texto completo del documento de forma inmediata?</span> <button type="button" style="background:#d97706;color:#ffffff;border:none;border-radius:6px;padding:5px 12px;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;">Leer Texto</button>`;
-          const btn = banner.querySelector("button");
-          if (btn) {
-            btn.onclick = () => {
-              document.querySelectorAll(".modal-tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === "text"));
-              previewPane.classList.add("hidden");
-              document.getElementById("modalTextPane").classList.remove("hidden");
-            };
-          }
-          if (previewPane.parentNode && !previewPane.classList.contains("hidden")) {
-            previewPane.prepend(banner);
-          }
-        }
-      }, 5000);
-    }
+    openTabBtn.href = streamPdfUrl;
+    openTabBtn.onclick = null;
   } else if (["PNG", "JPG", "JPEG", "WEBP", "AVIF"].includes(doc.ext)) {
     previewPane.innerHTML = `
       <figure class="preview-image-figure">
@@ -3592,7 +3982,7 @@ async function renderModalRelatedQuestions(doc, isReload = false) {
     return;
   }
 
-  const batchSize = window.innerWidth <= 640 ? 3 : 4;
+  const batchSize = window.innerWidth <= 640 ? 2 : 4;
   if (!(STATE.modalRelatedSeen instanceof Set)) {
     STATE.modalRelatedSeen = new Set();
   }
@@ -4158,6 +4548,7 @@ function bindEvents() {
 
   const closeReader = () => {
     stopReaderTTS();
+    destroyActivePdfViewer();
     setReaderFullscreen(false);
     docModal.classList.add("hidden");
     document.documentElement.classList.remove("reader-open");
@@ -4279,7 +4670,7 @@ function bindEvents() {
     });
   }
 
-  // Controles V6: Modo Campamento, Físicas 3D, Lienzo Ambiental, Ejes y Dock
+  // Controles de Tema (Modo Claro / Modo Oscuro), Ejes y Dock
   const btnToggleCampMode = document.getElementById("btnToggleCampMode");
   if (btnToggleCampMode) {
     btnToggleCampMode.addEventListener("click", () => {
@@ -4854,6 +5245,16 @@ function setupReaderQoLHandlers(doc, fullText) {
   const btnZoomOut = document.getElementById("btnZoomOut");
   if (btnZoomOut) {
     btnZoomOut.onclick = () => {
+      if (
+        STATE.activePdfViewer &&
+        typeof STATE.activePdfViewer.changeZoom === "function" &&
+        previewPane &&
+        !previewPane.classList.contains("hidden")
+      ) {
+        STATE.activePdfViewer.changeZoom(STATE.activePdfViewer.getZoom() - 0.2);
+        BiblioFeel.pulse(8);
+        return;
+      }
       if (currentZoom > 0.65) {
         currentZoom = Math.max(0.65, Number((currentZoom - 0.15).toFixed(2)));
         applyZoom();
@@ -4865,6 +5266,16 @@ function setupReaderQoLHandlers(doc, fullText) {
   const btnZoomIn = document.getElementById("btnZoomIn");
   if (btnZoomIn) {
     btnZoomIn.onclick = () => {
+      if (
+        STATE.activePdfViewer &&
+        typeof STATE.activePdfViewer.changeZoom === "function" &&
+        previewPane &&
+        !previewPane.classList.contains("hidden")
+      ) {
+        STATE.activePdfViewer.changeZoom(STATE.activePdfViewer.getZoom() + 0.2);
+        BiblioFeel.pulse(8);
+        return;
+      }
       if (currentZoom < 1.5) {
         currentZoom = Math.min(1.5, Number((currentZoom + 0.15).toFixed(2)));
         applyZoom();
@@ -5374,13 +5785,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.7.0";
-const APP_MOBILE_VERSION = "3.6.3";
+const APP_WEB_VERSION = "9.8.0";
+const APP_MOBILE_VERSION = "3.8.0";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v51";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v52";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -5589,7 +6000,7 @@ function setupWebOfflineManager() {
       if (hasBank && hasFaq4) {
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (14,832 preg.)";
+          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (21,134 preg.)";
         }
         if (btnDownload) {
           btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
@@ -5739,7 +6150,7 @@ function setupWelcomeModal() {
       const shareUrl = "https://ey-liam.github.io/bibliotech-scouts/";
       const shareData = {
         title: "BiblioTech Scout — Biblioteca e Inteligencia Documental Scout",
-        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 14,832 respuestas scouts en BiblioTech Scout:",
+        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 21,134 respuestas scouts en BiblioTech Scout:",
         url: shareUrl
       };
       enqueueAnonTelemetry({ t: "enlace_externo", label: "Compartir QR / Sitio Bienvenida", url: shareUrl }, false);
@@ -6853,7 +7264,7 @@ function initPrivacyAndTelemetry() {
 }
 
 // ============================================================================
-// BÓVEDA LOCAL DE AUTOLLENADO SCOUT + EDITOR INTELIGENTE DE FORMATOS OFICIALES
+// BOVEDA LOCAL DE AUTOLLENADO SCOUT + EDITOR DE ARCHIVOS OFICIALES
 // ============================================================================
 
 const BT_AUTOFILL_PROFILE_KEY = "bt_autofill_profile_v1";
@@ -7034,7 +7445,7 @@ function setupAutofillVault() {
 }
 
 // ============================================================================
-// EDITOR INTELIGENTE DE FORMATOS SCOUT (100% OFICIALES ASMAC, PDF Y PNG)
+// EDITOR DE ARCHIVOS SCOUT (100% OFICIALES ASMAC, PDF Y PNG)
 // ============================================================================
 const BT_SF_ACTIVE_PREFIX = "bt_sf_active_v2_";
 const BT_SF_DRAFTS_KEY = "bt_sf_named_drafts_v2";

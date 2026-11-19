@@ -1,12 +1,15 @@
 // ============================================================================
-// BiblioTech Scout — Cloudflare Worker v2.0 (Telemetría, Moderación y La Fogata)
+// BiblioTech Scout — Cloudflare Worker v2.1 (Telemetría, La Fogata y Streaming PDF)
 // - Worker en Cloudflare: bibliotech-telemetry
 // - Binding KV: FORUM_KV -> bibliotech_fogata_kv
 // - Opcional para moderación remota: Variable secreta ADMIN_TOKEN
 // - Observabilidad: Workers Logs + Traces habilitados
+// - Streaming PDF por rangos (HTTP 206) estrictamente limitado a releases oficiales
 // ============================================================================
 
-const WORKER_VERSION = "2.0";
+const WORKER_VERSION = "2.1";
+const GITHUB_RELEASE_PDF_BASE =
+  "https://github.com/ey-liam/bibliotech-scouts/releases/download/v1.0/";
 const FORUM_CACHE_KEY = "https://bibliotech-forum-cache.internal/v1/posts.json";
 const KV_POSTS_KEY = "fogata_posts_v1";
 const KV_DELETED_KEY = "fogata_deleted_v1";
@@ -21,8 +24,9 @@ const ipWriteBuckets = new Map();
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Accept, X-Admin-Token",
+  "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Accept, X-Admin-Token, Range, If-None-Match, If-Modified-Since",
+  "Access-Control-Expose-Headers": "Accept-Ranges, Content-Range, Content-Length, Content-Type, ETag",
   "X-Content-Type-Options": "nosniff",
 };
 
@@ -419,6 +423,56 @@ async function applyForumEvent(env, payload, isAdmin) {
   }
 }
 
+async function handlePdfStream(request, shaRaw) {
+  const sha = String(shaRaw || "").trim().toLowerCase();
+  if (!/^[a-f0-9]{12}$/.test(sha)) {
+    return jsonResponse({ ok: false, error: "Identificador de PDF invalido" }, 400);
+  }
+  const targetUrl = `${GITHUB_RELEASE_PDF_BASE}${sha}.pdf`;
+  const upstreamHeaders = new Headers({
+    "User-Agent": "BiblioTech-Scout-PDF-Stream/2.1",
+  });
+  const reqRange = request.headers.get("Range");
+  if (reqRange && /^bytes=\d*-\d*$/i.test(reqRange.trim())) {
+    upstreamHeaders.set("Range", reqRange.trim());
+  }
+
+  let upstream;
+  try {
+    upstream = await fetch(targetUrl, {
+      method: request.method === "HEAD" ? "HEAD" : "GET",
+      headers: upstreamHeaders,
+      redirect: "follow",
+    });
+  } catch (_) {
+    return jsonResponse({ ok: false, error: "No se pudo conectar con el origen del PDF" }, 502);
+  }
+
+  if (!upstream.ok && upstream.status !== 206) {
+    return jsonResponse(
+      { ok: false, error: `Origen PDF respondio HTTP ${upstream.status}` },
+      upstream.status === 404 ? 404 : 502
+    );
+  }
+
+  const outHeaders = new Headers({
+    ...CORS_HEADERS,
+    "Content-Type": "application/pdf",
+    "Content-Disposition": `inline; filename="${sha}.pdf"`,
+    "Accept-Ranges": "bytes",
+    "Cache-Control": "public, max-age=86400",
+  });
+  for (const h of ["content-length", "content-range", "etag", "last-modified"]) {
+    const val = upstream.headers.get(h);
+    if (val) outHeaders.set(h, val);
+  }
+
+  return new Response(request.method === "HEAD" ? null : upstream.body, {
+    status: upstream.status,
+    headers: outHeaders,
+  });
+}
+
 export default {
   async fetch(request, env, ctx) {
     if (request.method === "OPTIONS") {
@@ -430,8 +484,20 @@ export default {
       request.headers.get("X-Admin-Token") || url.searchParams.get("token") || "";
     const isAdmin = Boolean(env && env.ADMIN_TOKEN && timingSafeMatch(reqAdminToken, env.ADMIN_TOKEN));
 
-    if (request.method === "GET") {
+    if (request.method === "GET" || request.method === "HEAD") {
       const channel = url.searchParams.get("channel") || "";
+
+      if (channel === "pdf") {
+        return handlePdfStream(request, url.searchParams.get("sha"));
+      }
+      const pdfPathMatch = url.pathname.match(/^\/pdf\/([a-f0-9]{12})\.pdf$/i);
+      if (pdfPathMatch) {
+        return handlePdfStream(request, pdfPathMatch[1]);
+      }
+
+      if (request.method === "HEAD") {
+        return new Response(null, { status: 200, headers: CORS_HEADERS });
+      }
 
       if (channel === "forum") {
         const [posts, deletedIds] = await Promise.all([

@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 18/11/2026 • **Versión:** BETA `9.3.0` (Web) • `3.3.0` Mobile  
+**Base de datos:** 19/11/2026 • **Versión:** `9.8.0` (Web) • `3.8.0` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -11,12 +11,12 @@
 
 ## 1. Qué es BiblioTech Scout y cómo funciona
 
-**BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, plantillas RECME, reglamentos, libros históricos, avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta de donde proviene cada dato.
+**BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, acciones educativas FAES, plantillas RECME, reglamentos, libros históricos, avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta y nomenclatura oficial de donde proviene cada dato.
 
-- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`13,520` preguntas y respuestas verificadas), el catálogo completo (`599` documentos), el modo oscuro, los visores integrados y los recursos rápidos funcionan directamente desde cualquier navegador de escritorio, tablet o celular.
+- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`21,134` preguntas y respuestas verificadas con enlaces cruzados entre documentos), el catálogo oficial (`883` documentos oficiales visibles, `1,035` entradas indexadas y `664` con nomenclatura oficial ASMAC/WOSM), el modo oscuro, el visor PDF por página con streaming inteligente para archivos pesados (`50 MB` a `300+ MB`), el Editor de Archivos y La Fogata funcionan directamente desde cualquier navegador de escritorio, tablet o celular (optimizados incluso para dispositivos de baja gama).
 - **Uso sin conexión (Offline):**
-  - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS / Liquid Glass (`img/apple-touch-icon.png`) y caché PWA (`sw.js`).
-  - En **Android (APK oficial):** la app nativa empaca las preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de hasta los `599` documentos.
+  - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS (`img/apple-touch-icon.png`) y caché PWA (`sw.js`).
+  - En **Android (APK oficial):** la app nativa empaca las `21,134` preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de los `883` documentos oficiales.
 
 ---
 
@@ -68,13 +68,13 @@ El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **M
 
 | Apartado | Función y qué puedes hacer ahí | Vista |
 | :--- | :--- | :---: |
-| **Buscador (`#buscador`)** | Escribe cualquier duda scout, filtra por sección (*Manada*, *Tropa*, *Comunidad*, *Clan*, etc.), abre el filtro rápido de **Sección**, genera o recarga **Preguntas al azar**, lee respuestas fundamentadas con fuente documental exacta y escúchalas con lectura en voz alta. | ![Buscador con metodología SMART](docs/screenshots/web-buscador-smart.png) |
-| **Biblioteca Scout (`#biblioteca`)** | Filtra por texto, sección, colección (*Centenario*, *Guías y PJOS*, *FES*, *RECME y FAES*, *SISAS y Help Desk*, *Manuales*, *Reglamentos*, *Comunicados*, etc.) o subcategoría entre los `599` documentos; guarda favoritos, toma notas locales, reporta errores directo en el visor y abre PDFs, hojas Excel con filtro/CSV, presentaciones, guías HTML o imágenes sin salir del sitio. | ![Biblioteca Scout en Modo Noche](docs/screenshots/web-biblioteca-noche.png) |
-| **Guía de Uso (`#guia`)** | Tarjetas plegables numeradas (*01 Primeros Pasos*, *02 Ecosistema Digital*, *03 Campo Escuela Meztitla*, etc.) con respuestas rápidas, cuotas de registro, permisos JL304 y enlaces oficiales al tocar cada tema. | ![Guía de Uso con acordeones desplegables](docs/screenshots/web-acordeones.png) |
+| **Buscador (`#buscador`)** | Escribe cualquier duda scout, filtra por sección (*Manada*, *Tropa*, *Comunidad*, *Clan*, etc.), abre el filtro rápido de **Sección**, genera o recarga **Preguntas al azar**, lee respuestas fundamentadas con fuente documental exacta, nomenclatura oficial y documentos relacionados, y escúchalas con lectura en voz alta. | ![Buscador con metodología SMART](docs/screenshots/web-buscador-smart.png) |
+| **Biblioteca Scout (`#biblioteca`)** | Filtra por texto, sección, colección (*Centenario*, *Guías y PJOS*, *FES*, *RECME y FAES*, *SISAS y Help Desk*, *Manuales*, *Reglamentos*, *Comunicados*, etc.) o subcategoría entre los `883` documentos oficiales (con carga progresiva de `12` en `12`); guarda favoritos, toma notas locales, consulta preguntas relacionadas con cada documento y abre PDFs pesados (`50–300+ MB`) con streaming por página, hojas Excel con filtro/CSV, presentaciones, guías HTML o imágenes sin salir del sitio. | ![Biblioteca Scout en Modo Noche](docs/screenshots/web-biblioteca-noche.png) |
+| **Guía de Uso (`#guia`)** | Tarjetas plegables numeradas (*01 Primeros Pasos*, *02 Ecosistema Digital*, *03 Campo Escuela Meztitla*, etc.) desplegadas por defecto con respuestas rápidas, cuotas de registro, permisos JL304 y enlaces oficiales al tocar cada tema. | ![Guía de Uso con acordeones desplegables](docs/screenshots/web-acordeones.png) |
 | **Secciones Scouts (`#secciones`)** | Acceso directo unificado por rango de edad (*Manada de Lobatos*, *Tropa de Scouts*, *Comunidad de Caminantes*, *Clan de Rovers*, *Adultos y Dirigentes* y *World Scouting WOSM*) para filtrar al instante sus documentos, progresiones e insignias. | ![Tarjetas unificadas de Secciones Scouts](docs/screenshots/web-secciones-unificadas.png) |
 | **¿Qué es BiblioTech? (`#acerca`)** | Presentación transparente del proyecto sin fines de lucro, su objetivo educativo, resumen de capacidades, datos de autoría y correo/reporte para mejoras o fallas. | ![Sección Proyecto sin fines de lucro y autoría](docs/screenshots/web-acerca-proyecto.png) |
 
-*(Además, desde la barra superior o el botón **Menú** accedes de forma ordenada a **Agentes de Cambio.MX**, **Servicios y Trámites**, **Cambios en Esquemas**, **La Fogata**, **Editor de Formatos (Próximamente)** y **Descarga App**).*
+*(Desde la barra superior accedes directamente a los 7 espacios dedicados: **Inicio**, **Biblioteca**, **Guía Scout**, **Agentes de Cambio.MX**, **La Fogata**, **Editor de Archivos** y **¿Qué es BiblioTech?**, además del acceso a **Guardados** y **App / Offline**).*
 
 ---
 
@@ -82,11 +82,11 @@ El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **M
 
 | Capacidad | Sitio Web (Escritorio / Móvil) | iOS Safari Web App (iPhone / iPad) | App Android (APK Oficial) |
 | :--- | :---: | :---: | :---: |
-| Buscador con `13,516` preguntas y fuentes exactas | En línea / Offline opcional | Descarga offline iOS Safari/PWA (`11 MB` o completo) | 100% Offline nativo |
-| Biblioteca de `599` documentos con visores integrados | En línea | En línea | En línea + Descarga offline |
+| Buscador con `21,134` preguntas, nomenclaturas y fuentes cruzadas | En línea / Offline opcional | Descarga offline iOS Safari/PWA | 100% Offline nativo |
+| Biblioteca de `883` documentos oficiales con visores integrados | En línea (streaming HTTP 206) | En línea (streaming HTTP 206) | En línea + Descarga offline |
 | Favoritos (`Guardados`), historial reciente y notas locales | Cookies + `localStorage` | Cookies + `localStorage` | Guardados + Almacenamiento nativo |
 | Modo Claro y Modo Oscuro unificados | Incluido | Incluido | Incluido |
-| Lector PDF nativo (`PdfRenderer`) con zoom y modo noche | Visor web embebido | Visor Safari iOS | Nativo de Android por página |
+| Lector PDF para archivos pesados (`50–300+ MB`) sin límite de 25 MB | Streaming por página (`PDF.js` + Nativo) | Streaming por página (`PDF.js`) | Nativo (`PdfRenderer`) + Streaming |
 | Gestor de descargas por lote (25 o individuales) | Descarga individual | Descarga Safari | Nativo (`Mi biblioteca`) |
 | Actualizaciones en segundo plano (interfaz y `data/`) | Automática al recargar | Automática (`sw.js`) | Descarga atómica OTA integrada |
 
@@ -96,17 +96,19 @@ El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **M
 
 El proyecto está construido evitando dependencias pesadas en el cliente y apoyado en herramientas verificables en el repositorio:
 
-- **Frontend e Interfaz Web:** `HTML5` semántico, `CSS3` (variables personalizadas, animaciones GPU, diseño responsivo desktop/tablet/móvil y modos Claro/Oscuro), `JavaScript (ES6+)`.
-- **Web App y Accesibilidad:** PWA (`manifest.webmanifest`, `sw.js` con estrategia *Network-First*), ícono compatible con iOS (`img/apple-touch-icon.png`) y `Web Speech API` para lectura en voz alta.
+- **Frontend e Interfaz Web:** `HTML5` semántico, `CSS3` (variables personalizadas, modo ligero adaptativo `data-bt-perf="lite"` para dispositivos de baja gama, diseño responsivo desktop/tablet/móvil y modos Claro/Oscuro), `JavaScript (ES6+)`.
+- **Web App y Accesibilidad:** PWA (`manifest.webmanifest`, `sw.js` con estrategia *Network-First*), ícono compatible con iOS (`img/apple-touch-icon.png`), `PDF.js` bajo demanda con streaming HTTP Range (`256 KB` por bloque) y `Web Speech API` para lectura en voz alta.
 - **Procesamiento, Build y Calidad (`scripts/` y CI):** `Node.js` (`esbuild` para minificación CSS/JS desde `src/` y validaciones en GitHub Actions `ci.yml`); `Python 3` con `pypdfium2` (extracción de texto PDF), `Pillow` (generación y optimización de portadas JPG e íconos), `openpyxl` (procesamiento de hojas Excel) y `Playwright` (pruebas E2E en escritorio, móvil e iOS).
-- **Infraestructura y Distribución:** `GitHub Pages` para publicación automática del sitio web, `GitHub Actions` para CI automatizado y `Cloudflare Workers Free` (plantilla preparada en `scripts/cloudflare-worker-telemetry.js`).
+- **Infraestructura y Distribución:** `GitHub Pages` para publicación automática del sitio web, `GitHub Actions` para CI automatizado y `Cloudflare Workers` (`cloudflare-worker/worker.js` `v2.1` con KV `FORUM_KV` y streaming HTTP 206 para PDFs oficiales de GitHub Releases).
 
 ---
 
-## 8. Novedades Recientes (`9.3.0`)
-- **Editor Inteligente de Formatos activo (100% local y offline):** 6 plantillas oficiales editables (*Ficha Médica y de Salud*, *Permiso de Salida JL304*, *Ficha de Especialidad FES*, *Cédula de Proyecto SMART*, *Convocatoria y Programa*, *Acta de Consejo/Corte de Honor*) con autollenado en 1 clic desde tu Perfil Local, gestor de borradores, vista previa en hoja carta, impresión/PDF y descarga editable en Word (`.doc`).
-- **Modo oscuro automático y visible en móvil:** detección automática de `prefers-color-scheme: dark` del sistema operativo o navegador en tiempo real, más botón de alternancia manual visible tanto en escritorio como en celular.
-- **La Fogata blindada para difusión:** borrado sincronizado (`foro_eliminar`) de publicaciones y comentarios en Cloudflare KV, edición de comentarios en KV, registro persistente de reportes/auditoría y límite anti-spam en el Worker.
+## 8. Novedades Recientes (`9.8.0`)
+- **Visor PDF interactivo por página para archivos pesados (`50 MB` a `300+ MB`):** soluciona de raíz el límite de `25 MB` de Google Docs Viewer mediante streaming HTTP 206 por bloques de `256 KB` a través de Cloudflare Worker `v2.1` (`/pdf/<sha12>.pdf`) y renderizado en alta definición con `PDF.js`, controles de página (`Anterior`, `Pág. X / N`, `Siguiente`), zoom, `Visor Nativo` y tarjeta de resiliencia con portada y lectura inmediata de texto.
+- **Rediseño visual editorial y motor de rendimiento para dispositivos de baja gama (`9.7.0`–`9.8.0`):** eliminación de bucles CSS infinitos y `backdrop-filter` en elementos con scroll, detección automática `data-bt-perf="lite"`, botones y tarjetas unificados en los 7 espacios y contraste reforzado en modo oscuro.
+- **Banco ampliado a `21,134` preguntas verificadas (+42.5%) y enlaces cruzados (`related_doc_ids`):** cobertura del 100% de los `883` documentos oficiales (`664` con nomenclatura oficial visible), barra de **Preguntas relacionadas con este documento** con recarga aleatoria dentro del lector y hasta 5 documentos relacionados por respuesta.
+- **Depuración integral del repositorio:** eliminación de más de `133 MB` de activos y grabaciones locales no referenciados, reglas CSS obsoletas y scripts históricos de un solo uso, manteniendo el 100% de los activos en su calidad original.
+- **Editor de Archivos activo (100% local y offline):** 6 plantillas oficiales editables (*Ficha Médica y de Salud* de 2 hojas completa, *Permiso de Salida JL304*, *Ficha de Especialidad FES*, *Cédula de Proyecto SMART*, *Convocatoria y Programa*, *Acta de Consejo/Corte de Honor*) con selector oficial de las 42 Provincias Scout de México y autollenado local.
 
 ### Versión anterior (`9.2.0`)
 - **Optimización móvil (Web/iOS y Android):** arranque en paralelo de `catalog.json` + `knowledge_base.json`, renderizado diferido de Biblioteca y cadenas de versión, eliminación de layout thrashing en scroll, timeouts con `AbortController` en `version.json` y La Fogata, y menor carga GPU en celulares.
@@ -131,13 +133,14 @@ bibliotech-scouts/
 ├── index.html                  # Estructura semántica principal (12 apartados ordenados)
 ├── src/                        # Fuente editable: styles.css y app.js
 ├── styles.css / app.js         # Salida depurada y minificada generada con npm run build
-├── sw.js                       # Service Worker PWA (bibliotech-scout-v42)
+├── sw.js                       # Service Worker PWA (bibliotech-scout-v52)
 ├── manifest.webmanifest        # Manifiesto Web App / PWA (iconos maskable y shortcuts)
-├── data/                       # catalog.json, questions_bank.json, faq_v3.json, faq_v4.json, kb, chunks
-├── covers/                     # Carátulas optimizadas en JPG (599 documentos)
-├── img/                        # Logotipos, fondos temáticos, galería y apple-touch-icon.png
-├── assets/                     # Recursos gráficos y multimedia locales
-├── scripts/                    # build-assets.mjs, validate-site.mjs, smoke_e2e.py, Cloudflare Worker y Python
+├── data/                       # catalog.json (883 docs), questions_bank.json, faq_v3.json, faq_v4.json (21,134 preg), kb, chunks
+├── covers/                     # Carátulas optimizadas en JPG (883 documentos oficiales)
+├── img/                        # Logotipos, fondos temáticos, galería, formatos y apple-touch-icon.png
+├── assets/                     # Recursos gráficos esenciales de interfaz
+├── cloudflare-worker/          # worker.js v2.1 (La Fogata KV, telemetría y streaming HTTP 206 de PDFs pesados)
+├── scripts/                    # build-assets.mjs, validate-site.mjs, smoke_e2e.py y utilidades de ingesta/auditoría
 ├── .github/workflows/ci.yml    # CI automatizado (validación + E2E Playwright)
 ├── ARCHITECTURE.md             # Documentación técnica y traspaso interno
 └── docs/screenshots/           # Capturas verificadas de escritorio, tablet, móvil, iOS y Android

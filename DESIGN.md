@@ -67,7 +67,7 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
 - **Barra superior escritorio (`.desktop-quick-nav`):** 8 accesos en 1 sola línea (`Inicio`, `Biblioteca`, `Guía Scout`, `Agentes de Cambio.MX`, `La Fogata`, `Editor de Archivos`, `¿Qué es BiblioTech?`, `App / Offline`) + modo oscuro + `Menú`.
 - **Dock inferior móvil (`#unifiedBottomDock`):** exactamente 5 botones equilibrados (`Inicio`, `Biblioteca`, `Fogata`, `Archivos`, `Guardados`) con `flex: 1 1 0; min-width: 0`.
 - **Controles de sub-vista:**
-  - Biblioteca (`#btLibraryModeBar`): segmented control corto (`Estantes (882)` / `Catálogo y Filtros`) + botón `Mis Guardados y Notas`. Paginación uniforme de **12 archivos por defecto** y carga progresiva de `+12` con botón `Cargar más archivos`. Subcategorías contraídas en `Destacados`/`Todas` y abiertas automáticamente al entrar en un estante/categoría específica (`FAES`, `Especialidades FES`, etc.).
+  - Biblioteca (`#btLibraryModeBar`): segmented control corto (`Estantes (883)` / `Catálogo y Filtros`) + botón `Mis Guardados y Notas`. Paginación uniforme de **12 archivos por defecto** y carga progresiva de `+12` con botón `Cargar más archivos`. Subcategorías contraídas en `Destacados`/`Todas` y abiertas automáticamente al entrar en un estante/categoría específica (`FAES`, `Especialidades FES`, etc.).
   - Guía Scout (`#btGuideSubnav`): barra de píldoras desplazable con 6 sub-pestañas (`Todo`, `Guía de Uso`, `Secciones`, `Servicios y Trámites`, `Cambios en Esquemas`, `App y Offline`), con acordeones `<details class="bt-acc-card">` desplegados por defecto y contraíbles.
 
 ---
@@ -83,6 +83,7 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
   - Cabecera en 1 sola fila compacta con título (máximo 2 líneas), botón `Info` plegable (`#btnToggleDocInfo` con descripción, fecha RECME, ODS y etiquetas), guardado, reporte y cerrar.
   - Metadatos y etiquetas viven dentro del cajón `#modalDocInfoDrawer` (cerrado por defecto) y nunca compiten con `#modalFieldNoteBox` (cierre mutuo).
   - Barra unificada (`.bt-reader-unified-bar`) arriba en escritorio y **al pie del modal en móvil (`<= 768px`)** respetando `env(safe-area-inset-bottom)`.
+  - **Visor PDF interactivo por página con streaming HTTP 206 (`.bt-pdfjs-stage` / `.pdf-quick-bar-interactive`):** para todos los PDFs pesados o alojados en GitHub Releases (`50 MB` a `300+ MB`, sin el límite de `25 MB` de Google Docs Viewer) y en navegadores móviles, renderiza cada página bajo demanda en `<canvas>` de alta definición mediante peticiones de rango (`256 KB` por bloque a través de Cloudflare Worker `v2.1`), mostrando de inmediato la portada real y controles de página (`Anterior`, `Pág. X / N`, `Siguiente`, zoom `- / 100% / +`, `Visor Nativo`, `Abrir en pestaña` y `Texto`), además de la barra de **Preguntas relacionadas con este documento** con botón `Otras preguntas`.
 - **App Android nativa (`#bt-pdf-viewer`):**
   - Controles esenciales siempre a mano: volver, título, salto a página `#`, zoom, Guardar (`bt_saved_docs`), Notas (`bt_note_<id>`), Reportar y descarga/abrir externo.
   - Modo lectura inmersivo (`.is-immersive`) alternado con toque simple en el centro de la página.
