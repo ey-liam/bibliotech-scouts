@@ -3774,7 +3774,8 @@ function bindEvents() {
 
 const BiblioFeel = {
   hapticsEnabled: true,
-  campMode: localStorage.getItem("bt_camp_mode") === "true",
+  campMode: false,
+  _themeMediaBound: false,
 
   pulse(pattern = 10) {
     if (!this.hapticsEnabled) return;
@@ -3783,24 +3784,80 @@ const BiblioFeel = {
     } catch (_) {}
   },
 
-  initCampMode() {
+  applyDarkTheme(isDark) {
+    this.campMode = Boolean(isDark);
     document.documentElement.setAttribute("data-camp-mode", String(this.campMode));
     const btn = document.getElementById("btnToggleCampMode");
     if (btn) {
       btn.setAttribute("aria-pressed", String(this.campMode));
+      const label = this.campMode ? "Cambiar a modo claro" : "Modo oscuro";
+      btn.setAttribute("title", label);
+      btn.setAttribute("aria-label", label);
+      btn.innerHTML = this.campMode
+        ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>'
+        : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+    }
+    const dockNight = document.getElementById("dockBtnNight");
+    if (dockNight) {
+      dockNight.setAttribute("aria-pressed", String(this.campMode));
+      dockNight.classList.toggle("is-active", this.campMode);
     }
     syncThemeColorMetas(this.campMode);
   },
 
-  toggleCampMode() {
-    this.campMode = !this.campMode;
-    localStorage.setItem("bt_camp_mode", String(this.campMode));
-    document.documentElement.setAttribute("data-camp-mode", String(this.campMode));
-    const btn = document.getElementById("btnToggleCampMode");
-    if (btn) {
-      btn.setAttribute("aria-pressed", String(this.campMode));
+  initCampMode() {
+    const mql =
+      typeof window !== "undefined" && typeof window.matchMedia === "function"
+        ? window.matchMedia("(prefers-color-scheme: dark)")
+        : null;
+    const sysDark = Boolean(mql && mql.matches);
+    let initialDark = sysDark;
+
+    try {
+      const savedMode = localStorage.getItem("bt_camp_mode");
+      const lastSys = localStorage.getItem("bt_theme_sys_snapshot");
+      if (savedMode !== null && (lastSys === null || lastSys === String(sysDark))) {
+        initialDark = savedMode === "true";
+      } else {
+        initialDark = sysDark;
+        localStorage.setItem("bt_camp_mode", String(sysDark));
+      }
+      localStorage.setItem("bt_theme_sys_snapshot", String(sysDark));
+    } catch (_) {}
+
+    this.applyDarkTheme(initialDark);
+
+    if (mql && !this._themeMediaBound) {
+      this._themeMediaBound = true;
+      this._mql = mql;
+      const onSystemThemeChange = (e) => {
+        const nextDark = Boolean(e && e.matches);
+        try {
+          localStorage.setItem("bt_camp_mode", String(nextDark));
+          localStorage.setItem("bt_theme_sys_snapshot", String(nextDark));
+        } catch (_) {}
+        this.applyDarkTheme(nextDark);
+      };
+      this._onSystemThemeChange = onSystemThemeChange;
+      if (typeof mql.addEventListener === "function") {
+        mql.addEventListener("change", onSystemThemeChange);
+      } else if (typeof mql.addListener === "function") {
+        mql.addListener(onSystemThemeChange);
+      }
     }
-    syncThemeColorMetas(this.campMode);
+  },
+
+  toggleCampMode() {
+    const nextDark = !this.campMode;
+    try {
+      localStorage.setItem("bt_camp_mode", String(nextDark));
+      const mql =
+        typeof window !== "undefined" && typeof window.matchMedia === "function"
+          ? window.matchMedia("(prefers-color-scheme: dark)")
+          : null;
+      if (mql) localStorage.setItem("bt_theme_sys_snapshot", String(Boolean(mql.matches)));
+    } catch (_) {}
+    this.applyDarkTheme(nextDark);
     this.pulse([12, 40, 12]);
     return this.campMode;
   },
@@ -4725,12 +4782,12 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.2.0";
-const APP_MOBILE_VERSION = "3.2.0";
-const APP_COOKIE_SCHEMA = "9.2";
+const APP_WEB_VERSION = "9.3.0";
+const APP_MOBILE_VERSION = "3.3.0";
+const APP_COOKIE_SCHEMA = "9.3";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v41";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v42";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -6339,7 +6396,10 @@ function setupAutofillVault() {
         renderDemo(prof);
       }
       BiblioFeel.pulse([10, 24]);
-      showWebToast("Perfil local guardado. Se usará en La Fogata y en el futuro Editor.");
+      if (typeof window.__btSyncSmartFormFromProfile === "function") {
+        window.__btSyncSmartFormFromProfile(prof, false);
+      }
+      showWebToast("Perfil local guardado. Listo para usar en el Editor de Formatos y La Fogata.");
       enqueueAnonTelemetry({ t: "ui_accion", label: "autofill_perfil_guardado" }, false);
     });
   }
@@ -6373,30 +6433,556 @@ function setupAutofillVault() {
     });
   }
 
-  // Enlaces directos desde las 6 tarjetas "Próximamente" hacia el Catálogo actual
-  document.querySelectorAll("#editor-formatos .editor-jump-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const jumpCat = btn.getAttribute("data-jump-cat");
-      const jumpQuery = btn.getAttribute("data-jump-query");
-      const filterCat = document.getElementById("filterCategory");
-      const catSearch = document.getElementById("catalogSearchInput");
-      if (jumpCat) {
-        STATE.categoryFilter = jumpCat;
-        STATE.subcategoryFilter = "all";
-        STATE.searchQuery = "";
-        if (filterCat) filterCat.value = jumpCat;
-        if (catSearch) catSearch.value = "";
-      } else if (jumpQuery) {
-        STATE.categoryFilter = "all";
-        STATE.subcategoryFilter = "all";
-        STATE.searchQuery = jumpQuery;
-        if (filterCat) filterCat.value = "all";
-        if (catSearch) catSearch.value = jumpQuery;
+  setupSmartFormsEngine(readFormProfile);
+}
+
+// ============================================================================
+// EDITOR INTELIGENTE DE FORMATOS SCOUT (100% LOCAL, OFFLINE, PDF Y WORD)
+// ============================================================================
+const BT_SF_ACTIVE_PREFIX = "bt_sf_active_v1_";
+const BT_SF_DRAFTS_KEY = "bt_sf_named_drafts_v1";
+
+const SMART_FORM_TEMPLATES = {
+  salud: {
+    id: "salud",
+    code: "ASMAC-SALUD",
+    title: "Ficha Médica y de Salud Scout",
+    subtitle: "Registro confidencial de salud, emergencias y autorización médica para actividades y campamentos",
+    signatures: ["Firma del Padre, Madre o Tutor Legal", "Firma del Participante / Scout", "Recibió: Scouter Responsable"],
+    fields: [
+      { key: "name", label: "Nombre completo del participante", type: "text", bind: "name", placeholder: "Ej. Liam Durán" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Ej. TLX0530123" },
+      { key: "age", label: "Edad", type: "text", bind: "age", placeholder: "Ej. 16 años" },
+      { key: "section", label: "Sección", type: "text", bind: "section", placeholder: "Comunidad de Caminantes" },
+      { key: "group", label: "Grupo Scout", type: "text", bind: "group", placeholder: "Ej. Grupo 53" },
+      { key: "province", label: "Provincia Scout", type: "text", bind: "province", placeholder: "Ej. Tláhuac-Xochimilco" },
+      { key: "blood", label: "Tipo de sangre y alergias", type: "text", bind: "blood", placeholder: "Ej. O+ · Sin alergias conocidas" },
+      { key: "insurance", label: "Servicio médico / Seguro / NSS", type: "text", placeholder: "Ej. IMSS / Seguro Scout ASMAC vigente" },
+      { key: "emergency", label: "Contacto de emergencia (Nombre y parentesco)", type: "text", bind: "emergency", placeholder: "Ej. Madre / Tutor responsable" },
+      { key: "emergencyPhone", label: "Teléfono(s) de emergencia 24 h", type: "text", placeholder: "Ej. 55 1234 5678" },
+      { key: "scouter", label: "Scouter responsable", type: "text", bind: "scouter", placeholder: "Ej. Coordinador de Comunidad" },
+      { key: "date", label: "Fecha de actualización", type: "text", defaultToday: true },
+      { key: "medications", label: "Medicamentos actuales, dosis o tratamientos en curso", type: "textarea", full: true, placeholder: "Indicar si toma algún medicamento, horario y dosis, o escribir «Ninguno»." },
+      { key: "notes", label: "Restricciones alimenticias, físicas o indicaciones médicas importantes", type: "textarea", full: true, placeholder: "Observaciones de salud relevantes para el equipo de dirigentes en campamento." }
+    ]
+  },
+  jl304: {
+    id: "jl304",
+    code: "FORMATO JL304",
+    title: "Permiso de Actividad y Salida Scout (JL304)",
+    subtitle: "Autorización oficial de padres o tutores para participación en salida, excursión o campamento",
+    signatures: ["Nombre y Firma del Padre, Madre o Tutor", "Firma del Scouter Responsable", "Vo. Bo. Jefatura de Grupo"],
+    fields: [
+      { key: "name", label: "Nombre del Scout participante", type: "text", bind: "name", placeholder: "Ej. Liam Durán" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Ej. TLX0530123" },
+      { key: "age", label: "Edad", type: "text", bind: "age", placeholder: "Ej. 16" },
+      { key: "section", label: "Sección", type: "text", bind: "section", placeholder: "Comunidad de Caminantes" },
+      { key: "group", label: "Grupo Scout", type: "text", bind: "group", placeholder: "Ej. Grupo 53" },
+      { key: "province", label: "Provincia Scout", type: "text", bind: "province", placeholder: "Ej. Tláhuac-Xochimilco" },
+      { key: "eventName", label: "Nombre de la actividad o campamento", type: "text", placeholder: "Ej. Campamento de Sección en Meztitla" },
+      { key: "destination", label: "Lugar / Destino exacto", type: "text", placeholder: "Ej. Campo Escuela Scout Meztitla, Tepoztlán, Mor." },
+      { key: "departureDate", label: "Fecha y hora de salida", type: "text", placeholder: "Ej. Sábado 8:00 h" },
+      { key: "returnDate", label: "Fecha y hora de regreso", type: "text", placeholder: "Ej. Domingo 18:00 h" },
+      { key: "meetingPoint", label: "Punto de reunión y entrega", type: "text", placeholder: "Ej. Local de Grupo / Parque habitual" },
+      { key: "scouter", label: "Scouter responsable de la actividad", type: "text", bind: "scouter", placeholder: "Nombre y cargo del dirigente" },
+      { key: "emergency", label: "Padre, madre o tutor que autoriza", type: "text", bind: "emergency", placeholder: "Nombre completo del tutor" },
+      { key: "blood", label: "Tipo de sangre y alergias a considerar", type: "text", bind: "blood", placeholder: "Ej. O+ · Ninguna" },
+      { key: "gearAndCost", label: "Equipo requerido y observaciones de transporte", type: "textarea", full: true, placeholder: "Uniforme completo, equipo de acampado, hidratación, ficha médica vigente." },
+      { key: "declaration", label: "Declaración de autorización", type: "textarea", full: true, defaultValue: "Autorizo que mi hijo(a) o tutorado(a) participe en la actividad descrita bajo las normas de la Asociación de Scouts de México, A.C. (ASMAC) y la política A Salvo del Peligro, facultando a los dirigentes responsables a tomar las medidas médicas de urgencia necesarias en caso de incidente." }
+    ]
+  },
+  fes: {
+    id: "fes",
+    code: "FES · RECME",
+    title: "Ficha de Especialidad Scout (FES) y Seguimiento",
+    subtitle: "Plan de trabajo, relación con los 4 Ejes y 17 ODS, aprendizajes y evidencias logradas",
+    signatures: ["Firma del Joven / Participante", "Firma del Sinodal o Asesor de Especialidad", "Firma del Scouter de Sección"],
+    fields: [
+      { key: "name", label: "Nombre del Scout", type: "text", bind: "name" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum" },
+      { key: "section", label: "Sección", type: "text", bind: "section" },
+      { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
+      { key: "province", label: "Provincia Scout", type: "text", bind: "province" },
+      { key: "specialtyName", label: "Nombre de la Especialidad (FES)", type: "text", placeholder: "Ej. Gestión de Riesgos en Áreas Naturales / Primeros Auxilios" },
+      { key: "fesAxis", label: "Eje temático FES", type: "select", options: ["Salud y Bienestar", "Habilidades para la Vida", "Ambiente y Sustentabilidad", "Paz y Acción Comunitaria"] },
+      { key: "odsGoal", label: "ODS vinculado (Agenda 2030)", type: "text", placeholder: "Ej. ODS 3: Salud y Bienestar / ODS 13: Acción por el Clima" },
+      { key: "level", label: "Nivel o etapa", type: "select", options: ["Nivel Básico / Exploración", "Nivel Intermedio / Dominio", "Nivel Avanzado / Servicio"] },
+      { key: "scouter", label: "Sinodal o Scouter acompañante", type: "text", bind: "scouter" },
+      { key: "evalDate", label: "Fecha de presentación", type: "text", defaultToday: true },
+      { key: "learningGoals", label: "Objetivos y competencias a desarrollar", type: "textarea", full: true, placeholder: "Qué conocimientos teóricos y habilidades prácticas se acordaron con el sinodal." },
+      { key: "evidences", label: "Acciones realizadas, servicio a la sección y evidencias entregadas", type: "textarea", full: true, placeholder: "Describe las prácticas, talleres, bitácora o demostración realizada ante la sección." }
+    ]
+  },
+  smart: {
+    id: "smart",
+    code: "PROYECTO SMART",
+    title: "Cédula de Proyecto SMART e Insignias Mundiales",
+    subtitle: "Planeación y reporte para Agentes de Cambio.MX, Tribu de la Tierra, Campeones, Mensajeros de la Paz, Jade y Obsidiana",
+    signatures: ["Firma del Coordinador / Proponente", "Firma del Asesor o Scouter", "Validación Consejo / Red"],
+    fields: [
+      { key: "name", label: "Coordinador(a) del proyecto", type: "text", bind: "name" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum" },
+      { key: "section", label: "Sección", type: "text", bind: "section" },
+      { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
+      { key: "province", label: "Provincia Scout", type: "text", bind: "province" },
+      { key: "framework", label: "Iniciativa o Insignia objetivo", type: "select", options: ["Agentes de Cambio.MX (Red de Caminantes)", "Tribu de la Tierra (Earth Tribe)", "Campeones de la Naturaleza", "Mensajeros de la Paz", "Horas al Aire Libre / Vida Silvestre", "Insignia de Jade / Insignia de Obsidiana", "Máxima Insignia de Sección"] },
+      { key: "projectTitle", label: "Título del proyecto", type: "text", full: true, placeholder: "Nombre claro y concreto del proyecto" },
+      { key: "scouter", label: "Asesor o Scouter que acompaña", type: "text", bind: "scouter" },
+      { key: "startDate", label: "Periodo de ejecución", type: "text", defaultToday: true },
+      { key: "diagnosis", label: "1. Diagnóstico y problemática detectada", type: "textarea", full: true, placeholder: "Qué necesidad real de la comunidad o entorno atiende este proyecto." },
+      { key: "smartGoal", label: "2. Objetivo SMART (Específico, Medible, Alcanzable, Relevante y con Tiempo)", type: "textarea", full: true, placeholder: "Ej. Lograr recolectar/capacitar/restaurar [meta numérica] en [lugar] antes del [fecha]." },
+      { key: "activities", label: "3. Cronograma de fases (Preparación, Ejecución y Evaluación)", type: "textarea", full: true, placeholder: "Actividades principales, responsables, recursos y medidas de seguridad (A Salvo del Peligro)." },
+      { key: "impact", label: "4. Impacto medible, beneficiarios directos y horas de servicio", type: "textarea", full: true, placeholder: "Personas beneficiadas, horas totales de servicio del equipo y resultados verificables." }
+    ]
+  },
+  programa: {
+    id: "programa",
+    code: "PROGRAMA SCOUT",
+    title: "Convocatoria y Programa de Actividad o Campamento",
+    subtitle: "Diseño de programa de ciclo, salida de fin de semana o campamento de sección",
+    signatures: ["Elaboró: Equipo / Consejo de Sección", "Revisó: Scouter Responsable", "Autorizó: Jefatura de Grupo"],
+    fields: [
+      { key: "eventName", label: "Nombre del evento o actividad", type: "text", full: true, placeholder: "Ej. Acantonamiento / Campamento de Patrullas / Actividad de Comunidad" },
+      { key: "section", label: "Sección convocada", type: "text", bind: "section" },
+      { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
+      { key: "province", label: "Provincia Scout", type: "text", bind: "province" },
+      { key: "dates", label: "Fechas y horarios", type: "text", placeholder: "Ej. 22 y 23 de noviembre · 08:00 a 17:00 h" },
+      { key: "location", label: "Sede / Punto de encuentro", type: "text", placeholder: "Lugar exacto y referencias de acceso" },
+      { key: "scouter", label: "Responsable general", type: "text", bind: "scouter" },
+      { key: "emergency", label: "Contacto de enlace en ciudad", type: "text", bind: "emergency" },
+      { key: "educationalGoal", label: "Objetivos educativos y énfasis del programa", type: "textarea", full: true, placeholder: "Qué áreas de crecimiento, progresión o vida al aire libre se trabajan." },
+      { key: "scheduleBlocks", label: "Cronograma por bloques y horarios", type: "textarea", full: true, placeholder: "08:00 Registro y revisión JL304\n09:00 Apertura y montaje\n11:00 Gran Juego / Taller técnico\n14:00 Comida por pequeños grupos\n16:00 Evaluación y cierre" },
+      { key: "gearList", label: "Lista de equipo indispensable y requisitos (Ficha de Salud + JL304)", type: "textarea", full: true, placeholder: "Mochila, bolsa estanca, lámpara frontal, cantimplora, impermeable, botiquín personal." }
+    ]
+  },
+  acta: {
+    id: "acta",
+    code: "ACTA OFICIAL",
+    title: "Acta de Consejo, Corte de Honor o Acuerdo MASC",
+    subtitle: "Registro formal de acuerdos, seguimiento de pequeños grupos y compromisos",
+    signatures: ["Firma de quien preside la sesión", "Firma de Secretaría / Redacción", "Firmas de conformidad de asistentes"],
+    fields: [
+      { key: "organType", label: "Órgano o instancia que sesiona", type: "select", options: ["Consejo de Grupo", "Corte de Honor de Tropa", "Asamblea / Comité de Comunidad", "Consejo de Clan Rover", "Consejo de Roca de Manada", "Acuerdo de Diálogo Directo / MASC"] },
+      { key: "datePlace", label: "Fecha, hora y lugar de la sesión", type: "text", defaultToday: true },
+      { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
+      { key: "province", label: "Provincia Scout", type: "text", bind: "province" },
+      { key: "name", label: "Quien redacta / Secretaría", type: "text", bind: "name" },
+      { key: "scouter", label: "Quien preside o acompaña", type: "text", bind: "scouter" },
+      { key: "attendees", label: "1. Lista de asistentes y quórum", type: "textarea", full: true, placeholder: "Nombres y cargos o pequeños grupos presentes en la sesión." },
+      { key: "agenda", label: "2. Orden del día y temas tratados", type: "textarea", full: true, placeholder: "1) Lectura de acta anterior\n2) Evaluación de actividades\n3) Progresiones e insignias\n4) Próximo ciclo de programa" },
+      { key: "agreements", label: "3. Acuerdos tomados, responsables y fechas compromiso", type: "textarea", full: true, placeholder: "Detallar cada acuerdo votado o consensuado, quién le da seguimiento y cuándo se revisa." }
+    ]
+  }
+};
+
+function setupSmartFormsEngine(readFormProfileFn) {
+  const workspace = document.getElementById("smartFormWorkspace");
+  const selectEl = document.getElementById("sfTemplateSelect");
+  const fieldsContainer = document.getElementById("sfFormFieldsContainer");
+  const sheetEl = document.getElementById("sfDocumentSheet");
+  const statusEl = document.getElementById("sfSaveStatus");
+  const applyProfileBtn = document.getElementById("btnSfApplyProfile");
+  const saveDraftBtn = document.getElementById("btnSfSaveNamedDraft");
+  const resetBtn = document.getElementById("btnSfResetForm");
+  const draftsWrap = document.getElementById("sfSavedDraftsWrap");
+  const draftsList = document.getElementById("sfSavedDraftsList");
+  const splitLayout = document.getElementById("sfSplitLayout");
+  const printBtn = document.getElementById("btnSfPrintPdf");
+  const wordBtn = document.getElementById("btnSfDownloadDoc");
+  const copyBtn = document.getElementById("btnSfCopyText");
+  if (!workspace || !selectEl || !fieldsContainer || !sheetEl) return;
+
+  let currentTemplateId = "salud";
+  let currentValues = {};
+
+  const todayStr = () => new Date().toLocaleDateString("es-MX", { day: "2-digit", month: "long", year: "numeric" });
+
+  const readActiveStorage = (tplId) => {
+    try {
+      const raw = localStorage.getItem(BT_SF_ACTIVE_PREFIX + tplId);
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) {
+      return null;
+    }
+  };
+
+  const writeActiveStorage = (tplId, data) => {
+    try {
+      localStorage.setItem(BT_SF_ACTIVE_PREFIX + tplId, JSON.stringify(data || {}));
+    } catch (_) {}
+  };
+
+  const readNamedDrafts = () => {
+    try {
+      const raw = localStorage.getItem(BT_SF_DRAFTS_KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (_) {
+      return [];
+    }
+  };
+
+  const writeNamedDrafts = (arr) => {
+    try {
+      localStorage.setItem(BT_SF_DRAFTS_KEY, JSON.stringify((arr || []).slice(0, 30)));
+    } catch (_) {}
+  };
+
+  const getCurrentProfile = () => {
+    const fromStorage = getAutofillProfile();
+    const fromForm = typeof readFormProfileFn === "function" ? readFormProfileFn() : {};
+    return {
+      name: fromForm.name || fromStorage.name || "",
+      cum: fromForm.cum || fromStorage.cum || "",
+      age: fromForm.age || fromStorage.age || "",
+      section: fromForm.section || fromStorage.section || "Comunidad de Caminantes",
+      group: fromForm.group || fromStorage.group || "",
+      province: fromForm.province || fromStorage.province || "",
+      blood: fromForm.blood || fromStorage.blood || "",
+      emergency: fromForm.emergency || fromStorage.emergency || "",
+      scouter: fromForm.scouter || fromStorage.scouter || ""
+    };
+  };
+
+  const buildInitialValues = (tplId) => {
+    const tpl = SMART_FORM_TEMPLATES[tplId] || SMART_FORM_TEMPLATES.salud;
+    const saved = readActiveStorage(tpl.id) || {};
+    const prof = getCurrentProfile();
+    const out = {};
+    for (const f of tpl.fields) {
+      if (saved[f.key] !== undefined && String(saved[f.key]).trim() !== "") {
+        out[f.key] = String(saved[f.key]);
+      } else if (f.bind && prof[f.bind]) {
+        out[f.key] = String(prof[f.bind]);
+      } else if (f.defaultToday) {
+        out[f.key] = todayStr();
+      } else if (f.defaultValue) {
+        out[f.key] = f.defaultValue;
+      } else if (f.type === "select" && Array.isArray(f.options) && f.options.length) {
+        out[f.key] = f.options[0];
+      } else {
+        out[f.key] = "";
       }
-      applyCatalogFilters();
-      btNavigateToSection("explorar");
+    }
+    return out;
+  };
+
+  const renderSheetHtml = (tpl, vals) => {
+    const shortFields = tpl.fields.filter((f) => !f.full && f.type !== "textarea");
+    const longFields = tpl.fields.filter((f) => f.full || f.type === "textarea");
+    const metaRows = shortFields
+      .map((f) => {
+        const v = String(vals[f.key] || "").trim() || "___________________________";
+        return `<div class="bt-sf-doc-cell"><span class="bt-sf-doc-k">${escapeHtml(f.label)}</span><strong class="bt-sf-doc-v">${escapeHtml(v)}</strong></div>`;
+      })
+      .join("");
+    const longBlocks = longFields
+      .map((f) => {
+        const v = String(vals[f.key] || "").trim() || "(Espacio para completar)";
+        return `<div class="bt-sf-doc-block"><div class="bt-sf-doc-block-title">${escapeHtml(f.label)}</div><div class="bt-sf-doc-block-body">${escapeHtml(v).replace(/\n/g, "<br>")}</div></div>`;
+      })
+      .join("");
+    const sigs = (tpl.signatures || [])
+      .map(
+        (s) =>
+          `<div class="bt-sf-doc-sig"><div class="bt-sf-doc-sig-line"></div><span>${escapeHtml(s)}</span></div>`
+      )
+      .join("");
+
+    return `
+      <div class="bt-sf-doc-header">
+        <div class="bt-sf-doc-brand">
+          <span class="bt-sf-doc-code">${escapeHtml(tpl.code)}</span>
+          <h4>${escapeHtml(tpl.title)}</h4>
+          <p>${escapeHtml(tpl.subtitle)}</p>
+        </div>
+        <div class="bt-sf-doc-stamp">
+          <strong>BiblioTech Scout</strong>
+          <span>Formato Documental</span>
+          <span>${escapeHtml(todayStr())}</span>
+        </div>
+      </div>
+      <div class="bt-sf-doc-meta-grid">${metaRows}</div>
+      <div class="bt-sf-doc-blocks">${longBlocks}</div>
+      <div class="bt-sf-doc-sigs">${sigs}</div>
+    `;
+  };
+
+  const updatePreviewSheet = () => {
+    const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+    sheetEl.innerHTML = renderSheetHtml(tpl, currentValues);
+  };
+
+  const renderFields = () => {
+    const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+    fieldsContainer.innerHTML = tpl.fields
+      .map((f) => {
+        const val = currentValues[f.key] || "";
+        const wrapCls = f.full || f.type === "textarea" ? "bt-sf-field is-full" : "bt-sf-field";
+        if (f.type === "select" && Array.isArray(f.options)) {
+          const opts = f.options
+            .map(
+              (o) =>
+                `<option value="${escapeHtml(o)}"${o === val ? " selected" : ""}>${escapeHtml(o)}</option>`
+            )
+            .join("");
+          return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><select data-sf-field="${escapeHtml(f.key)}">${opts}</select></label>`;
+        }
+        if (f.type === "textarea") {
+          return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><textarea rows="3" data-sf-field="${escapeHtml(f.key)}" placeholder="${escapeHtml(f.placeholder || "")}">${escapeHtml(val)}</textarea></label>`;
+        }
+        return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><input type="text" data-sf-field="${escapeHtml(f.key)}" value="${escapeHtml(val)}" placeholder="${escapeHtml(f.placeholder || "")}" /></label>`;
+      })
+      .join("");
+  };
+
+  const renderNamedDrafts = () => {
+    if (!draftsWrap || !draftsList) return;
+    const list = readNamedDrafts();
+    if (!list.length) {
+      draftsWrap.classList.add("hidden");
+      draftsList.innerHTML = "";
+      return;
+    }
+    draftsWrap.classList.remove("hidden");
+    draftsList.innerHTML = list
+      .map(
+        (d) => `
+        <div class="bt-sf-draft-chip">
+          <button type="button" class="bt-sf-draft-load" data-load-draft="${escapeHtml(d.id)}">
+            <strong>${escapeHtml(d.label)}</strong>
+            <span>${escapeHtml(d.date || "")}</span>
+          </button>
+          <button type="button" class="bt-sf-draft-del" data-del-draft="${escapeHtml(d.id)}" aria-label="Eliminar borrador" title="Eliminar borrador">×</button>
+        </div>`
+      )
+      .join("");
+  };
+
+  const loadTemplate = (tplId, scrollWorkspace = false) => {
+    const tpl = SMART_FORM_TEMPLATES[tplId] ? SMART_FORM_TEMPLATES[tplId] : SMART_FORM_TEMPLATES.salud;
+    currentTemplateId = tpl.id;
+    selectEl.value = tpl.id;
+    document.querySelectorAll("#smartFormTemplateCards [data-template-card]").forEach((card) => {
+      card.classList.toggle("is-active-template", card.getAttribute("data-template-card") === tpl.id);
+    });
+    currentValues = buildInitialValues(tpl.id);
+    renderFields();
+    updatePreviewSheet();
+    if (statusEl) statusEl.textContent = "Borrador local listo";
+    if (scrollWorkspace) {
+      workspace.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const applyProfileToCurrent = (profOverride, notify = true) => {
+    const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+    const prof = profOverride || getCurrentProfile();
+    let count = 0;
+    for (const f of tpl.fields) {
+      if (f.bind && prof[f.bind]) {
+        currentValues[f.key] = String(prof[f.bind]);
+        count++;
+      }
+    }
+    writeActiveStorage(currentTemplateId, currentValues);
+    renderFields();
+    updatePreviewSheet();
+    if (statusEl) statusEl.textContent = "Autollenado aplicado desde tu Perfil Local";
+    if (notify) {
+      showWebToast(
+        count
+          ? `Se rellenaron ${count} campos automáticamente con tu Perfil Local.`
+          : "Guarda tus datos abajo en «Mi Perfil Local» para autollenar en 1 clic."
+      );
+    }
+  };
+
+  window.__btSyncSmartFormFromProfile = (prof, notify) => {
+    applyProfileToCurrent(prof, notify);
+  };
+
+  fieldsContainer.addEventListener("input", (e) => {
+    const input = e.target.closest("[data-sf-field]");
+    if (!input) return;
+    const key = input.getAttribute("data-sf-field");
+    currentValues[key] = input.value;
+    writeActiveStorage(currentTemplateId, currentValues);
+    updatePreviewSheet();
+    if (statusEl) statusEl.textContent = "Guardado en este dispositivo";
+  });
+
+  selectEl.addEventListener("change", () => {
+    loadTemplate(selectEl.value, false);
+  });
+
+  document.querySelectorAll("[data-open-template]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const tplId = btn.getAttribute("data-open-template");
+      loadTemplate(tplId, true);
     });
   });
+
+  if (applyProfileBtn) {
+    applyProfileBtn.addEventListener("click", () => applyProfileToCurrent(null, true));
+  }
+
+  if (saveDraftBtn) {
+    saveDraftBtn.addEventListener("click", () => {
+      const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+      const who = (currentValues.name || currentValues.eventName || currentValues.projectTitle || "Scout").trim();
+      const drafts = readNamedDrafts();
+      const entry = {
+        id: `d_${Date.now().toString(36)}`,
+        templateId: tpl.id,
+        label: `${tpl.code} · ${who.slice(0, 32)}`,
+        date: new Date().toLocaleDateString("es-MX", { day: "2-digit", month: "short" }),
+        values: { ...currentValues }
+      };
+      drafts.unshift(entry);
+      writeNamedDrafts(drafts);
+      renderNamedDrafts();
+      showWebToast("Borrador guardado en «Mis borradores guardados».");
+    });
+  }
+
+  if (draftsList) {
+    draftsList.addEventListener("click", (e) => {
+      const loadBtn = e.target.closest("[data-load-draft]");
+      if (loadBtn) {
+        const id = loadBtn.getAttribute("data-load-draft");
+        const found = readNamedDrafts().find((d) => d.id === id);
+        if (found) {
+          currentTemplateId = SMART_FORM_TEMPLATES[found.templateId] ? found.templateId : "salud";
+          selectEl.value = currentTemplateId;
+          currentValues = { ...(found.values || {}) };
+          writeActiveStorage(currentTemplateId, currentValues);
+          renderFields();
+          updatePreviewSheet();
+          showWebToast(`Borrador cargado: ${found.label}`);
+        }
+        return;
+      }
+      const delBtn = e.target.closest("[data-del-draft]");
+      if (delBtn) {
+        const id = delBtn.getAttribute("data-del-draft");
+        const next = readNamedDrafts().filter((d) => d.id !== id);
+        writeNamedDrafts(next);
+        renderNamedDrafts();
+        showWebToast("Borrador eliminado.");
+      }
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      try {
+        localStorage.removeItem(BT_SF_ACTIVE_PREFIX + currentTemplateId);
+      } catch (_) {}
+      currentValues = buildInitialValues(currentTemplateId);
+      renderFields();
+      updatePreviewSheet();
+      showWebToast("Campos restablecidos con los datos base de tu perfil.");
+    });
+  }
+
+  document.querySelectorAll("#sfMobileModeTabs [data-sf-mob-pane]").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const pane = tab.getAttribute("data-sf-mob-pane") || "edit";
+      if (splitLayout) splitLayout.setAttribute("data-sf-active-pane", pane);
+      document.querySelectorAll("#sfMobileModeTabs [data-sf-mob-pane]").forEach((t) => {
+        const act = t === tab;
+        t.classList.toggle("active", act);
+        t.setAttribute("aria-selected", act ? "true" : "false");
+      });
+    });
+  });
+
+  const buildStandaloneDocumentHtml = (forWord = false) => {
+    const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+    return `<!DOCTYPE html>
+<html lang="es" ${forWord ? 'xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"' : ""}>
+<head>
+<meta charset="utf-8" />
+<title>${escapeHtml(tpl.title)} - BiblioTech Scout</title>
+<style>
+  @page { size: letter; margin: 16mm; }
+  body { font-family: Arial, Helvetica, sans-serif; color: #0f172a; margin: 0; padding: 16px; font-size: 11pt; line-height: 1.45; }
+  .bt-sf-doc-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #4c1d95; padding-bottom: 10px; margin-bottom: 14px; }
+  .bt-sf-doc-code { display: inline-block; background: #ede9fe; color: #4c1d95; font-weight: bold; font-size: 8.5pt; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+  .bt-sf-doc-brand h4 { margin: 6px 0 3px; font-size: 15pt; color: #0f172a; }
+  .bt-sf-doc-brand p { margin: 0; font-size: 9.5pt; color: #475569; }
+  .bt-sf-doc-stamp { text-align: right; font-size: 8.5pt; color: #475569; }
+  .bt-sf-doc-stamp strong { display: block; color: #4c1d95; font-size: 10pt; }
+  .bt-sf-doc-meta-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+  .bt-sf-doc-cell { display: inline-block; width: 47%; vertical-align: top; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 9px; margin: 0 1% 8px 0; box-sizing: border-box; }
+  .bt-sf-doc-k { display: block; font-size: 8pt; text-transform: uppercase; color: #64748b; font-weight: bold; }
+  .bt-sf-doc-v { display: block; font-size: 10.5pt; color: #0f172a; margin-top: 2px; }
+  .bt-sf-doc-block { border: 1px solid #cbd5e1; border-radius: 6px; padding: 9px 11px; margin-bottom: 10px; page-break-inside: avoid; }
+  .bt-sf-doc-block-title { font-size: 9pt; font-weight: bold; text-transform: uppercase; color: #4c1d95; margin-bottom: 5px; }
+  .bt-sf-doc-block-body { font-size: 10.5pt; color: #0f172a; min-height: 28px; }
+  .bt-sf-doc-sigs { display: flex; justify-content: space-between; gap: 18px; margin-top: 38px; page-break-inside: avoid; }
+  .bt-sf-doc-sig { flex: 1; text-align: center; font-size: 9pt; color: #334155; }
+  .bt-sf-doc-sig-line { border-bottom: 1px solid #0f172a; height: 28px; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+${renderSheetHtml(tpl, currentValues)}
+</body>
+</html>`;
+  };
+
+  if (printBtn) {
+    printBtn.addEventListener("click", () => {
+      document.body.classList.add("bt-printing-smart-form");
+      const cleanup = () => document.body.classList.remove("bt-printing-smart-form");
+      window.addEventListener("afterprint", cleanup, { once: true });
+      try {
+        window.print();
+      } catch (_) {}
+      setTimeout(cleanup, 1800);
+    });
+  }
+
+  if (wordBtn) {
+    wordBtn.addEventListener("click", () => {
+      const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+      const htmlDoc = buildStandaloneDocumentHtml(true);
+      const blob = new Blob(["\ufeff", htmlDoc], { type: "application/msword;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const safeWho = (currentValues.name || currentValues.eventName || currentValues.projectTitle || "Scout")
+        .replace(/[^a-zA-Z0-9_-]+/g, "_")
+        .slice(0, 28);
+      a.href = url;
+      a.download = `${tpl.code.replace(/\s+/g, "_")}_${safeWho || "BiblioTech"}.doc`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+      showWebToast("Formato descargado en Word (.doc) listo para editar o imprimir.");
+    });
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+      const lines = [`${tpl.title.toUpperCase()} (${tpl.code})`, "----------------------------------------"];
+      for (const f of tpl.fields) {
+        lines.push(`${f.label}: ${String(currentValues[f.key] || "—").trim()}`);
+      }
+      const txt = lines.join("\n");
+      try {
+        await navigator.clipboard.writeText(txt);
+        showWebToast("Texto del formato copiado al portapapeles.");
+      } catch (_) {
+        showWebToast("No se pudo copiar automáticamente en este navegador.");
+      }
+    });
+  }
+
+  renderNamedDrafts();
+  loadTemplate("salud", false);
 }
 
 // ============================================================================
@@ -6813,6 +7399,7 @@ function setupScoutForum() {
       publicPost: publicData.publicPost || null,
       publicComment: publicData.publicComment || null,
       likeDelta: publicData.likeDelta || null,
+      deleteTarget: publicData.deleteTarget || null,
       actividad_completa: [
         `EVENTO EN LA FOGATA: ${actionType}`,
         `--- REGISTRO DE SEGURIDAD INTERNO (PRIVADO SI ELIGIÓ ANÓNIMO) ---`,
@@ -6886,8 +7473,19 @@ function setupScoutForum() {
       const res = await btFetchWithTimeout(url, { method: "GET", headers: { Accept: "application/json" } }, 7500);
       if (res && res.ok) {
         const data = await res.json().catch(() => null);
-        if (data && data.ok && Array.isArray(data.posts)) {
-          mergeCloudForumPosts(data.posts);
+        if (data && data.ok) {
+          if (Array.isArray(data.deletedIds) && data.deletedIds.length) {
+            const delSet = new Set(data.deletedIds);
+            const before = forumState.posts.length;
+            forumState.posts = forumState.posts.filter((p) => !delSet.has(p.id));
+            if (forumState.posts.length !== before) {
+              persistForumState();
+              renderForum();
+            }
+          }
+          if (Array.isArray(data.posts)) {
+            mergeCloudForumPosts(data.posts);
+          }
         }
         updateSyncBadge(true);
       } else {
@@ -7666,11 +8264,19 @@ function setupScoutForum() {
     const delPostBtn = e.target.closest("[data-delete-post]");
     if (delPostBtn) {
       const pid = delPostBtn.getAttribute("data-delete-post");
+      const targetPost = forumState.posts.find((p) => p.id === pid && p.authorId === LOCAL_AUTHOR_ID);
       forumState.posts = forumState.posts.filter((p) => !(p.id === pid && p.authorId === LOCAL_AUTHOR_ID));
       forumState.savedPostIds = forumState.savedPostIds.filter((id) => id !== pid);
       persistForumState();
       renderForum();
       showWebToast("Publicación eliminada.");
+      if (targetPost) {
+        sendForumSecurityRecord("foro_eliminar", getForumIdentity(), `Publicación eliminada: ${targetPost.title}`, {
+          postId: pid,
+          title: targetPost.title,
+          deleteTarget: { postId: pid, authorId: LOCAL_AUTHOR_ID }
+        });
+      }
       return;
     }
 
@@ -7746,10 +8352,18 @@ function setupScoutForum() {
       const [pid, cid] = (delCommentBtn.getAttribute("data-delete-comment") || "").split("::");
       const post = forumState.posts.find((p) => p.id === pid);
       if (post && Array.isArray(post.comments)) {
+        const targetComment = post.comments.find((c) => c.id === cid && c.authorId === LOCAL_AUTHOR_ID);
         post.comments = post.comments.filter((c) => !(c.id === cid && c.authorId === LOCAL_AUTHOR_ID));
         persistForumState();
         renderForum();
         showWebToast("Comentario eliminado.");
+        if (targetComment) {
+          sendForumSecurityRecord("foro_eliminar", getForumIdentity(), `Comentario eliminado en ${post.title}`, {
+            postId: pid,
+            title: post.title,
+            deleteTarget: { postId: pid, commentId: cid, authorId: LOCAL_AUTHOR_ID }
+          });
+        }
       }
     }
   });
@@ -7854,6 +8468,11 @@ function setupScoutForum() {
         persistForumState();
         renderForum();
         showWebToast("Comentario actualizado.");
+        sendForumSecurityRecord("foro_comentario_edicion", getForumIdentity(), `Comentario editado en "${post.title}": ${text}`, {
+          postId: pid,
+          title: post.title,
+          publicComment: { postId: pid, comment }
+        });
       }
     }
   });

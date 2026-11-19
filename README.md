@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 18/11/2026 • **Versión:** BETA `9.2.0` (Web) • `3.2.0` Mobile  
+**Base de datos:** 18/11/2026 • **Versión:** BETA `9.3.0` (Web) • `3.3.0` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -103,7 +103,12 @@ El proyecto está construido evitando dependencias pesadas en el cliente y apoya
 
 ---
 
-## 8. Novedades Recientes (`9.2.0`)
+## 8. Novedades Recientes (`9.3.0`)
+- **Editor Inteligente de Formatos activo (100% local y offline):** 6 plantillas oficiales editables (*Ficha Médica y de Salud*, *Permiso de Salida JL304*, *Ficha de Especialidad FES*, *Cédula de Proyecto SMART*, *Convocatoria y Programa*, *Acta de Consejo/Corte de Honor*) con autollenado en 1 clic desde tu Perfil Local, gestor de borradores, vista previa en hoja carta, impresión/PDF y descarga editable en Word (`.doc`).
+- **Modo oscuro automático y visible en móvil:** detección automática de `prefers-color-scheme: dark` del sistema operativo o navegador en tiempo real, más botón de alternancia manual visible tanto en escritorio como en celular.
+- **La Fogata blindada para difusión:** borrado sincronizado (`foro_eliminar`) de publicaciones y comentarios en Cloudflare KV, edición de comentarios en KV, registro persistente de reportes/auditoría y límite anti-spam en el Worker.
+
+### Versión anterior (`9.2.0`)
 - **Optimización móvil (Web/iOS y Android):** arranque en paralelo de `catalog.json` + `knowledge_base.json`, renderizado diferido de Biblioteca y cadenas de versión, eliminación de layout thrashing en scroll, timeouts con `AbortController` en `version.json` y La Fogata, y menor carga GPU en celulares.
 - **Cero botones encimados en móvil:** botón `↑` posicionado encima del dock inferior, toasts elevados con margen de seguridad, `padding-bottom` ampliado para el dock y ocultamiento automático de flotantes con modales abiertos.
 - **Limpieza de botones duplicados:** eliminados accesos repetidos en el Hero de Inicio, menú hamburguesa, Biblioteca móvil (`Guardados` ya vive en el dock), tarjetas del espacio Formatos y en la versión Android nativa.
@@ -126,7 +131,7 @@ bibliotech-scouts/
 ├── index.html                  # Estructura semántica principal (12 apartados ordenados)
 ├── src/                        # Fuente editable: styles.css y app.js
 ├── styles.css / app.js         # Salida depurada y minificada generada con npm run build
-├── sw.js                       # Service Worker PWA (bibliotech-scout-v41)
+├── sw.js                       # Service Worker PWA (bibliotech-scout-v42)
 ├── manifest.webmanifest        # Manifiesto Web App / PWA (iconos maskable y shortcuts)
 ├── data/                       # catalog.json, questions_bank.json, faq_v3.json, faq_v4.json, kb, chunks
 ├── covers/                     # Carátulas optimizadas en JPG (599 documentos)

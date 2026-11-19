@@ -1,8 +1,8 @@
 {
-  "version": "9.2.0",
-  "mobileVersion": "3.2.0",
-  "cache": "bibliotech-scout-v41",
+  "version": "9.3.0",
+  "mobileVersion": "3.3.0",
+  "cache": "bibliotech-scout-v42",
   "releasedAt": "2026-11-18",
-  "schemaCookieVersion": "9.2",
-  "notes": "Versión 9.2.0: optimización móvil (arranque paralelo, render diferido, menor carga GPU), cero botones encimados sobre el dock y limpieza de botones duplicados entre apartados."
+  "schemaCookieVersion": "9.3",
+  "notes": "Versión 9.3.0: Editor Inteligente de Formatos activo (6 formatos editables offline con PDF y Word), Modo oscuro automático por sistema y visible en móvil, y La Fogata con borrado/moderación sincronizados en KV."
 }

@@ -287,10 +287,23 @@ def run_e2e(test_webkit: bool = False):
             assert forum_fit, "Tarjetas de foro exceden el ancho móvil"
             mpage.click('#unifiedBottomDock [data-bt-go-view="formatos"]')
             assert mpage.locator("#editor-formatos").is_visible(), "Dock móvil no abrió Formatos"
+            assert mpage.locator("#smartFormWorkspace").is_visible(), "Editor Inteligente de Formatos no visible"
+            mpage.select_option("#sfTemplateSelect", "jl304")
+            mpage.click("#btnSfApplyProfile")
+            assert "Permiso de Actividad y Salida" in mpage.locator("#sfDocumentSheet").inner_text(), "Hoja JL304 no renderizó en el Editor"
             editor_fit = mpage.evaluate(
                 "() => Array.from(document.querySelectorAll('#editor-formatos .editor-format-card')).every(el => el.getBoundingClientRect().right <= window.innerWidth + 1)"
             )
             assert editor_fit, "Tarjetas de editor exceden el ancho móvil"
+
+            # Probar Modo oscuro visible en móvil y detección automática de sistema (prefers-color-scheme)
+            assert mpage.locator("#btnToggleCampMode").is_visible(), "Botón Modo oscuro oculto en móvil"
+            mpage.emulate_media(color_scheme="dark")
+            mpage.wait_for_timeout(120)
+            assert mpage.evaluate("document.documentElement.getAttribute('data-camp-mode') === 'true'"), "Modo oscuro no se activó automáticamente con prefers-color-scheme: dark"
+            mpage.emulate_media(color_scheme="light")
+            mpage.wait_for_timeout(120)
+            assert mpage.evaluate("document.documentElement.getAttribute('data-camp-mode') === 'false'"), "Modo claro no se restauró automáticamente con prefers-color-scheme: light"
             mctx.close()
             ctx.close()
             browser.close()

@@ -10,7 +10,7 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
 2. **Cero emojis en toda la plataforma:** prohibidos en HTML, CSS, JS, JSON, botones, badges, alertas, documentación y mensajes de error. Toda iconografía debe ser **SVG vectorial limpio** (`stroke="currentColor"`, `stroke-width="2"`, `aria-hidden="true"`).
 3. **Práctico para novatos, profundo para expertos:** cada espacio muestra primero la acción más común de forma limpia y deja filtros avanzados, subcategorías, metadatos y normativa detallada accesibles en un toque (plegables o en sub-pestañas), sin saturar la pantalla inicial.
 4. **Mobile-first real (390x844) y escritorio amplio (1440x900):** todo botón interactivo debe ofrecer zona táctil cómoda (`>= 40px`, ideal `44px`), sin texto recortado ni desbordamiento horizontal (`overflow-x: hidden` nunca se usa como excusa para cortar controles).
-5. **Paridad Claro / Modo Campamento (Oscuro):** todo elemento nuevo debe definir estilos tanto para modo claro por defecto como para `html[data-camp-mode="true"]` con contraste legible (`>= 4.5:1` en texto normal y `>= 3:1` en controles).
+5. **Paridad Claro / Modo oscuro:** todo elemento nuevo debe definir estilos tanto para modo claro por defecto como para `html[data-camp-mode="true"]` con contraste legible (`>= 4.5:1` en texto normal y `>= 3:1` en controles). Se activa o desactiva automáticamente según `prefers-color-scheme: dark` del PC, celular o navegador y también mediante el botón manual en la cabecera (escritorio y móvil).
 
 ---
 
@@ -33,7 +33,7 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
 - **Coral / Naranja (`--coral` / `--scout-orange`):** `#f97316` / `#ea580c` (avisos, Caminantes/Fogata)
 - **Rojo (`--scout-red`):** `#e63946` (reportes, alertas críticas, Rover/Emergencias)
 
-### Modo Campamento / Oscuro (`html[data-camp-mode="true"]`)
+### Modo oscuro (`html[data-camp-mode="true"]`)
 - **Superficies elevadas:** fondos nocturnos translúcidos violeta-pizarra (`rgba(21, 14, 44, 0.9)` / `#0f172a`)
 - **Bordes:** `rgba(139, 92, 246, 0.36)` (sutiles, sin marcos blancos chillones)
 - **Texto principal / secundario:** `#f8fafc` / `#cbd5e1`
