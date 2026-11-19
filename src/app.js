@@ -6446,13 +6446,48 @@ const SMART_FORM_TEMPLATES = {
   salud: {
     id: "salud",
     code: "ASMAC-SALUD",
+    baseDocId: "doc-0325",
+    baseDocName: "FICHA MÉDICA EDITABLE.pdf",
     title: "Ficha Médica y de Salud Scout",
-    subtitle: "Registro confidencial de salud, emergencias y autorización médica para actividades y campamentos",
+    subtitle: "Basado en el documento oficial FICHA MÉDICA EDITABLE.pdf de ASMAC",
     signatures: ["Firma del Padre, Madre o Tutor Legal", "Firma del Participante / Scout", "Recibió: Scouter Responsable"],
+    officialPages: [
+      {
+        src: "img/forms/salud_p1.webp",
+        aspect: "1311 / 1853",
+        boxes: [
+          { key: "date", x: 71.0, y: 13.6, w: 23.5, h: 1.3 },
+          { key: "name", x: 20.3, y: 15.8, w: 40.5, h: 1.4 },
+          { key: "age", x: 81.6, y: 15.8, w: 12.8, h: 1.4 },
+          { key: "province", x: 20.3, y: 17.2, w: 40.5, h: 1.4 },
+          { key: "group", x: 81.6, y: 17.2, w: 12.8, h: 1.4 },
+          { key: "cum", x: 20.3, y: 18.5, w: 40.5, h: 1.4 },
+          { key: "section", x: 81.6, y: 18.5, w: 12.8, h: 1.4 },
+          { key: "blood", x: 8.8, y: 20.9, w: 85.5, h: 1.6 },
+          { key: "blood", x: 21.3, y: 24.1, w: 12.2, h: 1.3 },
+          { key: "insurance", x: 53.8, y: 27.6, w: 29.0, h: 1.4 },
+          { key: "blood", x: 8.8, y: 34.8, w: 85.5, h: 2.2 },
+          { key: "medications", x: 8.8, y: 39.5, w: 85.5, h: 2.3, multiline: true },
+          { key: "notes", x: 9.2, y: 81.0, w: 84.5, h: 5.5, multiline: true }
+        ]
+      },
+      {
+        src: "img/forms/salud_p2.webp",
+        aspect: "1311 / 1853",
+        boxes: [
+          { key: "emergency", x: 21.2, y: 39.2, w: 33.0, h: 1.3 },
+          { key: "emergencyPhone", x: 21.2, y: 40.5, w: 33.0, h: 1.3 },
+          { key: "scouter", x: 21.2, y: 43.0, w: 33.0, h: 1.3 },
+          { key: "notes", x: 8.8, y: 49.2, w: 25.5, h: 10.0, multiline: true },
+          { key: "emergency", x: 12.0, y: 70.2, w: 25.0, h: 1.6, align: "center" },
+          { key: "name", x: 63.0, y: 70.2, w: 25.0, h: 1.6, align: "center" }
+        ]
+      }
+    ],
     fields: [
       { key: "name", label: "Nombre completo del participante", type: "text", bind: "name", placeholder: "Ej. Liam Durán" },
       { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Ej. TLX0530123" },
-      { key: "age", label: "Edad", type: "text", bind: "age", placeholder: "Ej. 16 años" },
+      { key: "age", label: "Edad / Fecha de nacimiento", type: "text", bind: "age", placeholder: "Ej. 16 años" },
       { key: "section", label: "Sección", type: "text", bind: "section", placeholder: "Comunidad de Caminantes" },
       { key: "group", label: "Grupo Scout", type: "text", bind: "group", placeholder: "Ej. Grupo 53" },
       { key: "province", label: "Provincia Scout", type: "text", bind: "province", placeholder: "Ej. Tláhuac-Xochimilco" },
@@ -6468,23 +6503,49 @@ const SMART_FORM_TEMPLATES = {
   },
   jl304: {
     id: "jl304",
-    code: "FORMATO JL304",
-    title: "Permiso de Actividad y Salida Scout (JL304)",
-    subtitle: "Autorización oficial de padres o tutores para participación en salida, excursión o campamento",
+    code: "FORMATO JL304 / JL306",
+    baseDocId: "doc-0305",
+    baseDocName: "ASMAC/DNGDI/CNAR/JL306 — Autorización de eventos",
+    title: "Permiso de Actividad y Salida Scout (JL304 / JL306)",
+    subtitle: "Basado en el formato oficial de Autorización de participación en eventos de ASMAC",
     signatures: ["Nombre y Firma del Padre, Madre o Tutor", "Firma del Scouter Responsable", "Vo. Bo. Jefatura de Grupo"],
+    officialPages: [
+      {
+        src: "img/forms/jl304_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "departureDate", x: 47.0, y: 15.6, w: 40.0, h: 1.8, align: "center" },
+          { key: "name", x: 13.0, y: 25.4, w: 74.0, h: 2.0, align: "center" },
+          { key: "age", x: 47.0, y: 34.6, w: 40.0, h: 1.8, align: "center" },
+          { key: "destination", x: 12.0, y: 47.7, w: 54.5, h: 1.5 },
+          { key: "returnDate", x: 22.5, y: 49.4, w: 51.0, h: 1.5 },
+          { key: "scouter", x: 35.0, y: 53.8, w: 45.5, h: 1.5 }
+        ]
+      },
+      {
+        src: "img/forms/jl304_p2.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "emergency", x: 12.0, y: 26.8, w: 30.0, h: 1.6, align: "center" },
+          { key: "scouter", x: 54.0, y: 26.8, w: 30.0, h: 1.6, align: "center" },
+          { key: "emergency", x: 12.0, y: 74.2, w: 30.0, h: 1.6, align: "center" },
+          { key: "group", x: 54.0, y: 74.2, w: 30.0, h: 1.6, align: "center" }
+        ]
+      }
+    ],
     fields: [
       { key: "name", label: "Nombre del Scout participante", type: "text", bind: "name", placeholder: "Ej. Liam Durán" },
       { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Ej. TLX0530123" },
-      { key: "age", label: "Edad", type: "text", bind: "age", placeholder: "Ej. 16" },
+      { key: "age", label: "Edad / Fecha de nacimiento", type: "text", bind: "age", placeholder: "Ej. 16 años" },
       { key: "section", label: "Sección", type: "text", bind: "section", placeholder: "Comunidad de Caminantes" },
       { key: "group", label: "Grupo Scout", type: "text", bind: "group", placeholder: "Ej. Grupo 53" },
       { key: "province", label: "Provincia Scout", type: "text", bind: "province", placeholder: "Ej. Tláhuac-Xochimilco" },
       { key: "eventName", label: "Nombre de la actividad o campamento", type: "text", placeholder: "Ej. Campamento de Sección en Meztitla" },
-      { key: "destination", label: "Lugar / Destino exacto", type: "text", placeholder: "Ej. Campo Escuela Scout Meztitla, Tepoztlán, Mor." },
-      { key: "departureDate", label: "Fecha y hora de salida", type: "text", placeholder: "Ej. Sábado 8:00 h" },
-      { key: "returnDate", label: "Fecha y hora de regreso", type: "text", placeholder: "Ej. Domingo 18:00 h" },
+      { key: "destination", label: "Lugar / Evento denominado", type: "text", placeholder: "Ej. Campo Escuela Scout Meztitla, Tepoztlán, Mor." },
+      { key: "departureDate", label: "Fecha de autorización / Salida", type: "text", defaultToday: true },
+      { key: "returnDate", label: "Fechas del evento (Salida y regreso)", type: "text", placeholder: "Ej. 22 al 23 de noviembre de 2026" },
       { key: "meetingPoint", label: "Punto de reunión y entrega", type: "text", placeholder: "Ej. Local de Grupo / Parque habitual" },
-      { key: "scouter", label: "Scouter responsable de la actividad", type: "text", bind: "scouter", placeholder: "Nombre y cargo del dirigente" },
+      { key: "scouter", label: "Scouter responsable / Acompañante autorizado", type: "text", bind: "scouter", placeholder: "Nombre y cargo del dirigente" },
       { key: "emergency", label: "Padre, madre o tutor que autoriza", type: "text", bind: "emergency", placeholder: "Nombre completo del tutor" },
       { key: "blood", label: "Tipo de sangre y alergias a considerar", type: "text", bind: "blood", placeholder: "Ej. O+ · Ninguna" },
       { key: "gearAndCost", label: "Equipo requerido y observaciones de transporte", type: "textarea", full: true, placeholder: "Uniforme completo, equipo de acampado, hidratación, ficha médica vigente." },
@@ -6493,84 +6554,174 @@ const SMART_FORM_TEMPLATES = {
   },
   fes: {
     id: "fes",
-    code: "FES · RECME",
-    title: "Ficha de Especialidad Scout (FES) y Seguimiento",
-    subtitle: "Plan de trabajo, relación con los 4 Ejes y 17 ODS, aprendizajes y evidencias logradas",
+    code: "PLANTILLA P5.1 · FES",
+    baseDocId: "doc-0695",
+    baseDocName: "P5.1_PlantillaEspecialidad_v1.1.pdf",
+    title: "Ficha de Especialidad Scout (Plantilla Oficial P5.1)",
+    subtitle: "Basado en el archivo oficial P5.1_PlantillaEspecialidad_v1.1.pdf de RECME ASMAC",
     signatures: ["Firma del Joven / Participante", "Firma del Sinodal o Asesor de Especialidad", "Firma del Scouter de Sección"],
+    officialPages: [
+      {
+        src: "img/forms/fes_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "specialtyName", x: 5.2, y: 8.4, w: 58.0, h: 3.6 },
+          { key: "section", x: 69.5, y: 8.4, w: 24.5, h: 3.6 },
+          { key: "odsGoal", x: 70.0, y: 29.0, w: 24.0, h: 3.6 },
+          { key: "learningGoals", x: 5.2, y: 24.0, w: 58.0, h: 10.0, multiline: true },
+          { key: "fesAxis", x: 5.2, y: 36.7, w: 58.0, h: 3.2 },
+          { key: "evidences", x: 5.2, y: 43.8, w: 58.0, h: 10.0, multiline: true },
+          { key: "level", x: 5.2, y: 57.2, w: 58.0, h: 3.2 },
+          { key: "scouter", x: 5.2, y: 64.2, w: 58.0, h: 9.8, multiline: true },
+          { key: "group", x: 70.0, y: 77.5, w: 23.5, h: 11.0, multiline: true },
+          { key: "name", x: 5.2, y: 94.6, w: 46.5, h: 3.2 }
+        ]
+      }
+    ],
     fields: [
-      { key: "name", label: "Nombre del Scout", type: "text", bind: "name" },
+      { key: "name", label: "Elaboró (Nombre del Scout y CUM)", type: "text", bind: "name" },
       { key: "cum", label: "CUM", type: "text", bind: "cum" },
       { key: "section", label: "Sección", type: "text", bind: "section" },
-      { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
+      { key: "group", label: "Grupo, Provincia y Medidas de Seguridad", type: "text", bind: "group" },
       { key: "province", label: "Provincia Scout", type: "text", bind: "province" },
-      { key: "specialtyName", label: "Nombre de la Especialidad (FES)", type: "text", placeholder: "Ej. Gestión de Riesgos en Áreas Naturales / Primeros Auxilios" },
-      { key: "fesAxis", label: "Eje temático FES", type: "select", options: ["Salud y Bienestar", "Habilidades para la Vida", "Ambiente y Sustentabilidad", "Paz y Acción Comunitaria"] },
-      { key: "odsGoal", label: "ODS vinculado (Agenda 2030)", type: "text", placeholder: "Ej. ODS 3: Salud y Bienestar / ODS 13: Acción por el Clima" },
-      { key: "level", label: "Nivel o etapa", type: "select", options: ["Nivel Básico / Exploración", "Nivel Intermedio / Dominio", "Nivel Avanzado / Servicio"] },
-      { key: "scouter", label: "Sinodal o Scouter acompañante", type: "text", bind: "scouter" },
+      { key: "specialtyName", label: "Nombre de mi Especialidad (FES)", type: "text", placeholder: "Ej. Gestión de Riesgos en Áreas Naturales / Primeros Auxilios" },
+      { key: "fesAxis", label: "Eje temático FES / Qué más puedo aprender", type: "select", options: ["Salud y Bienestar", "Habilidades para la Vida", "Ambiente y Sustentabilidad", "Paz y Acción Comunitaria"] },
+      { key: "odsGoal", label: "Tema relacionado y ODS (Agenda 2030)", type: "text", placeholder: "Ej. ODS 3: Salud y Bienestar / ODS 13: Acción por el Clima" },
+      { key: "level", label: "Nivel o etapa / Qué más puedo hacer", type: "select", options: ["Nivel Básico / Exploración", "Nivel Intermedio / Dominio", "Nivel Avanzado / Servicio"] },
+      { key: "scouter", label: "3. Comparto y Sinodal acompañante", type: "text", bind: "scouter" },
       { key: "evalDate", label: "Fecha de presentación", type: "text", defaultToday: true },
-      { key: "learningGoals", label: "Objetivos y competencias a desarrollar", type: "textarea", full: true, placeholder: "Qué conocimientos teóricos y habilidades prácticas se acordaron con el sinodal." },
-      { key: "evidences", label: "Acciones realizadas, servicio a la sección y evidencias entregadas", type: "textarea", full: true, placeholder: "Describe las prácticas, talleres, bitácora o demostración realizada ante la sección." }
+      { key: "learningGoals", label: "1. CONOZCO — Lo que tengo que aprender sobre la especialidad", type: "textarea", full: true, placeholder: "Qué conocimientos teóricos y habilidades prácticas se acordaron con el sinodal." },
+      { key: "evidences", label: "2. APLICO — Lo que hago para demostrar los conocimientos adquiridos", type: "textarea", full: true, placeholder: "Describe las prácticas, talleres, bitácora o demostración realizada ante la sección." }
     ]
   },
   smart: {
     id: "smart",
-    code: "PROYECTO SMART",
-    title: "Cédula de Proyecto SMART e Insignias Mundiales",
-    subtitle: "Planeación y reporte para Agentes de Cambio.MX, Tribu de la Tierra, Campeones, Mensajeros de la Paz, Jade y Obsidiana",
+    code: "PLANTILLA P6.2 · PROYECTO",
+    baseDocId: "doc-0697",
+    baseDocName: "P6.2_PlantillaProyecto_V1.0.pdf",
+    title: "Ficha de Proyecto Scout (Plantilla Oficial P6.2)",
+    subtitle: "Basado en el archivo oficial P6.2_PlantillaProyecto_V1.0.pdf de RECME ASMAC",
     signatures: ["Firma del Coordinador / Proponente", "Firma del Asesor o Scouter", "Validación Consejo / Red"],
+    officialPages: [
+      {
+        src: "img/forms/smart_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "projectTitle", x: 41.2, y: 7.4, w: 52.5, h: 3.2 },
+          { key: "startDate", x: 6.8, y: 9.0, w: 25.0, h: 2.5 },
+          { key: "name", x: 6.8, y: 19.3, w: 25.0, h: 2.5 },
+          { key: "scouter", x: 6.8, y: 24.4, w: 25.0, h: 2.5 },
+          { key: "group", x: 6.8, y: 36.8, w: 25.0, h: 2.4 },
+          { key: "province", x: 6.8, y: 46.2, w: 25.0, h: 2.4 },
+          { key: "smartGoal", x: 41.0, y: 15.0, w: 25.0, h: 11.0, multiline: true },
+          { key: "activities", x: 40.6, y: 30.0, w: 25.5, h: 25.5, multiline: true },
+          { key: "diagnosis", x: 40.6, y: 59.8, w: 52.5, h: 5.2, multiline: true },
+          { key: "impact", x: 40.6, y: 68.4, w: 52.5, h: 5.2, multiline: true },
+          { key: "section", x: 40.6, y: 76.9, w: 52.5, h: 3.2 },
+          { key: "framework", x: 40.6, y: 91.5, w: 52.5, h: 2.6 }
+        ]
+      }
+    ],
     fields: [
-      { key: "name", label: "Coordinador(a) del proyecto", type: "text", bind: "name" },
+      { key: "name", label: "Nombre de quien lidera y coordina el proyecto", type: "text", bind: "name" },
       { key: "cum", label: "CUM", type: "text", bind: "cum" },
-      { key: "section", label: "Sección", type: "text", bind: "section" },
-      { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
-      { key: "province", label: "Provincia Scout", type: "text", bind: "province" },
-      { key: "framework", label: "Iniciativa o Insignia objetivo", type: "select", options: ["Agentes de Cambio.MX (Red de Caminantes)", "Tribu de la Tierra (Earth Tribe)", "Campeones de la Naturaleza", "Mensajeros de la Paz", "Horas al Aire Libre / Vida Silvestre", "Insignia de Jade / Insignia de Obsidiana", "Máxima Insignia de Sección"] },
-      { key: "projectTitle", label: "Título del proyecto", type: "text", full: true, placeholder: "Nombre claro y concreto del proyecto" },
-      { key: "scouter", label: "Asesor o Scouter que acompaña", type: "text", bind: "scouter" },
-      { key: "startDate", label: "Periodo de ejecución", type: "text", defaultToday: true },
-      { key: "diagnosis", label: "1. Diagnóstico y problemática detectada", type: "textarea", full: true, placeholder: "Qué necesidad real de la comunidad o entorno atiende este proyecto." },
-      { key: "smartGoal", label: "2. Objetivo SMART (Específico, Medible, Alcanzable, Relevante y con Tiempo)", type: "textarea", full: true, placeholder: "Ej. Lograr recolectar/capacitar/restaurar [meta numérica] en [lugar] antes del [fecha]." },
-      { key: "activities", label: "3. Cronograma de fases (Preparación, Ejecución y Evaluación)", type: "textarea", full: true, placeholder: "Actividades principales, responsables, recursos y medidas de seguridad (A Salvo del Peligro)." },
-      { key: "impact", label: "4. Impacto medible, beneficiarios directos y horas de servicio", type: "textarea", full: true, placeholder: "Personas beneficiadas, horas totales de servicio del equipo y resultados verificables." }
+      { key: "section", label: "Sección y alcance del proyecto", type: "text", bind: "section" },
+      { key: "group", label: "Grupo Scout / Logística", type: "text", bind: "group" },
+      { key: "province", label: "Provincia Scout / Relaciones institucionales", type: "text", bind: "province" },
+      { key: "framework", label: "Palabras clave / Iniciativa o Insignia objetivo", type: "select", options: ["Agentes de Cambio.MX (Red de Caminantes)", "Tribu de la Tierra (Earth Tribe)", "Campeones de la Naturaleza", "Mensajeros de la Paz", "Horas al Aire Libre / Vida Silvestre", "Insignia de Jade / Insignia de Obsidiana", "Máxima Insignia de Sección"] },
+      { key: "projectTitle", label: "Nombre del proyecto / Título", type: "text", full: true, placeholder: "Nombre claro y concreto del proyecto" },
+      { key: "scouter", label: "Nombre de quien me asesora", type: "text", bind: "scouter" },
+      { key: "startDate", label: "Fecha de inicio del proyecto", type: "text", defaultToday: true },
+      { key: "smartGoal", label: "Objetivo General (SMART)", type: "textarea", full: true, placeholder: "Ej. Lograr recolectar/capacitar/restaurar [meta numérica] en [lugar] antes del [fecha]." },
+      { key: "activities", label: "Objetivos Particulares y Fases del Proyecto", type: "textarea", full: true, placeholder: "Actividades principales, responsables, recursos y medidas de seguridad." },
+      { key: "diagnosis", label: "¿Qué necesidad o problemática estoy atendiendo específicamente?", type: "textarea", full: true, placeholder: "Qué necesidad real de la comunidad o entorno atiende este proyecto." },
+      { key: "impact", label: "¿A quién o quiénes afecta esta problemática y cuál es el impacto?", type: "textarea", full: true, placeholder: "Personas beneficiadas, horas totales de servicio del equipo y resultados verificables." }
     ]
   },
   programa: {
     id: "programa",
-    code: "PROGRAMA SCOUT",
-    title: "Convocatoria y Programa de Actividad o Campamento",
-    subtitle: "Diseño de programa de ciclo, salida de fin de semana o campamento de sección",
+    code: "PLANTILLA P6.3 · PROGRAMA",
+    baseDocId: "doc-0698",
+    baseDocName: "P6.3_PlantillaPrograma_v1.0.pdf",
+    title: "Formato Programa de Actividades (Plantilla Oficial P6.3)",
+    subtitle: "Basado en el archivo oficial P6.3_PlantillaPrograma_v1.0.pdf de RECME ASMAC",
     signatures: ["Elaboró: Equipo / Consejo de Sección", "Revisó: Scouter Responsable", "Autorizó: Jefatura de Grupo"],
+    officialPages: [
+      {
+        src: "img/forms/programa_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "group", x: 6.8, y: 3.7, w: 25.0, h: 2.5 },
+          { key: "dates", x: 6.8, y: 9.0, w: 24.0, h: 2.5 },
+          { key: "section", x: 35.4, y: 9.0, w: 13.0, h: 2.5 },
+          { key: "eventName", x: 51.6, y: 9.0, w: 42.0, h: 2.5 },
+          { key: "location", x: 6.8, y: 13.6, w: 24.0, h: 2.5 },
+          { key: "scouter", x: 35.4, y: 13.6, w: 58.0, h: 2.5 },
+          { key: "province", x: 6.8, y: 18.4, w: 24.0, h: 2.5 },
+          { key: "gearList", x: 66.6, y: 19.6, w: 27.5, h: 20.0, multiline: true },
+          { key: "emergency", x: 6.8, y: 35.2, w: 49.5, h: 5.2, multiline: true },
+          { key: "scheduleBlocks", x: 7.0, y: 48.2, w: 87.0, h: 27.5, multiline: true },
+          { key: "educationalGoal", x: 6.8, y: 80.6, w: 87.0, h: 7.0, multiline: true }
+        ]
+      }
+    ],
     fields: [
-      { key: "eventName", label: "Nombre del evento o actividad", type: "text", full: true, placeholder: "Ej. Acantonamiento / Campamento de Patrullas / Actividad de Comunidad" },
-      { key: "section", label: "Sección convocada", type: "text", bind: "section" },
+      { key: "eventName", label: "Nombre de la sección / Evento o actividad", type: "text", full: true, placeholder: "Ej. Acantonamiento / Campamento de Patrullas / Actividad de Comunidad" },
+      { key: "section", label: "Sección", type: "text", bind: "section" },
       { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
-      { key: "province", label: "Provincia Scout", type: "text", bind: "province" },
-      { key: "dates", label: "Fechas y horarios", type: "text", placeholder: "Ej. 22 y 23 de noviembre · 08:00 a 17:00 h" },
-      { key: "location", label: "Sede / Punto de encuentro", type: "text", placeholder: "Lugar exacto y referencias de acceso" },
-      { key: "scouter", label: "Responsable general", type: "text", bind: "scouter" },
-      { key: "emergency", label: "Contacto de enlace en ciudad", type: "text", bind: "emergency" },
-      { key: "educationalGoal", label: "Objetivos educativos y énfasis del programa", type: "textarea", full: true, placeholder: "Qué áreas de crecimiento, progresión o vida al aire libre se trabajan." },
-      { key: "scheduleBlocks", label: "Cronograma por bloques y horarios", type: "textarea", full: true, placeholder: "08:00 Registro y revisión JL304\n09:00 Apertura y montaje\n11:00 Gran Juego / Taller técnico\n14:00 Comida por pequeños grupos\n16:00 Evaluación y cierre" },
-      { key: "gearList", label: "Lista de equipo indispensable y requisitos (Ficha de Salud + JL304)", type: "textarea", full: true, placeholder: "Mochila, bolsa estanca, lámpara frontal, cantimplora, impermeable, botiquín personal." }
+      { key: "province", label: "Provincia / Duración total", type: "text", bind: "province" },
+      { key: "dates", label: "Fecha", type: "text", defaultToday: true },
+      { key: "location", label: "Lugar / Sede", type: "text", placeholder: "Lugar exacto y referencias de acceso" },
+      { key: "scouter", label: "Responsable de la sección", type: "text", bind: "scouter" },
+      { key: "emergency", label: "Medidas de seguridad y contacto de emergencia", type: "text", bind: "emergency" },
+      { key: "scheduleBlocks", label: "Programa general (Minuto a minuto: Tiempo | Actividad | Responsable)", type: "textarea", full: true, placeholder: "08:00 | Registro y revisión JL304 | Jefatura\n09:00 | Apertura y montaje | Pequeños grupos\n11:00 | Gran Juego / Taller técnico | Equipo coordinador\n14:00 | Comida por pequeños grupos | Intendencia\n16:00 | Evaluación y cierre | Toda la sección" },
+      { key: "gearList", label: "Materiales y equipo indispensable", type: "textarea", full: true, placeholder: "Mochila, bolsa estanca, lámpara frontal, cantimplora, impermeable, botiquín personal." },
+      { key: "educationalGoal", label: "Competencias que se busca desarrollar", type: "textarea", full: true, placeholder: "Qué áreas de crecimiento, progresión o vida al aire libre se trabajan." }
     ]
   },
   acta: {
     id: "acta",
-    code: "ACTA OFICIAL",
-    title: "Acta de Consejo, Corte de Honor o Acuerdo MASC",
-    subtitle: "Registro formal de acuerdos, seguimiento de pequeños grupos y compromisos",
+    code: "PLANTILLA P6.4 · ACTA",
+    baseDocId: "doc-0699",
+    baseDocName: "P6.4_PlantillaActadeConsejodeNivel_v1.0.pdf",
+    title: "Acta de Consejo de Nivel y Corte de Honor (Plantilla Oficial P6.4)",
+    subtitle: "Basado en el archivo oficial P6.4_PlantillaActadeConsejodeNivel_v1.0.pdf de RECME ASMAC",
     signatures: ["Firma de quien preside la sesión", "Firma de Secretaría / Redacción", "Firmas de conformidad de asistentes"],
+    officialPages: [
+      {
+        src: "img/forms/acta_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "attendees", x: 5.5, y: 11.2, w: 61.0, h: 35.0, multiline: true },
+          { key: "group", x: 70.2, y: 8.3, w: 24.5, h: 3.8 },
+          { key: "province", x: 70.2, y: 15.4, w: 24.5, h: 3.8 },
+          { key: "datePlace", x: 70.2, y: 22.8, w: 24.5, h: 3.8 },
+          { key: "datePlace", x: 70.2, y: 37.2, w: 24.5, h: 3.8 },
+          { key: "organType", x: 70.2, y: 44.2, w: 24.5, h: 3.8 },
+          { key: "agenda", x: 5.2, y: 52.4, w: 89.5, h: 41.0, multiline: true }
+        ]
+      },
+      {
+        src: "img/forms/acta_p2.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "agreements", x: 5.2, y: 8.6, w: 89.5, h: 45.5, multiline: true },
+          { key: "name", x: 5.2, y: 67.3, w: 42.5, h: 3.8 },
+          { key: "scouter", x: 51.8, y: 67.3, w: 42.5, h: 3.8 },
+          { key: "scouter", x: 5.2, y: 76.2, w: 89.5, h: 3.8 }
+        ]
+      }
+    ],
     fields: [
-      { key: "organType", label: "Órgano o instancia que sesiona", type: "select", options: ["Consejo de Grupo", "Corte de Honor de Tropa", "Asamblea / Comité de Comunidad", "Consejo de Clan Rover", "Consejo de Roca de Manada", "Acuerdo de Diálogo Directo / MASC"] },
+      { key: "organType", label: "Tipo de sesión de Consejo / Órgano", type: "select", options: ["Consejo de Grupo", "Corte de Honor de Tropa", "Asamblea / Comité de Comunidad", "Consejo de Clan Rover", "Consejo de Roca de Manada", "Acuerdo de Diálogo Directo / MASC"] },
       { key: "datePlace", label: "Fecha, hora y lugar de la sesión", type: "text", defaultToday: true },
       { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
-      { key: "province", label: "Provincia Scout", type: "text", bind: "province" },
-      { key: "name", label: "Quien redacta / Secretaría", type: "text", bind: "name" },
-      { key: "scouter", label: "Quien preside o acompaña", type: "text", bind: "scouter" },
-      { key: "attendees", label: "1. Lista de asistentes y quórum", type: "textarea", full: true, placeholder: "Nombres y cargos o pequeños grupos presentes en la sesión." },
-      { key: "agenda", label: "2. Orden del día y temas tratados", type: "textarea", full: true, placeholder: "1) Lectura de acta anterior\n2) Evaluación de actividades\n3) Progresiones e insignias\n4) Próximo ciclo de programa" },
-      { key: "agreements", label: "3. Acuerdos tomados, responsables y fechas compromiso", type: "textarea", full: true, placeholder: "Detallar cada acuerdo votado o consensuado, quién le da seguimiento y cuándo se revisa." }
+      { key: "province", label: "Sección / Provincia Scout", type: "text", bind: "province" },
+      { key: "name", label: "Elaboró (Secretaría / Redacción)", type: "text", bind: "name" },
+      { key: "scouter", label: "Presidió / Scouter responsable", type: "text", bind: "scouter" },
+      { key: "attendees", label: "1. Lista de asistencia (Nombre | CUM)", type: "textarea", full: true, placeholder: "Nombres y CUM de quienes integran la sesión." },
+      { key: "agenda", label: "2. Orden del día / Puntos a tratar o revisar", type: "textarea", full: true, placeholder: "1) Lectura de acta anterior\n2) Evaluación de actividades\n3) Progresiones e insignias\n4) Próximo ciclo de programa" },
+      { key: "agreements", label: "3. Acuerdos tomados, responsables y fechas compromiso (Página 2)", type: "textarea", full: true, placeholder: "Detallar cada acuerdo votado o consensuado, quién le da seguimiento y cuándo se revisa." }
     ]
   }
 };
@@ -6667,7 +6818,32 @@ function setupSmartFormsEngine(readFormProfileFn) {
     return out;
   };
 
-  const renderSheetHtml = (tpl, vals) => {
+  const renderSheetHtml = (tpl, vals, includeOfficialPages = true) => {
+    let officialPagesHtml = "";
+    if (includeOfficialPages && Array.isArray(tpl.officialPages) && tpl.officialPages.length) {
+      const pagesInner = tpl.officialPages
+        .map((pg, idx) => {
+          const overlays = (pg.boxes || [])
+            .map((b) => {
+              const rawVal = String(vals[b.key] || "").trim();
+              if (!rawVal) return "";
+              const cls = `bt-sf-overlay-field${b.multiline ? " is-multi" : ""}${b.align === "center" ? " is-center" : ""}`;
+              return `<div class="${cls}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%;height:${b.h}%;">${escapeHtml(rawVal).replace(/\n/g, "<br>")}</div>`;
+            })
+            .join("");
+          return `
+            <div class="bt-sf-official-page-wrap">
+              <div class="bt-sf-official-page-badge">Archivo base oficial: ${escapeHtml(tpl.baseDocName || tpl.code)} · Página ${idx + 1} de ${tpl.officialPages.length}</div>
+              <div class="bt-sf-official-page" style="aspect-ratio:${pg.aspect || "1347 / 1743"};">
+                <img src="${escapeHtml(pg.src)}" alt="${escapeHtml(tpl.title)} página ${idx + 1}" class="bt-sf-official-bg" loading="eager" />
+                <div class="bt-sf-official-overlays">${overlays}</div>
+              </div>
+            </div>`;
+        })
+        .join("");
+      officialPagesHtml = `<div class="bt-sf-official-pages-stack">${pagesInner}</div>`;
+    }
+
     const shortFields = tpl.fields.filter((f) => !f.full && f.type !== "textarea");
     const longFields = tpl.fields.filter((f) => f.full || f.type === "textarea");
     const metaRows = shortFields
@@ -6690,21 +6866,24 @@ function setupSmartFormsEngine(readFormProfileFn) {
       .join("");
 
     return `
-      <div class="bt-sf-doc-header">
-        <div class="bt-sf-doc-brand">
-          <span class="bt-sf-doc-code">${escapeHtml(tpl.code)}</span>
-          <h4>${escapeHtml(tpl.title)}</h4>
-          <p>${escapeHtml(tpl.subtitle)}</p>
+      ${officialPagesHtml}
+      <div class="bt-sf-structured-summary">
+        <div class="bt-sf-doc-header">
+          <div class="bt-sf-doc-brand">
+            <span class="bt-sf-doc-code">${escapeHtml(tpl.code)}</span>
+            <h4>${escapeHtml(tpl.title)}</h4>
+            <p>${escapeHtml(tpl.subtitle)}</p>
+          </div>
+          <div class="bt-sf-doc-stamp">
+            <strong>BiblioTech Scout</strong>
+            <span>Base: ${escapeHtml(tpl.baseDocName || tpl.code)}</span>
+            <span>${escapeHtml(todayStr())}</span>
+          </div>
         </div>
-        <div class="bt-sf-doc-stamp">
-          <strong>BiblioTech Scout</strong>
-          <span>Formato Documental</span>
-          <span>${escapeHtml(todayStr())}</span>
-        </div>
+        <div class="bt-sf-doc-meta-grid">${metaRows}</div>
+        <div class="bt-sf-doc-blocks">${longBlocks}</div>
+        <div class="bt-sf-doc-sigs">${sigs}</div>
       </div>
-      <div class="bt-sf-doc-meta-grid">${metaRows}</div>
-      <div class="bt-sf-doc-blocks">${longBlocks}</div>
-      <div class="bt-sf-doc-sigs">${sigs}</div>
     `;
   };
 
@@ -6927,7 +7106,7 @@ function setupSmartFormsEngine(readFormProfileFn) {
 </style>
 </head>
 <body>
-${renderSheetHtml(tpl, currentValues)}
+${renderSheetHtml(tpl, currentValues, !forWord)}
 </body>
 </html>`;
   };
@@ -6977,6 +7156,112 @@ ${renderSheetHtml(tpl, currentValues)}
         showWebToast("Texto del formato copiado al portapapeles.");
       } catch (_) {
         showWebToast("No se pudo copiar automáticamente en este navegador.");
+      }
+    });
+  }
+
+  const pngBtn = document.getElementById("btnSfDownloadOfficialPng");
+  const openBaseBtn = document.getElementById("btnSfOpenBaseDoc");
+
+  if (openBaseBtn) {
+    openBaseBtn.addEventListener("click", () => {
+      const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+      if (tpl.baseDocId && typeof openDocumentModal === "function") {
+        openDocumentModal(tpl.baseDocId);
+      }
+    });
+  }
+
+  if (pngBtn) {
+    pngBtn.addEventListener("click", async () => {
+      const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+      const pages = Array.isArray(tpl.officialPages) ? tpl.officialPages : [];
+      if (!pages.length) return;
+      try {
+        const loadedImgs = await Promise.all(
+          pages.map(
+            (pg) =>
+              new Promise((resolve, reject) => {
+                const im = new Image();
+                im.onload = () => resolve({ im, pg });
+                im.onerror = reject;
+                im.src = pg.src;
+              })
+          )
+        );
+        const maxW = Math.max(...loadedImgs.map((x) => x.im.naturalWidth || 1347));
+        const gap = loadedImgs.length > 1 ? 24 : 0;
+        const totalH = loadedImgs.reduce((s, x) => s + (x.im.naturalHeight || 1743), 0) + gap * (loadedImgs.length - 1);
+        const canvas = document.createElement("canvas");
+        canvas.width = maxW;
+        canvas.height = totalH;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, maxW, totalH);
+
+        let offsetY = 0;
+        for (const { im, pg } of loadedImgs) {
+          const pw = im.naturalWidth || 1347;
+          const ph = im.naturalHeight || 1743;
+          ctx.drawImage(im, 0, offsetY, pw, ph);
+          ctx.fillStyle = "#0f172a";
+          for (const b of pg.boxes || []) {
+            const val = String(currentValues[b.key] || "").trim();
+            if (!val) continue;
+            const bx = (b.x / 100) * pw;
+            const by = offsetY + (b.y / 100) * ph;
+            const bw = (b.w / 100) * pw;
+            const bh = (b.h / 100) * ph;
+            const fontPx = b.multiline ? Math.max(15, Math.round(pw * 0.0135)) : Math.max(16, Math.round(pw * 0.0145));
+            ctx.font = `700 ${fontPx}px Arial, sans-serif`;
+            ctx.textBaseline = "top";
+            const rawLines = val.split(/\r?\n/);
+            const wrapped = [];
+            for (const rl of rawLines) {
+              const words = rl.split(/\s+/);
+              let line = "";
+              for (const w of words) {
+                const test = line ? `${line} ${w}` : w;
+                if (ctx.measureText(test).width > bw - 8 && line) {
+                  wrapped.push(line);
+                  line = w;
+                } else {
+                  line = test;
+                }
+              }
+              if (line) wrapped.push(line);
+            }
+            const maxLines = b.multiline ? Math.max(1, Math.floor(bh / (fontPx * 1.25))) : 1;
+            for (let li = 0; li < Math.min(wrapped.length, maxLines); li++) {
+              const txtLine = wrapped[li];
+              let tx = bx + 4;
+              if (b.align === "center") {
+                tx = bx + Math.max(2, (bw - ctx.measureText(txtLine).width) / 2);
+              }
+              ctx.fillText(txtLine, tx, by + 2 + li * (fontPx * 1.25), bw - 6);
+            }
+          }
+          offsetY += ph + gap;
+        }
+
+        canvas.toBlob((blob) => {
+          if (!blob) return;
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          const safeWho = (currentValues.name || currentValues.eventName || currentValues.projectTitle || "Scout")
+            .replace(/[^a-zA-Z0-9_-]+/g, "_")
+            .slice(0, 28);
+          a.href = url;
+          a.download = `${tpl.code.replace(/[^a-zA-Z0-9]+/g, "_")}_${safeWho || "Oficial"}.png`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 1500);
+          showWebToast("Formato oficial descargado con tus datos puestos en cada casilla.");
+        }, "image/png");
+      } catch (err) {
+        console.warn("[BiblioTech] Error generando PNG oficial:", err);
+        showWebToast("Usa «Imprimir / Guardar PDF» para exportar el formato oficial.");
       }
     });
   }

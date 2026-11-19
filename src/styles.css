@@ -16747,6 +16747,95 @@ html[data-camp-mode="true"] .bt-sf-export-btn.is-primary {
   line-height: 1.45;
 }
 
+/* Páginas oficiales de base ASMAC con casillas superpuestas en vivo */
+.bt-sf-official-pages-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  margin-bottom: 1.25rem;
+}
+
+.bt-sf-official-page-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.38rem;
+}
+
+.bt-sf-official-page-badge,
+html[data-camp-mode="true"] .bt-sf-sheet .bt-sf-official-page-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.22rem 0.68rem;
+  border-radius: 999px;
+  background: #ede9fe !important;
+  color: #4c1d95 !important;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.bt-sf-official-page {
+  position: relative;
+  width: 100%;
+  background: #ffffff !important;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  overflow: hidden;
+  box-shadow: 0 10px 24px -16px rgba(15, 23, 42, 0.35);
+}
+
+.bt-sf-official-bg {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+.bt-sf-official-overlays {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.bt-sf-overlay-field,
+html[data-camp-mode="true"] .bt-sf-sheet .bt-sf-overlay-field {
+  position: absolute;
+  box-sizing: border-box;
+  color: #0f172a !important;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: clamp(7px, 0.86vw, 11px);
+  line-height: 1.12;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  padding: 0 3px;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.94);
+}
+
+.bt-sf-overlay-field.is-multi,
+html[data-camp-mode="true"] .bt-sf-sheet .bt-sf-overlay-field.is-multi {
+  align-items: flex-start;
+  white-space: pre-wrap;
+  font-size: clamp(7px, 0.85vw, 10.5px);
+  line-height: 1.18;
+}
+
+.bt-sf-overlay-field.is-center,
+html[data-camp-mode="true"] .bt-sf-sheet .bt-sf-overlay-field.is-center {
+  justify-content: center;
+  text-align: center;
+}
+
+.bt-sf-structured-summary {
+  border-top: 2px dashed #cbd5e1;
+  padding-top: 1.1rem;
+}
+
 .bt-sf-doc-header {
   display: flex;
   justify-content: space-between;
@@ -16949,5 +17038,39 @@ html[data-camp-mode="true"] .bt-sf-sheet .bt-sf-doc-stamp strong {
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
+  }
+
+  body.bt-printing-smart-form .bt-sf-official-page-badge,
+  body.bt-printing-smart-form .bt-sf-structured-summary {
+    display: none !important;
+  }
+
+  body.bt-printing-smart-form .bt-sf-official-pages-stack {
+    gap: 0 !important;
+    margin: 0 !important;
+  }
+
+  body.bt-printing-smart-form .bt-sf-official-page-wrap {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  body.bt-printing-smart-form .bt-sf-official-page-wrap:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  body.bt-printing-smart-form .bt-sf-official-page {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  body.bt-printing-smart-form .bt-sf-overlay-field {
+    font-size: 9.5pt !important;
+  }
+
+  body.bt-printing-smart-form .bt-sf-overlay-field.is-multi {
+    font-size: 8.5pt !important;
   }
 }

@@ -1,8 +1,8 @@
 {
-  "version": "9.3.0",
-  "mobileVersion": "3.3.0",
-  "cache": "bibliotech-scout-v42",
+  "version": "9.3.1",
+  "mobileVersion": "3.3.1",
+  "cache": "bibliotech-scout-v43",
   "releasedAt": "2026-11-18",
   "schemaCookieVersion": "9.3",
-  "notes": "Versión 9.3.0: Editor Inteligente de Formatos activo (6 formatos editables offline con PDF y Word), Modo oscuro automático por sistema y visible en móvil, y La Fogata con borrado/moderación sincronizados en KV."
+  "notes": "Versión 9.3.1: El Editor Inteligente de Formatos ahora renderiza y descarga los documentos oficiales de base de ASMAC reales (Ficha de Salud, JL304/JL306, P5.1 Especialidad FES, P6.2 Proyecto, P6.3 Programa y P6.4 Acta) con tus datos estampados directamente dentro de cada casilla oficial."
 }

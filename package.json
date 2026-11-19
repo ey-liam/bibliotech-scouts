@@ -1,6 +1,6 @@
 {
   "name": "bibliotech-scouts",
-  "version": "9.3.0",
+  "version": "9.3.1",
   "private": true,
   "description": "Biblioteca digital y buscador documental scout de ASMAC y WOSM",
   "scripts": {

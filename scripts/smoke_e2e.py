@@ -198,6 +198,8 @@ def run_e2e(test_webkit: bool = False):
             page.click("#btnPreviewAutofillDemo")
             page.wait_for_selector("#autofillDemoPreview:not(.hidden)", timeout=3000)
             assert "Liam Durán Prueba" in page.locator("#autofillDemoPreview").inner_text(), "Demo autofill sin datos"
+            assert page.locator("#sfDocumentSheet .bt-sf-official-page").count() >= 1, "No se renderizó la página oficial de base en el Editor"
+            assert "Liam Durán Prueba" in page.locator("#sfDocumentSheet .bt-sf-official-overlays").first.inner_text(), "Los datos no se superpusieron sobre la página oficial de base"
 
             # Navegar al espacio La Fogata (#foro) y probar flujo completo
             page.click('.desktop-quick-nav [data-bt-go-view="fogata"]')
