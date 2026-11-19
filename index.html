@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=36" />
+  <link rel="stylesheet" href="styles.css?v=37" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -1860,16 +1860,16 @@
               <span class="bt-sf-preview-label">Documento oficial de base con tus datos</span>
               <div class="bt-sf-export-btns">
                 <button type="button" id="btnSfPrintPdf" class="bt-sf-export-btn is-primary">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                  <span>Imprimir / Guardar PDF</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  <span>Descargar PDF Oficial (.pdf)</span>
                 </button>
                 <button type="button" id="btnSfDownloadOfficialPng" class="bt-sf-export-btn">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                  <span>Descargar Formato Oficial (.png)</span>
+                  <span>Descargar Imagen (.png)</span>
                 </button>
                 <button type="button" id="btnSfDownloadDoc" class="bt-sf-export-btn">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                  <span>Word (.doc)</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                  <span>Imprimir</span>
                 </button>
                 <button type="button" id="btnSfOpenBaseDoc" class="bt-sf-export-btn" title="Abrir el archivo oficial original en blanco">Ver base original</button>
               </div>
@@ -1885,60 +1885,61 @@
       <div class="autofill-vault-card">
         <div class="autofill-vault-head">
           <div>
-            <span class="bt-consent-kicker">Bóveda local en tu dispositivo · Ya disponible para adelantar tus datos</span>
+            <span class="bt-consent-kicker">Bóveda local en tu dispositivo · Para autollenar tus formatos en 1 clic</span>
             <h3>Mi Perfil Local de Autollenado Scout</h3>
           </div>
           <span id="autofillStatusBadge" class="autofill-status-badge">Sin datos guardados</span>
         </div>
 
         <p class="autofill-vault-desc">
-          Al igual que tus documentos marcados y notas, estos datos se guardan <strong>únicamente en las cookies/almacenamiento local de este dispositivo</strong> (nunca se envían a internet por sí solos). Cuando se active el Editor de Formatos rellenarán tus archivos automáticamente, y desde hoy ya autocompletan tu registro de seguridad en <strong>La Fogata</strong>.
+          Al igual que tus documentos marcados y notas, estos datos se guardan <strong>únicamente en el almacenamiento local de este dispositivo</strong> (nunca se envían a internet por sí solos). Sirven para rellenar tus formatos oficiales en 1 clic y autocompletar tu registro en <strong>La Fogata</strong>.
         </p>
 
         <form id="autofillProfileForm" class="autofill-profile-form" novalidate>
           <div class="autofill-fields-grid">
             <label class="autofill-field">
-              <span>Nombre completo o Alias Scout</span>
-              <input type="text" id="afName" maxlength="80" placeholder="Ej. Liam Durán" />
+              <span>Nombre completo</span>
+              <input type="text" id="afName" maxlength="80" placeholder="Escribe aquí tu nombre completo" />
             </label>
             <label class="autofill-field">
-              <span>CUM (opcional)</span>
-              <input type="text" id="afCum" maxlength="24" placeholder="Ej. TLX0530123" />
+              <span>CUM</span>
+              <input type="text" id="afCum" maxlength="24" placeholder="Escribe aquí tu CUM" />
             </label>
             <label class="autofill-field">
-              <span>Edad</span>
-              <input type="number" id="afAge" min="5" max="99" placeholder="Ej. 16" />
+              <span>Fecha de nacimiento (Día/Mes/Año)</span>
+              <input type="text" id="afAge" maxlength="30" placeholder="Día / Mes / Año" />
             </label>
             <label class="autofill-field">
-              <span>Sección o Rol</span>
+              <span>Sección</span>
               <select id="afSection">
-                <option value="Manada de Lobatos">Manada de Lobatos</option>
-                <option value="Tropa de Scouts">Tropa de Scouts</option>
-                <option value="Comunidad de Caminantes" selected>Comunidad de Caminantes</option>
-                <option value="Clan de Rovers">Clan de Rovers</option>
-                <option value="Scouter / Dirigente">Scouter / Dirigente</option>
-                <option value="Padre / Madre / Tutor">Padre / Madre / Tutor</option>
+                <option value="">Selecciona tu sección...</option>
+                <option value="Manada">Manada</option>
+                <option value="Tropa">Tropa</option>
+                <option value="Comunidad">Comunidad</option>
+                <option value="Clan">Clan</option>
+                <option value="Scouters o Dirigentes">Scouters o Dirigentes</option>
+                <option value="Otro">Otro</option>
               </select>
             </label>
             <label class="autofill-field">
               <span>Grupo Scout</span>
-              <input type="text" id="afGroup" maxlength="60" placeholder="Ej. Grupo 53" />
+              <input type="text" id="afGroup" maxlength="60" placeholder="Escribe aquí tu Grupo Scout" />
             </label>
             <label class="autofill-field">
               <span>Provincia Scout</span>
-              <input type="text" id="afProvince" maxlength="60" placeholder="Ej. Tláhuac-Xochimilco" />
+              <input type="text" id="afProvince" maxlength="60" list="officialProvincesDatalist" placeholder="Selecciona o escribe tu Provincia" />
             </label>
             <label class="autofill-field">
-              <span>Tipo de sangre y alergias</span>
-              <input type="text" id="afBlood" maxlength="80" placeholder="Ej. O+ · Ninguna conocida" />
+              <span>Tipo de sangre (Grupo y Rh)</span>
+              <input type="text" id="afBlood" maxlength="20" placeholder="Escribe aquí tu tipo de sangre (ej. O+)" />
             </label>
             <label class="autofill-field">
-              <span>Tutor / Contacto de emergencia</span>
-              <input type="text" id="afEmergency" maxlength="80" placeholder="Ej. Madre / Tutor responsable" />
+              <span>Contacto de emergencia</span>
+              <input type="text" id="afEmergency" maxlength="80" placeholder="Escribe aquí tu contacto de emergencia" />
             </label>
             <label class="autofill-field">
-              <span>Scouter o Asesor responsable</span>
-              <input type="text" id="afScouter" maxlength="80" placeholder="Ej. Jefe de Tropa / Asesor" />
+              <span>Scouter o Adulto responsable</span>
+              <input type="text" id="afScouter" maxlength="80" placeholder="Escribe aquí el nombre del adulto responsable" />
             </label>
           </div>
 
@@ -2718,17 +2719,16 @@
           <div class="bt-bug-row-grid">
             <label class="bt-bug-field">
               <span>Nombre completo real *</span>
-              <input type="text" id="forumPostRealName" maxlength="70" placeholder="Ej. Liam Durán" required />
+              <input type="text" id="forumPostRealName" maxlength="70" placeholder="Escribe aquí tu nombre completo" required />
             </label>
             <label class="bt-bug-field">
               <span>Tu sección o rol *</span>
               <select id="forumPostRole" required>
-                <option value="Manada de Lobatos">Manada de Lobatos</option>
-                <option value="Tropa de Scouts">Tropa de Scouts</option>
-                <option value="Comunidad de Caminantes" selected>Comunidad de Caminantes</option>
-                <option value="Clan de Rovers">Clan de Rovers</option>
-                <option value="Scouter / Dirigente">Scouter / Dirigente</option>
-                <option value="Asesor de Red / Grupo">Asesor de Red / Grupo</option>
+                <option value="Manada">Manada</option>
+                <option value="Tropa">Tropa</option>
+                <option value="Comunidad">Comunidad</option>
+                <option value="Clan">Clan</option>
+                <option value="Scouters o Dirigentes">Scouters o Dirigentes</option>
                 <option value="Padre / Madre / Tutor">Padre / Madre / Tutor</option>
               </select>
             </label>
@@ -2736,11 +2736,11 @@
           <div class="bt-bug-row-grid">
             <label class="bt-bug-field">
               <span>Grupo Scout *</span>
-              <input type="text" id="forumPostGroup" maxlength="50" placeholder="Ej. Grupo 53 (o Independiente)" required />
+              <input type="text" id="forumPostGroup" maxlength="50" placeholder="Escribe aquí tu Grupo Scout" required />
             </label>
             <label class="bt-bug-field">
               <span>Provincia Scout *</span>
-              <input type="text" id="forumPostProvince" maxlength="60" placeholder="Ej. Tláhuac-Xochimilco" required />
+              <input type="text" id="forumPostProvince" maxlength="60" list="officialProvincesDatalist" placeholder="Selecciona o escribe tu Provincia Scout" required />
             </label>
           </div>
         </div>

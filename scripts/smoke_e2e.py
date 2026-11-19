@@ -292,7 +292,7 @@ def run_e2e(test_webkit: bool = False):
             assert mpage.locator("#smartFormWorkspace").is_visible(), "Editor Inteligente de Formatos no visible"
             mpage.select_option("#sfTemplateSelect", "jl304")
             mpage.click("#btnSfApplyProfile")
-            assert "Permiso de Actividad y Salida" in mpage.locator("#sfDocumentSheet").inner_text(), "Hoja JL304 no renderizó en el Editor"
+            assert "ASMAC/DNGDI/CNAR/JL306" in mpage.locator("#sfDocumentSheet").inner_text(), "Hoja JL304 no renderizó en el Editor"
             editor_fit = mpage.evaluate(
                 "() => Array.from(document.querySelectorAll('#editor-formatos .editor-format-card')).every(el => el.getBoundingClientRect().right <= window.innerWidth + 1)"
             )

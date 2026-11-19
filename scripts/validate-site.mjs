@@ -93,6 +93,27 @@ while ((refMatch = refRegex.exec(htmlText)) !== null) {
 }
 console.log(`OK index.html (${checked.size} rutas locales verificadas)`);
 
+// 5. Validar sincronía de versión entre version.json, sw.js y src/app.js
+try {
+  const verJson = JSON.parse(await readFile(path.join(root, "version.json"), "utf8"));
+  const appSrc = await readFile(path.join(root, "src", "app.js"), "utf8");
+  const webVerMatch = appSrc.match(/const APP_WEB_VERSION\s*=\s*"([^"]+)"/);
+  const cacheMatch = appSrc.match(/const WEB_OFFLINE_CACHE\s*=\s*"([^"]+)"/);
+  const swCacheMatch = swText.match(/const CACHE_NAME\s*=\s*"([^"]+)"/);
+  if (!webVerMatch || webVerMatch[1] !== verJson.version) {
+    fail(`APP_WEB_VERSION en src/app.js (${webVerMatch?.[1]}) no coincide con version.json (${verJson.version})`);
+  }
+  if (!cacheMatch || cacheMatch[1] !== verJson.cache) {
+    fail(`WEB_OFFLINE_CACHE en src/app.js (${cacheMatch?.[1]}) no coincide con version.json (${verJson.cache})`);
+  }
+  if (!swCacheMatch || swCacheMatch[1] !== verJson.cache) {
+    fail(`CACHE_NAME en sw.js (${swCacheMatch?.[1]}) no coincide con version.json (${verJson.cache})`);
+  }
+  console.log(`OK sincronía version.json <-> src/app.js <-> sw.js (${verJson.version} / ${verJson.cache})`);
+} catch (err) {
+  fail(`Error validando sincronía de versiones: ${err.message}`);
+}
+
 if (errors > 0) {
   process.exit(1);
 }

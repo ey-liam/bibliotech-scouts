@@ -10,13 +10,13 @@ const JOBS = [
     src: path.join(root, "src", "styles.css"),
     out: path.join(root, "styles.css"),
     loader: "css",
-    banner: "/* BiblioTech Scout CSS (9.3.1) - generado desde src/styles.css */\n",
+    banner: "/* BiblioTech Scout CSS (9.4.0) - generado desde src/styles.css */\n",
   },
   {
     src: path.join(root, "src", "app.js"),
     out: path.join(root, "app.js"),
     loader: "js",
-    banner: "// BiblioTech Scout JS (9.3.1) - generado desde src/app.js\n",
+    banner: "// BiblioTech Scout JS (9.4.0) - generado desde src/app.js\n",
   },
 ];
 

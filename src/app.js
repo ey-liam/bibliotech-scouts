@@ -2072,8 +2072,148 @@ function buildTopicAnswer(topic, query, maxChars = 1500) {
   return out;
 }
 
+
+const ASMAC_PROVINCES_DIRECTORY = [
+  { name: "Aguascalientes", president: "Isabel Cristina García Romo", email: "presidente.aguascalientes@scouts.org.mx", keys: ["aguascalientes"] },
+  { name: "Álvaro Obregón", president: "Juan Carlos Franco Sánchez", email: "presidente.alvaro_obregon@scouts.org.mx", keys: ["alvaro obregon"] },
+  { name: "Azcapotzalco", president: "Luis Miguel Picazo", email: "presidente.azcapotzalco@scouts.org.mx", keys: ["azcapotzalco"] },
+  { name: "Baja California", president: "Claudia Margarita Delgadillo Becerra", email: "presidente.baja_california_norte@scouts.org.mx", keys: ["baja california norte", "baja california"] },
+  { name: "Baja California Sur", president: "Jonathan Sánchez Guerrero", email: "presidente.baja_california_sur@scouts.org.mx", keys: ["baja california sur", "bcs"] },
+  { name: "Benito Juárez", president: "Luis Enrique Palacio Rodríguez", email: "presidente.benito_juarez@scouts.org.mx", keys: ["benito juarez"] },
+  { name: "Chalco Ixtapaluca", president: "Raúl Josías Albarrán Ramírez", email: "presidente.chalco_ixtapaluca@scouts.org.mx", keys: ["chalco ixtapaluca", "chalco", "ixtapaluca"] },
+  { name: "Chiapas", president: "Carlos Adrián Pérez Muñoz", email: "presidente.chiapas@scouts.org.mx", keys: ["chiapas"] },
+  { name: "Chihuahua Norte", president: "Adrián Emmanuel Gutiérrez Gutiérrez", email: "presidente.chihuahua_norte@scouts.org.mx", keys: ["chihuahua norte"] },
+  { name: "Chihuahua Sur", president: "Alan Damián Anchondo del Villar", email: "presidente.chihuahua_sur@scouts.org.mx", keys: ["chihuahua sur"] },
+  { name: "Coahuila", president: "Bertha Alicia Estrada Herrera", email: "presidente.coahuila@scouts.org.mx", keys: ["coahuila"] },
+  { name: "Colima", president: "Lorena Yasmín Ceballos Méndez", email: "presidente.colima@scouts.org.mx", keys: ["colima"] },
+  { name: "Coyoacán", president: "Emilia Ernestina Leticia Valladares", email: "presidente.coyoacan@scouts.org.mx", keys: ["coyoacan"] },
+  { name: "Cuauhtémoc", president: "Karla Cynthia Muñoz Alcántara", email: "presidente.cuauhtemoc@scouts.org.mx", keys: ["cuauhtemoc"] },
+  { name: "Cuautitlán", president: "Ulises Saúl Carreño Macías", email: "presidente.cuautitlan@scouts.org.mx", keys: ["cuautitlan"] },
+  { name: "Durango", president: "Jesús Jael Leyva de la Torre", email: "presidente.durango@scouts.org.mx", keys: ["durango"] },
+  { name: "Guanajuato I", president: "Wilfrido Ignacio Contreras Camarena", email: "presidente.guanajuato_1@scouts.org.mx", keys: ["guanajuato 1", "guanajuato i", "guanajuato uno"] },
+  { name: "Guanajuato II", president: "Raúl Arrieta Medina", email: "presidente.guanajuato_2@scouts.org.mx", keys: ["guanajuato 2", "guanajuato ii", "guanajuato dos"] },
+  { name: "Guerrero", president: "María de los Ángeles Monroy Borja", email: "presidente.guerrero@scouts.org.mx", keys: ["guerrero"] },
+  { name: "Gustavo A. Madero", president: "Iván Fernando Rodríguez García", email: "presidente.gustavo_a_madero@scouts.org.mx", keys: ["gustavo a madero", "gam"] },
+  { name: "Hidalgo", president: "Mariana Aurora Camejo Quiroz", email: "presidente.hidalgo@scouts.org.mx", keys: ["hidalgo"] },
+  { name: "Iztacalco", president: "Esmeralda de Alfonso Gálvez", email: "presidente.iztacalco@scouts.org.mx", keys: ["iztacalco"] },
+  { name: "Iztapalapa", president: "Israel Araujo Martínez", email: "presidente.iztapalapa@scouts.org.mx", keys: ["iztapalapa"] },
+  { name: "Jalisco", president: "Ana Carolina Rentería García", email: "presidente.jalisco@scouts.org.mx", keys: ["jalisco"] },
+  { name: "La Laguna", president: "Ulises Lugo Guerrero", email: "presidente.la_laguna@scouts.org.mx", keys: ["la laguna", "laguna"] },
+  { name: "Michoacán", president: "Ana Martha Mora Ruano", email: "presidente.michoacan@scouts.org.mx", keys: ["michoacan"] },
+  { name: "Miguel Hidalgo", president: "Paulette Eurídice Robles", email: "presidente.miguel_hidalgo@scouts.org.mx", keys: ["miguel hidalgo"] },
+  { name: "Morelos", president: "David Cortés Chan", email: "presidente.morelos@scouts.org.mx", keys: ["morelos"] },
+  { name: "Naucalpan", president: "Federico Alejandro Ortíz Baeza", email: "presidente.naucalpan@scouts.org.mx", keys: ["naucalpan"] },
+  { name: "Nuevo León", president: "Adrián Garza García", email: "presidente.nuevo_leon@scouts.org.mx", keys: ["nuevo leon"] },
+  { name: "Oaxaca", president: "Karina Graciela Ortiz Cervantes", email: "presidente.oaxaca@scouts.org.mx", keys: ["oaxaca"] },
+  { name: "Puebla", president: "Guillermo Sabas Ramírez Luna", email: "presidente.puebla@scouts.org.mx", keys: ["puebla"] },
+  { name: "Querétaro", president: "Natzielli López Ramírez", email: "presidente.queretaro@scouts.org.mx", keys: ["queretaro"] },
+  { name: "Quintana Roo", president: "Gilberto Arias Pastor", email: "presidente.quintana_roo@scouts.org.mx", keys: ["quintana roo"] },
+  { name: "San Luis Potosí", president: "Ana Lucía Rocha Pinot", email: "presidente.san_luis_potosi@scouts.org.mx", keys: ["san luis potosi", "slp"] },
+  { name: "Sinaloa", president: "Eleazar Pacheco Félix", email: "presidente.sinaloa@scouts.org.mx", keys: ["sinaloa"] },
+  { name: "Sonora", president: "Hilda Guadalupe Valenzuela Zamora", email: "presidente.sonora@scouts.org.mx", keys: ["sonora"] },
+  { name: "Tabasco", president: "Mariana Jiménez Pérez", email: "presidente.tabasco@scouts.org.mx", keys: ["tabasco"] },
+  { name: "Tamaulipas Norte", president: "José Ángel Cantú García", email: "presidente.tamaulipas_norte@scouts.org.mx", keys: ["tamaulipas norte"] },
+  { name: "Tamaulipas Sur", president: "José Ignacio Anchondo Pérez", email: "presidente.tamaulipas_sur@scouts.org.mx", keys: ["tamaulipas sur"] },
+  { name: "Tláhuac Xochimilco", president: "Alfonso Vázquez Quiroz", email: "presidente.tlahuac_xochimilco@scouts.org.mx", keys: ["tlahuac xochimilco", "tlahuac", "xochimilco", "tlxh"] },
+  { name: "Tlalnepantla-Atizapán", president: "José Jaime Magallón Díaz", email: "presidente.tlalnepantla@scouts.org.mx", keys: ["tlalnepantla atizapan", "tlalnepantla", "atizapan"] },
+  { name: "Tlalpan", president: "Horacio Guillermo Ponce Ullóa", email: "presidente.tlalpan@scouts.org.mx", keys: ["tlalpan"] },
+  { name: "Toluca", president: "Alicia Karina Rogel Bedolla", email: "presidente.toluca@scouts.org.mx", keys: ["toluca"] },
+  { name: "Valle Noreste", president: "Dannae Desirée Viveros Devars", email: "presidente.vallenoreste@scouts.org.mx", keys: ["valle noreste", "vallenoreste"] },
+  { name: "Venustiano Carranza", president: "Alejandro Rivera Pozo", email: "presidente.venustiano_carranza@scouts.org.mx", keys: ["venustiano carranza"] },
+  { name: "Veracruz", president: "Miguel González González", email: "presidente.veracruz@scouts.org.mx", keys: ["veracruz"] },
+  { name: "Yucatán", president: "Jorge Carlos Villamil Domínguez", email: "presidente.yucatan@scouts.org.mx", keys: ["yucatan"] },
+  { name: "Zacatecas", president: "María Guadalupe González Ramírez", email: "presidente.zacatecas@scouts.org.mx", keys: ["zacatecas"] }
+];
+
+function matchProvinceDirectoryAnswer(qNorm) {
+  if (!qNorm) return null;
+  const asksProvinceTopic = /\b(provincia|provincias|presidente|presidenta|presidentes|correo|contacto)\b/.test(qNorm);
+  if (!asksProvinceTopic) return null;
+
+  // Check if asking about one or more specific provinces (check longer keys first so "baja california sur" and "miguel hidalgo" win over shorter substrings)
+  const sortedProvs = ASMAC_PROVINCES_DIRECTORY.slice().sort((a, b) => b.keys[0].length - a.keys[0].length);
+  let remaining = ` ${qNorm} `;
+  const matchedProvs = [];
+  for (const p of sortedProvs) {
+    for (const k of p.keys) {
+      if (remaining.includes(` ${k} `)) {
+        matchedProvs.push(p);
+        remaining = remaining.split(` ${k} `).join(" ");
+        break;
+      }
+    }
+  }
+  if (matchedProvs.length === 1) {
+    const p = matchedProvs[0];
+    return (
+      `**Provincia Scout ${p.name.toUpperCase()} (ASMAC):**\n\n` +
+      `- **Presidente(a) de Provincia:** **${p.president}**\n` +
+      `- **Correo electrónico oficial:** \`${p.email}\`\n` +
+      `- **Organización Nacional:** ${p.name} forma parte de las **49 Provincias Scouts oficiales** de la Asociación de Scouts de México, A.C. (ASMAC).\n` +
+      `- **Directorio oficial:** [scouts.org.mx/presidentes-de-provincia](https://scouts.org.mx/presidentes-de-provincia/)`
+    );
+  }
+  if (matchedProvs.length > 1) {
+    return (
+      matchedProvs
+        .map(
+          (p) =>
+            `**Provincia Scout ${p.name.toUpperCase()} (ASMAC):**\n` +
+            `- **Presidente(a) de Provincia:** **${p.president}** · Correo: \`${p.email}\``
+        )
+        .join("\n\n") +
+      `\n\n- **Directorio oficial de las 49 Provincias:** [scouts.org.mx/presidentes-de-provincia](https://scouts.org.mx/presidentes-de-provincia/)`
+    );
+  }
+
+  // Handle "guanajuato" (both I and II) or "chihuahua" (Norte and Sur) or "tamaulipas" (Norte and Sur)
+  if (qNorm.includes("guanajuato")) {
+    const g1 = ASMAC_PROVINCES_DIRECTORY.find((x) => x.name === "Guanajuato I");
+    const g2 = ASMAC_PROVINCES_DIRECTORY.find((x) => x.name === "Guanajuato II");
+    return (
+      `**En el estado de Guanajuato existen 2 Provincias Scouts oficiales de ASMAC:**\n\n` +
+      `1. **Provincia ${g1.name}:** Presidente(a): **${g1.president}** · Correo: \`${g1.email}\`\n` +
+      `2. **Provincia ${g2.name}:** Presidente(a): **${g2.president}** · Correo: \`${g2.email}\``
+    );
+  }
+  if (qNorm.includes("chihuahua")) {
+    const c1 = ASMAC_PROVINCES_DIRECTORY.find((x) => x.name === "Chihuahua Norte");
+    const c2 = ASMAC_PROVINCES_DIRECTORY.find((x) => x.name === "Chihuahua Sur");
+    return (
+      `**En el estado de Chihuahua existen 2 Provincias Scouts oficiales de ASMAC:**\n\n` +
+      `1. **Provincia ${c1.name}:** Presidente(a): **${c1.president}** · Correo: \`${c1.email}\`\n` +
+      `2. **Provincia ${c2.name}:** Presidente(a): **${c2.president}** · Correo: \`${c2.email}\``
+    );
+  }
+  if (qNorm.includes("tamaulipas")) {
+    const t1 = ASMAC_PROVINCES_DIRECTORY.find((x) => x.name === "Tamaulipas Norte");
+    const t2 = ASMAC_PROVINCES_DIRECTORY.find((x) => x.name === "Tamaulipas Sur");
+    return (
+      `**En el estado de Tamaulipas existen 2 Provincias Scouts oficiales de ASMAC:**\n\n` +
+      `1. **Provincia ${t1.name}:** Presidente(a): **${t1.president}** · Correo: \`${t1.email}\`\n` +
+      `2. **Provincia ${t2.name}:** Presidente(a): **${t2.president}** · Correo: \`${t2.email}\``
+    );
+  }
+
+  if (/\b(cuantas provincias|todas las provincias|lista de provincias|presidentes de provincia|directorio de provincias|provincias scouts)\b/.test(qNorm)) {
+    const listMd = ASMAC_PROVINCES_DIRECTORY.map(
+      (p, idx) => `${idx + 1}. **${p.name}** — Presidente(a): **${p.president}** · \`${p.email}\``
+    ).join("\n");
+    return (
+      `**En la Asociación de Scouts de México, A.C. (ASMAC) existen 49 Provincias Scouts oficiales:**\n\n` +
+      `${listMd}\n\n` +
+      `- **Portal oficial:** [scouts.org.mx/presidentes-de-provincia](https://scouts.org.mx/presidentes-de-provincia/)`
+    );
+  }
+  return null;
+}
+
 function buildAnswerLocally(query) {
   const qNorm = normalizeQuestionKey(query);
+  const provAns = matchProvinceDirectoryAnswer(qNorm);
+  if (provAns) {
+    return { kind: "exact", text: provAns, item: { q: query, ans: provAns } };
+  }
   const bank = getBankIndex();
   const exact = bank.find((item) => item._nq === qNorm);
   if (exact && exact.ans && !isGenericDocQuestion(exact.q)) {
@@ -4782,12 +4922,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.3.0";
-const APP_MOBILE_VERSION = "3.3.0";
-const APP_COOKIE_SCHEMA = "9.3";
+const APP_WEB_VERSION = "9.4.0";
+const APP_MOBILE_VERSION = "3.4.0";
+const APP_COOKIE_SCHEMA = "9.4";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v42";
+const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v44";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -4798,8 +4939,10 @@ function setupVersionAndUpdateChecker() {
   if (!banner || !textEl) return;
 
   let pendingAction = null;
+  let latestDetectedVersion = APP_WEB_VERSION;
 
-  const showBanner = (message, onApplyFn = null, applyLabel = "Actualizar ahora") => {
+  const showBanner = (message, onApplyFn = null, applyLabel = "Actualizar ahora", detectedVer = "") => {
+    if (detectedVer) latestDetectedVersion = detectedVer;
     textEl.textContent = message;
     if (applyBtn) applyBtn.textContent = applyLabel;
     pendingAction = typeof onApplyFn === "function" ? onApplyFn : null;
@@ -4810,8 +4953,10 @@ function setupVersionAndUpdateChecker() {
 
   const markVersionSeen = () => {
     try {
-      localStorage.setItem(BT_SEEN_VERSION_KEY, APP_WEB_VERSION);
+      localStorage.setItem(BT_SEEN_VERSION_KEY, latestDetectedVersion || APP_WEB_VERSION);
       localStorage.setItem(BT_COOKIE_SCHEMA_KEY, APP_COOKIE_SCHEMA);
+      localStorage.setItem(BT_ACK_REMOTE_VER_KEY, latestDetectedVersion || APP_WEB_VERSION);
+      sessionStorage.setItem(BT_ACK_REMOTE_VER_KEY, latestDetectedVersion || APP_WEB_VERSION);
     } catch (_) {}
   };
 
@@ -4825,6 +4970,7 @@ function setupVersionAndUpdateChecker() {
   if (applyBtn) {
     applyBtn.addEventListener("click", async () => {
       markVersionSeen();
+      banner.classList.add("hidden");
       if (pendingAction) {
         try {
           await pendingAction();
@@ -4833,7 +4979,7 @@ function setupVersionAndUpdateChecker() {
       if ("caches" in window && !window.Capacitor) {
         try {
           const keys = await caches.keys();
-          await Promise.all(keys.filter((k) => k !== WEB_OFFLINE_CACHE).map((k) => caches.delete(k)));
+          await Promise.all(keys.map((k) => caches.delete(k)));
         } catch (_) {}
       }
       if ("serviceWorker" in navigator && !window.Capacitor) {
@@ -4850,37 +4996,17 @@ function setupVersionAndUpdateChecker() {
     });
   }
 
-  // 1) Detectar cambios importantes respecto a la última versión/cookies guardadas en este navegador o app
+  // Asegurar que la versión actual quede registrada para no mostrar avisos repetidos tras recargar
   try {
     const seenVersion = localStorage.getItem(BT_SEEN_VERSION_KEY);
-    const seenSchema = localStorage.getItem(BT_COOKIE_SCHEMA_KEY);
-    const hasPriorUserData = Boolean(
-      seenVersion ||
-      seenSchema ||
-      localStorage.getItem("bt_cookie_consent_v1") ||
-      localStorage.getItem("bt_saved_pins") ||
-      localStorage.getItem("bt_recent_questions") ||
-      localStorage.getItem("bt_autofill_profile_v1") ||
-      localStorage.getItem("bt_forum_state_v1") ||
-      localStorage.getItem(WEB_OFFLINE_META_KEY)
-    );
-
-    if (hasPriorUserData && (seenVersion !== APP_WEB_VERSION || seenSchema !== APP_COOKIE_SCHEMA)) {
-      let msg = `BiblioTech Scout se actualizó a la versión ${APP_WEB_VERSION} con La Fogata y cambios en archivos y preferencias locales.`;
-      try {
-        const offlineMetaRaw = localStorage.getItem(WEB_OFFLINE_META_KEY);
-        const offlineMeta = offlineMetaRaw ? JSON.parse(offlineMetaRaw) : null;
-        if (offlineMeta && offlineMeta.version !== APP_WEB_VERSION) {
-          msg = `Hay cambios importantes (versión ${APP_WEB_VERSION} con La Fogata). Actualiza para sincronizar archivos y tu paquete offline.`;
-        }
-      } catch (_) {}
-      showBanner(msg);
-    } else if (!hasPriorUserData) {
-      markVersionSeen();
+    if (seenVersion !== APP_WEB_VERSION) {
+      localStorage.setItem(BT_SEEN_VERSION_KEY, APP_WEB_VERSION);
+      localStorage.setItem(BT_COOKIE_SCHEMA_KEY, APP_COOKIE_SCHEMA);
+      localStorage.setItem(BT_ACK_REMOTE_VER_KEY, APP_WEB_VERSION);
     }
   } catch (_) {}
 
-  // 2) Comprobar contra el servidor si ya hay una versión más reciente publicada (Web, iOS Web App o Android)
+  // Comprobar contra el servidor solo si existe una versión remota distinta y aún no aceptada por el usuario
   if (navigator.onLine !== false) {
     const remoteUrl = window.Capacitor
       ? `https://ey-liam.github.io/bibliotech-scouts/version.json?t=${Date.now()}`
@@ -4891,28 +5017,30 @@ function setupVersionAndUpdateChecker() {
         if (!remote || typeof remote !== "object") return;
         const remoteWeb = String(remote.version || "").trim();
         const remoteMobile = String(remote.mobileVersion || "").trim();
-        const remoteSchema = String(remote.schemaCookieVersion || "").trim();
-        const remoteCache = String(remote.cache || "").trim();
+        let ackVer = "";
+        let sessionAck = "";
+        try {
+          ackVer = localStorage.getItem(BT_ACK_REMOTE_VER_KEY) || "";
+          sessionAck = sessionStorage.getItem(BT_ACK_REMOTE_VER_KEY) || "";
+        } catch (_) {}
 
         if (window.Capacitor) {
-          if (remoteMobile && remoteMobile !== APP_MOBILE_VERSION) {
+          if (remoteMobile && remoteMobile !== APP_MOBILE_VERSION && ackVer !== remoteMobile && sessionAck !== remoteMobile) {
             showBanner(
               `Nueva versión ${remoteMobile} disponible para BiblioTech Scout Mobile (Web ${remoteWeb || APP_WEB_VERSION}).`,
               () => {
                 window.open("https://github.com/ey-liam/bibliotech-scouts-app/releases/latest", "_blank", "noopener");
               },
-              "Ver actualización"
+              "Ver actualización",
+              remoteMobile
             );
-          } else if ((remoteWeb && remoteWeb !== APP_WEB_VERSION) || (remoteSchema && remoteSchema !== APP_COOKIE_SCHEMA)) {
-            showBanner(`Hay cambios recientes disponibles en archivos y datos (Web ${remoteWeb || APP_WEB_VERSION}).`);
           }
-        } else if (
-          (remoteWeb && remoteWeb !== APP_WEB_VERSION) ||
-          (remoteSchema && remoteSchema !== APP_COOKIE_SCHEMA) ||
-          (remoteCache && remoteCache !== WEB_OFFLINE_CACHE)
-        ) {
+        } else if (remoteWeb && remoteWeb !== APP_WEB_VERSION && ackVer !== remoteWeb && sessionAck !== remoteWeb) {
           showBanner(
-            `Nueva versión disponible (${remoteWeb || APP_WEB_VERSION}) con cambios importantes en archivos y funciones. Actualiza ahora.`
+            `Nueva versión disponible (${remoteWeb}) con cambios importantes en archivos y funciones. Actualiza ahora.`,
+            null,
+            "Actualizar ahora",
+            remoteWeb
           );
         }
       })
@@ -6269,10 +6397,22 @@ function initPrivacyAndTelemetry() {
 }
 
 // ============================================================================
-// BÓVEDA LOCAL DE AUTOLLENADO SCOUT + PRÓXIMAMENTE EDITOR DE FORMATOS
+// BÓVEDA LOCAL DE AUTOLLENADO SCOUT + EDITOR INTELIGENTE DE FORMATOS OFICIALES
 // ============================================================================
 
 const BT_AUTOFILL_PROFILE_KEY = "bt_autofill_profile_v1";
+
+const OFFICIAL_PROVINCE_NAMES = ASMAC_PROVINCES_DIRECTORY.map((p) => p.name);
+const OFFICIAL_PROVINCE_SELECT_OPTIONS = ["", ...OFFICIAL_PROVINCE_NAMES, "Otro"];
+const OFFICIAL_SECTION_SELECT_OPTIONS = ["", "Manada", "Tropa", "Comunidad", "Clan", "Scouters o Dirigentes", "Otro"];
+
+function ensureProvincesDatalist() {
+  if (document.getElementById("officialProvincesDatalist")) return;
+  const dl = document.createElement("datalist");
+  dl.id = "officialProvincesDatalist";
+  dl.innerHTML = OFFICIAL_PROVINCE_NAMES.map((n) => `<option value="${escapeHtml(n)}"></option>`).join("");
+  document.body.appendChild(dl);
+}
 
 function getAutofillProfile() {
   try {
@@ -6286,6 +6426,7 @@ function getAutofillProfile() {
 }
 
 function setupAutofillVault() {
+  ensureProvincesDatalist();
   const form = document.getElementById("autofillProfileForm");
   const statusBadge = document.getElementById("autofillStatusBadge");
   const previewBtn = document.getElementById("btnPreviewAutofillDemo");
@@ -6308,7 +6449,7 @@ function setupAutofillVault() {
     name: (fields.name ? fields.name.value : "").trim(),
     cum: (fields.cum ? fields.cum.value : "").trim().toUpperCase(),
     age: (fields.age ? fields.age.value : "").trim(),
-    section: (fields.section ? fields.section.value : "Comunidad de Caminantes").trim(),
+    section: (fields.section ? fields.section.value : "").trim(),
     group: (fields.group ? fields.group.value : "").trim(),
     province: (fields.province ? fields.province.value : "").trim(),
     blood: (fields.blood ? fields.blood.value : "").trim(),
@@ -6319,7 +6460,7 @@ function setupAutofillVault() {
   const hasAnySavedData = (prof) =>
     Boolean(
       prof &&
-        (prof.name || prof.cum || prof.age || prof.group || prof.province || prof.blood || prof.emergency || prof.scouter)
+        (prof.name || prof.cum || prof.age || prof.section || prof.group || prof.province || prof.blood || prof.emergency || prof.scouter)
     );
 
   const updateBadge = (prof) => {
@@ -6351,29 +6492,29 @@ function setupAutofillVault() {
         <div class="autofill-demo-doc">
           <div class="autofill-demo-doc-head">Permiso de Salida (JL304)</div>
           <div class="autofill-demo-rows">
-            <div class="autofill-demo-row"><span>Participante:</span><span class="autofill-demo-fill">${val("name", "(Nombre Scout)")}</span></div>
-            <div class="autofill-demo-row"><span>CUM / Edad:</span><span class="autofill-demo-fill">${val("cum", "—")} · ${val("age", "—")} años</span></div>
+            <div class="autofill-demo-row"><span>Participante:</span><span class="autofill-demo-fill">${val("name", "(Escribe aquí tu nombre)")}</span></div>
+            <div class="autofill-demo-row"><span>CUM / Nacimiento:</span><span class="autofill-demo-fill">${val("cum", "—")} · ${val("age", "—")}</span></div>
             <div class="autofill-demo-row"><span>Grupo / Prov.:</span><span class="autofill-demo-fill">${val("group", "—")} · ${val("province", "—")}</span></div>
-            <div class="autofill-demo-row"><span>Autoriza:</span><span class="autofill-demo-fill">${val("emergency", "(Padre/Tutor)")}</span></div>
-            <div class="autofill-demo-row"><span>Responsable:</span><span class="autofill-demo-fill">${val("scouter", "(Scouter)")}</span></div>
+            <div class="autofill-demo-row"><span>Autoriza:</span><span class="autofill-demo-fill">${val("emergency", "(Contacto)")}</span></div>
+            <div class="autofill-demo-row"><span>Responsable:</span><span class="autofill-demo-fill">${val("scouter", "(Adulto responsable)")}</span></div>
           </div>
         </div>
 
         <div class="autofill-demo-doc">
-          <div class="autofill-demo-doc-head">Ficha Médica y de Salud</div>
+          <div class="autofill-demo-doc-head">Ficha de Salud</div>
           <div class="autofill-demo-rows">
-            <div class="autofill-demo-row"><span>Scout:</span><span class="autofill-demo-fill">${val("name", "(Nombre)")}</span></div>
-            <div class="autofill-demo-row"><span>Sección:</span><span class="autofill-demo-fill">${val("section", "Comunidad de Caminantes")}</span></div>
-            <div class="autofill-demo-row"><span>Sangre / Alergias:</span><span class="autofill-demo-fill">${val("blood", "(Sin completar)")}</span></div>
+            <div class="autofill-demo-row"><span>Nombre:</span><span class="autofill-demo-fill">${val("name", "(Escribe aquí tu nombre)")}</span></div>
+            <div class="autofill-demo-row"><span>Sección:</span><span class="autofill-demo-fill">${val("section", "(Selecciona tu sección)")}</span></div>
+            <div class="autofill-demo-row"><span>Grupo y Rh:</span><span class="autofill-demo-fill">${val("blood", "(Sin completar)")}</span></div>
             <div class="autofill-demo-row"><span>Contacto SOS:</span><span class="autofill-demo-fill">${val("emergency", "(Contacto)")}</span></div>
           </div>
         </div>
 
         <div class="autofill-demo-doc">
-          <div class="autofill-demo-doc-head">Cédula SMART / RECME</div>
+          <div class="autofill-demo-doc-head">Proyecto / Especialidad</div>
           <div class="autofill-demo-rows">
-            <div class="autofill-demo-row"><span>Proponente:</span><span class="autofill-demo-fill">${val("name", "(Nombre)")}</span></div>
-            <div class="autofill-demo-row"><span>Sección:</span><span class="autofill-demo-fill">${val("section", "Comunidad de Caminantes")}</span></div>
+            <div class="autofill-demo-row"><span>Participante:</span><span class="autofill-demo-fill">${val("name", "(Escribe aquí tu nombre)")}</span></div>
+            <div class="autofill-demo-row"><span>Sección:</span><span class="autofill-demo-fill">${val("section", "(Selecciona tu sección)")}</span></div>
             <div class="autofill-demo-row"><span>Grupo / Provincia:</span><span class="autofill-demo-fill">${val("group", "—")} · ${val("province", "—")}</span></div>
             <div class="autofill-demo-row"><span>Asesor / Scouter:</span><span class="autofill-demo-fill">${val("scouter", "(Sin asignar)")}</span></div>
           </div>
@@ -6425,7 +6566,7 @@ function setupAutofillVault() {
         localStorage.removeItem(BT_AUTOFILL_PROFILE_KEY);
       } catch (_) {}
       form.reset();
-      if (fields.section) fields.section.value = "Comunidad de Caminantes";
+      if (fields.section) fields.section.value = "";
       updateBadge({});
       if (demoBox) demoBox.classList.add("hidden");
       if (previewBtn) previewBtn.textContent = "Ver demostración de autollenado";
@@ -6437,136 +6578,382 @@ function setupAutofillVault() {
 }
 
 // ============================================================================
-// EDITOR INTELIGENTE DE FORMATOS SCOUT (100% LOCAL, OFFLINE, PDF Y WORD)
+// EDITOR INTELIGENTE DE FORMATOS SCOUT (100% OFICIALES ASMAC, PDF Y PNG)
 // ============================================================================
-const BT_SF_ACTIVE_PREFIX = "bt_sf_active_v1_";
-const BT_SF_DRAFTS_KEY = "bt_sf_named_drafts_v1";
+const BT_SF_ACTIVE_PREFIX = "bt_sf_active_v2_";
+const BT_SF_DRAFTS_KEY = "bt_sf_named_drafts_v2";
+
+const MONTHS_ES = [
+  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+];
+const DAYS_LIST = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, "0"));
+const YEARS_26_99 = Array.from({ length: 74 }, (_, i) => String(26 + i));
+
+// 24 Antecedentes del Historial Médico (Página 1 de Ficha de Salud)
+const HEALTH_ANTECEDENTES_LIST = [
+  // Columna izquierda (x_sino = 32.6, w_sino = 7.0; x_esp = 39.8, w_esp = 13.4)
+  { key: "mh_diabetes", label: "DIABETES", col: "left", y: 46.9, h: 1.1 },
+  { key: "mh_hipertension", label: "HIPERTENSIÓN", col: "left", y: 48.0, h: 1.1 },
+  { key: "mh_epileptico", label: "EVENTO EPILÉPTICO", col: "left", y: 49.2, h: 1.1 },
+  { key: "mh_cardiaco", label: "PROBLEMA CARDÍACO", col: "left", y: 50.4, h: 1.1 },
+  { key: "mh_desmayos", label: "DESMAYOS Y/O MAREOS", col: "left", y: 51.6, h: 1.1 },
+  { key: "mh_asma", label: "ASMA", col: "left", y: 52.8, h: 1.1 },
+  { key: "mh_toxicomanias", label: "TOXICOMANÍAS", col: "left", y: 53.9, h: 1.1 },
+  { key: "mh_cirugia", label: "CIRUGÍA RECIENTE", col: "left", y: 55.1, h: 1.1 },
+  { key: "mh_embarazo", label: "EMBARAZO Y/O PUERPERIO", col: "left", y: 56.3, h: 1.1 },
+  { key: "mh_transfusion", label: "TRANSFUSIÓN", col: "left", y: 57.4, h: 1.1 },
+  { key: "mh_musculo", label: "LESIÓN MÚSCULO ESQUELÉTICA", col: "left", y: 58.6, h: 1.1 },
+  { key: "mh_ortopedicos", label: "ORTOPÉDICOS", col: "left", y: 59.8, h: 1.1 },
+  // Columna derecha (x_sino = 70.9, w_sino = 6.8; x_esp = 77.9, w_esp = 16.8)
+  { key: "mh_respiratorios", label: "RESPIRATORIOS", col: "right", y: 46.9, h: 1.1 },
+  { key: "mh_oftalmicos", label: "OFTÁLMICOS", col: "right", y: 48.0, h: 1.1 },
+  { key: "mh_nariz_oidos", label: "NARÍZ Y/U OÍDOS", col: "right", y: 49.2, h: 1.1 },
+  { key: "mh_neurologicos", label: "NEUROLÓGICOS", col: "right", y: 50.4, h: 1.1 },
+  { key: "mh_hematologicos", label: "HEMATOLÓGICOS", col: "right", y: 51.6, h: 1.1 },
+  { key: "mh_hepaticos", label: "HEPÁTICOS", col: "right", y: 52.8, h: 1.1 },
+  { key: "mh_digestivo", label: "APARATO DIGESTIVO", col: "right", y: 53.9, h: 1.1 },
+  { key: "mh_tiroideo", label: "TIROIDEO", col: "right", y: 55.1, h: 1.1 },
+  { key: "mh_dermatologico", label: "DERMATOLÓGICO", col: "right", y: 56.3, h: 1.1 },
+  { key: "mh_inmunologicos", label: "INMUNOLÓGICOS", col: "right", y: 57.4, h: 1.1 },
+  { key: "mh_urinarios", label: "URINARIOS", col: "right", y: 58.6, h: 1.1 },
+  { key: "mh_covid", label: "COVID-19", col: "right", y: 59.8, h: 1.1 }
+];
+
+// 13 Antecedentes Psicológicos/Psiquiátricos (Página 1 de Ficha de Salud)
+const PSYCH_ANTECEDENTES_LIST = [
+  // Columna izquierda (x_sino = 33.6, w_sino = 6.4; x_esp = 40.2, w_esp = 11.3)
+  { key: "ps_alimentacion", label: "CAMBIOS EN ALIMENTACIÓN", col: "left", y: 64.6, h: 1.1 },
+  { key: "ps_aislamiento", label: "AISLAMIENTO PERSONAL", col: "left", y: 65.8, h: 1.2 },
+  { key: "ps_vacio", label: "SENSACIÓN DE VACÍO O SIN IMPORTANCIA", col: "left", y: 67.3, h: 1.8 },
+  { key: "ps_impotencia", label: "IMPOTENCIA O DESESPERANZA", col: "left", y: 69.2, h: 1.1 },
+  { key: "ps_confusion", label: "CONFUSIÓN, DISTRACCIÓN O IRRITABILIDAD", col: "left", y: 70.6, h: 2.0 },
+  { key: "ps_pensamientos", label: "PENSAMIENTOS Y/O RECUERDOS QUE NO SALGAN DE SU CABEZA", col: "left", y: 73.0, h: 2.1 },
+  { key: "ps_lastimarse", label: "PENSAR LASTIMARSE A SÍ MISMO U OTROS", col: "left", y: 75.3, h: 2.1 },
+  // Columna derecha (x_sino = 76.7, w_sino = 6.7; x_esp = 83.6, w_esp = 11.2)
+  { key: "ps_sueno", label: "ALTERACIONES DEL SUEÑO", col: "right", y: 64.6, h: 1.1 },
+  { key: "ps_agotamiento", label: "AGOTAMIENTO EXCESIVO / DOLORES INEXPLICABLES", col: "right", y: 65.8, h: 1.2 },
+  { key: "ps_toxicomanias", label: "AUMENTO EN TOXICOMANÍAS", col: "right", y: 67.3, h: 1.8 },
+  { key: "ps_humor", label: "CAMBIOS DE HUMOR", col: "right", y: 69.2, h: 1.1 },
+  { key: "ps_voces", label: "ESCUCHAR VOCES O CREER COSAS QUE NO SON CIERTAS", col: "right", y: 70.6, h: 2.0 },
+  { key: "ps_tareas", label: "DIFICULTAD PARA REALIZAR TAREAS DIARIAS", col: "right", y: 73.0, h: 2.1 }
+];
+
+// Filas de Inmunología (Página 2 de Ficha de Salud)
+const IMMUNO_LEFT_ROWS = [
+  { key: "im_tetanos", label: "TÉTANOS", y: 19.6, h: 1.2, hasPadecio: true },
+  { key: "im_difteria", label: "DIFTERIA", y: 20.8, h: 1.2, hasPadecio: true },
+  { key: "im_sarampion", label: "SARAMPIÓN / RUBEOLA", y: 22.3, h: 2.6, hasPadecio: true },
+  { key: "im_paperas", label: "PAPERAS", y: 25.3, h: 1.2, hasPadecio: true },
+  { key: "im_polio", label: "POLIOMIELITIS", y: 26.7, h: 2.0, hasPadecio: true },
+  { key: "im_rotavirus", label: "ROTAVIRUS", y: 29.0, h: 1.9, hasPadecio: true },
+  { key: "im_covid1", label: "COVID 1ª DOSIS", y: 31.3, h: 2.1, hasPadecio: false },
+  { key: "im_covid_ref", label: "COVID REFUERZO", y: 33.8, h: 2.6, hasPadecio: false }
+];
+
+const IMMUNO_RIGHT_ROWS = [
+  { key: "im_influenza", label: "INFLUENZA", y: 19.6, h: 1.2, hasPadecio: true },
+  { key: "im_papiloma", label: "PAPILOMA", y: 20.8, h: 1.2, hasPadecio: true },
+  { key: "im_hepatitis", label: "HEPATITIS", y: 22.3, h: 2.6, hasPadecio: true },
+  { key: "im_meningitis", label: "MENINGITIS", y: 25.3, h: 1.2, hasPadecio: true }
+];
+
+function buildSaludPage1Boxes() {
+  const boxes = [
+    // Fecha: A __Día__ DE __Mes__ DE 20__Año__
+    { key: "fechaDia", x: 71.2, y: 13.4, w: 7.8, h: 1.2, align: "center" },
+    { key: "fechaMes", x: 81.3, y: 13.4, w: 8.8, h: 1.2, align: "center" },
+    { key: "fechaAnio", x: 93.8, y: 13.4, w: 2.6, h: 1.2, align: "left" },
+    // Datos de Identificación
+    { key: "name", x: 20.2, y: 15.9, w: 40.6, h: 1.2 },
+    { key: "birthDate", x: 81.4, y: 15.9, w: 13.3, h: 1.2, align: "center" },
+    { key: "_provinceOut", x: 20.2, y: 17.2, w: 40.6, h: 1.2 },
+    { key: "group", x: 81.4, y: 17.2, w: 13.3, h: 1.2 },
+    { key: "cum", x: 20.2, y: 18.4, w: 40.6, h: 1.2 },
+    { key: "_sectionOut", x: 81.4, y: 18.4, w: 13.3, h: 1.2 },
+    // Alerta
+    { key: "alertText", x: 8.6, y: 20.9, w: 86.0, h: 2.1, multiline: true },
+    // Datos Médicos Generales
+    { key: "_bloodCombined", x: 21.3, y: 24.4, w: 12.4, h: 1.2, align: "center" },
+    { key: "_weightFormatted", x: 21.3, y: 25.8, w: 12.4, h: 1.9, align: "center" },
+    { key: "_heightFormatted", x: 21.3, y: 27.9, w: 12.4, h: 1.1, align: "center" },
+    { key: "_imcCalculated", x: 21.3, y: 29.1, w: 12.4, h: 1.1, align: "center" },
+    { key: "diet", x: 21.3, y: 30.3, w: 12.4, h: 1.1, align: "center" },
+    // Afiliaciones a Servicios de Salud (Checkboxes + 4 filas)
+    { key: "_medTypePub", x: 55.2, y: 25.7, w: 1.4, h: 1.1, align: "center" },
+    { key: "_medTypeAseg", x: 69.9, y: 26.1, w: 1.4, h: 1.1, align: "center" },
+    { key: "_medTypePart", x: 84.6, y: 26.1, w: 1.4, h: 1.1, align: "center" },
+    { key: "medProvider", x: 53.8, y: 27.9, w: 40.8, h: 1.1 },
+    { key: "medPolicy", x: 53.8, y: 29.1, w: 40.8, h: 1.1 },
+    { key: "medEntitlement", x: 53.8, y: 30.3, w: 40.8, h: 1.1 },
+    { key: "medServiceNotes", x: 53.8, y: 31.4, w: 40.8, h: 1.1 },
+    // Alergias y Tratamientos Actuales
+    { key: "_allergiesOut", x: 8.6, y: 34.9, w: 86.0, h: 2.2, multiline: true },
+    { key: "_medicationsOut", x: 8.6, y: 39.7, w: 86.0, h: 2.1, multiline: true },
+    // Historial Médico (últimos 6 meses)
+    { key: "_medHistory6mOut", x: 8.6, y: 44.4, w: 86.0, h: 1.1 },
+    // Antecedentes Psicológicos/Psiquiátricos (últimos 6 meses)
+    { key: "_psyHistory6mOut", x: 71.0, y: 62.1, w: 23.5, h: 1.1 },
+    // Tratamiento médico controlado (final de página 1)
+    { key: "controlledTreatment", x: 8.8, y: 81.2, w: 85.8, h: 6.0, multiline: true }
+  ];
+
+  for (const item of HEALTH_ANTECEDENTES_LIST) {
+    const isLeft = item.col === "left";
+    boxes.push({
+      key: `_${item.key}_sino`,
+      x: isLeft ? 32.6 : 70.9,
+      y: item.y,
+      w: isLeft ? 7.0 : 6.8,
+      h: item.h,
+      align: "center"
+    });
+    boxes.push({
+      key: `${item.key}_esp`,
+      x: isLeft ? 39.8 : 77.9,
+      y: item.y,
+      w: isLeft ? 13.4 : 16.8,
+      h: item.h
+    });
+  }
+
+  for (const item of PSYCH_ANTECEDENTES_LIST) {
+    const isLeft = item.col === "left";
+    boxes.push({
+      key: `_${item.key}_sino`,
+      x: isLeft ? 33.6 : 76.7,
+      y: item.y,
+      w: isLeft ? 6.4 : 6.7,
+      h: item.h,
+      align: "center"
+    });
+    boxes.push({
+      key: `${item.key}_esp`,
+      x: isLeft ? 40.2 : 83.6,
+      y: item.y,
+      w: isLeft ? 11.3 : 11.2,
+      h: item.h
+    });
+  }
+
+  return boxes;
+}
+
+function buildSaludPage2Boxes() {
+  const boxes = [];
+  // Inmunología tabla izquierda
+  for (const r of IMMUNO_LEFT_ROWS) {
+    boxes.push({ key: `${r.key}_vac`, x: 17.4, y: r.y, w: 12.4, h: r.h, align: "center" });
+    boxes.push({ key: `${r.key}_fvac`, x: 30.0, y: r.y, w: 7.3, h: r.h, align: "center" });
+    if (r.hasPadecio) {
+      boxes.push({ key: `${r.key}_pad`, x: 37.5, y: r.y, w: 7.8, h: r.h, align: "center" });
+      boxes.push({ key: `${r.key}_fpad`, x: 45.5, y: r.y, w: 7.1, h: r.h, align: "center" });
+    }
+  }
+  // Inmunología tabla derecha
+  for (const r of IMMUNO_RIGHT_ROWS) {
+    boxes.push({ key: `${r.key}_vac`, x: 65.3, y: r.y, w: 7.7, h: r.h, align: "center" });
+    boxes.push({ key: `${r.key}_fvac`, x: 73.2, y: r.y, w: 6.6, h: r.h, align: "center" });
+    boxes.push({ key: `${r.key}_pad`, x: 80.0, y: r.y, w: 8.2, h: r.h, align: "center" });
+    boxes.push({ key: `${r.key}_fpad`, x: 88.4, y: r.y, w: 6.7, h: r.h, align: "center" });
+  }
+  // Reacción a vacunas, Otras, Covid 2a dosis y Marcas Covid (1a a 4a dosis)
+  boxes.push({ key: "im_reaccion", x: 65.3, y: 26.7, w: 29.8, h: 2.0 });
+  boxes.push({ key: "im_otras", x: 65.3, y: 29.0, w: 29.8, h: 1.9 });
+  boxes.push({ key: "im_covid2_vac", x: 65.3, y: 31.3, w: 7.7, h: 2.1, align: "center" });
+  boxes.push({ key: "im_covid2_fvac", x: 73.2, y: 31.3, w: 6.6, h: 2.1, align: "center" });
+  boxes.push({ key: "im_covid_marca1", x: 65.3, y: 34.8, w: 7.7, h: 1.8, align: "center" });
+  boxes.push({ key: "im_covid_marca2", x: 73.2, y: 34.8, w: 6.6, h: 1.8, align: "center" });
+  boxes.push({ key: "im_covid_marca3", x: 80.0, y: 34.8, w: 8.2, h: 1.8, align: "center" });
+  boxes.push({ key: "im_covid_marca4", x: 88.4, y: 34.8, w: 6.7, h: 1.8, align: "center" });
+
+  // Contacto de Emergencias — Contacto 1 y Contacto 2 (Observaciones y Firmas se dejan en blanco para llenar a mano)
+  boxes.push({ key: "em1_name", x: 21.0, y: 39.4, w: 33.8, h: 1.1 });
+  boxes.push({ key: "em1_relation", x: 68.0, y: 39.4, w: 27.0, h: 1.1 });
+  boxes.push({ key: "em1_phone1", x: 21.0, y: 40.5, w: 33.8, h: 1.1 });
+  boxes.push({ key: "em1_phone2", x: 68.0, y: 40.5, w: 27.0, h: 1.1 });
+  boxes.push({ key: "em1_address", x: 21.0, y: 41.7, w: 33.8, h: 1.1 });
+  boxes.push({ key: "em1_email", x: 68.0, y: 41.7, w: 27.0, h: 1.1 });
+
+  boxes.push({ key: "em2_name", x: 21.0, y: 44.1, w: 33.8, h: 1.1 });
+  boxes.push({ key: "em2_relation", x: 68.0, y: 44.1, w: 27.0, h: 1.1 });
+  boxes.push({ key: "em2_phone1", x: 21.0, y: 45.3, w: 33.8, h: 1.1 });
+  boxes.push({ key: "em2_phone2", x: 68.0, y: 45.3, w: 27.0, h: 1.1 });
+  boxes.push({ key: "em2_address", x: 21.0, y: 46.4, w: 33.8, h: 1.1 });
+  boxes.push({ key: "em2_email", x: 68.0, y: 46.4, w: 27.0, h: 1.1 });
+
+  return boxes;
+}
+
+function buildJl304Page1Boxes() {
+  const digitXs = [45.9, 51.2, 56.5, 61.8, 67.2, 72.5, 77.8, 83.1];
+  const boxes = [];
+  // 8 casillas de Fecha de autorización: (D1)(D2)(M1)(M2)(Y1)(Y2)(Y3)(Y4)
+  digitXs.forEach((dx, i) => {
+    boxes.push({ key: `_authD${i}`, x: dx, y: 15.7, w: 5.2, h: 1.8, align: "center" });
+  });
+  // Nombre(s), Primer Apellido, Segundo Apellido separados
+  boxes.push({ key: "firstName", x: 11.8, y: 25.4, w: 23.6, h: 2.2, align: "center" });
+  boxes.push({ key: "lastName1", x: 35.8, y: 25.4, w: 23.8, h: 2.2, align: "center" });
+  boxes.push({ key: "lastName2", x: 60.0, y: 25.4, w: 28.0, h: 2.2, align: "center" });
+  // 8 casillas de Fecha de nacimiento: (D1)(D2)(M1)(M2)(Y1)(Y2)(Y3)(Y4)
+  digitXs.forEach((dx, i) => {
+    boxes.push({ key: `_birthD${i}`, x: dx, y: 34.7, w: 5.2, h: 1.8, align: "center" });
+  });
+  // Líneas del permiso en Página 1
+  boxes.push({ key: "destination", x: 11.8, y: 47.7, w: 55.5, h: 1.5 });
+  boxes.push({ key: "eventDates", x: 22.3, y: 49.3, w: 52.0, h: 1.5 });
+  boxes.push({ key: "scouter", x: 35.0, y: 53.7, w: 46.5, h: 1.5 });
+  return boxes;
+}
 
 const SMART_FORM_TEMPLATES = {
   salud: {
     id: "salud",
     code: "ASMAC-SALUD",
+    exportPrefix: "Ficha de Salud",
     baseDocId: "doc-0325",
     baseDocName: "FICHA MÉDICA EDITABLE.pdf",
-    title: "Ficha Médica y de Salud Scout",
-    subtitle: "Basado en el documento oficial FICHA MÉDICA EDITABLE.pdf de ASMAC",
-    signatures: ["Firma del Padre, Madre o Tutor Legal", "Firma del Participante / Scout", "Recibió: Scouter Responsable"],
+    title: "Ficha de Salud Oficial ASMAC (2 páginas)",
+    subtitle: "Documento oficial FICHA MÉDICA EDITABLE.pdf de ASMAC",
     officialPages: [
       {
         src: "img/forms/salud_p1.webp",
         aspect: "1311 / 1853",
-        boxes: [
-          { key: "date", x: 71.0, y: 13.6, w: 23.5, h: 1.3 },
-          { key: "name", x: 20.3, y: 15.8, w: 40.5, h: 1.4 },
-          { key: "age", x: 81.6, y: 15.8, w: 12.8, h: 1.4 },
-          { key: "province", x: 20.3, y: 17.2, w: 40.5, h: 1.4 },
-          { key: "group", x: 81.6, y: 17.2, w: 12.8, h: 1.4 },
-          { key: "cum", x: 20.3, y: 18.5, w: 40.5, h: 1.4 },
-          { key: "section", x: 81.6, y: 18.5, w: 12.8, h: 1.4 },
-          { key: "blood", x: 8.8, y: 20.9, w: 85.5, h: 1.6 },
-          { key: "blood", x: 21.3, y: 24.1, w: 12.2, h: 1.3 },
-          { key: "insurance", x: 53.8, y: 27.6, w: 29.0, h: 1.4 },
-          { key: "blood", x: 8.8, y: 34.8, w: 85.5, h: 2.2 },
-          { key: "medications", x: 8.8, y: 39.5, w: 85.5, h: 2.3, multiline: true },
-          { key: "notes", x: 9.2, y: 81.0, w: 84.5, h: 5.5, multiline: true }
-        ]
+        boxes: buildSaludPage1Boxes()
       },
       {
         src: "img/forms/salud_p2.webp",
         aspect: "1311 / 1853",
-        boxes: [
-          { key: "emergency", x: 21.2, y: 39.2, w: 33.0, h: 1.3 },
-          { key: "emergencyPhone", x: 21.2, y: 40.5, w: 33.0, h: 1.3 },
-          { key: "scouter", x: 21.2, y: 43.0, w: 33.0, h: 1.3 },
-          { key: "notes", x: 8.8, y: 49.2, w: 25.5, h: 10.0, multiline: true },
-          { key: "emergency", x: 12.0, y: 70.2, w: 25.0, h: 1.6, align: "center" },
-          { key: "name", x: 63.0, y: 70.2, w: 25.0, h: 1.6, align: "center" }
-        ]
+        boxes: buildSaludPage2Boxes()
       }
     ],
     fields: [
-      { key: "name", label: "Nombre completo del participante", type: "text", bind: "name", placeholder: "Ej. Liam Durán" },
-      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Ej. TLX0530123" },
-      { key: "age", label: "Edad / Fecha de nacimiento", type: "text", bind: "age", placeholder: "Ej. 16 años" },
-      { key: "section", label: "Sección", type: "text", bind: "section", placeholder: "Comunidad de Caminantes" },
-      { key: "group", label: "Grupo Scout", type: "text", bind: "group", placeholder: "Ej. Grupo 53" },
-      { key: "province", label: "Provincia Scout", type: "text", bind: "province", placeholder: "Ej. Tláhuac-Xochimilco" },
-      { key: "blood", label: "Tipo de sangre y alergias", type: "text", bind: "blood", placeholder: "Ej. O+ · Sin alergias conocidas" },
-      { key: "insurance", label: "Servicio médico / Seguro / NSS", type: "text", placeholder: "Ej. IMSS / Seguro Scout ASMAC vigente" },
-      { key: "emergency", label: "Contacto de emergencia (Nombre y parentesco)", type: "text", bind: "emergency", placeholder: "Ej. Madre / Tutor responsable" },
-      { key: "emergencyPhone", label: "Teléfono(s) de emergencia 24 h", type: "text", placeholder: "Ej. 55 1234 5678" },
-      { key: "scouter", label: "Scouter responsable", type: "text", bind: "scouter", placeholder: "Ej. Coordinador de Comunidad" },
-      { key: "date", label: "Fecha de actualización", type: "text", defaultToday: true },
-      { key: "medications", label: "Medicamentos actuales, dosis o tratamientos en curso", type: "textarea", full: true, placeholder: "Indicar si toma algún medicamento, horario y dosis, o escribir «Ninguno»." },
-      { key: "notes", label: "Restricciones alimenticias, físicas o indicaciones médicas importantes", type: "textarea", full: true, placeholder: "Observaciones de salud relevantes para el equipo de dirigentes en campamento." }
+      { type: "section_heading", label: "Fecha de la Ficha (A __ Día __ De __ Mes __ de 20__26-99__)" },
+      { key: "fechaDia", label: "Día", type: "select", options: DAYS_LIST, defaultTodayDay: true },
+      { key: "fechaMes", label: "Mes", type: "select", options: MONTHS_ES, defaultTodayMonth: true },
+      { key: "fechaAnio", label: "Año (2026 - 2099)", type: "select", options: YEARS_26_99, defaultValue: "26" },
+
+      { type: "section_heading", label: "Datos de Identificación" },
+      { key: "name", label: "Nombre completo", type: "text", bind: "name", placeholder: "Escribe aquí tu nombre completo" },
+      { key: "province", label: "Provincia Scout", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Escribe aquí la Provincia o caso especial" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Escribe aquí tu CUM" },
+      { key: "birthDate", label: "Fecha de Nacimiento (Día/Mes/Año)", type: "text", bind: "age", placeholder: "Día / Mes / Año" },
+      { key: "group", label: "Grupo Scout", type: "text", bind: "group", placeholder: "Escribe aquí tu número o nombre de Grupo" },
+      { key: "section", label: "Sección", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Escribe aquí la sección o cargo" },
+
+      { type: "section_heading", label: "Alerta" },
+      { key: "alertText", label: "Alerta médica crítica", type: "text", full: true, placeholder: "Escribe aquí cualquier alerta médica urgente (o déjalo vacío)" },
+
+      { type: "section_heading", label: "Datos Médicos Generales" },
+      { key: "bloodGroup", label: "Grupo sanguíneo (A / B / AB / O)", type: "select", options: ["", "O", "A", "B", "AB"] },
+      { key: "bloodRh", label: "Factor RH (+ / -)", type: "select", options: ["", "+", "-"] },
+      { key: "weightKg", label: "Peso (solo números, se agrega kg automáticamente)", type: "number", placeholder: "Escribe tu peso en kg (ej. 70)" },
+      { key: "heightM", label: "Talla / Altura en metros", type: "number", step: "0.01", placeholder: "Escribe tu altura en metros (ej. 1.70)" },
+      { key: "_imcPreview", label: "I.M.C. (Calculado automáticamente: Peso ÷ Altura²)", type: "readonly", placeholder: "Se calcula al escribir Peso y Talla" },
+      { key: "diet", label: "Alimentación", type: "text", placeholder: "Escribe aquí tu tipo de alimentación" },
+
+      { type: "section_heading", label: "Afiliaciones a Servicios de Salud" },
+      { key: "medServiceType", label: "Tipo de institución", type: "select", options: ["", "Instituciones Públicas", "Aseguradoras", "Particular"] },
+      { key: "medProvider", label: "Nombre del proveedor", type: "text", placeholder: "Escribe aquí el nombre del proveedor médico" },
+      { key: "medPolicy", label: "No. de póliza / afiliación", type: "text", placeholder: "Escribe aquí el número de póliza o afiliación" },
+      { key: "medEntitlement", label: "Derechohabiencia", type: "text", placeholder: "Escribe aquí la derechohabiencia" },
+      { key: "medServiceNotes", label: "Observaciones de afiliación", type: "text", full: true, placeholder: "Escribe aquí observaciones del servicio médico" },
+
+      { type: "section_heading", label: "Alergias y Tratamientos Actuales" },
+      { key: "allergies", label: "Alergias — Especificar agente alérgico y reacción que provoca", type: "textarea", full: true, placeholder: "Escribe aquí tus alergias (si lo dejas vacío se pondrá «Ninguna» en el documento)" },
+      { key: "medications", label: "Tratamientos actuales — Especificar medicamento, dosis y periodicidad de toma", type: "textarea", full: true, placeholder: "Escribe aquí tus medicamentos actuales (si lo dejas vacío se pondrá «Ninguno» en el documento)" },
+
+      { type: "section_heading", label: "Historial Médico (Marca con check si es SÍ para habilitar Especifique; sin check se marca NO)" },
+      { key: "medHistory6m", label: "¿En los últimos 6 meses has presentado alguno de los siguientes antecedentes?", type: "text", full: true, placeholder: "Si lo dejas vacío se pondrá «No he presentado» en el documento" },
+      { type: "antecedentes_grid", groupId: "health_antecedentes", items: HEALTH_ANTECEDENTES_LIST },
+
+      { type: "section_heading", label: "Antecedentes Psicológicos / Psiquiátricos (Marca con check si es SÍ para habilitar Especifique; sin check se marca NO)" },
+      { key: "psyHistory6m", label: "¿En los últimos 6 meses ha presentado alguno de los siguientes antecedentes?", type: "text", full: true, placeholder: "Si lo dejas vacío se pondrá «No he presentado» en el documento" },
+      { type: "antecedentes_grid", groupId: "psych_antecedentes", items: PSYCH_ANTECEDENTES_LIST },
+
+      { type: "section_heading", label: "Tratamiento Médico Controlado (Página 1)" },
+      { key: "controlledTreatment", label: "En caso de encontrarse bajo tratamiento médico controlado describa las dosis y procedimientos indicados", type: "textarea", full: true, placeholder: "Si no aplica, déjalo vacío y quedará en blanco en el documento" },
+
+      { type: "section_heading", label: "Inmunología — Vacunas y Padecimientos (Página 2)" },
+      { type: "immuno_grid" },
+
+      { type: "section_heading", label: "Contacto de Emergencias — Contacto 1 (Página 2)" },
+      { key: "em1_name", label: "Nombre (Contacto 1)", type: "text", bind: "emergency", placeholder: "Escribe aquí el nombre del Contacto 1" },
+      { key: "em1_relation", label: "Parentesco (Contacto 1)", type: "text", placeholder: "Escribe aquí el parentesco" },
+      { key: "em1_phone1", label: "Teléfono (Contacto 1)", type: "text", placeholder: "Escribe aquí el teléfono principal" },
+      { key: "em1_phone2", label: "Teléfono 2 (Contacto 1)", type: "text", placeholder: "Escribe aquí el segundo teléfono" },
+      { key: "em1_address", label: "Dirección (Contacto 1)", type: "text", placeholder: "Escribe aquí la dirección" },
+      { key: "em1_email", label: "Correo electrónico (Contacto 1)", type: "text", placeholder: "Escribe aquí el correo electrónico" },
+
+      { type: "section_heading", label: "Contacto de Emergencias — Contacto 2 (Página 2)" },
+      { key: "em2_name", label: "Nombre (Contacto 2)", type: "text", placeholder: "Escribe aquí el nombre del Contacto 2" },
+      { key: "em2_relation", label: "Parentesco (Contacto 2)", type: "text", placeholder: "Escribe aquí el parentesco" },
+      { key: "em2_phone1", label: "Teléfono (Contacto 2)", type: "text", placeholder: "Escribe aquí el teléfono principal" },
+      { key: "em2_phone2", label: "Teléfono 2 (Contacto 2)", type: "text", placeholder: "Escribe aquí el segundo teléfono" },
+      { key: "em2_address", label: "Dirección (Contacto 2)", type: "text", placeholder: "Escribe aquí la dirección" },
+      { key: "em2_email", label: "Correo electrónico (Contacto 2)", type: "text", placeholder: "Escribe aquí el correo electrónico" }
     ]
   },
+
   jl304: {
     id: "jl304",
-    code: "FORMATO JL304 / JL306",
+    code: "ASMAC-JL304",
+    exportPrefix: "Permiso de Salida",
     baseDocId: "doc-0305",
     baseDocName: "ASMAC/DNGDI/CNAR/JL306 — Autorización de eventos",
-    title: "Permiso de Actividad y Salida Scout (JL304 / JL306)",
-    subtitle: "Basado en el formato oficial de Autorización de participación en eventos de ASMAC",
-    signatures: ["Nombre y Firma del Padre, Madre o Tutor", "Firma del Scouter Responsable", "Vo. Bo. Jefatura de Grupo"],
+    title: "Autorización de Participación en Eventos (JL304 / JL306 · 2 páginas)",
+    subtitle: "Documento oficial ASMAC/DNGDI/CNAR/JL306",
     officialPages: [
       {
         src: "img/forms/jl304_p1.webp",
         aspect: "1347 / 1743",
-        boxes: [
-          { key: "departureDate", x: 47.0, y: 15.6, w: 40.0, h: 1.8, align: "center" },
-          { key: "name", x: 13.0, y: 25.4, w: 74.0, h: 2.0, align: "center" },
-          { key: "age", x: 47.0, y: 34.6, w: 40.0, h: 1.8, align: "center" },
-          { key: "destination", x: 12.0, y: 47.7, w: 54.5, h: 1.5 },
-          { key: "returnDate", x: 22.5, y: 49.4, w: 51.0, h: 1.5 },
-          { key: "scouter", x: 35.0, y: 53.8, w: 45.5, h: 1.5 }
-        ]
+        boxes: buildJl304Page1Boxes()
       },
       {
         src: "img/forms/jl304_p2.webp",
         aspect: "1347 / 1743",
         boxes: [
-          { key: "emergency", x: 12.0, y: 26.8, w: 30.0, h: 1.6, align: "center" },
-          { key: "scouter", x: 54.0, y: 26.8, w: 30.0, h: 1.6, align: "center" },
-          { key: "emergency", x: 12.0, y: 74.2, w: 30.0, h: 1.6, align: "center" },
-          { key: "group", x: 54.0, y: 74.2, w: 30.0, h: 1.6, align: "center" }
+          { key: "_mediaConsentYes", x: 17.5, y: 64.5, w: 2.6, h: 2.2, align: "center" },
+          { key: "_mediaConsentNo", x: 17.5, y: 69.0, w: 2.6, h: 2.2, align: "center" }
         ]
       }
     ],
     fields: [
-      { key: "name", label: "Nombre del Scout participante", type: "text", bind: "name", placeholder: "Ej. Liam Durán" },
-      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Ej. TLX0530123" },
-      { key: "age", label: "Edad / Fecha de nacimiento", type: "text", bind: "age", placeholder: "Ej. 16 años" },
-      { key: "section", label: "Sección", type: "text", bind: "section", placeholder: "Comunidad de Caminantes" },
-      { key: "group", label: "Grupo Scout", type: "text", bind: "group", placeholder: "Ej. Grupo 53" },
-      { key: "province", label: "Provincia Scout", type: "text", bind: "province", placeholder: "Ej. Tláhuac-Xochimilco" },
-      { key: "eventName", label: "Nombre de la actividad o campamento", type: "text", placeholder: "Ej. Campamento de Sección en Meztitla" },
-      { key: "destination", label: "Lugar / Evento denominado", type: "text", placeholder: "Ej. Campo Escuela Scout Meztitla, Tepoztlán, Mor." },
-      { key: "departureDate", label: "Fecha de autorización / Salida", type: "text", defaultToday: true },
-      { key: "returnDate", label: "Fechas del evento (Salida y regreso)", type: "text", placeholder: "Ej. 22 al 23 de noviembre de 2026" },
-      { key: "meetingPoint", label: "Punto de reunión y entrega", type: "text", placeholder: "Ej. Local de Grupo / Parque habitual" },
-      { key: "scouter", label: "Scouter responsable / Acompañante autorizado", type: "text", bind: "scouter", placeholder: "Nombre y cargo del dirigente" },
-      { key: "emergency", label: "Padre, madre o tutor que autoriza", type: "text", bind: "emergency", placeholder: "Nombre completo del tutor" },
-      { key: "blood", label: "Tipo de sangre y alergias a considerar", type: "text", bind: "blood", placeholder: "Ej. O+ · Ninguna" },
-      { key: "gearAndCost", label: "Equipo requerido y observaciones de transporte", type: "textarea", full: true, placeholder: "Uniforme completo, equipo de acampado, hidratación, ficha médica vigente." },
-      { key: "declaration", label: "Declaración de autorización", type: "textarea", full: true, defaultValue: "Autorizo que mi hijo(a) o tutorado(a) participe en la actividad descrita bajo las normas de la Asociación de Scouts de México, A.C. (ASMAC) y la política A Salvo del Peligro, facultando a los dirigentes responsables a tomar las medidas médicas de urgencia necesarias en caso de incidente." }
+      { type: "section_heading", label: "Fechas en casillas separadas (Día / Mes / Año)" },
+      { key: "authDate", label: "Fecha de autorización (Día/Mes/Año)", type: "text", defaultTodaySlash: true, placeholder: "DD / MM / AAAA (ej. 18/11/2026)" },
+      { key: "birthDate", label: "Fecha de nacimiento del menor (Día/Mes/Año)", type: "text", bind: "age", placeholder: "DD / MM / AAAA (ej. 14/05/2010)" },
+
+      { type: "section_heading", label: "Datos del menor (separados por casilla oficial)" },
+      { key: "firstName", label: "Nombre(s)", type: "text", placeholder: "Escribe aquí solo el/los nombre(s)" },
+      { key: "lastName1", label: "Primer Apellido", type: "text", placeholder: "Escribe aquí el primer apellido" },
+      { key: "lastName2", label: "Segundo Apellido", type: "text", placeholder: "Escribe aquí el segundo apellido" },
+
+      { type: "section_heading", label: "Datos del evento y acompañante autorizado (Página 1)" },
+      { key: "destination", label: "Lugar del evento denominado", type: "text", full: true, placeholder: "Escribe aquí el lugar y nombre del evento o campamento" },
+      { key: "eventDates", label: "Fecha(s) en que se llevará a cabo", type: "text", full: true, placeholder: "Escribe aquí las fechas del evento" },
+      { key: "scouter", label: "Autorizo en este acto a (Adulto / Scouter acompañante)", type: "text", full: true, bind: "scouter", placeholder: "Escribe aquí el nombre completo del adulto o Scouter acompañante" },
+
+      { type: "section_heading", label: "Consentimiento para medios de comunicación (Página 2 · Las firmas se llenan a mano)" },
+      { key: "mediaConsent", label: "Autorizo al menor a participar con los medios de comunicación del evento", type: "single_checkbox", defaultChecked: true }
     ]
   },
+
   fes: {
     id: "fes",
     code: "PLANTILLA P5.1 · FES",
+    exportPrefix: "Ficha de Especialidad",
     baseDocId: "doc-0695",
     baseDocName: "P5.1_PlantillaEspecialidad_v1.1.pdf",
     title: "Ficha de Especialidad Scout (Plantilla Oficial P5.1)",
-    subtitle: "Basado en el archivo oficial P5.1_PlantillaEspecialidad_v1.1.pdf de RECME ASMAC",
-    signatures: ["Firma del Joven / Participante", "Firma del Sinodal o Asesor de Especialidad", "Firma del Scouter de Sección"],
+    subtitle: "Documento oficial P5.1_PlantillaEspecialidad_v1.1.pdf de RECME ASMAC",
     officialPages: [
       {
         src: "img/forms/fes_p1.webp",
         aspect: "1347 / 1743",
         boxes: [
           { key: "specialtyName", x: 5.2, y: 8.4, w: 58.0, h: 3.6 },
-          { key: "section", x: 69.5, y: 8.4, w: 24.5, h: 3.6 },
+          { key: "_sectionOut", x: 69.5, y: 8.4, w: 24.5, h: 3.6 },
           { key: "odsGoal", x: 70.0, y: 29.0, w: 24.0, h: 3.6 },
           { key: "learningGoals", x: 5.2, y: 24.0, w: 58.0, h: 10.0, multiline: true },
           { key: "fesAxis", x: 5.2, y: 36.7, w: 58.0, h: 3.2 },
@@ -6579,29 +6966,28 @@ const SMART_FORM_TEMPLATES = {
       }
     ],
     fields: [
-      { key: "name", label: "Elaboró (Nombre del Scout y CUM)", type: "text", bind: "name" },
-      { key: "cum", label: "CUM", type: "text", bind: "cum" },
-      { key: "section", label: "Sección", type: "text", bind: "section" },
-      { key: "group", label: "Grupo, Provincia y Medidas de Seguridad", type: "text", bind: "group" },
-      { key: "province", label: "Provincia Scout", type: "text", bind: "province" },
-      { key: "specialtyName", label: "Nombre de mi Especialidad (FES)", type: "text", placeholder: "Ej. Gestión de Riesgos en Áreas Naturales / Primeros Auxilios" },
-      { key: "fesAxis", label: "Eje temático FES / Qué más puedo aprender", type: "select", options: ["Salud y Bienestar", "Habilidades para la Vida", "Ambiente y Sustentabilidad", "Paz y Acción Comunitaria"] },
-      { key: "odsGoal", label: "Tema relacionado y ODS (Agenda 2030)", type: "text", placeholder: "Ej. ODS 3: Salud y Bienestar / ODS 13: Acción por el Clima" },
-      { key: "level", label: "Nivel o etapa / Qué más puedo hacer", type: "select", options: ["Nivel Básico / Exploración", "Nivel Intermedio / Dominio", "Nivel Avanzado / Servicio"] },
-      { key: "scouter", label: "3. Comparto y Sinodal acompañante", type: "text", bind: "scouter" },
-      { key: "evalDate", label: "Fecha de presentación", type: "text", defaultToday: true },
-      { key: "learningGoals", label: "1. CONOZCO — Lo que tengo que aprender sobre la especialidad", type: "textarea", full: true, placeholder: "Qué conocimientos teóricos y habilidades prácticas se acordaron con el sinodal." },
-      { key: "evidences", label: "2. APLICO — Lo que hago para demostrar los conocimientos adquiridos", type: "textarea", full: true, placeholder: "Describe las prácticas, talleres, bitácora o demostración realizada ante la sección." }
+      { key: "name", label: "Elaboró (Nombre del Scout)", type: "text", bind: "name", placeholder: "Escribe aquí tu nombre completo" },
+      { key: "section", label: "Sección", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Escribe aquí la sección" },
+      { key: "province", label: "Provincia Scout", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Escribe aquí la Provincia" },
+      { key: "group", label: "Grupo Scout y Medidas de Seguridad", type: "text", bind: "group", placeholder: "Escribe aquí tu Grupo y medidas de seguridad" },
+      { key: "specialtyName", label: "Nombre de mi Especialidad (FES)", type: "text", placeholder: "Escribe aquí el nombre de la especialidad" },
+      { key: "fesAxis", label: "¿Qué más puedo aprender? / Eje temático", type: "text", placeholder: "Escribe aquí qué más puedes aprender" },
+      { key: "odsGoal", label: "Tema relacionado", type: "text", placeholder: "Escribe aquí el tema relacionado" },
+      { key: "level", label: "¿Qué más puedo hacer?", type: "text", placeholder: "Escribe aquí qué más puedes hacer" },
+      { key: "learningGoals", label: "1. CONOZCO — Lo que tengo que aprender sobre la especialidad", type: "textarea", full: true, placeholder: "Escribe aquí lo que vas a investigar y conocer" },
+      { key: "evidences", label: "2. APLICO — Lo que hago para demostrar los conocimientos adquiridos", type: "textarea", full: true, placeholder: "Escribe aquí las actividades prácticas realizadas" },
+      { key: "scouter", label: "3. COMPARTO — La forma en que comparto mis nuevas habilidades", type: "textarea", full: true, bind: "scouter", placeholder: "Escribe aquí cómo compartes lo aprendido con los demás" }
     ]
   },
+
   smart: {
     id: "smart",
     code: "PLANTILLA P6.2 · PROYECTO",
+    exportPrefix: "Ficha de Proyecto",
     baseDocId: "doc-0697",
     baseDocName: "P6.2_PlantillaProyecto_V1.0.pdf",
-    title: "Ficha de Proyecto Scout (Plantilla Oficial P6.2)",
-    subtitle: "Basado en el archivo oficial P6.2_PlantillaProyecto_V1.0.pdf de RECME ASMAC",
-    signatures: ["Firma del Coordinador / Proponente", "Firma del Asesor o Scouter", "Validación Consejo / Red"],
+    title: "Ficha de Proyecto Scout (Plantilla Oficial P6.2 · 2 páginas)",
+    subtitle: "Documento oficial P6.2_PlantillaProyecto_V1.0.pdf de RECME ASMAC",
     officialPages: [
       {
         src: "img/forms/smart_p1.webp",
@@ -6609,43 +6995,52 @@ const SMART_FORM_TEMPLATES = {
         boxes: [
           { key: "projectTitle", x: 41.2, y: 7.4, w: 52.5, h: 3.2 },
           { key: "startDate", x: 6.8, y: 9.0, w: 25.0, h: 2.5 },
+          { key: "endDate", x: 6.8, y: 14.2, w: 25.0, h: 2.5 },
           { key: "name", x: 6.8, y: 19.3, w: 25.0, h: 2.5 },
           { key: "scouter", x: 6.8, y: 24.4, w: 25.0, h: 2.5 },
           { key: "group", x: 6.8, y: 36.8, w: 25.0, h: 2.4 },
-          { key: "province", x: 6.8, y: 46.2, w: 25.0, h: 2.4 },
+          { key: "_provinceOut", x: 6.8, y: 46.2, w: 25.0, h: 2.4 },
           { key: "smartGoal", x: 41.0, y: 15.0, w: 25.0, h: 11.0, multiline: true },
           { key: "activities", x: 40.6, y: 30.0, w: 25.5, h: 25.5, multiline: true },
           { key: "diagnosis", x: 40.6, y: 59.8, w: 52.5, h: 5.2, multiline: true },
           { key: "impact", x: 40.6, y: 68.4, w: 52.5, h: 5.2, multiline: true },
-          { key: "section", x: 40.6, y: 76.9, w: 52.5, h: 3.2 },
+          { key: "_sectionOut", x: 40.6, y: 76.9, w: 52.5, h: 3.2 },
           { key: "framework", x: 40.6, y: 91.5, w: 52.5, h: 2.6 }
+        ]
+      },
+      {
+        src: "img/forms/smart_p2.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "name", x: 5.2, y: 89.2, w: 42.5, h: 3.2 }
         ]
       }
     ],
     fields: [
-      { key: "name", label: "Nombre de quien lidera y coordina el proyecto", type: "text", bind: "name" },
-      { key: "cum", label: "CUM", type: "text", bind: "cum" },
-      { key: "section", label: "Sección y alcance del proyecto", type: "text", bind: "section" },
-      { key: "group", label: "Grupo Scout / Logística", type: "text", bind: "group" },
-      { key: "province", label: "Provincia Scout / Relaciones institucionales", type: "text", bind: "province" },
-      { key: "framework", label: "Palabras clave / Iniciativa o Insignia objetivo", type: "select", options: ["Agentes de Cambio.MX (Red de Caminantes)", "Tribu de la Tierra (Earth Tribe)", "Campeones de la Naturaleza", "Mensajeros de la Paz", "Horas al Aire Libre / Vida Silvestre", "Insignia de Jade / Insignia de Obsidiana", "Máxima Insignia de Sección"] },
-      { key: "projectTitle", label: "Nombre del proyecto / Título", type: "text", full: true, placeholder: "Nombre claro y concreto del proyecto" },
-      { key: "scouter", label: "Nombre de quien me asesora", type: "text", bind: "scouter" },
-      { key: "startDate", label: "Fecha de inicio del proyecto", type: "text", defaultToday: true },
-      { key: "smartGoal", label: "Objetivo General (SMART)", type: "textarea", full: true, placeholder: "Ej. Lograr recolectar/capacitar/restaurar [meta numérica] en [lugar] antes del [fecha]." },
-      { key: "activities", label: "Objetivos Particulares y Fases del Proyecto", type: "textarea", full: true, placeholder: "Actividades principales, responsables, recursos y medidas de seguridad." },
-      { key: "diagnosis", label: "¿Qué necesidad o problemática estoy atendiendo específicamente?", type: "textarea", full: true, placeholder: "Qué necesidad real de la comunidad o entorno atiende este proyecto." },
-      { key: "impact", label: "¿A quién o quiénes afecta esta problemática y cuál es el impacto?", type: "textarea", full: true, placeholder: "Personas beneficiadas, horas totales de servicio del equipo y resultados verificables." }
+      { key: "projectTitle", label: "Nombre del proyecto / Título", type: "text", full: true, placeholder: "Escribe aquí el título del proyecto" },
+      { key: "name", label: "Nombre de quien lidera y coordina el proyecto", type: "text", bind: "name", placeholder: "Escribe aquí tu nombre completo" },
+      { key: "scouter", label: "Nombre de quien me asesora", type: "text", bind: "scouter", placeholder: "Escribe aquí el nombre de quien asesora" },
+      { key: "startDate", label: "Fecha de inicio (Día/Mes/Año)", type: "text", defaultTodaySlash: true, placeholder: "DD / MM / AAAA" },
+      { key: "endDate", label: "Fecha proyectada de término (Día/Mes/Año)", type: "text", placeholder: "DD / MM / AAAA" },
+      { key: "section", label: "Sección / Alcance del proyecto", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Escribe aquí el alcance o sección" },
+      { key: "group", label: "Grupo Scout / Logística", type: "text", bind: "group", placeholder: "Escribe aquí tu Grupo Scout" },
+      { key: "province", label: "Provincia Scout / Relaciones institucionales", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Escribe aquí la Provincia" },
+      { key: "framework", label: "Palabras clave / Iniciativa", type: "text", placeholder: "Escribe aquí las palabras clave del proyecto" },
+      { key: "smartGoal", label: "Objetivo General", type: "textarea", full: true, placeholder: "Escribe aquí el objetivo general del proyecto" },
+      { key: "activities", label: "Objetivos Particulares", type: "textarea", full: true, placeholder: "Escribe aquí los objetivos particulares" },
+      { key: "diagnosis", label: "¿Qué necesidad o problemática estoy atendiendo específicamente?", type: "textarea", full: true, placeholder: "Escribe aquí la problemática que atiende el proyecto" },
+      { key: "impact", label: "¿A quién o quiénes afecta esta problemática?", type: "textarea", full: true, placeholder: "Escribe aquí la población beneficiada y el impacto" }
     ]
   },
+
   programa: {
     id: "programa",
     code: "PLANTILLA P6.3 · PROGRAMA",
+    exportPrefix: "Programa de Actividades",
     baseDocId: "doc-0698",
     baseDocName: "P6.3_PlantillaPrograma_v1.0.pdf",
     title: "Formato Programa de Actividades (Plantilla Oficial P6.3)",
-    subtitle: "Basado en el archivo oficial P6.3_PlantillaPrograma_v1.0.pdf de RECME ASMAC",
-    signatures: ["Elaboró: Equipo / Consejo de Sección", "Revisó: Scouter Responsable", "Autorizó: Jefatura de Grupo"],
+    subtitle: "Documento oficial P6.3_PlantillaPrograma_v1.0.pdf de RECME ASMAC",
     officialPages: [
       {
         src: "img/forms/programa_p1.webp",
@@ -6653,11 +7048,11 @@ const SMART_FORM_TEMPLATES = {
         boxes: [
           { key: "group", x: 6.8, y: 3.7, w: 25.0, h: 2.5 },
           { key: "dates", x: 6.8, y: 9.0, w: 24.0, h: 2.5 },
-          { key: "section", x: 35.4, y: 9.0, w: 13.0, h: 2.5 },
+          { key: "_sectionOut", x: 35.4, y: 9.0, w: 13.0, h: 2.5 },
           { key: "eventName", x: 51.6, y: 9.0, w: 42.0, h: 2.5 },
           { key: "location", x: 6.8, y: 13.6, w: 24.0, h: 2.5 },
           { key: "scouter", x: 35.4, y: 13.6, w: 58.0, h: 2.5 },
-          { key: "province", x: 6.8, y: 18.4, w: 24.0, h: 2.5 },
+          { key: "_provinceOut", x: 6.8, y: 18.4, w: 24.0, h: 2.5 },
           { key: "gearList", x: 66.6, y: 19.6, w: 27.5, h: 20.0, multiline: true },
           { key: "emergency", x: 6.8, y: 35.2, w: 49.5, h: 5.2, multiline: true },
           { key: "scheduleBlocks", x: 7.0, y: 48.2, w: 87.0, h: 27.5, multiline: true },
@@ -6666,27 +7061,28 @@ const SMART_FORM_TEMPLATES = {
       }
     ],
     fields: [
-      { key: "eventName", label: "Nombre de la sección / Evento o actividad", type: "text", full: true, placeholder: "Ej. Acantonamiento / Campamento de Patrullas / Actividad de Comunidad" },
-      { key: "section", label: "Sección", type: "text", bind: "section" },
-      { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
-      { key: "province", label: "Provincia / Duración total", type: "text", bind: "province" },
-      { key: "dates", label: "Fecha", type: "text", defaultToday: true },
-      { key: "location", label: "Lugar / Sede", type: "text", placeholder: "Lugar exacto y referencias de acceso" },
-      { key: "scouter", label: "Responsable de la sección", type: "text", bind: "scouter" },
-      { key: "emergency", label: "Medidas de seguridad y contacto de emergencia", type: "text", bind: "emergency" },
-      { key: "scheduleBlocks", label: "Programa general (Minuto a minuto: Tiempo | Actividad | Responsable)", type: "textarea", full: true, placeholder: "08:00 | Registro y revisión JL304 | Jefatura\n09:00 | Apertura y montaje | Pequeños grupos\n11:00 | Gran Juego / Taller técnico | Equipo coordinador\n14:00 | Comida por pequeños grupos | Intendencia\n16:00 | Evaluación y cierre | Toda la sección" },
-      { key: "gearList", label: "Materiales y equipo indispensable", type: "textarea", full: true, placeholder: "Mochila, bolsa estanca, lámpara frontal, cantimplora, impermeable, botiquín personal." },
-      { key: "educationalGoal", label: "Competencias que se busca desarrollar", type: "textarea", full: true, placeholder: "Qué áreas de crecimiento, progresión o vida al aire libre se trabajan." }
+      { key: "eventName", label: "Nombre de la actividad o campamento", type: "text", full: true, placeholder: "Escribe aquí el nombre de la actividad" },
+      { key: "section", label: "Sección", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Escribe aquí la sección" },
+      { key: "group", label: "Grupo Scout", type: "text", bind: "group", placeholder: "Escribe aquí tu Grupo Scout" },
+      { key: "province", label: "Provincia Scout / Duración", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Escribe aquí la Provincia o duración" },
+      { key: "dates", label: "Fecha (Día/Mes/Año)", type: "text", defaultTodaySlash: true, placeholder: "DD / MM / AAAA" },
+      { key: "location", label: "Lugar", type: "text", placeholder: "Escribe aquí el lugar de la actividad" },
+      { key: "scouter", label: "Responsable de la sección", type: "text", bind: "scouter", placeholder: "Escribe aquí el nombre del responsable" },
+      { key: "emergency", label: "Medidas de seguridad", type: "text", bind: "emergency", placeholder: "Escribe aquí las medidas de seguridad y contacto" },
+      { key: "scheduleBlocks", label: "Programa general (Tiempo | Actividad | Responsable)", type: "textarea", full: true, placeholder: "Escribe aquí el cronograma de actividades" },
+      { key: "gearList", label: "Materiales y equipo necesario", type: "textarea", full: true, placeholder: "Escribe aquí la lista de materiales" },
+      { key: "educationalGoal", label: "Competencias que se busca desarrollar", type: "textarea", full: true, placeholder: "Escribe aquí las competencias a desarrollar" }
     ]
   },
+
   acta: {
     id: "acta",
     code: "PLANTILLA P6.4 · ACTA",
+    exportPrefix: "Acta de Consejo",
     baseDocId: "doc-0699",
     baseDocName: "P6.4_PlantillaActadeConsejodeNivel_v1.0.pdf",
-    title: "Acta de Consejo de Nivel y Corte de Honor (Plantilla Oficial P6.4)",
-    subtitle: "Basado en el archivo oficial P6.4_PlantillaActadeConsejodeNivel_v1.0.pdf de RECME ASMAC",
-    signatures: ["Firma de quien preside la sesión", "Firma de Secretaría / Redacción", "Firmas de conformidad de asistentes"],
+    title: "Acta de Consejo de Nivel (Plantilla Oficial P6.4 · 2 páginas)",
+    subtitle: "Documento oficial P6.4_PlantillaActadeConsejodeNivel_v1.0.pdf de RECME ASMAC",
     officialPages: [
       {
         src: "img/forms/acta_p1.webp",
@@ -6694,9 +7090,9 @@ const SMART_FORM_TEMPLATES = {
         boxes: [
           { key: "attendees", x: 5.5, y: 11.2, w: 61.0, h: 35.0, multiline: true },
           { key: "group", x: 70.2, y: 8.3, w: 24.5, h: 3.8 },
-          { key: "province", x: 70.2, y: 15.4, w: 24.5, h: 3.8 },
+          { key: "_sectionOut", x: 70.2, y: 15.4, w: 24.5, h: 3.8 },
           { key: "datePlace", x: 70.2, y: 22.8, w: 24.5, h: 3.8 },
-          { key: "datePlace", x: 70.2, y: 37.2, w: 24.5, h: 3.8 },
+          { key: "_provinceOut", x: 70.2, y: 37.2, w: 24.5, h: 3.8 },
           { key: "organType", x: 70.2, y: 44.2, w: 24.5, h: 3.8 },
           { key: "agenda", x: 5.2, y: 52.4, w: 89.5, h: 41.0, multiline: true }
         ]
@@ -6707,24 +7103,132 @@ const SMART_FORM_TEMPLATES = {
         boxes: [
           { key: "agreements", x: 5.2, y: 8.6, w: 89.5, h: 45.5, multiline: true },
           { key: "name", x: 5.2, y: 67.3, w: 42.5, h: 3.8 },
-          { key: "scouter", x: 51.8, y: 67.3, w: 42.5, h: 3.8 },
-          { key: "scouter", x: 5.2, y: 76.2, w: 89.5, h: 3.8 }
+          { key: "scouter", x: 51.8, y: 67.3, w: 42.5, h: 3.8 }
         ]
       }
     ],
     fields: [
-      { key: "organType", label: "Tipo de sesión de Consejo / Órgano", type: "select", options: ["Consejo de Grupo", "Corte de Honor de Tropa", "Asamblea / Comité de Comunidad", "Consejo de Clan Rover", "Consejo de Roca de Manada", "Acuerdo de Diálogo Directo / MASC"] },
-      { key: "datePlace", label: "Fecha, hora y lugar de la sesión", type: "text", defaultToday: true },
-      { key: "group", label: "Grupo Scout", type: "text", bind: "group" },
-      { key: "province", label: "Sección / Provincia Scout", type: "text", bind: "province" },
-      { key: "name", label: "Elaboró (Secretaría / Redacción)", type: "text", bind: "name" },
-      { key: "scouter", label: "Presidió / Scouter responsable", type: "text", bind: "scouter" },
-      { key: "attendees", label: "1. Lista de asistencia (Nombre | CUM)", type: "textarea", full: true, placeholder: "Nombres y CUM de quienes integran la sesión." },
-      { key: "agenda", label: "2. Orden del día / Puntos a tratar o revisar", type: "textarea", full: true, placeholder: "1) Lectura de acta anterior\n2) Evaluación de actividades\n3) Progresiones e insignias\n4) Próximo ciclo de programa" },
-      { key: "agreements", label: "3. Acuerdos tomados, responsables y fechas compromiso (Página 2)", type: "textarea", full: true, placeholder: "Detallar cada acuerdo votado o consensuado, quién le da seguimiento y cuándo se revisa." }
+      { key: "name", label: "Elaboró (Nombre)", type: "text", bind: "name", placeholder: "Escribe aquí quién elabora el acta" },
+      { key: "scouter", label: "Revisó / Presidió", type: "text", bind: "scouter", placeholder: "Escribe aquí quién revisa o preside" },
+      { key: "group", label: "Grupo Scout", type: "text", bind: "group", placeholder: "Escribe aquí el Grupo Scout" },
+      { key: "section", label: "Sección", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Escribe aquí la sección" },
+      { key: "province", label: "Provincia Scout / Lugar", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Escribe aquí la Provincia o lugar" },
+      { key: "datePlace", label: "Fecha de realización (Día/Mes/Año)", type: "text", defaultTodaySlash: true, placeholder: "DD / MM / AAAA" },
+      { key: "organType", label: "Fecha próxima de Consejo / Tipo de sesión", type: "text", placeholder: "Escribe aquí la próxima fecha o tipo de consejo" },
+      { key: "attendees", label: "1. Lista de asistencia (Nombre | CUM)", type: "textarea", full: true, placeholder: "Escribe aquí los nombres y CUM de quienes asisten" },
+      { key: "agenda", label: "2. Puntos a tratar o revisar", type: "textarea", full: true, placeholder: "Escribe aquí los puntos tratados en la sesión" },
+      { key: "agreements", label: "3. Acuerdos tomados (Página 2)", type: "textarea", full: true, placeholder: "Escribe aquí los acuerdos tomados" }
     ]
   }
 };
+
+function parseDateTo8Digits(rawStr) {
+  const s = String(rawStr || "").trim();
+  if (!s) return ["", "", "", "", "", "", "", ""];
+  const nums = s.match(/\d+/g);
+  if (nums && nums.length >= 3) {
+    let d = nums[0].padStart(2, "0").slice(-2);
+    let m = nums[1].padStart(2, "0").slice(-2);
+    let y = nums[2];
+    if (y.length === 2) y = "20" + y;
+    y = y.padStart(4, "0").slice(-4);
+    return [...d.split(""), ...m.split(""), ...y.split("")];
+  }
+  const digitsOnly = s.replace(/\D/g, "");
+  if (digitsOnly.length === 8) {
+    return digitsOnly.split("");
+  }
+  return ["", "", "", "", "", "", "", ""];
+}
+
+function extractFirstGivenName(vals) {
+  const raw = String(vals.firstName || vals.name || vals.eventName || vals.projectTitle || "").trim();
+  if (!raw) return "";
+  const firstToken = raw.split(/\s+/)[0] || "";
+  return firstToken.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9_-]/g, "");
+}
+
+function buildOfficialExportFilename(tpl, vals, ext) {
+  const prefix = tpl.exportPrefix || "Formato Scout";
+  const first = extractFirstGivenName(vals);
+  return first ? `${prefix} ${first} BiblioTech.${ext}` : `${prefix} BiblioTech.${ext}`;
+}
+
+// Empaquetador directo de páginas Canvas (JPEG) en un archivo binario PDF-1.4 multipágina válido
+function buildMultiPagePdfBlobFromJpegDataUrls(pagesData) {
+  const encoder = new TextEncoder();
+  const chunks = [];
+  let offset = 0;
+  const offsets = [0];
+
+  const pushStr = (str) => {
+    const b = encoder.encode(str);
+    chunks.push(b);
+    offset += b.byteLength;
+  };
+  const pushBytes = (uint8) => {
+    chunks.push(uint8);
+    offset += uint8.byteLength;
+  };
+
+  pushStr("%PDF-1.4\n%\xFF\xFF\xFF\xFF\n");
+
+  // Object 1: Catalog, Object 2: Pages
+  const numPages = pagesData.length;
+  const pageObjIds = [];
+  for (let i = 0; i < numPages; i++) {
+    pageObjIds.push(3 + i * 3); // Page=3+3i, Content=4+3i, Image=5+3i
+  }
+
+  offsets[1] = offset;
+  pushStr("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+
+  offsets[2] = offset;
+  pushStr(`2 0 obj\n<< /Type /Pages /Kids [${pageObjIds.map((id) => `${id} 0 R`).join(" ")}] /Count ${numPages} >>\nendobj\n`);
+
+  for (let i = 0; i < numPages; i++) {
+    const pg = pagesData[i];
+    const pageId = 3 + i * 3;
+    const contentId = 4 + i * 3;
+    const imgId = 5 + i * 3;
+
+    // Convertir base64 JPEG a Uint8Array
+    const b64 = pg.jpegDataUrl.split(",")[1] || "";
+    const binStr = atob(b64);
+    const imgBytes = new Uint8Array(binStr.length);
+    for (let k = 0; k < binStr.length; k++) imgBytes[k] = binStr.charCodeAt(k);
+
+    // Dimensiones en puntos PDF (ancho Carta 612pt, alto proporcional exacto)
+    const pdfW = 612;
+    const pdfH = Math.round((pg.height / pg.width) * pdfW);
+
+    offsets[pageId] = offset;
+    pushStr(
+      `${pageId} 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pdfW} ${pdfH}] /Resources << /XObject << /Im${i} ${imgId} 0 R >> >> /Contents ${contentId} 0 R >>\nendobj\n`
+    );
+
+    const streamCmd = `q\n${pdfW} 0 0 ${pdfH} 0 0 cm\n/Im${i} Do\nQ\n`;
+    offsets[contentId] = offset;
+    pushStr(`${contentId} 0 obj\n<< /Length ${streamCmd.length} >>\nstream\n${streamCmd}endstream\nendobj\n`);
+
+    offsets[imgId] = offset;
+    pushStr(
+      `${imgId} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${pg.width} /Height ${pg.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${imgBytes.byteLength} >>\nstream\n`
+    );
+    pushBytes(imgBytes);
+    pushStr("\nendstream\nendobj\n");
+  }
+
+  const totalObjs = 2 + numPages * 3;
+  const xrefOffset = offset;
+  pushStr(`xref\n0 ${totalObjs + 1}\n0000000000 65535 f \n`);
+  for (let id = 1; id <= totalObjs; id++) {
+    pushStr(`${String(offsets[id] || 0).padStart(10, "0")} 00000 n \n`);
+  }
+  pushStr(`trailer\n<< /Size ${totalObjs + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`);
+
+  return new Blob(chunks, { type: "application/pdf" });
+}
 
 function setupSmartFormsEngine(readFormProfileFn) {
   const workspace = document.getElementById("smartFormWorkspace");
@@ -6740,13 +7244,16 @@ function setupSmartFormsEngine(readFormProfileFn) {
   const splitLayout = document.getElementById("sfSplitLayout");
   const printBtn = document.getElementById("btnSfPrintPdf");
   const wordBtn = document.getElementById("btnSfDownloadDoc");
-  const copyBtn = document.getElementById("btnSfCopyText");
   if (!workspace || !selectEl || !fieldsContainer || !sheetEl) return;
 
   let currentTemplateId = "salud";
   let currentValues = {};
 
-  const todayStr = () => new Date().toLocaleDateString("es-MX", { day: "2-digit", month: "long", year: "numeric" });
+  const nowDate = () => new Date();
+  const todaySlashStr = () => {
+    const d = nowDate();
+    return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
+  };
 
   const readActiveStorage = (tplId) => {
     try {
@@ -6786,7 +7293,7 @@ function setupSmartFormsEngine(readFormProfileFn) {
       name: fromForm.name || fromStorage.name || "",
       cum: fromForm.cum || fromStorage.cum || "",
       age: fromForm.age || fromStorage.age || "",
-      section: fromForm.section || fromStorage.section || "Comunidad de Caminantes",
+      section: fromForm.section || fromStorage.section || "",
       group: fromForm.group || fromStorage.group || "",
       province: fromForm.province || fromStorage.province || "",
       blood: fromForm.blood || fromStorage.blood || "",
@@ -6795,122 +7302,369 @@ function setupSmartFormsEngine(readFormProfileFn) {
     };
   };
 
+  const computeEffectiveValues = (tpl, rawVals) => {
+    const v = { ...(rawVals || {}) };
+
+    // Regla universal para "Otro": si seleccionó "Otro", usar lo escrito a mano en _other y NUNCA escribir la palabra "Otro"
+    const resolveSelectWithOther = (key) => {
+      const chosen = String(v[key] || "").trim();
+      if (chosen === "Otro") {
+        return String(v[`${key}_other`] || "").trim();
+      }
+      return chosen;
+    };
+    v._provinceOut = resolveSelectWithOther("province");
+    v._sectionOut = resolveSelectWithOther("section");
+
+    // Grupo y RH combinados
+    const bg = String(v.bloodGroup || "").trim();
+    const rh = String(v.bloodRh || "").trim();
+    v._bloodCombined = bg || rh ? `${bg}${rh}` : "";
+
+    // Peso (kg automático) y Talla (m) + Cálculo automático de I.M.C. = Peso / (Altura * Altura)
+    const rawW = String(v.weightKg || "").replace(/[^0-9.]/g, "");
+    const rawH = String(v.heightM || "").replace(/[^0-9.]/g, "");
+    const numW = parseFloat(rawW);
+    let numH = parseFloat(rawH);
+    // Si alguien escribió 170 en lugar de 1.70, convertir a metros automáticamente
+    if (numH > 3 && numH <= 250) {
+      numH = numH / 100;
+    }
+    v._weightFormatted = !isNaN(numW) && numW > 0 ? `${rawW} kg` : "";
+    v._heightFormatted = !isNaN(numH) && numH > 0 ? `${numH.toFixed(2)} m` : "";
+    if (!isNaN(numW) && numW > 0 && !isNaN(numH) && numH > 0.3) {
+      const sq = numH * numH;
+      v._imcCalculated = (numW / sq).toFixed(2);
+    } else {
+      v._imcCalculated = "";
+    }
+
+    // Checkboxes de tipo de servicio de salud
+    v._medTypePub = v.medServiceType === "Instituciones Públicas" ? "X" : "";
+    v._medTypeAseg = v.medServiceType === "Aseguradoras" ? "X" : "";
+    v._medTypePart = v.medServiceType === "Particular" ? "X" : "";
+
+    // Valores por defecto obligatorios cuando el usuario deja vacío en Ficha de Salud
+    v._allergiesOut = String(v.allergies || "").trim() || "Ninguna";
+    v._medicationsOut = String(v.medications || "").trim() || "Ninguno";
+    v._medHistory6mOut = String(v.medHistory6m || "").trim() || "No he presentado";
+    v._psyHistory6mOut = String(v.psyHistory6m || "").trim() || "No he presentado";
+
+    // 24 Antecedentes Médicos + 13 Psicológicos: check marcado -> SÍ, sin marcar -> NO
+    for (const item of HEALTH_ANTECEDENTES_LIST) {
+      const checked = Boolean(v[`${item.key}_chk`]);
+      v[`_${item.key}_sino`] = checked ? "SÍ" : "NO";
+      if (!checked) v[`${item.key}_esp`] = "";
+    }
+    for (const item of PSYCH_ANTECEDENTES_LIST) {
+      const checked = Boolean(v[`${item.key}_chk`]);
+      v[`_${item.key}_sino`] = checked ? "SÍ" : "NO";
+      if (!checked) v[`${item.key}_esp`] = "";
+    }
+
+    // Permiso JL304: 8 casillas de Fecha de autorización y 8 casillas de Fecha de nacimiento
+    const authDigits = parseDateTo8Digits(v.authDate);
+    authDigits.forEach((d, idx) => {
+      v[`_authD${idx}`] = d;
+    });
+    const birthDigits = parseDateTo8Digits(v.birthDate);
+    birthDigits.forEach((d, idx) => {
+      v[`_birthD${idx}`] = d;
+    });
+
+    // Consentimiento de medios en JL304 Página 2
+    const mediaOk = v.mediaConsent !== false && v.mediaConsent !== "false";
+    v._mediaConsentYes = mediaOk ? "X" : "";
+    v._mediaConsentNo = mediaOk ? "" : "X";
+
+    return v;
+  };
+
   const buildInitialValues = (tplId) => {
     const tpl = SMART_FORM_TEMPLATES[tplId] || SMART_FORM_TEMPLATES.salud;
     const saved = readActiveStorage(tpl.id) || {};
     const prof = getCurrentProfile();
-    const out = {};
+    const out = { ...saved };
+    const d = nowDate();
+
     for (const f of tpl.fields) {
+      if (!f.key) continue;
       if (saved[f.key] !== undefined && String(saved[f.key]).trim() !== "") {
-        out[f.key] = String(saved[f.key]);
+        out[f.key] = saved[f.key];
       } else if (f.bind && prof[f.bind]) {
-        out[f.key] = String(prof[f.bind]);
-      } else if (f.defaultToday) {
-        out[f.key] = todayStr();
-      } else if (f.defaultValue) {
+        let boundVal = String(prof[f.bind]).trim();
+        if (f.key === "province" && boundVal) {
+          const matchProv = OFFICIAL_PROVINCE_NAMES.find((p) => normalizeStr(p) === normalizeStr(boundVal));
+          if (matchProv) {
+            out[f.key] = matchProv;
+          } else {
+            out[f.key] = "Otro";
+            out.province_other = boundVal;
+          }
+        } else if (f.key === "section" && boundVal) {
+          const matchSec = OFFICIAL_SECTION_SELECT_OPTIONS.find((s) => s && normalizeStr(s) === normalizeStr(boundVal));
+          if (matchSec) {
+            out[f.key] = matchSec;
+          } else if (boundVal.toLowerCase().includes("manada")) out[f.key] = "Manada";
+          else if (boundVal.toLowerCase().includes("tropa")) out[f.key] = "Tropa";
+          else if (boundVal.toLowerCase().includes("comunidad")) out[f.key] = "Comunidad";
+          else if (boundVal.toLowerCase().includes("clan")) out[f.key] = "Clan";
+          else if (boundVal.toLowerCase().includes("scouter") || boundVal.toLowerCase().includes("dirigente")) out[f.key] = "Scouters o Dirigentes";
+          else {
+            out[f.key] = "Otro";
+            out.section_other = boundVal;
+          }
+        } else {
+          out[f.key] = boundVal;
+        }
+      } else if (f.defaultTodayDay) {
+        out[f.key] = String(d.getDate()).padStart(2, "0");
+      } else if (f.defaultTodayMonth) {
+        out[f.key] = MONTHS_ES[d.getMonth()];
+      } else if (f.defaultTodaySlash) {
+        out[f.key] = todaySlashStr();
+      } else if (f.defaultValue !== undefined) {
         out[f.key] = f.defaultValue;
+      } else if (f.type === "single_checkbox") {
+        out[f.key] = f.defaultChecked !== undefined ? Boolean(f.defaultChecked) : false;
       } else if (f.type === "select" && Array.isArray(f.options) && f.options.length) {
         out[f.key] = f.options[0];
       } else {
         out[f.key] = "";
       }
     }
+
+    // Si en JL304 el usuario tiene nombre completo en Perfil Local pero aún no separó firstName/lastName1/lastName2
+    if (tpl.id === "jl304" && !out.firstName && !out.lastName1 && prof.name) {
+      const parts = prof.name.trim().split(/\s+/);
+      if (parts.length === 1) {
+        out.firstName = parts[0];
+      } else if (parts.length === 2) {
+        out.firstName = parts[0];
+        out.lastName1 = parts[1];
+      } else if (parts.length >= 3) {
+        out.lastName2 = parts.pop();
+        out.lastName1 = parts.pop();
+        out.firstName = parts.join(" ");
+      }
+    }
+
     return out;
   };
 
-  const renderSheetHtml = (tpl, vals, includeOfficialPages = true) => {
-    let officialPagesHtml = "";
-    if (includeOfficialPages && Array.isArray(tpl.officialPages) && tpl.officialPages.length) {
-      const pagesInner = tpl.officialPages
-        .map((pg, idx) => {
-          const overlays = (pg.boxes || [])
-            .map((b) => {
-              const rawVal = String(vals[b.key] || "").trim();
-              if (!rawVal) return "";
-              const cls = `bt-sf-overlay-field${b.multiline ? " is-multi" : ""}${b.align === "center" ? " is-center" : ""}`;
-              return `<div class="${cls}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%;height:${b.h}%;">${escapeHtml(rawVal).replace(/\n/g, "<br>")}</div>`;
-            })
-            .join("");
-          return `
-            <div class="bt-sf-official-page-wrap">
-              <div class="bt-sf-official-page-badge">Archivo base oficial: ${escapeHtml(tpl.baseDocName || tpl.code)} · Página ${idx + 1} de ${tpl.officialPages.length}</div>
-              <div class="bt-sf-official-page" style="aspect-ratio:${pg.aspect || "1347 / 1743"};">
-                <img src="${escapeHtml(pg.src)}" alt="${escapeHtml(tpl.title)} página ${idx + 1}" class="bt-sf-official-bg" loading="eager" />
-                <div class="bt-sf-official-overlays">${overlays}</div>
-              </div>
-            </div>`;
-        })
-        .join("");
-      officialPagesHtml = `<div class="bt-sf-official-pages-stack">${pagesInner}</div>`;
-    }
+  // Renderiza ÚNICAMENTE las páginas oficiales de ASMAC (Página 1 y Página 2 completas) sin tablas inventadas debajo
+  const renderSheetHtml = (tpl, rawVals) => {
+    const vals = computeEffectiveValues(tpl, rawVals);
+    if (!Array.isArray(tpl.officialPages) || !tpl.officialPages.length) return "";
 
-    const shortFields = tpl.fields.filter((f) => !f.full && f.type !== "textarea");
-    const longFields = tpl.fields.filter((f) => f.full || f.type === "textarea");
-    const metaRows = shortFields
-      .map((f) => {
-        const v = String(vals[f.key] || "").trim() || "___________________________";
-        return `<div class="bt-sf-doc-cell"><span class="bt-sf-doc-k">${escapeHtml(f.label)}</span><strong class="bt-sf-doc-v">${escapeHtml(v)}</strong></div>`;
+    const pagesInner = tpl.officialPages
+      .map((pg, idx) => {
+        const overlays = (pg.boxes || [])
+          .map((b) => {
+            const rawVal = String(vals[b.key] ?? "").trim();
+            if (!rawVal) return "";
+            const cls = `bt-sf-overlay-field${b.multiline ? " is-multi" : ""}${b.align === "center" ? " is-center" : ""}`;
+            return `<div class="${cls}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%;height:${b.h}%;">${escapeHtml(rawVal).replace(/\n/g, "<br>")}</div>`;
+          })
+          .join("");
+        return `
+          <div class="bt-sf-official-page-wrap" data-official-page-index="${idx + 1}">
+            <div class="bt-sf-official-page-badge">Documento Oficial ASMAC: ${escapeHtml(tpl.baseDocName || tpl.code)} · Hoja ${idx + 1} de ${tpl.officialPages.length}</div>
+            <div class="bt-sf-official-page" style="aspect-ratio:${pg.aspect || "1347 / 1743"};">
+              <img src="${escapeHtml(pg.src)}" alt="${escapeHtml(tpl.title)} hoja ${idx + 1}" class="bt-sf-official-bg" loading="eager" />
+              <div class="bt-sf-official-overlays">${overlays}</div>
+            </div>
+          </div>`;
       })
       .join("");
-    const longBlocks = longFields
-      .map((f) => {
-        const v = String(vals[f.key] || "").trim() || "(Espacio para completar)";
-        return `<div class="bt-sf-doc-block"><div class="bt-sf-doc-block-title">${escapeHtml(f.label)}</div><div class="bt-sf-doc-block-body">${escapeHtml(v).replace(/\n/g, "<br>")}</div></div>`;
-      })
-      .join("");
-    const sigs = (tpl.signatures || [])
-      .map(
-        (s) =>
-          `<div class="bt-sf-doc-sig"><div class="bt-sf-doc-sig-line"></div><span>${escapeHtml(s)}</span></div>`
-      )
-      .join("");
 
-    return `
-      ${officialPagesHtml}
-      <div class="bt-sf-structured-summary">
-        <div class="bt-sf-doc-header">
-          <div class="bt-sf-doc-brand">
-            <span class="bt-sf-doc-code">${escapeHtml(tpl.code)}</span>
-            <h4>${escapeHtml(tpl.title)}</h4>
-            <p>${escapeHtml(tpl.subtitle)}</p>
-          </div>
-          <div class="bt-sf-doc-stamp">
-            <strong>BiblioTech Scout</strong>
-            <span>Base: ${escapeHtml(tpl.baseDocName || tpl.code)}</span>
-            <span>${escapeHtml(todayStr())}</span>
-          </div>
-        </div>
-        <div class="bt-sf-doc-meta-grid">${metaRows}</div>
-        <div class="bt-sf-doc-blocks">${longBlocks}</div>
-        <div class="bt-sf-doc-sigs">${sigs}</div>
-      </div>
-    `;
+    return `<div class="bt-sf-official-pages-stack">${pagesInner}</div>`;
   };
 
   const updatePreviewSheet = () => {
     const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+    const eff = computeEffectiveValues(tpl, currentValues);
+    const imcInput = fieldsContainer.querySelector('[data-sf-readonly="_imcPreview"]');
+    if (imcInput) {
+      imcInput.value = eff._imcCalculated ? `${eff._imcCalculated} kg/m²` : "";
+    }
     sheetEl.innerHTML = renderSheetHtml(tpl, currentValues);
+  };
+
+  const renderAntecedentesGridHtml = (items) => {
+    const cards = items
+      .map((item) => {
+        const chkKey = `${item.key}_chk`;
+        const espKey = `${item.key}_esp`;
+        const isChecked = Boolean(currentValues[chkKey]);
+        const espVal = currentValues[espKey] || "";
+        return `
+          <div class="bt-sf-ant-row${isChecked ? " is-checked" : ""}">
+            <label class="bt-sf-ant-check-label">
+              <input type="checkbox" data-sf-check="${escapeHtml(chkKey)}"${isChecked ? " checked" : ""} />
+              <span class="bt-sf-ant-name">${escapeHtml(item.label)}</span>
+              <span class="bt-sf-ant-state">${isChecked ? "SÍ" : "NO"}</span>
+            </label>
+            <input
+              type="text"
+              class="bt-sf-ant-esp-input${isChecked ? "" : " hidden"}"
+              data-sf-field="${escapeHtml(espKey)}"
+              value="${escapeHtml(espVal)}"
+              placeholder="Especifique (opcional)"
+              ${isChecked ? "" : "disabled"}
+            />
+          </div>`;
+      })
+      .join("");
+    return `<div class="bt-sf-field is-full"><div class="bt-sf-ant-grid">${cards}</div></div>`;
+  };
+
+  const renderImmunoGridHtml = () => {
+    const allRows = [...IMMUNO_LEFT_ROWS, ...IMMUNO_RIGHT_ROWS];
+    const rowsHtml = allRows
+      .map((r) => {
+        const vacVal = currentValues[`${r.key}_vac`] || "";
+        const fvacVal = currentValues[`${r.key}_fvac`] || "";
+        const padVal = currentValues[`${r.key}_pad`] || "";
+        const fpadVal = currentValues[`${r.key}_fpad`] || "";
+        return `
+          <div class="bt-sf-immuno-card">
+            <div class="bt-sf-immuno-title">${escapeHtml(r.label)}</div>
+            <div class="bt-sf-immuno-inputs">
+              <label>
+                <span>Vacuna (Sí/No)</span>
+                <select data-sf-field="${escapeHtml(r.key)}_vac">
+                  <option value=""${vacVal === "" ? " selected" : ""}>—</option>
+                  <option value="SÍ"${vacVal === "SÍ" ? " selected" : ""}>SÍ</option>
+                  <option value="NO"${vacVal === "NO" ? " selected" : ""}>NO</option>
+                </select>
+              </label>
+              <label>
+                <span>Fecha Vacuna</span>
+                <input type="text" data-sf-field="${escapeHtml(r.key)}_fvac" value="${escapeHtml(fvacVal)}" placeholder="Día/Mes/Año" />
+              </label>
+              ${
+                r.hasPadecio
+                  ? `<label>
+                      <span>Padeció</span>
+                      <input type="text" data-sf-field="${escapeHtml(r.key)}_pad" value="${escapeHtml(padVal)}" placeholder="Sí / No" />
+                    </label>
+                    <label>
+                      <span>Fecha Padeció</span>
+                      <input type="text" data-sf-field="${escapeHtml(r.key)}_fpad" value="${escapeHtml(fpadVal)}" placeholder="Día/Mes/Año" />
+                    </label>`
+                  : ""
+              }
+            </div>
+          </div>`;
+      })
+      .join("");
+
+    return `
+      <div class="bt-sf-field is-full">
+        <div class="bt-sf-immuno-grid">${rowsHtml}</div>
+        <div class="bt-sf-fields-grid" style="margin-top:0.65rem;">
+          <label class="bt-sf-field">
+            <span>COVID 2ª Dosis (Vacuna Sí/No)</span>
+            <select data-sf-field="im_covid2_vac">
+              <option value=""${(currentValues.im_covid2_vac || "") === "" ? " selected" : ""}>—</option>
+              <option value="SÍ"${currentValues.im_covid2_vac === "SÍ" ? " selected" : ""}>SÍ</option>
+              <option value="NO"${currentValues.im_covid2_vac === "NO" ? " selected" : ""}>NO</option>
+            </select>
+          </label>
+          <label class="bt-sf-field">
+            <span>Fecha COVID 2ª Dosis (Día/Mes/Año)</span>
+            <input type="text" data-sf-field="im_covid2_fvac" value="${escapeHtml(currentValues.im_covid2_fvac || "")}" placeholder="Día/Mes/Año" />
+          </label>
+          <label class="bt-sf-field">
+            <span>Reacción a vacunas</span>
+            <input type="text" data-sf-field="im_reaccion" value="${escapeHtml(currentValues.im_reaccion || "")}" placeholder="Especificar si hubo reacción" />
+          </label>
+          <label class="bt-sf-field">
+            <span>Otras vacunas</span>
+            <input type="text" data-sf-field="im_otras" value="${escapeHtml(currentValues.im_otras || "")}" placeholder="Otras vacunas aplicadas" />
+          </label>
+          <label class="bt-sf-field">
+            <span>Marca Vacuna COVID (1ª Dosis)</span>
+            <input type="text" data-sf-field="im_covid_marca1" value="${escapeHtml(currentValues.im_covid_marca1 || "")}" placeholder="Marca 1ª dosis" />
+          </label>
+          <label class="bt-sf-field">
+            <span>Marca Vacuna COVID (2ª Dosis)</span>
+            <input type="text" data-sf-field="im_covid_marca2" value="${escapeHtml(currentValues.im_covid_marca2 || "")}" placeholder="Marca 2ª dosis" />
+          </label>
+          <label class="bt-sf-field">
+            <span>Marca Vacuna COVID (3ª Dosis)</span>
+            <input type="text" data-sf-field="im_covid_marca3" value="${escapeHtml(currentValues.im_covid_marca3 || "")}" placeholder="Marca 3ª dosis" />
+          </label>
+          <label class="bt-sf-field">
+            <span>Marca Vacuna COVID (4ª Dosis)</span>
+            <input type="text" data-sf-field="im_covid_marca4" value="${escapeHtml(currentValues.im_covid_marca4 || "")}" placeholder="Marca 4ª dosis" />
+          </label>
+        </div>
+      </div>`;
   };
 
   const renderFields = () => {
     const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
+    const eff = computeEffectiveValues(tpl, currentValues);
+
     fieldsContainer.innerHTML = tpl.fields
       .map((f) => {
-        const val = currentValues[f.key] || "";
+        if (f.type === "section_heading") {
+          return `<div class="bt-sf-section-divider">${escapeHtml(f.label)}</div>`;
+        }
+        if (f.type === "antecedentes_grid") {
+          return renderAntecedentesGridHtml(f.items || []);
+        }
+        if (f.type === "immuno_grid") {
+          return renderImmunoGridHtml();
+        }
+        const val = currentValues[f.key] ?? "";
         const wrapCls = f.full || f.type === "textarea" ? "bt-sf-field is-full" : "bt-sf-field";
+
+        if (f.type === "readonly") {
+          const disp = f.key === "_imcPreview" && eff._imcCalculated ? `${eff._imcCalculated} kg/m²` : "";
+          return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><input type="text" data-sf-readonly="${escapeHtml(f.key)}" value="${escapeHtml(disp)}" placeholder="${escapeHtml(f.placeholder || "")}" readonly /></label>`;
+        }
+
+        if (f.type === "single_checkbox") {
+          const isChecked = val !== false && val !== "false" && Boolean(val);
+          return `
+            <label class="bt-sf-field is-full bt-sf-single-check">
+              <input type="checkbox" data-sf-check="${escapeHtml(f.key)}"${isChecked ? " checked" : ""} />
+              <span>${escapeHtml(f.label)}</span>
+            </label>`;
+        }
+
         if (f.type === "select" && Array.isArray(f.options)) {
           const opts = f.options
-            .map(
-              (o) =>
-                `<option value="${escapeHtml(o)}"${o === val ? " selected" : ""}>${escapeHtml(o)}</option>`
-            )
+            .map((o) => {
+              const label = o === "" ? "Selecciona una opción..." : o;
+              return `<option value="${escapeHtml(o)}"${o === val ? " selected" : ""}>${escapeHtml(label)}</option>`;
+            })
             .join("");
-          return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><select data-sf-field="${escapeHtml(f.key)}">${opts}</select></label>`;
+          const isOther = f.allowOther && val === "Otro";
+          const otherVal = currentValues[`${f.key}_other`] || "";
+          const otherInput = f.allowOther
+            ? `<input
+                type="text"
+                class="bt-sf-other-input${isOther ? "" : " hidden"}"
+                data-sf-field="${escapeHtml(f.key)}_other"
+                data-sf-other-for="${escapeHtml(f.key)}"
+                value="${escapeHtml(otherVal)}"
+                placeholder="${escapeHtml(f.otherPlaceholder || "Escribe aquí tu opción...")}"
+              />`
+            : "";
+          return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><select data-sf-field="${escapeHtml(f.key)}">${opts}</select>${otherInput}</label>`;
         }
+
         if (f.type === "textarea") {
-          return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><textarea rows="3" data-sf-field="${escapeHtml(f.key)}" placeholder="${escapeHtml(f.placeholder || "")}">${escapeHtml(val)}</textarea></label>`;
+          return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><textarea rows="2" data-sf-field="${escapeHtml(f.key)}" placeholder="${escapeHtml(f.placeholder || "")}">${escapeHtml(val)}</textarea></label>`;
         }
-        return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><input type="text" data-sf-field="${escapeHtml(f.key)}" value="${escapeHtml(val)}" placeholder="${escapeHtml(f.placeholder || "")}" /></label>`;
+
+        const inputType = f.type === "number" ? "number" : "text";
+        const stepAttr = f.step ? ` step="${escapeHtml(f.step)}"` : "";
+        return `<label class="${wrapCls}"><span>${escapeHtml(f.label)}</span><input type="${inputType}"${stepAttr} data-sf-field="${escapeHtml(f.key)}" value="${escapeHtml(val)}" placeholder="${escapeHtml(f.placeholder || "")}" /></label>`;
       })
       .join("");
   };
@@ -6948,7 +7702,7 @@ function setupSmartFormsEngine(readFormProfileFn) {
     currentValues = buildInitialValues(tpl.id);
     renderFields();
     updatePreviewSheet();
-    if (statusEl) statusEl.textContent = "Borrador local listo";
+    if (statusEl) statusEl.textContent = "Documento oficial listo para llenar";
     if (scrollWorkspace) {
       workspace.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -6960,7 +7714,47 @@ function setupSmartFormsEngine(readFormProfileFn) {
     let count = 0;
     for (const f of tpl.fields) {
       if (f.bind && prof[f.bind]) {
-        currentValues[f.key] = String(prof[f.bind]);
+        const boundVal = String(prof[f.bind]).trim();
+        if (f.key === "province") {
+          const matchProv = OFFICIAL_PROVINCE_NAMES.find((p) => normalizeStr(p) === normalizeStr(boundVal));
+          if (matchProv) {
+            currentValues.province = matchProv;
+          } else {
+            currentValues.province = "Otro";
+            currentValues.province_other = boundVal;
+          }
+        } else if (f.key === "section") {
+          const matchSec = OFFICIAL_SECTION_SELECT_OPTIONS.find((s) => s && normalizeStr(s) === normalizeStr(boundVal));
+          if (matchSec) currentValues.section = matchSec;
+          else {
+            currentValues.section = "Otro";
+            currentValues.section_other = boundVal;
+          }
+        } else {
+          currentValues[f.key] = boundVal;
+        }
+        count++;
+      }
+    }
+    if (tpl.id === "jl304" && prof.name) {
+      const parts = prof.name.trim().split(/\s+/);
+      if (parts.length === 1) currentValues.firstName = parts[0];
+      else if (parts.length === 2) {
+        currentValues.firstName = parts[0];
+        currentValues.lastName1 = parts[1];
+      } else if (parts.length >= 3) {
+        const copy = parts.slice();
+        currentValues.lastName2 = copy.pop();
+        currentValues.lastName1 = copy.pop();
+        currentValues.firstName = copy.join(" ");
+      }
+      count++;
+    }
+    if (tpl.id === "salud" && prof.blood) {
+      const m = prof.blood.toUpperCase().match(/(AB|A|B|O)\s*([+-])/);
+      if (m) {
+        currentValues.bloodGroup = m[1];
+        currentValues.bloodRh = m[2];
         count++;
       }
     }
@@ -6986,9 +7780,40 @@ function setupSmartFormsEngine(readFormProfileFn) {
     if (!input) return;
     const key = input.getAttribute("data-sf-field");
     currentValues[key] = input.value;
+
+    // Si es un select que tiene opción "Otro", mostrar u ocultar su input compañero sin perder foco
+    const otherInput = fieldsContainer.querySelector(`[data-sf-other-for="${key}"]`);
+    if (otherInput) {
+      const showOther = input.value === "Otro";
+      otherInput.classList.toggle("hidden", !showOther);
+    }
+
     writeActiveStorage(currentTemplateId, currentValues);
     updatePreviewSheet();
     if (statusEl) statusEl.textContent = "Guardado en este dispositivo";
+  });
+
+  fieldsContainer.addEventListener("change", (e) => {
+    const chk = e.target.closest("[data-sf-check]");
+    if (chk) {
+      const key = chk.getAttribute("data-sf-check");
+      currentValues[key] = Boolean(chk.checked);
+      const row = chk.closest(".bt-sf-ant-row");
+      if (row) {
+        row.classList.toggle("is-checked", chk.checked);
+        const stateBadge = row.querySelector(".bt-sf-ant-state");
+        if (stateBadge) stateBadge.textContent = chk.checked ? "SÍ" : "NO";
+        const espInput = row.querySelector(".bt-sf-ant-esp-input");
+        if (espInput) {
+          espInput.classList.toggle("hidden", !chk.checked);
+          espInput.disabled = !chk.checked;
+          if (chk.checked) espInput.focus();
+        }
+      }
+      writeActiveStorage(currentTemplateId, currentValues);
+      updatePreviewSheet();
+      if (statusEl) statusEl.textContent = "Guardado en este dispositivo";
+    }
   });
 
   selectEl.addEventListener("change", () => {
@@ -7009,12 +7834,12 @@ function setupSmartFormsEngine(readFormProfileFn) {
   if (saveDraftBtn) {
     saveDraftBtn.addEventListener("click", () => {
       const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
-      const who = (currentValues.name || currentValues.eventName || currentValues.projectTitle || "Scout").trim();
+      const who = (extractFirstGivenName(currentValues) || "Scout").trim();
       const drafts = readNamedDrafts();
       const entry = {
         id: `d_${Date.now().toString(36)}`,
         templateId: tpl.id,
-        label: `${tpl.code} · ${who.slice(0, 32)}`,
+        label: `${tpl.exportPrefix} · ${who.slice(0, 28)}`,
         date: new Date().toLocaleDateString("es-MX", { day: "2-digit", month: "short" }),
         values: { ...currentValues }
       };
@@ -7061,7 +7886,7 @@ function setupSmartFormsEngine(readFormProfileFn) {
       currentValues = buildInitialValues(currentTemplateId);
       renderFields();
       updatePreviewSheet();
-      showWebToast("Campos restablecidos con los datos base de tu perfil.");
+      showWebToast("Campos restablecidos.");
     });
   }
 
@@ -7077,86 +7902,142 @@ function setupSmartFormsEngine(readFormProfileFn) {
     });
   });
 
-  const buildStandaloneDocumentHtml = (forWord = false) => {
-    const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
-    return `<!DOCTYPE html>
-<html lang="es" ${forWord ? 'xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"' : ""}>
-<head>
-<meta charset="utf-8" />
-<title>${escapeHtml(tpl.title)} - BiblioTech Scout</title>
-<style>
-  @page { size: letter; margin: 16mm; }
-  body { font-family: Arial, Helvetica, sans-serif; color: #0f172a; margin: 0; padding: 16px; font-size: 11pt; line-height: 1.45; }
-  .bt-sf-doc-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #4c1d95; padding-bottom: 10px; margin-bottom: 14px; }
-  .bt-sf-doc-code { display: inline-block; background: #ede9fe; color: #4c1d95; font-weight: bold; font-size: 8.5pt; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
-  .bt-sf-doc-brand h4 { margin: 6px 0 3px; font-size: 15pt; color: #0f172a; }
-  .bt-sf-doc-brand p { margin: 0; font-size: 9.5pt; color: #475569; }
-  .bt-sf-doc-stamp { text-align: right; font-size: 8.5pt; color: #475569; }
-  .bt-sf-doc-stamp strong { display: block; color: #4c1d95; font-size: 10pt; }
-  .bt-sf-doc-meta-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 14px; }
-  .bt-sf-doc-cell { display: inline-block; width: 47%; vertical-align: top; border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 9px; margin: 0 1% 8px 0; box-sizing: border-box; }
-  .bt-sf-doc-k { display: block; font-size: 8pt; text-transform: uppercase; color: #64748b; font-weight: bold; }
-  .bt-sf-doc-v { display: block; font-size: 10.5pt; color: #0f172a; margin-top: 2px; }
-  .bt-sf-doc-block { border: 1px solid #cbd5e1; border-radius: 6px; padding: 9px 11px; margin-bottom: 10px; page-break-inside: avoid; }
-  .bt-sf-doc-block-title { font-size: 9pt; font-weight: bold; text-transform: uppercase; color: #4c1d95; margin-bottom: 5px; }
-  .bt-sf-doc-block-body { font-size: 10.5pt; color: #0f172a; min-height: 28px; }
-  .bt-sf-doc-sigs { display: flex; justify-content: space-between; gap: 18px; margin-top: 38px; page-break-inside: avoid; }
-  .bt-sf-doc-sig { flex: 1; text-align: center; font-size: 9pt; color: #334155; }
-  .bt-sf-doc-sig-line { border-bottom: 1px solid #0f172a; height: 28px; margin-bottom: 6px; }
-</style>
-</head>
-<body>
-${renderSheetHtml(tpl, currentValues, !forWord)}
-</body>
-</html>`;
+  // Renderiza todas las páginas oficiales del formato actual en objetos Canvas independientes de alta resolución
+  const renderOfficialPagesToCanvases = async (tpl, rawVals) => {
+    const vals = computeEffectiveValues(tpl, rawVals);
+    const pages = Array.isArray(tpl.officialPages) ? tpl.officialPages : [];
+    const loadedImgs = await Promise.all(
+      pages.map(
+        (pg) =>
+          new Promise((resolve, reject) => {
+            const im = new Image();
+            im.onload = () => resolve({ im, pg });
+            im.onerror = reject;
+            im.src = pg.src;
+          })
+      )
+    );
+
+    const renderedPages = [];
+    for (const { im, pg } of loadedImgs) {
+      const pw = im.naturalWidth || 1311;
+      const ph = im.naturalHeight || 1853;
+      const canvas = document.createElement("canvas");
+      canvas.width = pw;
+      canvas.height = ph;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, pw, ph);
+      ctx.drawImage(im, 0, 0, pw, ph);
+      ctx.fillStyle = "#0f172a";
+
+      for (const b of pg.boxes || []) {
+        const val = String(vals[b.key] ?? "").trim();
+        if (!val) continue;
+        const bx = (b.x / 100) * pw;
+        const by = (b.y / 100) * ph;
+        const bw = (b.w / 100) * pw;
+        const bh = (b.h / 100) * ph;
+        const fontPx = b.multiline
+          ? Math.max(13, Math.min(18, Math.round(pw * 0.0118)))
+          : Math.max(13, Math.min(19, Math.round( Math.min(pw * 0.0125, bh * 0.72) )));
+        ctx.font = `700 ${fontPx}px Arial, Helvetica, sans-serif`;
+        ctx.textBaseline = "middle";
+
+        if (!b.multiline) {
+          let tx = bx + 3;
+          if (b.align === "center") {
+            tx = bx + Math.max(2, (bw - Math.min(bw - 4, ctx.measureText(val).width)) / 2);
+          }
+          ctx.fillText(val, tx, by + bh / 2, bw - 4);
+        } else {
+          ctx.textBaseline = "top";
+          const rawLines = val.split(/\r?\n/);
+          const wrapped = [];
+          for (const rl of rawLines) {
+            const words = rl.split(/\s+/);
+            let line = "";
+            for (const w of words) {
+              const test = line ? `${line} ${w}` : w;
+              if (ctx.measureText(test).width > bw - 8 && line) {
+                wrapped.push(line);
+                line = w;
+              } else {
+                line = test;
+              }
+            }
+            if (line) wrapped.push(line);
+          }
+          const maxLines = Math.max(1, Math.floor(bh / (fontPx * 1.22)));
+          for (let li = 0; li < Math.min(wrapped.length, maxLines); li++) {
+            ctx.fillText(wrapped[li], bx + 4, by + 2 + li * (fontPx * 1.22), bw - 6);
+          }
+        }
+      }
+
+      renderedPages.push({
+        canvas,
+        width: pw,
+        height: ph,
+        jpegDataUrl: canvas.toDataURL("image/jpeg", 0.95)
+      });
+    }
+    return renderedPages;
   };
 
+  // Botón principal: Descargar PDF Oficial (.pdf) con nombre exacto "Ficha de Salud <PrimerNombre> BiblioTech.pdf"
   if (printBtn) {
-    printBtn.addEventListener("click", () => {
-      document.body.classList.add("bt-printing-smart-form");
-      const cleanup = () => document.body.classList.remove("bt-printing-smart-form");
-      window.addEventListener("afterprint", cleanup, { once: true });
+    printBtn.addEventListener("click", async () => {
+      const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
       try {
-        window.print();
-      } catch (_) {}
-      setTimeout(cleanup, 1800);
+        const renderedPages = await renderOfficialPagesToCanvases(tpl, currentValues);
+        if (!renderedPages.length) return;
+        const pdfBlob = buildMultiPagePdfBlobFromJpegDataUrls(renderedPages);
+        const fileName = buildOfficialExportFilename(tpl, currentValues, "pdf");
+        const url = URL.createObjectURL(pdfBlob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+        showWebToast(`Descargado: ${fileName}`);
+      } catch (err) {
+        console.warn("[BiblioTech] Error generando PDF oficial:", err);
+        showWebToast("No se pudo generar el PDF en este navegador.");
+      }
     });
   }
 
+  // Botón Imprimir: abre las páginas oficiales ya estampadas sin márgenes ni hojas extra
   if (wordBtn) {
-    wordBtn.addEventListener("click", () => {
+    wordBtn.addEventListener("click", async () => {
       const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
-      const htmlDoc = buildStandaloneDocumentHtml(true);
-      const blob = new Blob(["\ufeff", htmlDoc], { type: "application/msword;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      const safeWho = (currentValues.name || currentValues.eventName || currentValues.projectTitle || "Scout")
-        .replace(/[^a-zA-Z0-9_-]+/g, "_")
-        .slice(0, 28);
-      a.href = url;
-      a.download = `${tpl.code.replace(/\s+/g, "_")}_${safeWho || "BiblioTech"}.doc`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1500);
-      showWebToast("Formato descargado en Word (.doc) listo para editar o imprimir.");
-    });
-  }
-
-  if (copyBtn) {
-    copyBtn.addEventListener("click", async () => {
-      const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
-      const lines = [`${tpl.title.toUpperCase()} (${tpl.code})`, "----------------------------------------"];
-      for (const f of tpl.fields) {
-        lines.push(`${f.label}: ${String(currentValues[f.key] || "—").trim()}`);
-      }
-      const txt = lines.join("\n");
       try {
-        await navigator.clipboard.writeText(txt);
-        showWebToast("Texto del formato copiado al portapapeles.");
-      } catch (_) {
-        showWebToast("No se pudo copiar automáticamente en este navegador.");
-      }
+        const renderedPages = await renderOfficialPagesToCanvases(tpl, currentValues);
+        if (!renderedPages.length) return;
+        const fileName = buildOfficialExportFilename(tpl, currentValues, "pdf").replace(/\.pdf$/i, "");
+        const imgsHtml = renderedPages
+          .map((p) => `<div class="pg"><img src="${p.jpegDataUrl}" alt="Hoja oficial" /></div>`)
+          .join("");
+        const w = window.open("", "_blank");
+        if (!w) {
+          printBtn.click();
+          return;
+        }
+        w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${escapeHtml(fileName)}</title>
+          <style>
+            @page { size: letter portrait; margin: 0; }
+            html, body { margin: 0; padding: 0; background: #fff; }
+            .pg { width: 100vw; height: 100vh; page-break-after: always; break-after: page; display: flex; align-items: center; justify-content: center; }
+            .pg:last-child { page-break-after: auto; break-after: auto; }
+            img { width: 100%; height: 100%; object-fit: contain; display: block; }
+          </style></head><body>${imgsHtml}
+          <script>window.onload = function(){ setTimeout(function(){ window.print(); }, 250); };<\/script>
+          </body></html>`);
+        w.document.close();
+      } catch (_) {}
     });
   }
 
@@ -7175,93 +8056,38 @@ ${renderSheetHtml(tpl, currentValues, !forWord)}
   if (pngBtn) {
     pngBtn.addEventListener("click", async () => {
       const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
-      const pages = Array.isArray(tpl.officialPages) ? tpl.officialPages : [];
-      if (!pages.length) return;
       try {
-        const loadedImgs = await Promise.all(
-          pages.map(
-            (pg) =>
-              new Promise((resolve, reject) => {
-                const im = new Image();
-                im.onload = () => resolve({ im, pg });
-                im.onerror = reject;
-                im.src = pg.src;
-              })
-          )
-        );
-        const maxW = Math.max(...loadedImgs.map((x) => x.im.naturalWidth || 1347));
-        const gap = loadedImgs.length > 1 ? 24 : 0;
-        const totalH = loadedImgs.reduce((s, x) => s + (x.im.naturalHeight || 1743), 0) + gap * (loadedImgs.length - 1);
-        const canvas = document.createElement("canvas");
-        canvas.width = maxW;
-        canvas.height = totalH;
-        const ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#ffffff";
+        const renderedPages = await renderOfficialPagesToCanvases(tpl, currentValues);
+        if (!renderedPages.length) return;
+        const maxW = Math.max(...renderedPages.map((x) => x.width));
+        const gap = renderedPages.length > 1 ? 28 : 0;
+        const totalH = renderedPages.reduce((s, x) => s + x.height, 0) + gap * (renderedPages.length - 1);
+        const outCanvas = document.createElement("canvas");
+        outCanvas.width = maxW;
+        outCanvas.height = totalH;
+        const ctx = outCanvas.getContext("2d");
+        ctx.fillStyle = "#f1f5f9";
         ctx.fillRect(0, 0, maxW, totalH);
-
-        let offsetY = 0;
-        for (const { im, pg } of loadedImgs) {
-          const pw = im.naturalWidth || 1347;
-          const ph = im.naturalHeight || 1743;
-          ctx.drawImage(im, 0, offsetY, pw, ph);
-          ctx.fillStyle = "#0f172a";
-          for (const b of pg.boxes || []) {
-            const val = String(currentValues[b.key] || "").trim();
-            if (!val) continue;
-            const bx = (b.x / 100) * pw;
-            const by = offsetY + (b.y / 100) * ph;
-            const bw = (b.w / 100) * pw;
-            const bh = (b.h / 100) * ph;
-            const fontPx = b.multiline ? Math.max(15, Math.round(pw * 0.0135)) : Math.max(16, Math.round(pw * 0.0145));
-            ctx.font = `700 ${fontPx}px Arial, sans-serif`;
-            ctx.textBaseline = "top";
-            const rawLines = val.split(/\r?\n/);
-            const wrapped = [];
-            for (const rl of rawLines) {
-              const words = rl.split(/\s+/);
-              let line = "";
-              for (const w of words) {
-                const test = line ? `${line} ${w}` : w;
-                if (ctx.measureText(test).width > bw - 8 && line) {
-                  wrapped.push(line);
-                  line = w;
-                } else {
-                  line = test;
-                }
-              }
-              if (line) wrapped.push(line);
-            }
-            const maxLines = b.multiline ? Math.max(1, Math.floor(bh / (fontPx * 1.25))) : 1;
-            for (let li = 0; li < Math.min(wrapped.length, maxLines); li++) {
-              const txtLine = wrapped[li];
-              let tx = bx + 4;
-              if (b.align === "center") {
-                tx = bx + Math.max(2, (bw - ctx.measureText(txtLine).width) / 2);
-              }
-              ctx.fillText(txtLine, tx, by + 2 + li * (fontPx * 1.25), bw - 6);
-            }
-          }
-          offsetY += ph + gap;
+        let y = 0;
+        for (const pg of renderedPages) {
+          ctx.drawImage(pg.canvas, 0, y);
+          y += pg.height + gap;
         }
-
-        canvas.toBlob((blob) => {
+        outCanvas.toBlob((blob) => {
           if (!blob) return;
+          const fileName = buildOfficialExportFilename(tpl, currentValues, "png");
           const url = URL.createObjectURL(blob);
           const a = document.createElement("a");
-          const safeWho = (currentValues.name || currentValues.eventName || currentValues.projectTitle || "Scout")
-            .replace(/[^a-zA-Z0-9_-]+/g, "_")
-            .slice(0, 28);
           a.href = url;
-          a.download = `${tpl.code.replace(/[^a-zA-Z0-9]+/g, "_")}_${safeWho || "Oficial"}.png`;
+          a.download = fileName;
           document.body.appendChild(a);
           a.click();
           a.remove();
           setTimeout(() => URL.revokeObjectURL(url), 1500);
-          showWebToast("Formato oficial descargado con tus datos puestos en cada casilla.");
+          showWebToast(`Descargado: ${fileName}`);
         }, "image/png");
       } catch (err) {
         console.warn("[BiblioTech] Error generando PNG oficial:", err);
-        showWebToast("Usa «Imprimir / Guardar PDF» para exportar el formato oficial.");
       }
     });
   }

@@ -1,8 +1,8 @@
 {
-  "version": "9.3.1",
-  "mobileVersion": "3.3.1",
-  "cache": "bibliotech-scout-v43",
+  "version": "9.4.0",
+  "mobileVersion": "3.4.0",
+  "cache": "bibliotech-scout-v44",
   "releasedAt": "2026-11-18",
-  "schemaCookieVersion": "9.3",
-  "notes": "Versión 9.3.1: El Editor Inteligente de Formatos ahora renderiza y descarga los documentos oficiales de base de ASMAC reales (Ficha de Salud, JL304/JL306, P5.1 Especialidad FES, P6.2 Proyecto, P6.3 Programa y P6.4 Acta) con tus datos estampados directamente dentro de cada casilla oficial."
+  "schemaCookieVersion": "9.4",
+  "notes": "Versión 9.4.0: Editor Inteligente de Formatos 100% oficial (Ficha de Salud completa con IMC automático, 24+13 antecedentes con check, Inmunología, Contactos 1 y 2; Permiso JL304 con fechas por casilla, nombres separados y check de medios; exportación directa PDF/PNG como «Ficha de Salud [Nombre] BiblioTech») y directorio de las 49 Provincias Scouts en el buscador."
 }
