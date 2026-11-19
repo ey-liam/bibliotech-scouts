@@ -74,9 +74,11 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
 
 ## 5. Estándar del Lector y Herramientas Productivas
 
-- **Sistema unificado de controles y animaciones (v9.6.0):**
+- **Sistema unificado de controles, superficies y rendimiento baja gama (v9.7.0):**
   - Todos los `<button>`, `<input>`, `<select>` y `<textarea>` usan `Plus Jakarta Sans`; todos los títulos de sección usan `Outfit` con escala fluida única `clamp(1.72rem, 2.85vw, 2.38rem)`.
-  - Botones primarios y píldoras activas usan el mismo gradiente de marca (`linear-gradient(135deg, #6d28d9, #0284c7)`), radio uniforme (`12px` botones, `999px` píldoras, `20px` tarjetas, `24px` contenedores principales) y transición limpia (`0.2s cubic-bezier(0.22, 1, 0.36, 1)`) sin inclinaciones 3D bruscas en tarjetas ni figuras 3D distractoras en el fondo.
+  - Botones primarios y píldoras activas usan el mismo gradiente de marca (`linear-gradient(135deg, #6d28d9 0%, #4f46e5 52%, #0284c7 100%)`), radio uniforme (`12px` botones, `999px` píldoras, `18px–20px` tarjetas, `24px` contenedores y fotografías destacadas), contornos finos `1px` y transición ligera GPU-only (`transform`, `opacity`, `background-color`, `border-color`, `box-shadow` en `0.18s cubic-bezier(0.22, 1, 0.36, 1)`).
+  - **Optimización para dispositivos de baja gama sin pérdida de calidad en assets:** cero animaciones infinitas de fondo (sin cubos 3D, sin filtros SVG `feDropShadow` sobre viewBoxes gigantes, sin `backdrop-filter` pesado sobre tarjetas con scroll), `content-visibility: auto` + `contain: layout style` en cuadrículas largas y detección adaptativa `html[data-bt-perf="lite"]` (`deviceMemory <= 4`, `hardwareConcurrency <= 4`, `saveData` o `prefers-reduced-motion`).
+  - **Encuadre editorial de fotografías:** marcos limpios con `border-radius: 20px–24px`, anillo interior sutil `1px`, scrim de contraste donde existe texto encima y micro-zoom `scale(1.02)` en escritorio sin recortes poligonales deformantes ni compresión de imágenes.
 - **Web/iOS (`#docModal.bt-reader-v2`):**
   - Cabecera en 1 sola fila compacta con título (máximo 2 líneas), botón `Info` plegable (`#btnToggleDocInfo` con descripción, fecha RECME, ODS y etiquetas), guardado, reporte y cerrar.
   - Metadatos y etiquetas viven dentro del cajón `#modalDocInfoDrawer` (cerrado por defecto) y nunca compiten con `#modalFieldNoteBox` (cierre mutuo).

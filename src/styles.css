@@ -18370,3 +18370,595 @@ html[data-camp-mode="true"] .source-pill-code {
 html[data-camp-mode="true"] .bt-empty-ask-hint {
   color: #cbd5e1;
 }
+
+/* ============================================================================
+   V9.7.0 — DISEÑO EDITORIAL UNIFICADO + MOTOR DE RENDIMIENTO PARA BAJA GAMA
+   - Conserva el 100 % de la calidad original de fotografías y portadas.
+   - Elimina bucles infinitos de GPU, filtros pesados y desenfoques costosos.
+   - Unifica paleta, contornos, recuadros, botones, encuadres y micro-interacciones.
+   ============================================================================ */
+:root {
+  --bt-canvas: #f6f5f0;
+  --bt-surface-clean: #ffffff;
+  --bt-surface-soft: #f1efe8;
+  --bt-border-crisp: rgba(15, 23, 42, 0.095);
+  --bt-border-strong: rgba(15, 23, 42, 0.16);
+  --bt-border-accent: rgba(109, 40, 217, 0.36);
+  --bt-shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 26px -14px rgba(15, 23, 42, 0.11);
+  --bt-shadow-card-hover: 0 4px 10px rgba(15, 23, 42, 0.06), 0 16px 32px -14px rgba(109, 40, 217, 0.18);
+  --bt-grad-brand: linear-gradient(135deg, #6d28d9 0%, #4f46e5 52%, #0284c7 100%);
+  --bt-grad-brand-hover: linear-gradient(135deg, #5b21b6 0%, #4338ca 52%, #0369a1 100%);
+  --bt-ease-fast: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-camp-mode="true"] {
+  --bt-canvas: #080c18;
+  --bt-surface-clean: #11182c;
+  --bt-surface-soft: #162038;
+  --bt-border-crisp: rgba(148, 163, 184, 0.16);
+  --bt-border-strong: rgba(148, 163, 184, 0.28);
+  --bt-border-accent: rgba(167, 139, 250, 0.48);
+  --bt-shadow-card: 0 2px 6px rgba(2, 6, 23, 0.35), 0 14px 28px -14px rgba(2, 6, 23, 0.6);
+  --bt-shadow-card-hover: 0 6px 14px rgba(2, 6, 23, 0.45), 0 18px 34px -14px rgba(124, 58, 237, 0.32);
+}
+
+/* 1. FONDO EDITORIAL LIMPIO Y ESTÁTICO (0 % GASTO DE GPU EN REPOSO) */
+html,
+body {
+  background-color: var(--bt-canvas) !important;
+  background-image:
+    radial-gradient(64rem 34rem at 12% -6%, rgba(109, 40, 217, 0.085), transparent 62%),
+    radial-gradient(56rem 30rem at 88% 2%, rgba(2, 132, 199, 0.075), transparent 60%),
+    radial-gradient(48rem 26rem at 76% 96%, rgba(245, 158, 11, 0.04), transparent 64%) !important;
+  background-attachment: scroll !important;
+}
+
+html[data-camp-mode="true"],
+html[data-camp-mode="true"] body {
+  background-color: #080c18 !important;
+  background-image:
+    radial-gradient(64rem 34rem at 14% -4%, rgba(124, 58, 237, 0.17), transparent 62%),
+    radial-gradient(56rem 30rem at 88% 4%, rgba(14, 165, 233, 0.12), transparent 60%),
+    radial-gradient(46rem 24rem at 50% 100%, rgba(99, 102, 241, 0.08), transparent 68%) !important;
+}
+
+.global-animated-bg,
+.global-animated-bg * {
+  display: none !important;
+  animation: none !important;
+}
+
+/* 2. ANULACIÓN DE BUCLES INFINITOS Y WILL-CHANGE INNECESARIOS EN TODO EL SITIO */
+.bts-ribbon-layer,
+.bts-zigzag-svg,
+.bts-doodle,
+.bts-card-polygon,
+.bts-card-inner,
+.hero-photo,
+.hero-photo-masked,
+.hero-photo-clip-shell,
+.hero-photo-img,
+.book-card,
+.doc-card,
+.bt-workspace-card,
+.section-card,
+.adc-pillar-card,
+.forum-post-card,
+.bt-acc-card,
+.app-platform-card,
+.search-hub-card,
+.answer-card {
+  animation: none !important;
+  will-change: auto !important;
+}
+
+/* 3. OPTIMIZACIÓN DE SCROLL Y MEMORIA PARA GAMA BAJA (CONTAIN + CONTENT-VISIBILITY SEGURO) */
+.book-card,
+.doc-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+  contain: layout style;
+}
+
+.forum-post-card,
+.bt-acc-card,
+.section-card,
+.adc-pillar-card,
+.app-platform-card,
+.version-chain-card {
+  contain: layout style;
+}
+
+/* Eliminar backdrop-filter costoso en tarjetas, barras secundarias y contenedores con scroll */
+.search-hub-card,
+.answer-card,
+.bt-workspace-card,
+.book-card,
+.doc-card,
+.bt-acc-card,
+.forum-post-card,
+.section-card,
+.adc-pillar-card,
+.app-platform-card,
+.bt-sf-card,
+.about-card,
+.contribute-card,
+.bt-subview-bar,
+.catalog-filters-bar,
+.bt-segmented-control,
+.shelf-tab,
+.cat-filter-pill,
+.modal-container,
+.saved-panel-sheet {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Cabecera principal: nítida, fina y con blur ligero solo en PC potente */
+.main-header {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom: 1px solid var(--bt-border-crisp) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 6px 20px -14px rgba(15, 23, 42, 0.14) !important;
+  backdrop-filter: saturate(135%) blur(10px) !important;
+  -webkit-backdrop-filter: saturate(135%) blur(10px) !important;
+}
+
+html[data-camp-mode="true"] .main-header {
+  background: rgba(10, 15, 30, 0.94) !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14) !important;
+  box-shadow: 0 2px 14px rgba(2, 6, 23, 0.45) !important;
+}
+
+html[data-bt-perf="lite"] .main-header,
+html[data-bt-perf="lite"] #unifiedBottomDock {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+html[data-camp-mode="true"][data-bt-perf="lite"] .main-header,
+html[data-camp-mode="true"][data-bt-perf="lite"] #unifiedBottomDock {
+  background: rgba(10, 15, 30, 0.98) !important;
+}
+
+@media (max-width: 960px) {
+  .main-header,
+  #unifiedBottomDock {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* 4. HERO REFINADO: IDENTIDAD SCOUT ZINE + ENCUADRE EDITORIAL DE ALTA CALIDAD */
+.bts-hero-section {
+  background: transparent !important;
+  padding-bottom: clamp(1.25rem, 2.6vw, 2.2rem) !important;
+}
+
+.bts-hero-stage {
+  min-height: clamp(220px, 26vw, 315px) !important;
+  padding: clamp(1.1rem, 2.4vw, 2rem) 1rem clamp(0.85rem, 1.8vw, 1.45rem) !important;
+  background: transparent !important;
+}
+
+.bts-doodle {
+  opacity: 0.36 !important;
+  color: #6d28d9 !important;
+}
+
+html[data-camp-mode="true"] .bts-doodle {
+  opacity: 0.48 !important;
+  color: #a78bfa !important;
+}
+
+.bts-card-polygon {
+  clip-path: none !important;
+  border-radius: 24px !important;
+  transform: rotate(-0.85deg) !important;
+  background: rgba(255, 255, 255, 0.97) !important;
+  border: 1px solid rgba(109, 40, 217, 0.14) !important;
+  box-shadow:
+    0 2px 4px rgba(15, 23, 42, 0.04),
+    0 20px 44px -18px rgba(79, 70, 229, 0.24) !important;
+  padding: clamp(1.25rem, 2.8vw, 2.05rem) clamp(1.9rem, 4.8vw, 3.8rem) !important;
+}
+
+html[data-camp-mode="true"] .bts-card-polygon {
+  background: #11182c !important;
+  border: 1px solid rgba(167, 139, 250, 0.28) !important;
+  box-shadow:
+    0 4px 12px rgba(2, 6, 23, 0.45),
+    0 22px 48px -18px rgba(109, 40, 217, 0.38) !important;
+}
+
+.bts-card-creator {
+  letter-spacing: 0.2em !important;
+  font-weight: 800 !important;
+  opacity: 0.88 !important;
+}
+
+.bts-hero-container {
+  padding-top: clamp(0.6rem, 1.4vw, 1.15rem) !important;
+}
+
+.hero-intro-grid {
+  align-items: center !important;
+  gap: clamp(1.6rem, 3.6vw, 3.2rem) !important;
+}
+
+.hero-kicker-pill {
+  background: var(--bt-surface-clean) !important;
+  border: 1px solid var(--bt-border-crisp) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+  padding: 0.36rem 0.85rem 0.36rem 0.45rem !important;
+}
+
+.hero-title {
+  letter-spacing: -0.028em !important;
+  line-height: 1.12 !important;
+}
+
+.hero-description {
+  color: #475569 !important;
+  line-height: 1.62 !important;
+  max-width: 54ch;
+}
+
+html[data-camp-mode="true"] .hero-description {
+  color: #cbd5e1 !important;
+}
+
+/* Encuadre fotográfico editorial del Hero (nítido, moderno, sin recorte poligonal brusco) */
+.hero-photo-stage {
+  position: relative;
+}
+
+.hero-photo.hero-photo-masked {
+  position: relative;
+  border-radius: 24px !important;
+  clip-path: none !important;
+  transform: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.hero-photo.hero-photo-masked::before {
+  content: "";
+  position: absolute;
+  inset: -8px -8px 8px 8px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.22), rgba(2, 132, 199, 0.2));
+  border: 1px solid rgba(109, 40, 217, 0.18);
+  z-index: 0;
+  pointer-events: none;
+}
+
+html[data-camp-mode="true"] .hero-photo.hero-photo-masked::before {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.34), rgba(14, 165, 233, 0.24));
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+.hero-photo-clip-shell {
+  position: relative;
+  z-index: 1;
+  clip-path: none !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.08),
+    0 22px 44px -16px rgba(15, 23, 42, 0.28) !important;
+  background: #0f172a;
+  aspect-ratio: 16 / 10.5;
+}
+
+html[data-camp-mode="true"] .hero-photo-clip-shell {
+  border-color: rgba(148, 163, 184, 0.25) !important;
+  box-shadow:
+    0 4px 12px rgba(2, 6, 23, 0.5),
+    0 24px 48px -16px rgba(2, 6, 23, 0.78) !important;
+}
+
+.hero-photo-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 35% !important;
+  transition: transform 0.32s var(--bt-ease-fast) !important;
+}
+
+.hero-photo.hero-photo-masked:hover .hero-photo-img {
+  transform: scale(1.024) !important;
+}
+
+/* 5. FOTOGRAFÍAS Y PORTADAS EN TODA LA PLATAFORMA (MÁXIMA NITIDEZ Y ENCUADRE) */
+.book-cover-wrap {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08), 0 4px 12px -6px rgba(15, 23, 42, 0.16) !important;
+}
+
+.book-cover-wrap img,
+.doc-card-thumb {
+  transition: transform 0.24s var(--bt-ease-fast) !important;
+}
+
+.book-card:hover .book-cover-wrap img {
+  transform: scale(1.025);
+}
+
+.doc-card-thumb {
+  border-radius: 10px !important;
+  border: 1px solid var(--bt-border-crisp) !important;
+}
+
+.section-card img,
+.adc-pillar-card img,
+.about-creator-photo,
+.liam-card img {
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+}
+
+/* 6. SISTEMA EJECUTIVO UNIFICADO DE BOTONES Y CONTROLES */
+.btn-hero-primary,
+html[data-camp-mode="true"] .btn-hero-primary,
+html[data-camp-mode="true"] a.btn-hero-primary,
+.ask-submit-btn,
+html[data-camp-mode="true"] .ask-submit-btn,
+.btn-modal-primary,
+.btn-doc-view,
+.book-read-btn,
+.bt-empty-ask-btn,
+.bt-consent-btn.is-primary,
+.btn-field-note-save,
+.btn-load-more {
+  background: var(--bt-grad-brand) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 6px 16px -6px rgba(109, 40, 217, 0.44) !important;
+  transition: transform 0.16s var(--bt-ease-fast), box-shadow 0.18s ease, filter 0.18s ease !important;
+}
+
+html[data-camp-mode="true"] a.btn-hero-primary svg,
+html[data-camp-mode="true"] a.btn-hero-primary span,
+html[data-camp-mode="true"] .btn-hero-primary svg,
+html[data-camp-mode="true"] .btn-hero-primary span {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+html[data-camp-mode="true"] a.btn-hero-primary:hover,
+html[data-camp-mode="true"] .btn-hero-primary:hover {
+  background: var(--bt-grad-brand-hover) !important;
+  color: #ffffff !important;
+}
+
+.btn-hero-primary {
+  border-radius: 14px !important;
+  padding: 0.78rem 1.45rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.005em !important;
+  min-height: 46px;
+}
+
+.btn-hero-primary:hover,
+.ask-submit-btn:hover,
+.btn-modal-primary:hover,
+.btn-doc-view:hover,
+.book-read-btn:hover,
+.bt-empty-ask-btn:hover,
+.btn-load-more:hover {
+  background: var(--bt-grad-brand-hover) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 10px 22px -6px rgba(109, 40, 217, 0.5) !important;
+}
+
+.btn-hero-primary:active,
+.ask-submit-btn:active,
+.btn-modal-primary:active,
+.btn-doc-view:active,
+.book-read-btn:active,
+.btn-load-more:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* Botones secundarios, filtros y píldoras */
+.btn-doc-dl,
+.book-dl-btn,
+.btn-modal-secondary,
+.shelf-tab,
+.cat-filter-pill,
+.bt-subview-action-btn,
+.bt-q-chip,
+.section-chip,
+.bt-guide-pill {
+  border: 1px solid var(--bt-border-crisp) !important;
+  transition: transform 0.16s var(--bt-ease-fast), background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease !important;
+}
+
+.shelf-tab:not(.active),
+.cat-filter-pill:not(.active),
+.bt-guide-pill:not(.active),
+.bt-subview-action-btn,
+.btn-doc-dl,
+.book-dl-btn {
+  background: var(--bt-surface-clean) !important;
+}
+
+.shelf-tab:not(.active):hover,
+.cat-filter-pill:not(.active):hover,
+.bt-guide-pill:not(.active):hover,
+.bt-subview-action-btn:hover,
+.btn-doc-dl:hover,
+.book-dl-btn:hover {
+  border-color: var(--bt-border-accent) !important;
+  transform: translateY(-1px);
+}
+
+.shelf-tab.active,
+html[data-camp-mode="true"] .shelf-tab.active,
+.cat-filter-pill.active,
+html[data-camp-mode="true"] .cat-filter-pill.active,
+.bt-seg-btn.active,
+html[data-camp-mode="true"] .bt-seg-btn.active,
+.bt-guide-pill.active,
+html[data-camp-mode="true"] .bt-guide-pill.active {
+  background: var(--bt-grad-brand) !important;
+  border-color: rgba(167, 139, 250, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 5px 14px -5px rgba(109, 40, 217, 0.45) !important;
+}
+
+/* Foco accesible visible con teclado en todos los controles */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #7c3aed !important;
+  outline-offset: 2px !important;
+}
+
+/* 7. RECUADROS, TARJETAS Y CONTORNOS UNIFICADOS EN LOS 7 ESPACIOS */
+.search-hub-card,
+.answer-card,
+.bt-workspace-card,
+.book-card,
+.doc-card,
+.bt-acc-card,
+.forum-post-card,
+.section-card,
+.adc-pillar-card,
+.app-platform-card,
+.bt-sf-card,
+.about-card,
+.contribute-card,
+.version-chain-card,
+.catalog-filters-bar {
+  background: var(--bt-surface-clean) !important;
+  border: 1px solid var(--bt-border-crisp) !important;
+  box-shadow: var(--bt-shadow-card) !important;
+  transition: transform 0.18s var(--bt-ease-fast), border-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.bt-workspace-card,
+.book-card,
+.doc-card,
+.bt-acc-card,
+.forum-post-card,
+.section-card,
+.adc-pillar-card,
+.app-platform-card {
+  border-radius: 18px !important;
+}
+
+.search-hub-card,
+.answer-card,
+.bt-sf-card,
+.catalog-filters-bar {
+  border-radius: 22px !important;
+}
+
+.bt-workspace-card:hover,
+.book-card:hover,
+.doc-card:hover,
+.forum-post-card:hover,
+.adc-pillar-card:hover,
+.app-platform-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--bt-border-accent) !important;
+  box-shadow: var(--bt-shadow-card-hover) !important;
+}
+
+/* Entradas de formulario más limpias y nítidas */
+.ask-input-wrapper,
+.lib-search-input,
+.lib-filter-select,
+.catalog-filters-bar input,
+.catalog-filters-bar select {
+  border: 1px solid var(--bt-border-strong) !important;
+  background: var(--bt-surface-clean) !important;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease !important;
+}
+
+.ask-input-wrapper:focus-within,
+.lib-search-input:focus,
+.catalog-filters-bar input:focus,
+.catalog-filters-bar select:focus {
+  border-color: #7c3aed !important;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.14) !important;
+}
+
+/* Sub-barra superior de Biblioteca y Guía */
+.bt-subview-bar {
+  background: rgba(246, 245, 240, 0.94) !important;
+  border-bottom: 1px solid var(--bt-border-crisp) !important;
+}
+
+html[data-camp-mode="true"] .bt-subview-bar {
+  background: rgba(8, 12, 24, 0.94) !important;
+  border-bottom-color: rgba(148, 163, 184, 0.14) !important;
+}
+
+.bt-segmented-control {
+  background: var(--bt-surface-soft) !important;
+  border: 1px solid var(--bt-border-crisp) !important;
+  padding: 4px !important;
+  border-radius: 999px !important;
+}
+
+/* 8. MICRO-ANIMACIÓN SUAVE AL ENTRAR A UN ESPACIO (SOLO EN MODO ESTÁNDAR) */
+@keyframes btSpaceFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html[data-bt-perf="standard"] section[data-bt-view]:not(.bt-view-hidden) {
+  animation: btSpaceFadeIn 0.2s var(--bt-ease-fast) both;
+}
+
+/* MODO LIGERO / GAMA BAJA / REDUCED MOTION: CERO ANIMACIONES EXTRA Y MÁXIMA FLUIDEZ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-bt-perf="lite"] .bt-workspace-card:hover,
+html[data-bt-perf="lite"] .book-card:hover,
+html[data-bt-perf="lite"] .doc-card:hover,
+html[data-bt-perf="lite"] .hero-photo.hero-photo-masked:hover .hero-photo-img {
+  transform: none !important;
+}
+
+html[data-bt-perf="lite"] .bts-card-polygon {
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1) !important;
+}
+
+@media (max-width: 768px) {
+  .hero-photo.hero-photo-masked::before {
+    inset: -5px -5px 5px 5px;
+    border-radius: 20px;
+  }
+  .hero-photo-clip-shell {
+    border-radius: 18px !important;
+  }
+  .bts-card-polygon {
+    border-radius: 18px !important;
+    transform: none !important;
+  }
+}

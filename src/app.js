@@ -243,6 +243,7 @@ function loadQuestionBank() {
       STATE.questionBank = merged;
       STATE.qBankByNorm = {};
       STATE.qBankByDocId = {};
+      STATE.qBankByRelatedDocId = {};
       STATE.qBankByTopicId = {};
       for (const qObj of STATE.questionBank) {
         const nk = normalizeQuestionKey(qObj.q || "");
@@ -251,6 +252,15 @@ function loadQuestionBank() {
         if (did) {
           if (!STATE.qBankByDocId[did]) STATE.qBankByDocId[did] = [];
           STATE.qBankByDocId[did].push(qObj);
+        }
+        if (Array.isArray(qObj.related_doc_ids) && qObj.related_doc_ids.length) {
+          for (const rid of qObj.related_doc_ids) {
+            if (!rid || rid === did) continue;
+            if (!STATE.qBankByRelatedDocId[rid]) STATE.qBankByRelatedDocId[rid] = [];
+            if (STATE.qBankByRelatedDocId[rid].length < 40) {
+              STATE.qBankByRelatedDocId[rid].push(qObj);
+            }
+          }
         }
         const tid = (qObj.topic_id || "").trim();
         if (tid) {
@@ -2342,6 +2352,26 @@ function buildAnswerLocally(query) {
   return { kind: "none", topicRank: topicRank.slice(0, 5), qa };
 }
 
+function appendRelatedSources(qSources, item, maxSources = 5) {
+  if (!item || !Array.isArray(item.related_doc_ids) || !item.related_doc_ids.length) return;
+  const seenIds = new Set(qSources.map((s) => s.doc_id));
+  for (const rid of item.related_doc_ids) {
+    if (qSources.length >= maxSources) break;
+    if (!rid || seenIds.has(rid)) continue;
+    const rdoc = STATE.docsById[rid];
+    if (!rdoc) continue;
+    seenIds.add(rid);
+    qSources.push({
+      doc_id: rdoc.id,
+      title: rdoc.title,
+      filename: rdoc.filename,
+      ext: rdoc.ext,
+      year: rdoc.year,
+      page_start: 1
+    });
+  }
+}
+
 function answerLocallyInBrowser(query) {
   const qClean = normalizeQuestionKey(query);
   const exactQ = STATE.qBankByNorm[qClean];
@@ -2359,6 +2389,7 @@ function answerLocallyInBrowser(query) {
         page_start: exactQ.page || 1
       });
     }
+    appendRelatedSources(qSources, exactQ, 5);
     return {
       query,
       answer_markdown: exactQ.ans,
@@ -2368,19 +2399,21 @@ function answerLocallyInBrowser(query) {
 
   if (exactQ && exactQ.doc_id && STATE.docsById[exactQ.doc_id] && !exactQ.topic_id) {
     const doc = STATE.docsById[exactQ.doc_id];
+    const docSources = [
+      {
+        doc_id: doc.id,
+        title: doc.title,
+        filename: doc.filename,
+        ext: doc.ext,
+        year: doc.year,
+        page_start: exactQ.page || 1
+      }
+    ];
+    appendRelatedSources(docSources, exactQ, 5);
     return {
       query,
       answer_markdown: buildDocSpecificAnswerInBrowser(doc),
-      sources: [
-        {
-          doc_id: doc.id,
-          title: doc.title,
-          filename: doc.filename,
-          ext: doc.ext,
-          year: doc.year,
-          page_start: exactQ.page || 1
-        }
-      ]
+      sources: docSources
     };
   }
 
@@ -2406,6 +2439,7 @@ function answerLocallyInBrowser(query) {
         page_start: engine.item.page || 1
       });
     }
+    appendRelatedSources(qSources, engine.item, 5);
     for (const topic of matchedTopics) {
       for (const sourceFile of topic.source_files || []) {
         const doc = findDocByFilename(sourceFile);
@@ -3508,9 +3542,15 @@ function getRelatedQuestionsPoolForDoc(doc) {
     }
   }
 
-  // 3. Si hay menos de 8 directas, complementar con documentos hermanos de la misma subcategoría/sección
+  // 3. Preguntas de otros archivos enlazados explícitamente mediante related_doc_ids
   const extra = [];
-  if (direct.length < 8 && STATE.qBankByDocId) {
+  const crossLinked = (STATE.qBankByRelatedDocId && STATE.qBankByRelatedDocId[doc.id]) || [];
+  for (const item of shuffleArrayCopy(crossLinked).slice(0, 12)) {
+    pushItem(extra, item, false);
+  }
+
+  // 4. Si aún hay menos de 10 combinadas, complementar con documentos hermanos de la misma subcategoría/sección
+  if (direct.length + extra.length < 10 && STATE.qBankByDocId) {
     const siblings = STATE.documents.filter((other) => {
       if (!other || other.id === doc.id) return false;
       if (doc.subcategory && other.subcategory === doc.subcategory && other.section === doc.section) return true;
@@ -5334,13 +5374,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.6.4";
+const APP_WEB_VERSION = "9.7.0";
 const APP_MOBILE_VERSION = "3.6.3";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v50";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v51";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -10026,5 +10066,18 @@ function setupScoutForum() {
   flushForumOutbox();
   syncForumWithCloud();
 }
+
+function initAdaptivePerfMode() {
+  try {
+    const root = document.documentElement;
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+    const lowRam = typeof navigator.deviceMemory === "number" && navigator.deviceMemory <= 4;
+    const lowCpu = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4;
+    const isLite = Boolean(reduceMotion || saveData || lowRam || lowCpu);
+    root.dataset.btPerf = isLite ? "lite" : "standard";
+  } catch (_) {}
+}
+initAdaptivePerfMode();
 
 document.addEventListener("DOMContentLoaded", initApp);

@@ -1,8 +1,8 @@
 {
-  "version": "9.6.4",
-  "mobileVersion": "3.6.4",
-  "cache": "bibliotech-scout-v50",
+  "version": "9.7.0",
+  "mobileVersion": "3.7.0",
+  "cache": "bibliotech-scout-v51",
   "releasedAt": "2026-11-19",
   "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.6.4: Preguntas relacionadas sugeridas (3 a 4 con botón de recarga al azar) al abrir cualquier archivo en el Lector, rectificación de consultas reales (Patrimonito Art. 67, ubicación Pin/Certificado Punta de Flecha Art. 72, Paz y Participación Comunitaria, El Desafío de ser Caminante), puente directo al Buscador desde búsquedas vacías, corrección SW en iOS y Cloudflare Worker v2.0 (883 documentos · 14,836 preguntas)."
+  "notes": "Versión 9.7.0: Rediseño visual profesional y motor de rendimiento para dispositivos de baja gama (sin compresión ni pérdida de calidad en imágenes), expansión de +42.5 % a 21,134 preguntas verificadas cubriendo los 883 documentos oficiales y enlaces cruzados entre archivos relacionados en respuestas y lector."
 }
