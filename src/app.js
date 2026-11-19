@@ -1398,7 +1398,9 @@ function getDocsForShelf(shelf, filterText = "") {
     if (tokens.length) {
       const tagsStr = Array.isArray(d.tags) ? d.tags.join(" ") : "";
       const odsStr = Array.isArray(d.ods) ? d.ods.join(" ") : "";
-      const hay = normalizeStr(`${d.title} ${d.filename} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""} ${d.code || ""} ${tagsStr} ${odsStr}`);
+      const codeRaw = String(d.code || "");
+      const codeExpanded = `${codeRaw} ${codeRaw.replace(/[\/\-\._]+/g, " ")} ${codeRaw.replace(/[^a-z0-9]/gi, "")}`;
+      const hay = normalizeStr(`${d.title} ${d.filename} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""} ${codeExpanded} ${tagsStr} ${odsStr}`);
       for (const tk of tokens) {
         if (!hay.includes(tk)) return false;
       }
@@ -1496,6 +1498,7 @@ function renderLibraryShelf() {
             <span class="book-year-pill">${d.year}</span>
             <span class="book-pages-pill">${escapeHtml(pagesLabel)}</span>
           </div>
+          ${d.code ? `<span class="bt-doc-code-badge" title="Nomenclatura oficial: ${escapeHtml(d.code)}">${escapeHtml(d.code)}</span>` : ""}
           <h3 class="book-title" title="${escapeHtml(d.title)}">${escapeHtml(d.title)}</h3>
           <span class="book-meta">${escapeHtml(d.section_label)}${d.subcategory ? ` · ${escapeHtml(d.subcategory)}` : ""}</span>
           ${d.summary ? `<p class="book-desc">${escapeHtml(d.summary)}</p>` : ''}
@@ -2562,15 +2565,18 @@ function displayAnswer(data, queryText = "") {
   }
 
   sourcesEl.innerHTML = sources
-    .map(
-      (s) => `
+    .map((s) => {
+      const meta = STATE.docsById[s.doc_id];
+      const codeBadge = meta && meta.code ? `<span class="source-pill-code">${escapeHtml(meta.code)}</span>` : "";
+      return `
       <button type="button" class="source-bottom-pill" data-open-doc="${escapeHtml(s.doc_id)}">
         <span class="source-pill-ext">${escapeHtml(s.ext || "PDF")}</span>
+        ${codeBadge}
         <strong>${escapeHtml(s.title)}</strong>
         <span class="source-pill-year">${s.year || ""}${s.page_start ? ` • Pág. ${s.page_start}` : ""}</span>
       </button>
-    `
-    )
+    `;
+    })
     .join("");
 }
 
@@ -2727,7 +2733,9 @@ function applyCatalogFilters() {
     if (tokens.length) {
       const tagsStr = Array.isArray(d.tags) ? d.tags.join(" ") : "";
       const odsStr = Array.isArray(d.ods) ? d.ods.join(" ") : "";
-      const hay = normalizeStr(`${d.title} ${d.filename} ${d.code || ""} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""} ${tagsStr} ${odsStr}`);
+      const codeRaw = String(d.code || "");
+      const codeExpanded = `${codeRaw} ${codeRaw.replace(/[\/\-\._]+/g, " ")} ${codeRaw.replace(/[^a-z0-9]/gi, "")}`;
+      const hay = normalizeStr(`${d.title} ${d.filename} ${codeExpanded} ${d.category} ${d.subcategory || ""} ${d.section_label} ${d.summary || ""} ${tagsStr} ${odsStr}`);
       for (const tk of tokens) {
         if (!hay.includes(tk)) return false;
       }
@@ -2810,6 +2818,7 @@ function renderCatalogGrid() {
               <span class="badge badge-ext">${escapeHtml(d.ext)}</span>
               <span class="badge badge-year">${d.year}</span>
               <span class="badge badge-sec">${escapeHtml(d.section_label)}</span>
+              ${d.code ? `<span class="badge badge-code" title="Nomenclatura oficial: ${escapeHtml(d.code)}">${escapeHtml(d.code)}</span>` : ""}
             </div>
             <span style="font-size:0.74rem;color:#64748b;font-weight:700;">${sizeText}</span>
           </div>
@@ -3107,6 +3116,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
     <span class="badge badge-ext">${escapeHtml(doc.ext)}</span>
     <span class="badge badge-year">${doc.year}</span>
     <span class="badge badge-sec">${escapeHtml(doc.section_label)}</span>
+    ${doc.code ? `<span class="badge badge-code" title="Nomenclatura oficial: ${escapeHtml(doc.code)}">${escapeHtml(doc.code)}</span>` : ""}
   `;
 
   // Descripción y sinopsis del documento (oculta por defecto en cajón Info para ganar espacio)
@@ -3121,6 +3131,9 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   if (descEl) {
     const descContent = doc.summary || doc.full_excerpt || "";
     const metaParts = [];
+    if (doc.code) {
+      metaParts.push(`<div class="modal-doc-meta-line"><strong>Nomenclatura oficial:</strong> <code class="bt-inline-code">${escapeHtml(doc.code)}</code></div>`);
+    }
     if (descContent) {
       metaParts.push(`<div><strong>Contenido del documento:</strong> ${escapeHtml(descContent)}</div>`);
     }
@@ -5067,13 +5080,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.6.2";
-const APP_MOBILE_VERSION = "3.6.2";
+const APP_WEB_VERSION = "9.6.3";
+const APP_MOBILE_VERSION = "3.6.3";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v48";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v49";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -5282,7 +5295,7 @@ function setupWebOfflineManager() {
       if (hasBank && hasFaq4) {
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (14,828 preg.)";
+          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (14,832 preg.)";
         }
         if (btnDownload) {
           btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
@@ -5432,7 +5445,7 @@ function setupWelcomeModal() {
       const shareUrl = "https://ey-liam.github.io/bibliotech-scouts/";
       const shareData = {
         title: "BiblioTech Scout — Biblioteca e Inteligencia Documental Scout",
-        text: "Explora 882 documentos oficiales (incluyendo 220 FAES y 82 FES) y 14,828 respuestas scouts en BiblioTech Scout:",
+        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 14,832 respuestas scouts en BiblioTech Scout:",
         url: shareUrl
       };
       enqueueAnonTelemetry({ t: "enlace_externo", label: "Compartir QR / Sitio Bienvenida", url: shareUrl }, false);

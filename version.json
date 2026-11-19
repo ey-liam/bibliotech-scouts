@@ -1,8 +1,8 @@
 {
-  "version": "9.6.2",
-  "mobileVersion": "3.6.2",
-  "cache": "bibliotech-scout-v48",
+  "version": "9.6.3",
+  "mobileVersion": "3.6.3",
+  "cache": "bibliotech-scout-v49",
   "releasedAt": "2026-11-19",
   "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.6.2: Nuevas respuestas documentales oficiales sobre Insignias Mundiales (Marco Mundo Mejor): qué evitar para que no rechacen o cierren tu trámite, plazos de 15/30 días y 6 meses, validación en SISAS y canales oficiales de seguimiento si tu insignia no llega (14,828 preguntas verificadas)."
+  "notes": "Versión 9.6.3: Se integra el comunicado oficial ASMAC/DNME/CNPJ/26.005 (Mundo Mejor 2026: correos vigentes, copias obligatorias, 15 días hábiles y anulación a 30 días), nomenclaturas oficiales visibles y buscables en 664 documentos (883 documentos oficiales · 14,832 preguntas)."
 }

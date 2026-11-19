@@ -18059,3 +18059,74 @@ html[data-camp-mode="true"] .saved-drafts-divider {
     display: none !important;
   }
 }
+
+/* ============================================================================
+   V9.6.3: ETIQUETAS VISIBLES DE NOMENCLATURA OFICIAL ASMAC / RECME / SISAS
+   ============================================================================ */
+.bt-doc-code-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  max-width: 100%;
+  margin: 0.45rem 0 0.15rem;
+  padding: 0.18rem 0.52rem;
+  border-radius: 7px;
+  border: 1px solid rgba(109, 40, 217, 0.22);
+  background: rgba(109, 40, 217, 0.08);
+  color: #4c1d95;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge.badge-code,
+.source-pill-code {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 0.16rem 0.48rem;
+  border-radius: 7px;
+  border: 1px solid rgba(14, 116, 144, 0.28);
+  background: rgba(14, 116, 144, 0.09);
+  color: #0e7490;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bt-inline-code {
+  padding: 0.12rem 0.42rem;
+  border-radius: 6px;
+  background: rgba(109, 40, 217, 0.09);
+  color: #4c1d95;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+.doc-badges {
+  flex-wrap: wrap;
+}
+
+html[data-camp-mode="true"] .bt-doc-code-badge,
+html[data-camp-mode="true"] .bt-inline-code {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: rgba(167, 139, 250, 0.4);
+  color: #e9d5ff;
+}
+
+html[data-camp-mode="true"] .badge.badge-code,
+html[data-camp-mode="true"] .source-pill-code {
+  background: rgba(56, 189, 248, 0.16);
+  border-color: rgba(56, 189, 248, 0.38);
+  color: #bae6fd;
+}
