@@ -404,7 +404,7 @@ function setupLazyDataWarmup() {
 }
 
 // ============================================================================
-// CARGA INICIAL (CATALOGO DE 883 DOCUMENTOS OFICIALES + 105 TEMAS + 21,134 PREGUNTAS)
+// CARGA INICIAL (CATALOGO DE 883 DOCUMENTOS OFICIALES + 105 TEMAS + 21,185 PREGUNTAS)
 // ============================================================================
 const IS_APPLE_TOUCH =
   /iPhone|iPad|iPod/i.test(navigator.userAgent || "") ||
@@ -1837,9 +1837,27 @@ const SYNONYMS = {
   salud: ["ficha", "medica", "seguro"],
   caminantes: ["comunidad", "red", "cnrc", "aventura", "senderos"],
   comunidad: ["caminantes", "red", "everest"],
-  manada: ["lobatos", "lobellas", "seisena", "akela", "selva"],
+  manada: ["lobatos", "lobellas", "lobeznas", "seisena", "akela", "selva"],
   tropa: ["scouts", "patrulla", "guia", "rumbos"],
   clan: ["rovers", "servicio", "horquilla", "rutas", "ppv"],
+  horquilla: ["terminal", "insignia", "clan", "rover"],
+  sacar: ["obtener", "acreditar", "lograr", "tramitar", "conseguir", "requisitos"],
+  saco: ["obtener", "acreditar", "lograr", "tramitar", "requisitos"],
+  sacan: ["obtener", "acreditar", "lograr", "tramitar", "requisitos"],
+  sacarse: ["obtener", "acreditar", "lograr", "tramitar", "requisitos"],
+  obtener: ["sacar", "acreditar", "lograr", "tramitar", "conseguir"],
+  acreditar: ["obtener", "sacar", "lograr", "validar", "requisitos"],
+  conseguir: ["obtener", "sacar", "acreditar", "requisitos"],
+  especialidad: ["especialidades", "fes"],
+  especialidades: ["especialidad", "fes"],
+  conocimientos: ["requisitos", "temas", "habilidades", "contenidos"],
+  conocimiento: ["requisitos", "temas", "habilidades", "contenidos"],
+  necesario: ["requisitos", "pide", "piden"],
+  necesarios: ["requisitos", "pide", "piden"],
+  pedir: ["solicitar", "tramitar", "iniciar"],
+  solicitar: ["pedir", "tramitar", "iniciar"],
+  tiempo: ["anticipacion", "plazo", "meses"],
+  anticipacion: ["tiempo", "plazo", "meses"],
   agentes: ["cambio", "cnrc", "ods", "proyectos", "salud", "sustentabilidad", "paz", "habilidades"],
   promesa: ["ley", "principios", "virtudes", "flor", "lis", "investidura"]
 };
@@ -1935,40 +1953,152 @@ function getBankIndex() {
   return bankIndexCache;
 }
 
+const GENERIC_CONCEPT_TOKENS = new Set([
+  "requisito", "requisitos", "insignia", "insignias", "scout", "scouts",
+  "obtener", "sacar", "acreditar", "conseguir", "tramitar", "lograr",
+  "conocimiento", "conocimientos", "necesario", "necesarios", "pide", "piden",
+  "nuevo", "nueva", "nuevos", "nuevas", "tipo", "tipos", "diferencia", "diferencias",
+  "sirve", "sirven", "tema", "temas", "general", "oficial", "seccion", "secciones",
+  "formato", "formatos", "plantilla", "plantillas", "guia", "manual", "documento",
+  "archivo", "final", "terminal", "solicitud", "proceso", "procedimiento", "paso", "pasos"
+]);
+
+function buildQueryConceptGroups(query) {
+  const rawLower = String(query || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  const all = normalizeStr(query).match(/[a-z0-9]{2,}/g) || [];
+  const filtered = all.filter((w) => !ENGINE_STOPWORDS.has(w));
+  const words = filtered.length ? filtered : all;
+  const groups = [];
+  const seenCanon = new Set();
+
+  for (const word of words) {
+    const canon = canonicalToken(word) || word;
+    if (!canon || seenCanon.has(canon)) continue;
+    seenCanon.add(canon);
+
+    const baseVariants = tokenVariants(word);
+    const variants = new Set(baseVariants);
+    for (const v of baseVariants) {
+      const direct = Object.prototype.hasOwnProperty.call(SYNONYMS, v) ? SYNONYMS[v] : [];
+      for (const syn of direct) {
+        for (const sv of tokenVariants(syn)) variants.add(sv);
+      }
+    }
+    const isGeneric = GENERIC_CONCEPT_TOKENS.has(canon) || GENERIC_CONCEPT_TOKENS.has(word);
+    groups.push({
+      canon,
+      baseVariants,
+      variants: [...variants],
+      isGeneric,
+      weight: isGeneric ? 1.0 : 2.6
+    });
+  }
+
+  const compoundCodes = rawLower.match(/\b(?:[a-z]{1,4}\s*)?\d+(?:[._-]\d+)+\b|\b[a-z]+\d+(?:[._-]\d+)+\b/g) || [];
+  for (const code of compoundCodes) {
+    const joined = code.replace(/[^a-z0-9]/g, "");
+    if (joined.length >= 2 && !seenCanon.has(joined)) {
+      seenCanon.add(joined);
+      groups.push({
+        canon: joined,
+        baseVariants: [joined],
+        variants: [joined],
+        isGeneric: false,
+        weight: 3.2
+      });
+    }
+  }
+  return groups;
+}
+
 function rankQuestionBank(query) {
-  if (!STATE.questionBank.length) return { item: null, score: 0, coverage: 0, bodyCoverage: 0 };
-  const qSet = expandTokenSet(query);
+  if (!STATE.questionBank.length) {
+    return { item: null, score: 0, coverage: 0, specificCoverage: 0, bodyCoverage: 0 };
+  }
   const qNorm = normalizeQuestionKey(query);
-  const qTokens = [...qSet];
+  const conceptGroups = buildQueryConceptGroups(query);
+  if (!conceptGroups.length) {
+    return { item: null, score: 0, coverage: 0, specificCoverage: 0, bodyCoverage: 0 };
+  }
+  const totalWeight = conceptGroups.reduce((acc, g) => acc + g.weight, 0) || 1;
+  const specificGroups = conceptGroups.filter((g) => !g.isGeneric);
+  const specificTotal = specificGroups.length;
   const bank = getBankIndex();
   let best = null;
   let bestScore = 0;
   let bestCoverage = 0;
+  let bestSpecific = 0;
   let bestBody = 0;
 
   for (const item of bank) {
     const hasTopic = Boolean(item.topic_id && STATE.topicsById[item.topic_id]);
     if ((!item.ans && !hasTopic) || !item._nq) continue;
     if (isGenericDocQuestion(item.q)) continue;
+
     let hits = 0;
-    for (const token of qTokens) if (item._search.has(token)) hits++;
+    let directHits = 0;
+    let matchedWeight = 0;
+    let specificHits = 0;
+
+    for (const g of conceptGroups) {
+      let matched = false;
+      let direct = false;
+      for (const bv of g.baseVariants) {
+        if (item._base.has(bv)) {
+          matched = true;
+          direct = true;
+          break;
+        }
+      }
+      if (!matched) {
+        for (const v of g.variants) {
+          if (item._search.has(v)) {
+            matched = true;
+            break;
+          }
+        }
+      }
+      if (matched) {
+        hits++;
+        if (direct) directHits++;
+        matchedWeight += g.weight;
+        if (!g.isGeneric) specificHits++;
+      }
+    }
     if (!hits) continue;
-    const coverage = hits / Math.max(1, qSet.size);
-    if (coverage < 0.55 && !(qSet.size > 5 && hits >= 3)) continue;
+
+    const coverage = matchedWeight / totalWeight;
+    const specificCoverage = specificTotal > 0 ? specificHits / specificTotal : 1;
     const exact = item._nq === qNorm || item._nq.includes(qNorm) || qNorm.includes(item._nq);
-    if (hits < 2 && !(qSet.size === 1 && hits === 1 && exact)) continue;
+
+    // Nunca empatar preguntas que no coinciden con NINGÚN término propio/específico del usuario
+    if (specificTotal >= 1 && specificHits === 0) continue;
+    if (specificTotal >= 2 && specificCoverage < 0.5 && !exact) continue;
+    if (coverage < 0.52 && !(specificTotal >= 2 && specificCoverage >= 0.85)) continue;
+    if (hits < 2 && !(conceptGroups.length === 1 && hits === 1 && exact)) continue;
 
     // La respuesta se tokeniza solo para los candidatos que ya coinciden con la
     // pregunta. Así el índice inicial sigue siendo ligero en el teléfono.
     const bodySource = item.ans || (hasTopic ? STATE.topicsById[item.topic_id].content : "");
     const answerTokens = item._answer || (item._answer = expandTokenSet(bodySource || ""));
-    let bodyHits = 0;
-    for (const token of qTokens) if (answerTokens.has(token)) bodyHits++;
-    const bodyCoverage = bodyHits / Math.max(1, qSet.size);
-    const itemCoverage = hits / Math.max(1, item._base.size);
+    let bodyWeight = 0;
+    for (const g of conceptGroups) {
+      if (g.variants.some((v) => answerTokens.has(v))) bodyWeight += g.weight;
+    }
+    const bodyCoverage = bodyWeight / totalWeight;
+    const itemCoverage = Math.min(1, hits / Math.max(1, item._base.size));
 
-    let score = coverage * 60 + itemCoverage * 15 + bodyCoverage * 24 + hits * 4;
-    if (exact) score += 30;
+    let score =
+      coverage * 58 +
+      specificCoverage * 24 +
+      itemCoverage * 14 +
+      bodyCoverage * 20 +
+      hits * 4 +
+      directHits * 7;
+    if (exact) score += 34;
     if (item.doc_id) score += 2;
     if (item.topic_id) score += 3;
     if (item.cat) score += 1;
@@ -1976,6 +2106,7 @@ function rankQuestionBank(query) {
       bestScore = score;
       best = item;
       bestCoverage = coverage;
+      bestSpecific = specificCoverage;
       bestBody = bodyCoverage;
     }
   }
@@ -1985,7 +2116,13 @@ function rankQuestionBank(query) {
       ans: buildTopicAnswer(STATE.topicsById[best.topic_id], query, 1500)
     };
   }
-  return { item: best, score: bestScore, coverage: bestCoverage, bodyCoverage: bestBody };
+  return {
+    item: best,
+    score: bestScore,
+    coverage: bestCoverage,
+    specificCoverage: bestSpecific,
+    bodyCoverage: bestBody
+  };
 }
 
 function splitTopicSections(content) {
@@ -2178,11 +2315,37 @@ function buildTopicAnswer(topic, query, maxChars = 1500) {
       headingWeight += (1 + Math.log((total + 1) / (frequency + 1))) * 1.8;
     }
     const body = normalizeQuestionKey(section.text);
+    const headNorm = normalizeQuestionKey(section.heading);
     let boost = 0;
     if (wantsDocs && /(document|autoriz|ficha|permiso|acta|curp|codigo de conducta)/.test(body)) boost += 14;
     if (wantsPrice && /(\$|cuota|precio|costo|membresia|pago)/.test(body)) boost += 10;
-    if (wantsSteps && /(pasos|procedimiento|proceso|inscrip|registro)/.test(normalizeQuestionKey(section.heading))) boost += 6;
+    if (wantsSteps && /(pasos|procedimiento|proceso|inscrip|registro)/.test(headNorm)) boost += 6;
     if (wantsWhere && /(donde|direccion|ubicacion|tienda|portal|sitio)/.test(body)) boost += 6;
+    // Priorizar la subsección exacta cuando el usuario pregunta por una sección específica
+    const askedSec =
+      /\b(manada|lobato|lobatos|lobezna|lobeznas)\b/.test(qNorm)
+        ? "manada"
+        : /\b(tropa|patrulla|patrullas)\b/.test(qNorm)
+          ? "tropa"
+          : /\b(comunidad|caminante|caminantes)\b/.test(qNorm)
+            ? "comunidad"
+            : /\b(clan|rover|rovers)\b/.test(qNorm)
+              ? "clan"
+              : "";
+    if (askedSec) {
+      const headSec =
+        /\b(manada|lobato|lobezna)\b/.test(headNorm)
+          ? "manada"
+          : /\b(tropa|patrulla)\b/.test(headNorm)
+            ? "tropa"
+            : /\b(comunidad|caminante)\b/.test(headNorm)
+              ? "comunidad"
+              : /\b(clan|rover)\b/.test(headNorm)
+                ? "clan"
+                : "";
+      if (headSec === askedSec) boost += 22;
+      else if (headSec && headSec !== askedSec) boost -= 12;
+    }
     return { section, hits, score: weight + headingWeight + boost };
   });
   scored.sort((a, b) => b.score - a.score);
@@ -2372,11 +2535,19 @@ function buildAnswerLocally(query) {
   const second = topicRank[1];
   const topicScore = top ? top.score : 0;
   const qaCoverage = qa.item ? qa.coverage : 0;
+  const qaSpec = qa.item ? (qa.specificCoverage || 0) : 0;
 
+  // Pregunta específica de alta precisión en el banco vence a temas genéricos
+  if (qa.item && qaCoverage >= 0.84 && qaSpec >= 0.95 && qa.score >= 68) {
+    return { kind: "qa", text: qa.item.ans, item: qa.item, qa, top };
+  }
+  if (qa.item && qaCoverage >= 0.72 && qaSpec >= 0.95 && topicScore < 52) {
+    return { kind: "qa", text: qa.item.ans, item: qa.item, qa, top };
+  }
   if (qa.item && qaCoverage >= 0.92 && topicScore < 30) {
     return { kind: "qa", text: qa.item.ans, item: qa.item, qa, top };
   }
-  if (qa.item && qa.bodyCoverage >= 0.55 && topicScore < 32) {
+  if (qa.item && qa.bodyCoverage >= 0.55 && qaSpec >= 0.65 && topicScore < 32) {
     let text = qa.item.ans;
     let extraTopic = null;
     if (top && topicScore >= 12 && top.topic.id !== qa.item.topic_id) {
@@ -5785,13 +5956,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.8.0";
+const APP_WEB_VERSION = "9.8.1";
 const APP_MOBILE_VERSION = "3.8.0";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v52";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v53";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -6000,7 +6171,7 @@ function setupWebOfflineManager() {
       if (hasBank && hasFaq4) {
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (21,134 preg.)";
+          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (21,185 preg.)";
         }
         if (btnDownload) {
           btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
@@ -6150,7 +6321,7 @@ function setupWelcomeModal() {
       const shareUrl = "https://ey-liam.github.io/bibliotech-scouts/";
       const shareData = {
         title: "BiblioTech Scout — Biblioteca e Inteligencia Documental Scout",
-        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 21,134 respuestas scouts en BiblioTech Scout:",
+        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 21,185 respuestas scouts en BiblioTech Scout:",
         url: shareUrl
       };
       enqueueAnonTelemetry({ t: "enlace_externo", label: "Compartir QR / Sitio Bienvenida", url: shareUrl }, false);

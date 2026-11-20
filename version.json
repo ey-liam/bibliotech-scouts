@@ -1,8 +1,8 @@
 {
-  "version": "9.8.0",
+  "version": "9.8.1",
   "mobileVersion": "3.8.0",
-  "cache": "bibliotech-scout-v52",
+  "cache": "bibliotech-scout-v53",
   "releasedAt": "2026-11-19",
   "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.8.0: Visor PDF interactivo por página con streaming HTTP 206 para archivos pesados (50 MB a 300+ MB sin límite de 25 MB) vía Cloudflare Worker v2.1, pulido visual en los 7 espacios (claro y oscuro), banco de 21,134 preguntas verificadas con enlaces cruzados y depuración de más de 133 MB de recursos obsoletos sin comprimir activos activos."
+  "notes": "Versión 9.8.1: Motor de búsqueda conceptual por relevancia específica (corrige colisiones de sinónimos como Águila Real vs Everest y Baden-Powell), 51 nuevas preguntas y respuestas oficiales verificadas a partir de consultas reales de usuarios (21,185 preguntas totales sobre Insignias Finales/Terminales, Método Scout, Actividades Scouts, Especialidades FES, Congreso de Comunidad, Mapache de Cozumel y PJOS por sección)."
 }
