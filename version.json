@@ -1,8 +1,8 @@
 {
-  "version": "9.8.1",
+  "version": "9.8.2",
   "mobileVersion": "3.8.0",
-  "cache": "bibliotech-scout-v53",
-  "releasedAt": "2026-11-19",
+  "cache": "bibliotech-scout-v54",
+  "releasedAt": "2026-11-20",
   "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.8.1: Motor de búsqueda conceptual por relevancia específica (corrige colisiones de sinónimos como Águila Real vs Everest y Baden-Powell), 51 nuevas preguntas y respuestas oficiales verificadas a partir de consultas reales de usuarios (21,185 preguntas totales sobre Insignias Finales/Terminales, Método Scout, Actividades Scouts, Especialidades FES, Congreso de Comunidad, Mapache de Cozumel y PJOS por sección)."
+  "notes": "Versión 9.8.2: Ordenamiento por relevancia de título y código en Biblioteca y Catálogo, filtro de ruido benigno WebKit/iOS para alertas de telemetría y corrección directa de respuestas consultadas por familias y jóvenes (21,186 preguntas verificadas)."
 }

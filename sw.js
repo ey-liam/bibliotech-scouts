@@ -1,10 +1,10 @@
 // ============================================================================
 // BiblioTech Scout — Service Worker PWA (Soporte Offline & Cache Resiliente)
 // Creador: Liam Durán - Provincia TLXH (ey-liam)
-// Versión: 9.8.1
+// Versión: 9.8.2
 // ============================================================================
 
-const CACHE_NAME = "bibliotech-scout-v53";
+const CACHE_NAME = "bibliotech-scout-v54";
 const STATIC_ASSETS = [
   "./",
   "index.html",

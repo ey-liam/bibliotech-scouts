@@ -404,7 +404,7 @@ function setupLazyDataWarmup() {
 }
 
 // ============================================================================
-// CARGA INICIAL (CATALOGO DE 883 DOCUMENTOS OFICIALES + 105 TEMAS + 21,185 PREGUNTAS)
+// CARGA INICIAL (CATALOGO DE 883 DOCUMENTOS OFICIALES + 105 TEMAS + 21,186 PREGUNTAS)
 // ============================================================================
 const IS_APPLE_TOUCH =
   /iPhone|iPad|iPod/i.test(navigator.userAgent || "") ||
@@ -1497,9 +1497,43 @@ function renderSubcategoryPills(containerId, docsPool, activeSub, isOpen, onTogg
   });
 }
 
+const DOC_SEARCH_STOPWORDS = new Set(["de", "del", "la", "las", "los", "el", "en", "y", "e", "o", "u", "para", "por", "con", "un", "una", "al", "a"]);
+
+function extractDocSearchTokens(rawQuery) {
+  const q = normalizeStr(String(rawQuery || "").trim());
+  const raw = q ? q.split(/\s+/).filter(Boolean) : [];
+  const filtered = raw.filter((tk) => tk.length >= 2 && !DOC_SEARCH_STOPWORDS.has(tk));
+  return { q, tokens: filtered.length ? filtered : raw };
+}
+
+function scoreDocSearchRelevance(doc, q, tokens) {
+  if (!doc || !tokens.length) return 0;
+  const titleN = normalizeStr(doc.title || "");
+  const fileN = normalizeStr(doc.filename || "");
+  const codeN = normalizeStr(doc.code || "");
+  const subN = normalizeStr(`${doc.subcategory || ""} ${doc.section_label || ""} ${doc.category || ""}`);
+  let score = 0;
+  if (q && (titleN === q || codeN === q)) score += 160;
+  else if (q && titleN.includes(q)) score += 110;
+  if (q && codeN && codeN.includes(q)) score += 95;
+  if (q && fileN.includes(q)) score += 75;
+  let titleHits = 0;
+  for (const tk of tokens) {
+    if (titleN.includes(tk)) {
+      score += 28;
+      titleHits++;
+    }
+    if (codeN && codeN.includes(tk)) score += 20;
+    if (fileN.includes(tk)) score += 14;
+    if (subN.includes(tk)) score += 8;
+  }
+  if (titleHits === tokens.length) score += 45;
+  if (doc.is_latest_in_family !== false) score += 4;
+  return score;
+}
+
 function getDocsForShelf(shelf, filterText = "") {
-  const q = normalizeStr(filterText.trim());
-  const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
+  const { q, tokens } = extractDocSearchTokens(filterText);
   const secFilter = STATE.librarySection || "all";
   const scope = STATE.libraryScope || "shelf";
 
@@ -1524,6 +1558,14 @@ function getDocsForShelf(shelf, filterText = "") {
   let baseDocs = scope === "all" ? readable : filterDocsByShelfName(readable, shelf);
   if (scope !== "all" && tokens.length && !baseDocs.length && readable.length) {
     baseDocs = readable;
+  }
+
+  if (tokens.length && baseDocs.length > 1) {
+    baseDocs = baseDocs.slice().sort((a, b) => {
+      const diff = scoreDocSearchRelevance(b, q, tokens) - scoreDocSearchRelevance(a, q, tokens);
+      if (diff !== 0) return diff;
+      return (b.year || 0) - (a.year || 0);
+    });
   }
 
   renderSubcategoryPills(
@@ -3013,8 +3055,7 @@ function syncCatalogSubcategoryDropdown(docsPool) {
 }
 
 function applyCatalogFilters() {
-  const q = normalizeStr(STATE.searchQuery.trim());
-  const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
+  const { q, tokens } = extractDocSearchTokens(STATE.searchQuery);
 
   const baseFiltered = STATE.documents.filter((d) => {
     if (STATE.onlyLatest && d.is_latest_in_family === false) return false;
@@ -3067,6 +3108,10 @@ function applyCatalogFilters() {
   }
 
   filtered.sort((a, b) => {
+    if (tokens.length && STATE.sortOrder === "recent") {
+      const relDiff = scoreDocSearchRelevance(b, q, tokens) - scoreDocSearchRelevance(a, q, tokens);
+      if (relDiff !== 0) return relDiff;
+    }
     if (STATE.sortOrder === "title") {
       return a.title.localeCompare(b.title, "es", { numeric: true });
     }
@@ -5956,13 +6001,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.8.1";
+const APP_WEB_VERSION = "9.8.2";
 const APP_MOBILE_VERSION = "3.8.0";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v53";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v54";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -6171,7 +6216,7 @@ function setupWebOfflineManager() {
       if (hasBank && hasFaq4) {
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (21,185 preg.)";
+          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (21,186 preg.)";
         }
         if (btnDownload) {
           btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
@@ -6321,7 +6366,7 @@ function setupWelcomeModal() {
       const shareUrl = "https://ey-liam.github.io/bibliotech-scouts/";
       const shareData = {
         title: "BiblioTech Scout — Biblioteca e Inteligencia Documental Scout",
-        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 21,185 respuestas scouts en BiblioTech Scout:",
+        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 21,186 respuestas scouts en BiblioTech Scout:",
         url: shareUrl
       };
       enqueueAnonTelemetry({ t: "enlace_externo", label: "Compartir QR / Sitio Bienvenida", url: shareUrl }, false);
@@ -7287,9 +7332,20 @@ function setupFullActivityObservers() {
     true
   );
 
-  // 5. Captura anónima de errores JS / bugs reales de ejecución
+  // 5. Captura anónima de errores JS / bugs reales de ejecución (filtrando ruido benigno de ciclo de vida iOS/WebKit)
+  const isBenignBrowserNoise = (rawMsg, rawFile = "") => {
+    const m = String(rawMsg || "").trim();
+    if (!m) return true;
+    if (/^Script error\.?$/i.test(m) && !rawFile) return true;
+    if (/ResizeObserver loop/i.test(m)) return true;
+    if (/AbortError|The operation was aborted|signal is aborted|cancelled|canceled/i.test(m)) return true;
+    if (/Worker was terminated|RenderingCancelledException/i.test(m)) return true;
+    if ((/Load failed|Failed to fetch|NetworkError/i.test(m)) && (document.visibilityState === "hidden" || navigator.onLine === false)) return true;
+    return false;
+  };
   window.addEventListener("error", (ev) => {
     if (!hasTelemetryConsent() || !ev || !ev.message) return;
+    if (isBenignBrowserNoise(ev.message, ev.filename)) return;
     enqueueAnonTelemetry(
       {
         t: "error_js",
@@ -7302,6 +7358,7 @@ function setupFullActivityObservers() {
   window.addEventListener("unhandledrejection", (ev) => {
     if (!hasTelemetryConsent() || !ev || !ev.reason) return;
     const msg = ev.reason && ev.reason.message ? ev.reason.message : String(ev.reason);
+    if (isBenignBrowserNoise(msg, "promise_rejection")) return;
     enqueueAnonTelemetry(
       {
         t: "error_js",
