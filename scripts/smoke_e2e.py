@@ -315,14 +315,18 @@ def run_e2e(test_webkit: bool = False):
             page.wait_for_timeout(150)
             assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Desktop 1200px horizontal overflow"
 
-            # Vista móvil 390x844 sin desborde y prueba del Dock inferior de 5 botones
+            # Vista móvil 390x844 sin desborde y prueba del Dock inferior de 6 botones
             mctx = browser.new_context(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
             mpage = mctx.new_page()
             mpage.on("pageerror", lambda err: errors.append(f"mobile pageerror: {err}"))
             mpage.goto("http://127.0.0.1:18775/", wait_until="networkidle")
             dismiss_consent(mpage)
             assert mpage.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Mobile horizontal overflow (inicio)"
-            assert mpage.locator("#unifiedBottomDock .bt-dock-item").count() == 5, "Dock móvil debe tener 5 botones"
+            assert mpage.locator("#unifiedBottomDock .bt-dock-item").count() == 6, "Dock móvil debe tener 6 botones"
+            mpage.click("#dockBtnSettings")
+            mpage.wait_for_selector("#btSettingsModal:not(.hidden)", timeout=3000)
+            mpage.click("#closeSettingsModalBtn")
+            mpage.locator("#btSettingsModal").wait_for(state="hidden", timeout=3000)
             mpage.click('#unifiedBottomDock [data-bt-go-view="fogata"]')
             assert mpage.locator("#foro").is_visible(), "Dock móvil no abrió La Fogata"
             forum_fit = mpage.evaluate(
