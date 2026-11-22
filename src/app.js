@@ -361,6 +361,8 @@ function loadQuestionBank() {
       if (badge && STATE.questionBank.length) {
         badge.textContent = STATE.questionBank.length.toLocaleString("es-MX");
       }
+      resetBankIndexWarmup();
+      scheduleBankIndexWarmup();
       return STATE.questionBank;
     })
     .catch((error) => {
@@ -519,6 +521,8 @@ async function initApp() {
   setupScoutForum();
   setupHeaderUI();
   setupWorkspaceViews();
+  setupSettingsHub();
+  BtSoundEngine.init();
   setupContactEmailUI();
   bindEvents();
   setupScrollAnimations();
@@ -1212,21 +1216,100 @@ function isQuestionMatchingAskSection(item, targetSection) {
   return true;
 }
 
+function buildCodeAutocompleteSuggestions(rawInput) {
+  const qClean = normalizeStr(rawInput).trim();
+  const compact = qClean.replace(/[^a-z0-9.]/g, "");
+  if (!compact || compact.length < 2) return [];
+
+  const isCodeLike =
+    /^(?:recme|serie|p\d{1,2}|jl\d*|dnme|jsn|cnpj|sjsn|faes|fes)/.test(qClean) ||
+    /\b(?:p\d{1,2}(?:\.\d+)?|jl\d+|dnme|jsn)\b/.test(qClean);
+  if (!isCodeLike) return [];
+
+  const items = [];
+  const seen = new Set();
+  const pushItem = (query, codeBadge, cat) => {
+    const k = normalizeQuestionKey(query);
+    if (!k || seen.has(k)) return;
+    seen.add(k);
+    items.push({ q: query, codeBadge, cat, isCodeSuggestion: true });
+  };
+
+  // 1. Coincidencias de Series RECME P1-P10
+  const pSeriesMatch = qClean.match(/(?:^|\b)(?:recme\s+|serie\s+)?(p\d{1,2})(?:\.(\d+))?\b/);
+  if (pSeriesMatch) {
+    const seriesKey = pSeriesMatch[1].toUpperCase();
+    const sInfo = BT_RECME_SERIES_INFO[seriesKey];
+    if (sInfo && !pSeriesMatch[2]) {
+      pushItem(`recme ${seriesKey}`, `Serie ${seriesKey}`, sInfo.name);
+    }
+  }
+
+  // 2. Coincidencias en documentos oficiales con código (P8.1..P9.5, JL304, DNME, JSN, etc.)
+  const needleNoSep = compact.replace(/\./g, "");
+  if (Array.isArray(STATE.documents) && STATE.documents.length) {
+    const matchedDocs = [];
+    for (const d of STATE.documents) {
+      const dCode = String(d.code || "").trim();
+      const dCodeNorm = normalizeStr(dCode);
+      const dCodeCompact = dCodeNorm.replace(/[^a-z0-9]/g, "");
+      const hay = normalizeStr(`${dCode} ${d.filename || ""} ${d.title || ""}`);
+      let sc = 0;
+      if (dCodeNorm && dCodeNorm === compact) sc += 120;
+      else if (dCodeNorm && dCodeNorm.startsWith(compact)) sc += 90;
+      else if (dCodeCompact && dCodeCompact.startsWith(needleNoSep)) sc += 75;
+      else if (hay.includes(qClean)) sc += 30;
+      if (sc > 0 && dCode) {
+        matchedDocs.push({ sc, d });
+      }
+    }
+    matchedDocs.sort(
+      (a, b) =>
+        b.sc - a.sc ||
+        String(a.d.code || "").localeCompare(String(b.d.code || ""), "es", { numeric: true })
+    );
+    for (const { d } of matchedDocs.slice(0, 5)) {
+      pushItem(
+        `${d.code} ${d.title}`.slice(0, 88),
+        d.code,
+        d.section_label || d.category || "Oficial RECME"
+      );
+    }
+  }
+
+  // 3. Caso especial: P8.6 o P5.2 si el usuario escribe justo ese folio
+  if (pSeriesMatch && pSeriesMatch[2]) {
+    const fullCode = `${pSeriesMatch[1].toUpperCase()}.${pSeriesMatch[2]}`;
+    const exists = items.some((it) => normalizeStr(it.codeBadge || "") === normalizeStr(fullCode));
+    if (!exists && BT_RECME_SERIES_INFO[pSeriesMatch[1].toUpperCase()]) {
+      pushItem(
+        `recme ${fullCode}`,
+        fullCode,
+        BT_RECME_SERIES_INFO[pSeriesMatch[1].toUpperCase()].name
+      );
+    }
+  }
+
+  return items.slice(0, 5);
+}
+
 function updateAutocompleteDropdown(rawInput) {
   const box = document.getElementById("askAutocomplete");
   if (!box) return;
 
   const qNorm = normalizeQuestionKey(rawInput);
-  if (!qNorm || qNorm.length < 2 || !STATE.questionBank.length) {
+  if (!qNorm || qNorm.length < 2 || (!STATE.questionBank.length && !STATE.documents.length)) {
     box.classList.add("hidden");
     box.innerHTML = "";
     return;
   }
 
+  const codeItems = buildCodeAutocompleteSuggestions(rawInput);
+
   // Se usan palabras significativas (sin artículos ni muletillas) para que al
   // escribir una pregunta completa también aparezcan temas relacionados.
   const tokens = tokenizeQuery(rawInput).filter((w) => w.length >= 2);
-  if (!tokens.length) {
+  if (!tokens.length && !codeItems.length) {
     box.classList.add("hidden");
     box.innerHTML = "";
     return;
@@ -1236,60 +1319,72 @@ function updateAutocompleteDropdown(rawInput) {
   const userTypedFalda = qNorm.includes("falda");
   const matches = [];
 
-  for (const item of STATE.questionBank) {
-    const nq = normalizeQuestionKey(item.q || "");
-    if (!userTypedFalda && nq.includes("falda")) continue;
+  if (tokens.length && STATE.questionBank.length) {
+    for (const item of STATE.questionBank) {
+      const nq = normalizeQuestionKey(item.q || "");
+      if (!userTypedFalda && nq.includes("falda")) continue;
 
-    // Si el usuario seleccionó una sección en el buscador, no mostrar sugerencias de otras secciones
-    if (STATE.activeAskSection && STATE.activeAskSection !== "all") {
-      if (!isQuestionMatchingAskSection(item, STATE.activeAskSection)) {
-        continue;
+      // Si el usuario seleccionó una sección en el buscador, no mostrar sugerencias de otras secciones
+      if (STATE.activeAskSection && STATE.activeAskSection !== "all") {
+        if (!isQuestionMatchingAskSection(item, STATE.activeAskSection)) {
+          continue;
+        }
       }
-    }
 
-    let score = 0;
-    // Bonificación de relevancia si coincide específicamente con la sección activa
-    if (STATE.activeAskSection && STATE.activeAskSection !== "all") {
-      const catSec = {
-        "Comunidad de Caminantes": "comunidad",
-        "Tropa de Scouts": "tropa",
-        "Manada de Lobatos": "manada",
-        "Clan de Rovers": "clan",
-        "Insignias Mundiales (WOSM)": "internacional"
-      }[item.cat];
-      if (catSec === STATE.activeAskSection) score += 20;
-    }
-    if (nq.startsWith(qNorm)) score += 30;
-    else if (nq.includes(qNorm)) score += 18;
-
-    let tokenHits = 0;
-    for (const tk of tokens) {
-      if (nq.includes(tk)) {
-        score += tk.length >= 5 ? 5 : 3;
-        tokenHits += 1;
+      let score = 0;
+      // Bonificación de relevancia si coincide específicamente con la sección activa
+      if (STATE.activeAskSection && STATE.activeAskSection !== "all") {
+        const catSec = {
+          "Comunidad de Caminantes": "comunidad",
+          "Tropa de Scouts": "tropa",
+          "Manada de Lobatos": "manada",
+          "Clan de Rovers": "clan",
+          "Insignias Mundiales (WOSM)": "internacional"
+        }[item.cat];
+        if (catSec === STATE.activeAskSection) score += 20;
       }
-    }
-    if (tokenHits >= minHits) {
-      if (tokenHits === tokens.length) score += 12;
-      if (!item.doc_id) score += 6;
-      matches.push({ score, item });
+      if (nq.startsWith(qNorm)) score += 30;
+      else if (nq.includes(qNorm)) score += 18;
+
+      let tokenHits = 0;
+      for (const tk of tokens) {
+        if (nq.includes(tk)) {
+          score += tk.length >= 5 ? 5 : 3;
+          tokenHits += 1;
+        }
+      }
+      if (tokenHits >= minHits) {
+        if (tokenHits === tokens.length) score += 12;
+        if (!item.doc_id) score += 6;
+        matches.push({ score, item });
+      }
     }
   }
 
   matches.sort((a, b) => b.score - a.score);
-  const top = matches.slice(0, 8).map((m) => m.item);
+  const seenAc = new Set(codeItems.map((it) => normalizeQuestionKey(it.q)));
+  const topQuestions = [];
+  for (const m of matches) {
+    const k = normalizeQuestionKey(m.item.q || "");
+    if (!k || seenAc.has(k)) continue;
+    seenAc.add(k);
+    topQuestions.push(m.item);
+    if (codeItems.length + topQuestions.length >= 8) break;
+  }
 
-  if (!top.length) {
+  const combined = [...codeItems, ...topQuestions].slice(0, 8);
+
+  if (!combined.length) {
     box.classList.add("hidden");
     box.innerHTML = "";
     return;
   }
 
-  box.innerHTML = top
+  box.innerHTML = combined
     .map(
       (item) => `
-      <div class="ask-ac-item" data-ac-query="${escapeHtml(item.q)}">
-        <span class="ask-ac-text">${escapeHtml(item.q)}</span>
+      <div class="ask-ac-item${item.isCodeSuggestion ? " is-code-item" : ""}" data-ac-query="${escapeHtml(item.q)}">
+        <span class="ask-ac-text">${item.codeBadge ? `<span class="ask-ac-code-badge">${escapeHtml(item.codeBadge)}</span> ` : ""}${escapeHtml(item.q)}</span>
         <span class="ask-ac-cat">${escapeHtml(item.cat || "General")}</span>
       </div>
     `
@@ -1591,6 +1686,58 @@ function getDocsForShelf(shelf, filterText = "") {
   return baseDocs;
 }
 
+function getDocSizeLabel(doc) {
+  if (!doc) return "";
+  if (doc.size_label) return String(doc.size_label);
+  const mb = Number(doc.size_mb || 0);
+  if (mb >= 0.1) return `${mb.toFixed(1)} MB`;
+  const kb = Math.max(1, Math.round(Number(doc.size_kb || 50)));
+  return `${kb} KB`;
+}
+
+const BT_PDF_LAST_PAGE_KEY = "bt_pdf_last_page_v1";
+
+function getSavedPdfPage(docId, maxPages = 9999) {
+  let saved = 1;
+  try {
+    const map = JSON.parse(localStorage.getItem(BT_PDF_LAST_PAGE_KEY) || "{}");
+    const entry = map && map[docId];
+    const p = Number(entry && entry.p);
+    if (Number.isFinite(p) && p >= 1 && p <= maxPages) {
+      saved = p;
+    }
+  } catch (_) {}
+  if (saved <= 1) {
+    try {
+      const ss = parseInt(sessionStorage.getItem(`bt_pdf_page_${docId}`) || "1", 10);
+      if (Number.isFinite(ss) && ss >= 1 && ss <= maxPages) saved = ss;
+    } catch (_) {}
+  }
+  return saved;
+}
+
+function savePdfPageProgress(docId, pageNum, totalPages) {
+  if (!docId || !pageNum) return;
+  try {
+    sessionStorage.setItem(`bt_pdf_page_${docId}`, String(pageNum));
+  } catch (_) {}
+  if (totalPages > 1) {
+    try {
+      const map = JSON.parse(localStorage.getItem(BT_PDF_LAST_PAGE_KEY) || "{}");
+      const safeMap = map && typeof map === "object" ? map : {};
+      safeMap[docId] = { p: Number(pageNum), t: Number(totalPages), ts: Date.now() };
+      const keys = Object.keys(safeMap);
+      if (keys.length > 120) {
+        keys
+          .sort((a, b) => Number((safeMap[a] && safeMap[a].ts) || 0) - Number((safeMap[b] && safeMap[b].ts) || 0))
+          .slice(0, keys.length - 120)
+          .forEach((k) => delete safeMap[k]);
+      }
+      localStorage.setItem(BT_PDF_LAST_PAGE_KEY, JSON.stringify(safeMap));
+    } catch (_) {}
+  }
+}
+
 function resolveDefaultLibraryCount() {
   if (STATE.libraryQuery.trim() !== "") return 24;
   return 12;
@@ -1641,6 +1788,7 @@ function renderLibraryShelf() {
     .map((d, idx) => {
       const coverUrl = d.sha12 ? `covers/${d.sha12}.jpg` : "";
       const pagesLabel = d.page_count > 1 ? `${d.page_count} págs.` : d.ext;
+      const docSize = getDocSizeLabel(d);
       return `
         <article class="book-card" data-doc-id="${escapeHtml(d.id)}" data-shelf-idx="${idx}">
           <div class="book-cover-wrap">
@@ -1673,7 +1821,7 @@ function renderLibraryShelf() {
                   .join("")}</div>`
               : ""
           }
-          <button type="button" class="book-read-btn">Abrir lectura</button>
+          <button type="button" class="book-read-btn">Abrir lectura (${escapeHtml(docSize)})</button>
         </article>
       `;
     })
@@ -1746,18 +1894,32 @@ async function submitQuestion(queryText, options = {}) {
     } catch (_) {}
   }
 
-  // El banco, los fragmentos y el catálogo se cargan en el primer toque. La
-  // respuesta puede llegar antes de que terminen de descargarse; esperamos aquí
-  // para que la primera pregunta también funcione sin conexión y con todas las
-  // fuentes, incluso si se hace justo al abrir la app.
+  // El catálogo y el banco de 21,195 preguntas bastan para responder al instante;
+  // chunks.json (14 MB) solo bloquea si hace falta una búsqueda profunda de fragmentos.
   try {
-    await Promise.all([waitForAppReady(), loadQuestionBank(), loadWebChunks()]);
+    await Promise.all([waitForAppReady(), loadQuestionBank()]);
   } catch (_) {}
 
-  const ans = answerLocallyInBrowser(q);
+  let ans = answerLocallyInBrowser(q);
+  const needsDeepChunks =
+    !ans ||
+    (!ans.sources?.length && /no disponible en el acervo actual/i.test(ans.answer_markdown || ""));
+  if (needsDeepChunks && (!STATE.webChunks || !STATE.webChunks.length)) {
+    try {
+      await loadWebChunks();
+      ans = answerLocallyInBrowser(q);
+    } catch (_) {}
+  } else {
+    setTimeout(() => {
+      loadWebChunks().catch(() => {});
+    }, 1200);
+  }
   displayAnswer(ans, q);
   renderRelatedQuestions(q);
   recordQueryTelemetry(q, ans, querySource);
+  if (typeof BtSoundEngine !== "undefined" && ans && ans.sources && ans.sources.length) {
+    BtSoundEngine.play("success");
+  }
   container.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -1962,18 +2124,185 @@ function isGenericDocQuestion(question) {
     (/«/.test(question) && /(de que trata|informacion oficial|que especifica|que requisitos)/.test(normalized));
 }
 
-let bankIndexCache = null;
+let bankIndexCache = [];
+let bankIndexCursor = 0;
+let bankIndexWarmupTimer = null;
+const BANK_INDEX_CHUNK_SIZE = 2500;
+const corpusVocabulary = new Map();
+let corpusVocabDocsBuilt = false;
+
+function addTextToVocabulary(text, weight = 1) {
+  const words = normalizeStr(text || "").match(/[a-z]{4,}/g) || [];
+  for (const w of words) {
+    if (ENGINE_STOPWORDS.has(w)) continue;
+    corpusVocabulary.set(w, (corpusVocabulary.get(w) || 0) + weight);
+  }
+}
+
+function indexBankSlice(start, end) {
+  const limit = Math.min(end, STATE.questionBank.length);
+  for (let i = start; i < limit; i++) {
+    const item = STATE.questionBank[i];
+    if (!item) continue;
+    addTextToVocabulary(item.q || "", 1);
+    bankIndexCache.push({
+      ...item,
+      _nq: normalizeQuestionKey(item.q || ""),
+      _base: baseTokenSet(item.q || ""),
+      _search: expandTokenSet(item.q || ""),
+      _answer: null
+    });
+  }
+  bankIndexCursor = limit;
+}
+
+function resetBankIndexWarmup() {
+  bankIndexCache = [];
+  bankIndexCursor = 0;
+  corpusVocabDocsBuilt = false;
+  if (bankIndexWarmupTimer) {
+    clearTimeout(bankIndexWarmupTimer);
+    bankIndexWarmupTimer = null;
+  }
+}
+
+function ensureCorpusVocabulary() {
+  if (!corpusVocabDocsBuilt) {
+    corpusVocabDocsBuilt = true;
+    for (const d of STATE.documents || []) {
+      addTextToVocabulary(`${d.title || ""} ${d.subcategory || ""}`, 2);
+    }
+    for (const t of STATE.topics || []) {
+      addTextToVocabulary(`${t.title || ""} ${(t.keywords || []).join(" ")} ${t.content || ""}`, 3);
+    }
+  }
+  if (bankIndexCursor < STATE.questionBank.length) {
+    getBankIndex();
+  }
+  return corpusVocabulary;
+}
+
+function scheduleBankIndexWarmup() {
+  if (bankIndexCursor >= STATE.questionBank.length) return;
+  const runChunk = () => {
+    bankIndexWarmupTimer = null;
+    if (!STATE.questionBank.length || bankIndexCursor >= STATE.questionBank.length) return;
+    indexBankSlice(bankIndexCursor, bankIndexCursor + BANK_INDEX_CHUNK_SIZE);
+    if (bankIndexCursor < STATE.questionBank.length) {
+      scheduleBankIndexWarmup();
+    }
+  };
+  if (typeof window !== "undefined" && typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(() => runChunk(), { timeout: 600 });
+  } else {
+    bankIndexWarmupTimer = setTimeout(runChunk, 12);
+  }
+}
 
 function getBankIndex() {
-  if (bankIndexCache && bankIndexCache.length === STATE.questionBank.length) return bankIndexCache;
-  bankIndexCache = STATE.questionBank.map((item) => ({
-    ...item,
-    _nq: normalizeQuestionKey(item.q || ""),
-    _base: baseTokenSet(item.q || ""),
-    _search: expandTokenSet(item.q || ""),
-    _answer: null
-  }));
+  if (bankIndexCache.length === STATE.questionBank.length && bankIndexCursor === STATE.questionBank.length) {
+    return bankIndexCache;
+  }
+  if (bankIndexCache.length > STATE.questionBank.length || bankIndexCursor > STATE.questionBank.length) {
+    resetBankIndexWarmup();
+  }
+  if (bankIndexCursor < STATE.questionBank.length) {
+    indexBankSlice(bankIndexCursor, STATE.questionBank.length);
+  }
   return bankIndexCache;
+}
+
+function editDistanceDL(a, b, maxDist = 2) {
+  const m = a.length;
+  const n = b.length;
+  if (Math.abs(m - n) > maxDist) return maxDist + 1;
+  const prev2 = new Array(n + 1).fill(0);
+  const prev1 = Array.from({ length: n + 1 }, (_, j) => j);
+  const curr = new Array(n + 1).fill(0);
+
+  for (let i = 1; i <= m; i++) {
+    curr[0] = i;
+    let rowMin = curr[0];
+    const ai = a.charCodeAt(i - 1);
+    for (let j = 1; j <= n; j++) {
+      const bj = b.charCodeAt(j - 1);
+      const cost = ai === bj ? 0 : 1;
+      let val = Math.min(
+        prev1[j] + 1,
+        curr[j - 1] + 1,
+        prev1[j - 1] + cost
+      );
+      if (i > 1 && j > 1 && ai === b.charCodeAt(j - 2) && a.charCodeAt(i - 2) === bj) {
+        val = Math.min(val, prev2[j - 2] + 1);
+      }
+      curr[j] = val;
+      if (val < rowMin) rowMin = val;
+    }
+    if (rowMin > maxDist) return maxDist + 1;
+    for (let j = 0; j <= n; j++) {
+      prev2[j] = prev1[j];
+      prev1[j] = curr[j];
+    }
+  }
+  return prev1[n];
+}
+
+function correctQueryTypos(rawQuery) {
+  const vocab = ensureCorpusVocabulary();
+  if (!vocab.size) return { correctedQuery: rawQuery, wasCorrected: false, replacements: [] };
+
+  const tokens = String(rawQuery || "").split(/(\s+)/);
+  let wasCorrected = false;
+  const replacements = [];
+
+  const outTokens = tokens.map((part) => {
+    if (!part || /^\s+$/.test(part)) return part;
+    const m = part.match(/^([^A-Za-zÀ-ÿ0-9]*)([A-Za-zÀ-ÿ0-9]+)([^A-Za-zÀ-ÿ0-9]*)$/);
+    if (!m) return part;
+    const [, lead, core, trail] = m;
+    const norm = normalizeStr(core);
+    if (
+      norm.length < 4 ||
+      /\d/.test(norm) ||
+      ENGINE_STOPWORDS.has(norm) ||
+      vocab.has(norm) ||
+      Object.prototype.hasOwnProperty.call(SYNONYMS, norm)
+    ) {
+      return part;
+    }
+    const maxDist = norm.length >= 7 ? 2 : 1;
+    let bestWord = null;
+    let bestDist = maxDist + 1;
+    let bestFreq = 0;
+    const c0 = norm[0];
+    const c1 = norm[1] || "";
+
+    for (const [cand, freq] of vocab.entries()) {
+      if (Math.abs(cand.length - norm.length) > maxDist) continue;
+      if (cand[0] !== c0 && cand[0] !== c1 && cand[1] !== c0) continue;
+      const dist = editDistanceDL(norm, cand, maxDist);
+      if (dist > 0 && dist <= maxDist) {
+        if (dist < bestDist || (dist === bestDist && freq > bestFreq)) {
+          bestDist = dist;
+          bestWord = cand;
+          bestFreq = freq;
+        }
+      }
+    }
+
+    if (bestWord && bestWord !== norm) {
+      wasCorrected = true;
+      replacements.push({ from: core, to: bestWord });
+      return `${lead}${bestWord}${trail}`;
+    }
+    return part;
+  });
+
+  return {
+    correctedQuery: outTokens.join(""),
+    wasCorrected,
+    replacements
+  };
 }
 
 const GENERIC_CONCEPT_TOKENS = new Set([
@@ -2136,7 +2465,7 @@ function rankQuestionBank(query) {
   if (best && !best.ans && best.topic_id && STATE.topicsById[best.topic_id]) {
     best = {
       ...best,
-      ans: buildTopicAnswer(STATE.topicsById[best.topic_id], query, 1500)
+      ans: buildTopicAnswer(STATE.topicsById[best.topic_id], query, 4200)
     };
   }
   return {
@@ -2300,20 +2629,21 @@ function phraseLine(excerpt, query) {
 
 function trimSection(text, maxChars) {
   const clean = String(text || "").replace(/\n{3,}/g, "\n\n").trim();
-  if (clean.length <= maxChars) return clean;
+  const limit = maxChars >= 2000 ? maxChars + 800 : maxChars;
+  if (clean.length <= limit) return clean;
   const lines = clean.split("\n");
   let out = "";
   for (const line of lines) {
-    if ((out + "\n" + line).length > maxChars) break;
+    if ((out + "\n" + line).length > limit) break;
     out += (out ? "\n" : "") + line;
   }
   if (out) return out.trim();
-  const cut = clean.slice(0, maxChars);
+  const cut = clean.slice(0, limit);
   const lastStop = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf(".\n"), cut.lastIndexOf("; "));
-  return (lastStop > maxChars * 0.55 ? cut.slice(0, lastStop + 1) : cut).trim() + "…";
+  return (lastStop > limit * 0.55 ? cut.slice(0, lastStop + 1) : cut).trim() + "…";
 }
 
-function buildTopicAnswer(topic, query, maxChars = 1500) {
+function buildTopicAnswer(topic, query, maxChars = 4200) {
   prepareTopic(topic);
   const qSet = expandTokenSet(query);
   const qNorm = normalizeQuestionKey(query);
@@ -2378,13 +2708,17 @@ function buildTopicAnswer(topic, query, maxChars = 1500) {
   if (best) {
     if (out) out += "\n\n";
     out += best.section.text;
+    for (let i = 1; i < Math.min(3, scored.length); i++) {
+      const nxt = scored[i];
+      if (!nxt || nxt.hits < 1) continue;
+      if (nxt.score < best.score * 0.45) continue;
+      if ((out + "\n\n" + nxt.section.text).length > maxChars) break;
+      out += "\n\n" + nxt.section.text;
+    }
   } else if (!out && topic._sections.length) {
     out = topic._sections[0].text;
   }
   if (!out) out = topic.content || "";
-  if (best && best.hits <= 1 && scored[1] && scored[1].hits > 1 && out.length < 900) {
-    out += "\n\n" + scored[1].section.text;
-  }
   out = trimSection(out, maxChars);
   const phrase = phraseLine(out, query);
   if (phrase && out.indexOf(phrase.line) > 80 && !(/\$/.test(phrase.line) && !wantsPrice)) {
@@ -2548,7 +2882,7 @@ function buildAnswerLocally(query) {
   }
   if (exact && exact.topic_id && STATE.topicsById[exact.topic_id]) {
     const tObj = STATE.topicsById[exact.topic_id];
-    const text = buildTopicAnswer(tObj, query, 1500);
+    const text = buildTopicAnswer(tObj, query, 4200);
     return { kind: "topic", text, topic: tObj, score: 95, topics: [{ topic: tObj, score: 95 }] };
   }
 
@@ -2574,7 +2908,7 @@ function buildAnswerLocally(query) {
     let text = qa.item.ans;
     let extraTopic = null;
     if (top && topicScore >= 12 && top.topic.id !== qa.item.topic_id) {
-      const related = buildTopicAnswer(top.topic, query, 700);
+      const related = buildTopicAnswer(top.topic, query, 2400);
       if (related) {
         text += "\n\n**Información relacionada:**\n" + related;
         extraTopic = top.topic;
@@ -2585,9 +2919,9 @@ function buildAnswerLocally(query) {
   if (top && topicScore >= 20) {
     let primary = top;
     let secondary = second;
-    let text = buildTopicAnswer(primary.topic, query, 1500);
+    let text = buildTopicAnswer(primary.topic, query, 4200);
     let primaryPhrase = phraseLine(text, query);
-    let secondText = secondary ? buildTopicAnswer(secondary.topic, query, 900) : "";
+    let secondText = secondary ? buildTopicAnswer(secondary.topic, query, 2400) : "";
     let secondPhrase = secondText ? phraseLine(secondText, query) : null;
     if (
       secondary &&
@@ -2614,7 +2948,7 @@ function buildAnswerLocally(query) {
     return { kind: "qa", text: qa.item.ans, item: qa.item, qa, top };
   }
   if (top && topicScore >= 12) {
-    return { kind: "topic", text: buildTopicAnswer(top.topic, query, 1300), topic: top.topic, score: topicScore, topics: topicRank.slice(0, 4) };
+    return { kind: "topic", text: buildTopicAnswer(top.topic, query, 3600), topic: top.topic, score: topicScore, topics: topicRank.slice(0, 4) };
   }
   return { kind: "none", topicRank: topicRank.slice(0, 5), qa };
 }
@@ -2889,7 +3223,7 @@ function matchDocumentOrCodeOverview(query) {
   return null;
 }
 
-function answerLocallyInBrowser(query) {
+function answerLocallyInBrowser(query, _allowTypoRetry = true) {
   const qClean = normalizeQuestionKey(query);
   const codeOverview = matchDocumentOrCodeOverview(query);
   if (codeOverview) {
@@ -2938,7 +3272,29 @@ function answerLocallyInBrowser(query) {
     };
   }
 
-  const engine = buildAnswerLocally(query);
+  let engine = buildAnswerLocally(query);
+
+  if (_allowTypoRetry && engine.kind !== "exact") {
+    const typoFix = correctQueryTypos(query);
+    if (typoFix.wasCorrected && typoFix.correctedQuery) {
+      const retryAns = answerLocallyInBrowser(typoFix.correctedQuery, false);
+      const retryHasStrongAnswer =
+        retryAns &&
+        retryAns.answer_markdown &&
+        !/Información no disponible en el acervo actual/i.test(retryAns.answer_markdown);
+      const needsCorrection =
+        engine.kind === "none" ||
+        (engine.kind === "qa" && (engine.qa?.coverage || 0) < 0.78) ||
+        engine.kind === "topic";
+      if (retryHasStrongAnswer && needsCorrection) {
+        return {
+          ...retryAns,
+          query,
+          correctedQuery: typoFix.correctedQuery
+        };
+      }
+    }
+  }
   const matchedTopics =
     engine.kind === "topic"
       ? [engine.topic, engine.extraTopic].filter(Boolean)
@@ -3132,7 +3488,11 @@ function displayAnswer(data, queryText = "") {
   const bodyEl = document.getElementById("answerBody");
   const sourcesEl = document.getElementById("answerSourcesGrid");
 
-  bodyEl.innerHTML = renderMarkdown(data.answer_markdown || "");
+  const typoBanner =
+    data && data.correctedQuery
+      ? `<div class="bt-typo-banner" role="status">Mostrando resultados para <strong>«${escapeHtml(data.correctedQuery)}»</strong> <span class="bt-typo-sub">(consulta corregida automáticamente)</span></div>`
+      : "";
+  bodyEl.innerHTML = typoBanner + renderMarkdown((data && data.answer_markdown) || "");
 
   const sources = data.sources || [];
   updateAnswerFeedbackUI(queryText, data, sources.length);
@@ -3437,7 +3797,7 @@ function renderCatalogGrid() {
           <div class="doc-card-footer">
             <span style="font-size:0.74rem;color:#64748b;font-weight:600;">${escapeHtml(d.category)}${d.subcategory ? ` · ${escapeHtml(d.subcategory)}` : ""}</span>
             <div class="doc-actions">
-              <button type="button" class="btn-doc-view" data-open-doc="${escapeHtml(d.id)}">Leer</button>
+              <button type="button" class="btn-doc-view" data-open-doc="${escapeHtml(d.id)}">Leer (${escapeHtml(sizeText)})</button>
               <a href="${dlUrl}" download="${escapeHtml(dlName)}" data-dl-doc="${escapeHtml(d.id)}" class="btn-doc-dl">Descargar</a>
             </div>
           </div>
@@ -3705,10 +4065,12 @@ async function openDocumentModal(docId, shelfIndex = -1) {
 
   titleEl.textContent = doc.title;
   fnameEl.textContent = `${doc.filename} • ${doc.category}${doc.subcategory ? ` • ${doc.subcategory}` : ""}`;
+  const docSizeLabel = getDocSizeLabel(doc);
   badgesEl.innerHTML = `
     <span class="badge badge-ext">${escapeHtml(doc.ext)}</span>
     <span class="badge badge-year">${doc.year}</span>
     <span class="badge badge-sec">${escapeHtml(doc.section_label)}</span>
+    ${docSizeLabel ? `<span class="badge badge-size" title="Tamaño aproximado del archivo">${escapeHtml(docSizeLabel)}</span>` : ""}
     ${doc.code ? `<span class="badge badge-code" title="Nomenclatura oficial: ${escapeHtml(doc.code)}">${escapeHtml(doc.code)}</span>` : ""}
   `;
 
@@ -3760,6 +4122,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
   dlBtn.href = dlUrl;
   dlBtn.setAttribute("download", cleanDownloadFilename(doc));
   dlBtn.setAttribute("data-dl-doc", doc.id);
+  dlBtn.textContent = docSizeLabel ? `Descargar (${docSizeLabel})` : "Descargar";
 
   // Si es una imagen (PNG, JPG, WEBP, AVIF), 'Abrir en pestaña' abre un visor web
   // limpio en la nueva pestaña para evitar que el navegador la descargue forzosamente
@@ -3914,6 +4277,10 @@ async function openDocumentModal(docId, shelfIndex = -1) {
         zoom: 1,
         timeoutId: null,
         onKeyDown: null,
+        pageTextCache: new Map(),
+        searchMatches: [],
+        searchIdx: -1,
+        initialRenderDone: false
       };
       STATE.activePdfViewer = viewerState;
 
@@ -3935,6 +4302,16 @@ async function openDocumentModal(docId, shelfIndex = -1) {
               <button type="button" id="btPdfZoomResetBtn" class="bt-pdfjs-ctrl-btn bt-pdfjs-zoom-label" title="Ajustar al 100%">100%</button>
               <button type="button" id="btPdfZoomInBtn" class="bt-pdfjs-ctrl-btn bt-pdfjs-icon-btn" aria-label="Acercar página" title="Acercar">+</button>
             </div>
+            <div class="bt-pdfjs-search-group" role="search" aria-label="Buscar dentro del PDF">
+              <input type="search" id="btPdfInDocSearch" class="bt-pdfjs-search-input" placeholder="Buscar en PDF..." aria-label="Buscar texto en este PDF" />
+              <span id="btPdfInDocSearchCount" class="bt-pdfjs-search-count"></span>
+              <button type="button" id="btPdfInDocSearchPrev" class="bt-pdfjs-ctrl-btn bt-pdfjs-icon-btn hidden" title="Coincidencia anterior" aria-label="Coincidencia anterior">↑</button>
+              <button type="button" id="btPdfInDocSearchNext" class="bt-pdfjs-ctrl-btn bt-pdfjs-icon-btn hidden" title="Siguiente coincidencia" aria-label="Siguiente coincidencia">↓</button>
+            </div>
+            <span id="btPdfResumeBadge" class="bt-pdfjs-resume-pill hidden">
+              <span id="btPdfResumeText"></span>
+              <button type="button" id="btPdfJumpFirstBtn" class="bt-pdfjs-resume-reset" title="Volver a la página 1">Pág. 1</button>
+            </span>
           </div>
           <div class="pdf-quick-actions">
             ${!isMobileUa ? `<button type="button" class="btn-pdf-toggle-mode" data-target-mode="direct" title="Abrir en el visor PDF integrado del navegador">Visor Nativo</button>` : ""}
@@ -3974,6 +4351,13 @@ async function openDocumentModal(docId, shelfIndex = -1) {
       const zoomOutBtn = previewPane.querySelector("#btPdfZoomOutBtn");
       const zoomResetBtn = previewPane.querySelector("#btPdfZoomResetBtn");
       const zoomInBtn = previewPane.querySelector("#btPdfZoomInBtn");
+      const inDocSearchInput = previewPane.querySelector("#btPdfInDocSearch");
+      const inDocSearchCount = previewPane.querySelector("#btPdfInDocSearchCount");
+      const inDocSearchPrev = previewPane.querySelector("#btPdfInDocSearchPrev");
+      const inDocSearchNext = previewPane.querySelector("#btPdfInDocSearchNext");
+      const resumeBadge = previewPane.querySelector("#btPdfResumeBadge");
+      const resumeTextEl = previewPane.querySelector("#btPdfResumeText");
+      const jumpFirstBtn = previewPane.querySelector("#btPdfJumpFirstBtn");
       const statusCard = previewPane.querySelector("#btPdfStatusCard");
       const statusMsg = previewPane.querySelector("#btPdfStatusMsg");
       const progressFill = previewPane.querySelector("#btPdfProgressFill");
@@ -4046,14 +4430,20 @@ async function openDocumentModal(docId, shelfIndex = -1) {
         if (zoomResetBtn) zoomResetBtn.textContent = `${Math.round(viewerState.zoom * 100)}%`;
       };
 
-      const renderCurrentPage = async (pageNum) => {
+      const renderCurrentPage = async (pageNum, userInitiated = true) => {
         if (STATE.pdfViewerToken !== token || !viewerState.pdfDoc || !canvas) return;
+        const prevPage = viewerState.page;
         const clamped = Math.max(1, Math.min(viewerState.numPages, Number(pageNum) || 1));
         viewerState.page = clamped;
         updateNavControls();
-        try {
-          sessionStorage.setItem(`bt_pdf_page_${doc.id}`, String(clamped));
-        } catch (_) {}
+        savePdfPageProgress(doc.id, clamped, viewerState.numPages);
+
+        if (userInitiated && viewerState.initialRenderDone && clamped !== prevPage && typeof BtSoundEngine !== "undefined") {
+          BtSoundEngine.play("page");
+        }
+        if (resumeBadge && clamped === 1) {
+          resumeBadge.classList.add("hidden");
+        }
 
         if (viewerState.renderTask && typeof viewerState.renderTask.cancel === "function") {
           try {
@@ -4078,7 +4468,9 @@ async function openDocumentModal(docId, shelfIndex = -1) {
             Math.min(1040, (stageEl ? stageEl.clientWidth : window.innerWidth) - (window.innerWidth < 640 ? 20 : 48))
           );
           const fitScale = availWidth / Math.max(1, baseViewport.width);
-          const isLite = document.documentElement.getAttribute("data-bt-perf") === "lite";
+          const isLite =
+            document.documentElement.getAttribute("data-bt-visual") === "lite" ||
+            document.documentElement.getAttribute("data-bt-perf") === "lite";
           const maxDpr = isLite ? 1.35 : Math.min(window.devicePixelRatio || 1, 2);
           const cssScale = fitScale * viewerState.zoom;
           const renderViewport = pdfPage.getViewport({ scale: cssScale * maxDpr });
@@ -4087,6 +4479,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           canvas.height = Math.max(1, Math.floor(renderViewport.height));
           canvas.style.width = `${Math.floor(baseViewport.width * cssScale)}px`;
           canvas.style.height = `${Math.floor(baseViewport.height * cssScale)}px`;
+          canvas.style.transform = "";
 
           const ctx = canvas.getContext("2d", { alpha: false });
           ctx.fillStyle = "#ffffff";
@@ -4100,6 +4493,7 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           await task.promise;
           if (STATE.pdfViewerToken !== token) return;
 
+          viewerState.initialRenderDone = true;
           if (viewerState.timeoutId) {
             clearTimeout(viewerState.timeoutId);
             viewerState.timeoutId = null;
@@ -4107,6 +4501,14 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           if (statusCard) statusCard.classList.add("hidden");
           if (canvasWrap) canvasWrap.classList.remove("hidden");
           if (stageEl) stageEl.scrollTop = 0;
+
+          // Precargar en segundo plano la página siguiente para navegación fluida
+          if (clamped < viewerState.numPages) {
+            setTimeout(() => {
+              if (STATE.pdfViewerToken !== token || !viewerState.pdfDoc) return;
+              viewerState.pdfDoc.getPage(clamped + 1).catch(() => {});
+            }, 160);
+          }
         } catch (err) {
           if (err && err.name === "RenderingCancelledException") return;
           if (STATE.pdfViewerToken !== token) return;
@@ -4119,37 +4521,213 @@ async function openDocumentModal(docId, shelfIndex = -1) {
         }
       };
 
+      if (jumpFirstBtn) {
+        jumpFirstBtn.onclick = () => {
+          if (resumeBadge) resumeBadge.classList.add("hidden");
+          renderCurrentPage(1, true);
+        };
+      }
+
       if (prevPageBtn) {
         prevPageBtn.onclick = () => {
-          if (viewerState.page > 1) renderCurrentPage(viewerState.page - 1);
+          if (viewerState.page > 1) renderCurrentPage(viewerState.page - 1, true);
         };
       }
       if (nextPageBtn) {
         nextPageBtn.onclick = () => {
-          if (viewerState.page < viewerState.numPages) renderCurrentPage(viewerState.page + 1);
+          if (viewerState.page < viewerState.numPages) renderCurrentPage(viewerState.page + 1, true);
         };
       }
       if (pageInput) {
         pageInput.onchange = () => {
           const val = parseInt(pageInput.value, 10);
-          if (Number.isFinite(val)) renderCurrentPage(val);
+          if (Number.isFinite(val)) renderCurrentPage(val, true);
         };
         pageInput.onkeydown = (e) => {
           if (e.key === "Enter") {
             e.preventDefault();
             const val = parseInt(pageInput.value, 10);
-            if (Number.isFinite(val)) renderCurrentPage(val);
+            if (Number.isFinite(val)) renderCurrentPage(val, true);
           }
         };
       }
       const changePdfZoom = (nextZoom) => {
-        viewerState.zoom = Math.max(0.65, Math.min(2.25, Number(nextZoom.toFixed(2))));
+        viewerState.zoom = Math.max(0.65, Math.min(2.4, Number(nextZoom.toFixed(2))));
         updateNavControls();
-        renderCurrentPage(viewerState.page);
+        renderCurrentPage(viewerState.page, false);
       };
       if (zoomOutBtn) zoomOutBtn.onclick = () => changePdfZoom(viewerState.zoom - 0.2);
       if (zoomInBtn) zoomInBtn.onclick = () => changePdfZoom(viewerState.zoom + 0.2);
       if (zoomResetBtn) zoomResetBtn.onclick = () => changePdfZoom(1);
+
+      // Doble toque / doble clic y pellizco táctil (pinch-to-zoom) en el lienzo PDF
+      if (canvasWrap) {
+        let lastTapAt = 0;
+        let pinchStartDist = 0;
+        let pinchStartZoom = 1;
+        let pinchTargetZoom = 1;
+
+        canvasWrap.addEventListener("dblclick", (e) => {
+          e.preventDefault();
+          changePdfZoom(viewerState.zoom > 1.25 ? 1 : 1.75);
+        });
+
+        canvasWrap.addEventListener(
+          "touchstart",
+          (e) => {
+            if (e.touches.length === 2) {
+              const dx = e.touches[0].clientX - e.touches[1].clientX;
+              const dy = e.touches[0].clientY - e.touches[1].clientY;
+              pinchStartDist = Math.hypot(dx, dy) || 1;
+              pinchStartZoom = viewerState.zoom;
+              pinchTargetZoom = viewerState.zoom;
+            }
+          },
+          { passive: true }
+        );
+
+        canvasWrap.addEventListener(
+          "touchmove",
+          (e) => {
+            if (e.touches.length === 2 && pinchStartDist > 0) {
+              e.preventDefault();
+              const dx = e.touches[0].clientX - e.touches[1].clientX;
+              const dy = e.touches[0].clientY - e.touches[1].clientY;
+              const dist = Math.hypot(dx, dy) || pinchStartDist;
+              const ratio = dist / pinchStartDist;
+              pinchTargetZoom = Math.max(0.65, Math.min(2.4, pinchStartZoom * ratio));
+              if (canvas) {
+                canvas.style.transformOrigin = "top center";
+                canvas.style.transform = `scale(${(pinchTargetZoom / Math.max(0.5, viewerState.zoom)).toFixed(3)})`;
+              }
+            }
+          },
+          { passive: false }
+        );
+
+        canvasWrap.addEventListener(
+          "touchend",
+          (e) => {
+            if (pinchStartDist > 0 && e.touches.length < 2) {
+              pinchStartDist = 0;
+              if (canvas) canvas.style.transform = "";
+              if (Math.abs(pinchTargetZoom - viewerState.zoom) >= 0.08) {
+                changePdfZoom(pinchTargetZoom);
+              }
+              return;
+            }
+            if (e.changedTouches.length === 1 && e.touches.length === 0) {
+              const now = Date.now();
+              if (now - lastTapAt < 280) {
+                lastTapAt = 0;
+                changePdfZoom(viewerState.zoom > 1.25 ? 1 : 1.75);
+              } else {
+                lastTapAt = now;
+              }
+            }
+          },
+          { passive: true }
+        );
+      }
+
+      // Búsqueda de texto dentro del PDF (salto directo a página coincidente)
+      const preseedPageTextsFromFullText = () => {
+        if (!fullTextContent || viewerState.pageTextCache.size > 0) return;
+        const pageMarkerRx = /--- Página (\d+) ---/g;
+        const markers = Array.from(fullTextContent.matchAll(pageMarkerRx));
+        if (!markers.length) return;
+        for (let i = 0; i < markers.length; i++) {
+          const pNum = parseInt(markers[i][1], 10);
+          const start = (markers[i].index || 0) + markers[i][0].length;
+          const end = i + 1 < markers.length ? markers[i + 1].index : fullTextContent.length;
+          if (Number.isFinite(pNum) && pNum >= 1) {
+            viewerState.pageTextCache.set(pNum, normalizeStr(fullTextContent.slice(start, end)));
+          }
+        }
+      };
+
+      const runInPdfSearch = async (jumpToFirst = true) => {
+        if (!inDocSearchInput || !viewerState.pdfDoc) return;
+        const rawNeedle = (inDocSearchInput.value || "").trim();
+        const needle = normalizeStr(rawNeedle);
+        viewerState.searchMatches = [];
+        viewerState.searchIdx = -1;
+
+        if (!needle || needle.length < 2) {
+          if (inDocSearchCount) inDocSearchCount.textContent = "";
+          if (inDocSearchPrev) inDocSearchPrev.classList.add("hidden");
+          if (inDocSearchNext) inDocSearchNext.classList.add("hidden");
+          return;
+        }
+
+        if (inDocSearchCount) inDocSearchCount.textContent = "...";
+        preseedPageTextsFromFullText();
+
+        const matches = [];
+        const totalP = viewerState.numPages || 1;
+        for (let p = 1; p <= totalP; p++) {
+          if (STATE.pdfViewerToken !== token || normalizeStr(inDocSearchInput.value || "") !== needle) return;
+          let pText = viewerState.pageTextCache.get(p);
+          if (pText === undefined) {
+            try {
+              const pg = await viewerState.pdfDoc.getPage(p);
+              const tc = await pg.getTextContent();
+              pText = normalizeStr((tc && tc.items ? tc.items.map((it) => it.str).join(" ") : ""));
+              viewerState.pageTextCache.set(p, pText);
+            } catch (_) {
+              pText = "";
+              viewerState.pageTextCache.set(p, "");
+            }
+          }
+          if (pText && pText.includes(needle)) {
+            matches.push(p);
+          }
+        }
+
+        if (STATE.pdfViewerToken !== token || normalizeStr(inDocSearchInput.value || "") !== needle) return;
+        viewerState.searchMatches = matches;
+
+        if (!matches.length) {
+          if (inDocSearchCount) inDocSearchCount.textContent = "0 págs.";
+          if (inDocSearchPrev) inDocSearchPrev.classList.add("hidden");
+          if (inDocSearchNext) inDocSearchNext.classList.add("hidden");
+          return;
+        }
+
+        viewerState.searchIdx = 0;
+        if (inDocSearchCount) inDocSearchCount.textContent = `1/${matches.length} págs.`;
+        if (inDocSearchPrev) inDocSearchPrev.classList.toggle("hidden", matches.length < 2);
+        if (inDocSearchNext) inDocSearchNext.classList.toggle("hidden", matches.length < 2);
+        if (jumpToFirst) {
+          renderCurrentPage(matches[0], true);
+        }
+      };
+
+      const stepInPdfSearch = (dir) => {
+        const matches = viewerState.searchMatches;
+        if (!matches || !matches.length) return;
+        viewerState.searchIdx = (viewerState.searchIdx + dir + matches.length) % matches.length;
+        if (inDocSearchCount) inDocSearchCount.textContent = `${viewerState.searchIdx + 1}/${matches.length} págs.`;
+        renderCurrentPage(matches[viewerState.searchIdx], true);
+      };
+
+      if (inDocSearchInput) {
+        inDocSearchInput.addEventListener(
+          "input",
+          debounce(() => {
+            runInPdfSearch(true);
+          }, 260)
+        );
+        inDocSearchInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            if (viewerState.searchMatches.length) stepInPdfSearch(1);
+            else runInPdfSearch(true);
+          }
+        });
+      }
+      if (inDocSearchPrev) inDocSearchPrev.onclick = () => stepInPdfSearch(-1);
+      if (inDocSearchNext) inDocSearchNext.onclick = () => stepInPdfSearch(1);
 
       viewerState.changeZoom = changePdfZoom;
       viewerState.getZoom = () => viewerState.zoom;
@@ -4220,14 +4798,12 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           if (!pdfDoc || STATE.pdfViewerToken !== token) return;
           viewerState.pdfDoc = pdfDoc;
           viewerState.numPages = pdfDoc.numPages || 1;
-          let savedPage = 1;
-          try {
-            const rawSaved = parseInt(sessionStorage.getItem(`bt_pdf_page_${doc.id}`) || "1", 10);
-            if (Number.isFinite(rawSaved) && rawSaved >= 1 && rawSaved <= viewerState.numPages) {
-              savedPage = rawSaved;
-            }
-          } catch (_) {}
-          return renderCurrentPage(savedPage);
+          const savedPage = getSavedPdfPage(doc.id, viewerState.numPages);
+          if (savedPage > 1 && resumeBadge && resumeTextEl) {
+            resumeTextEl.textContent = `Continuando en pág. ${savedPage}`;
+            resumeBadge.classList.remove("hidden");
+          }
+          return renderCurrentPage(savedPage, false);
         })
         .catch((err) => {
           if (STATE.pdfViewerToken !== token) return;
@@ -5171,6 +5747,10 @@ const BiblioFeel = {
       dockNight.setAttribute("aria-pressed", String(this.campMode));
       dockNight.classList.toggle("is-active", this.campMode);
     }
+    const settingsDarkChk = document.getElementById("settingsCampModeToggle");
+    if (settingsDarkChk) {
+      settingsDarkChk.checked = Boolean(this.campMode);
+    }
     syncThemeColorMetas(this.campMode);
   },
 
@@ -5231,28 +5811,56 @@ const BiblioFeel = {
     return this.campMode;
   },
 
+  _tiltBound: false,
+  _ambientCtrl: null,
+
+  setVisualMode(mode, persist = true) {
+    const safeMode = mode === "full" ? "full" : "lite";
+    const root = document.documentElement;
+    root.dataset.btVisual = safeMode;
+    if (safeMode === "full") {
+      root.dataset.btPerf = "standard";
+    } else {
+      root.dataset.btPerf = "lite";
+    }
+    if (persist) {
+      try {
+        localStorage.setItem("bt_visual_mode_v1", safeMode);
+      } catch (_) {}
+    }
+    if (this._ambientCtrl) {
+      if (safeMode === "full") this._ambientCtrl.start();
+      else this._ambientCtrl.stop();
+    }
+    return safeMode;
+  },
+
   init3DTilt() {
+    if (this._tiltBound) return;
+    this._tiltBound = true;
     const coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
     const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Solo un micro-relieve suave en el retrato de autor; las tarjetas de lectura y botones
-    // conservan un hover plano y consistente sin inclinaciones 3D incongruentes.
-    const selector = ".liam-depth-stage";
+    const fullSelector = ".book-card, .doc-card, .section-card, .adc-pillar-card, .bts-card-polygon, .hero-photo-masked, .liam-depth-stage";
 
     if (!coarse && !reduced) {
       document.addEventListener("pointermove", (e) => {
+        const isFull = document.documentElement.dataset.btVisual === "full";
+        const selector = isFull ? fullSelector : ".liam-depth-stage";
         const card = e.target.closest(selector);
         if (!card) return;
         const rect = card.getBoundingClientRect();
         if (!rect.width || !rect.height) return;
         const nx = (e.clientX - rect.left) / rect.width;
         const ny = (e.clientY - rect.top) / rect.height;
-        card.style.setProperty("--rx", `${((0.5 - ny) * 3.5).toFixed(2)}deg`);
-        card.style.setProperty("--ry", `${((nx - 0.5) * 4).toFixed(2)}deg`);
+        const ampX = isFull ? 5.2 : 3.5;
+        const ampY = isFull ? 6.0 : 4.0;
+        card.style.setProperty("--rx", `${((0.5 - ny) * ampX).toFixed(2)}deg`);
+        card.style.setProperty("--ry", `${((nx - 0.5) * ampY).toFixed(2)}deg`);
         card.classList.add("is-tilting");
       }, { passive: true });
 
       document.addEventListener("pointerout", (e) => {
-        const card = e.target.closest(selector);
+        const card = e.target.closest(fullSelector);
         if (!card || (e.relatedTarget && card.contains(e.relatedTarget))) return;
         card.style.setProperty("--rx", "0deg");
         card.style.setProperty("--ry", "0deg");
@@ -5262,7 +5870,8 @@ const BiblioFeel = {
   },
 
   initAmbientCanvas() {
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const reducedMql = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reducedMql && reducedMql.matches) return;
     let canvas = document.getElementById("btAmbientCanvas");
     if (!canvas) {
       canvas = document.createElement("canvas");
@@ -5283,15 +5892,15 @@ const BiblioFeel = {
       { passive: true }
     );
 
-    const count = window.innerWidth < 768 ? 24 : 44;
+    const count = window.innerWidth < 768 ? 22 : 40;
     const lightPalette = ["109, 40, 217", "2, 132, 199", "219, 39, 119"];
     const darkPalette = ["56, 189, 248", "167, 139, 250", "250, 204, 21"];
     const particles = Array.from({ length: count }, (_, i) => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      r: 1.4 + Math.random() * 2.1,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: -0.22 - Math.random() * 0.5,
+      r: 1.5 + Math.random() * 2.3,
+      vx: (Math.random() - 0.5) * 0.36,
+      vy: -0.22 - Math.random() * 0.48,
       phase: Math.random() * Math.PI * 2,
       toneIdx: i % 3
     }));
@@ -5299,7 +5908,10 @@ const BiblioFeel = {
     let rafId = null;
     const render = () => {
       rafId = null;
-      if (document.hidden) return;
+      if (document.hidden || document.documentElement.dataset.btVisual !== "full") {
+        ctx.clearRect(0, 0, w, h);
+        return;
+      }
       ctx.clearRect(0, 0, w, h);
       const isDark = !!this.campMode;
       const palette = isDark ? darkPalette : lightPalette;
@@ -5318,12 +5930,34 @@ const BiblioFeel = {
       }
       rafId = requestAnimationFrame(render);
     };
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && rafId === null) {
+
+    const start = () => {
+      if (reducedMql && reducedMql.matches) return;
+      if (document.documentElement.dataset.btVisual !== "full") return;
+      if (rafId === null && !document.hidden) {
         rafId = requestAnimationFrame(render);
       }
+    };
+    const stop = () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      ctx.clearRect(0, 0, w, h);
+    };
+    this._ambientCtrl = { start, stop };
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && document.documentElement.dataset.btVisual === "full") {
+        start();
+      } else {
+        stop();
+      }
     });
-    rafId = requestAnimationFrame(render);
+
+    if (document.documentElement.dataset.btVisual === "full") {
+      start();
+    }
   }
 };
 
@@ -6115,6 +6749,11 @@ function setupUnifiedDock() {
         return;
       }
 
+      if (action === "settings") {
+        e.preventDefault();
+        return;
+      }
+
       if (action === "night") {
         e.preventDefault();
         BiblioFeel.toggleCampMode();
@@ -6236,13 +6875,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.8.4";
-const APP_MOBILE_VERSION = "3.8.0";
-const APP_COOKIE_SCHEMA = "9.6";
+const APP_WEB_VERSION = "9.9.0";
+const APP_MOBILE_VERSION = "3.9.0";
+const APP_COOKIE_SCHEMA = "9.7";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v56";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v57";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -10970,6 +11609,816 @@ function setupScoutForum() {
   syncForumWithCloud();
 }
 
+// ============================================================================
+// MOTOR DE SONIDOS WEB AUDIO, CONTRASTE ALTO, IDIOMA (ES/EN) Y CENTRO DE AJUSTES
+// ============================================================================
+
+const BT_SOUND_KEY = "bt_sound_enabled_v1";
+const BT_CONTRAST_KEY = "bt_high_contrast_v1";
+const BT_LANG_KEY = "bt_lang_v1";
+const BT_VISUAL_KEY = "bt_visual_mode_v1";
+
+const BtSoundEngine = {
+  ctx: null,
+  enabled: true,
+  _bound: false,
+  _lastSpecialAt: 0,
+
+  isEnabled() {
+    try {
+      const saved = localStorage.getItem(BT_SOUND_KEY);
+      if (saved === "false" || saved === "0") return false;
+    } catch (_) {}
+    return this.enabled;
+  },
+
+  setEnabled(val, persist = true) {
+    this.enabled = Boolean(val);
+    if (persist) {
+      try {
+        localStorage.setItem(BT_SOUND_KEY, this.enabled ? "true" : "false");
+      } catch (_) {}
+    }
+    const chk = document.getElementById("settingsSoundToggle");
+    if (chk) chk.checked = this.enabled;
+  },
+
+  ensureContext() {
+    if (this.ctx) {
+      if (this.ctx.state === "suspended" && typeof this.ctx.resume === "function") {
+        this.ctx.resume().catch(() => {});
+      }
+      return this.ctx;
+    }
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    try {
+      this.ctx = new Ctx();
+      if (this.ctx.state === "suspended" && typeof this.ctx.resume === "function") {
+        this.ctx.resume().catch(() => {});
+      }
+      return this.ctx;
+    } catch (_) {
+      return null;
+    }
+  },
+
+  play(type = "tap") {
+    if (!this.isEnabled()) return false;
+    const nowMs = Date.now();
+    if (type === "tap") {
+      if (nowMs - this._lastSpecialAt < 50) return false;
+    } else {
+      this._lastSpecialAt = nowMs;
+    }
+    const ctx = this.ensureContext();
+    if (!ctx) return false;
+    try {
+      const now = ctx.currentTime;
+      const playTone = (freqStart, freqEnd, dur, gainPeak, oscType = "sine", delay = 0) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = oscType;
+        osc.frequency.setValueAtTime(freqStart, now + delay);
+        if (freqEnd !== freqStart) {
+          osc.frequency.exponentialRampToValueAtTime(Math.max(40, freqEnd), now + delay + dur);
+        }
+        gain.gain.setValueAtTime(0.0001, now + delay);
+        gain.gain.exponentialRampToValueAtTime(gainPeak, now + delay + 0.008);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + dur);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + delay);
+        osc.stop(now + delay + dur + 0.01);
+      };
+
+      if (type === "page") {
+        // Sonido ligero tipo hoja al pasar página en visor PDF
+        const dur = 0.045;
+        const bufSize = Math.floor(ctx.sampleRate * dur);
+        const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * (1 - i / bufSize);
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = buf;
+        const filter = ctx.createBiquadFilter();
+        filter.type = "bandpass";
+        filter.frequency.setValueAtTime(1900, now);
+        filter.Q.setValueAtTime(1.4, now);
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.045, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+        noise.start(now);
+        return true;
+      }
+      if (type === "success") {
+        playTone(523.25, 523.25, 0.08, 0.042, "sine", 0);
+        playTone(783.99, 783.99, 0.14, 0.045, "sine", 0.065);
+        return true;
+      }
+      if (type === "open") {
+        playTone(392, 523.25, 0.11, 0.04, "triangle", 0);
+        return true;
+      }
+      if (type === "toggle") {
+        playTone(580, 740, 0.055, 0.04, "sine", 0);
+        return true;
+      }
+      // "tap" por defecto: clic suave
+      playTone(520, 320, 0.042, 0.036, "triangle", 0);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  },
+
+  init() {
+    this.enabled = this.isEnabled();
+    if (this._bound) return;
+    this._bound = true;
+    const unlock = () => {
+      if (this.isEnabled()) this.ensureContext();
+    };
+    window.addEventListener("pointerdown", unlock, { once: true, passive: true });
+    window.addEventListener("keydown", unlock, { once: true, passive: true });
+
+    document.addEventListener(
+      "click",
+      (e) => {
+        if (!this.isEnabled()) return;
+        const interactive =
+          e.target &&
+          e.target.closest &&
+          e.target.closest(
+            "button, .nav-link, .bt-dock-item, .shelf-tab, .qcat-tab, .quick-chip, .quick-q-chip, .sec-pill, .cat-filter-pill"
+          );
+        if (!interactive) return;
+        if (interactive.id === "btnTestBtSound" || interactive.id === "btPdfPrevBtn" || interactive.id === "btPdfNextBtn") return;
+        this.play("tap");
+      },
+      { passive: true }
+    );
+  }
+};
+
+function applyHighContrast(enabled, persist = true) {
+  const isOn = Boolean(enabled);
+  document.documentElement.setAttribute("data-bt-contrast", isOn ? "high" : "normal");
+  if (persist) {
+    try {
+      localStorage.setItem(BT_CONTRAST_KEY, isOn ? "true" : "false");
+    } catch (_) {}
+  }
+  const chk = document.getElementById("settingsContrastToggle");
+  if (chk) chk.checked = isOn;
+  return isOn;
+}
+
+const BT_UI_I18N = {
+  es: {
+    navHome: "Inicio",
+    navLibrary: "Biblioteca",
+    navGuide: "Guía Scout",
+    navAgents: "Agentes de Cambio.MX",
+    navForum: "La Fogata",
+    navEditor: "Editor de Archivos",
+    navAbout: "¿Qué es BiblioTech?",
+    navApp: "App / Offline",
+    dockLabels: ["Inicio", "Biblioteca", "Fogata", "Archivos", "Guardados", "Ajustes"],
+    heroTitle: "Consulta dudas Scout en documentos oficiales",
+    heroDesc:
+      "Manuales, 220 fichas FAES, 82 especialidades FES, plantillas RECME, reglamentos y convocatorias vigentes con su fuente exacta. Pensado para todas las secciones y adultos.",
+    heroCta: "Preguntar ahora",
+    searchKicker: "BUSCADOR",
+    searchTitle: "¿Qué quieres descubrir hoy?",
+    searchNote: "Escribe tu duda o toca una pregunta para ver respuesta y fuente oficial.",
+    searchPlaceholder: "Pregunta lo que quieras... ej. Grupo Scout, SISAS, CNRC",
+    searchBtn: "Consultar",
+    randomBtn: "Preguntas al azar",
+    settingsKicker: "Preferencias locales y actualizaciones",
+    settingsTitle: "Ajustes de BiblioTech Scout",
+    settingsTabs: ["Apariencia y Sonido", "Mis Datos y Guardados", "Actualizaciones y Avisos"],
+    visualHeading: "Modo Visual del Sitio",
+    visualDesc: "Mismos apartados, botones y orden exacto; elige entre máxima rapidez o experiencia visual animada.",
+    modeLiteTitle: "Modo Lite (Actual · Ligero)",
+    modeLiteDesc: "Sin partículas ni animaciones 3D. Ideal para celulares básicos, ahorro de batería y respuesta instantánea.",
+    modeFullTitle: "Modo Completo (Animado + 3D)",
+    modeFullDesc: "Activa partículas ambientales, efecto 3D al pasar el cursor, animación asimétrica del título e imagen en Inicio y transiciones fluidas.",
+    soundLabel: "Efectos de sonido interactivos",
+    soundSub: "Sonidos suaves al pulsar botones, cambiar página en PDF o recibir respuestas (Web Audio local).",
+    testSoundBtn: "Probar",
+    contrastLabel: "Modo de Alto Contraste",
+    contrastSub: "Refuerza bordes, textos y enlaces para lectura con vista reducida o bajo sol directo.",
+    campLabel: "Tema Oscuro (Campamento)",
+    campSub: "Cambia la paleta visual entre modo claro editorial y modo oscuro nocturno.",
+    langLabel: "Idioma de la interfaz",
+    langSub: "Traduce menús, controles y encabezados principales entre Español e Inglés (documentos oficiales conservan su idioma original)."
+  },
+  en: {
+    navHome: "Home",
+    navLibrary: "Library",
+    navGuide: "Scout Guide",
+    navAgents: "Agents of Change.MX",
+    navForum: "The Campfire",
+    navEditor: "File Editor",
+    navAbout: "About BiblioTech",
+    navApp: "App / Offline",
+    dockLabels: ["Home", "Library", "Campfire", "Files", "Saved", "Settings"],
+    heroTitle: "Search Scout questions in official documents",
+    heroDesc:
+      "Manuals, 220 FAES cards, 82 FES specialties, RECME templates, bylaws and active national bulletins with exact citations for every Scout section and adults.",
+    heroCta: "Ask now",
+    searchKicker: "SEARCH",
+    searchTitle: "What do you want to discover today?",
+    searchNote: "Type your question or tap a chip to see the answer and official source.",
+    searchPlaceholder: "Ask anything... e.g. Grupo Scout, SISAS, CNRC, P9.2",
+    searchBtn: "Search",
+    randomBtn: "Random questions",
+    settingsKicker: "Local preferences and updates",
+    settingsTitle: "BiblioTech Scout Settings",
+    settingsTabs: ["Appearance & Sound", "My Data & Saved", "Updates & Changelog"],
+    visualHeading: "Visual Display Mode",
+    visualDesc: "Exact same sections, buttons and layout; choose between ultra-fast lightweight speed or animated 3D visuals.",
+    modeLiteTitle: "Lite Mode (Current · Fast)",
+    modeLiteDesc: "No background particles or 3D tilt. Built for entry-level phones, battery savings and instant responsiveness.",
+    modeFullTitle: "Full Mode (Animated + 3D)",
+    modeFullDesc: "Enables ambient floating particles, 3D card tilt on hover, asymmetric hero title morphing and smooth fluid motion.",
+    soundLabel: "Interactive sound effects",
+    soundSub: "Soft tactile chimes when tapping controls, flipping PDF pages or getting search answers (local Web Audio).",
+    testSoundBtn: "Test",
+    contrastLabel: "High Contrast Mode",
+    contrastSub: "Stronger borders, high-visibility links and sharper text for low vision or outdoor sunlight.",
+    campLabel: "Dark Theme (Camp Mode)",
+    campSub: "Switch visual palette between light editorial and dark night-camp theme.",
+    langLabel: "Interface Language",
+    langSub: "Translates main navigation, controls and headings between Spanish and English (official ASMAC files stay in their original language)."
+  }
+};
+
+function applyUiLanguage(lang = "es", persist = true) {
+  const safeLang = lang === "en" ? "en" : "es";
+  const dict = BT_UI_I18N[safeLang];
+  document.documentElement.lang = safeLang === "en" ? "en" : "es-MX";
+  document.documentElement.dataset.btLang = safeLang;
+  if (persist) {
+    try {
+      localStorage.setItem(BT_LANG_KEY, safeLang);
+    } catch (_) {}
+  }
+
+  const setText = (sel, txt) => {
+    const el = document.querySelector(sel);
+    if (el && typeof txt === "string") el.textContent = txt;
+  };
+
+  setText('.desktop-quick-nav [data-bt-go-view="inicio"]', dict.navHome);
+  setText('.desktop-quick-nav [data-bt-go-view="biblioteca"]', dict.navLibrary);
+  setText('.desktop-quick-nav [data-bt-go-view="guia"]:not(.nav-link-app)', dict.navGuide);
+  setText('.desktop-quick-nav [data-bt-go-view="agentes"]', dict.navAgents);
+  setText('.desktop-quick-nav [data-bt-go-view="fogata"]', dict.navForum);
+  setText('.desktop-quick-nav [data-bt-go-view="formatos"]', dict.navEditor);
+  setText('.desktop-quick-nav [data-bt-go-view="acerca"]', dict.navAbout);
+  setText('.desktop-quick-nav .nav-link-app', dict.navApp);
+
+  const dockSpans = document.querySelectorAll("#unifiedBottomDock .bt-dock-item span:not(.bt-dock-badge)");
+  dockSpans.forEach((sp, i) => {
+    if (dict.dockLabels[i]) sp.textContent = dict.dockLabels[i];
+  });
+
+  setText(".hero-title", dict.heroTitle);
+  setText(".hero-description", dict.heroDesc);
+  const heroBtn = document.querySelector(".btn-hero-primary");
+  if (heroBtn) {
+    const svg = heroBtn.querySelector("svg");
+    heroBtn.textContent = "";
+    if (svg) heroBtn.appendChild(svg);
+    heroBtn.appendChild(document.createTextNode(" " + dict.heroCta));
+  }
+
+  setText(".search-hub-kicker", dict.searchKicker);
+  setText(".search-hub-title", dict.searchTitle);
+  setText(".search-hub-note", dict.searchNote);
+  const askInput = document.getElementById("askInput");
+  if (askInput) askInput.placeholder = dict.searchPlaceholder;
+  setText("#askSubmitBtn span", dict.searchBtn);
+  setText("#randomPoolBtn span", dict.randomBtn);
+
+  setText("#settingsKicker", dict.settingsKicker);
+  setText("#btSettingsTitle", dict.settingsTitle);
+  document.querySelectorAll(".bt-settings-tab").forEach((tab, idx) => {
+    if (dict.settingsTabs[idx]) tab.textContent = dict.settingsTabs[idx];
+  });
+  setText("#settingsVisualHeading", dict.visualHeading);
+  setText("#settingsVisualDesc", dict.visualDesc);
+  setText("#labelModeLite", dict.modeLiteTitle);
+  setText("#descModeLite", dict.modeLiteDesc);
+  setText("#labelModeFull", dict.modeFullTitle);
+  setText("#descModeFull", dict.modeFullDesc);
+  setText("#settingsSoundLabel", dict.soundLabel);
+  setText("#settingsSoundSub", dict.soundSub);
+  setText("#btnTestBtSound", dict.testSoundBtn);
+  setText("#settingsContrastLabel", dict.contrastLabel);
+  setText("#settingsContrastSub", dict.contrastSub);
+  setText("#settingsCampLabel", dict.campLabel);
+  setText("#settingsCampSub", dict.campSub);
+  setText("#settingsLangLabel", dict.langLabel);
+  setText("#settingsLangSub", dict.langSub);
+
+  document.querySelectorAll("[data-lang-choice]").forEach((btn) => {
+    btn.classList.toggle("active", btn.getAttribute("data-lang-choice") === safeLang);
+  });
+}
+
+const BT_RELEASE_NOTES = [
+  {
+    version: "Web v9.9.0 / APK v3.9.0",
+    date: "22/11/2026",
+    items: [
+      "Respuestas 100 % completas sin recortes en iPhone (iOS App Web), Android APK y escritorio, con indexación incremental para no trabar celulares básicos.",
+      "Búsqueda tolerante a errores ortográficos (Damerau-Levenshtein) con corrección automática y sugerencias instantáneas de códigos oficiales (P1–P10, JL304, DNME, JSN).",
+      "Visor PDF mejorado: recuerda la última página leída por archivo, precarga la siguiente página en segundo plano, añade búsqueda de texto dentro del PDF, pellizco / doble toque y tamaño visible antes de abrir.",
+      "Nuevo Centro de Ajustes: elige entre Modo Lite (actual ultraligero) o Modo Completo (partículas, efecto 3D y rectángulo asimétrico animado en Inicio), efectos de sonido Web Audio, Modo Alto Contraste, idioma Español/Inglés, gestión de datos de autollenado, archivos guardados, cookies y recarga manual de versión."
+    ]
+  },
+  {
+    version: "Web v9.8.4",
+    date: "22/11/2026",
+    items: [
+      "Fichas ejecutivas automáticas por código y serie RECME (P1–P10, JL304, DNME, JSN, RECME23) que explican con transparencia documental tanto los archivos vigentes como los folios no publicados (por ejemplo P8.6 o P5.2)."
+    ]
+  },
+  {
+    version: "Web v9.8.1 – v9.8.3",
+    date: "20–22/11/2026",
+    items: [
+      "Ampliación a 21,195 preguntas verificadas: Insignias Finales/Terminales (Águila Real P9.2, Alfa P9.1, Everest P9.3, Baden Powell P9.4), Método Scout, Aventuras en la Naturaleza, No Dejar Rastro y Marcos Mundo Mejor.",
+      "Ordenamiento por relevancia exacta en Biblioteca y Catálogo, deduplicación atómica de telemetría y filtrado de ruido WebView Android/iOS."
+    ]
+  },
+  {
+    version: "Web v9.8.0 / APK v3.8.0",
+    date: "19/11/2026",
+    items: [
+      "Rediseño editorial unificado claro/oscuro, streaming por bloques HTTP Range para PDFs pesados (>25 MB) y navegación fluida entre los 7 apartados."
+    ]
+  }
+];
+
+function detectDetailedPlatformInfo() {
+  const ua = (typeof navigator !== "undefined" && navigator.userAgent) || "";
+  const isStandalone =
+    !window.Capacitor &&
+    (window.navigator.standalone === true ||
+      (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches));
+  if (window.Capacitor) {
+    return {
+      key: "apk",
+      pill: `App Android APK v${APP_MOBILE_VERSION} · Web v${APP_WEB_VERSION}`,
+      desc: "Estás en la App Android nativa. Puedes comprobar actualizaciones OTA de contenido web/datos o abrir el gestor de archivos offline del APK."
+    };
+  }
+  if (IS_APPLE_TOUCH || /iPhone|iPad|iPod/i.test(ua)) {
+    return {
+      key: "ios",
+      pill: isStandalone ? `iOS App Web v${APP_WEB_VERSION}` : `iPhone / iPad Safari v${APP_WEB_VERSION}`,
+      desc: isStandalone
+        ? "Estás en iOS App Web (pantalla de inicio). Si Safari guardó una versión previa en caché, este botón fuerza la actualización y recarga al instante."
+        : "Estás en Safari para iOS. Usa este botón para limpiar caché del Service Worker y cargar la versión más reciente."
+    };
+  }
+  return {
+    key: "web",
+    pill: `Web PWA v${APP_WEB_VERSION}`,
+    desc: "Estás en el sitio web oficial. Limpia la caché del navegador y recarga la versión más reciente aunque no haya salido el aviso automático."
+  };
+}
+
+function setupSettingsHub() {
+  const modal = document.getElementById("btSettingsModal");
+  if (!modal) return;
+
+  const closeBtn = document.getElementById("closeSettingsModalBtn");
+  const tabBtns = Array.from(modal.querySelectorAll(".bt-settings-tab"));
+  const panes = Array.from(modal.querySelectorAll(".bt-settings-pane"));
+  const btnLite = document.getElementById("btnSetVisualLite");
+  const btnFull = document.getElementById("btnSetVisualFull");
+  const visualBadge = document.getElementById("settingsVisualActiveBadge");
+  const soundChk = document.getElementById("settingsSoundToggle");
+  const testSoundBtn = document.getElementById("btnTestBtSound");
+  const contrastChk = document.getElementById("settingsContrastToggle");
+  const campChk = document.getElementById("settingsCampModeToggle");
+  const langBtns = Array.from(modal.querySelectorAll("[data-lang-choice]"));
+
+  const autofillBox = document.getElementById("settingsAutofillSummary");
+  const btnJumpAutofill = document.getElementById("btnSettingsJumpAutofill");
+  const btnClearAutofill = document.getElementById("btnSettingsClearAutofill");
+  const savedCountEl = document.getElementById("settingsSavedCount");
+  const savedListEl = document.getElementById("settingsSavedDocsList");
+  const btnClearAllSaved = document.getElementById("btnSettingsClearAllSaved");
+  const consentChk = document.getElementById("settingsConsentToggle");
+  const btnClearRecents = document.getElementById("btnSettingsClearRecents");
+  const btnOpenCookieModal = document.getElementById("btnSettingsOpenCookieModal");
+
+  const platPill = document.getElementById("settingsPlatformPill");
+  const platDesc = document.getElementById("settingsPlatformDesc");
+  const btnCheckReload = document.getElementById("btnSettingsCheckAndReload");
+  const btnNativeApk = document.getElementById("btnSettingsNativeApkUpdate");
+  const updateStatusEl = document.getElementById("settingsUpdateStatus");
+  const changelogBox = document.getElementById("settingsChangelogContainer");
+
+  const closeMenuIfOpen = () => {
+    const header = document.querySelector(".main-header");
+    const navToggle = document.getElementById("navToggle");
+    const navBackdrop = document.getElementById("navBackdrop");
+    if (header) header.classList.remove("nav-open");
+    document.body.classList.remove("nav-open");
+    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+    if (navBackdrop) navBackdrop.hidden = true;
+  };
+
+  const switchSettingsTab = (tabName) => {
+    tabBtns.forEach((btn) => {
+      const act = btn.getAttribute("data-settings-tab") === tabName;
+      btn.classList.toggle("active", act);
+      btn.setAttribute("aria-selected", String(act));
+    });
+    panes.forEach((pane) => {
+      pane.classList.toggle("hidden", pane.getAttribute("data-settings-pane") !== tabName);
+    });
+  };
+
+  const renderVisualControls = () => {
+    const curVis = document.documentElement.dataset.btVisual === "full" ? "full" : "lite";
+    if (btnLite) {
+      btnLite.classList.toggle("is-selected", curVis === "lite");
+      btnLite.setAttribute("aria-pressed", String(curVis === "lite"));
+    }
+    if (btnFull) {
+      btnFull.classList.toggle("is-selected", curVis === "full");
+      btnFull.setAttribute("aria-pressed", String(curVis === "full"));
+    }
+    if (visualBadge) {
+      visualBadge.textContent = curVis === "full" ? "Modo Completo" : "Modo Lite";
+    }
+    if (soundChk) soundChk.checked = BtSoundEngine.isEnabled();
+    if (contrastChk) contrastChk.checked = document.documentElement.getAttribute("data-bt-contrast") === "high";
+    if (campChk) campChk.checked = Boolean(BiblioFeel.campMode);
+    const curLang = document.documentElement.dataset.btLang || "es";
+    langBtns.forEach((b) => b.classList.toggle("active", b.getAttribute("data-lang-choice") === curLang));
+  };
+
+  const renderDataPane = () => {
+    const prof = getAutofillProfile();
+    const entries = [
+      ["Nombre", prof.name],
+      ["CUM", prof.cum],
+      ["Nacimiento", prof.age],
+      ["Sección", prof.section],
+      ["Grupo", prof.group],
+      ["Provincia", prof.province],
+      ["Sangre", prof.blood],
+      ["Emergencia", prof.emergency],
+      ["Scouter", prof.scouter]
+    ].filter(([, v]) => String(v || "").trim());
+
+    if (autofillBox) {
+      if (!entries.length) {
+        autofillBox.innerHTML =
+          '<span style="opacity:0.8;">No hay datos de autollenado guardados todavía en este dispositivo.</span>';
+      } else {
+        autofillBox.innerHTML = entries
+          .map(([k, v]) => `<div><strong>${escapeHtml(k)}:</strong> ${escapeHtml(v)}</div>`)
+          .join("");
+      }
+    }
+    if (btnClearAutofill) btnClearAutofill.disabled = !entries.length;
+
+    const allDocIds = getSavedAndNotedDocIds();
+    const savedDocs = (STATE.documents || []).filter((d) => allDocIds.includes(d.id));
+    if (savedCountEl) savedCountEl.textContent = String(savedDocs.length);
+    if (btnClearAllSaved) btnClearAllSaved.disabled = savedDocs.length === 0;
+
+    if (savedListEl) {
+      if (!savedDocs.length) {
+        savedListEl.innerHTML =
+          '<div style="font-size:0.79rem;opacity:0.75;padding:0.4rem 0;">No tienes archivos marcados ni notas guardadas.</div>';
+      } else {
+        savedListEl.innerHTML = savedDocs
+          .map((d) => {
+            const note = getDocNote(d.id);
+            return `
+              <div class="bt-settings-saved-row">
+                <div class="bt-settings-saved-meta">
+                  <strong>${escapeHtml(d.title)}</strong>
+                  <span>${escapeHtml(d.ext)} · ${escapeHtml(getDocSizeLabel(d))}${note ? " · Con nota" : ""}</span>
+                </div>
+                <div class="bt-settings-inline-actions">
+                  <button type="button" class="bt-mini-action-btn" data-st-open-doc="${escapeHtml(d.id)}">Abrir</button>
+                  <button type="button" class="bt-mini-action-btn is-danger" data-st-remove-doc="${escapeHtml(d.id)}">Quitar</button>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+    }
+
+    if (consentChk) {
+      consentChk.checked = hasTelemetryConsent();
+    }
+  };
+
+  const renderVersionPane = () => {
+    const plat = detectDetailedPlatformInfo();
+    if (platPill) platPill.textContent = plat.pill;
+    if (platDesc) platDesc.textContent = plat.desc;
+    if (btnNativeApk) {
+      btnNativeApk.classList.toggle("hidden", plat.key !== "apk");
+    }
+
+    if (changelogBox) {
+      const platTag =
+        plat.key === "apk"
+          ? "Adaptado para Android APK"
+          : plat.key === "ios"
+            ? "Adaptado para iOS App Web"
+            : "Sitio Web Oficial";
+      changelogBox.innerHTML = BT_RELEASE_NOTES.map(
+        (rel, idx) => `
+          <article class="bt-changelog-item">
+            <div class="bt-changelog-item-head">
+              <strong>${escapeHtml(rel.version)}${idx === 0 ? ` · ${escapeHtml(platTag)}` : ""}</strong>
+              <span class="bt-changelog-item-date">${escapeHtml(rel.date)}</span>
+            </div>
+            <ul>
+              ${rel.items.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+            </ul>
+          </article>
+        `
+      ).join("");
+    }
+  };
+
+  const openSettingsModal = (initialTab = "visual") => {
+    closeMenuIfOpen();
+    renderVisualControls();
+    renderDataPane();
+    renderVersionPane();
+    switchSettingsTab(initialTab);
+    modal.classList.remove("hidden");
+    document.documentElement.classList.add("modal-open");
+    BtSoundEngine.play("open");
+    activateDialogFocusTrap(modal, "#closeSettingsModalBtn");
+  };
+
+  const closeSettingsModal = () => {
+    modal.classList.add("hidden");
+    if (!document.querySelector(".modal-overlay:not(.hidden)") && !document.querySelector("#savedPanel:not(.hidden)")) {
+      document.documentElement.classList.remove("modal-open");
+    }
+    releaseDialogFocusTrap(modal);
+  };
+
+  window.__btOpenSettingsModal = openSettingsModal;
+  window.__btCloseSettingsModal = closeSettingsModal;
+
+  document.addEventListener("click", (e) => {
+    const opener = e.target.closest("[data-action-open-settings]");
+    if (opener) {
+      e.preventDefault();
+      openSettingsModal(opener.getAttribute("data-settings-initial-tab") || "visual");
+    }
+  });
+
+  if (closeBtn) closeBtn.addEventListener("click", closeSettingsModal);
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeSettingsModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) closeSettingsModal();
+  });
+
+  tabBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetTab = btn.getAttribute("data-settings-tab") || "visual";
+      if (targetTab === "datos") renderDataPane();
+      if (targetTab === "version") renderVersionPane();
+      switchSettingsTab(targetTab);
+    });
+  });
+
+  if (btnLite) {
+    btnLite.addEventListener("click", () => {
+      BiblioFeel.setVisualMode("lite", true);
+      BtSoundEngine.play("toggle");
+      renderVisualControls();
+      showWebToast("Modo Lite activado: máxima ligereza para celulares básicos.");
+    });
+  }
+  if (btnFull) {
+    btnFull.addEventListener("click", () => {
+      BiblioFeel.setVisualMode("full", true);
+      BtSoundEngine.play("toggle");
+      renderVisualControls();
+      showWebToast("Modo Completo activado: partículas, efectos 3D y animación de portada.");
+    });
+  }
+
+  if (soundChk) {
+    soundChk.addEventListener("change", () => {
+      BtSoundEngine.setEnabled(soundChk.checked, true);
+      if (soundChk.checked) {
+        BtSoundEngine.play("success");
+        showWebToast("Sonidos interactivos activados.");
+      } else {
+        showWebToast("Sonidos silenciados.");
+      }
+    });
+  }
+  if (testSoundBtn) {
+    testSoundBtn.addEventListener("click", () => {
+      if (!BtSoundEngine.isEnabled()) {
+        BtSoundEngine.setEnabled(true, true);
+      }
+      BtSoundEngine.play("success");
+    });
+  }
+
+  if (contrastChk) {
+    contrastChk.addEventListener("change", () => {
+      const on = applyHighContrast(contrastChk.checked, true);
+      BtSoundEngine.play("toggle");
+      showWebToast(on ? "Modo de Alto Contraste activado." : "Alto Contraste desactivado.");
+    });
+  }
+
+  if (campChk) {
+    campChk.addEventListener("change", () => {
+      BiblioFeel.toggleCampMode();
+      BtSoundEngine.play("toggle");
+    });
+  }
+
+  langBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const chosen = btn.getAttribute("data-lang-choice") || "es";
+      applyUiLanguage(chosen, true);
+      BtSoundEngine.play("toggle");
+      showWebToast(chosen === "en" ? "Interface language set to English." : "Idioma de interfaz cambiado a Español.");
+    });
+  });
+
+  if (btnJumpAutofill) {
+    btnJumpAutofill.addEventListener("click", () => {
+      closeSettingsModal();
+      btSwitchView("formatos", { scrollToId: "autofillProfileForm" });
+    });
+  }
+
+  if (btnClearAutofill) {
+    btnClearAutofill.addEventListener("click", () => {
+      try {
+        localStorage.removeItem(BT_AUTOFILL_PROFILE_KEY);
+      } catch (_) {}
+      const form = document.getElementById("autofillProfileForm");
+      if (form) form.reset();
+      const badge = document.getElementById("autofillStatusBadge");
+      if (badge) {
+        badge.classList.remove("is-ready");
+        badge.textContent = "Sin datos guardados";
+      }
+      renderDataPane();
+      showWebToast("Datos de autollenado borrados de este dispositivo.");
+    });
+  }
+
+  if (savedListEl) {
+    savedListEl.addEventListener("click", (e) => {
+      const openBtn = e.target.closest("[data-st-open-doc]");
+      if (openBtn) {
+        const docId = openBtn.getAttribute("data-st-open-doc");
+        closeSettingsModal();
+        openDocumentModal(docId);
+        return;
+      }
+      const remBtn = e.target.closest("[data-st-remove-doc]");
+      if (remBtn) {
+        const docId = remBtn.getAttribute("data-st-remove-doc");
+        const pins = getSavedPins();
+        if (pins.includes(docId)) toggleSavedPin(docId);
+        setDocNote(docId, "");
+        updateSavedBadge();
+        renderDataPane();
+        showWebToast("Archivo quitado de guardados.");
+      }
+    });
+  }
+
+  if (btnClearAllSaved) {
+    btnClearAllSaved.addEventListener("click", () => {
+      const ids = getSavedAndNotedDocIds();
+      setSavedPins([]);
+      for (const id of ids) setDocNote(id, "");
+      updateSavedBadge();
+      renderDataPane();
+      showWebToast("Se vaciaron todos los archivos y notas guardados.");
+    });
+  }
+
+  if (consentChk) {
+    consentChk.addEventListener("change", () => {
+      if (window.Capacitor) {
+        consentChk.checked = true;
+        showWebToast("En el APK Android la mejora anónima ya está integrada de forma segura.");
+        return;
+      }
+      const accepted = consentChk.checked;
+      try {
+        localStorage.setItem(BT_CONSENT_KEY, accepted ? "accepted" : "declined");
+        if (!accepted) {
+          localStorage.removeItem(BT_ANON_QUEUE_KEY);
+          localStorage.removeItem(BT_ANON_STATS_KEY);
+        }
+      } catch (_) {}
+      renderRecentQueriesUI();
+      if (accepted) setupFullActivityObservers();
+      showWebToast(accepted ? "Preferencias de cookies y mejora continua activadas." : "Solo cookies esenciales activas.");
+    });
+  }
+
+  if (btnClearRecents) {
+    btnClearRecents.addEventListener("click", () => {
+      try {
+        localStorage.removeItem(BT_RECENT_QUERIES_KEY);
+      } catch (_) {}
+      renderRecentQueriesUI();
+      showWebToast("Historial de preguntas recientes borrado.");
+    });
+  }
+
+  if (btnOpenCookieModal) {
+    btnOpenCookieModal.addEventListener("click", () => {
+      closeSettingsModal();
+      const overlay = document.getElementById("cookieConsentBanner");
+      if (overlay) overlay.classList.remove("hidden");
+    });
+  }
+
+  if (btnNativeApk) {
+    btnNativeApk.addEventListener("click", () => {
+      closeSettingsModal();
+      if (window.__btNativeBridge && typeof window.__btNativeBridge.openModal === "function") {
+        window.__btNativeBridge.openModal("app");
+      }
+    });
+  }
+
+  if (btnCheckReload) {
+    btnCheckReload.addEventListener("click", async () => {
+      if (updateStatusEl) {
+        updateStatusEl.textContent = "Comprobando versión más reciente y limpiando caché local...";
+        updateStatusEl.classList.remove("hidden");
+      }
+      btnCheckReload.disabled = true;
+
+      if (window.Capacitor && window.__btNativeBridge && typeof window.__btNativeBridge.updateContent === "function") {
+        closeSettingsModal();
+        window.__btNativeBridge.updateContent(true, false);
+        btnCheckReload.disabled = false;
+        return;
+      }
+
+      try {
+        const res = await btFetchWithTimeout(`version.json?t=${Date.now()}`, { cache: "no-store" }, 6000);
+        const remote = res && res.ok ? await res.json().catch(() => null) : null;
+        if (remote && remote.version && updateStatusEl) {
+          updateStatusEl.textContent = `Versión en servidor: ${remote.version}. Aplicando recarga limpia...`;
+        }
+        if ("caches" in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((k) => caches.delete(k)));
+        }
+        if ("serviceWorker" in navigator) {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg && reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+          else if (reg && typeof reg.update === "function") await reg.update().catch(() => {});
+        }
+        setTimeout(() => window.location.reload(), 450);
+      } catch (_) {
+        if (updateStatusEl) {
+          updateStatusEl.textContent = "No hubo conexión al servidor, recargando con la versión actual...";
+        }
+        setTimeout(() => window.location.reload(), 550);
+      }
+    });
+  }
+}
+
 function initAdaptivePerfMode() {
   try {
     const root = document.documentElement;
@@ -10977,8 +12426,38 @@ function initAdaptivePerfMode() {
     const saveData = Boolean(navigator.connection && navigator.connection.saveData);
     const lowRam = typeof navigator.deviceMemory === "number" && navigator.deviceMemory <= 4;
     const lowCpu = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4;
-    const isLite = Boolean(reduceMotion || saveData || lowRam || lowCpu);
-    root.dataset.btPerf = isLite ? "lite" : "standard";
+    const isLowEnd = Boolean(reduceMotion || saveData || lowRam || lowCpu);
+
+    let visualMode = "lite";
+    try {
+      const savedVis = localStorage.getItem(BT_VISUAL_KEY);
+      if (savedVis === "full" || savedVis === "lite") {
+        visualMode = savedVis;
+      } else {
+        visualMode = isLowEnd ? "lite" : "full";
+      }
+    } catch (_) {
+      visualMode = isLowEnd ? "lite" : "full";
+    }
+    if (reduceMotion) visualMode = "lite";
+
+    root.dataset.btVisual = visualMode;
+    root.dataset.btPerf = visualMode === "full" && !isLowEnd ? "standard" : "lite";
+
+    let savedContrast = false;
+    try {
+      savedContrast = localStorage.getItem(BT_CONTRAST_KEY) === "true";
+    } catch (_) {}
+    root.setAttribute("data-bt-contrast", savedContrast ? "high" : "normal");
+
+    let savedLang = "es";
+    try {
+      savedLang = localStorage.getItem(BT_LANG_KEY) === "en" ? "en" : "es";
+    } catch (_) {}
+    root.dataset.btLang = savedLang;
+    if (savedLang === "en") {
+      document.addEventListener("DOMContentLoaded", () => applyUiLanguage("en", false), { once: true });
+    }
   } catch (_) {}
 }
 initAdaptivePerfMode();

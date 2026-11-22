@@ -114,6 +114,71 @@ try {
   fail(`Error validando sincronía de versiones: ${err.message}`);
 }
 
+// 6. Regresión automática del banco de 21,195+ preguntas y temas críticos de telemetría
+try {
+  const norm = (s) =>
+    String(s || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const qBase = JSON.parse(await readFile(path.join(root, "data", "questions_bank.json"), "utf8")).questions || [];
+  const qV3 = JSON.parse(await readFile(path.join(root, "data", "faq_v3.json"), "utf8")).questions || [];
+  const qV4 = JSON.parse(await readFile(path.join(root, "data", "faq_v4.json"), "utf8")).questions || [];
+  const mergedMap = new Map();
+  for (const item of [...qBase, ...qV3, ...qV4]) {
+    const k = norm(item.q);
+    if (k && !mergedMap.has(k)) mergedMap.set(k, item);
+  }
+  const merged = Array.from(mergedMap.values());
+  if (merged.length < 21195) {
+    fail(`Conteo total de preguntas combinadas bajó a ${merged.length} (< 21195)`);
+  }
+
+  const catalog = JSON.parse(await readFile(path.join(root, "data", "catalog.json"), "utf8"));
+  const docsById = new Set((catalog.documents || []).map((d) => d.id));
+  const kb = JSON.parse(await readFile(path.join(root, "data", "knowledge_base.json"), "utf8"));
+  const topicsById = new Set((kb.topics || []).map((t) => t.id));
+
+  const requiredChecks = [
+    { label: "Insignia Final Águila Real (P9.2)", rx: /aguila real.*requisitos|requisitos.*aguila real|p9 2/i, minLen: 260 },
+    { label: "Método Scout (8 elementos)", rx: /metodo scout/i, minLen: 260 },
+    { label: "Scouts Go Solar (P8.7)", rx: /scouts go solar/i, minLen: 200 },
+    { label: "Mensajeros de la Paz (P8.3)", rx: /mensajeros de la paz/i, minLen: 200 },
+    { label: "Plastic Tide Turners (P8.4)", rx: /tide turners|plastico/i, minLen: 200 },
+    { label: "Champions for Nature (P8.1/P8.2)", rx: /champions for nature/i, minLen: 200 },
+    { label: "Horquilla Baden Powell (P9.4)", rx: /baden powell.*requisitos|horquilla.*baden powell/i, minLen: 220 },
+    { label: "Proceso 12 pasos CDC (26.011)", rx: /12 pasos|cdc|comite de desarrollo/i, minLen: 200 },
+    { label: "Acreditación PJOS (26.007)", rx: /26 007|acredita/i, minLen: 200 },
+    { label: "Insignia Everest (P9.3)", rx: /insignia.*everest|everest.*requisitos/i, minLen: 220 },
+    { label: "Mapache de Cozumel / Aventuras", rx: /mapache.*cozumel|aventuras en la naturaleza/i, minLen: 200 },
+  ];
+
+  for (const chk of requiredChecks) {
+    const hit = merged.find((it) => {
+      const text = norm(it.q);
+      const ans = String(it.ans || "");
+      return chk.rx.test(text) && ans.length >= chk.minLen;
+    });
+    if (!hit) {
+      fail(`Regresión de búsqueda: falta respuesta completa para "${chk.label}"`);
+    } else {
+      if (hit.doc_id && !docsById.has(hit.doc_id)) {
+        fail(`Fuente inexistente (${hit.doc_id}) en pregunta de "${chk.label}"`);
+      }
+      if (hit.topic_id && !topicsById.has(hit.topic_id)) {
+        fail(`topic_id inexistente (${hit.topic_id}) en pregunta de "${chk.label}"`);
+      }
+    }
+  }
+  console.log(`OK regresión de búsqueda y banco combinado (${merged.length} preguntas verificadas)`);
+} catch (err) {
+  fail(`Error en validación de regresión del buscador: ${err.message}`);
+}
+
 if (errors > 0) {
   process.exit(1);
 }

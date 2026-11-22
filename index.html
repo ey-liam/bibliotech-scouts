@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=43" />
+  <link rel="stylesheet" href="styles.css?v=44" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -158,6 +158,13 @@
           </svg>
           <span>Bienvenida y QR para compartir</span>
         </button>
+        <button type="button" id="openSettingsMenuBtn" class="nav-link nav-link-settings" data-action-open-settings="1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Ajustes, modo visual y versión</span>
+        </button>
         <button type="button" id="openBugReportMenuBtn" class="nav-link nav-link-report">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
@@ -180,6 +187,20 @@
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
           </svg>
           <span id="headerSavedCount" class="bt-header-saved-badge hidden">0</span>
+        </button>
+
+        <button
+          type="button"
+          class="btn-header-settings"
+          id="btnHeaderSettings"
+          data-action-open-settings="1"
+          title="Ajustes, modo visual, sonidos y avisos de actualización"
+          aria-label="Abrir ajustes y opciones"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
         </button>
 
         <button
@@ -2084,7 +2105,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 3.8.0 Mobile · Web 9.8.4</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 3.9.0 Mobile · Web 9.9.0</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
             <strong>No es necesario descargar nada:</strong> puedes disfrutar de todas las herramientas, el buscador de 21,195 preguntas, los 883 documentos (incluyendo 220 FAES y 82 FES) y el Editor de Archivos directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
@@ -2244,7 +2265,7 @@
           </div>
 
           <p class="app-download-update-note">
-            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v47</code>) cada vez que abres la app con conexión.
+            La Web App en iOS se actualiza automáticamente desde Safari gracias al Service Worker Network-First (<code>v57</code>) cada vez que abres la app con conexión, o de forma manual en <strong>Ajustes → Versión y Avisos</strong>.
           </p>
         </div>
       </div>
@@ -2445,8 +2466,9 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 22/11/2026 (883 documentos · 21,195 preguntas) · BETA 9.8.4 - 3.8.0 Mobile (22/11/2026) ·
-          <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button>
+          Base de datos: 22/11/2026 (883 documentos · 21,195 preguntas) · BETA 9.9.0 - 3.9.0 Mobile (22/11/2026) ·
+          <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button> ·
+          <button type="button" id="openSettingsFooterBtn" class="footer-privacy-btn" data-action-open-settings="1">Ajustes y versión</button>
         </p>
         <p class="footer-non-affiliation">
           <strong>Aviso de proyecto independiente:</strong> BiblioTech es un proyecto sin fines de lucro creado para facilitar la búsqueda y comprensión de los documentos oficiales a toda la membresía. No cuenta con afiliación institucional, comercial ni representación oficial directa de la Asociación de Scouts de México, A.C. (ASMAC) ni de la Organización Mundial del Movimiento Scout (World Scouting / WOSM); todos los documentos, manuales, reglamentos, logotipos y marcas citados pertenecen a sus respectivos titulares oficiales.
@@ -2459,7 +2481,7 @@
   <div id="cookieConsentBanner" class="bt-consent-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="consentTitle">
     <div class="bt-consent-card">
       <div class="bt-consent-head">
-        <img src="img/logo-flor.png" alt="Logo BiblioTech Scout" class="bt-consent-logo" />
+        <img src="img/logo-flor.png" alt="Logo BiblioTech Scout" class="bt-consent-logo" loading="lazy" decoding="async" />
         <div>
           <span class="bt-consent-kicker">Privacidad y mejora continua</span>
           <h3 id="consentTitle">Preferencias y análisis anónimo de uso</h3>
@@ -2518,6 +2540,13 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
       <span>Guardados</span>
       <span id="dockSavedCount" class="bt-dock-badge hidden">0</span>
+    </button>
+    <button type="button" class="bt-dock-item" id="dockBtnSettings" data-action="settings" data-action-open-settings="1" aria-label="Abrir ajustes y opciones">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+      <span>Ajustes</span>
     </button>
   </nav>
 
@@ -2637,7 +2666,7 @@
     <div class="bt-consent-card bt-welcome-card">
       <div class="bt-welcome-head">
         <div class="bt-welcome-brand-row">
-          <img src="img/logo-flor.png" alt="Logo BiblioTech Scout" class="bt-welcome-logo" />
+          <img src="img/logo-flor.png" alt="Logo BiblioTech Scout" class="bt-welcome-logo" loading="lazy" decoding="async" />
           <div>
             <span class="bt-consent-kicker">Siempre Listos · Lanzamiento Oficial</span>
             <h3 id="welcomeModalTitle">¡Bienvenido a BiblioTech Scout!</h3>
@@ -2699,7 +2728,7 @@
 
       <div class="bt-welcome-qr-box">
         <div class="bt-welcome-qr-frame">
-          <img src="img/qr-bibliotech.png" alt="Código QR oficial de BiblioTech Scout para compartir" width="136" height="136" loading="eager" />
+          <img src="img/qr-bibliotech.png" alt="Código QR oficial de BiblioTech Scout para compartir" width="136" height="136" loading="lazy" decoding="async" />
         </div>
         <div class="bt-welcome-qr-info">
           <span class="bt-welcome-qr-badge">Hecho por y para toda la comunidad Scout</span>
@@ -2854,6 +2883,190 @@
           <button type="submit" id="submitForumPostBtn" class="bt-consent-btn is-primary">Publicar en La Fogata</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL CENTRO DE AJUSTES Y OPCIONES (MODO VISUAL, SONIDOS, DATOS, CONTRASTE, IDIOMA Y VERSIONES) -->
+  <div id="btSettingsModal" class="bt-consent-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="btSettingsTitle">
+    <div class="bt-consent-card bt-settings-card">
+      <div class="bt-bug-head bt-settings-head">
+        <div>
+          <span id="settingsKicker" class="bt-consent-kicker">Preferencias locales y actualizaciones</span>
+          <h3 id="btSettingsTitle">Ajustes de BiblioTech Scout</h3>
+        </div>
+        <button type="button" id="closeSettingsModalBtn" class="bt-bug-close" aria-label="Cerrar ajustes">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="bt-settings-tabs" role="tablist" aria-label="Categorías de ajustes">
+        <button type="button" class="bt-settings-tab active" data-settings-tab="visual" role="tab" aria-selected="true">
+          Apariencia y Sonido
+        </button>
+        <button type="button" class="bt-settings-tab" data-settings-tab="datos" role="tab" aria-selected="false">
+          Mis Datos y Guardados
+        </button>
+        <button type="button" class="bt-settings-tab" data-settings-tab="version" role="tab" aria-selected="false">
+          Actualizaciones y Avisos
+        </button>
+      </div>
+
+      <div class="bt-settings-body">
+        <!-- PESTAÑA 1: MODO VISUAL DUAL, SONIDOS, CONTRASTE, TEMA E IDIOMA -->
+        <div class="bt-settings-pane" data-settings-pane="visual">
+          <div class="bt-setting-block">
+            <div class="bt-setting-block-head">
+              <div>
+                <h4 id="settingsVisualHeading">Modo Visual del Sitio</h4>
+                <p id="settingsVisualDesc">Mismos apartados, botones y orden exacto; elige entre máxima rapidez o experiencia visual animada.</p>
+              </div>
+              <span id="settingsVisualActiveBadge" class="bt-setting-pill">Modo Lite</span>
+            </div>
+            <div class="bt-visual-mode-grid">
+              <button type="button" id="btnSetVisualLite" class="bt-visual-mode-card" data-visual-choice="lite" aria-pressed="true">
+                <strong id="labelModeLite">Modo Lite (Actual · Ligero)</strong>
+                <span id="descModeLite">Sin partículas ni animaciones 3D. Ideal para celulares básicos, ahorro de batería y respuesta instantánea.</span>
+              </button>
+              <button type="button" id="btnSetVisualFull" class="bt-visual-mode-card" data-visual-choice="full" aria-pressed="false">
+                <strong id="labelModeFull">Modo Completo (Animado + 3D)</strong>
+                <span id="descModeFull">Activa partículas ambientales, efecto 3D al pasar el cursor, animación asimétrica del título e imagen en Inicio y transiciones fluidas.</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="bt-setting-row">
+            <div class="bt-setting-row-copy">
+              <strong id="settingsSoundLabel">Efectos de sonido interactivos</strong>
+              <span id="settingsSoundSub">Sonidos suaves al pulsar botones, cambiar página en PDF o recibir respuestas (Web Audio local).</span>
+            </div>
+            <div class="bt-setting-row-controls">
+              <button type="button" id="btnTestBtSound" class="bt-mini-action-btn">Probar</button>
+              <label class="bt-switch">
+                <input type="checkbox" id="settingsSoundToggle" checked />
+                <span class="bt-switch-slider" aria-hidden="true"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="bt-setting-row">
+            <div class="bt-setting-row-copy">
+              <strong id="settingsContrastLabel">Modo de Alto Contraste</strong>
+              <span id="settingsContrastSub">Refuerza bordes, textos y enlaces para lectura con vista reducida o bajo sol directo.</span>
+            </div>
+            <div class="bt-setting-row-controls">
+              <label class="bt-switch">
+                <input type="checkbox" id="settingsContrastToggle" />
+                <span class="bt-switch-slider" aria-hidden="true"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="bt-setting-row">
+            <div class="bt-setting-row-copy">
+              <strong id="settingsCampLabel">Tema Oscuro (Campamento)</strong>
+              <span id="settingsCampSub">Cambia la paleta visual entre modo claro editorial y modo oscuro nocturno.</span>
+            </div>
+            <div class="bt-setting-row-controls">
+              <label class="bt-switch">
+                <input type="checkbox" id="settingsCampModeToggle" />
+                <span class="bt-switch-slider" aria-hidden="true"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="bt-setting-row">
+            <div class="bt-setting-row-copy">
+              <strong id="settingsLangLabel">Idioma de la interfaz</strong>
+              <span id="settingsLangSub">Traduce menús, controles y encabezados principales entre Español e Inglés (documentos oficiales conservan su idioma original).</span>
+            </div>
+            <div class="bt-setting-row-controls bt-lang-pills" role="group" aria-label="Elegir idioma">
+              <button type="button" id="btnLangEs" class="bt-lang-btn active" data-lang-choice="es">Español</button>
+              <button type="button" id="btnLangEn" class="bt-lang-btn" data-lang-choice="en">English</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 2: AUTOLLENADO, ARCHIVOS GUARDADOS Y COOKIES -->
+        <div class="bt-settings-pane hidden" data-settings-pane="datos">
+          <div class="bt-setting-block">
+            <div class="bt-setting-block-head">
+              <div>
+                <h4>Mis Datos de Autollenado (Bóveda Local)</h4>
+                <p>Información guardada solo en este dispositivo para rellenar formatos oficiales en 1 clic.</p>
+              </div>
+            </div>
+            <div id="settingsAutofillSummary" class="bt-settings-summary-box"></div>
+            <div class="bt-settings-inline-actions">
+              <button type="button" id="btnSettingsJumpAutofill" class="bt-mini-action-btn is-primary">Editar en Editor de Archivos</button>
+              <button type="button" id="btnSettingsClearAutofill" class="bt-mini-action-btn is-danger">Borrar datos de autollenado</button>
+            </div>
+          </div>
+
+          <div class="bt-setting-block">
+            <div class="bt-setting-block-head">
+              <div>
+                <h4>Archivos Guardados y Notas (<span id="settingsSavedCount">0</span>)</h4>
+                <p>Abre o elimina de forma individual tus manuales, FAES y especialidades guardadas aquí.</p>
+              </div>
+              <button type="button" id="btnSettingsClearAllSaved" class="bt-mini-action-btn is-danger">Vaciar guardados</button>
+            </div>
+            <div id="settingsSavedDocsList" class="bt-settings-saved-list"></div>
+          </div>
+
+          <div class="bt-setting-row">
+            <div class="bt-setting-row-copy">
+              <strong>Cookies y análisis anónimo de uso</strong>
+              <span>Permite guardar historial de preguntas recientes y enviar fallos/consultas anónimas para mejorar BiblioTech.</span>
+            </div>
+            <div class="bt-setting-row-controls">
+              <label class="bt-switch">
+                <input type="checkbox" id="settingsConsentToggle" />
+                <span class="bt-switch-slider" aria-hidden="true"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="bt-settings-inline-actions">
+            <button type="button" id="btnSettingsClearRecents" class="bt-mini-action-btn">Borrar preguntas recientes</button>
+            <button type="button" id="btnSettingsOpenCookieModal" class="bt-mini-action-btn">Ver detalle de privacidad y cookies</button>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 3: ACTUALIZACIONES Y AVISOS DE CAMBIOS (WEB, iOS, ANDROID APK) -->
+        <div class="bt-settings-pane hidden" data-settings-pane="version">
+          <div class="bt-setting-block bt-settings-update-card">
+            <div class="bt-setting-block-head">
+              <div>
+                <span id="settingsPlatformPill" class="bt-setting-pill">Web · v9.9.0</span>
+                <h4 style="margin-top:0.4rem;">Recargar y Buscar Actualización</h4>
+                <p id="settingsPlatformDesc">Si no te apareció el aviso automático de nueva versión, limpia la caché local y recarga el sitio desde aquí.</p>
+              </div>
+            </div>
+            <div class="bt-settings-inline-actions">
+              <button type="button" id="btnSettingsCheckAndReload" class="bt-mini-action-btn is-primary">
+                Buscar actualización y recargar sitio
+              </button>
+              <button type="button" id="btnSettingsNativeApkUpdate" class="bt-mini-action-btn hidden">
+                Abrir gestor offline y OTA del APK
+              </button>
+            </div>
+            <p id="settingsUpdateStatus" class="bt-settings-update-status hidden" role="status"></p>
+          </div>
+
+          <div class="bt-setting-block">
+            <div class="bt-setting-block-head">
+              <div>
+                <h4>Avisos de Actualización (Qué incluye cada versión)</h4>
+                <p>Historial detallado adaptado a tu plataforma actual (Web, iOS App Web y Android APK).</p>
+              </div>
+            </div>
+            <div id="settingsChangelogContainer" class="bt-changelog-list"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

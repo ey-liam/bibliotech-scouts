@@ -1,8 +1,8 @@
 {
-  "version": "9.8.4",
-  "mobileVersion": "3.8.0",
-  "cache": "bibliotech-scout-v56",
+  "version": "9.9.0",
+  "mobileVersion": "3.9.0",
+  "cache": "bibliotech-scout-v57",
   "releasedAt": "2026-11-22",
-  "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.8.4: Nuevo resolvedor de fichas ejecutivas por código y serie oficial (P1–P10, JL304, DNME, JSN, RECME23 y los 883 documentos oficiales) que explica con precisión documental tanto los archivos existentes como los folios no publicados en RECME (p. ej. P8.6 o P5.2) sin inventar información."
+  "schemaCookieVersion": "9.7",
+  "notes": "Versión 9.9.0 / Mobile 3.9.0: Respuestas completas sin recortes, corrección ortográfica fuzzy search, autocompletado de códigos oficiales (P1–P10, JL304, DNME, JSN), buscador de texto interno en PDF con memoria de página y tamaño visible, Centro de Ajustes completo (Modo Lite vs Modo Completo animado/3D, sonidos Web Audio, Alto Contraste, Idioma ES/EN, datos de autollenado, guardados, cookies, recarga manual y avisos de actualización multi-plataforma)."
 }
