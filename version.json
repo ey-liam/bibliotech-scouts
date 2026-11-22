@@ -1,8 +1,8 @@
 {
-  "version": "9.8.2",
+  "version": "9.8.3",
   "mobileVersion": "3.8.0",
-  "cache": "bibliotech-scout-v54",
-  "releasedAt": "2026-11-20",
+  "cache": "bibliotech-scout-v55",
+  "releasedAt": "2026-11-22",
   "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.8.2: Ordenamiento por relevancia de título y código en Biblioteca y Catálogo, filtro de ruido benigno WebKit/iOS para alertas de telemetría y corrección directa de respuestas consultadas por familias y jóvenes (21,186 preguntas verificadas)."
+  "notes": "Versión 9.8.3: Telemetría con reclamo atómico de cola y cooldown anti-duplicados (elimina envíos repetidos al abrir PDFs o cambiar de pestaña), filtro de ruido interno Android WebView (navigation_performance_logger_android) y respuestas completas 2026 del Marco Mundo Mejor / Tribu de la Tierra (Scouts Go Solar P8.7, Mensajeros de la Paz P8.3, Plastic Tide Turners P8.4 y Champions for Nature P8.1/P8.2; 21,195 preguntas verificadas)."
 }

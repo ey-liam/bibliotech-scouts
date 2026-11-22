@@ -404,7 +404,7 @@ function setupLazyDataWarmup() {
 }
 
 // ============================================================================
-// CARGA INICIAL (CATALOGO DE 883 DOCUMENTOS OFICIALES + 105 TEMAS + 21,186 PREGUNTAS)
+// CARGA INICIAL (CATALOGO DE 883 DOCUMENTOS OFICIALES + 105 TEMAS + 21,195 PREGUNTAS)
 // ============================================================================
 const IS_APPLE_TOUCH =
   /iPhone|iPad|iPod/i.test(navigator.userAgent || "") ||
@@ -6001,13 +6001,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.8.2";
+const APP_WEB_VERSION = "9.8.3";
 const APP_MOBILE_VERSION = "3.8.0";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v54";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v55";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -6216,7 +6216,7 @@ function setupWebOfflineManager() {
       if (hasBank && hasFaq4) {
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (21,186 preg.)";
+          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (21,195 preg.)";
         }
         if (btnDownload) {
           btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
@@ -6366,7 +6366,7 @@ function setupWelcomeModal() {
       const shareUrl = "https://ey-liam.github.io/bibliotech-scouts/";
       const shareData = {
         title: "BiblioTech Scout — Biblioteca e Inteligencia Documental Scout",
-        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 21,186 respuestas scouts en BiblioTech Scout:",
+        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 21,195 respuestas scouts en BiblioTech Scout:",
         url: shareUrl
       };
       enqueueAnonTelemetry({ t: "enlace_externo", label: "Compartir QR / Sitio Bienvenida", url: shareUrl }, false);
@@ -6886,14 +6886,25 @@ window.btTrackEvent = function btTrackEvent(type, payload = {}, flushNow = false
   enqueueAnonTelemetry({ t: type, ...payload }, flushNow);
 };
 
+let btLastLoggedQueryKey = "";
+let btLastLoggedQueryAt = 0;
 function recordQueryTelemetry(query, data, querySource = "manual") {
   const q = String(query || "").trim();
   if (!q) return;
   saveRecentQueryLocal(q);
+  const now = Date.now();
+  const qNormKey = normalizeQuestionKey(q);
+  // Evitar duplicar la misma consulta consecutiva por doble toque en menos de 30s
+  if (qNormKey && qNormKey === btLastLoggedQueryKey && now - btLastLoggedQueryAt < 30000) {
+    return;
+  }
+  btLastLoggedQueryKey = qNormKey;
+  btLastLoggedQueryAt = now;
+
   const sources = Array.isArray(data && data.sources) ? data.sources : [];
   const answerFull = summarizeMarkdownPlain(data && data.answer_markdown, 2500);
   const unmatched =
-    !sources.length && /no encontr[eé]|sin resultados|reformul|espec[ií]fica/i.test(answerFull);
+    !sources.length && /no (?:se )?encontr[eéoó]|informaci[oó]n no disponible|sin resultados|reformul|espec[ií]fica/i.test(answerFull);
 
   bumpStatCounter("topQueries", q, 25);
   try {
@@ -7064,21 +7075,28 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
 
   const now = Date.now();
   const lastSent = Number(localStorage.getItem(BT_LAST_SENT_KEY) || "0");
-  // En salida de app (forceImmediate), enviar si hay al menos 1 acción sustancial nueva y pasaron >= 25s
-  // En segundo plano periódico, exigir >= 3 preguntas o >= 3 minutos con actividad relevante
+  // En salida de app / cambio de pestaña (forceImmediate), respetar cooldown de 90s para evitar duplicados al abrir PDFs
+  // En segundo plano periódico, exigir >= 5 minutos o >= 5 preguntas relevantes
   if (!criticalCount) {
     if (forceImmediate) {
-      if (now - lastSent < 25000 && meaningfulEvents.length < 2) return;
+      if (now - lastSent < 90000) return;
     } else {
-      const cooldownOk = now - lastSent >= 180000;
-      if (!cooldownOk && questionCount < 4) return;
+      const cooldownOk = now - lastSent >= 300000;
+      if (!cooldownOk && questionCount < 5) return;
       if (questionCount < 1 && meaningfulEvents.length < 3) return;
     }
   }
 
   btFlushInFlight = true;
+  const batch = queue.slice(0, 25);
+  const remaining = queue.slice(batch.length);
+  // Reclamar el lote de forma atómica ANTES de la petición de red para evitar envíos duplicados entre visibilitychange/pagehide o pestañas
   try {
-    const batch = queue.slice(0, 25);
+    localStorage.setItem(BT_LAST_SENT_KEY, String(now));
+    localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(remaining));
+  } catch (_) {}
+
+  try {
     const ctx = detectClientContext();
     const lines = batch.map((ev, i) => formatTelemetryEventLine(ev, i));
     const statsBlock = formatTopStatsBlock();
@@ -7120,12 +7138,22 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
 
     if (sentOk) {
       markHashesAsSent(batch);
-      const remaining = queue.slice(batch.length);
-      localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(remaining));
-      localStorage.setItem(BT_LAST_SENT_KEY, String(Date.now()));
+    } else {
+      // Restaurar el lote al inicio de la cola si falló la red
+      try {
+        const currentQ = JSON.parse(localStorage.getItem(BT_ANON_QUEUE_KEY) || "[]");
+        const restored = batch.concat(Array.isArray(currentQ) ? currentQ : []).slice(-120);
+        localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(restored));
+        localStorage.setItem(BT_LAST_SENT_KEY, String(lastSent));
+      } catch (_) {}
     }
   } catch (_) {
-    // Reintentar en la siguiente sesión si falla la red
+    try {
+      const currentQ = JSON.parse(localStorage.getItem(BT_ANON_QUEUE_KEY) || "[]");
+      const restored = batch.concat(Array.isArray(currentQ) ? currentQ : []).slice(-120);
+      localStorage.setItem(BT_ANON_QUEUE_KEY, JSON.stringify(restored));
+      localStorage.setItem(BT_LAST_SENT_KEY, String(lastSent));
+    } catch (_) {}
   } finally {
     btFlushInFlight = false;
   }
@@ -7340,6 +7368,7 @@ function setupFullActivityObservers() {
     if (/ResizeObserver loop/i.test(m)) return true;
     if (/AbortError|The operation was aborted|signal is aborted|cancelled|canceled/i.test(m)) return true;
     if (/Worker was terminated|RenderingCancelledException/i.test(m)) return true;
+    if (/Java object is gone|navigation_performance_logger|webkit\.messageHandlers/i.test(m) || /navigation_performance_logger/i.test(String(rawFile || ""))) return true;
     if ((/Load failed|Failed to fetch|NetworkError/i.test(m)) && (document.visibilityState === "hidden" || navigator.onLine === false)) return true;
     return false;
   };
