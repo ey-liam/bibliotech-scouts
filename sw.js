@@ -103,9 +103,11 @@ self.addEventListener("fetch", (event) => {
           caches.match(req, { ignoreSearch: true }).then((cached) => {
             if (cached) return cached;
             if (req.mode === "navigate" || req.headers.get("accept")?.includes("text/html")) {
-              return caches.match("index.html", { ignoreSearch: true });
+              return caches.match("index.html", { ignoreSearch: true }).then(
+                (fallback) => fallback || new Response("Offline", { status: 503, statusText: "Offline" })
+              );
             }
-            return undefined;
+            return new Response("Offline", { status: 503, statusText: "Offline" });
           })
         )
     );
@@ -124,7 +126,7 @@ self.addEventListener("fetch", (event) => {
           }
           return response;
         })
-        .catch(() => undefined);
+        .catch(() => new Response("Offline", { status: 503, statusText: "Offline" }));
     })
   );
 });

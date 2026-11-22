@@ -7117,6 +7117,10 @@ function setupWebOfflineManager() {
       const urls = includeChunks ? [...BASE_OFFLINE_URLS, "data/chunks.json"] : [...BASE_OFFLINE_URLS];
 
       btnDownload.disabled = true;
+      if (badge) {
+        badge.classList.remove("ready");
+        badge.textContent = "Descargando...";
+      }
       if (progressWrap) progressWrap.classList.remove("hidden");
 
       try {
