@@ -1762,32 +1762,13 @@ async function submitQuestion(queryText, options = {}) {
 }
 
 function buildDocSpecificAnswerInBrowser(doc) {
-  const lines = [
-    `### ${doc.title} (${doc.year})`,
-    `- **Archivo oficial:** \`${doc.filename}\``,
-    `- **Categoría:** ${doc.category} • **Sección:** ${doc.section_label}`,
-    `- **Formato:** ${doc.ext}${doc.page_count > 1 ? ` (${doc.page_count} páginas)` : ""}${doc.code ? ` • **Código oficial:** \`${doc.code}\`` : ""}`,
-    ""
-  ];
-  if (doc.summary) {
-    lines.push(`**Resumen del documento:**\n${doc.summary}\n`);
-  }
-
-  const docChunks = (STATE.webChunks || []).filter((c) => c[0] === doc.id).slice(0, 3);
-  if (docChunks.length) {
-    lines.push("**Contenido destacado extraído del documento oficial:**");
-    for (const [, pStart, rawTxt] of docChunks) {
-      const clean = String(rawTxt || "")
-        .replace(/\[Pág\.\s*\d+\]\s*/g, "")
-        .replace(/\s+/g, " ")
-        .trim()
-        .slice(0, 420);
-      if (clean) {
-        lines.push(`- *(Pág. ${pStart})* ${clean}`);
-      }
-    }
-  }
-  return lines.join("\n");
+  const siblings = doc && doc.code && /^P\d+/i.test(String(doc.code))
+    ? STATE.documents
+        .filter((d) => d.id !== doc.id && String(d.code || "").toUpperCase().startsWith(`${String(doc.code).toUpperCase().split(".")[0]}.`))
+        .sort((a, b) => String(a.code || "").localeCompare(String(b.code || ""), "es", { numeric: true }))
+        .slice(0, 5)
+    : [];
+  return buildExecutiveDocCard(doc, siblings);
 }
 
 // ============================================================================
@@ -2658,8 +2639,262 @@ function appendRelatedSources(qSources, item, maxSources = 5) {
   }
 }
 
+const BT_RECME_SERIES_INFO = {
+  P1: {
+    name: "Plantillas de Diagnóstico Inicial (PJOS)",
+    desc: "Formatos oficiales de RECME para el diagnóstico inicial de NNAJ al ingresar o pasar de sección (Manada, Tropa, Comunidad y Clan).",
+    contact: "programa.jovenes@scouts.org.mx"
+  },
+  P2: {
+    name: "Plantillas de Evaluación Auxiliar y Seguimiento (PJOS)",
+    desc: "Cédulas auxiliares para evaluar acciones educativas y dar seguimiento a la progresión personal por sección.",
+    contact: "programa.jovenes@scouts.org.mx"
+  },
+  P3: {
+    name: "Mapas, Pasaportes y Herramientas de Progresión Personal (PJOS)",
+    desc: "Herramientas individuales de registro de progresión por sección (Mi Libro del Seeonee, Mapa de Exploraciones, Hoja de Caminata, Mi Pasaporte de Comunidad y Mapa de Rutas / PPV SMART).",
+    contact: "programa.jovenes@scouts.org.mx"
+  },
+  P4: {
+    name: "Plantillas de Fichas de Acciones Educativas Scouts (FAES)",
+    desc: "Plantilla principal y anexos vertical/horizontal para diseñar y compartir Fichas de Acciones Educativas Scouts (FAES) en el PJOS.",
+    contact: "programa.jovenes@scouts.org.mx"
+  },
+  P5: {
+    name: "Plantillas de Fichas de Especialidades Scouts (FES)",
+    desc: "Plantilla oficial editable (`P5.1`) para desarrollar y documentar Especialidades Scouts en las 4 fases (Descubro, Conozco, Aplico, Comparto y Reflexiono). Sus anexos horizontal y vertical corresponden a `P10.4` y `P10.5`.",
+    contact: "programa.jovenes@scouts.org.mx"
+  },
+  P6: {
+    name: "Plantillas de Escenarios de Aprendizaje, Actas y Ciclo de Programa",
+    desc: "Formatos para Fichas de Evento (`P6.1`), Fichas de Proyecto (`P6.2`), Programa de Actividades (`P6.3`), Acta de Consejo de Nivel y Corte de Honor (`P6.4`) y Ciclo de Programa (`P6.5`).",
+    contact: "programa.jovenes@scouts.org.mx"
+  },
+  P7: {
+    name: "Plantillas Auxiliares para el Registro de Progresión Personal",
+    desc: "Tablas auxiliares para que el equipo de Scouters lleve el registro de progresión de Manada (`P7.1`), Tropa (`P7.2`), Comunidad (`P7.3`) y Clan (`P7.4`).",
+    contact: "programa.jovenes@scouts.org.mx"
+  },
+  P8: {
+    name: "Formatos para Solicitud de Insignias del Marco Mundo Mejor 2026",
+    desc: "Formatos digitales oficiales publicados en RECME para tramitar reconocimientos de Mundo Mejor / Tribu de la Tierra (se llenan en digital, sin imprimir, y se tramitan conforme a `ASMAC/DNME/CNPJ/26.005`).",
+    contact: "mundo.mejor@scouts.org.mx"
+  },
+  P9: {
+    name: "Formatos de Solicitud de Insignia Final / Terminal y Ciclo de Programa 2026",
+    desc: "Solicitudes oficiales de Insignia Final (`P9.1` Alfa, `P9.2` Águila Real, `P9.3` Everest), Insignia Terminal (`P9.4` Baden Powell) en versiones Obsidiana/Jade (`DNME-CNPJ 26.011`) y formato de Ciclo de Programa 2026 (`P9.5`).",
+    contact: "insignias.cnpj@scouts.org.mx"
+  },
+  P10: {
+    name: "Formación de Adultos (CNAMS) y Anexos para Fichas de Especialidad",
+    desc: "Documentos de formación de adultos (Ficha de Planeación Didáctica `P10.2`, Cartas de Acompañamiento Formativo `P10.6` y `P10.7`) y anexos horizontal/vertical de Especialidades (`P10.4` y `P10.5`).",
+    contact: "programa.jovenes@scouts.org.mx"
+  }
+};
+
+function cleanDocExcerpt(rawText, docTitle = "") {
+  let t = String(rawText || "")
+    .replace(/\[Pág\.\s*\d+\]\s*/g, "")
+    .replace(/DOCUMENTO OFICIAL ASMAC:[^\n]*/gi, "")
+    .replace(/_{4,}/g, "___")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (docTitle && t.toLowerCase().startsWith(docTitle.toLowerCase())) {
+    t = t.slice(docTitle.length).replace(/^[\s:–—-]+/, "").trim();
+  }
+  return t;
+}
+
+function buildExecutiveDocCard(doc, siblings = []) {
+  const codeTag = doc.code ? ` (\`${doc.code}\`)` : "";
+  const lines = [
+    `### ${doc.title}${codeTag}`,
+    "",
+    "**Ficha oficial en BiblioTech Scout (basada en el documento original):**",
+    `- **Archivo oficial:** \`${doc.filename}\`${doc.ext ? ` (${doc.ext}` : ""}${doc.page_count > 1 ? `, ${doc.page_count} páginas` : ""}${doc.size_label ? `, ${doc.size_label}` : ""}${doc.ext ? ")" : ""}`,
+    `- **Clasificación:** ${doc.category}${doc.subcategory ? ` → ${doc.subcategory}` : ""} · **Sección:** ${doc.section_label || "General"} · **Año:** ${doc.year || "Vigente"}`
+  ];
+  if (doc.code) {
+    const pMatch = doc.code.match(/^(P\d+)/i);
+    const seriesInfo = pMatch ? BT_RECME_SERIES_INFO[pMatch[1].toUpperCase()] : null;
+    if (seriesInfo) {
+      lines.push(`- **Serie oficial RECME:** \`${pMatch[1].toUpperCase()}\` — ${seriesInfo.name}. ${seriesInfo.desc}`);
+    }
+  }
+  const cleanSummary = cleanDocExcerpt(doc.summary || "", doc.title);
+  if (cleanSummary && cleanSummary.length > 25) {
+    lines.push("", "**Qué contiene y para qué sirve (resumen documental):**", cleanSummary.slice(0, 620));
+  }
+  const docChunks = (STATE.webChunks || []).filter((c) => c[0] === doc.id).slice(0, 2);
+  const excerptParts = [];
+  for (const [, pageNum, raw] of docChunks) {
+    const cleaned = cleanDocExcerpt(raw, doc.title);
+    if (cleaned && cleaned.length > 40 && !cleanSummary.toLowerCase().includes(cleaned.slice(0, 60).toLowerCase())) {
+      excerptParts.push(`- *(Pág. ${pageNum})* ${cleaned.slice(0, 360)}${cleaned.length > 360 ? "…" : ""}`);
+    }
+  }
+  if (excerptParts.length) {
+    lines.push("", "**Extracto literal del archivo oficial:**", ...excerptParts);
+  }
+  if (siblings.length) {
+    lines.push("", "**Otros documentos oficiales de la misma serie:**");
+    for (const s of siblings.slice(0, 6)) {
+      lines.push(`- **\`${s.code || s.ext}\`** — ${s.title}`);
+    }
+  }
+  lines.push(
+    "",
+    "**Cómo abrirlo o descargarlo:** Pulsa la tarjeta del documento justo debajo en **Fuentes oficiales**, o busca el código en la sección **Biblioteca** / **Catálogo**."
+  );
+  return lines.join("\n");
+}
+
+function matchDocumentOrCodeOverview(query) {
+  const raw = String(query || "").trim();
+  const qNorm = normalizeQuestionKey(raw);
+  if (!qNorm) return null;
+  const wordCount = qNorm.split(/\s+/).filter(Boolean).length;
+
+  // Caso 0: RECME 23 / RECME 2.0 (fichas históricas anteriores al PJOS alojadas en /phocadownload/)
+  if (/\brecme\s*23\b|\brecme\s*2\s*0\b|\bphocadownload\b/.test(qNorm)) {
+    const faesTemplates = STATE.documents.filter((d) => /^P4\./i.test(String(d.code || "")));
+    const sources = faesTemplates.slice(0, 5).map((d) => ({
+      doc_id: d.id, title: d.title, filename: d.filename, ext: d.ext, year: d.year, page_start: 1
+    }));
+    const text = [
+      "### ¿Qué son las fichas `RECME23` (RECME 2.0) y por qué ya no aparecen listadas en la Biblioteca Virtual?",
+      "",
+      "- **Origen documental:** Los archivos con nomenclatura `RECME23_AES_*` (rotulados como *«Ficha de Actividad RECME 2.0»*, 2023) pertenecen a la **versión anterior de la plataforma RECME**, previa a la migración completa al **Programa de Jóvenes Orientado a la Sustentabilidad (PJOS)**.",
+      "- **Por qué parecen «ocultos»:** Al actualizar la Biblioteca Virtual de RECME (`recme.scouts.org.mx/biblioteca-virtual/`), la ASMAC retiró del listado público las fichas `RECME23` y las reemplazó por las **Fichas de Acciones Educativas Scouts (`FAES`)** y las **Fichas de Especialidades Scouts (`FES`)** organizadas por sección y eje temático; algunos PDFs antiguos permanecen únicamente como enlaces directos en `/phocadownload/`.",
+      "- **Qué usar actualmente en el PJOS 2026:** En BiblioTech Scout tienes respaldadas las **220 FAES vigentes**, las **82 FES oficiales** y las plantillas **`P4.1`**, **`P4.2`** y **`P4.3`** para elaborar nuevas acciones educativas.",
+      "- **Si requieres un archivo histórico específico:** Puedes solicitarlo o confirmar su vigencia ante la Comisión Nacional de Programa de Jóvenes en `programa.jovenes@scouts.org.mx` o en el **Help Desk ASMAC**."
+    ].join("\n");
+    return { query, answer_markdown: text, sources };
+  }
+
+  // Solo activar el resolvedor directo de códigos en consultas cortas o explícitas de código/archivo (<= 7 palabras)
+  if (wordCount > 7) return null;
+  const isCodeQuestion =
+    /^(?:que es|que significa|para que sirve|donde encuentro|donde esta|plantilla|formato|archivo|documento|comunicado|recme|serie|codigo|clave|folio)?\s*(?:el|la|de|del|en)?\s*(?:recme\s+)?(?:p\d+(?:\.\d+)*|jl\d+|(?:asmac[\s\/\-]*)?(?:dnme|jsn|cnpj|sjsn)[\s\/\-]*(?:cnpj[\s\/\-]*)?\d{2}\.\d{2,3})\b/i.test(raw) ||
+    /\b(?:p\d+\.\d+(?:\.\d+)?|jl\d{3}|(?:dnme|jsn|cnpj)[\s\/\-]+(?:cnpj[\s\/\-]+)?\d{2}\.\d{2,3})\b/i.test(raw);
+  if (!isCodeQuestion) return null;
+
+  // 1) Detectar código P1..P10 (ej. P8.6, P8.7, P9.2, P3.3.2, P10.2, o solo serie P8)
+  const pCodeMatch = raw.match(/\b(P\d{1,2}(?:\.\d+)*)\b/i);
+  if (pCodeMatch) {
+    const codeUpper = pCodeMatch[1].toUpperCase();
+    const seriesKey = codeUpper.split(".")[0];
+    const seriesDocs = STATE.documents
+      .filter((d) => {
+        const dc = String(d.code || "").toUpperCase();
+        return dc === seriesKey || dc.startsWith(`${seriesKey}.`);
+      })
+      .sort((a, b) => String(a.code || "").localeCompare(String(b.code || ""), "es", { numeric: true }));
+
+    // Coincidencia exacta de código en catálogo
+    const exactDocs = seriesDocs.filter((d) => String(d.code || "").toUpperCase() === codeUpper);
+    if (exactDocs.length) {
+      const primary = exactDocs[0];
+      const siblings = seriesDocs.filter((d) => d.id !== primary.id);
+      const sources = [primary, ...siblings.slice(0, 4)].map((d) => ({
+        doc_id: d.id, title: d.title, filename: d.filename, ext: d.ext, year: d.year, page_start: 1
+      }));
+      return { query, answer_markdown: buildExecutiveDocCard(primary, siblings), sources };
+    }
+
+    // Serie completa (ej. "serie p8" o "recme p8") o folio no publicado (ej. "recme p8.6", "p5.2", "p10.1")
+    const seriesInfo = BT_RECME_SERIES_INFO[seriesKey];
+    if (seriesInfo) {
+      const isSpecificFolio = codeUpper.includes(".");
+      const lines = [
+        isSpecificFolio
+          ? `### Código \`${codeUpper}\` — Folio no publicado en la serie \`${seriesKey}\` de RECME`
+          : `### Serie \`${seriesKey}\` en RECME — ${seriesInfo.name}`,
+        ""
+      ];
+      if (isSpecificFolio) {
+        lines.push(
+          `**Nota de transparencia documental:** En la Biblioteca Virtual oficial de **RECME** (ASMAC) al corte del **22 de noviembre de 2026**, el código **\`${codeUpper}\`** corresponde por numeración a la **serie \`${seriesKey}\` (${seriesInfo.name})**, pero **ese folio específico no aparece publicado ni listado** en el repositorio público.`
+        );
+      } else {
+        lines.push(`En la plataforma **RECME** (ASMAC), la **serie \`${seriesKey}\`** agrupa las **${seriesInfo.name}**: ${seriesInfo.desc}`);
+      }
+      if (seriesDocs.length) {
+        lines.push("", `**Documentos oficiales que SÍ están publicados en la serie \`${seriesKey}\` (${seriesDocs.length} archivos):**`);
+        for (const d of seriesDocs) {
+          lines.push(`- **\`${d.code}\`** — ${d.title} (\`${d.filename}\`)`);
+        }
+      }
+      lines.push(
+        "",
+        "**¿Cómo confirmar si existe o solicitar un folio faltante?**",
+        `- Escribe a la comisión correspondiente (**\`${seriesInfo.contact}\`**) indicando el código exacto (\`${codeUpper}\`) y tu sección o Grupo, o levanta un ticket en el **Help Desk ASMAC** (\`soporte.scouts.org.mx\`).`,
+        `- Mientras tanto, puedes abrir y descargar cualquiera de los formatos vigentes de la serie \`${seriesKey}\` directamente desde las **Fuentes oficiales** de abajo.`
+      );
+      const sources = seriesDocs.slice(0, 6).map((d) => ({
+        doc_id: d.id, title: d.title, filename: d.filename, ext: d.ext, year: d.year, page_start: 1
+      }));
+      return { query, answer_markdown: lines.join("\n"), sources };
+    }
+  }
+
+  // 2) Detectar código JL304 o comunicados DNME / JSN / CNPJ (ej. "jl304", "dnme 26.007", "jsn 25.136")
+  const otherCodeMatch = raw.match(/\b(JL\d{3}|(?:DNME|JSN|CNPJ|SJSN)[\s\/\-]+(?:CNPJ[\s\/\-]+)?\d{2}\.\d{2,3})\b/i);
+  if (otherCodeMatch) {
+    const needleNorm = normalizeStr(otherCodeMatch[1]).replace(/[^a-z0-9]/g, "");
+    const numOnly = (otherCodeMatch[1].match(/\d{2}\.\d{2,3}/) || [""])[0];
+    const matched = STATE.documents.filter((d) => {
+      const codeStr = normalizeStr(`${d.code || ""} ${d.filename || ""} ${d.title || ""}`);
+      const compact = codeStr.replace(/[^a-z0-9]/g, "");
+      if (compact.includes(needleNorm)) return true;
+      if (numOnly && codeStr.includes(numOnly) && /dnme|jsn|cnpj|sjsn/i.test(codeStr)) return true;
+      return false;
+    });
+    if (matched.length) {
+      const primary = matched[0];
+      const siblings = matched.slice(1, 5);
+      const sources = [primary, ...siblings].map((d) => ({
+        doc_id: d.id, title: d.title, filename: d.filename, ext: d.ext, year: d.year, page_start: 1
+      }));
+      return { query, answer_markdown: buildExecutiveDocCard(primary, siblings), sources };
+    }
+    // Comunicado DNME/JSN no publicado en el acervo
+    if (numOnly) {
+      const prefix = (otherCodeMatch[1].match(/DNME|JSN|CNPJ|SJSN/i) || ["ASMAC"])[0].toUpperCase();
+      const sameYear = STATE.documents
+        .filter((d) => new RegExp(`${prefix}.*${numOnly.slice(0, 3)}`, "i").test(`${d.code || ""} ${d.filename || ""}`))
+        .slice(0, 6);
+      const lines = [
+        `### Comunicado \`${otherCodeMatch[1].toUpperCase()}\` — No encontrado en el acervo actual`,
+        "",
+        `**Nota de transparencia documental:** El folio **\`${otherCodeMatch[1].toUpperCase()}\`** no se encuentra publicado en el acervo oficial respaldado de BiblioTech Scout al **22 de noviembre de 2026** (puede corresponder a un comunicado de uso interno, a una actualización aún no difundida o a un folio pendiente de incorporar).`,
+        "",
+        "**¿Cómo solicitarlo o confirmar su vigencia?**",
+        "- Consulta en el portal oficial de Comunicados de ASMAC (`scouts.org.mx`) o escribe a `programa.jovenes@scouts.org.mx` / `oficina.nacional@scouts.org.mx`.",
+        "- Si cuentas con el PDF oficial emitido por la ASMAC, puedes enviarlo a través del botón **Aportar / Reportar** para integrarlo en BiblioTech Scout."
+      ];
+      if (sameYear.length) {
+        lines.push("", `**Comunicados vigentes de la misma serie (${prefix}) disponibles en BiblioTech:**`);
+        for (const d of sameYear) {
+          lines.push(`- **\`${d.code || d.year}\`** — ${d.title}`);
+        }
+      }
+      const sources = sameYear.map((d) => ({
+        doc_id: d.id, title: d.title, filename: d.filename, ext: d.ext, year: d.year, page_start: 1
+      }));
+      return { query, answer_markdown: lines.join("\n"), sources };
+    }
+  }
+
+  return null;
+}
+
 function answerLocallyInBrowser(query) {
   const qClean = normalizeQuestionKey(query);
+  const codeOverview = matchDocumentOrCodeOverview(query);
+  if (codeOverview) {
+    return codeOverview;
+  }
   const exactQ = STATE.qBankByNorm[qClean];
 
   if (exactQ && exactQ.ans) {
@@ -6001,13 +6236,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.8.3";
+const APP_WEB_VERSION = "9.8.4";
 const APP_MOBILE_VERSION = "3.8.0";
 const APP_COOKIE_SCHEMA = "9.6";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v55";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v56";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {

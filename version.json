@@ -1,8 +1,8 @@
 {
-  "version": "9.8.3",
+  "version": "9.8.4",
   "mobileVersion": "3.8.0",
-  "cache": "bibliotech-scout-v55",
+  "cache": "bibliotech-scout-v56",
   "releasedAt": "2026-11-22",
   "schemaCookieVersion": "9.6",
-  "notes": "Versión 9.8.3: Telemetría con reclamo atómico de cola y cooldown anti-duplicados (elimina envíos repetidos al abrir PDFs o cambiar de pestaña), filtro de ruido interno Android WebView (navigation_performance_logger_android) y respuestas completas 2026 del Marco Mundo Mejor / Tribu de la Tierra (Scouts Go Solar P8.7, Mensajeros de la Paz P8.3, Plastic Tide Turners P8.4 y Champions for Nature P8.1/P8.2; 21,195 preguntas verificadas)."
+  "notes": "Versión 9.8.4: Nuevo resolvedor de fichas ejecutivas por código y serie oficial (P1–P10, JL304, DNME, JSN, RECME23 y los 883 documentos oficiales) que explica con precisión documental tanto los archivos existentes como los folios no publicados en RECME (p. ej. P8.6 o P5.2) sin inventar información."
 }
