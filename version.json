@@ -1,8 +1,8 @@
 {
-  "version": "9.9.0",
-  "mobileVersion": "3.9.0",
-  "cache": "bibliotech-scout-v57",
+  "version": "9.9.1",
+  "mobileVersion": "3.9.1",
+  "cache": "bibliotech-scout-v58",
   "releasedAt": "2026-11-22",
   "schemaCookieVersion": "9.7",
-  "notes": "Versión 9.9.0 / Mobile 3.9.0: Respuestas completas sin recortes, corrección ortográfica fuzzy search, autocompletado de códigos oficiales (P1–P10, JL304, DNME, JSN), buscador de texto interno en PDF con memoria de página y tamaño visible, Centro de Ajustes completo (Modo Lite vs Modo Completo animado/3D, sonidos Web Audio, Alto Contraste, Idioma ES/EN, datos de autollenado, guardados, cookies, recarga manual y avisos de actualización multi-plataforma)."
+  "notes": "Versión 9.9.1 / Mobile 3.9.1: Menú móvil sin duplicados, Ajustes simplificados (Modo Lite, Modo Estándar, Modo oscuro), App y Modo Offline dentro de Ajustes, Bienvenida interactiva de 3 páginas con consejo de conexión iOS y centro unificado de Ajustes y Descargas en APK Android."
 }

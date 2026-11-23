@@ -64,8 +64,13 @@ def run_e2e(test_webkit: bool = False):
 
             page.goto("http://127.0.0.1:18775/", wait_until="networkidle")
 
-            # Verificar que el modal de bienvenida + QR aparece en la primera visita
+            # Verificar que el modal de bienvenida en 3 páginas + QR aparece en la primera visita
             page.wait_for_selector("#welcomeModal:not(.hidden)", timeout=4000)
+            assert "Página 1 de 3" in page.locator("#welcomePageIndicator").inner_text(), "Bienvenida no inició en página 1 de 3"
+            page.click("#nextWelcomePageBtn")
+            assert "Página 2 de 3" in page.locator("#welcomePageIndicator").inner_text(), "Bienvenida no avanzó a página 2 de 3"
+            page.click("#nextWelcomePageBtn")
+            assert "Página 3 de 3" in page.locator("#welcomePageIndicator").inner_text(), "Bienvenida no avanzó a página 3 de 3"
             qr_loaded = page.evaluate(
                 "() => { const img = document.querySelector('#welcomeModal img[src*=\"qr-bibliotech.png\"]'); return Boolean(img && img.complete && img.naturalWidth > 100); }"
             )
@@ -323,8 +328,15 @@ def run_e2e(test_webkit: bool = False):
             dismiss_consent(mpage)
             assert mpage.evaluate("document.documentElement.scrollWidth <= window.innerWidth"), "Mobile horizontal overflow (inicio)"
             assert mpage.locator("#unifiedBottomDock .bt-dock-item").count() == 6, "Dock móvil debe tener 6 botones"
+            assert mpage.locator("#navegacion-principal #openSettingsMenuBtn").count() == 0, "Ajustes no debe duplicarse en el menú"
+            assert mpage.locator("#navegacion-principal #openSavedMenuBtn").count() == 0, "Guardados no debe duplicarse en el menú"
+            assert mpage.locator('#navegacion-principal a[href="#aportar"]').count() == 0, "Aportar y Contacto no debe estar en el menú"
+            assert mpage.locator('#navegacion-principal a[href="#app"]').count() == 0, "App / Offline no debe duplicarse en el menú"
             mpage.click("#dockBtnSettings")
             mpage.wait_for_selector("#btSettingsModal:not(.hidden)", timeout=3000)
+            assert "Modo Estándar" in mpage.locator("#labelModeFull").inner_text(), "Falta etiqueta Modo Estándar"
+            assert mpage.locator("#settingsCampLabel").inner_text().strip() == "Modo oscuro", "Modo oscuro debe mostrarse sin (Campamento)"
+            assert mpage.locator('#btSettingsModal [data-settings-tab="offline"]').is_visible(), "Falta pestaña App y Modo Offline en Ajustes"
             mpage.click("#closeSettingsModalBtn")
             mpage.locator("#btSettingsModal").wait_for(state="hidden", timeout=3000)
             mpage.click('#unifiedBottomDock [data-bt-go-view="fogata"]')

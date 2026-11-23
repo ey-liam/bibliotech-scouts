@@ -910,7 +910,17 @@ function setupWorkspaceViews() {
         guideTab: guideJump !== null ? guideJump : (targetView === "guia" ? "all" : undefined),
         scrollToId: hashId === "buscador" ? "buscador" : ""
       };
-      btSwitchView(targetView, opts);
+      if (guideJump === "app" && (window.Capacitor || window.innerWidth <= 920)) {
+        if (window.Capacitor && window.__btNativeBridge && typeof window.__btNativeBridge.openModal === "function") {
+          window.__btNativeBridge.openModal("files");
+        } else if (typeof window.__btOpenSettingsModal === "function") {
+          window.__btOpenSettingsModal("offline");
+        } else {
+          btSwitchView(targetView, opts);
+        }
+      } else {
+        btSwitchView(targetView, opts);
+      }
 
       // Cerrar menú desplegable si estaba abierto
       const header = document.querySelector(".main-header");
@@ -6875,13 +6885,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.9.0";
-const APP_MOBILE_VERSION = "3.9.0";
+const APP_WEB_VERSION = "9.9.1";
+const APP_MOBILE_VERSION = "3.9.1";
 const APP_COOKIE_SCHEMA = "9.7";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v57";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v58";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -7086,28 +7096,45 @@ function setupWebOfflineManager() {
       const hasChunks = await cache.match("data/chunks.json", { ignoreSearch: true });
       const rawMeta = localStorage.getItem(WEB_OFFLINE_META_KEY);
       const meta = rawMeta ? JSON.parse(rawMeta) : null;
+      const stBadge = document.getElementById("settingsOfflineStatusBadge");
+      const stBtn = document.getElementById("btnSettingsDownloadOffline");
 
       if (hasBank && hasFaq4) {
+        const label = hasChunks ? "Listo offline (completo)" : "Listo offline (21,195 preg.)";
+        const btnTxt = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
         if (badge) {
           badge.classList.add("ready");
-          badge.textContent = hasChunks ? "Listo offline (completo)" : "Listo offline (21,195 preg.)";
+          badge.textContent = label;
         }
-        if (btnDownload) {
-          btnDownload.textContent = meta && meta.date ? `Actualizar (${meta.date})` : "Actualizar datos offline";
+        if (stBadge) {
+          stBadge.classList.add("ready");
+          stBadge.textContent = label;
         }
+        if (btnDownload) btnDownload.textContent = btnTxt;
+        if (stBtn) stBtn.textContent = btnTxt;
         if (btnClear) btnClear.classList.remove("hidden");
       } else {
         if (badge) {
           badge.classList.remove("ready");
           badge.textContent = "Sin descargar";
         }
+        if (stBadge) {
+          stBadge.classList.remove("ready");
+          stBadge.textContent = "Sin descargar";
+        }
         if (btnDownload) btnDownload.textContent = "Descargar modo sin conexión";
+        if (stBtn) stBtn.textContent = "Descargar modo sin conexión";
         if (btnClear) btnClear.classList.add("hidden");
       }
     } catch (_) {}
   };
 
+  window.__btRefreshWebOfflineStatus = refreshStatus;
+
   if (btnDownload) {
+    window.__btTriggerWebOfflineDownload = async () => {
+      btnDownload.click();
+    };
     btnDownload.addEventListener("click", async () => {
       if (navigator.onLine === false) {
         showWebToast("Conéctate a internet para descargar el paquete offline.");
@@ -7115,11 +7142,21 @@ function setupWebOfflineManager() {
       }
       const includeChunks = Boolean(chunksToggle && chunksToggle.checked);
       const urls = includeChunks ? [...BASE_OFFLINE_URLS, "data/chunks.json"] : [...BASE_OFFLINE_URLS];
+      const stBadge = document.getElementById("settingsOfflineStatusBadge");
+      const stBtn = document.getElementById("btnSettingsDownloadOffline");
 
       btnDownload.disabled = true;
+      if (stBtn) {
+        stBtn.disabled = true;
+        stBtn.textContent = "Descargando...";
+      }
       if (badge) {
         badge.classList.remove("ready");
         badge.textContent = "Descargando...";
+      }
+      if (stBadge) {
+        stBadge.classList.remove("ready");
+        stBadge.textContent = "Descargando...";
       }
       if (progressWrap) progressWrap.classList.remove("hidden");
 
@@ -7134,6 +7171,7 @@ function setupWebOfflineManager() {
           done++;
           const pct = Math.round((done / urls.length) * 100);
           if (progressBar) progressBar.style.width = `${pct}%`;
+          if (stBtn) stBtn.textContent = `Descargando (${pct}%)...`;
         }
 
         const today = new Date().toLocaleDateString("es-MX");
@@ -7145,6 +7183,7 @@ function setupWebOfflineManager() {
         enqueueAnonTelemetry({ t: "error_js", msg: `web_offline: ${String(err && err.message || err)}`, src: "ios_offline" }, false);
       } finally {
         btnDownload.disabled = false;
+        if (stBtn) stBtn.disabled = false;
         await refreshStatus();
       }
     });
@@ -7178,25 +7217,78 @@ function setupWelcomeModal() {
   const openFooterBtn = document.getElementById("openWelcomeFooterBtn");
   const closeBtn = document.getElementById("closeWelcomeModalBtn");
   const skipBtn = document.getElementById("skipWelcomeModalBtn");
+  const prevBtn = document.getElementById("prevWelcomePageBtn");
+  const nextBtn = document.getElementById("nextWelcomePageBtn");
   const startBtn = document.getElementById("startWelcomeModalBtn");
+  const indicatorEl = document.getElementById("welcomePageIndicator");
+  const stepBtns = Array.from(modal.querySelectorAll("[data-welcome-step]"));
+  const pagePanels = Array.from(modal.querySelectorAll("[data-welcome-page]"));
+  const platBtns = Array.from(modal.querySelectorAll("[data-welcome-plat]"));
+  const platPanes = Array.from(modal.querySelectorAll("[data-welcome-plat-pane]"));
   const shareQrBtn = document.getElementById("shareWelcomeQrBtn");
   const downloadQrBtn = document.getElementById("downloadWelcomeQrBtn");
   const openPrivacyBtn = document.getElementById("welcomeOpenPrivacyBtn");
+
+  let currentPage = 1;
+
+  const detectDefaultPlatform = () => {
+    if (window.Capacitor) return "apk";
+    if (IS_APPLE_TOUCH || /iPhone|iPad|iPod/i.test(navigator.userAgent || "")) return "ios";
+    if (/Android/i.test(navigator.userAgent || "")) return "apk";
+    return "desktop";
+  };
+
+  const setWelcomePlatform = (platName) => {
+    const target = ["ios", "apk", "desktop"].includes(platName) ? platName : "desktop";
+    platBtns.forEach((btn) => {
+      const act = btn.getAttribute("data-welcome-plat") === target;
+      btn.classList.toggle("is-active", act);
+      btn.setAttribute("aria-selected", String(act));
+    });
+    platPanes.forEach((pane) => {
+      pane.classList.toggle("hidden", pane.getAttribute("data-welcome-plat-pane") !== target);
+    });
+  };
+
+  const setWelcomePage = (pageNum) => {
+    currentPage = Math.max(1, Math.min(3, Number(pageNum) || 1));
+    stepBtns.forEach((btn) => {
+      const n = Number(btn.getAttribute("data-welcome-step"));
+      const act = n === currentPage;
+      btn.classList.toggle("is-active", act);
+      btn.setAttribute("aria-selected", String(act));
+    });
+    pagePanels.forEach((panel) => {
+      const n = Number(panel.getAttribute("data-welcome-page"));
+      panel.classList.toggle("hidden", n !== currentPage);
+    });
+    if (indicatorEl) indicatorEl.textContent = `Página ${currentPage} de 3`;
+    if (prevBtn) prevBtn.classList.toggle("hidden", currentPage <= 1);
+    if (nextBtn) nextBtn.classList.toggle("hidden", currentPage >= 3);
+  };
+
+  setWelcomePlatform(detectDefaultPlatform());
+  setWelcomePage(1);
 
   const closeMenuIfOpen = () => {
     const header = document.querySelector(".main-header");
     const navToggle = document.getElementById("navToggle");
     const navBackdrop = document.getElementById("navBackdrop");
     if (header) header.classList.remove("nav-open");
+    document.body.classList.remove("nav-open");
     if (navToggle) navToggle.setAttribute("aria-expanded", "false");
     if (navBackdrop) navBackdrop.hidden = true;
   };
 
-  const openWelcome = () => {
+  const openWelcome = (initialPage = 1) => {
     closeMenuIfOpen();
+    setWelcomePlatform(detectDefaultPlatform());
+    setWelcomePage(initialPage);
     modal.classList.remove("hidden");
     activateDialogFocusTrap(modal, "#startWelcomeModalBtn");
   };
+
+  window.__btOpenWelcomeModal = openWelcome;
 
   const dismissWelcome = (acceptConsentIfUnset = true) => {
     try {
@@ -7217,11 +7309,24 @@ function setupWelcomeModal() {
   } catch (_) {}
 
   if (!alreadySeen) {
-    openWelcome();
+    openWelcome(1);
   }
 
-  if (openMenuBtn) openMenuBtn.addEventListener("click", openWelcome);
-  if (openFooterBtn) openFooterBtn.addEventListener("click", openWelcome);
+  stepBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setWelcomePage(Number(btn.getAttribute("data-welcome-step")) || 1);
+    });
+  });
+  platBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setWelcomePlatform(btn.getAttribute("data-welcome-plat") || "desktop");
+    });
+  });
+  if (prevBtn) prevBtn.addEventListener("click", () => setWelcomePage(currentPage - 1));
+  if (nextBtn) nextBtn.addEventListener("click", () => setWelcomePage(currentPage + 1));
+
+  if (openMenuBtn) openMenuBtn.addEventListener("click", () => openWelcome(1));
+  if (openFooterBtn) openFooterBtn.addEventListener("click", () => openWelcome(1));
   if (closeBtn) closeBtn.addEventListener("click", () => dismissWelcome(true));
   if (skipBtn) skipBtn.addEventListener("click", () => dismissWelcome(true));
   if (startBtn) {
@@ -11806,22 +11911,21 @@ const BT_UI_I18N = {
     randomBtn: "Preguntas al azar",
     settingsKicker: "Preferencias locales y actualizaciones",
     settingsTitle: "Ajustes de BiblioTech Scout",
-    settingsTabs: ["Apariencia y Sonido", "Mis Datos y Guardados", "Actualizaciones y Avisos"],
-    visualHeading: "Modo Visual del Sitio",
-    visualDesc: "Mismos apartados, botones y orden exacto; elige entre máxima rapidez o experiencia visual animada.",
-    modeLiteTitle: "Modo Lite (Actual · Ligero)",
-    modeLiteDesc: "Sin partículas ni animaciones 3D. Ideal para celulares básicos, ahorro de batería y respuesta instantánea.",
-    modeFullTitle: "Modo Completo (Animado + 3D)",
-    modeFullDesc: "Activa partículas ambientales, efecto 3D al pasar el cursor, animación asimétrica del título e imagen en Inicio y transiciones fluidas.",
+    settingsTabs: ["Apariencia y Sonido", "App y Modo Offline", "Mis Datos y Guardados", "Actualizaciones y Avisos"],
+    visualHeading: "Modo visual",
+    modeLiteTitle: "Modo Lite",
+    modeFullTitle: "Modo Estándar",
     soundLabel: "Efectos de sonido interactivos",
     soundSub: "Sonidos suaves al pulsar botones, cambiar página en PDF o recibir respuestas (Web Audio local).",
     testSoundBtn: "Probar",
     contrastLabel: "Modo de Alto Contraste",
     contrastSub: "Refuerza bordes, textos y enlaces para lectura con vista reducida o bajo sol directo.",
-    campLabel: "Tema Oscuro (Campamento)",
-    campSub: "Cambia la paleta visual entre modo claro editorial y modo oscuro nocturno.",
+    campLabel: "Modo oscuro",
     langLabel: "Idioma de la interfaz",
-    langSub: "Traduce menús, controles y encabezados principales entre Español e Inglés (documentos oficiales conservan su idioma original)."
+    langSub: "Traduce menús, controles y encabezados principales entre Español e Inglés (documentos oficiales conservan su idioma original).",
+    welcomeLabel: "Guía de bienvenida y QR",
+    welcomeSub: "Abre la introducción de 3 páginas sobre funciones, uso sin señal y código QR para compartir.",
+    welcomeOpenBtn: "Abrir bienvenida"
   },
   en: {
     navHome: "Home",
@@ -11845,22 +11949,21 @@ const BT_UI_I18N = {
     randomBtn: "Random questions",
     settingsKicker: "Local preferences and updates",
     settingsTitle: "BiblioTech Scout Settings",
-    settingsTabs: ["Appearance & Sound", "My Data & Saved", "Updates & Changelog"],
-    visualHeading: "Visual Display Mode",
-    visualDesc: "Exact same sections, buttons and layout; choose between ultra-fast lightweight speed or animated 3D visuals.",
-    modeLiteTitle: "Lite Mode (Current · Fast)",
-    modeLiteDesc: "No background particles or 3D tilt. Built for entry-level phones, battery savings and instant responsiveness.",
-    modeFullTitle: "Full Mode (Animated + 3D)",
-    modeFullDesc: "Enables ambient floating particles, 3D card tilt on hover, asymmetric hero title morphing and smooth fluid motion.",
+    settingsTabs: ["Appearance & Sound", "App & Offline Mode", "My Data & Saved", "Updates & Changelog"],
+    visualHeading: "Visual Mode",
+    modeLiteTitle: "Lite Mode",
+    modeFullTitle: "Standard Mode",
     soundLabel: "Interactive sound effects",
     soundSub: "Soft tactile chimes when tapping controls, flipping PDF pages or getting search answers (local Web Audio).",
     testSoundBtn: "Test",
     contrastLabel: "High Contrast Mode",
     contrastSub: "Stronger borders, high-visibility links and sharper text for low vision or outdoor sunlight.",
-    campLabel: "Dark Theme (Camp Mode)",
-    campSub: "Switch visual palette between light editorial and dark night-camp theme.",
+    campLabel: "Dark mode",
     langLabel: "Interface Language",
-    langSub: "Translates main navigation, controls and headings between Spanish and English (official ASMAC files stay in their original language)."
+    langSub: "Translates main navigation, controls and headings between Spanish and English (official ASMAC files stay in their original language).",
+    welcomeLabel: "Welcome guide & QR",
+    welcomeSub: "Open the 3-page introduction on features, offline usage and shareable QR code.",
+    welcomeOpenBtn: "Open guide"
   }
 };
 
@@ -11918,20 +12021,19 @@ function applyUiLanguage(lang = "es", persist = true) {
     if (dict.settingsTabs[idx]) tab.textContent = dict.settingsTabs[idx];
   });
   setText("#settingsVisualHeading", dict.visualHeading);
-  setText("#settingsVisualDesc", dict.visualDesc);
   setText("#labelModeLite", dict.modeLiteTitle);
-  setText("#descModeLite", dict.modeLiteDesc);
   setText("#labelModeFull", dict.modeFullTitle);
-  setText("#descModeFull", dict.modeFullDesc);
   setText("#settingsSoundLabel", dict.soundLabel);
   setText("#settingsSoundSub", dict.soundSub);
   setText("#btnTestBtSound", dict.testSoundBtn);
   setText("#settingsContrastLabel", dict.contrastLabel);
   setText("#settingsContrastSub", dict.contrastSub);
   setText("#settingsCampLabel", dict.campLabel);
-  setText("#settingsCampSub", dict.campSub);
   setText("#settingsLangLabel", dict.langLabel);
   setText("#settingsLangSub", dict.langSub);
+  setText("#settingsWelcomeLabel", dict.welcomeLabel);
+  setText("#settingsWelcomeSub", dict.welcomeSub);
+  setText("#btnSettingsOpenWelcome", dict.welcomeOpenBtn);
 
   document.querySelectorAll("[data-lang-choice]").forEach((btn) => {
     btn.classList.toggle("active", btn.getAttribute("data-lang-choice") === safeLang);
@@ -11940,13 +12042,23 @@ function applyUiLanguage(lang = "es", persist = true) {
 
 const BT_RELEASE_NOTES = [
   {
+    version: "Web v9.9.1 / APK v3.9.1",
+    date: "22/11/2026",
+    items: [
+      "Menú móvil y cabecera depurados: se retiraron accesos duplicados (Ajustes, Guardados, App/Offline, Bienvenida y Aportar/Contacto) dejando la navegación limpia desde el Dock y Ajustes.",
+      "Ajustes simplificados: opciones directas Modo Lite, Modo Estándar y Modo oscuro, nueva pestaña App y Modo Offline en Web/iOS, y botón directo para abrir la guía de bienvenida y código QR.",
+      "App Android (.apk): menú unificado de Ajustes y Descargas Offline en un mismo panel con pestañas de Mis descargas, Descargar archivos, Ajustes y Actualizaciones.",
+      "Nueva Bienvenida de 3 páginas: explica qué es BiblioTech, cómo se usan sus apartados y cómo usarla en iPhone (consejo de desactivar Wi-Fi/Datos móviles sin señal), Android APK y escritorio."
+    ]
+  },
+  {
     version: "Web v9.9.0 / APK v3.9.0",
     date: "22/11/2026",
     items: [
       "Respuestas 100 % completas sin recortes en iPhone (iOS App Web), Android APK y escritorio, con indexación incremental para no trabar celulares básicos.",
       "Búsqueda tolerante a errores ortográficos (Damerau-Levenshtein) con corrección automática y sugerencias instantáneas de códigos oficiales (P1–P10, JL304, DNME, JSN).",
       "Visor PDF mejorado: recuerda la última página leída por archivo, precarga la siguiente página en segundo plano, añade búsqueda de texto dentro del PDF, pellizco / doble toque y tamaño visible antes de abrir.",
-      "Nuevo Centro de Ajustes: elige entre Modo Lite (actual ultraligero) o Modo Completo (partículas, efecto 3D y rectángulo asimétrico animado en Inicio), efectos de sonido Web Audio, Modo Alto Contraste, idioma Español/Inglés, gestión de datos de autollenado, archivos guardados, cookies y recarga manual de versión."
+      "Centro de Ajustes completo: Modo Lite vs Modo Estándar, efectos de sonido Web Audio, Modo Alto Contraste, idioma Español/Inglés, datos de autollenado, archivos guardados, cookies y recarga manual."
     ]
   },
   {
@@ -12034,6 +12146,10 @@ function setupSettingsHub() {
   const btnNativeApk = document.getElementById("btnSettingsNativeApkUpdate");
   const updateStatusEl = document.getElementById("settingsUpdateStatus");
   const changelogBox = document.getElementById("settingsChangelogContainer");
+  const btnOpenWelcome = document.getElementById("btnSettingsOpenWelcome");
+  const btnSettingsDownloadOffline = document.getElementById("btnSettingsDownloadOffline");
+  const btnSettingsCopyIosUrl = document.getElementById("btnSettingsCopyIosUrl");
+  const btnSettingsJumpAppSection = document.getElementById("btnSettingsJumpAppSection");
 
   const closeMenuIfOpen = () => {
     const header = document.querySelector(".main-header");
@@ -12067,7 +12183,7 @@ function setupSettingsHub() {
       btnFull.setAttribute("aria-pressed", String(curVis === "full"));
     }
     if (visualBadge) {
-      visualBadge.textContent = curVis === "full" ? "Modo Completo" : "Modo Lite";
+      visualBadge.textContent = curVis === "full" ? "Modo Estándar" : "Modo Lite";
     }
     if (soundChk) soundChk.checked = BtSoundEngine.isEnabled();
     if (contrastChk) contrastChk.checked = document.documentElement.getAttribute("data-bt-contrast") === "high";
@@ -12170,9 +12286,18 @@ function setupSettingsHub() {
 
   const openSettingsModal = (initialTab = "visual") => {
     closeMenuIfOpen();
+    if (window.Capacitor && window.__btNativeBridge && typeof window.__btNativeBridge.openModal === "function") {
+      const nativeTab =
+        initialTab === "offline" ? "download" : initialTab === "version" ? "app" : "settings";
+      window.__btNativeBridge.openModal(nativeTab);
+      return;
+    }
     renderVisualControls();
     renderDataPane();
     renderVersionPane();
+    if (typeof window.__btRefreshWebOfflineStatus === "function") {
+      window.__btRefreshWebOfflineStatus();
+    }
     switchSettingsTab(initialTab);
     modal.classList.remove("hidden");
     document.documentElement.classList.add("modal-open");
@@ -12190,6 +12315,10 @@ function setupSettingsHub() {
 
   window.__btOpenSettingsModal = openSettingsModal;
   window.__btCloseSettingsModal = closeSettingsModal;
+  window.BiblioFeel = BiblioFeel;
+  window.BtSoundEngine = BtSoundEngine;
+  window.BT_RELEASE_NOTES = BT_RELEASE_NOTES;
+  window.applyUiLanguage = applyUiLanguage;
 
   document.addEventListener("click", (e) => {
     const opener = e.target.closest("[data-action-open-settings]");
@@ -12212,16 +12341,54 @@ function setupSettingsHub() {
       const targetTab = btn.getAttribute("data-settings-tab") || "visual";
       if (targetTab === "datos") renderDataPane();
       if (targetTab === "version") renderVersionPane();
+      if (targetTab === "offline" && typeof window.__btRefreshWebOfflineStatus === "function") {
+        window.__btRefreshWebOfflineStatus();
+      }
       switchSettingsTab(targetTab);
     });
   });
+
+  if (btnOpenWelcome) {
+    btnOpenWelcome.addEventListener("click", () => {
+      closeSettingsModal();
+      if (typeof window.__btOpenWelcomeModal === "function") {
+        window.__btOpenWelcomeModal(1);
+      }
+    });
+  }
+  if (btnSettingsDownloadOffline) {
+    btnSettingsDownloadOffline.addEventListener("click", () => {
+      if (typeof window.__btTriggerWebOfflineDownload === "function") {
+        window.__btTriggerWebOfflineDownload();
+      }
+    });
+  }
+  if (btnSettingsCopyIosUrl) {
+    btnSettingsCopyIosUrl.addEventListener("click", async () => {
+      const url = "https://ey-liam.github.io/bibliotech-scouts/";
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+        }
+        showWebToast("Enlace copiado. Ábrelo en Safari y toca Agregar a pantalla de inicio.");
+      } catch (_) {
+        showWebToast(`Copia: ${url}`);
+      }
+    });
+  }
+  if (btnSettingsJumpAppSection) {
+    btnSettingsJumpAppSection.addEventListener("click", () => {
+      closeSettingsModal();
+      btSwitchView("guia", { guideTab: "app" });
+    });
+  }
 
   if (btnLite) {
     btnLite.addEventListener("click", () => {
       BiblioFeel.setVisualMode("lite", true);
       BtSoundEngine.play("toggle");
       renderVisualControls();
-      showWebToast("Modo Lite activado: máxima ligereza para celulares básicos.");
+      showWebToast("Modo Lite activado.");
     });
   }
   if (btnFull) {
@@ -12229,7 +12396,7 @@ function setupSettingsHub() {
       BiblioFeel.setVisualMode("full", true);
       BtSoundEngine.play("toggle");
       renderVisualControls();
-      showWebToast("Modo Completo activado: partículas, efectos 3D y animación de portada.");
+      showWebToast("Modo Estándar activado.");
     });
   }
 

@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=44" />
+  <link rel="stylesheet" href="styles.css?v=45" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -140,31 +140,6 @@
         <a href="#cambios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="cambios">Cambios en Esquemas</a>
         <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
         <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor de Archivos</a>
-        <a href="#app" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">App / Modo Offline</a>
-        <a href="#aportar" class="nav-link">Aportar y Contacto</a>
-        <button type="button" id="openSavedMenuBtn" class="nav-link nav-link-saved" data-action-open-saved="1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-          </svg>
-          <span>Mis guardados y notas</span>
-          <span id="menuSavedCount" class="bt-inline-saved-badge hidden">0</span>
-        </button>
-        <button type="button" id="openWelcomeMenuBtn" class="nav-link nav-link-welcome">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
-          <span>Bienvenida y QR para compartir</span>
-        </button>
-        <button type="button" id="openSettingsMenuBtn" class="nav-link nav-link-settings" data-action-open-settings="1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-          </svg>
-          <span>Ajustes, modo visual y versión</span>
-        </button>
         <button type="button" id="openBugReportMenuBtn" class="nav-link nav-link-report">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
@@ -2105,7 +2080,7 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 3.9.0 Mobile · Web 9.9.0</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 3.9.1 Mobile · Web 9.9.1</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
             <strong>No es necesario descargar nada:</strong> puedes disfrutar de todas las herramientas, el buscador de 21,195 preguntas, los 883 documentos (incluyendo 220 FAES y 82 FES) y el Editor de Archivos directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
@@ -2466,7 +2441,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 22/11/2026 (883 documentos · 21,195 preguntas) · BETA 9.9.0 - 3.9.0 Mobile (22/11/2026) ·
+          Base de datos: 22/11/2026 (883 documentos · 21,195 preguntas) · BETA 9.9.1 - 3.9.1 Mobile (22/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button> ·
           <button type="button" id="openSettingsFooterBtn" class="footer-privacy-btn" data-action-open-settings="1">Ajustes y versión</button>
         </p>
@@ -2661,15 +2636,15 @@
     </div>
   </div>
 
-  <!-- MODAL DE BIENVENIDA Y CÓDIGO QR PARA COMPARTIR (SOLO APARECE LA PRIMERA VEZ O DESDE EL MENÚ) -->
+  <!-- MODAL DE BIENVENIDA EN 3 PÁGINAS Y CÓDIGO QR PARA COMPARTIR -->
   <div id="welcomeModal" class="bt-consent-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="welcomeModalTitle">
     <div class="bt-consent-card bt-welcome-card">
       <div class="bt-welcome-head">
         <div class="bt-welcome-brand-row">
-          <img src="img/logo-flor.png" alt="Logo BiblioTech Scout" class="bt-welcome-logo" loading="lazy" decoding="async" />
+          <img src="img/logo-flor.png" alt="Logo BiblioTech Scout" class="bt-welcome-logo" decoding="async" />
           <div>
-            <span class="bt-consent-kicker">Siempre Listos · Lanzamiento Oficial</span>
-            <h3 id="welcomeModalTitle">¡Bienvenido a BiblioTech Scout!</h3>
+            <span class="bt-consent-kicker">Siempre Listos · Guía rápida</span>
+            <h3 id="welcomeModalTitle">Bienvenido a BiblioTech Scout</h3>
           </div>
         </div>
         <button type="button" id="closeWelcomeModalBtn" class="bt-bug-close" aria-label="Omitir bienvenida">
@@ -2680,75 +2655,180 @@
         </button>
       </div>
 
-      <p class="bt-welcome-lead">
-        Tu biblioteca e inteligencia documental scout hecha para toda la membresía. Un espacio vivo que crece y mejora con cada consulta, cada sugerencia y cada scout que lo usa:
-      </p>
+      <div class="bt-welcome-stepper" role="tablist" aria-label="Páginas de bienvenida">
+        <button type="button" class="bt-welcome-step is-active" data-welcome-step="1" role="tab" aria-selected="true">
+          1. ¿Qué es?
+        </button>
+        <button type="button" class="bt-welcome-step" data-welcome-step="2" role="tab" aria-selected="false">
+          2. Cómo se usa
+        </button>
+        <button type="button" class="bt-welcome-step" data-welcome-step="3" role="tab" aria-selected="false">
+          3. Tu dispositivo y QR
+        </button>
+      </div>
 
-      <div class="bt-welcome-grid">
-        <div class="bt-welcome-item">
-          <span class="bt-welcome-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </span>
-          <div>
-            <strong>Buscador de 21,195 preguntas</strong>
-            <p>Consulta tus dudas sobre PJOS 2026, 220 FAES, 82 especialidades FES, insignias, secciones, campismo o trámites con su fuente oficial exacta.</p>
+      <!-- PÁGINA 1: QUÉ ES, PARA QUÉ SIRVE Y QUÉ CONTIENE -->
+      <div class="bt-welcome-page" data-welcome-page="1">
+        <p class="bt-welcome-lead">
+          BiblioTech Scout reúne en un solo lugar los documentos oficiales del Movimiento Scout para que jóvenes, padres de familia y Scouters encuentren todo fácil y rápido.
+        </p>
+
+        <div class="bt-welcome-grid">
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <div>
+              <strong>Respuestas directas a tus dudas</strong>
+              <p>Escribe cualquier pregunta sobre secciones, insignias, campamentos, uniformes o trámites y obtén una respuesta clara con el documento de respaldo.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="bt-welcome-item">
-          <span class="bt-welcome-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-          </span>
-          <div>
-            <strong>Biblioteca y Visores (883 archivos)</strong>
-            <p>Explora libros de la Biblioteca del Centenario, FAES por Cazadero, Rumbo, Sendero y Ruta, FES, manuales, convocatorias y hojas Excel.</p>
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <div>
+              <strong>Biblioteca oficial completa</strong>
+              <p>883 documentos listos para leer o descargar: manuales por sección, 220 fichas de actividades, 82 especialidades, libros del Centenario, convocatorias y reglamentos.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="bt-welcome-item">
-          <span class="bt-welcome-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          </span>
-          <div>
-            <strong>Modo Offline para Campamentos</strong>
-            <p>Úsala en iPhone, Android (.apk) o computadora incluso sin señal de internet en el campo descargando el paquete sin conexión.</p>
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            </span>
+            <div>
+              <strong>Formatos listos para llenar</strong>
+              <p>Llena tu Ficha de Salud, permiso de salida, especialidades y hojas de proyecto guardando tus datos en tu dispositivo para reutilizarlos con un toque.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="bt-welcome-item">
-          <span class="bt-welcome-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-          </span>
-          <div>
-            <strong>La Fogata y Editor de Archivos</strong>
-            <p>Comparte recomendaciones entre jóvenes y Scouters, y llena Ficha de Salud, JL304, FES y proyectos directamente sobre los documentos oficiales.</p>
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </span>
+            <div>
+              <strong>Útil incluso sin señal</strong>
+              <p>Guarda manuales, respuestas y notas en tu dispositivo para consultarlos durante excursiones, acantonamientos o campamentos.</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="bt-welcome-qr-box">
-        <div class="bt-welcome-qr-frame">
-          <img src="img/qr-bibliotech.png" alt="Código QR oficial de BiblioTech Scout para compartir" width="136" height="136" loading="lazy" decoding="async" />
+      <!-- PÁGINA 2: APARTADOS Y CÓMO UTILIZARLA -->
+      <div class="bt-welcome-page hidden" data-welcome-page="2">
+        <p class="bt-welcome-lead">
+          Todo está organizado en espacios claros para que encuentres lo que necesitas en segundos:
+        </p>
+
+        <div class="bt-welcome-grid">
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </span>
+            <div>
+              <strong>Inicio y Buscador</strong>
+              <p>Escribe tu duda en la barra principal o toca un tema sugerido. Puedes buscar texto, claves oficiales (como P8.6 o JL304) y abrir el archivo citado ahí mismo.</p>
+            </div>
+          </div>
+
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </span>
+            <div>
+              <strong>Biblioteca y Guía Scout</strong>
+              <p>Explora los estantes por categoría o sección (Manada, Tropa, Comunidad, Clan y Adultos). En el menú superior encontrarás las guías rápidas de secciones y trámites.</p>
+            </div>
+          </div>
+
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <div>
+              <strong>La Fogata y Editor de Archivos</strong>
+              <p>En La Fogata lees y compartes consejos prácticos entre scouts. En Archivos rellenas formatos oficiales para descargarlos o imprimirlos sin volver a capturar tus datos.</p>
+            </div>
+          </div>
+
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </span>
+            <div>
+              <strong>Guardados y Ajustes</strong>
+              <p>En Guardados conservas tus archivos favoritos y notas de lectura. En Ajustes cambias entre Modo Lite o Estándar, Modo oscuro, sonidos, idioma y modo sin conexión.</p>
+            </div>
+          </div>
         </div>
-        <div class="bt-welcome-qr-info">
-          <span class="bt-welcome-qr-badge">Hecho por y para toda la comunidad Scout</span>
-          <h4>Entre más scouts la usen, mejor será para todas y todos</h4>
+      </div>
+
+      <!-- PÁGINA 3: TU DISPOSITIVO (iOS APP WEB, APK ANDROID, ESCRITORIO) Y QR -->
+      <div class="bt-welcome-page hidden" data-welcome-page="3">
+        <div class="bt-welcome-plat-tabs" role="tablist" aria-label="Cómo usar BiblioTech en tu dispositivo">
+          <button type="button" class="bt-welcome-plat-tab is-active" data-welcome-plat="ios" role="tab" aria-selected="true">iPhone / iPad</button>
+          <button type="button" class="bt-welcome-plat-tab" data-welcome-plat="apk" role="tab" aria-selected="false">App Android (APK)</button>
+          <button type="button" class="bt-welcome-plat-tab" data-welcome-plat="desktop" role="tab" aria-selected="false">Computadora</button>
+        </div>
+
+        <div class="bt-welcome-plat-card" data-welcome-plat-pane="ios">
+          <strong>App Web en iPhone y iPad (y modo sin conexión)</strong>
           <p>
-            BiblioTech Scout se fortalece cada día con el uso y la colaboración de quienes forman parte del Movimiento. Entre más personas consulten, compartan este QR con su Seisena, Patrulla, Comunidad, Clan o Scouters y envíen sus sugerencias o reportes, más precisas serán las respuestas, más completo el acervo y mejores las herramientas: <strong>cada mejora que logramos juntos termina sirviendo para toda la comunidad.</strong>
+            Desde Safari toca <strong>Compartir</strong> y elige <strong>Agregar a pantalla de inicio</strong> (con «Abrir como app web» activo) para tener el icono de BiblioTech a pantalla completa. Luego entra a <strong>Ajustes → App y Modo Offline</strong> para descargar las preguntas y el catálogo antes de salir.
           </p>
-          <div class="bt-welcome-qr-actions">
-            <button type="button" id="shareWelcomeQrBtn" class="bt-welcome-mini-btn is-primary">Compartir enlace</button>
-            <a href="img/qr-bibliotech.png" download="QR-BiblioTech-Scout.png" id="downloadWelcomeQrBtn" class="bt-welcome-mini-btn">Descargar QR</a>
+          <div class="bt-welcome-offline-tip">
+            <strong>Importante al abrirla sin señal:</strong> si estás en un lugar sin internet real, <strong>desactiva el Wi-Fi y los Datos móviles</strong> (o activa el Modo Avión) antes de abrir la App Web. Si los dejas encendidos sin conexión estable, Safari intentará buscar la red y la página podría quedarse cargando; al apagarlos, abrirá al instante con los datos guardados.
+          </div>
+        </div>
+
+        <div class="bt-welcome-plat-card hidden" data-welcome-plat-pane="apk">
+          <strong>App Android (.apk) con descargas para campamento</strong>
+          <p>
+            La aplicación para Android ya trae todas las preguntas y respuestas integradas para trabajar sin conexión desde el primer día.
+          </p>
+          <div class="bt-welcome-offline-tip">
+            <strong>Archivos y manuales offline:</strong> entra al botón de <strong>Ajustes</strong> en la barra inferior y abre la pestaña <strong>Descargar archivos</strong> para guardar en tu teléfono los manuales, fichas o reglamentos que necesites antes de ir a campo.
+          </div>
+        </div>
+
+        <div class="bt-welcome-plat-card hidden" data-welcome-plat-pane="desktop">
+          <strong>Versión de Escritorio (la experiencia más amplia y cómoda)</strong>
+          <p>
+            En computadora disfrutas toda la pantalla para leer manuales, comparar reglamentos, organizar la biblioteca de tu grupo e imprimir formatos oficiales en tamaño completo sin instalar programas adicionales.
+          </p>
+        </div>
+
+        <div class="bt-welcome-qr-box">
+          <div class="bt-welcome-qr-frame">
+            <img src="img/qr-bibliotech.png" alt="Código QR oficial de BiblioTech Scout para compartir" width="136" height="136" decoding="async" />
+          </div>
+          <div class="bt-welcome-qr-info">
+            <span class="bt-welcome-qr-badge">Comparte con tu Grupo o Provincia</span>
+            <h4>Entre más scouts la usen, mejor será</h4>
+            <p>
+              Comparte este código QR o enlace con tu Seisena, Patrulla, Comunidad, Clan o Scouters. Puedes volver a abrir esta guía en cualquier momento desde <strong>Ajustes</strong>.
+            </p>
+            <div class="bt-welcome-qr-actions">
+              <button type="button" id="shareWelcomeQrBtn" class="bt-welcome-mini-btn is-primary">Compartir enlace</button>
+              <a href="img/qr-bibliotech.png" download="QR-BiblioTech-Scout.png" id="downloadWelcomeQrBtn" class="bt-welcome-mini-btn">Descargar QR</a>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="bt-welcome-footer">
-        <p class="bt-welcome-privacy-note">
-          Este mensaje solo aparece en tu primera visita. Al explorar, guardamos tus preferencias locales y mejora continua 100 % anónima (<button type="button" id="welcomeOpenPrivacyBtn" class="bt-welcome-inline-link">configurar privacidad</button>).
-        </p>
-        <div class="bt-consent-actions">
-          <button type="button" id="skipWelcomeModalBtn" class="bt-consent-btn is-secondary">Omitir anuncio</button>
+        <div class="bt-welcome-nav-meta">
+          <span id="welcomePageIndicator" class="bt-welcome-page-indicator">Página 1 de 3</span>
+          <p class="bt-welcome-privacy-note">
+            <button type="button" id="welcomeOpenPrivacyBtn" class="bt-welcome-inline-link">Configurar privacidad</button>
+          </p>
+        </div>
+        <div class="bt-consent-actions bt-welcome-actions-row">
+          <button type="button" id="skipWelcomeModalBtn" class="bt-consent-btn is-secondary">Omitir</button>
+          <button type="button" id="prevWelcomePageBtn" class="bt-consent-btn is-secondary hidden">Anterior</button>
+          <button type="button" id="nextWelcomePageBtn" class="bt-consent-btn is-primary">Siguiente</button>
           <button type="button" id="startWelcomeModalBtn" class="bt-consent-btn is-primary">Explorar BiblioTech</button>
         </div>
       </div>
@@ -2906,6 +2986,9 @@
         <button type="button" class="bt-settings-tab active" data-settings-tab="visual" role="tab" aria-selected="true">
           Apariencia y Sonido
         </button>
+        <button type="button" class="bt-settings-tab" data-settings-tab="offline" role="tab" aria-selected="false">
+          App y Modo Offline
+        </button>
         <button type="button" class="bt-settings-tab" data-settings-tab="datos" role="tab" aria-selected="false">
           Mis Datos y Guardados
         </button>
@@ -2915,25 +2998,34 @@
       </div>
 
       <div class="bt-settings-body">
-        <!-- PESTAÑA 1: MODO VISUAL DUAL, SONIDOS, CONTRASTE, TEMA E IDIOMA -->
+        <!-- PESTAÑA 1: MODO VISUAL DUAL, SONIDOS, CONTRASTE, TEMA, IDIOMA Y BIENVENIDA -->
         <div class="bt-settings-pane" data-settings-pane="visual">
           <div class="bt-setting-block">
             <div class="bt-setting-block-head">
               <div>
-                <h4 id="settingsVisualHeading">Modo Visual del Sitio</h4>
-                <p id="settingsVisualDesc">Mismos apartados, botones y orden exacto; elige entre máxima rapidez o experiencia visual animada.</p>
+                <h4 id="settingsVisualHeading">Modo visual</h4>
               </div>
               <span id="settingsVisualActiveBadge" class="bt-setting-pill">Modo Lite</span>
             </div>
             <div class="bt-visual-mode-grid">
-              <button type="button" id="btnSetVisualLite" class="bt-visual-mode-card" data-visual-choice="lite" aria-pressed="true">
-                <strong id="labelModeLite">Modo Lite (Actual · Ligero)</strong>
-                <span id="descModeLite">Sin partículas ni animaciones 3D. Ideal para celulares básicos, ahorro de batería y respuesta instantánea.</span>
+              <button type="button" id="btnSetVisualLite" class="bt-visual-mode-card is-compact-choice" data-visual-choice="lite" aria-pressed="true">
+                <strong id="labelModeLite">Modo Lite</strong>
               </button>
-              <button type="button" id="btnSetVisualFull" class="bt-visual-mode-card" data-visual-choice="full" aria-pressed="false">
-                <strong id="labelModeFull">Modo Completo (Animado + 3D)</strong>
-                <span id="descModeFull">Activa partículas ambientales, efecto 3D al pasar el cursor, animación asimétrica del título e imagen en Inicio y transiciones fluidas.</span>
+              <button type="button" id="btnSetVisualFull" class="bt-visual-mode-card is-compact-choice" data-visual-choice="full" aria-pressed="false">
+                <strong id="labelModeFull">Modo Estándar</strong>
               </button>
+            </div>
+          </div>
+
+          <div class="bt-setting-row">
+            <div class="bt-setting-row-copy">
+              <strong id="settingsCampLabel">Modo oscuro</strong>
+            </div>
+            <div class="bt-setting-row-controls">
+              <label class="bt-switch">
+                <input type="checkbox" id="settingsCampModeToggle" />
+                <span class="bt-switch-slider" aria-hidden="true"></span>
+              </label>
             </div>
           </div>
 
@@ -2966,25 +3058,55 @@
 
           <div class="bt-setting-row">
             <div class="bt-setting-row-copy">
-              <strong id="settingsCampLabel">Tema Oscuro (Campamento)</strong>
-              <span id="settingsCampSub">Cambia la paleta visual entre modo claro editorial y modo oscuro nocturno.</span>
-            </div>
-            <div class="bt-setting-row-controls">
-              <label class="bt-switch">
-                <input type="checkbox" id="settingsCampModeToggle" />
-                <span class="bt-switch-slider" aria-hidden="true"></span>
-              </label>
-            </div>
-          </div>
-
-          <div class="bt-setting-row">
-            <div class="bt-setting-row-copy">
               <strong id="settingsLangLabel">Idioma de la interfaz</strong>
               <span id="settingsLangSub">Traduce menús, controles y encabezados principales entre Español e Inglés (documentos oficiales conservan su idioma original).</span>
             </div>
             <div class="bt-setting-row-controls bt-lang-pills" role="group" aria-label="Elegir idioma">
               <button type="button" id="btnLangEs" class="bt-lang-btn active" data-lang-choice="es">Español</button>
               <button type="button" id="btnLangEn" class="bt-lang-btn" data-lang-choice="en">English</button>
+            </div>
+          </div>
+
+          <div class="bt-setting-row">
+            <div class="bt-setting-row-copy">
+              <strong id="settingsWelcomeLabel">Guía de bienvenida y QR</strong>
+              <span id="settingsWelcomeSub">Abre la introducción de 3 páginas sobre funciones, uso sin señal y código QR para compartir.</span>
+            </div>
+            <div class="bt-setting-row-controls">
+              <button type="button" id="btnSettingsOpenWelcome" class="bt-mini-action-btn is-primary">Abrir bienvenida</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PESTAÑA 2: APP Y MODO OFFLINE (iOS APP WEB, NAVEGADOR Y ANDROID APK) -->
+        <div class="bt-settings-pane hidden" data-settings-pane="offline">
+          <div class="bt-setting-block">
+            <div class="bt-setting-block-head">
+              <div>
+                <h4>iPhone / iPad (App Web) y Modo sin conexión</h4>
+                <p>Descarga las 21,195 preguntas y el catálogo completo para abrir BiblioTech aunque no tengas cobertura.</p>
+              </div>
+              <span id="settingsOfflineStatusBadge" class="bt-setting-pill">Sin descargar</span>
+            </div>
+            <div class="bt-welcome-offline-tip">
+              <strong>Consejo importante sin internet:</strong> si estás en un lugar sin señal, desactiva el Wi-Fi y los Datos móviles (o activa el Modo Avión) antes de abrir la App Web. Si quedan encendidos sin internet real, el teléfono intentará conectarse y la página podría tardar o no cargar; al apagarlos, abrirá al instante desde la memoria guardada.
+            </div>
+            <div class="bt-settings-inline-actions">
+              <button type="button" id="btnSettingsDownloadOffline" class="bt-mini-action-btn is-primary">Descargar modo sin conexión</button>
+              <button type="button" id="btnSettingsCopyIosUrl" class="bt-mini-action-btn">Copiar enlace para Safari</button>
+            </div>
+          </div>
+
+          <div class="bt-setting-block">
+            <div class="bt-setting-block-head">
+              <div>
+                <h4>Aplicación Android (.apk)</h4>
+                <p>Instala la app oficial en Android para llevar preguntas offline y descargar manuales y PDFs dentro del teléfono.</p>
+              </div>
+            </div>
+            <div class="bt-settings-inline-actions">
+              <a href="https://github.com/ey-liam/bibliotech-scouts-app/releases/latest/download/bibliotech-scout.apk" class="bt-mini-action-btn is-primary" rel="noopener">Descargar APK oficial</a>
+              <button type="button" id="btnSettingsJumpAppSection" class="bt-mini-action-btn">Ver guía de instalación</button>
             </div>
           </div>
         </div>
