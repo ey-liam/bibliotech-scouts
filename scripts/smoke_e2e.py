@@ -348,6 +348,15 @@ def run_e2e(test_webkit: bool = False):
             mpage.click('#unifiedBottomDock [data-bt-go-view="formatos"]')
             assert mpage.locator("#editor-formatos").is_visible(), "Dock móvil no abrió Formatos"
             assert mpage.locator("#smartFormWorkspace").is_visible(), "Editor Inteligente de Formatos no visible"
+            assert mpage.locator("#sfTemplateSelect option").count() == 11, "Se esperaban 11 plantillas en sfTemplateSelect"
+
+            # Probar Asistente en 3 pasos y apertura directa de plantilla P9.2
+            mpage.click('[data-wiz-sec="tropa"]')
+            mpage.click('[data-wiz-goal="insignia_final"]')
+            assert "Águila Real" in mpage.locator("#btWizardResult").inner_text(), "Wizard no generó paquete de Tropa"
+            mpage.click('[data-wiz-open-tpl="p9"]')
+            assert mpage.locator("#sfTemplateSelect").input_value() == "p9", "Wizard no seleccionó plantilla p9"
+
             mpage.select_option("#sfTemplateSelect", "jl304")
             mpage.click("#btnSfApplyProfile")
             assert "ASMAC/DNGDI/CNAR/JL306" in mpage.locator("#sfDocumentSheet").inner_text(), "Hoja JL304 no renderizó en el Editor"
@@ -355,6 +364,23 @@ def run_e2e(test_webkit: bool = False):
                 "() => Array.from(document.querySelectorAll('#editor-formatos .editor-format-card')).every(el => el.getBoundingClientRect().right <= window.innerWidth + 1)"
             )
             assert editor_fit, "Tarjetas de editor exceden el ancho móvil"
+
+            # Probar escala tipográfica, detector Eagle Scout, folio fuera de rango P8.8 y enlaces rápidos
+            mpage.click("#dockBtnSettings")
+            mpage.wait_for_selector("#btSettingsModal:not(.hidden)", timeout=3000)
+            mpage.click('[data-font-scale="115"]')
+            assert mpage.evaluate("document.documentElement.getAttribute('data-bt-font-scale')") == "115", "Escala 115 no aplicada"
+            mpage.click("#closeSettingsModalBtn")
+            mpage.locator("#btSettingsModal").wait_for(state="hidden", timeout=3000)
+
+            mpage.click('#unifiedBottomDock [data-bt-go-view="inicio"]')
+            mpage.fill("#askInput", "P8.8")
+            mpage.click("#askForm button[type='submit']")
+            mpage.wait_for_selector("#answerContainer:not(.hidden)", timeout=5000)
+            assert "P8.1" in mpage.locator("#answerBody").inner_text(), "Detector P8.8 no mostró rango real de serie P8"
+            assert mpage.locator("#btnSpeakAnswer").is_visible(), "Falta botón Escuchar en respuesta"
+            assert mpage.locator("#btnShareAnswerLink").is_visible(), "Falta botón Compartir enlace en respuesta"
+            assert mpage.locator("#btnPrintAnswerPdf").is_visible(), "Falta botón Imprimir / PDF en respuesta"
 
             # Probar Modo oscuro visible en móvil y detección automática de sistema (prefers-color-scheme)
             assert mpage.locator("#btnToggleCampMode").is_visible(), "Botón Modo oscuro oculto en móvil"
@@ -380,6 +406,11 @@ def run_e2e(test_webkit: bool = False):
                 badge = wpage.locator("#appDetectedOsBadge").inner_text()
                 assert "iPhone / iPad" in badge, f"iOS detection failed: {badge}"
                 assert wpage.locator("#iosOfflineCard").is_visible(), "iOS offline card no visible"
+                wpage.goto("http://127.0.0.1:18775/?q=Eagle+Scout", wait_until="networkidle")
+                dismiss_consent(wpage)
+                wpage.wait_for_selector("#answerContainer:not(.hidden)", timeout=6000)
+                wans = wpage.locator("#answerBody").inner_text()
+                assert "Águila Real" in wans or "Baden Powell" in wans, "Deep link ?q=Eagle+Scout falló en WebKit"
                 wctx.close()
                 wbrowser.close()
     finally:

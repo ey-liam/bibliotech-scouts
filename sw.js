@@ -1,10 +1,10 @@
 // ============================================================================
 // BiblioTech Scout — Service Worker PWA (Soporte Offline & Cache Resiliente)
 // Creador: Liam Durán - Provincia TLXH (ey-liam)
-// Versión: 9.9.1
+// Versión: 9.9.2
 // ============================================================================
 
-const CACHE_NAME = "bibliotech-scout-v58";
+const CACHE_NAME = "bibliotech-scout-v59";
 const STATIC_ASSETS = [
   "./",
   "index.html",
@@ -32,6 +32,11 @@ const STATIC_ASSETS = [
   "img/forms/programa_p1.webp",
   "img/forms/acta_p1.webp",
   "img/forms/acta_p2.webp",
+  "img/forms/p1_p1.webp",
+  "img/forms/p2_p1.webp",
+  "img/forms/p8_p1.webp",
+  "img/forms/p9_p1.webp",
+  "img/forms/vales_p1.webp",
   "data/catalog.json",
   "data/knowledge_base.json",
   "data/faq_v3.json",
@@ -81,6 +86,19 @@ function isFreshFirstRequest(req, url) {
   );
 }
 
+function fetchWithTimeout(req, timeoutMs) {
+  if (typeof AbortController === "undefined") {
+    return fetch(req, { cache: "no-cache" });
+  }
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => {
+    try {
+      ctrl.abort();
+    } catch (_) {}
+  }, timeoutMs);
+  return fetch(req, { cache: "no-cache", signal: ctrl.signal }).finally(() => clearTimeout(timer));
+}
+
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   const url = new URL(req.url);
@@ -88,10 +106,12 @@ self.addEventListener("fetch", (event) => {
   if (req.method !== "GET") return;
   if (url.origin !== self.location.origin) return;
 
-  // Network-First para HTML, CSS, JS y JSON con respaldo ignoreSearch en modo offline
+  // Network-First con timeout corto anti lie-fi para HTML, CSS, JS y JSON
   if (isFreshFirstRequest(req, url)) {
+    const isHeavyJson = /questions_bank\.json|faq_v4\.json|chunks\.json/i.test(url.pathname);
+    const timeoutMs = isHeavyJson ? 4500 : 2600;
     event.respondWith(
-      fetch(req, { cache: "no-cache" })
+      fetchWithTimeout(req, timeoutMs)
         .then((networkResponse) => {
           if (networkResponse && networkResponse.status === 200) {
             const clone = networkResponse.clone();

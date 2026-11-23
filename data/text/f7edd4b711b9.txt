@@ -1,1 +1,17 @@
-Recurso visual oficial / infografía / plantilla: orgamigrama-nacional (WEBP).
+--- Infografía Oficial (WEBP) ---
+Título: Organigrama — Dirección Nacional de Innovación, Tecnología y Servicios a la Membresía (ASMAC)
+
+Estructura jerárquica mostrada en el diagrama institucional:
+- Nivel superior:
+  • Dirección Nacional de Innovación, Tecnología y Servicios a la Membresía
+- Gerencias dependientes (3 áreas principales):
+  1. Gerencia de Desarrollo:
+     - Ejecutivo de Desarrollo y Pruebas
+     - Ejecutivo de Infraestructura y Base de Datos
+  2. Gerencia de Mejora de Procesos:
+     - Ejecutivo de BI (Inteligencia de Negocios)
+  3. Gerencia de Mesa de Ayuda y Atención a la Membresía:
+     - Ejecutivo(s) de Atención a la Membresía
+     - Ejecutivos de Mesa de Ayuda y Atención a la Membresía
+
+Nota: Esta estructura complementa el organigrama general de Jefatura Nacional y Dirección Ejecutiva Nacional (DEN) contenido en el repositorio.

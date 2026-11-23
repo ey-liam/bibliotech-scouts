@@ -19899,3 +19899,271 @@ html[data-camp-mode="true"] .bt-welcome-page-indicator {
     gap: 0.3rem !important;
   }
 }
+
+/* ============================================================================
+   BIBLIOTECH v9.9.2: ESCALA DE LECTURA, ASISTENTE 3 PASOS, BOTONES E IMPRESIÓN
+   ============================================================================ */
+.bt-font-scale-group {
+  display: inline-flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+.bt-font-scale-group .bt-seg-btn {
+  padding: 0.42rem 0.74rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 1px solid rgba(124, 58, 237, 0.24);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.bt-font-scale-group .bt-seg-btn.is-active {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+html[data-bt-font-scale="115"] .answer-markdown-body,
+html[data-bt-font-scale="115"] .modal-text-pane,
+html[data-bt-font-scale="115"] .book-card p,
+html[data-bt-font-scale="115"] .bt-wizard-pkg-info {
+  font-size: 1.12rem;
+  line-height: 1.65;
+}
+html[data-bt-font-scale="130"] .answer-markdown-body,
+html[data-bt-font-scale="130"] .modal-text-pane,
+html[data-bt-font-scale="130"] .book-card p,
+html[data-bt-font-scale="130"] .bt-wizard-pkg-info {
+  font-size: 1.24rem;
+  line-height: 1.72;
+}
+html[data-bt-font-scale="115"] .answer-question-title { font-size: 1.55rem; }
+html[data-bt-font-scale="130"] .answer-question-title { font-size: 1.72rem; }
+
+.answer-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  justify-content: flex-end;
+}
+.bt-ans-action.is-speaking {
+  background: #6d28d9;
+  color: #ffffff;
+  border-color: #6d28d9;
+}
+.bt-ans-rate {
+  min-width: 44px;
+  font-weight: 800;
+}
+
+.bt-wizard-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(109, 40, 217, 0.18);
+  border-radius: 20px;
+  padding: 1.15rem 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+[data-theme="dark"] .bt-wizard-card {
+  background: rgba(20, 24, 38, 0.92);
+  border-color: rgba(167, 139, 250, 0.25);
+}
+.bt-wizard-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+.bt-wizard-kicker {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #6d28d9;
+}
+[data-theme="dark"] .bt-wizard-kicker { color: #c4b5fd; }
+.bt-wizard-head h3 {
+  margin: 0.15rem 0 0;
+  font-size: 1.12rem;
+}
+.bt-wizard-reset {
+  border: 1px solid rgba(100, 116, 139, 0.35);
+  background: transparent;
+  color: inherit;
+  border-radius: 10px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.bt-wizard-steps-row {
+  display: grid;
+  gap: 0.85rem;
+}
+.bt-wizard-step-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin-bottom: 0.42rem;
+  opacity: 0.85;
+}
+.bt-wizard-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.bt-wiz-pill {
+  border: 1px solid rgba(109, 40, 217, 0.24);
+  background: rgba(109, 40, 217, 0.06);
+  color: inherit;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.83rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.14s ease, background 0.14s ease;
+}
+.bt-wiz-pill.is-active {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+  color: #ffffff;
+  border-color: transparent;
+}
+.bt-wizard-result {
+  margin-top: 0.95rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed rgba(148, 163, 184, 0.35);
+}
+.bt-wizard-placeholder {
+  margin: 0;
+  font-size: 0.86rem;
+  opacity: 0.82;
+}
+.bt-wizard-pkg-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+.bt-wizard-sec-tag {
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #047857;
+}
+[data-theme="dark"] .bt-wizard-sec-tag {
+  background: rgba(16, 185, 129, 0.24);
+  color: #6ee7b7;
+}
+.bt-wizard-pkg-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+.bt-wizard-pkg-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 12px;
+  background: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+}
+[data-theme="dark"] .bt-wizard-pkg-item {
+  background: rgba(30, 41, 59, 0.65);
+}
+.bt-wizard-pkg-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.86rem;
+}
+.bt-wiz-code {
+  font-weight: 800;
+  padding: 0.16rem 0.48rem;
+  border-radius: 6px;
+  background: rgba(109, 40, 217, 0.12);
+  color: #6d28d9;
+}
+[data-theme="dark"] .bt-wiz-code {
+  background: rgba(167, 139, 250, 0.2);
+  color: #ddd6fe;
+}
+.bt-wizard-pkg-btns {
+  display: flex;
+  gap: 0.42rem;
+  flex-wrap: wrap;
+}
+.bt-wiz-action {
+  border: 1px solid rgba(109, 40, 217, 0.35);
+  background: transparent;
+  color: inherit;
+  border-radius: 9px;
+  padding: 0.38rem 0.72rem;
+  font-size: 0.79rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.bt-wiz-action.is-primary {
+  background: #6d28d9;
+  color: #ffffff;
+  border-color: transparent;
+}
+.bt-wizard-tip {
+  margin: 0.65rem 0 0;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+@media print {
+  #btAmbientCanvas,
+  .main-header,
+  .bt-mobile-dock,
+  .hero-section,
+  .explore-shortcuts-bar,
+  .search-hub-header,
+  #askForm,
+  .search-action-toolbar,
+  #askSectionDrawer,
+  #quickChipsContainer,
+  #recentQueriesBox,
+  .answer-header-actions,
+  .answer-related,
+  .answer-feedback-bar,
+  #library-section,
+  #fogata-section,
+  #editor-formatos,
+  #savedSection,
+  footer,
+  .modal-overlay,
+  .bt-toast {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  #answerContainer {
+    display: block !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .answer-markdown-body,
+  .answer-question-title {
+    color: #000000 !important;
+  }
+}

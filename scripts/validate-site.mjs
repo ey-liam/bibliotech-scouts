@@ -174,7 +174,34 @@ try {
       }
     }
   }
-  console.log(`OK regresión de búsqueda y banco combinado (${merged.length} preguntas verificadas)`);
+    console.log(`OK regresión de búsqueda y banco combinado (${merged.length} preguntas verificadas)`);
+
+  // 7. Validar cobertura textual (>=150 chars en data/text) y bases visuales de las 11 plantillas
+  let shortCount = 0;
+  for (const d of catalog.documents || []) {
+    const tPath = path.join(root, "data", "text", `${d.sha12}.txt`);
+    if (!existsSync(tPath)) {
+      fail(`Falta archivo de texto data/text/${d.sha12}.txt (${d.id})`);
+      continue;
+    }
+    const txt = (await readFile(tPath, "utf8")).trim();
+    if (txt.length < 150) {
+      fail(`Documento ${d.id} (${d.sha12}.txt) tiene solo ${txt.length} chars (< 150)`);
+      shortCount++;
+    }
+  }
+  const requiredFormWebps = [
+    "salud_p1.webp", "salud_p2.webp", "jl304_p1.webp", "jl304_p2.webp",
+    "fes_p1.webp", "smart_p1.webp", "smart_p2.webp", "programa_p1.webp",
+    "acta_p1.webp", "acta_p2.webp", "p1_p1.webp", "p2_p1.webp",
+    "p8_p1.webp", "p9_p1.webp", "vales_p1.webp",
+  ];
+  for (const wf of requiredFormWebps) {
+    if (!existsSync(path.join(root, "img", "forms", wf))) {
+      fail(`Falta base de plantilla img/forms/${wf}`);
+    }
+  }
+  console.log(`OK textos de catálogo (short=${shortCount}) y ${requiredFormWebps.length} bases de plantillas`);
 } catch (err) {
   fail(`Error en validación de regresión del buscador: ${err.message}`);
 }

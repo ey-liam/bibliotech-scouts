@@ -522,6 +522,9 @@ async function initApp() {
   setupHeaderUI();
   setupWorkspaceViews();
   setupSettingsHub();
+  initFontScaleSetting();
+  setupProcedureWizard();
+  setupAnswerQuickActions();
   BtSoundEngine.init();
   setupContactEmailUI();
   bindEvents();
@@ -640,6 +643,7 @@ async function initApp() {
     console.error("Error cargando datos de BiblioTech:", err);
   } finally {
     markAppReady();
+    handleStartupDeepLinks();
   }
 }
 
@@ -3116,14 +3120,47 @@ function matchDocumentOrCodeOverview(query) {
     return { query, answer_markdown: text, sources };
   }
 
+  // Caso 0B: Equivalencias internacionales Scout (Eagle Scout, Merit Badges, BSA, Cub Scouts, Venturing, Queen's/King's Scout)
+  if (
+    /\b(?:eagle\s*scout|merit\s*badges?|cub\s*scouts?|webelos|arrow\s*of\s*light|boy\s*scouts?(?:\s+of\s+america)?|scouts?\s+bsa|scouting\s+america|venturing|sea\s*scouts?|queen\s*s?\s*scout|king\s*s?\s*scout|equivalencia.*(?:eagle|bsa|usa|estados\s+unidos))\b/i.test(
+      qNorm
+    )
+  ) {
+    const eqDocs = STATE.documents.filter((d) => /^(?:P9\.[1-4]|P5\.1|P1\.0\.1)$/i.test(String(d.code || "")));
+    const sources = eqDocs.slice(0, 6).map((d) => ({
+      doc_id: d.id,
+      title: d.title,
+      filename: d.filename,
+      ext: d.ext,
+      year: d.year,
+      page_start: 1
+    }));
+    const text = [
+      "### Equivalencias Internacionales en Scouts de México (`ASMAC · PJOS 2026`)",
+      "",
+      "Las progresiones e insignias pertenecen a cada Organización Scout Nacional miembro de la **OMMS / WOSM**, pero por rango de edad y nivel formativo corresponden en la **Asociación de Scouts de México, A.C. (ASMAC)** a:",
+      "",
+      "- **Cub Scouts / Webelos / Arrow of Light (`7–10` años):** Equivale a **Manada de Lobatos** (`7 a 10` años). Su máximo reconocimiento de sección es la **Insignia Alfa** (Formato **`P9.1`**).",
+      "- **Scouts BSA (`11–14` años):** Equivale a **Tropa de Scouts** (`10 a 14` años). Su reconocimiento máximo de sección es la **Insignia Final Águila Real** (Formato **`P9.2`**).",
+      "- **Venturing / Sea Scouts (`14–18` años):** Equivale a **Comunidad de Caminantes** (`14 a 18` años). Su reconocimiento máximo de sección es la **Insignia Everest** (Formato **`P9.3`**).",
+      "- **Eagle Scout / Queen's o King's Scout (máximo grado juvenil internacional):** En México culmina el recorrido juvenil con las **Insignias Finales y Terminales**, cerrando en **Clan de Rovers** (`18 a 22` años) con la **Horquilla / Insignia Baden Powell** (Formato **`P9.4`**; y en Tropa el equivalente nominal por emblema es la **Insignia Águila Real `P9.2`**).",
+      "- **Merit Badges (Insignias de Mérito):** Equivalen a las **82 Especialidades Scouts (`FES`)** del PJOS y a la serie editable **`P5.1–P5.6`**.",
+      "",
+      "**¿Cómo revalidar o ubicar a alguien que viene de otro país?** Se aplica el diagnóstico inicial por competencias con los formatos **`P1.0.1`** / **`P1.1–P1.4`** junto al Consejo de Sección.",
+      "",
+      "*Puedes abrir abajo en **Fuentes oficiales** los formatos `P9.1–P9.4`, `P5.1` y `P1.0.1` o llenarlos directamente en **Editor de Archivos**.*"
+    ].join("\n");
+    return { query, answer_markdown: text, sources };
+  }
+
   // Solo activar el resolvedor directo de códigos en consultas cortas o explícitas de código/archivo (<= 7 palabras)
   if (wordCount > 7) return null;
   const isCodeQuestion =
-    /^(?:que es|que significa|para que sirve|donde encuentro|donde esta|plantilla|formato|archivo|documento|comunicado|recme|serie|codigo|clave|folio)?\s*(?:el|la|de|del|en)?\s*(?:recme\s+)?(?:p\d+(?:\.\d+)*|jl\d+|(?:asmac[\s\/\-]*)?(?:dnme|jsn|cnpj|sjsn)[\s\/\-]*(?:cnpj[\s\/\-]*)?\d{2}\.\d{2,3})\b/i.test(raw) ||
+    /^(?:que es|que significa|para que sirve|donde encuentro|donde esta|plantilla|formato|archivo|documento|comunicado|recme|serie|codigo|clave|folio)?\s*(?:el|la|de|del|en)?\s*(?:recme\s+)?(?:p\d+(?:\.\d+)*|jl\d+|(?:asmac[\s\/\-]*)?(?:dnme|jsn|cnpj|sjsn)[\s\/\-]*(?:cnpj[\s\/\-]+)?\d{2}\.\d{2,3})\b/i.test(raw) ||
     /\b(?:p\d+\.\d+(?:\.\d+)?|jl\d{3}|(?:dnme|jsn|cnpj)[\s\/\-]+(?:cnpj[\s\/\-]+)?\d{2}\.\d{2,3})\b/i.test(raw);
   if (!isCodeQuestion) return null;
 
-  // 1) Detectar código P1..P10 (ej. P8.6, P8.7, P9.2, P3.3.2, P10.2, o solo serie P8)
+  // 1) Detectar código P1..P10+ (ej. P8.6, P8.8, P9.2, P11, P12, P3.3.2, o solo serie P8)
   const pCodeMatch = raw.match(/\b(P\d{1,2}(?:\.\d+)*)\b/i);
   if (pCodeMatch) {
     const codeUpper = pCodeMatch[1].toUpperCase();
@@ -3146,25 +3183,30 @@ function matchDocumentOrCodeOverview(query) {
       return { query, answer_markdown: buildExecutiveDocCard(primary, siblings), sources };
     }
 
-    // Serie completa (ej. "serie p8" o "recme p8") o folio no publicado (ej. "recme p8.6", "p5.2", "p10.1")
+    // Serie completa o folio inexistente / fuera de rango (P8.8, P9.6, P1.5, P2.5, etc.)
     const seriesInfo = BT_RECME_SERIES_INFO[seriesKey];
     if (seriesInfo) {
       const isSpecificFolio = codeUpper.includes(".");
+      const activeCodes = seriesDocs.map((d) => String(d.code || "").toUpperCase()).filter(Boolean);
+      const rangeNote =
+        activeCodes.length > 1
+          ? ` El rango oficial publicado y activo en la serie \`${seriesKey}\` abarca únicamente de **\`${activeCodes[0]}\`** a **\`${activeCodes[activeCodes.length - 1]}\`** (${activeCodes.length} documentos vigentes).`
+          : "";
       const lines = [
         isSpecificFolio
-          ? `### Código \`${codeUpper}\` — Folio no publicado en la serie \`${seriesKey}\` de RECME`
+          ? `### Código \`${codeUpper}\` — Fuera de rango o no publicado en la serie \`${seriesKey}\` de RECME`
           : `### Serie \`${seriesKey}\` en RECME — ${seriesInfo.name}`,
         ""
       ];
       if (isSpecificFolio) {
         lines.push(
-          `**Nota de transparencia documental:** En la Biblioteca Virtual oficial de **RECME** (ASMAC) al corte del **22 de noviembre de 2026**, el código **\`${codeUpper}\`** corresponde por numeración a la **serie \`${seriesKey}\` (${seriesInfo.name})**, pero **ese folio específico no aparece publicado ni listado** en el repositorio público.`
+          `**Verificación en el catálogo oficial:** En la Biblioteca Virtual oficial de **RECME** (ASMAC) al corte del **22 de noviembre de 2026**, el folio **\`${codeUpper}\`** corresponde por prefijo a la **serie \`${seriesKey}\` (${seriesInfo.name})**, pero **no existe ni aparece publicado en el acervo oficial**.${rangeNote}`
         );
       } else {
         lines.push(`En la plataforma **RECME** (ASMAC), la **serie \`${seriesKey}\`** agrupa las **${seriesInfo.name}**: ${seriesInfo.desc}`);
       }
       if (seriesDocs.length) {
-        lines.push("", `**Documentos oficiales que SÍ están publicados en la serie \`${seriesKey}\` (${seriesDocs.length} archivos):**`);
+        lines.push("", `**Documentos oficiales que SÍ existen y están publicados en la serie \`${seriesKey}\` (${seriesDocs.length} archivos):**`);
         for (const d of seriesDocs) {
           lines.push(`- **\`${d.code}\`** — ${d.title} (\`${d.filename}\`)`);
         }
@@ -3180,6 +3222,26 @@ function matchDocumentOrCodeOverview(query) {
       }));
       return { query, answer_markdown: lines.join("\n"), sources };
     }
+
+    // Serie inexistente fuera del rango P1-P10 (ej. P11, P12, P15, P0)
+    const seriesSummary = Object.entries(BT_RECME_SERIES_INFO)
+      .map(([k, v]) => `- **\`${k}\`**: ${v.name}`)
+      .join("\n");
+    const sampleDocs = STATE.documents.filter((d) => /^P\d+\./i.test(String(d.code || ""))).slice(0, 6);
+    const lines = [
+      `### Código \`${codeUpper}\` — Serie fuera del rango oficial RECME (\`P1\` a \`P10\`)`,
+      "",
+      `**Verificación oficial:** La nomenclatura de plantillas PJOS en **RECME** (ASMAC) contempla únicamente **10 series oficiales numeradas de \`P1\` a \`P10\`**. El código **\`${codeUpper}\`** no forma parte de la numeración pública vigente.`,
+      "",
+      "**Series oficiales vigentes en RECME (`P1` a `P10`):**",
+      seriesSummary,
+      "",
+      "*Si buscas algún formato oficial por tema (diagnóstico, evaluación, progresión, FAES, especialidades, campamento, actas o insignias), escríbelo con palabras o usa el **Asistente en 3 pasos** dentro de **Editor de Archivos**.*"
+    ];
+    const sources = sampleDocs.map((d) => ({
+      doc_id: d.id, title: d.title, filename: d.filename, ext: d.ext, year: d.year, page_start: 1
+    }));
+    return { query, answer_markdown: lines.join("\n"), sources };
   }
 
   // 2) Detectar código JL304 o comunicados DNME / JSN / CNPJ (ej. "jl304", "dnme 26.007", "jsn 25.136")
@@ -3497,6 +3559,14 @@ function answerLocallyInBrowser(query, _allowTypoRetry = true) {
 function displayAnswer(data, queryText = "") {
   const bodyEl = document.getElementById("answerBody");
   const sourcesEl = document.getElementById("answerSourcesGrid");
+
+  if (typeof BtSpeechReader !== "undefined") BtSpeechReader.stop();
+  STATE.currentAnswerSnapshot = {
+    query: queryText || "",
+    markdown: (data && data.answer_markdown) || "",
+    plainText: summarizeMarkdownPlain((data && data.answer_markdown) || "", 12000),
+    sources: (data && data.sources) || []
+  };
 
   const typoBanner =
     data && data.correctedQuery
@@ -4047,12 +4117,14 @@ function renderSpreadsheetReaderView(doc, sheetPkg, dlUrl, viewUrl, fullTextCont
   `;
 }
 
-async function openDocumentModal(docId, shelfIndex = -1) {
+async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
   const doc = STATE.docsById[docId];
   if (!doc) return;
 
   recordDocOpenTelemetry(doc);
+  STATE.currentOpenDocId = docId;
   STATE.currentReadingIndex = shelfIndex;
+  STATE.requestedDocPage = targetPage && Number(targetPage) > 0 ? Number(targetPage) : null;
 
   const modal = document.getElementById("docModal");
   const titleEl = document.getElementById("modalDocTitle");
@@ -4747,12 +4819,18 @@ async function openDocumentModal(docId, shelfIndex = -1) {
         if (!modalEl || modalEl.classList.contains("hidden")) return;
         const tag = (e.target && e.target.tagName) || "";
         if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-        if (e.key === "ArrowLeft" && viewerState.page > 1) {
+        if ((e.key === "ArrowLeft" || e.key === "[") && viewerState.page > 1) {
           e.preventDefault();
           renderCurrentPage(viewerState.page - 1);
-        } else if (e.key === "ArrowRight" && viewerState.page < viewerState.numPages) {
+        } else if ((e.key === "ArrowRight" || e.key === "]") && viewerState.page < viewerState.numPages) {
           e.preventDefault();
           renderCurrentPage(viewerState.page + 1);
+        } else if (e.key === "+" || e.key === "=") {
+          e.preventDefault();
+          changePdfZoom(viewerState.zoom + 0.2);
+        } else if (e.key === "-") {
+          e.preventDefault();
+          changePdfZoom(viewerState.zoom - 0.2);
         }
       };
       document.addEventListener("keydown", viewerState.onKeyDown);
@@ -4808,8 +4886,13 @@ async function openDocumentModal(docId, shelfIndex = -1) {
           if (!pdfDoc || STATE.pdfViewerToken !== token) return;
           viewerState.pdfDoc = pdfDoc;
           viewerState.numPages = pdfDoc.numPages || 1;
-          const savedPage = getSavedPdfPage(doc.id, viewerState.numPages);
-          if (savedPage > 1 && resumeBadge && resumeTextEl) {
+          const reqPage =
+            STATE.requestedDocPage && STATE.requestedDocPage <= viewerState.numPages
+              ? STATE.requestedDocPage
+              : 0;
+          STATE.requestedDocPage = null;
+          const savedPage = reqPage || getSavedPdfPage(doc.id, viewerState.numPages);
+          if (savedPage > 1 && !reqPage && resumeBadge && resumeTextEl) {
             resumeTextEl.textContent = `Continuando en pág. ${savedPage}`;
             resumeBadge.classList.remove("hidden");
           }
@@ -6885,13 +6968,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.9.1";
-const APP_MOBILE_VERSION = "3.9.1";
+const APP_WEB_VERSION = "9.9.2";
+const APP_MOBILE_VERSION = "3.9.2";
 const APP_COOKIE_SCHEMA = "9.7";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v58";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v59";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -7020,6 +7103,30 @@ function setupGlobalShortcuts() {
         target.tagName === "TEXTAREA" ||
         target.tagName === "SELECT" ||
         target.isContentEditable);
+
+    // Alt + 1..6: navegación rápida de apartados en escritorio
+    if (e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey && !isEditable) {
+      const viewMap = {
+        "1": "inicio",
+        "2": "biblioteca",
+        "3": "fogata",
+        "4": "formatos",
+        "5": "guardados"
+      };
+      if (viewMap[e.key]) {
+        e.preventDefault();
+        btSwitchView(viewMap[e.key]);
+        return;
+      }
+      if (e.key === "6") {
+        e.preventDefault();
+        if (typeof window.__btOpenSettingsModal === "function") {
+          window.__btOpenSettingsModal("apariencia");
+        }
+        return;
+      }
+    }
+
     const isCmdK = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k";
     const isSlash = !isEditable && !e.ctrlKey && !e.metaKey && !e.altKey && e.key === "/";
     if (!isCmdK && !isSlash) return;
@@ -8681,6 +8788,91 @@ function setupAutofillVault() {
     });
   }
 
+  const exportBtn = document.getElementById("btnExportAutofillProfile");
+  const importBtn = document.getElementById("btnImportAutofillProfile");
+  const importInput = document.getElementById("inputImportAutofillProfile");
+
+  const doExportProfile = () => {
+    const prof = hasAnySavedData(readFormProfile()) ? readFormProfile() : getAutofillProfile();
+    if (!hasAnySavedData(prof)) {
+      showWebToast("Primero guarda al menos un dato en tu perfil para poder exportarlo.");
+      return;
+    }
+    const payload = {
+      schema: "bibliotech-autofill-v1",
+      exportedAt: new Date().toISOString(),
+      profile: prof
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "bibliotech-autollenado-scout.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1200);
+    showWebToast("Respaldo .json de autollenado descargado en tu dispositivo.");
+    enqueueAnonTelemetry({ t: "ui_accion", label: "autofill_export_json" }, false);
+  };
+
+  const handleImportFile = (file) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const raw = JSON.parse(String(reader.result || "{}"));
+        const src = raw && typeof raw.profile === "object" ? raw.profile : raw;
+        if (!src || typeof src !== "object") throw new Error("Formato inválido");
+        const cleanProf = {
+          name: String(src.name || "").trim().slice(0, 120),
+          cum: String(src.cum || "").trim().toUpperCase().slice(0, 32),
+          age: String(src.age || "").trim().slice(0, 40),
+          section: String(src.section || "").trim().slice(0, 60),
+          group: String(src.group || "").trim().slice(0, 80),
+          province: String(src.province || "").trim().slice(0, 80),
+          blood: String(src.blood || "").trim().slice(0, 20),
+          emergency: String(src.emergency || "").trim().slice(0, 140),
+          scouter: String(src.scouter || "").trim().slice(0, 120)
+        };
+        if (!hasAnySavedData(cleanProf)) throw new Error("Sin campos válidos");
+        localStorage.setItem(BT_AUTOFILL_PROFILE_KEY, JSON.stringify(cleanProf));
+        fillFormFromStorage();
+        if (demoBox && !demoBox.classList.contains("hidden")) renderDemo(cleanProf);
+        if (typeof window.__btSyncSmartFormFromProfile === "function") {
+          window.__btSyncSmartFormFromProfile(cleanProf, false);
+        }
+        if (typeof window.__btRefreshSettingsDataPane === "function") {
+          window.__btRefreshSettingsDataPane();
+        }
+        showWebToast("Datos de autollenado importados y activados correctamente.");
+        enqueueAnonTelemetry({ t: "ui_accion", label: "autofill_import_json" }, false);
+      } catch (_) {
+        showWebToast("No se pudo leer el archivo .json de respaldo. Verifica que sea válido.");
+      }
+    };
+    reader.readAsText(file, "utf-8");
+  };
+
+  if (exportBtn) exportBtn.addEventListener("click", doExportProfile);
+  if (importBtn && importInput) {
+    importBtn.addEventListener("click", () => {
+      importInput.value = "";
+      importInput.click();
+    });
+    importInput.addEventListener("change", () => {
+      const f = importInput.files && importInput.files[0];
+      if (f) handleImportFile(f);
+    });
+  }
+  window.__btExportAutofillProfile = doExportProfile;
+  window.__btTriggerImportAutofillProfile = () => {
+    if (importInput) {
+      importInput.value = "";
+      importInput.click();
+    }
+  };
+
   setupSmartFormsEngine(readFormProfile);
 }
 
@@ -9225,6 +9417,200 @@ const SMART_FORM_TEMPLATES = {
       { key: "attendees", label: "1. Lista de asistencia (Nombre | CUM)", type: "textarea", full: true, placeholder: "Escribe aquí los nombres y CUM de quienes asisten" },
       { key: "agenda", label: "2. Puntos a tratar o revisar", type: "textarea", full: true, placeholder: "Escribe aquí los puntos tratados en la sesión" },
       { key: "agreements", label: "3. Acuerdos tomados (Página 2)", type: "textarea", full: true, placeholder: "Escribe aquí los acuerdos tomados" }
+    ]
+  },
+  p1: {
+    id: "p1",
+    title: "Diagnóstico Inicial NNAJ (RECME P1.0.1)",
+    subtitle: "Ficha oficial P1.0.1 para registro inicial de competencias al ingreso o cambio de Grupo",
+    baseDocId: "doc-0670",
+    filePrefix: "Diagnostico_P1_0_1",
+    fontPt: 11,
+    pages: [
+      {
+        src: "img/forms/p1_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "duration", x: 7.8, y: 7.5, w: 18.0, h: 2.6 },
+          { key: "section", x: 7.8, y: 12.1, w: 17.5, h: 1.9 },
+          { key: "participants", x: 7.8, y: 17.2, w: 10.0, h: 2.1 },
+          { key: "groupProvince", x: 69.5, y: 15.8, w: 24.5, h: 2.2 },
+          { key: "scouter", x: 40.2, y: 91.2, w: 46.0, h: 2.4 }
+        ]
+      }
+    ],
+    fields: [
+      { key: "duration", label: "Duración estimada", type: "text", defaultVal: "2 horas", placeholder: "Ej. 2 horas o 3 juntas" },
+      { key: "section", label: "Sección o rango de edad", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Ej. Tropa / 10 a 14 años" },
+      { key: "participants", label: "Número de participantes", type: "text", defaultVal: "1", placeholder: "Ej. 1 o Seisena" },
+      { key: "groupProvince", label: "Grupo / Provincia Scout", type: "text", bind: "group", placeholder: "Ej. Grupo 12 / Provincia Morelos" },
+      { key: "scouter", label: "Elaboró / Scouter responsable", type: "text", bind: "scouter", placeholder: "Nombre del Scouter" }
+    ]
+  },
+  p2: {
+    id: "p2",
+    title: "Cédula de Evaluación Manada (RECME P2.1)",
+    subtitle: "Formato auxiliar oficial de evaluación y seguimiento de progresión en Manada de Lobatos",
+    baseDocId: "doc-0683",
+    filePrefix: "Cedula_Evaluacion_P2_1",
+    fontPt: 10,
+    pages: [
+      {
+        src: "img/forms/p2_p1.webp",
+        aspect: "1347 / 1905",
+        boxes: [
+          { key: "name", x: 23.8, y: 5.5, w: 27.2, h: 1.4 },
+          { key: "manada", x: 60.1, y: 5.5, w: 18.0, h: 1.4 },
+          { key: "group", x: 85.2, y: 5.5, w: 7.1, h: 1.4 },
+          { key: "scouter", x: 23.8, y: 7.2, w: 27.2, h: 1.4 },
+          { key: "province", x: 60.1, y: 7.2, w: 18.0, h: 1.4 },
+          { key: "date", x: 85.2, y: 7.2, w: 7.1, h: 1.4 },
+          { key: "observations", x: 7.0, y: 84.8, w: 52.5, h: 4.0, multiline: true },
+          { key: "reviewDate", x: 60.1, y: 84.8, w: 18.0, h: 1.3 },
+          { key: "endDate", x: 78.5, y: 84.8, w: 13.7, h: 1.3 },
+          { key: "reviewer", x: 60.1, y: 87.2, w: 18.0, h: 1.3 },
+          { key: "deliveryDate", x: 78.5, y: 87.2, w: 13.7, h: 1.3 }
+        ]
+      }
+    ],
+    fields: [
+      { key: "name", label: "Lobezna o Lobato", type: "text", bind: "name", placeholder: "Nombre completo" },
+      { key: "manada", label: "Manada / Seisena", type: "text", bind: "section", placeholder: "Nombre de la Manada" },
+      { key: "group", label: "Grupo", type: "text", bind: "group", placeholder: "Número de Grupo" },
+      { key: "scouter", label: "Scouter responsable", type: "text", bind: "scouter", placeholder: "Nombre de Akela / Scouter" },
+      { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
+      { key: "date", label: "Fecha", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "observations", label: "Observaciones o Comentarios", type: "textarea", full: true, placeholder: "Anota competencias identificadas o seguimiento de etapa" },
+      { key: "reviewDate", label: "Fecha de revisión", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "endDate", label: "Fecha de terminación", type: "text", placeholder: "DD/MM/AA" },
+      { key: "reviewer", label: "Revisó (Firma/Nombre)", type: "text", placeholder: "Nombre quien revisa" },
+      { key: "deliveryDate", label: "Fecha de entrega", type: "text", placeholder: "DD/MM/AA" }
+    ]
+  },
+  p8: {
+    id: "p8",
+    title: "Solicitud Champions for Nature (RECME P8.1)",
+    subtitle: "Formato oficial 2026 de Mundo Mejor / Tribu de la Tierra (llenado digital, sin imprimir)",
+    baseDocId: "doc-0705",
+    filePrefix: "Solicitud_P8_1_Champions",
+    fontPt: 11,
+    pages: [
+      {
+        src: "img/forms/p8_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "name", x: 17.5, y: 22.8, w: 45.0, h: 2.2 },
+          { key: "cum", x: 69.5, y: 22.8, w: 21.0, h: 2.2 },
+          { key: "group", x: 33.0, y: 26.2, w: 29.8, h: 2.2 },
+          { key: "section", x: 72.0, y: 26.2, w: 18.5, h: 2.2 },
+          { key: "province", x: 19.0, y: 29.7, w: 43.5, h: 2.2 },
+          { key: "birthDate", x: 79.0, y: 29.7, w: 12.0, h: 2.2 },
+          { key: "phone", x: 26.5, y: 33.1, w: 36.0, h: 2.2 },
+          { key: "email", x: 76.5, y: 33.1, w: 14.5, h: 2.2 },
+          { key: "activities", x: 10.5, y: 38.0, w: 79.5, h: 2.9, multiline: true },
+          { key: "sdgsUrl", x: 31.0, y: 41.8, w: 59.0, h: 2.2 },
+          { key: "driveUrl", x: 43.5, y: 45.3, w: 46.5, h: 2.2 },
+          { key: "sectionDate", x: 21.0, y: 86.2, w: 17.0, h: 1.8 },
+          { key: "groupDate", x: 72.5, y: 86.0, w: 17.0, h: 1.8 }
+        ]
+      }
+    ],
+    fields: [
+      { key: "name", label: "Nombre completo", type: "text", bind: "name", placeholder: "Nombre del solicitante" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Ej. MEX123456" },
+      { key: "group", label: "Nombre y número de Grupo", type: "text", bind: "group", placeholder: "Ej. Grupo 15" },
+      { key: "section", label: "Sección", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Sección" },
+      { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
+      { key: "birthDate", label: "Fecha de nacimiento", type: "text", bind: "age", placeholder: "DD/MM/AAAA" },
+      { key: "phone", label: "Teléfono de contacto", type: "text", bind: "emergency", placeholder: "Número de contacto" },
+      { key: "email", label: "Correo electrónico", type: "text", placeholder: "correo@ejemplo.com" },
+      { key: "activities", label: "Actividades realizadas y Voluntariado", type: "textarea", full: true, placeholder: "Describe las acciones de la canasta y voluntariado" },
+      { key: "sdgsUrl", label: "Enlace(s) de sdgs.scout.org", type: "text", full: true, placeholder: "https://sdgs.scout.org/..." },
+      { key: "driveUrl", label: "Enlace(s) Drive abierto de evidencias", type: "text", full: true, placeholder: "https://drive.google.com/..." },
+      { key: "sectionDate", label: "Fecha aval Consejo de Sección", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AAAA" },
+      { key: "groupDate", label: "Fecha aval Consejo de Grupo", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AAAA" }
+    ]
+  },
+  p9: {
+    id: "p9",
+    title: "Solicitud Insignia Final Águila Real (RECME P9.2)",
+    subtitle: "Formato oficial PJOS de Tropa ante Corte de Honor y Consejo de Grupo",
+    baseDocId: "doc-0712",
+    filePrefix: "Solicitud_P9_2_Aguila_Real",
+    fontPt: 10,
+    pages: [
+      {
+        src: "img/forms/p9_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "honorDate", x: 45.4, y: 12.6, w: 12.8, h: 1.5 },
+          { key: "group", x: 73.6, y: 12.6, w: 6.1, h: 1.5 },
+          { key: "province", x: 9.7, y: 14.9, w: 25.6, h: 1.5 },
+          { key: "sessionDate", x: 52.6, y: 14.9, w: 16.4, h: 1.5 },
+          { key: "name", x: 34.1, y: 17.2, w: 37.0, h: 1.5 },
+          { key: "cum", x: 78.5, y: 17.2, w: 11.4, h: 1.5 },
+          { key: "badgeStage", x: 66.5, y: 19.5, w: 17.9, h: 1.5 },
+          { key: "birthDate", x: 74.3, y: 21.8, w: 12.8, h: 1.5 },
+          { key: "entryDate", x: 39.3, y: 24.1, w: 11.4, h: 1.5 },
+          { key: "passDate", x: 9.6, y: 26.4, w: 23.2, h: 1.5 }
+        ]
+      }
+    ],
+    fields: [
+      { key: "name", label: "Nombre del Scout solicitante", type: "text", bind: "name", placeholder: "Nombre completo" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "CUM oficial" },
+      { key: "group", label: "Número de Grupo", type: "text", bind: "group", placeholder: "Ej. 15" },
+      { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
+      { key: "honorDate", label: "Fecha solicitud Corte de Honor", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "sessionDate", label: "Fecha sesión Consejo de Grupo", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "badgeStage", label: "Nivel / Modalidad", type: "text", defaultVal: "Obsidiana / Jade", placeholder: "Obsidiana o Jade" },
+      { key: "birthDate", label: "Fecha de nacimiento", type: "text", bind: "age", placeholder: "DD/MM/AA" },
+      { key: "entryDate", label: "Fecha ingreso a Tropa", type: "text", placeholder: "DD/MM/AA" },
+      { key: "passDate", label: "Fecha tentativa de pase", type: "text", placeholder: "DD/MM/AA" }
+    ]
+  },
+  vales: {
+    id: "vales",
+    title: "Vales de Caja y Recibo (NO 3 Tesorería)",
+    subtitle: "Lámina administrativa de Grupo: Vale Provisional de Caja y Recibo foliados listos para imprimir",
+    baseDocId: "doc-0356",
+    filePrefix: "Vales_Caja_NO3",
+    fontPt: 11,
+    pages: [
+      {
+        src: "img/forms/vales_p1.webp",
+        aspect: "1654 / 1241",
+        boxes: [
+          { key: "valeFolio", x: 26.0, y: 8.5, w: 19.0, h: 2.8 },
+          { key: "valeAmount", x: 6.2, y: 18.2, w: 8.0, h: 2.4 },
+          { key: "valeAmountWords", x: 15.6, y: 18.2, w: 30.0, h: 2.4 },
+          { key: "valeConcept", x: 4.0, y: 24.0, w: 42.0, h: 13.5, multiline: true },
+          { key: "valeDate", x: 4.0, y: 40.8, w: 12.5, h: 2.4 },
+          { key: "valeAuth", x: 18.5, y: 40.8, w: 13.0, h: 2.4 },
+          { key: "valeReceiver", x: 33.5, y: 40.8, w: 12.5, h: 2.4 },
+          { key: "reciboFolio", x: 76.0, y: 8.5, w: 19.5, h: 2.8 },
+          { key: "reciboAmount", x: 56.2, y: 18.2, w: 8.0, h: 2.4 },
+          { key: "reciboFrom", x: 54.0, y: 24.0, w: 42.0, h: 2.4 },
+          { key: "reciboConcept", x: 54.0, y: 29.5, w: 42.0, h: 9.0, multiline: true },
+          { key: "reciboDate", x: 54.0, y: 40.8, w: 12.5, h: 2.4 },
+          { key: "reciboAuth", x: 68.5, y: 40.8, w: 13.0, h: 2.4 }
+        ]
+      }
+    ],
+    fields: [
+      { key: "valeFolio", label: "Vale — Folio", type: "text", defaultVal: "001", placeholder: "Ej. 001" },
+      { key: "valeAmount", label: "Vale — Importe ($)", type: "text", placeholder: "Ej. 500.00" },
+      { key: "valeAmountWords", label: "Vale — Importe en letra", type: "text", placeholder: "Quinientos pesos 00/100 M.N." },
+      { key: "valeConcept", label: "Vale — Concepto del gasto o caja", type: "textarea", full: true, placeholder: "Material para actividad o adelanto de campamento" },
+      { key: "valeDate", label: "Vale — Fecha", type: "text", defaultTodaySlash: true, placeholder: "DD / MM / AA" },
+      { key: "valeAuth", label: "Vale — Autorizado por", type: "text", bind: "scouter", placeholder: "Tesorero / Jefe de Grupo" },
+      { key: "valeReceiver", label: "Vale — Recibí (Nombre)", type: "text", bind: "name", placeholder: "Quién recibe" },
+      { key: "reciboFolio", label: "Recibo — Folio", type: "text", defaultVal: "001", placeholder: "Ej. 001" },
+      { key: "reciboAmount", label: "Recibo — Importe ($)", type: "text", placeholder: "Ej. 500.00" },
+      { key: "reciboFrom", label: "Recibo — Recibí de", type: "text", bind: "name", placeholder: "Nombre completo" },
+      { key: "reciboConcept", label: "Recibo — Por concepto de", type: "textarea", full: true, placeholder: "Cuota de campamento / reembolso" },
+      { key: "reciboDate", label: "Recibo — Fecha", type: "text", defaultTodaySlash: true, placeholder: "DD / MM / AA" },
+      { key: "reciboAuth", label: "Recibo — Autorizado por", type: "text", bind: "scouter", placeholder: "Tesorero / Jefe de Grupo" }
     ]
   }
 };
@@ -10212,6 +10598,7 @@ function setupSmartFormsEngine(readFormProfileFn) {
 
   renderNamedDrafts();
   loadTemplate("salud", false);
+  window.__btSelectSmartTemplate = (tplId, scroll = true) => loadTemplate(tplId, Boolean(scroll));
 }
 
 // ============================================================================
@@ -12040,7 +12427,426 @@ function applyUiLanguage(lang = "es", persist = true) {
   });
 }
 
+// ============================================================================
+// NUEVAS CAPACIDADES v9.9.2: ASISTENTE 3 CLICS, LECTURA DE RESPUESTAS, ENLACES,
+// IMPRESIÓN PDF Y ESCALA TIPOGRÁFICA
+// ============================================================================
+const BT_FONT_SCALE_KEY = "bt_font_scale_v1";
+
+function applyFontScale(scaleRaw) {
+  const valid = ["100", "115", "130"].includes(String(scaleRaw)) ? String(scaleRaw) : "100";
+  document.documentElement.setAttribute("data-bt-font-scale", valid);
+  try {
+    localStorage.setItem(BT_FONT_SCALE_KEY, valid);
+  } catch (_) {}
+  document.querySelectorAll("[data-font-scale]").forEach((btn) => {
+    const active = btn.getAttribute("data-font-scale") === valid;
+    btn.classList.toggle("is-active", active);
+    btn.setAttribute("aria-pressed", String(active));
+  });
+}
+
+function initFontScaleSetting() {
+  let saved = "100";
+  try {
+    saved = localStorage.getItem(BT_FONT_SCALE_KEY) || "100";
+  } catch (_) {}
+  applyFontScale(saved);
+  document.querySelectorAll("[data-font-scale]").forEach((btn) => {
+    if (btn._btBound) return;
+    btn._btBound = true;
+    btn.addEventListener("click", () => {
+      applyFontScale(btn.getAttribute("data-font-scale"));
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+    });
+  });
+}
+
+const BT_SPEECH_RATES = [1, 1.25];
+const BtSpeechReader = {
+  playing: false,
+  rateIdx: 0,
+  stop() {
+    if ("speechSynthesis" in window) {
+      try {
+        window.speechSynthesis.cancel();
+      } catch (_) {}
+    }
+    this.playing = false;
+    const btn = document.getElementById("btnSpeakAnswer");
+    const rateBtn = document.getElementById("btnSpeakRate");
+    if (btn) {
+      btn.textContent = "Escuchar";
+      btn.classList.remove("is-speaking");
+      btn.setAttribute("aria-pressed", "false");
+    }
+    if (rateBtn) rateBtn.classList.add("hidden");
+  },
+  toggle() {
+    if (!("speechSynthesis" in window)) {
+      showWebToast("Tu navegador no soporta lectura en voz alta.");
+      return;
+    }
+    if (this.playing) {
+      this.stop();
+      return;
+    }
+    const snap = STATE.currentAnswerSnapshot;
+    const bodyEl = document.getElementById("answerBody");
+    const rawText = (snap && snap.plainText) || (bodyEl ? bodyEl.innerText : "");
+    const cleanText = String(rawText || "").replace(/\s+/g, " ").trim();
+    if (!cleanText) {
+      showWebToast("No hay respuesta activa para leer.");
+      return;
+    }
+    this.stop();
+    const utt = new SpeechSynthesisUtterance(cleanText.slice(0, 5000));
+    const curLang = document.documentElement.dataset.btLang === "en" ? "en-US" : "es-MX";
+    utt.lang = curLang;
+    utt.rate = BT_SPEECH_RATES[this.rateIdx] || 1;
+    const voices = window.speechSynthesis.getVoices();
+    const pref = voices.find((v) => v.lang && v.lang.toLowerCase().startsWith(curLang.slice(0, 2)));
+    if (pref) utt.voice = pref;
+    utt.onend = () => this.stop();
+    utt.onerror = () => this.stop();
+    this.playing = true;
+    window.speechSynthesis.speak(utt);
+    const btn = document.getElementById("btnSpeakAnswer");
+    const rateBtn = document.getElementById("btnSpeakRate");
+    if (btn) {
+      btn.textContent = "Detener voz";
+      btn.classList.add("is-speaking");
+      btn.setAttribute("aria-pressed", "true");
+    }
+    if (rateBtn) {
+      rateBtn.classList.remove("hidden");
+      rateBtn.textContent = `${BT_SPEECH_RATES[this.rateIdx]}x`;
+    }
+  },
+  cycleRate() {
+    this.rateIdx = (this.rateIdx + 1) % BT_SPEECH_RATES.length;
+    const rateBtn = document.getElementById("btnSpeakRate");
+    if (rateBtn) rateBtn.textContent = `${BT_SPEECH_RATES[this.rateIdx]}x`;
+    if (this.playing) {
+      this.stop();
+      this.toggle();
+    }
+  }
+};
+window.BtSpeechReader = BtSpeechReader;
+
+function buildShareDeepLink(params) {
+  const base = `${window.location.origin}${window.location.pathname}`;
+  const sp = new URLSearchParams();
+  Object.entries(params || {}).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && String(v).trim() !== "") {
+      sp.set(k, String(v).trim());
+    }
+  });
+  return `${base}?${sp.toString()}`;
+}
+
+async function copyOrShareDeepLink(url, shareTitle, toastLabel) {
+  if (typeof navigator.share === "function" && (window.innerWidth <= 900 || window.Capacitor)) {
+    try {
+      await navigator.share({ title: shareTitle, url });
+      return;
+    } catch (_) {}
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    showWebToast(toastLabel);
+  } catch (_) {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+      showWebToast(toastLabel);
+    } catch (_) {
+      showWebToast(url);
+    }
+  }
+}
+
+function setupAnswerQuickActions() {
+  const speakBtn = document.getElementById("btnSpeakAnswer");
+  const rateBtn = document.getElementById("btnSpeakRate");
+  const shareAnsBtn = document.getElementById("btnShareAnswerLink");
+  const printAnsBtn = document.getElementById("btnPrintAnswerPdf");
+  const shareDocBtn = document.getElementById("btnShareDocLink");
+  const closeAnsBtn = document.getElementById("closeAnswerBtn");
+  const newSearchBtn = document.getElementById("newSearchBtn");
+
+  if (speakBtn) speakBtn.addEventListener("click", () => BtSpeechReader.toggle());
+  if (rateBtn) rateBtn.addEventListener("click", () => BtSpeechReader.cycleRate());
+  if (closeAnsBtn) closeAnsBtn.addEventListener("click", () => BtSpeechReader.stop());
+  if (newSearchBtn) newSearchBtn.addEventListener("click", () => BtSpeechReader.stop());
+
+  if (shareAnsBtn) {
+    shareAnsBtn.addEventListener("click", () => {
+      const q = (STATE.currentAnswerSnapshot && STATE.currentAnswerSnapshot.query) || document.getElementById("answerQuestionTitle")?.textContent || "";
+      if (!q.trim()) return;
+      const url = buildShareDeepLink({ q: q.trim() });
+      copyOrShareDeepLink(url, `BiblioTech Scout — ${q.trim()}`, "Enlace de respuesta copiado para compartir.");
+      enqueueAnonTelemetry({ t: "ui_accion", label: "share_answer_link" }, false);
+    });
+  }
+
+  if (printAnsBtn) {
+    printAnsBtn.addEventListener("click", () => {
+      BtSpeechReader.stop();
+      document.documentElement.classList.add("bt-print-answer-mode");
+      const cleanup = () => document.documentElement.classList.remove("bt-print-answer-mode");
+      window.addEventListener("afterprint", cleanup, { once: true });
+      setTimeout(cleanup, 4000);
+      window.print();
+      enqueueAnonTelemetry({ t: "ui_accion", label: "print_answer_pdf" }, false);
+    });
+  }
+
+  if (shareDocBtn) {
+    shareDocBtn.addEventListener("click", () => {
+      const docId = STATE.currentOpenDocId;
+      if (!docId) return;
+      const curPage = STATE.activePdfViewer && STATE.activePdfViewer.page > 1 ? STATE.activePdfViewer.page : null;
+      const url = buildShareDeepLink(curPage ? { doc: docId, page: curPage } : { doc: docId });
+      const title = STATE.docsById[docId]?.title || "Documento Oficial Scout";
+      copyOrShareDeepLink(
+        url,
+        title,
+        curPage ? `Enlace directo copiado (Pág. ${curPage}).` : "Enlace directo al documento copiado."
+      );
+      enqueueAnonTelemetry({ t: "ui_accion", label: "share_doc_link" }, false);
+    });
+  }
+}
+
+function handleStartupDeepLinks() {
+  try {
+    const rawSearch = window.location.search || "";
+    const rawHash = window.location.hash || "";
+    let sp = new URLSearchParams(rawSearch);
+    if (!sp.get("q") && !sp.get("doc") && rawHash.includes("=")) {
+      sp = new URLSearchParams(rawHash.replace(/^#/, ""));
+    }
+    const qParam = (sp.get("q") || "").trim();
+    const docParam = (sp.get("doc") || "").trim();
+    const pageParam = parseInt(sp.get("page") || "0", 10);
+
+    if (docParam && STATE.docsById[docParam]) {
+      setTimeout(() => {
+        openDocumentModal(docParam, -1, pageParam > 0 ? pageParam : null);
+      }, 120);
+      return;
+    }
+    if (qParam) {
+      setTimeout(() => {
+        submitQuestion(qParam, { syncInput: true, source: "deeplink" });
+      }, 120);
+    }
+  } catch (_) {}
+}
+
+function setupProcedureWizard() {
+  const secPills = document.querySelectorAll("[data-wiz-sec]");
+  const goalPills = document.querySelectorAll("[data-wiz-goal]");
+  const resultEl = document.getElementById("btWizardResult");
+  const resetBtn = document.getElementById("btWizardResetBtn");
+  if (!resultEl || !secPills.length || !goalPills.length) return;
+
+  const SEC_LABEL = {
+    manada: "Manada de Lobatos",
+    tropa: "Tropa de Scouts",
+    comunidad: "Comunidad de Caminantes",
+    clan: "Clan de Rovers",
+    grupo: "Grupo / Consejo / Scouters"
+  };
+  const PKG_BUILDERS = {
+    insignia_final: {
+      manada: {
+        title: "Paquete Oficial — Insignia Alfa (Manada `P9.1`)",
+        steps: [
+          { code: "P2.1", docId: "doc-0683", desc: "Cédula Auxiliar de Evaluación Manada al día", tpl: "p2" },
+          { code: "Acta", docId: "doc-0704", desc: "Acta de Consejo de Sección y Consejo de Grupo (`P6.4`)", tpl: "acta" },
+          { code: "P9.1", docId: "doc-0711", desc: "Formato Solicitud Insignia Final Alfa (`P9.1`)", tpl: null }
+        ],
+        tip: "Verifica evidencias en CDC conforme a `ASMAC/DNME/CNPJ/26.011`."
+      },
+      tropa: {
+        title: "Paquete Oficial — Insignia Águila Real (Tropa `P9.2`)",
+        steps: [
+          { code: "P2.2", docId: "doc-0684", desc: "Cédula Auxiliar de Evaluación Tropa", tpl: null },
+          { code: "Acta", docId: "doc-0704", desc: "Acuerdo de Corte de Honor y Consejo de Grupo (`P6.4`)", tpl: "acta" },
+          { code: "P9.2", docId: "doc-0712", desc: "Formato Solicitud Águila Real (`P9.2`) lleno digitalmente", tpl: "p9" }
+        ],
+        tip: "Llena el formato `P9.2` con el autollenado y adjunta actas firmadas."
+      },
+      comunidad: {
+        title: "Paquete Oficial — Insignia Everest (Comunidad `P9.3`)",
+        steps: [
+          { code: "P2.3", docId: "doc-0685", desc: "Cédula Auxiliar de Evaluación Comunidad", tpl: null },
+          { code: "Acta", docId: "doc-0704", desc: "Aval de Congreso / Asamblea y Consejo (`P6.4`)", tpl: "acta" },
+          { code: "P9.3", docId: "doc-0713", desc: "Formato Solicitud Insignia Everest (`P9.3`)", tpl: null }
+        ],
+        tip: "Incluye acreditación PJOS vigente o en proceso (`DNME 26.007`)."
+      },
+      clan: {
+        title: "Paquete Oficial — Horquilla Baden Powell (Clan `P9.4`)",
+        steps: [
+          { code: "P2.4", docId: "doc-0686", desc: "Cédula Auxiliar de Evaluación Clan", tpl: null },
+          { code: "Acta", docId: "doc-0704", desc: "Aval de Asamblea/Consejo de Clan y Consejo de Grupo", tpl: "acta" },
+          { code: "P9.4", docId: "doc-0714", desc: "Formato Solicitud Horquilla Baden Powell (`P9.4`)", tpl: null }
+        ],
+        tip: "Adjunta evidencias de proyecto SMART e iniciativas ejecutadas."
+      },
+      grupo: {
+        title: "Paquete de Validación Final — Consejos de Grupo (`P9` y `P6.4`)",
+        steps: [
+          { code: "P6.4", docId: "doc-0704", desc: "Acta de Consejo de Nivel / Grupo aprobando la solicitud", tpl: "acta" },
+          { code: "26.011", docId: "doc-1035", desc: "Revisa el proceso de 12 pasos CDC (`DNME-CNPJ 26.011`)", tpl: null },
+          { code: "P9.2", docId: "doc-0712", desc: "Revisa solicitudes terminales (`P9.1`–`P9.4`)", tpl: "p9" }
+        ],
+        tip: "Asegúrate de usar el correo institucional del Grupo al enviar a CNPJ/CDC."
+      }
+    },
+    mundo_mejor: {
+      title: "Paquete Oficial — Insignias Mundo Mejor / Tribu de la Tierra (`P8.1`–`P8.7`)",
+      steps: [
+        { code: "SMART", docId: "doc-0702", desc: "Diseño de Proyecto SMART y objetivos ODS (`P6.2`)", tpl: "smart" },
+        { code: "P8.1", docId: "doc-0705", desc: "Solicitud digital Champions for Nature / Mundo Mejor (sin imprimir)", tpl: "p8" },
+        { code: "Acta", docId: "doc-0704", desc: "Acta de Consejo de Sección y Consejo de Grupo (`P6.4`)", tpl: "acta" }
+      ],
+      tip: "Registra el proyecto en `sdgs.scout.org`, comparte Drive abierto y envía según `ASMAC/DNME/CNPJ/26.005`."
+    },
+    especialidad: {
+      title: "Paquete Oficial — Especialidades Scouts (`FES` · `P5.1`)",
+      steps: [
+        { code: "P5.1", docId: "doc-0691", desc: "Ficha de Especialidad Scout FES editable (Descubro, Conozco, Aplico, Comparto)", tpl: "fes" },
+        { code: "P2.1", docId: "doc-0683", desc: "Registro en Cédula Auxiliar de Evaluación (`P2.x`)", tpl: "p2" }
+      ],
+      tip: "Puedes elegir entre las 82 especialidades FES vigentes en la pestaña Especialidades de Biblioteca."
+    },
+    diagnostico: {
+      title: "Paquete Oficial — Diagnóstico Inicial y Progresión (`P1` / `P2`)",
+      steps: [
+        { code: "P1.0.1", docId: "doc-0670", desc: "Ficha FAES de Diagnóstico Inicial NNAJ", tpl: "p1" },
+        { code: "P2.1", docId: "doc-0683", desc: "Cédula Auxiliar de Evaluación de progresión", tpl: "p2" },
+        { code: "P1.1–P1.4", docId: "doc-0672", desc: "Matriz de Diagnóstico Inicial por sección", tpl: null }
+      ],
+      tip: "Úsalo al recibir aspirantes, hacer pases o iniciar Ciclo de Programa."
+    },
+    salida_salud: {
+      title: "Paquete Oficial — Salida, Campamento, Salud y Tesorería",
+      steps: [
+        { code: "JL304", docId: "doc-0623", desc: "Autorización / Permiso de Actividad y Salida firmado por padre/tutor", tpl: "jl304" },
+        { code: "Salud", docId: "doc-0623", desc: "Ficha Médica y de Salud Scout actualizada", tpl: "salud" },
+        { code: "Prog.", docId: "doc-0703", desc: "Convocatoria y Programa de Actividad (`P6.3`)", tpl: "programa" },
+        { code: "NO 3", docId: "doc-0356", desc: "Vale Provisional de Caja y Recibo administrativo de Grupo", tpl: "vales" }
+      ],
+      tip: "Recuerda llevar el botón de pánico / emergencia y botiquín completos en toda salida."
+    }
+  };
+
+  let curSec = "";
+  let curGoal = "";
+
+  const renderWizard = () => {
+    secPills.forEach((b) => b.classList.toggle("is-active", b.getAttribute("data-wiz-sec") === curSec));
+    goalPills.forEach((b) => b.classList.toggle("is-active", b.getAttribute("data-wiz-goal") === curGoal));
+    if (resetBtn) resetBtn.classList.toggle("hidden", !curSec && !curGoal);
+
+    if (!curSec || !curGoal) {
+      resultEl.innerHTML = `<p class="bt-wizard-placeholder">${
+        !curSec && !curGoal
+          ? "Selecciona una sección y el tipo de trámite para obtener tu paquete exacto de documentos oficiales y abrir los formatos listos para llenar."
+          : "Ahora elige el paso faltante arriba para ver la lista exacta de documentos y abrirlos en 1 clic."
+      }</p>`;
+      return;
+    }
+
+    const baseGoal = PKG_BUILDERS[curGoal];
+    const pkg = curGoal === "insignia_final" ? baseGoal[curSec] : baseGoal;
+    const rowsHtml = pkg.steps
+      .map((st, idx) => {
+        const openDocBtn =
+          st.docId && STATE.docsById[st.docId]
+            ? `<button type="button" class="bt-wiz-action" data-wiz-open-doc="${escapeHtml(st.docId)}">Ver oficial</button>`
+            : "";
+        const fillBtn = st.tpl
+          ? `<button type="button" class="bt-wiz-action is-primary" data-wiz-open-tpl="${escapeHtml(st.tpl)}">Llenar plantilla</button>`
+          : "";
+        return `
+          <li class="bt-wizard-pkg-item">
+            <div class="bt-wizard-pkg-info">
+              <span class="bt-wiz-code">${idx + 1}. ${escapeHtml(st.code)}</span>
+              <span>${escapeHtml(st.desc)}</span>
+            </div>
+            <div class="bt-wizard-pkg-btns">${fillBtn}${openDocBtn}</div>
+          </li>
+        `;
+      })
+      .join("");
+
+    resultEl.innerHTML = `
+      <div class="bt-wizard-pkg-head">
+        <strong>${escapeHtml(pkg.title)}</strong>
+        <span class="bt-wizard-sec-tag">${escapeHtml(SEC_LABEL[curSec] || "")}</span>
+      </div>
+      <ol class="bt-wizard-pkg-list">${rowsHtml}</ol>
+      <p class="bt-wizard-tip">${escapeHtml(pkg.tip)}</p>
+    `;
+  };
+
+  secPills.forEach((b) => {
+    b.addEventListener("click", () => {
+      curSec = b.getAttribute("data-wiz-sec") || "";
+      renderWizard();
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+    });
+  });
+  goalPills.forEach((b) => {
+    b.addEventListener("click", () => {
+      curGoal = b.getAttribute("data-wiz-goal") || "";
+      renderWizard();
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+    });
+  });
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      curSec = "";
+      curGoal = "";
+      renderWizard();
+    });
+  }
+  resultEl.addEventListener("click", (e) => {
+    const docBtn = e.target.closest("[data-wiz-open-doc]");
+    if (docBtn) {
+      openDocumentModal(docBtn.getAttribute("data-wiz-open-doc"));
+      return;
+    }
+    const tplBtn = e.target.closest("[data-wiz-open-tpl]");
+    if (tplBtn && typeof window.__btSelectSmartTemplate === "function") {
+      window.__btSelectSmartTemplate(tplBtn.getAttribute("data-wiz-open-tpl"), true);
+    }
+  });
+}
+
 const BT_RELEASE_NOTES = [
+  {
+    version: "Web v9.9.2 / APK v3.9.2",
+    date: "22/11/2026",
+    items: [
+      "Protección anti lie-fi offline: Service Worker con timeout corto (2.6–4.5 s) que cambia al instante a caché local en iOS/Web cuando hay señal débil o sin datos reales.",
+      "Acervo documental y buscador mejorados: 23 libros históricos, organigramas y formatos administrativos enriquecidos con su contenido real + equivalencias internacionales (Eagle Scout, Merit Badges, BSA) y detección exacta de folios RECME fuera de rango (P8.8, P11, etc.).",
+      "Asistente guiado en 3 pasos y 5 nuevas plantillas oficiales autollenables: Diagnóstico Inicial NNAJ (P1.0.1), Cédula Manada (P2.1), Champions for Nature (P8.1), Solicitud Águila Real (P9.2) y Vales de Caja / Recibo (NO 3).",
+      "Lectura en voz alta (1x / 1.25x) e impresión limpia a PDF en cada respuesta, enlaces compartibles (?q= y ?doc=&page=), tamaño de letra ajustable (Normal, Grande, Extra), atajos de teclado (Alt+1..6 y [ ] + - en PDF) y respaldo .json de autollenado."
+    ]
+  },
   {
     version: "Web v9.9.1 / APK v3.9.1",
     date: "22/11/2026",
@@ -12132,6 +12938,8 @@ function setupSettingsHub() {
 
   const autofillBox = document.getElementById("settingsAutofillSummary");
   const btnJumpAutofill = document.getElementById("btnSettingsJumpAutofill");
+  const btnSettingsExportAutofill = document.getElementById("btnSettingsExportAutofill");
+  const btnSettingsImportAutofill = document.getElementById("btnSettingsImportAutofill");
   const btnClearAutofill = document.getElementById("btnSettingsClearAutofill");
   const savedCountEl = document.getElementById("settingsSavedCount");
   const savedListEl = document.getElementById("settingsSavedDocsList");
@@ -12467,6 +13275,17 @@ function setupSettingsHub() {
       showWebToast("Datos de autollenado borrados de este dispositivo.");
     });
   }
+  window.__btRefreshSettingsDataPane = renderDataPane;
+  if (btnSettingsExportAutofill) {
+    btnSettingsExportAutofill.addEventListener("click", () => {
+      if (typeof window.__btExportAutofillProfile === "function") window.__btExportAutofillProfile();
+    });
+  }
+  if (btnSettingsImportAutofill) {
+    btnSettingsImportAutofill.addEventListener("click", () => {
+      if (typeof window.__btTriggerImportAutofillProfile === "function") window.__btTriggerImportAutofillProfile();
+    });
+  }
 
   if (savedListEl) {
     savedListEl.addEventListener("click", (e) => {
@@ -12620,6 +13439,12 @@ function initAdaptivePerfMode() {
       savedContrast = localStorage.getItem(BT_CONTRAST_KEY) === "true";
     } catch (_) {}
     root.setAttribute("data-bt-contrast", savedContrast ? "high" : "normal");
+
+    let savedFontScale = "100";
+    try {
+      savedFontScale = localStorage.getItem(BT_FONT_SCALE_KEY) || "100";
+    } catch (_) {}
+    root.setAttribute("data-bt-font-scale", ["100", "115", "130"].includes(savedFontScale) ? savedFontScale : "100");
 
     let savedLang = "es";
     try {

@@ -1,1 +1,14 @@
-Recurso visual oficial / infografía / plantilla: orgamigrama-nacional1 (WEBP).
+--- Infografía Oficial (WEBP) ---
+Título: Organigrama — Jefatura Nacional (ASMAC)
+
+Estructura jerárquica mostrada en el diagrama institucional:
+- Máxima instancia operativa en este cuadro:
+  • Jefatura Scout Nacional (acompañada lateralmente por Asistente de la Dirección Nacional, Subjefe Scout Nacional, Auxiliar de Dirección General y Auxiliar Administrativo).
+- 7 Direcciones Nacionales subordinadas en línea directa:
+  1. Dirección Nacional de Administración y Finanzas
+  2. Dirección Nacional de Operación y Logística
+  3. Dirección Nacional de Métodos Educativos (DNME)
+  4. Dirección Nacional de Gestión y Desarrollo Institucional (DNGDI / DGI)
+  5. Dirección Nacional de Protección a la Membresía
+  6. Dirección Nacional de Innovación, Tecnología y Servicios a la Membresía
+  7. Dirección Internacional

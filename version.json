@@ -1,8 +1,8 @@
 {
-  "version": "9.9.1",
-  "mobileVersion": "3.9.1",
-  "cache": "bibliotech-scout-v58",
+  "version": "9.9.2",
+  "mobileVersion": "3.9.2",
+  "cache": "bibliotech-scout-v59",
   "releasedAt": "2026-11-22",
   "schemaCookieVersion": "9.7",
-  "notes": "Versión 9.9.1 / Mobile 3.9.1: Menú móvil sin duplicados, Ajustes simplificados (Modo Lite, Modo Estándar, Modo oscuro), App y Modo Offline dentro de Ajustes, Bienvenida interactiva de 3 páginas con consejo de conexión iOS y centro unificado de Ajustes y Descargas en APK Android."
+  "notes": "Versión 9.9.2 / Mobile 3.9.2: Protección real anti lie-fi offline en iOS y Web, enriquecimiento integral de libros históricos y formatos, detector de códigos RECME fuera de rango y equivalencias internacionales, asistente de trámites en 3 clics, 5 nuevas plantillas oficiales autollenables (P1.0.1, P2.1, P8.1, P9.2 y Vales NO 3), lectura en voz alta y PDF para respuestas, enlaces compartibles, atajos de teclado, tamaño de letra ajustable y respaldo JSON de autollenado."
 }

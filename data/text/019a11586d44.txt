@@ -1,1 +1,11 @@
-ASMAC Descuentos Scouts   ️  Registro Familiar Iniciar Sesión CUM Contraseña Ingresar ¿No tienes cuenta? Regístrate aquí
+Plataforma Web Oficial ASMAC (Asociación de Scouts de México, A.C.): Descuentos Scouts y Registro Familiar (scouts.org.mx)
+
+Resumen y propósito institucional:
+Este recurso corresponde al acceso oficial de miembros de la Asociación de Scouts de México, A.C. (ASMAC) hacia los módulos en línea de Registro Familiar y beneficios de Descuentos Scouts.
+
+Elementos y trámites vinculados:
+1. Inicio de sesión con Clave Única de Membresía (CUM) y contraseña institucional del integrante o tutor.
+2. Registro Familiar y Credencialización: en coordinación con el sistema SISAS (opción «Actualiza Miembro»), permite validar la vigencia de registro anual y gestionar credenciales oficiales. De acuerdo con los lineamientos de Credencial y Registro Familiar de ASMAC, la fotografía digital tipo infantil (formato .JPG, rostro de frente) debe cargarse en SISAS respetando los cortes quincenales (día 15 y último día de cada mes). La reposición de credencial física se gestiona con el formato oficial de solicitud de reposición ante la Oficina Scout Nacional.
+3. Descuentos Scouts y Registro Nuevo: ofrece acceso al registro de aspirantes y a convenios comerciales vigentes para miembros con credencial y CUM activos.
+
+Canales oficiales de soporte: Portal scouts.org.mx, Help Desk ASMAC (helpdesk.scouts.org.mx) y Oficina Scout Nacional (Córdoba 57, Col. Roma Norte, C.P. 06700, Ciudad de México).

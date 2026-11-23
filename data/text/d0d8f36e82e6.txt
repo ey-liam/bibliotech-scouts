@@ -1,1 +1,11 @@
-Recurso visual oficial / infografía / plantilla: NO 4 FORMATO DE CHEQUE (JPG).
+--- Recurso Gráfico Oficial (JPG) ---
+Título: NO 4 — Formato de Cheque (Referencia administrativa de llenado)
+
+Elementos y campos visibles en el esquema instructivo:
+1. DATOS DE LA CUENTA BANCARIA (esquina superior izquierda): número de cuenta, sucursal y ciudad.
+2. FECHA DE EMISIÓN (esquina superior derecha): línea de fecha (ejemplo mostrado: «9 de Agosto de 2017»).
+3. BENEFICIARIO (campo central): línea «PÁGUESE ESTE CHEQUE A:» (ejemplo mostrado: «Al portador» o nombre completo del beneficiario).
+4. IMPORTE EN NÚMERO (recuadro derecho): signo `$` con cantidad numérica y centavos (ejemplo: `$ 5,900.00`).
+5. IMPORTE EN LETRA: línea inferior escrita con palabras más fracción en centavos y leyenda «MONEDA NACIONAL» (ejemplo: «Cinco mil novecientos pesos 0/100»).
+6. FIRMAS AUTORIZADAS: línea de firma mancomunada o autorizada por la tesorería del Grupo/Provincia correspondiente.
+7. BANDA INFERIOR BANCARIA (MICR): caracteres magnéticos de control y referencia de ejemplar administrativo.

@@ -1,2 +1,10 @@
---- Página 1 ---
-Documento oficial Scout: organigramaDEN (organigramaDEN.pdf). Disponible para visualización y descarga directa en BiblioTech.
+--- Documento Gráfico Oficial (PDF 1 página) ---
+Título: Organigrama de la Dirección Ejecutiva Nacional (DEN) — ASMAC
+
+Estructura organizacional representada en el diagrama de árbol horizontal:
+1. Encabezado principal: JSN (Jefatura Scout Nacional) -> SJSN (Subjefatura Scout Nacional) y CED (Comisión/Centro Editorial y Diseño: Imagen Institucional, Diseño para Eventos, Revista y Publicaciones).
+2. Ramal CP(USAID) y DA (Dirección de Administración): Centros Scouts (Jefe de Campo), Gerencia Eventos (Ejecutivo) y Administración y Finanzas (Gerencias de Servicios, Gerencia Comercial, Gerencias de Contabilidad y Gerencia de Compras).
+3. Dirección Ejecutiva Nacional (DEN) con 4 direcciones técnicas:
+   - DME (Dirección de Métodos Educativos): Ejecutivos de Programa y Formación -> CNPJ (Subcomisiones de Programa: SPJM Manada, SPJTS Tropa, SPJCC Comunidad, SPJCR Clan) y CNF (Subcomisión de Formación: SFB y SFP).
+   - DGI (Dirección de Gestión Institucional) y DI (Dirección Internacional): con CNPGC, CNFV, CNM y CNE.
+   - DDI (Dirección de Desarrollo Institucional): Ejecutivo -> CNVI (SFI, SAE, SVI), CNVIE (SSS, SVE) y CC (CNCI, CNCE, RP, RS, PW).

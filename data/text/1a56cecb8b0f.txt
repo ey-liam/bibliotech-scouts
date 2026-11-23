@@ -1,1 +1,11 @@
-The 44th World Scout Conference
+Portal Principal OMMS: The 44th World Scout Conference (44.ª Conferencia Scout Mundial 2027)
+
+Resumen documental:
+Página principal de referencia en BiblioTech Scout para el sitio oficial de la 44.ª Conferencia Scout Mundial de la Organización Mundial del Movimiento Scout (OMMS / WOSM) programada para 2027.
+
+Puntos clave y documentos asociados en BiblioTech:
+1. Gobernanza mundial: espacio informativo central de la Conferencia Scout Mundial, donde se publican fechas, avisos oficiales para Organizaciones Miembro, circulares y material preparatorio.
+2. Circulares relacionadas disponibles con texto completo en este repositorio:
+   - «Circular GLB-C22-2026: Proposed Rules of Procedure for the 44th World Scout Conference in 2027», con el proceso de seminarios web informativos y referéndum electrónico conforme al artículo XI.4 de la Constitución OMMS.
+   - «Documentos: The 44th World Scout Conference», que concentra los enlaces de descarga oficiales en español, inglés, francés y árabe.
+3. Consulta los archivos hermanos dentro de «Sitios Web Oficiales (Referencia) -> Páginas Institucionales ASMAC / WOSM» para leer el texto completo de la circular.

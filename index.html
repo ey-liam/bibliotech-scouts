@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=45" />
+  <link rel="stylesheet" href="styles.css?v=46" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -446,6 +446,10 @@
               <span id="answerModeLabel">Información basada en documentos oficiales</span>
             </div>
             <div class="answer-header-actions">
+              <button type="button" id="btnSpeakAnswer" class="btn-close-answer bt-ans-action" title="Escuchar respuesta en voz alta (sin conexión)" aria-pressed="false">Escuchar</button>
+              <button type="button" id="btnSpeakRate" class="btn-close-answer bt-ans-rate hidden" title="Cambiar velocidad de lectura">1x</button>
+              <button type="button" id="btnShareAnswerLink" class="btn-close-answer bt-ans-action" title="Copiar enlace directo o compartir por WhatsApp">Compartir enlace</button>
+              <button type="button" id="btnPrintAnswerPdf" class="btn-close-answer bt-ans-action" title="Imprimir o guardar respuesta como PDF">Imprimir / PDF</button>
               <button type="button" id="newSearchBtn" class="btn-close-answer btn-new-search" title="Empezar otra búsqueda">Nueva búsqueda</button>
               <button type="button" id="closeAnswerBtn" class="btn-close-answer" title="Cerrar respuesta">Cerrar</button>
             </div>
@@ -1734,6 +1738,45 @@
         </div>
       </div>
 
+      <!-- ASISTENTE GUIADO DE TRÁMITES EN 3 CLICS -->
+      <section id="btProcedureWizard" class="bt-wizard-card" aria-label="Asistente de trámites y requisitos en 3 pasos">
+        <div class="bt-wizard-head">
+          <div>
+            <span class="bt-wizard-kicker">ASISTENTE EN 3 PASOS</span>
+            <h3>¿Qué trámite o insignia vas a gestionar?</h3>
+          </div>
+          <button type="button" id="btWizardResetBtn" class="bt-wizard-reset hidden">Reiniciar pasos</button>
+        </div>
+
+        <div class="bt-wizard-steps-row">
+          <div class="bt-wizard-step">
+            <span class="bt-wizard-step-label">1. Elige sección o área</span>
+            <div class="bt-wizard-pills" id="btWizardSecPills" role="group" aria-label="Paso 1: Sección">
+              <button type="button" class="bt-wiz-pill" data-wiz-sec="manada">Manada</button>
+              <button type="button" class="bt-wiz-pill" data-wiz-sec="tropa">Tropa</button>
+              <button type="button" class="bt-wiz-pill" data-wiz-sec="comunidad">Comunidad</button>
+              <button type="button" class="bt-wiz-pill" data-wiz-sec="clan">Clan</button>
+              <button type="button" class="bt-wiz-pill" data-wiz-sec="grupo">Grupo / Scouters</button>
+            </div>
+          </div>
+
+          <div class="bt-wizard-step">
+            <span class="bt-wizard-step-label">2. Elige el trámite o meta</span>
+            <div class="bt-wizard-pills" id="btWizardGoalPills" role="group" aria-label="Paso 2: Trámite">
+              <button type="button" class="bt-wiz-pill" data-wiz-goal="insignia_final">Insignia Final / Terminal (P9)</button>
+              <button type="button" class="bt-wiz-pill" data-wiz-goal="mundo_mejor">Insignias Mundo Mejor (P8)</button>
+              <button type="button" class="bt-wiz-pill" data-wiz-goal="especialidad">Especialidades FES (P5)</button>
+              <button type="button" class="bt-wiz-pill" data-wiz-goal="diagnostico">Diagnóstico y Evaluación (P1/P2)</button>
+              <button type="button" class="bt-wiz-pill" data-wiz-goal="salida_salud">Salida, Salud y Tesorería</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="btWizardResult" class="bt-wizard-result" aria-live="polite">
+          <p class="bt-wizard-placeholder">Selecciona una sección y el tipo de trámite para obtener tu paquete exacto de documentos oficiales y abrir los formatos listos para llenar.</p>
+        </div>
+      </section>
+
       <div class="editor-formats-grid" id="smartFormTemplateCards">
         <article class="editor-format-card is-active-template" data-template-card="salud">
           <div class="editor-format-top">
@@ -1806,6 +1849,61 @@
           <p>Actas de Consejo de Grupo, Corte de Honor, Asamblea de Comunidad, Consejo de Clan o acuerdos de Diálogo Directo.</p>
           <button type="button" class="bt-open-template-btn" data-open-template="acta">Abrir y llenar archivo</button>
         </article>
+        <article class="editor-format-card" data-template-card="p1">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            </span>
+            <span class="editor-soon-pill is-ready">1 Hoja · RECME P1.0.1</span>
+          </div>
+          <h3>Diagnóstico Inicial NNAJ (P1.0.1)</h3>
+          <p>Ficha oficial de diagnóstico inicial de competencias para nuevo ingreso, enlace y cambio de Grupo en PJOS.</p>
+          <button type="button" class="bt-open-template-btn" data-open-template="p1">Abrir y llenar archivo</button>
+        </article>
+        <article class="editor-format-card" data-template-card="p2">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+            </span>
+            <span class="editor-soon-pill is-ready">1 Hoja · RECME P2.1</span>
+          </div>
+          <h3>Cédula de Evaluación Manada (P2.1)</h3>
+          <p>Formato auxiliar de evaluación de progresión personal, dentelladas, actividades significativas y firma de scouter.</p>
+          <button type="button" class="bt-open-template-btn" data-open-template="p2">Abrir y llenar archivo</button>
+        </article>
+        <article class="editor-format-card" data-template-card="p8">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </span>
+            <span class="editor-soon-pill is-ready">1 Hoja · RECME P8.1</span>
+          </div>
+          <h3>Solicitud Champions for Nature (P8.1)</h3>
+          <p>Solicitud digital oficial de Mundo Mejor / Tribu de la Tierra con CUM, voluntariado, enlace sdgs.scout.org y Drive.</p>
+          <button type="button" class="bt-open-template-btn" data-open-template="p8">Abrir y llenar archivo</button>
+        </article>
+        <article class="editor-format-card" data-template-card="p9">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </span>
+            <span class="editor-soon-pill is-ready">1 Hoja · RECME P9.2</span>
+          </div>
+          <h3>Solicitud Insignia Águila Real (P9.2)</h3>
+          <p>Trámite de Insignia Final de Tropa ante Corte de Honor y Consejo de Grupo con CUM, fechas de ingreso y pase.</p>
+          <button type="button" class="bt-open-template-btn" data-open-template="p9">Abrir y llenar archivo</button>
+        </article>
+        <article class="editor-format-card" data-template-card="vales">
+          <div class="editor-format-top">
+            <span class="editor-format-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+            </span>
+            <span class="editor-soon-pill is-ready">Lámina · NO 3 Tesorería</span>
+          </div>
+          <h3>Vales de Caja y Recibo (NO 3)</h3>
+          <p>Lámina administrativa de Grupo con Vale Provisional de Caja y Recibo oficial listos para foliar, fechar e imprimir.</p>
+          <button type="button" class="bt-open-template-btn" data-open-template="vales">Abrir y llenar archivo</button>
+        </article>
       </div>
 
       <!-- ESTACIÓN DE TRABAJO INTERACTIVA DEL EDITOR DE FORMATOS -->
@@ -1820,6 +1918,11 @@
               <option value="smart">4. Cédula de Proyecto SMART e Insignias Mundiales</option>
               <option value="programa">5. Convocatoria y Programa de Campamento</option>
               <option value="acta">6. Acta de Consejo, Corte de Honor y MASC</option>
+              <option value="p1">7. Diagnóstico Inicial NNAJ (RECME P1.0.1)</option>
+              <option value="p2">8. Cédula de Evaluación Manada (RECME P2.1)</option>
+              <option value="p8">9. Solicitud Champions for Nature (RECME P8.1)</option>
+              <option value="p9">10. Solicitud Insignia Final Águila Real (RECME P9.2)</option>
+              <option value="vales">11. Vales Provisionales de Caja y Recibo (NO 3)</option>
             </select>
             <span id="sfSaveStatus" class="bt-sf-save-status" aria-live="polite">Autoguardado local activo</span>
           </div>
@@ -1949,9 +2052,16 @@
             <button type="button" id="btnPreviewAutofillDemo" class="btn-autofill-demo">
               Ver demostración de autollenado
             </button>
+            <button type="button" id="btnExportAutofillProfile" class="btn-autofill-demo" title="Descargar respaldo local .json con tus datos de autollenado">
+              Exportar respaldo (.json)
+            </button>
+            <button type="button" id="btnImportAutofillProfile" class="btn-autofill-demo" title="Restaurar respaldo local .json">
+              Importar respaldo (.json)
+            </button>
             <button type="button" id="btnClearAutofillProfile" class="bt-consent-btn is-secondary">
               Borrar datos locales
             </button>
+            <input type="file" id="inputImportAutofillProfile" accept=".json,application/json" class="hidden" aria-label="Importar archivo JSON de autollenado" />
           </div>
         </form>
 
@@ -2340,6 +2450,10 @@
         <button type="button" id="btnReaderTTS" class="bt-qol-pill" title="Escuchar lectura en voz alta">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
           <span>Escuchar</span>
+        </button>
+        <button type="button" id="btnShareDocLink" class="bt-qol-pill" title="Copiar enlace directo a este documento y página">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          <span>Compartir enlace</span>
         </button>
         <div class="bt-reader-zoom-group" role="group" aria-label="Zoom">
           <button type="button" id="btnZoomOut" class="bt-qol-pill bt-qol-zoom-btn" title="Reducir tamaño (quitar zoom)" aria-label="Reducir zoom">−</button>
@@ -3031,6 +3145,18 @@
 
           <div class="bt-setting-row">
             <div class="bt-setting-row-copy">
+              <strong id="settingsFontScaleLabel">Tamaño de letra (Lectura cómoda)</strong>
+              <span id="settingsFontScaleSub">Amplía la tipografía en respuestas, tarjetas y biblioteca para leer mejor en campo o móvil.</span>
+            </div>
+            <div class="bt-setting-row-controls bt-font-scale-group" role="group" aria-label="Tamaño de letra">
+              <button type="button" class="bt-seg-btn is-active" data-font-scale="100">Normal</button>
+              <button type="button" class="bt-seg-btn" data-font-scale="115">Grande</button>
+              <button type="button" class="bt-seg-btn" data-font-scale="130">Extra</button>
+            </div>
+          </div>
+
+          <div class="bt-setting-row">
+            <div class="bt-setting-row-copy">
               <strong id="settingsSoundLabel">Efectos de sonido interactivos</strong>
               <span id="settingsSoundSub">Sonidos suaves al pulsar botones, cambiar página en PDF o recibir respuestas (Web Audio local).</span>
             </div>
@@ -3123,6 +3249,8 @@
             <div id="settingsAutofillSummary" class="bt-settings-summary-box"></div>
             <div class="bt-settings-inline-actions">
               <button type="button" id="btnSettingsJumpAutofill" class="bt-mini-action-btn is-primary">Editar en Editor de Archivos</button>
+              <button type="button" id="btnSettingsExportAutofill" class="bt-mini-action-btn">Exportar .json</button>
+              <button type="button" id="btnSettingsImportAutofill" class="bt-mini-action-btn">Importar .json</button>
               <button type="button" id="btnSettingsClearAutofill" class="bt-mini-action-btn is-danger">Borrar datos de autollenado</button>
             </div>
           </div>

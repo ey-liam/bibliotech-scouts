@@ -1,1 +1,19 @@
-Recurso visual oficial / infografía / plantilla: NO 3 VALES DE CAJA, COMPROBANTES DE GASTOS Y RECIBO (JPG).
+--- Recurso Gráfico Oficial (JPG) ---
+Título: NO 3 — Vales de Caja, Comprobantes de Gastos y Recibo (ASMAC)
+Institución: Asociación de Scouts de México, A.C. (Córdoba 57, Col. Roma, C.P. 06700, México, D.F. · scouts.org.mx)
+
+Descripción exacta de los 3 formatos administrativos contenidos en la lámina:
+1. VALE PROVISIONAL DE CAJA:
+   - Campos superiores: Logotipo Scouts México, recuadro «Escudo Provincia» y recuadro «Folio».
+   - Cuerpo contable: «Importe con número ($)», «Importe en letra» y renglones amplios de «CONCEPTO».
+   - Pie de validación: «Fecha (__ / __ / __)», «Autorizado por» y firma «RECIBÍ».
+2. RECIBO:
+   - Campos superiores: Logotipo Scouts México, recuadro «Escudo Provincia» y recuadro «Folio».
+   - Cuerpo contable: «Importe con número ($)», «Importe en letra», «RECIBÍ DE:» y «POR CONCEPTO DE:».
+   - Pie de validación: «Fecha (__ / __ / __)», «Autorizado por» y firma «RECIBÍ».
+3. COMPROBANTE DE GASTOS:
+   - Campos superiores: Logotipo Scouts México, «Escudo Provincia» y «Folio».
+   - Cuerpo contable: «Importe con número ($)», «Importe en letra», «CONCEPTO» y tabla «CÁRGUESE A:» con columnas «No. de Cta.», «Nombre» e «Importe».
+   - Pie de validación: «Fecha», «Autorizado por» y «RECIBÍ».
+
+Disponibilidad editable: Puedes llenar estos campos directamente desde BiblioTech en «Editor de Archivos -> Plantilla No. 3 Vales de Caja y Recibos» y exportarlos a PDF tamaño carta.
