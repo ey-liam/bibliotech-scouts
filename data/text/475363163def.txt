@@ -1,3 +1,10 @@
-Diagrama SISAS — Recuperar Contraseña de Autorización (Help Desk)
+DIAGRAMA SISAS — RECUPERAR CONTRASEÑA DE AUTORIZACIÓN (HELP DESK ASMAC)
 
-Captura oficial del menú 'Autorización' en SISAS que muestra el recuadro de ingreso de Contraseña de Autorización y el botón morado 'Recuperar contraseña' para restablecerla vía correo electrónico registrado.
+Captura oficial del cuadro de diálogo emergente del sistema SISAS cuando un miembro o tutor intenta editar datos de perfil ("Para realizar cambios en tu perfil necesitaremos validar la Contraseña de autorización de tu tutor...").
+
+Elementos y botones visibles en la pantalla:
+- Campo de texto: "Contraseña de autorización: [10 caracteres]" con botón de visibilidad (ícono de ojo).
+- Tres botones de acción:
+  1. Botón amarillo: "Sólo deseo consultar mi información".
+  2. Botón verde: "Editar información".
+  3. Botón morado: "Restablecer la contraseña de autorización" (vía correo electrónico registrado para recuperar el acceso en caso de extravío).

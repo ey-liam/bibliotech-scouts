@@ -1,3 +1,16 @@
-INFOGRAFÍA OFICIAL ASMAC: RegNal vs. SISAS.
+INFOGRAFÍA OFICIAL ASMAC: REGNAL VS. PLATAFORMA SISAS
 
-Diagrama radial comparativo que muestra todos los módulos integrados en el Sistema de Administración Scout (SISAS) respecto al anterior RegNal: Módulo Adultos en el Movimiento, Perfil, Eventos, Credencial, Cambio de Grupo, Pagos, Anuncios, Encuestas, Progresión, Reporte del Scouter y Contraseña de Autorización.
+Diagrama radial oficial en fondo oscuro con el encabezado de Scouts de México y título "ReGnAL vs. SISAS", diseñado para explicar la migración funcional entre el sistema anterior (RegNal) y el Sistema de Administración Scout (SISAS).
+
+Los 11 módulos representados alrededor del núcleo "REGNAL VS SISAS" (en sentido horario desde la parte superior) son:
+1. Perfil (datos personales, de contacto y validación de cuenta).
+2. Eventos (inscripción y seguimiento a eventos nacionales/provinciales).
+3. Credencial (descarga y validación digital de membresía vigente).
+4. Cambio de Grupo (gestión de transferencias de grupo o sección).
+5. Pagos (fichas de pago, cuotas y registro financiero).
+6. Anuncios (avisos oficiales institucionales dentro del portal).
+7. Encuestas (instrumentos de consulta a la membresía).
+8. Progresión (seguimiento oficial de etapas, insignias y competencias).
+9. Reporte del Scouter (informes y bitácoras de los adultos responsables).
+10. Contraseña de Autorización (clave personal o de tutor de 10 caracteres para autorizar cambios).
+11. Módulo Adultos en el Movimiento (gestión de formación y puestos de adultos voluntarios).

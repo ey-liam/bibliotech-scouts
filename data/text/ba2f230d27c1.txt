@@ -1,2 +1,8 @@
---- Página 1 ---
-Documento oficial Scout: NO 13 EJEMPLO CFDI (NO_ 13_EJEMPLO CFDI.pdf). Disponible para visualización y descarga directa en BiblioTech.
+FORMATO CONTABLE OFICIAL NO. 13: EJEMPLO DE CFDI (ARRENDAMIENTO Y PAPELERÍA)
+
+Documento técnico de referencia de la Dirección Nacional de Administración y Finanzas (ASMAC) compuesto por 2 páginas con ejemplos reales de representación impresa de Comprobantes Fiscales Digitales por Internet (CFDI) emitidos a favor de la Asociación de Scouts de México, A.C.
+
+Datos fiscales modelo contenidos en las dos páginas:
+- Receptor modelo: ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C. | R.F.C.: ASM 430224 4H3 | Domicilio fiscal: Córdoba 57, Col. Roma Norte, C.P. 06700, México, D.F.
+- Página 1 (Recibo de arrendamiento de persona física en Régimen Intermedio): muestra el desglose correcto de Renta Mensual con Importe, IVA, Subtotal, Retención de I.S.R., Retención de I.V.A., Total neto e importe con letra.
+- Página 2 (Factura de papelería en general pagada con cheque): muestra cantidad, unidad de medida, descripción ("Papelería en general"), subtotal, IVA trasladado, Total neto con letra y Cadena Original del timbre de certificación digital del SAT. Sirve como guía para verificar que los comprobantes fiscales recibidos por provincias y grupos cumplan los requisitos contables antes de elaborar pólizas.

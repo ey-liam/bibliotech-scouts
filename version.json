@@ -1,8 +1,8 @@
 {
-  "version": "9.9.2",
-  "mobileVersion": "3.9.2",
-  "cache": "bibliotech-scout-v59",
+  "version": "9.9.3",
+  "mobileVersion": "3.9.3",
+  "cache": "bibliotech-scout-v60",
   "releasedAt": "2026-11-22",
   "schemaCookieVersion": "9.7",
-  "notes": "Versión 9.9.2 / Mobile 3.9.2: Protección real anti lie-fi offline en iOS y Web, enriquecimiento integral de libros históricos y formatos, detector de códigos RECME fuera de rango y equivalencias internacionales, asistente de trámites en 3 clics, 5 nuevas plantillas oficiales autollenables (P1.0.1, P2.1, P8.1, P9.2 y Vales NO 3), lectura en voz alta y PDF para respuestas, enlaces compartibles, atajos de teclado, tamaño de letra ajustable y respaldo JSON de autollenado."
+  "notes": "Versión 9.9.3 / Mobile 3.9.3: Cobertura textual completa (<400 chars = 0 en los 1,035 documentos), vista previa de formatos en vivo idéntica al PDF (16 plantillas oficiales incluyendo P8.3, P8.7, P9.1, P9.2 2 págs., P9.3 y P9.4), firmas digitales opcionales en blanco/trazo/imagen, checklist de progresión e insignia terminal por sección, saltos -10/+10 y marcadores por página en PDF, código QR offline para compartir perfil de autollenado, JSON compacto + indexación asíncrona e idioma inglés integral."
 }

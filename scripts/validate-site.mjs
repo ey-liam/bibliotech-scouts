@@ -176,7 +176,7 @@ try {
   }
     console.log(`OK regresión de búsqueda y banco combinado (${merged.length} preguntas verificadas)`);
 
-  // 7. Validar cobertura textual (>=150 chars en data/text) y bases visuales de las 11 plantillas
+  // 7. Validar cobertura textual (>=400 chars en data/text) y bases visuales de las 24 páginas de plantillas
   let shortCount = 0;
   for (const d of catalog.documents || []) {
     const tPath = path.join(root, "data", "text", `${d.sha12}.txt`);
@@ -185,8 +185,8 @@ try {
       continue;
     }
     const txt = (await readFile(tPath, "utf8")).trim();
-    if (txt.length < 150) {
-      fail(`Documento ${d.id} (${d.sha12}.txt) tiene solo ${txt.length} chars (< 150)`);
+    if (txt.length < 400) {
+      fail(`Documento ${d.id} (${d.sha12}.txt) tiene solo ${txt.length} chars (< 400)`);
       shortCount++;
     }
   }
@@ -194,7 +194,10 @@ try {
     "salud_p1.webp", "salud_p2.webp", "jl304_p1.webp", "jl304_p2.webp",
     "fes_p1.webp", "smart_p1.webp", "smart_p2.webp", "programa_p1.webp",
     "acta_p1.webp", "acta_p2.webp", "p1_p1.webp", "p2_p1.webp",
-    "p8_p1.webp", "p9_p1.webp", "vales_p1.webp",
+    "p8_p1.webp", "p8_mop_p1.webp", "p8_solar_p1.webp",
+    "p9_p1.webp", "p9_p2.webp", "p9_alfa_p1.webp", "p9_alfa_p2.webp",
+    "p9_everest_p1.webp", "p9_everest_p2.webp", "p9_bp_p1.webp", "p9_bp_p2.webp",
+    "vales_p1.webp",
   ];
   for (const wf of requiredFormWebps) {
     if (!existsSync(path.join(root, "img", "forms", wf))) {

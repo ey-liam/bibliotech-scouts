@@ -1,3 +1,10 @@
-ORGANIGRAMA OFICIAL ASMAC: Subjefatura Scout Nacional.
+ORGANIGRAMA OFICIAL ASMAC: SUBJEFATURA SCOUT NACIONAL (CENTROS Y COMUNICACIONES)
 
-Detalla las áreas dependientes de la Subjefatura Scout Nacional: Gerencia de RRHH (Seguridad), Gerencia de Comunicaciones (Imagen y Diseño, Community Manager), Relaciones Públicas y Editorial, Jefatura del Centro Cuautli y Jefatura del Campo Escuela Meztitla (Programa, Mantenimiento y Auxiliares).
+Documento gráfico oficial de estructura organizacional de la Asociación de Scouts de México, A.C. (ASMAC).
+
+Áreas adscritas a la Subjefatura Scout Nacional:
+1. Gerencia de RRHH -> Coordinación de Seguridad.
+2. Gerencia Nacional de Comunicaciones -> Coordinación de Imagen y Diseño, Community Manager, Ejecutivo de Diseño e Imagen y Coordinación Editorial.
+3. Comisión Nacional de Relaciones Públicas.
+4. Jefatura de Centro Cuauhtli (campo escuela scout).
+5. Jefatura de Centro Meztitla (campo escuela scout) -> Ejecutivo de Programa, Coordinador de Mantenimiento de Centro y Auxiliares de Mantenimiento de Centro.

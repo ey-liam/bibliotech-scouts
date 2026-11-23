@@ -1,2 +1,10 @@
---- Página 1 ---
-Documento oficial Scout: NO 10 PÓLIZA DE CHEQUE (NO_10_PÓLIZA DE CHEQUE.pdf). Disponible para visualización y descarga directa en BiblioTech.
+FORMATO CONTABLE OFICIAL NO. 10: PÓLIZA DE CHEQUE NACIONAL ASMAC
+
+Plantilla contable oficial de la Asociación de Scouts de México, A.C. para el registro documental y contable de egresos cubiertos mediante cheque en Oficina Nacional o Niveles Administrativos.
+
+Apartados y campos del formato oficial:
+1. Encabezado: logotipo morado SCOUTS México ("Construir un Mundo Mejor") y título "PÓLIZA DE CHEQUE NAL".
+2. Recuadro superior e intermedio: espacio destinado al comprobante o "COPIA CHEQUE".
+3. Datos del pago: Banco, N° de Cuenta, Concepto del pago y recuadro de recibido ("nombre, firma y cargo").
+4. Tabla contable de póliza: columnas Cuenta, Subcuenta, Sub-sub-cuenta, Nombre, Parcial, Debe y Haber, con fila de verificación "SUMAS IGUALES".
+5. Pie institucional "ASOCIACIÓN DE SCOUTS DE MÉXICO, A.C." con casillas de control interno: Hecho por, Revisado, Vo.Bo., Autorizado, Autorizado y Póliza No.

@@ -1,3 +1,10 @@
-ORGANIGRAMA OFICIAL ASMAC: Dirección Nacional de Operación y Logística.
+ORGANIGRAMA OFICIAL ASMAC: DIRECCIÓN NACIONAL DE OPERACIÓN Y LOGÍSTICA
 
-Muestra la estructura operativa conformada por la Gerencia de Compras (Ejecutivo de Compras), Gerencia de Tienda Scout Nacional y Comercialización, Gerencia de Centro de Distribución Scout y Tienda en Línea, Gerencia de Eventos Nacionales y Ejecutivo de Operación y Logística.
+Documento gráfico oficial de estructura organizacional de la Asociación de Scouts de México, A.C. (ASMAC).
+
+Estructura jerárquica de la Dirección Nacional de Operación y Logística:
+1. Gerencia de Compras -> Ejecutivo de Compras.
+2. Gerencia de Tienda Scout Nacional y Comercialización -> Coordinación de Tienda Scout Nacional -> Ejecutivo de Tienda Scout Nacional.
+3. Gerencia de Centro de Distribución Scout -> Coordinación de Centro de Distribución Scout -> Ejecutivo de Tienda en Línea y Ejecutivo de Centro de Distribución Scout.
+4. Gerencia de Eventos Nacionales -> Coordinación de Eventos Nacionales.
+5. Ejecutivo de la Dirección Nacional de Operación y Logística (adscripción directa a la Dirección).

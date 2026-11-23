@@ -1,2 +1,10 @@
-CATÁLOGO OFICIAL DE PLANTILLAS RECME (CATEGORÍAS Y FECHAS 2026):
-Incluye las 46 plantillas numeradas P1–P10 más Formato de Proyecto v1.1 publicadas entre el 19 de abril y el 15 de octubre de 2026 para Manada, Tropa, Comunidad, Clan, Adultos y Formación de Directores/Formadores.
+CATÁLOGO OFICIAL DE PLANTILLAS RECME (CATEGORÍAS, CÓDIGOS Y FECHAS 2026)
+
+Índice de referencia del sistema documental de la Red Colaborativa de Material Educativo (RECME) publicado entre el 19 de abril y el 15 de octubre de 2026, integrado por 46 plantillas oficiales numeradas (series P1 a P10 más Fichas de Especialidades FES y Formato de Proyecto v1.1):
+- Serie P1 (Diagnóstico): P1.0.1 FAES Diagnóstico Inicial NNAJ, P1.0.2 Anexo FAES Diagnóstico y matrices P1.1 Manada, P1.2 Tropa, P1.3 Comunidad, P1.4 Clan.
+- Serie P2 (Evaluación): P2.0.1 FAES Evaluación Auxiliar + Anexo y cédulas auxiliares P2.1 a P2.4 por sección.
+- Serie P3–P6 (Seguimiento, Programas e Insignias): herramientas y cuadernillos de progresión personal por sección (incluidos P3.1 Libro del Seeonee, P3.2 Bitácora Scout, P3.3 Guía Caminantes, P3.4 Proyecto de Vida Rover).
+- Serie P7 (Actas y Consejo / Ciclo): Acta de Consejo de Nivel y formatos auxiliares de Ciclo de Programa.
+- Serie P8 (Mundo Mejor / Marcos Mundiales): Campeones por la Naturaleza (P8.1/P8.2), Mensajeros de la Paz (P8.3), Marea de Plásticos (P8.4/P8.5), Compromiso Ciudadano (P8.6) y Scouts Go Solar (P8.7).
+- Serie P9 (Insignia Final y Terminal por Sección): P9.1 Alfa y Omega (Manada), P9.2 Águila Real (Tropa), P9.3 Everest (Comunidad) y P9.4 Horquilla Baden-Powell (Clan).
+- Serie P10 / Formatos complementarios: Formato de Proyecto, fichas de salud y cartas de evento. Todos estos documentos están indexados y accesibles en BiblioTech Scout.

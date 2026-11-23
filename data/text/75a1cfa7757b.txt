@@ -1,2 +1,14 @@
---- Página 1 ---
-Documento oficial Scout: solicitud fondo scout nal (solicitud_fondo_scout_nal.pdf). Disponible para visualización y descarga directa en BiblioTech.
+SOLICITUD DE RECURSOS AL FONDO SCOUT NACIONAL (FORMATO OFICIAL 2 PÁGINAS)
+
+Formato oficial de la Asociación de Scouts de México, A.C. dirigido al Comité del Fondo Scout Nacional (Córdoba 57, México, D.F., Tel. 55 208 71 22) para gestionar apoyo económico para proyectos, programas o actividades scout.
+
+Estructura de campos del formato (Páginas 1 y 2):
+- Página 1:
+  1. Datos del solicitante: Nombre del solicitante, Dirección, Ciudad, Estado, C.P., Teléfonos, Edad, Estado Civil, Escolaridad, Ocupación, Dirección del Trabajo (con Ciudad, Estado, C.P. y Teléfonos).
+  2. Datos scouts: Grupo, Distrito, Provincia, Nivel Nacional, Otro.
+  3. Tipo de solicitud e importe: casillas [ ] Proyecto / [ ] Programa / [ ] Actividad; Importe solicitado; Fecha de devolución.
+  4. Bloques narrativos amplios: "Especifique el objetivo", "Detalle de metodología" y "Recursos humanos necesarios".
+- Página 2:
+  1. Presupuesto detallado e información adicional adjunta o complementaria para conocimiento del Comité del Fondo Scout Nacional.
+  2. Declaración expresa de conocer, haber leído y aceptar el Reglamento del Fondo Scout Nacional, con Fecha y Firma del solicitante.
+  3. Bloque de resolución oficial: "Aprobado por el Consejo Nacional de la Asociación de Scouts de México, A.C. en su sesión del ___ de ___" (adjuntando copia del acta correspondiente), Firma del Secretario Nacional y Firma del Presidente Nacional.

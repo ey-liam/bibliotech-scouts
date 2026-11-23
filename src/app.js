@@ -313,7 +313,7 @@ function loadQuestionBank() {
     loadJsonBank("data/faq_v3.json"),
     loadJsonBank("data/faq_v4.json"),
   ])
-    .then(([baseData, v3Data, v4Data]) => {
+    .then(async ([baseData, v3Data, v4Data]) => {
       const base = (baseData && baseData.questions) || [];
       const extra = ((v3Data && v3Data.questions) || []).concat((v4Data && v4Data.questions) || []);
       const seen = new Set();
@@ -334,29 +334,42 @@ function loadQuestionBank() {
       STATE.qBankByDocId = {};
       STATE.qBankByRelatedDocId = {};
       STATE.qBankByTopicId = {};
-      for (const qObj of STATE.questionBank) {
-        const nk = normalizeQuestionKey(qObj.q || "");
-        if (nk) STATE.qBankByNorm[nk] = qObj;
-        const did = (qObj.doc_id || "").trim();
-        if (did) {
-          if (!STATE.qBankByDocId[did]) STATE.qBankByDocId[did] = [];
-          STATE.qBankByDocId[did].push(qObj);
-        }
-        if (Array.isArray(qObj.related_doc_ids) && qObj.related_doc_ids.length) {
-          for (const rid of qObj.related_doc_ids) {
-            if (!rid || rid === did) continue;
-            if (!STATE.qBankByRelatedDocId[rid]) STATE.qBankByRelatedDocId[rid] = [];
-            if (STATE.qBankByRelatedDocId[rid].length < 40) {
-              STATE.qBankByRelatedDocId[rid].push(qObj);
+
+      // Indexación incremental por bloques para evitar bloqueos del hilo principal
+      const totalQ = STATE.questionBank.length;
+      const SLICE_SIZE = 3500;
+      for (let offset = 0; offset < totalQ; offset += SLICE_SIZE) {
+        const sliceStart = typeof performance !== "undefined" ? performance.now() : 0;
+        const limit = Math.min(totalQ, offset + SLICE_SIZE);
+        for (let idx = offset; idx < limit; idx++) {
+          const qObj = STATE.questionBank[idx];
+          const nk = normalizeQuestionKey(qObj.q || "");
+          if (nk) STATE.qBankByNorm[nk] = qObj;
+          const did = (qObj.doc_id || "").trim();
+          if (did) {
+            if (!STATE.qBankByDocId[did]) STATE.qBankByDocId[did] = [];
+            STATE.qBankByDocId[did].push(qObj);
+          }
+          if (Array.isArray(qObj.related_doc_ids) && qObj.related_doc_ids.length) {
+            for (const rid of qObj.related_doc_ids) {
+              if (!rid || rid === did) continue;
+              if (!STATE.qBankByRelatedDocId[rid]) STATE.qBankByRelatedDocId[rid] = [];
+              if (STATE.qBankByRelatedDocId[rid].length < 40) {
+                STATE.qBankByRelatedDocId[rid].push(qObj);
+              }
             }
           }
+          const tid = (qObj.topic_id || "").trim();
+          if (tid) {
+            if (!STATE.qBankByTopicId[tid]) STATE.qBankByTopicId[tid] = [];
+            STATE.qBankByTopicId[tid].push(qObj);
+          }
         }
-        const tid = (qObj.topic_id || "").trim();
-        if (tid) {
-          if (!STATE.qBankByTopicId[tid]) STATE.qBankByTopicId[tid] = [];
-          STATE.qBankByTopicId[tid].push(qObj);
+        if (limit < totalQ && typeof performance !== "undefined" && performance.now() - sliceStart > 12) {
+          await new Promise((resolve) => setTimeout(resolve, 0));
         }
       }
+
       const badge = document.getElementById("totalQuestionsCount");
       if (badge && STATE.questionBank.length) {
         badge.textContent = STATE.questionBank.length.toLocaleString("es-MX");
@@ -524,6 +537,8 @@ async function initApp() {
   setupSettingsHub();
   initFontScaleSetting();
   setupProcedureWizard();
+  if (typeof setupProgressionChecker === "function") setupProgressionChecker();
+  if (typeof setupAutofillQrSharing === "function") setupAutofillQrSharing();
   setupAnswerQuickActions();
   BtSoundEngine.init();
   setupContactEmailUI();
@@ -1750,6 +1765,57 @@ function savePdfPageProgress(docId, pageNum, totalPages) {
       localStorage.setItem(BT_PDF_LAST_PAGE_KEY, JSON.stringify(safeMap));
     } catch (_) {}
   }
+}
+
+const BT_PAGE_BOOKMARKS_KEY = "bt_page_bookmarks_v1";
+
+function getPageBookmarks() {
+  try {
+    const arr = JSON.parse(localStorage.getItem(BT_PAGE_BOOKMARKS_KEY) || "[]");
+    if (!Array.isArray(arr)) return [];
+    return arr.filter((b) => b && b.docId && Number(b.page) >= 1);
+  } catch (_) {
+    return [];
+  }
+}
+
+function savePageBookmarks(list) {
+  try {
+    localStorage.setItem(BT_PAGE_BOOKMARKS_KEY, JSON.stringify(list.slice(0, 60)));
+  } catch (_) {}
+}
+
+function isPageBookmarked(docId, pageNum) {
+  const p = Number(pageNum) || 1;
+  return getPageBookmarks().some((b) => b.docId === docId && Number(b.page) === p);
+}
+
+function togglePageBookmark(doc, pageNum) {
+  if (!doc || !doc.id) return false;
+  const p = Math.max(1, Number(pageNum) || 1);
+  const list = getPageBookmarks();
+  const idx = list.findIndex((b) => b.docId === doc.id && Number(b.page) === p);
+  let added = false;
+  if (idx >= 0) {
+    list.splice(idx, 1);
+  } else {
+    list.unshift({
+      docId: doc.id,
+      page: p,
+      title: String(doc.title || doc.filename || doc.id).slice(0, 120),
+      ext: doc.ext || "PDF",
+      ts: Date.now(),
+    });
+    added = true;
+  }
+  savePageBookmarks(list);
+  return added;
+}
+
+function removePageBookmark(docId, pageNum) {
+  const p = Number(pageNum) || 1;
+  const next = getPageBookmarks().filter((b) => !(b.docId === docId && Number(b.page) === p));
+  savePageBookmarks(next);
 }
 
 function resolveDefaultLibraryCount() {
@@ -4371,6 +4437,7 @@ async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
           <div class="bt-pdfjs-nav-group">
             <span class="bt-pdfjs-mode-pill">${isHeavyOrExternalPdf ? `Streaming HD · ${escapeHtml(sizeLabel)}` : `Visor por Página · ${escapeHtml(sizeLabel)}`}</span>
             <div class="bt-pdfjs-pager" role="group" aria-label="Navegación de páginas">
+              <button type="button" id="btPdfPrev10Btn" class="bt-pdfjs-ctrl-btn bt-pdfjs-jump-btn" disabled aria-label="Retroceder 10 páginas" title="Retroceder 10 páginas">-10</button>
               <button type="button" id="btPdfPrevBtn" class="bt-pdfjs-ctrl-btn" disabled aria-label="Página anterior" title="Página anterior">Anterior</button>
               <label class="bt-pdfjs-page-label" for="btPdfPageInput">
                 <span>Pág.</span>
@@ -4378,6 +4445,8 @@ async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
                 <span id="btPdfPageTotal">/ ${viewerState.numPages > 1 ? viewerState.numPages : "..."}</span>
               </label>
               <button type="button" id="btPdfNextBtn" class="bt-pdfjs-ctrl-btn" disabled aria-label="Página siguiente" title="Página siguiente">Siguiente</button>
+              <button type="button" id="btPdfNext10Btn" class="bt-pdfjs-ctrl-btn bt-pdfjs-jump-btn" disabled aria-label="Avanzar 10 páginas" title="Avanzar 10 páginas">+10</button>
+              <button type="button" id="btPdfBookmarkPageBtn" class="bt-pdfjs-ctrl-btn bt-pdfjs-bmk-btn" aria-pressed="false" title="Guardar marcador en esta página">Marcar pág.</button>
             </div>
             <div class="bt-pdfjs-zoom-group" role="group" aria-label="Zoom de página">
               <button type="button" id="btPdfZoomOutBtn" class="bt-pdfjs-ctrl-btn bt-pdfjs-icon-btn" aria-label="Alejar página" title="Alejar">−</button>
@@ -4395,6 +4464,7 @@ async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
               <button type="button" id="btPdfJumpFirstBtn" class="bt-pdfjs-resume-reset" title="Volver a la página 1">Pág. 1</button>
             </span>
           </div>
+          <div id="btPdfPageBookmarksBar" class="bt-pdfjs-bookmarks-bar hidden" aria-label="Marcadores de página en este PDF"></div>
           <div class="pdf-quick-actions">
             ${!isMobileUa ? `<button type="button" class="btn-pdf-toggle-mode" data-target-mode="direct" title="Abrir en el visor PDF integrado del navegador">Visor Nativo</button>` : ""}
             ${canUseGDocs ? `<button type="button" class="btn-pdf-toggle-mode" data-target-mode="gdocs" title="Abrir con Google Docs Viewer">Google Docs</button>` : ""}
@@ -4426,8 +4496,12 @@ async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
         </div>
       `;
 
+      const prev10Btn = previewPane.querySelector("#btPdfPrev10Btn");
       const prevPageBtn = previewPane.querySelector("#btPdfPrevBtn");
       const nextPageBtn = previewPane.querySelector("#btPdfNextBtn");
+      const next10Btn = previewPane.querySelector("#btPdfNext10Btn");
+      const bookmarkPageBtn = previewPane.querySelector("#btPdfBookmarkPageBtn");
+      const bookmarksBar = previewPane.querySelector("#btPdfPageBookmarksBar");
       const pageInput = previewPane.querySelector("#btPdfPageInput");
       const pageTotalEl = previewPane.querySelector("#btPdfPageTotal");
       const zoomOutBtn = previewPane.querySelector("#btPdfZoomOutBtn");
@@ -4499,10 +4573,43 @@ async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
         }
       };
 
+      const renderPdfPageBookmarksBar = () => {
+        if (!bookmarksBar) return;
+        const docBmks = getPageBookmarks()
+          .filter((b) => b.docId === doc.id)
+          .sort((a, b) => Number(a.page) - Number(b.page));
+        if (!docBmks.length) {
+          bookmarksBar.classList.add("hidden");
+          bookmarksBar.innerHTML = "";
+          return;
+        }
+        bookmarksBar.classList.remove("hidden");
+        bookmarksBar.innerHTML =
+          `<span class="bt-pdfjs-bmk-label">${document.documentElement.dataset.btLang === "en" ? "Bookmarks:" : "Marcadores:"}</span>` +
+          docBmks
+            .map(
+              (b) => `
+              <span class="bt-pdfjs-bmk-chip${Number(b.page) === viewerState.page ? " is-current" : ""}">
+                <button type="button" data-pdf-bmk-jump="${Number(b.page)}">Pág. ${Number(b.page)}</button>
+                <button type="button" data-pdf-bmk-del="${Number(b.page)}" aria-label="Quitar marcador de página ${Number(b.page)}">&times;</button>
+              </span>`
+            )
+            .join("");
+      };
+
       const updateNavControls = () => {
         if (!viewerState.pdfDoc) return;
+        if (prev10Btn) prev10Btn.disabled = viewerState.page <= 1;
         if (prevPageBtn) prevPageBtn.disabled = viewerState.page <= 1;
         if (nextPageBtn) nextPageBtn.disabled = viewerState.page >= viewerState.numPages;
+        if (next10Btn) next10Btn.disabled = viewerState.page >= viewerState.numPages;
+        if (bookmarkPageBtn) {
+          const marked = isPageBookmarked(doc.id, viewerState.page);
+          const isEn = document.documentElement.dataset.btLang === "en";
+          bookmarkPageBtn.classList.toggle("is-bookmarked", marked);
+          bookmarkPageBtn.setAttribute("aria-pressed", String(marked));
+          bookmarkPageBtn.textContent = marked ? (isEn ? "Bookmarked" : "Marcada") : (isEn ? "Bookmark pg." : "Marcar pág.");
+        }
         if (pageInput) {
           pageInput.disabled = false;
           pageInput.max = String(viewerState.numPages);
@@ -4510,6 +4617,7 @@ async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
         }
         if (pageTotalEl) pageTotalEl.textContent = `/ ${viewerState.numPages}`;
         if (zoomResetBtn) zoomResetBtn.textContent = `${Math.round(viewerState.zoom * 100)}%`;
+        renderPdfPageBookmarksBar();
       };
 
       const renderCurrentPage = async (pageNum, userInitiated = true) => {
@@ -4610,6 +4718,11 @@ async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
         };
       }
 
+      if (prev10Btn) {
+        prev10Btn.onclick = () => {
+          if (viewerState.page > 1) renderCurrentPage(Math.max(1, viewerState.page - 10), true);
+        };
+      }
       if (prevPageBtn) {
         prevPageBtn.onclick = () => {
           if (viewerState.page > 1) renderCurrentPage(viewerState.page - 1, true);
@@ -4619,6 +4732,36 @@ async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
         nextPageBtn.onclick = () => {
           if (viewerState.page < viewerState.numPages) renderCurrentPage(viewerState.page + 1, true);
         };
+      }
+      if (next10Btn) {
+        next10Btn.onclick = () => {
+          if (viewerState.page < viewerState.numPages) {
+            renderCurrentPage(Math.min(viewerState.numPages, viewerState.page + 10), true);
+          }
+        };
+      }
+      if (bookmarkPageBtn) {
+        bookmarkPageBtn.onclick = () => {
+          const added = togglePageBookmark(doc, viewerState.page);
+          updateNavControls();
+          showWebToast(added ? `Página ${viewerState.page} guardada en marcadores.` : `Marcador de página ${viewerState.page} quitado.`);
+        };
+      }
+      if (bookmarksBar) {
+        bookmarksBar.addEventListener("click", (e) => {
+          const jumpEl = e.target.closest("[data-pdf-bmk-jump]");
+          if (jumpEl) {
+            const targetP = parseInt(jumpEl.getAttribute("data-pdf-bmk-jump") || "1", 10);
+            renderCurrentPage(targetP, true);
+            return;
+          }
+          const delEl = e.target.closest("[data-pdf-bmk-del]");
+          if (delEl) {
+            const targetP = parseInt(delEl.getAttribute("data-pdf-bmk-del") || "1", 10);
+            removePageBookmark(doc.id, targetP);
+            updateNavControls();
+          }
+        });
       }
       if (pageInput) {
         pageInput.onchange = () => {
@@ -6285,13 +6428,14 @@ function openSavedPanel() {
   const allDocIds = getSavedAndNotedDocIds();
   const savedDocs = STATE.documents.filter((d) => allDocIds.includes(d.id));
   const drafts = getSavedEditorDraftsForPanel();
+  const pageBmks = getPageBookmarks();
 
-  if (savedDocs.length === 0 && drafts.length === 0) {
+  if (savedDocs.length === 0 && drafts.length === 0 && pageBmks.length === 0) {
     list.innerHTML = `
       <div class="saved-empty-state">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
         <p><strong>Aún no tienes archivos guardados</strong></p>
-        <span>Abre cualquier libro, manual, FAES o especialidad de la biblioteca y toca <strong>Guardar</strong> (o escribe una nota) para tenerlo siempre a la mano en este dispositivo.</span>
+        <span>Abre cualquier libro, manual, FAES o especialidad de la biblioteca y toca <strong>Guardar</strong> (o marca una página en un PDF) para tenerlo siempre a la mano en este dispositivo.</span>
       </div>
     `;
   } else {
@@ -6321,6 +6465,25 @@ function openSavedPanel() {
       `;
     }).join("");
 
+    const pageBmksHtml = pageBmks.length
+      ? `
+        <div class="saved-drafts-divider">Marcadores de página en PDF (${pageBmks.length})</div>
+        ${pageBmks.map((b) => `
+          <article class="saved-card">
+            <div class="saved-card-main">
+              <span class="badge badge-ext">${escapeHtml(b.ext || 'PDF')}</span>
+              <span class="badge badge-sec">Pág. ${Number(b.page)}</span>
+              <h4 class="saved-card-title">${escapeHtml(b.title)}</h4>
+            </div>
+            <div class="saved-card-actions">
+              <button type="button" class="btn-saved-open" data-open-doc-page="${escapeHtml(b.docId)}:${Number(b.page)}">Ir a pág. ${Number(b.page)}</button>
+              <button type="button" class="btn-saved-remove" data-remove-page-bmk="${escapeHtml(b.docId)}:${Number(b.page)}" title="Quitar marcador">Quitar</button>
+            </div>
+          </article>
+        `).join("")}
+      `
+      : "";
+
     const draftsHtml = drafts.length
       ? `
         <div class="saved-drafts-divider">Borradores del Editor de Archivos (${drafts.length})</div>
@@ -6340,13 +6503,32 @@ function openSavedPanel() {
       `
       : "";
 
-    list.innerHTML = docsHtml + draftsHtml;
+    list.innerHTML = docsHtml + pageBmksHtml + draftsHtml;
 
     list.querySelectorAll("[data-open-doc]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const id = btn.getAttribute("data-open-doc");
         closeSavedPanel();
         openDocumentModal(id);
+      });
+    });
+
+    list.querySelectorAll("[data-open-doc-page]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const raw = btn.getAttribute("data-open-doc-page") || "";
+        const [id, pgStr] = raw.split(":");
+        const pg = parseInt(pgStr || "1", 10);
+        closeSavedPanel();
+        if (id) openDocumentModal(id, -1, Number.isFinite(pg) && pg >= 1 ? pg : null);
+      });
+    });
+
+    list.querySelectorAll("[data-remove-page-bmk]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const raw = btn.getAttribute("data-remove-page-bmk") || "";
+        const [id, pgStr] = raw.split(":");
+        if (id) removePageBookmark(id, parseInt(pgStr || "1", 10));
+        openSavedPanel();
       });
     });
 
@@ -6968,13 +7150,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.9.2";
-const APP_MOBILE_VERSION = "3.9.2";
+const APP_WEB_VERSION = "9.9.3";
+const APP_MOBILE_VERSION = "3.9.3";
 const APP_COOKIE_SCHEMA = "9.7";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v59";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v60";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -9213,8 +9395,9 @@ const SMART_FORM_TEMPLATES = {
         src: "img/forms/jl304_p2.webp",
         aspect: "1347 / 1743",
         boxes: [
-          { key: "_mediaConsentYes", x: 17.5, y: 64.5, w: 2.6, h: 2.2, align: "center" },
-          { key: "_mediaConsentNo", x: 17.5, y: 69.0, w: 2.6, h: 2.2, align: "center" }
+          { key: "_mediaConsentYes", x: 17.5, y: 64.5, w: 2.6, h: 2.2, align: "center", isCheck: true, checkSymbol: "X" },
+          { key: "_mediaConsentNo", x: 17.5, y: 69.0, w: 2.6, h: 2.2, align: "center", isCheck: true, checkSymbol: "X" },
+          { key: "_userSignature", x: 34.0, y: 76.2, w: 32.0, h: 6.5, isSignature: true }
         ]
       }
     ],
@@ -9402,7 +9585,8 @@ const SMART_FORM_TEMPLATES = {
         boxes: [
           { key: "agreements", x: 5.2, y: 8.6, w: 89.5, h: 45.5, multiline: true },
           { key: "name", x: 5.2, y: 67.3, w: 42.5, h: 3.8 },
-          { key: "scouter", x: 51.8, y: 67.3, w: 42.5, h: 3.8 }
+          { key: "scouter", x: 51.8, y: 67.3, w: 42.5, h: 3.8 },
+          { key: "_userSignature", x: 5.5, y: 72.2, w: 32.0, h: 5.2, isSignature: true }
         ]
       }
     ],
@@ -9421,55 +9605,120 @@ const SMART_FORM_TEMPLATES = {
   },
   p1: {
     id: "p1",
+    code: "RECME P1.0.1",
+    exportPrefix: "Diagnostico P1.0.1",
+    baseDocId: "doc-0670",
+    baseDocName: "P1.0.1_FAESDiagnosticoInicialNNAJ_v1.1.pdf",
     title: "Diagnóstico Inicial NNAJ (RECME P1.0.1)",
     subtitle: "Ficha oficial P1.0.1 para registro inicial de competencias al ingreso o cambio de Grupo",
-    baseDocId: "doc-0670",
-    filePrefix: "Diagnostico_P1_0_1",
-    fontPt: 11,
-    pages: [
+    officialPages: [
       {
         src: "img/forms/p1_p1.webp",
         aspect: "1347 / 1743",
         boxes: [
-          { key: "duration", x: 7.8, y: 7.5, w: 18.0, h: 2.6 },
-          { key: "section", x: 7.8, y: 12.1, w: 17.5, h: 1.9 },
-          { key: "participants", x: 7.8, y: 17.2, w: 10.0, h: 2.1 },
-          { key: "groupProvince", x: 69.5, y: 15.8, w: 24.5, h: 2.2 },
-          { key: "scouter", x: 40.2, y: 91.2, w: 46.0, h: 2.4 }
+          { key: "duration", x: 7.8, y: 7.5, w: 26.0, h: 2.6 },
+          { key: "_sectionOut", x: 7.8, y: 12.1, w: 18.0, h: 2.1 },
+          { key: "participants", x: 7.8, y: 17.2, w: 26.0, h: 2.1 },
+          { key: "scouter", x: 40.2, y: 91.2, w: 52.0, h: 2.4 },
+          { key: "apoyo_si", x: 30.6, y: 12.6, w: 2.3, h: 1.7, isCheck: true },
+          { key: "eje_ambiente", x: 43.2, y: 12.6, w: 2.3, h: 1.7, isCheck: true },
+          { key: "eje_habilidades", x: 49.4, y: 15.5, w: 2.3, h: 1.7, isCheck: true },
+          { key: "eje_paz", x: 56.0, y: 12.6, w: 2.3, h: 1.7, isCheck: true },
+          { key: "eje_salud", x: 62.5, y: 15.5, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_1", x: 15.9, y: 58.2, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_2", x: 23.2, y: 58.2, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_3", x: 30.5, y: 58.2, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_4", x: 15.9, y: 64.5, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_5", x: 23.2, y: 64.5, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_6", x: 30.5, y: 64.5, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_7", x: 15.9, y: 71.1, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_8", x: 23.2, y: 71.1, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_9", x: 30.5, y: 71.1, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_10", x: 15.9, y: 77.4, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_11", x: 23.2, y: 77.4, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_12", x: 30.5, y: 77.4, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_13", x: 15.9, y: 83.7, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_14", x: 23.2, y: 83.7, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_15", x: 30.5, y: 83.7, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_16", x: 15.9, y: 90.4, w: 2.3, h: 1.7, isCheck: true },
+          { key: "ods_17", x: 23.2, y: 90.4, w: 2.3, h: 1.7, isCheck: true }
         ]
       }
     ],
     fields: [
-      { key: "duration", label: "Duración estimada", type: "text", defaultVal: "2 horas", placeholder: "Ej. 2 horas o 3 juntas" },
-      { key: "section", label: "Sección o rango de edad", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Ej. Tropa / 10 a 14 años" },
-      { key: "participants", label: "Número de participantes", type: "text", defaultVal: "1", placeholder: "Ej. 1 o Seisena" },
-      { key: "groupProvince", label: "Grupo / Provincia Scout", type: "text", bind: "group", placeholder: "Ej. Grupo 12 / Provincia Morelos" },
-      { key: "scouter", label: "Elaboró / Scouter responsable", type: "text", bind: "scouter", placeholder: "Nombre del Scouter" }
+      { key: "duration", label: "Duración estimada", type: "text", defaultValue: "2 horas", placeholder: "Ej. 2 horas o 3 juntas" },
+      { key: "section", label: "Rango de edad / Sección", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Ej. Tropa / 10 a 14 años" },
+      { key: "participants", label: "Número de participantes", type: "text", defaultValue: "1", placeholder: "Ej. 1 o Seisena" },
+      { key: "scouter", label: "Elaboración / Scouter y Grupo", type: "text", bind: "scouter", placeholder: "Nombre del Scouter o fuente" },
+      {
+        key: "_p1_ejes",
+        type: "checks_group",
+        label: "Apoyo Adulto y 4 Ejes Temáticos",
+        full: true,
+        options: [
+          { key: "apoyo_si", label: "Apoyo Adulto requerido" },
+          { key: "eje_ambiente", label: "Medio Ambiente y Sustentabilidad" },
+          { key: "eje_habilidades", label: "Habilidades para la Vida" },
+          { key: "eje_paz", label: "Paz y Participación Comunitaria" },
+          { key: "eje_salud", label: "Salud y Bienestar" }
+        ]
+      },
+      {
+        key: "_p1_ods",
+        type: "checks_group",
+        label: "Objetivos de Desarrollo Sostenible (17 ODS)",
+        full: true,
+        options: [
+          { key: "ods_1", label: "1. Fin pobreza" },
+          { key: "ods_2", label: "2. Hambre cero" },
+          { key: "ods_3", label: "3. Salud" },
+          { key: "ods_4", label: "4. Educación" },
+          { key: "ods_5", label: "5. Igualdad género" },
+          { key: "ods_6", label: "6. Agua limpia" },
+          { key: "ods_7", label: "7. Energía asequible" },
+          { key: "ods_8", label: "8. Trabajo decente" },
+          { key: "ods_9", label: "9. Industria e innovación" },
+          { key: "ods_10", label: "10. Reducción desigualdades" },
+          { key: "ods_11", label: "11. Ciudades sostenibles" },
+          { key: "ods_12", label: "12. Producción responsable" },
+          { key: "ods_13", label: "13. Acción clima" },
+          { key: "ods_14", label: "14. Vida submarina" },
+          { key: "ods_15", label: "15. Vida terrestre" },
+          { key: "ods_16", label: "16. Paz y justicia" },
+          { key: "ods_17", label: "17. Alianzas" }
+        ]
+      }
     ]
   },
+
   p2: {
     id: "p2",
+    code: "RECME P2.1",
+    exportPrefix: "Cedula P2.1 Manada",
+    baseDocId: "doc-0683",
+    baseDocName: "P2.1_CedulaAuxiliarEvaluacionMLL_v1.1.pdf",
     title: "Cédula de Evaluación Manada (RECME P2.1)",
     subtitle: "Formato auxiliar oficial de evaluación y seguimiento de progresión en Manada de Lobatos",
-    baseDocId: "doc-0683",
-    filePrefix: "Cedula_Evaluacion_P2_1",
-    fontPt: 10,
-    pages: [
+    officialPages: [
       {
         src: "img/forms/p2_p1.webp",
         aspect: "1347 / 1905",
         boxes: [
-          { key: "name", x: 23.8, y: 5.5, w: 27.2, h: 1.4 },
-          { key: "manada", x: 60.1, y: 5.5, w: 18.0, h: 1.4 },
-          { key: "group", x: 85.2, y: 5.5, w: 7.1, h: 1.4 },
-          { key: "scouter", x: 23.8, y: 7.2, w: 27.2, h: 1.4 },
-          { key: "province", x: 60.1, y: 7.2, w: 18.0, h: 1.4 },
-          { key: "date", x: 85.2, y: 7.2, w: 7.1, h: 1.4 },
-          { key: "observations", x: 7.0, y: 84.8, w: 52.5, h: 4.0, multiline: true },
-          { key: "reviewDate", x: 60.1, y: 84.8, w: 18.0, h: 1.3 },
-          { key: "endDate", x: 78.5, y: 84.8, w: 13.7, h: 1.3 },
-          { key: "reviewer", x: 60.1, y: 87.2, w: 18.0, h: 1.3 },
-          { key: "deliveryDate", x: 78.5, y: 87.2, w: 13.7, h: 1.3 }
+          { key: "name", x: 18.0, y: 5.7, w: 32.5, h: 1.4 },
+          { key: "manada", x: 57.5, y: 5.7, w: 20.5, h: 1.4 },
+          { key: "group", x: 83.2, y: 5.7, w: 9.0, h: 1.4 },
+          { key: "scouter", x: 12.6, y: 7.3, w: 38.0, h: 1.4 },
+          { key: "_provinceOut", x: 57.5, y: 7.3, w: 20.5, h: 1.4 },
+          { key: "date", x: 83.2, y: 7.3, w: 9.0, h: 1.4 },
+          { key: "specNombre", x: 24.0, y: 54.9, w: 68.0, h: 1.4 },
+          { key: "specEstatus", x: 24.0, y: 56.5, w: 68.0, h: 1.4 },
+          { key: "specTerm", x: 24.0, y: 58.0, w: 68.0, h: 1.4 },
+          { key: "observations", x: 7.0, y: 84.9, w: 52.5, h: 3.9, multiline: true },
+          { key: "reviewDate", x: 60.2, y: 84.8, w: 17.8, h: 1.3 },
+          { key: "endDate", x: 78.6, y: 84.8, w: 13.6, h: 1.3 },
+          { key: "reviewer", x: 60.2, y: 87.2, w: 17.8, h: 1.3 },
+          { key: "deliveryDate", x: 78.6, y: 87.2, w: 13.6, h: 1.3 },
+          { key: "_userSignature", x: 60.2, y: 88.8, w: 17.8, h: 2.3, isSignature: true }
         ]
       }
     ],
@@ -9480,38 +9729,46 @@ const SMART_FORM_TEMPLATES = {
       { key: "scouter", label: "Scouter responsable", type: "text", bind: "scouter", placeholder: "Nombre de Akela / Scouter" },
       { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
       { key: "date", label: "Fecha", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "specNombre", label: "Especialidad(es) trabajada(s)", type: "text", placeholder: "Nombre de especialidad o proyecto" },
+      { key: "specEstatus", label: "Estatus de especialidad", type: "text", placeholder: "En proceso / Concluida" },
+      { key: "specTerm", label: "Fecha terminación especialidad", type: "text", placeholder: "DD/MM/AA" },
       { key: "observations", label: "Observaciones o Comentarios", type: "textarea", full: true, placeholder: "Anota competencias identificadas o seguimiento de etapa" },
       { key: "reviewDate", label: "Fecha de revisión", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
       { key: "endDate", label: "Fecha de terminación", type: "text", placeholder: "DD/MM/AA" },
-      { key: "reviewer", label: "Revisó (Firma/Nombre)", type: "text", placeholder: "Nombre quien revisa" },
+      { key: "reviewer", label: "Revisó (Nombre)", type: "text", placeholder: "Nombre quien revisa" },
       { key: "deliveryDate", label: "Fecha de entrega", type: "text", placeholder: "DD/MM/AA" }
     ]
   },
+
   p8: {
     id: "p8",
+    code: "RECME P8.1",
+    exportPrefix: "Solicitud P8.1 Champions",
+    baseDocId: "doc-0705",
+    baseDocName: "P8.1_ChampionsForNature.pdf",
     title: "Solicitud Champions for Nature (RECME P8.1)",
     subtitle: "Formato oficial 2026 de Mundo Mejor / Tribu de la Tierra (llenado digital, sin imprimir)",
-    baseDocId: "doc-0705",
-    filePrefix: "Solicitud_P8_1_Champions",
-    fontPt: 11,
-    pages: [
+    officialPages: [
       {
         src: "img/forms/p8_p1.webp",
         aspect: "1347 / 1743",
         boxes: [
-          { key: "name", x: 17.5, y: 22.8, w: 45.0, h: 2.2 },
-          { key: "cum", x: 69.5, y: 22.8, w: 21.0, h: 2.2 },
-          { key: "group", x: 33.0, y: 26.2, w: 29.8, h: 2.2 },
-          { key: "section", x: 72.0, y: 26.2, w: 18.5, h: 2.2 },
-          { key: "province", x: 19.0, y: 29.7, w: 43.5, h: 2.2 },
-          { key: "birthDate", x: 79.0, y: 29.7, w: 12.0, h: 2.2 },
-          { key: "phone", x: 26.5, y: 33.1, w: 36.0, h: 2.2 },
-          { key: "email", x: 76.5, y: 33.1, w: 14.5, h: 2.2 },
-          { key: "activities", x: 10.5, y: 38.0, w: 79.5, h: 2.9, multiline: true },
-          { key: "sdgsUrl", x: 31.0, y: 41.8, w: 59.0, h: 2.2 },
-          { key: "driveUrl", x: 43.5, y: 45.3, w: 46.5, h: 2.2 },
-          { key: "sectionDate", x: 21.0, y: 86.2, w: 17.0, h: 1.8 },
-          { key: "groupDate", x: 72.5, y: 86.0, w: 17.0, h: 1.8 }
+          { key: "name", x: 17.5, y: 22.4, w: 45.0, h: 2.2 },
+          { key: "cum", x: 69.5, y: 22.4, w: 21.0, h: 2.2 },
+          { key: "group", x: 33.2, y: 25.9, w: 29.8, h: 2.2 },
+          { key: "_sectionOut", x: 71.2, y: 25.9, w: 19.2, h: 2.2 },
+          { key: "_provinceOut", x: 18.0, y: 29.3, w: 44.5, h: 2.2 },
+          { key: "birthDate", x: 80.6, y: 29.3, w: 11.5, h: 2.2 },
+          { key: "phone", x: 26.8, y: 32.8, w: 36.0, h: 2.2 },
+          { key: "email", x: 78.8, y: 32.8, w: 14.5, h: 2.2 },
+          { key: "activities", x: 10.5, y: 38.2, w: 79.5, h: 2.9, multiline: true },
+          { key: "sdgsUrl", x: 30.8, y: 41.3, w: 59.5, h: 2.2 },
+          { key: "driveUrl", x: 43.5, y: 44.8, w: 46.8, h: 2.2 },
+          { key: "p8_eje_salud", x: 13.7, y: 66.5, w: 2.9, h: 2.3, isCheck: true },
+          { key: "p8_eje_ambiente", x: 28.4, y: 66.3, w: 2.9, h: 2.3, isCheck: true },
+          { key: "_userSignature", x: 11.5, y: 79.5, w: 28.0, h: 4.3, isSignature: true },
+          { key: "sectionDate", x: 19.6, y: 86.4, w: 18.0, h: 1.8 },
+          { key: "groupDate", x: 71.0, y: 86.1, w: 18.0, h: 1.8 }
         ]
       }
     ],
@@ -9527,32 +9784,277 @@ const SMART_FORM_TEMPLATES = {
       { key: "activities", label: "Actividades realizadas y Voluntariado", type: "textarea", full: true, placeholder: "Describe las acciones de la canasta y voluntariado" },
       { key: "sdgsUrl", label: "Enlace(s) de sdgs.scout.org", type: "text", full: true, placeholder: "https://sdgs.scout.org/..." },
       { key: "driveUrl", label: "Enlace(s) Drive abierto de evidencias", type: "text", full: true, placeholder: "https://drive.google.com/..." },
+      {
+        key: "_p8_ejes",
+        type: "checks_group",
+        label: "Eje temático abordado",
+        full: true,
+        options: [
+          { key: "p8_eje_salud", label: "Salud y Bienestar" },
+          { key: "p8_eje_ambiente", label: "Medio Ambiente" }
+        ]
+      },
       { key: "sectionDate", label: "Fecha aval Consejo de Sección", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AAAA" },
       { key: "groupDate", label: "Fecha aval Consejo de Grupo", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AAAA" }
     ]
   },
+
+  p8_mop: {
+    id: "p8_mop",
+    code: "RECME P8.3",
+    exportPrefix: "Solicitud P8.3 Mensajeros",
+    baseDocId: "doc-0707",
+    baseDocName: "P8.3_MensajerosDeLaPaz.pdf",
+    title: "Solicitud Mensajeros de la Paz (RECME P8.3)",
+    subtitle: "Formato oficial 2026 de Mundo Mejor / Mensajeros de la Paz con horas de voluntariado",
+    officialPages: [
+      {
+        src: "img/forms/p8_mop_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "name", x: 17.5, y: 22.4, w: 45.0, h: 2.2 },
+          { key: "cum", x: 69.5, y: 22.4, w: 21.0, h: 2.2 },
+          { key: "group", x: 33.2, y: 25.9, w: 29.8, h: 2.2 },
+          { key: "_sectionOut", x: 71.2, y: 25.9, w: 19.2, h: 2.2 },
+          { key: "_provinceOut", x: 18.0, y: 29.3, w: 44.5, h: 2.2 },
+          { key: "birthDate", x: 80.6, y: 29.3, w: 11.5, h: 2.2 },
+          { key: "phone", x: 26.8, y: 32.8, w: 36.0, h: 2.2 },
+          { key: "email", x: 78.8, y: 32.8, w: 14.5, h: 2.2 },
+          { key: "volunteerName", x: 31.8, y: 36.2, w: 31.5, h: 2.2 },
+          { key: "volunteerHours", x: 87.2, y: 36.2, w: 6.5, h: 2.2 },
+          { key: "sdgsUrl", x: 30.8, y: 41.3, w: 59.5, h: 2.2 },
+          { key: "driveUrl", x: 43.5, y: 46.5, w: 46.8, h: 2.2 },
+          { key: "p8_eje_habilidades", x: 12.8, y: 65.4, w: 2.9, h: 2.3, isCheck: true },
+          { key: "p8_eje_paz", x: 29.0, y: 65.4, w: 2.9, h: 2.3, isCheck: true },
+          { key: "p8_eje_salud", x: 21.2, y: 77.2, w: 2.9, h: 2.3, isCheck: true },
+          { key: "_userSignature", x: 11.5, y: 79.8, w: 28.0, h: 4.1, isSignature: true },
+          { key: "sectionDate", x: 19.6, y: 86.4, w: 18.0, h: 1.8 },
+          { key: "groupDate", x: 71.0, y: 86.1, w: 18.0, h: 1.8 }
+        ]
+      }
+    ],
+    fields: [
+      { key: "name", label: "Nombre completo", type: "text", bind: "name", placeholder: "Nombre del solicitante" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Ej. MEX123456" },
+      { key: "group", label: "Nombre y número de Grupo", type: "text", bind: "group", placeholder: "Ej. Grupo 15" },
+      { key: "section", label: "Sección", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Sección" },
+      { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
+      { key: "birthDate", label: "Fecha de nacimiento", type: "text", bind: "age", placeholder: "DD/MM/AAAA" },
+      { key: "phone", label: "Teléfono de contacto", type: "text", bind: "emergency", placeholder: "Número de contacto" },
+      { key: "email", label: "Correo electrónico", type: "text", placeholder: "correo@ejemplo.com" },
+      { key: "volunteerName", label: "Nombre del Voluntariado(s)", type: "text", placeholder: "Nombre del proyecto o voluntariado" },
+      { key: "volunteerHours", label: "Horas totales de Voluntariado", type: "text", placeholder: "Ej. 30 hrs" },
+      { key: "sdgsUrl", label: "Enlace(s) de sdgs.scout.org", type: "text", full: true, placeholder: "https://sdgs.scout.org/..." },
+      { key: "driveUrl", label: "Enlace(s) Drive abierto de evidencias", type: "text", full: true, placeholder: "https://drive.google.com/..." },
+      {
+        key: "_p8mop_ejes",
+        type: "checks_group",
+        label: "Eje temático abordado",
+        full: true,
+        options: [
+          { key: "p8_eje_habilidades", label: "Habilidades para la Vida" },
+          { key: "p8_eje_paz", label: "Paz y Participación" },
+          { key: "p8_eje_salud", label: "Salud y Bienestar" }
+        ]
+      },
+      { key: "sectionDate", label: "Fecha aval Consejo de Sección", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AAAA" },
+      { key: "groupDate", label: "Fecha aval Consejo de Grupo", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AAAA" }
+    ]
+  },
+
+  p8_solar: {
+    id: "p8_solar",
+    code: "RECME P8.7",
+    exportPrefix: "Solicitud P8.7 Solar",
+    baseDocId: "doc-0710",
+    baseDocName: "P8.7_ScoutsGoSolar.pdf",
+    title: "Solicitud Scouts Go Solar (RECME P8.7)",
+    subtitle: "Formato oficial 2026 de Mundo Mejor / Scouts Go Solar (llenado digital, sin imprimir)",
+    officialPages: [
+      {
+        src: "img/forms/p8_solar_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "name", x: 17.5, y: 22.4, w: 45.0, h: 2.2 },
+          { key: "cum", x: 69.5, y: 22.4, w: 21.0, h: 2.2 },
+          { key: "group", x: 33.2, y: 25.9, w: 29.8, h: 2.2 },
+          { key: "_sectionOut", x: 71.2, y: 25.9, w: 19.2, h: 2.2 },
+          { key: "_provinceOut", x: 18.0, y: 29.3, w: 44.5, h: 2.2 },
+          { key: "birthDate", x: 80.6, y: 29.3, w: 11.5, h: 2.2 },
+          { key: "phone", x: 26.8, y: 32.8, w: 36.0, h: 2.2 },
+          { key: "email", x: 78.8, y: 32.8, w: 14.5, h: 2.2 },
+          { key: "activities", x: 10.5, y: 38.2, w: 79.5, h: 2.9, multiline: true },
+          { key: "sdgsUrl", x: 30.8, y: 41.3, w: 59.5, h: 2.2 },
+          { key: "driveUrl", x: 43.5, y: 44.8, w: 46.8, h: 2.2 },
+          { key: "p8_eje_habilidades", x: 13.2, y: 66.1, w: 2.9, h: 2.3, isCheck: true },
+          { key: "p8_eje_ambiente", x: 28.3, y: 66.1, w: 2.9, h: 2.3, isCheck: true },
+          { key: "_userSignature", x: 11.5, y: 79.5, w: 28.0, h: 4.3, isSignature: true },
+          { key: "sectionDate", x: 19.6, y: 86.4, w: 18.0, h: 1.8 },
+          { key: "groupDate", x: 71.0, y: 86.1, w: 18.0, h: 1.8 }
+        ]
+      }
+    ],
+    fields: [
+      { key: "name", label: "Nombre completo", type: "text", bind: "name", placeholder: "Nombre del solicitante" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "Ej. MEX123456" },
+      { key: "group", label: "Nombre y número de Grupo", type: "text", bind: "group", placeholder: "Ej. Grupo 15" },
+      { key: "section", label: "Sección", type: "select", options: OFFICIAL_SECTION_SELECT_OPTIONS, allowOther: true, bind: "section", otherPlaceholder: "Sección" },
+      { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
+      { key: "birthDate", label: "Fecha de nacimiento", type: "text", bind: "age", placeholder: "DD/MM/AAAA" },
+      { key: "phone", label: "Teléfono de contacto", type: "text", bind: "emergency", placeholder: "Número de contacto" },
+      { key: "email", label: "Correo electrónico", type: "text", placeholder: "correo@ejemplo.com" },
+      { key: "activities", label: "Actividades realizadas y Voluntariado", type: "textarea", full: true, placeholder: "Describe actividades de Scouts Go Solar y voluntariado" },
+      { key: "sdgsUrl", label: "Enlace(s) de sdgs.scout.org", type: "text", full: true, placeholder: "https://sdgs.scout.org/..." },
+      { key: "driveUrl", label: "Enlace(s) Drive abierto de evidencias", type: "text", full: true, placeholder: "https://drive.google.com/..." },
+      {
+        key: "_p8sol_ejes",
+        type: "checks_group",
+        label: "Eje temático abordado",
+        full: true,
+        options: [
+          { key: "p8_eje_habilidades", label: "Habilidades para la Vida" },
+          { key: "p8_eje_ambiente", label: "Medio Ambiente" }
+        ]
+      },
+      { key: "sectionDate", label: "Fecha aval Consejo de Sección", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AAAA" },
+      { key: "groupDate", label: "Fecha aval Consejo de Grupo", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AAAA" }
+    ]
+  },
+
+  p9_alfa: {
+    id: "p9_alfa",
+    code: "RECME P9.1",
+    exportPrefix: "Solicitud P9.1 Alfa",
+    baseDocId: "doc-0711",
+    baseDocName: "P9.1_SolicitudInsigniaAlfa.pdf",
+    title: "Solicitud Insignia Final Alfa (Manada P9.1 · 2 hojas)",
+    subtitle: "Formato oficial PJOS de Manada ante Consejo de Roca y Consejo de Grupo",
+    officialPages: [
+      {
+        src: "img/forms/p9_alfa_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "rockDate", x: 45.2, y: 12.2, w: 14.8, h: 1.5 },
+          { key: "group", x: 73.4, y: 12.2, w: 6.9, h: 1.5 },
+          { key: "_provinceOut", x: 9.8, y: 14.5, w: 36.2, h: 1.5 },
+          { key: "sessionDate", x: 52.0, y: 14.5, w: 17.5, h: 1.5 },
+          { key: "name", x: 33.5, y: 16.9, w: 40.5, h: 1.5 },
+          { key: "cum", x: 78.2, y: 16.9, w: 11.6, h: 1.5 },
+          { key: "badgeStage", x: 61.8, y: 19.2, w: 26.5, h: 1.5 },
+          { key: "birthDate", x: 67.5, y: 21.6, w: 15.2, h: 1.5 },
+          { key: "entryDate", x: 30.0, y: 23.9, w: 17.5, h: 1.5 },
+          { key: "passDate", x: 9.8, y: 26.2, w: 27.5, h: 1.5 },
+          { key: "compromisoFecha", x: 15.2, y: 40.5, w: 12.0, h: 1.4 },
+          { key: "territorioFecha", x: 44.2, y: 40.5, w: 12.0, h: 1.4 },
+          { key: "stage1Term", x: 16.5, y: 54.0, w: 11.5, h: 1.3 },
+          { key: "stage1Ent", x: 16.5, y: 55.4, w: 11.5, h: 1.3 },
+          { key: "stage2Term", x: 36.6, y: 54.0, w: 11.5, h: 1.3 },
+          { key: "stage2Ent", x: 36.6, y: 55.4, w: 11.5, h: 1.3 },
+          { key: "stage3Term", x: 56.8, y: 54.0, w: 11.5, h: 1.3 },
+          { key: "stage3Ent", x: 56.8, y: 55.4, w: 11.5, h: 1.3 },
+          { key: "stage4Term", x: 76.9, y: 54.0, w: 11.5, h: 1.3 },
+          { key: "stage4Ent", x: 76.9, y: 55.4, w: 11.5, h: 1.3 }
+        ]
+      },
+      {
+        src: "img/forms/p9_alfa_p2.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "mopTerm", x: 56.8, y: 20.5, w: 11.5, h: 1.3 },
+          { key: "mopEnt", x: 56.8, y: 21.9, w: 11.5, h: 1.3 },
+          { key: "tribuTerm", x: 76.9, y: 20.5, w: 11.5, h: 1.3 },
+          { key: "tribuEnt", x: 76.9, y: 21.9, w: 11.5, h: 1.3 },
+          { key: "evento1Nombre", x: 10.5, y: 42.8, w: 33.0, h: 1.8 },
+          { key: "evento1Fecha", x: 45.0, y: 42.8, w: 19.0, h: 1.8 },
+          { key: "evento1Duracion", x: 65.5, y: 42.8, w: 10.0, h: 1.8 },
+          { key: "evento1Eje", x: 76.5, y: 42.8, w: 13.0, h: 1.8 },
+          { key: "signName", x: 16.5, y: 85.5, w: 28.0, h: 1.6 },
+          { key: "groupScouter", x: 55.8, y: 85.5, w: 28.0, h: 1.6 },
+          { key: "_userSignature", x: 10.5, y: 79.8, w: 32.0, h: 4.5, isSignature: true }
+        ]
+      }
+    ],
+    fields: [
+      { key: "name", label: "Nombre de la Lobezna / Lobato", type: "text", bind: "name", placeholder: "Nombre completo" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "CUM oficial" },
+      { key: "group", label: "Número de Grupo", type: "text", bind: "group", placeholder: "Ej. 15" },
+      { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
+      { key: "rockDate", label: "Fecha solicitud Consejo de Roca", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "sessionDate", label: "Fecha sesión Consejo de Grupo", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "badgeStage", label: "Insignia / Modalidad", type: "text", defaultValue: "Alfa y Omega", placeholder: "Alfa / Alfa y Omega" },
+      { key: "birthDate", label: "Fecha de nacimiento", type: "text", bind: "age", placeholder: "DD/MM/AA" },
+      { key: "entryDate", label: "Fecha ingreso a Manada", type: "text", placeholder: "DD/MM/AA" },
+      { key: "passDate", label: "Fecha tentativa de pase a Tropa", type: "text", placeholder: "DD/MM/AA" },
+      { key: "compromisoFecha", label: "Fecha Compromiso / Promesa", type: "text", placeholder: "DD/MM/AA" },
+      { key: "territorioFecha", label: "Fecha Territorio de Caza", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage1Term", label: "Pata Tierna — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage1Ent", label: "Pata Tierna — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage2Term", label: "Saltador — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage2Ent", label: "Saltador — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage3Term", label: "Rastreador — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage3Ent", label: "Rastreador — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage4Term", label: "Cazador — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage4Ent", label: "Cazador — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "mopTerm", label: "Mensajeros de la Paz — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "tribuTerm", label: "Tribu de la Tierra — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "evento1Nombre", label: "Evento significativo — Nombre", type: "text", placeholder: "Ej. Campamento de Verano" },
+      { key: "evento1Fecha", label: "Evento — Fecha / Lugar", type: "text", placeholder: "Ej. Jul 2026 · Meztitla" },
+      { key: "evento1Duracion", label: "Evento — Duración", type: "text", placeholder: "3 días" },
+      { key: "evento1Eje", label: "Evento — Eje relacionado", type: "text", placeholder: "Ej. Naturaleza" },
+      { key: "signName", label: "Scouter de Manada (Nombre)", type: "text", bind: "scouter", placeholder: "Akela / Scouter" },
+      { key: "groupScouter", label: "Jefe de Grupo (Nombre)", type: "text", placeholder: "Nombre quien firma por Grupo" }
+    ]
+  },
+
   p9: {
     id: "p9",
-    title: "Solicitud Insignia Final Águila Real (RECME P9.2)",
-    subtitle: "Formato oficial PJOS de Tropa ante Corte de Honor y Consejo de Grupo",
+    code: "RECME P9.2",
+    exportPrefix: "Solicitud P9.2 Aguila Real",
     baseDocId: "doc-0712",
-    filePrefix: "Solicitud_P9_2_Aguila_Real",
-    fontPt: 10,
-    pages: [
+    baseDocName: "P9.2_SolicitudAguilaReal.pdf",
+    title: "Solicitud Insignia Final Águila Real (RECME P9.2 · 2 hojas)",
+    subtitle: "Formato oficial PJOS de Tropa ante Corte de Honor y Consejo de Grupo",
+    officialPages: [
       {
         src: "img/forms/p9_p1.webp",
         aspect: "1347 / 1743",
         boxes: [
-          { key: "honorDate", x: 45.4, y: 12.6, w: 12.8, h: 1.5 },
-          { key: "group", x: 73.6, y: 12.6, w: 6.1, h: 1.5 },
-          { key: "province", x: 9.7, y: 14.9, w: 25.6, h: 1.5 },
-          { key: "sessionDate", x: 52.6, y: 14.9, w: 16.4, h: 1.5 },
-          { key: "name", x: 34.1, y: 17.2, w: 37.0, h: 1.5 },
-          { key: "cum", x: 78.5, y: 17.2, w: 11.4, h: 1.5 },
-          { key: "badgeStage", x: 66.5, y: 19.5, w: 17.9, h: 1.5 },
-          { key: "birthDate", x: 74.3, y: 21.8, w: 12.8, h: 1.5 },
-          { key: "entryDate", x: 39.3, y: 24.1, w: 11.4, h: 1.5 },
-          { key: "passDate", x: 9.6, y: 26.4, w: 23.2, h: 1.5 }
+          { key: "honorDate", x: 45.4, y: 12.2, w: 14.5, h: 1.5 },
+          { key: "group", x: 73.6, y: 12.2, w: 6.5, h: 1.5 },
+          { key: "_provinceOut", x: 9.8, y: 14.5, w: 36.2, h: 1.5 },
+          { key: "sessionDate", x: 52.0, y: 14.5, w: 17.5, h: 1.5 },
+          { key: "name", x: 34.1, y: 16.9, w: 40.0, h: 1.5 },
+          { key: "cum", x: 78.5, y: 16.9, w: 11.4, h: 1.5 },
+          { key: "badgeStage", x: 66.5, y: 19.2, w: 23.0, h: 1.5 },
+          { key: "birthDate", x: 74.3, y: 21.6, w: 12.8, h: 1.5 },
+          { key: "entryDate", x: 39.3, y: 23.9, w: 12.5, h: 1.5 },
+          { key: "passDate", x: 9.8, y: 26.2, w: 23.2, h: 1.5 },
+          { key: "stage1Term", x: 21.4, y: 50.5, w: 9.2, h: 1.3 },
+          { key: "stage1Ent", x: 21.4, y: 52.1, w: 9.2, h: 1.3 },
+          { key: "stage2Term", x: 41.8, y: 50.5, w: 9.0, h: 1.3 },
+          { key: "stage2Ent", x: 41.8, y: 52.1, w: 9.0, h: 1.3 },
+          { key: "stage3Term", x: 61.6, y: 50.5, w: 9.2, h: 1.3 },
+          { key: "stage3Ent", x: 61.6, y: 52.1, w: 9.2, h: 1.3 },
+          { key: "stage4Term", x: 81.8, y: 50.5, w: 9.0, h: 1.3 },
+          { key: "stage4Ent", x: 81.8, y: 52.1, w: 9.0, h: 1.3 }
+        ]
+      },
+      {
+        src: "img/forms/p9_p2.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "mopTerm", x: 61.6, y: 28.9, w: 9.2, h: 1.3 },
+          { key: "mopEnt", x: 61.6, y: 30.4, w: 9.2, h: 1.3 },
+          { key: "tribuTerm", x: 81.8, y: 28.9, w: 9.0, h: 1.3 },
+          { key: "tribuEnt", x: 81.8, y: 30.4, w: 9.0, h: 1.3 },
+          { key: "flechaFecha", x: 35.5, y: 34.3, w: 18.0, h: 1.4 },
+          { key: "evento1Nombre", x: 10.5, y: 42.3, w: 33.0, h: 1.8 },
+          { key: "evento1Fecha", x: 45.0, y: 42.3, w: 19.0, h: 1.8 },
+          { key: "evento1Duracion", x: 65.5, y: 42.3, w: 10.0, h: 1.8 },
+          { key: "evento1Eje", x: 76.5, y: 42.3, w: 13.0, h: 1.8 },
+          { key: "signName", x: 16.5, y: 87.9, w: 28.0, h: 1.6 },
+          { key: "groupScouter", x: 54.6, y: 87.9, w: 28.0, h: 1.6 },
+          { key: "_userSignature", x: 10.5, y: 82.0, w: 32.0, h: 4.5, isSignature: true }
         ]
       }
     ],
@@ -9563,20 +10065,205 @@ const SMART_FORM_TEMPLATES = {
       { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
       { key: "honorDate", label: "Fecha solicitud Corte de Honor", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
       { key: "sessionDate", label: "Fecha sesión Consejo de Grupo", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
-      { key: "badgeStage", label: "Nivel / Modalidad", type: "text", defaultVal: "Obsidiana / Jade", placeholder: "Obsidiana o Jade" },
+      { key: "badgeStage", label: "Nivel / Modalidad", type: "text", defaultValue: "Obsidiana / Jade", placeholder: "Obsidiana o Jade" },
       { key: "birthDate", label: "Fecha de nacimiento", type: "text", bind: "age", placeholder: "DD/MM/AA" },
       { key: "entryDate", label: "Fecha ingreso a Tropa", type: "text", placeholder: "DD/MM/AA" },
-      { key: "passDate", label: "Fecha tentativa de pase", type: "text", placeholder: "DD/MM/AA" }
+      { key: "passDate", label: "Fecha tentativa de pase", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage1Term", label: "Pistas — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage1Ent", label: "Pistas — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage2Term", label: "Sendas — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage2Ent", label: "Sendas — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage3Term", label: "Rumbos — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage3Ent", label: "Rumbos — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage4Term", label: "Travesías — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage4Ent", label: "Travesías — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "flechaFecha", label: "Flecha de Madera / Curso — Fecha", type: "text", placeholder: "DD/MM/AA" },
+      { key: "mopTerm", label: "Mensajeros de la Paz — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "tribuTerm", label: "Tribu de la Tierra — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "evento1Nombre", label: "Evento significativo — Nombre", type: "text", placeholder: "Ej. Camporee Nacional" },
+      { key: "evento1Fecha", label: "Evento — Fecha / Lugar", type: "text", placeholder: "Ej. Ago 2026" },
+      { key: "evento1Duracion", label: "Evento — Duración", type: "text", placeholder: "5 días" },
+      { key: "evento1Eje", label: "Evento — Eje relacionado", type: "text", placeholder: "Ej. Habilidades" },
+      { key: "signName", label: "Scouter de Tropa (Nombre)", type: "text", bind: "scouter", placeholder: "Nombre del Scouter" },
+      { key: "groupScouter", label: "Jefe de Grupo (Nombre)", type: "text", placeholder: "Nombre quien firma por Grupo" }
     ]
   },
+
+  p9_everest: {
+    id: "p9_everest",
+    code: "RECME P9.3",
+    exportPrefix: "Solicitud P9.3 Everest",
+    baseDocId: "doc-0713",
+    baseDocName: "P9.3_SolicitudEverest.pdf",
+    title: "Solicitud Insignia Final Everest (Comunidad P9.3 · 2 hojas)",
+    subtitle: "Formato oficial PJOS de Comunidad de Caminantes ante Comité y Consejo de Grupo",
+    officialPages: [
+      {
+        src: "img/forms/p9_everest_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "comiteDate", x: 51.6, y: 12.2, w: 15.0, h: 1.5 },
+          { key: "group", x: 80.8, y: 12.2, w: 5.7, h: 1.5 },
+          { key: "_provinceOut", x: 16.5, y: 14.5, w: 28.0, h: 1.5 },
+          { key: "sessionDate", x: 49.5, y: 14.5, w: 14.2, h: 1.5 },
+          { key: "name", x: 22.2, y: 16.9, w: 36.2, h: 1.5 },
+          { key: "cum", x: 64.8, y: 16.9, w: 11.6, h: 1.5 },
+          { key: "badgeStage", x: 50.2, y: 19.2, w: 22.0, h: 1.5 },
+          { key: "birthDate", x: 48.5, y: 21.6, w: 15.0, h: 1.5 },
+          { key: "entryDate", x: 22.0, y: 23.9, w: 14.2, h: 1.5 },
+          { key: "passDate", x: 71.0, y: 23.9, w: 18.2, h: 1.5 },
+          { key: "stage1Term", x: 21.4, y: 50.1, w: 9.8, h: 1.3 },
+          { key: "stage1Ent", x: 21.4, y: 51.7, w: 9.8, h: 1.3 },
+          { key: "stage2Term", x: 42.2, y: 50.1, w: 8.8, h: 1.3 },
+          { key: "stage2Ent", x: 42.2, y: 51.7, w: 8.8, h: 1.3 },
+          { key: "stage3Term", x: 62.0, y: 50.1, w: 8.8, h: 1.3 },
+          { key: "stage3Ent", x: 62.0, y: 51.7, w: 8.8, h: 1.3 },
+          { key: "stage4Term", x: 81.6, y: 50.1, w: 9.0, h: 1.3 },
+          { key: "stage4Ent", x: 81.6, y: 51.7, w: 9.0, h: 1.3 }
+        ]
+      },
+      {
+        src: "img/forms/p9_everest_p2.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "mopTerm", x: 63.0, y: 26.1, w: 9.2, h: 1.3 },
+          { key: "mopEnt", x: 63.0, y: 27.7, w: 9.2, h: 1.3 },
+          { key: "tribuTerm", x: 83.4, y: 26.1, w: 8.0, h: 1.3 },
+          { key: "tribuEnt", x: 83.4, y: 27.7, w: 8.0, h: 1.3 },
+          { key: "puntaFecha", x: 35.5, y: 32.2, w: 18.0, h: 1.4 },
+          { key: "evento1Nombre", x: 10.5, y: 40.8, w: 33.0, h: 1.8 },
+          { key: "evento1Fecha", x: 45.0, y: 40.8, w: 19.0, h: 1.8 },
+          { key: "evento1Duracion", x: 65.5, y: 40.8, w: 10.0, h: 1.8 },
+          { key: "evento1Eje", x: 76.5, y: 40.8, w: 13.0, h: 1.8 },
+          { key: "signName", x: 16.5, y: 87.3, w: 28.0, h: 1.6 },
+          { key: "groupScouter", x: 58.2, y: 87.3, w: 28.0, h: 1.6 },
+          { key: "_userSignature", x: 10.5, y: 81.5, w: 32.0, h: 4.5, isSignature: true }
+        ]
+      }
+    ],
+    fields: [
+      { key: "name", label: "Nombre del Caminante", type: "text", bind: "name", placeholder: "Nombre completo" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "CUM oficial" },
+      { key: "group", label: "Número de Grupo", type: "text", bind: "group", placeholder: "Ej. 15" },
+      { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
+      { key: "comiteDate", label: "Fecha solicitud Comité de Comunidad", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "sessionDate", label: "Fecha sesión Consejo de Grupo", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "badgeStage", label: "Insignia / Nivel", type: "text", defaultValue: "Everest", placeholder: "Insignia Everest" },
+      { key: "birthDate", label: "Fecha de nacimiento", type: "text", bind: "age", placeholder: "DD/MM/AA" },
+      { key: "entryDate", label: "Fecha ingreso a Comunidad", type: "text", placeholder: "DD/MM/AA" },
+      { key: "passDate", label: "Fecha tentativa de pase a Clan", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage1Term", label: "Etapa 1 — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage1Ent", label: "Etapa 1 — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage2Term", label: "Etapa 2 — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage2Ent", label: "Etapa 2 — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage3Term", label: "Etapa 3 — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage3Ent", label: "Etapa 3 — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage4Term", label: "Etapa 4 — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage4Ent", label: "Etapa 4 — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "puntaFecha", label: "Punta de Flecha — Fecha", type: "text", placeholder: "DD/MM/AA" },
+      { key: "mopTerm", label: "Mensajeros de la Paz — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "tribuTerm", label: "Tribu de la Tierra — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "evento1Nombre", label: "Evento significativo — Nombre", type: "text", placeholder: "Nombre del evento o expedición" },
+      { key: "evento1Fecha", label: "Evento — Fecha / Lugar", type: "text", placeholder: "DD/MM/AA · Lugar" },
+      { key: "evento1Duracion", label: "Evento — Duración", type: "text", placeholder: "4 días" },
+      { key: "evento1Eje", label: "Evento — Eje relacionado", type: "text", placeholder: "Paz / Sustentabilidad" },
+      { key: "signName", label: "Scouter de Comunidad (Nombre)", type: "text", bind: "scouter", placeholder: "Nombre del Scouter" },
+      { key: "groupScouter", label: "Jefe de Grupo (Nombre)", type: "text", placeholder: "Nombre quien firma por Grupo" }
+    ]
+  },
+
+  p9_bp: {
+    id: "p9_bp",
+    code: "RECME P9.4",
+    exportPrefix: "Solicitud P9.4 Baden Powell",
+    baseDocId: "doc-0714",
+    baseDocName: "P9.4_SolicitudBadenPowell.pdf",
+    title: "Solicitud Horquilla Baden-Powell (Clan P9.4 · 2 hojas)",
+    subtitle: "Formato oficial PJOS de Clan de Rovers ante Parlamento Rover y Consejo de Grupo",
+    officialPages: [
+      {
+        src: "img/forms/p9_bp_p1.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "parlamentoDate", x: 43.5, y: 12.2, w: 15.0, h: 1.5 },
+          { key: "group", x: 72.6, y: 12.2, w: 6.9, h: 1.5 },
+          { key: "_provinceOut", x: 9.8, y: 14.5, w: 36.2, h: 1.5 },
+          { key: "sessionDate", x: 52.0, y: 14.5, w: 17.5, h: 1.5 },
+          { key: "name", x: 31.0, y: 16.9, w: 32.3, h: 1.5 },
+          { key: "cum", x: 69.8, y: 16.9, w: 11.6, h: 1.5 },
+          { key: "badgeStage", x: 64.2, y: 19.2, w: 24.2, h: 1.5 },
+          { key: "birthDate", x: 67.5, y: 21.6, w: 15.2, h: 1.5 },
+          { key: "entryDate", x: 31.8, y: 23.9, w: 13.5, h: 1.5 },
+          { key: "passDate", x: 73.3, y: 23.9, w: 16.8, h: 1.5 },
+          { key: "stage1Term", x: 21.4, y: 50.1, w: 9.8, h: 1.3 },
+          { key: "stage1Ent", x: 21.4, y: 51.7, w: 9.8, h: 1.3 },
+          { key: "stage2Term", x: 42.2, y: 50.1, w: 9.8, h: 1.3 },
+          { key: "stage2Ent", x: 42.2, y: 51.7, w: 9.8, h: 1.3 },
+          { key: "stage3Term", x: 63.0, y: 50.1, w: 8.8, h: 1.3 },
+          { key: "stage3Ent", x: 63.0, y: 51.7, w: 8.8, h: 1.3 },
+          { key: "stage4Term", x: 82.6, y: 50.1, w: 8.8, h: 1.3 },
+          { key: "stage4Ent", x: 82.6, y: 51.7, w: 8.8, h: 1.3 }
+        ]
+      },
+      {
+        src: "img/forms/p9_bp_p2.webp",
+        aspect: "1347 / 1743",
+        boxes: [
+          { key: "mopTerm", x: 48.4, y: 23.7, w: 10.5, h: 1.3 },
+          { key: "mopEnt", x: 48.4, y: 25.3, w: 10.5, h: 1.3 },
+          { key: "tribuTerm", x: 64.2, y: 23.7, w: 9.8, h: 1.3 },
+          { key: "tribuEnt", x: 64.2, y: 25.3, w: 9.8, h: 1.3 },
+          { key: "viajeFecha", x: 52.5, y: 29.0, w: 19.0, h: 1.4 },
+          { key: "evento1Nombre", x: 10.5, y: 42.8, w: 33.0, h: 1.8 },
+          { key: "evento1Fecha", x: 45.0, y: 42.8, w: 19.0, h: 1.8 },
+          { key: "evento1Duracion", x: 65.5, y: 42.8, w: 10.0, h: 1.8 },
+          { key: "evento1Eje", x: 76.5, y: 42.8, w: 13.0, h: 1.8 },
+          { key: "signName", x: 16.5, y: 89.1, w: 28.0, h: 1.6 },
+          { key: "groupScouter", x: 58.2, y: 89.1, w: 28.0, h: 1.6 },
+          { key: "_userSignature", x: 10.5, y: 83.8, w: 32.0, h: 4.5, isSignature: true }
+        ]
+      }
+    ],
+    fields: [
+      { key: "name", label: "Nombre del Rover solicitante", type: "text", bind: "name", placeholder: "Nombre completo" },
+      { key: "cum", label: "CUM", type: "text", bind: "cum", placeholder: "CUM oficial" },
+      { key: "group", label: "Número de Grupo", type: "text", bind: "group", placeholder: "Ej. 15" },
+      { key: "province", label: "Provincia", type: "select", options: OFFICIAL_PROVINCE_SELECT_OPTIONS, allowOther: true, bind: "province", otherPlaceholder: "Provincia Scout" },
+      { key: "parlamentoDate", label: "Fecha solicitud Parlamento Rover", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "sessionDate", label: "Fecha sesión Consejo de Grupo", type: "text", defaultTodaySlash: true, placeholder: "DD/MM/AA" },
+      { key: "badgeStage", label: "Insignia / Nivel", type: "text", defaultValue: "Baden-Powell", placeholder: "Horquilla Baden-Powell" },
+      { key: "birthDate", label: "Fecha de nacimiento", type: "text", bind: "age", placeholder: "DD/MM/AA" },
+      { key: "entryDate", label: "Fecha ingreso a Clan de Rovers", type: "text", placeholder: "DD/MM/AA" },
+      { key: "passDate", label: "Fecha tentativa de Partida Rover", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage1Term", label: "Etapa 1 — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage1Ent", label: "Etapa 1 — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage2Term", label: "Etapa 2 — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage2Ent", label: "Etapa 2 — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage3Term", label: "Etapa 3 — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage3Ent", label: "Etapa 3 — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage4Term", label: "Etapa 4 — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "stage4Ent", label: "Etapa 4 — Entrega", type: "text", placeholder: "DD/MM/AA" },
+      { key: "viajeFecha", label: "Viaje Rover / Curso — Fecha", type: "text", placeholder: "DD/MM/AA" },
+      { key: "mopTerm", label: "Mensajeros de la Paz — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "tribuTerm", label: "Tribu de la Tierra — Término", type: "text", placeholder: "DD/MM/AA" },
+      { key: "evento1Nombre", label: "Evento significativo — Nombre", type: "text", placeholder: "Ej. Moot Nacional / Encuentro" },
+      { key: "evento1Fecha", label: "Evento — Fecha / Lugar", type: "text", placeholder: "DD/MM/AA · Lugar" },
+      { key: "evento1Duracion", label: "Evento — Duración", type: "text", placeholder: "5 días" },
+      { key: "evento1Eje", label: "Evento — Eje relacionado", type: "text", placeholder: "Habilidades / Paz" },
+      { key: "signName", label: "Consejero / Scouter de Clan (Nombre)", type: "text", bind: "scouter", placeholder: "Nombre del Consejero" },
+      { key: "groupScouter", label: "Jefe de Grupo (Nombre)", type: "text", placeholder: "Nombre quien firma por Grupo" }
+    ]
+  },
+
   vales: {
     id: "vales",
+    code: "ASMAC NO 3",
+    exportPrefix: "Vales NO 3 Tesoreria",
+    baseDocId: "doc-0356",
+    baseDocName: "NO 3 VALES DE CAJA Y RECIBO.pdf",
     title: "Vales de Caja y Recibo (NO 3 Tesorería)",
     subtitle: "Lámina administrativa de Grupo: Vale Provisional de Caja y Recibo foliados listos para imprimir",
-    baseDocId: "doc-0356",
-    filePrefix: "Vales_Caja_NO3",
-    fontPt: 11,
-    pages: [
+    officialPages: [
       {
         src: "img/forms/vales_p1.webp",
         aspect: "1654 / 1241",
@@ -9588,6 +10275,7 @@ const SMART_FORM_TEMPLATES = {
           { key: "valeDate", x: 4.0, y: 40.8, w: 12.5, h: 2.4 },
           { key: "valeAuth", x: 18.5, y: 40.8, w: 13.0, h: 2.4 },
           { key: "valeReceiver", x: 33.5, y: 40.8, w: 12.5, h: 2.4 },
+          { key: "_userSignature", x: 33.5, y: 36.2, w: 12.5, h: 3.8, isSignature: true },
           { key: "reciboFolio", x: 76.0, y: 8.5, w: 19.5, h: 2.8 },
           { key: "reciboAmount", x: 56.2, y: 18.2, w: 8.0, h: 2.4 },
           { key: "reciboFrom", x: 54.0, y: 24.0, w: 42.0, h: 2.4 },
@@ -9598,14 +10286,14 @@ const SMART_FORM_TEMPLATES = {
       }
     ],
     fields: [
-      { key: "valeFolio", label: "Vale — Folio", type: "text", defaultVal: "001", placeholder: "Ej. 001" },
+      { key: "valeFolio", label: "Vale — Folio", type: "text", defaultValue: "001", placeholder: "Ej. 001" },
       { key: "valeAmount", label: "Vale — Importe ($)", type: "text", placeholder: "Ej. 500.00" },
       { key: "valeAmountWords", label: "Vale — Importe en letra", type: "text", placeholder: "Quinientos pesos 00/100 M.N." },
       { key: "valeConcept", label: "Vale — Concepto del gasto o caja", type: "textarea", full: true, placeholder: "Material para actividad o adelanto de campamento" },
       { key: "valeDate", label: "Vale — Fecha", type: "text", defaultTodaySlash: true, placeholder: "DD / MM / AA" },
       { key: "valeAuth", label: "Vale — Autorizado por", type: "text", bind: "scouter", placeholder: "Tesorero / Jefe de Grupo" },
       { key: "valeReceiver", label: "Vale — Recibí (Nombre)", type: "text", bind: "name", placeholder: "Quién recibe" },
-      { key: "reciboFolio", label: "Recibo — Folio", type: "text", defaultVal: "001", placeholder: "Ej. 001" },
+      { key: "reciboFolio", label: "Recibo — Folio", type: "text", defaultValue: "001", placeholder: "Ej. 001" },
       { key: "reciboAmount", label: "Recibo — Importe ($)", type: "text", placeholder: "Ej. 500.00" },
       { key: "reciboFrom", label: "Recibo — Recibí de", type: "text", bind: "name", placeholder: "Nombre completo" },
       { key: "reciboConcept", label: "Recibo — Por concepto de", type: "textarea", full: true, placeholder: "Cuota de campamento / reembolso" },
@@ -9946,27 +10634,71 @@ function setupSmartFormsEngine(readFormProfileFn) {
     return out;
   };
 
-  // Renderiza ÚNICAMENTE las páginas oficiales de ASMAC (Página 1 y Página 2 completas) sin tablas inventadas debajo
+  // Imagen caché en memoria para vista previa en vivo instantánea (<canvas> == PDF/PNG final)
+  const sfImgCache = new Map();
+  const BT_USER_SIGNATURE_KEY = "bt_user_signature_v1";
+  const getSavedSignatureState = () => {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(BT_USER_SIGNATURE_KEY) || "{}");
+      const mode = ["blank", "draw", "upload"].includes(parsed.mode) ? parsed.mode : "blank";
+      return { mode, dataUrl: typeof parsed.dataUrl === "string" ? parsed.dataUrl : "" };
+    } catch (_) {
+      return { mode: "blank", dataUrl: "" };
+    }
+  };
+  const saveSignatureState = (next) => {
+    try {
+      localStorage.setItem(BT_USER_SIGNATURE_KEY, JSON.stringify(next || { mode: "blank", dataUrl: "" }));
+    } catch (_) {}
+  };
+  let signatureState = getSavedSignatureState();
+  const sfSigImgCache = new Map();
+
+  const loadImageCached = (src) => {
+    if (!src) return Promise.resolve(null);
+    if (src.startsWith("data:") && sfSigImgCache.has(src)) return Promise.resolve(sfSigImgCache.get(src));
+    if (!src.startsWith("data:") && sfImgCache.has(src)) return Promise.resolve(sfImgCache.get(src));
+    return new Promise((resolve, reject) => {
+      const im = new Image();
+      im.onload = () => {
+        if (src.startsWith("data:")) sfSigImgCache.set(src, im);
+        else sfImgCache.set(src, im);
+        resolve(im);
+      };
+      im.onerror = reject;
+      im.src = src;
+    });
+  };
+
+  let previewRenderSeq = 0;
+  let previewDebounceTimer = null;
+
+  // Renderiza la estructura de contenedores en vivo + áreas interactivas clicables para enfocar o alternar checks
   const renderSheetHtml = (tpl, rawVals) => {
     const vals = computeEffectiveValues(tpl, rawVals);
     if (!Array.isArray(tpl.officialPages) || !tpl.officialPages.length) return "";
 
     const pagesInner = tpl.officialPages
       .map((pg, idx) => {
-        const overlays = (pg.boxes || [])
+        const hitboxes = (pg.boxes || [])
+          .filter((b) => !b.isSignature)
           .map((b) => {
-            const rawVal = String(vals[b.key] ?? "").trim();
-            if (!rawVal) return "";
-            const cls = `bt-sf-overlay-field${b.multiline ? " is-multi" : ""}${b.align === "center" ? " is-center" : ""}`;
-            return `<div class="${cls}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%;height:${b.h}%;">${escapeHtml(rawVal).replace(/\n/g, "<br>")}</div>`;
+            const k = b.key || "";
+            if (b.isCheck) {
+              const checked = vals[k] === true || vals[k] === "true" || vals[k] === "X" || vals[k] === "✓";
+              return `<button type="button" class="bt-sf-hitbox is-check-box${checked ? " is-checked" : ""}" data-sf-hitbox-check="${escapeHtml(k)}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%;height:${b.h}%;" title="Clic para marcar / desmarcar"></button>`;
+            }
+            const focusKey = k.startsWith("_") ? k.replace(/^_/, "").replace(/Out$/, "") : k;
+            return `<button type="button" class="bt-sf-hitbox is-text-box" data-sf-hitbox-focus="${escapeHtml(focusKey)}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%;height:${b.h}%;" title="Clic para editar este campo"></button>`;
           })
           .join("");
+
         return `
           <div class="bt-sf-official-page-wrap" data-official-page-index="${idx + 1}">
             <div class="bt-sf-official-page-badge">Documento Oficial ASMAC: ${escapeHtml(tpl.baseDocName || tpl.code)} · Hoja ${idx + 1} de ${tpl.officialPages.length}</div>
             <div class="bt-sf-official-page" style="aspect-ratio:${pg.aspect || "1347 / 1743"};">
-              <img src="${escapeHtml(pg.src)}" alt="${escapeHtml(tpl.title)} hoja ${idx + 1}" class="bt-sf-official-bg" loading="eager" />
-              <div class="bt-sf-official-overlays">${overlays}</div>
+              <canvas class="bt-sf-preview-canvas" data-sf-preview-canvas="${idx}" aria-label="${escapeHtml(tpl.title)} hoja ${idx + 1}"></canvas>
+              <div class="bt-sf-official-hitboxes">${hitboxes}</div>
             </div>
           </div>`;
       })
@@ -9975,14 +10707,51 @@ function setupSmartFormsEngine(readFormProfileFn) {
     return `<div class="bt-sf-official-pages-stack">${pagesInner}</div>`;
   };
 
-  const updatePreviewSheet = () => {
+  const paintLivePreviewCanvases = async (tpl, valsSnapshot) => {
+    const seq = ++previewRenderSeq;
+    try {
+      const rendered = await renderOfficialPagesToCanvases(tpl, valsSnapshot, { forExport: false });
+      if (seq !== previewRenderSeq) return;
+      const canvases = Array.from(sheetEl.querySelectorAll("canvas.bt-sf-preview-canvas"));
+      rendered.forEach((item, idx) => {
+        const target = canvases[idx];
+        if (!target || !item || !item.canvas) return;
+        if (target.width !== item.width || target.height !== item.height) {
+          target.width = item.width;
+          target.height = item.height;
+        }
+        const ctx = target.getContext("2d");
+        ctx.clearRect(0, 0, target.width, target.height);
+        ctx.drawImage(item.canvas, 0, 0);
+      });
+    } catch (err) {
+      console.warn("[BiblioTech SF Preview]", err);
+    }
+  };
+
+  const updatePreviewSheet = (rebuildDom = false) => {
     const tpl = SMART_FORM_TEMPLATES[currentTemplateId] || SMART_FORM_TEMPLATES.salud;
     const eff = computeEffectiveValues(tpl, currentValues);
     const imcInput = fieldsContainer.querySelector('[data-sf-readonly="_imcPreview"]');
     if (imcInput) {
       imcInput.value = eff._imcCalculated ? `${eff._imcCalculated} kg/m²` : "";
     }
-    sheetEl.innerHTML = renderSheetHtml(tpl, currentValues);
+    const existingTplId = sheetEl.getAttribute("data-rendered-tpl");
+    if (rebuildDom || existingTplId !== tpl.id || !sheetEl.querySelector("canvas.bt-sf-preview-canvas")) {
+      sheetEl.setAttribute("data-rendered-tpl", tpl.id);
+      sheetEl.innerHTML = renderSheetHtml(tpl, currentValues);
+    } else {
+      // Actualiza estado visual de hitboxes de checkbox sin destruir los canvas
+      sheetEl.querySelectorAll("[data-sf-hitbox-check]").forEach((hb) => {
+        const k = hb.getAttribute("data-sf-hitbox-check");
+        const checked = eff[k] === true || eff[k] === "true" || eff[k] === "X" || eff[k] === "✓";
+        hb.classList.toggle("is-checked", checked);
+      });
+    }
+    if (previewDebounceTimer) clearTimeout(previewDebounceTimer);
+    previewDebounceTimer = setTimeout(() => {
+      paintLivePreviewCanvases(tpl, currentValues);
+    }, 18);
   };
 
   const renderAntecedentesGridHtml = (items) => {
@@ -10128,6 +10897,20 @@ function setupSmartFormsEngine(readFormProfileFn) {
               <input type="checkbox" data-sf-check="${escapeHtml(f.key)}"${isChecked ? " checked" : ""} />
               <span>${escapeHtml(f.label)}</span>
             </label>`;
+        }
+
+        if (f.type === "checks_group" && Array.isArray(f.options)) {
+          const checksHtml = f.options
+            .map((opt) => {
+              const checked = Boolean(currentValues[opt.key]);
+              return `
+                <label class="bt-sf-check-chip${checked ? " is-checked" : ""}">
+                  <input type="checkbox" data-sf-check="${escapeHtml(opt.key)}"${checked ? " checked" : ""} />
+                  <span>${escapeHtml(opt.label)}</span>
+                </label>`;
+            })
+            .join("");
+          return `<div class="bt-sf-field is-full"><span class="bt-sf-group-label">${escapeHtml(f.label)}</span><div class="bt-sf-checks-group">${checksHtml}</div></div>`;
         }
 
         if (f.type === "select" && Array.isArray(f.options)) {
@@ -10304,11 +11087,51 @@ function setupSmartFormsEngine(readFormProfileFn) {
           if (chk.checked) espInput.focus();
         }
       }
+      const chip = chk.closest(".bt-sf-check-chip");
+      if (chip) chip.classList.toggle("is-checked", chk.checked);
       writeActiveStorage(currentTemplateId, currentValues);
       updatePreviewSheet();
       if (statusEl) statusEl.textContent = "Guardado en este dispositivo";
     }
   });
+
+  if (sheetEl) {
+    sheetEl.addEventListener("click", (e) => {
+      const checkBtn = e.target.closest("[data-sf-hitbox-check]");
+      if (checkBtn) {
+        const key = checkBtn.getAttribute("data-sf-hitbox-check");
+        if (key === "_mediaConsentYes" || key === "_mediaConsentNo") {
+          const next = key === "_mediaConsentYes";
+          currentValues.mediaConsent = next;
+          const inp = fieldsContainer.querySelector('[data-sf-check="mediaConsent"]');
+          if (inp) inp.checked = next;
+        } else {
+          const next = !Boolean(currentValues[key]);
+          currentValues[key] = next;
+          const inp = fieldsContainer.querySelector(`[data-sf-check="${key}"]`);
+          if (inp) {
+            inp.checked = next;
+            const chip = inp.closest(".bt-sf-check-chip");
+            if (chip) chip.classList.toggle("is-checked", next);
+          }
+        }
+        writeActiveStorage(currentTemplateId, currentValues);
+        updatePreviewSheet();
+        if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+        return;
+      }
+      const focusBtn = e.target.closest("[data-sf-hitbox-focus]");
+      if (focusBtn) {
+        const key = focusBtn.getAttribute("data-sf-hitbox-focus");
+        const targetField = fieldsContainer.querySelector(`[data-sf-field="${key}"]`) ||
+          fieldsContainer.querySelector(`[data-sf-field^="${key}"]`);
+        if (targetField) {
+          targetField.scrollIntoView({ behavior: "smooth", block: "center" });
+          targetField.focus();
+        }
+      }
+    });
+  }
 
   selectEl.addEventListener("change", () => {
     loadTemplate(selectEl.value, false);
@@ -10396,24 +11219,25 @@ function setupSmartFormsEngine(readFormProfileFn) {
     });
   });
 
-  // Renderiza todas las páginas oficiales del formato actual en objetos Canvas independientes de alta resolución
-  const renderOfficialPagesToCanvases = async (tpl, rawVals) => {
+  // Renderiza todas las páginas oficiales del formato actual en objetos Canvas independientes (vista previa == PDF/PNG)
+  const renderOfficialPagesToCanvases = async (tpl, rawVals, opts = {}) => {
+    const forExport = opts.forExport !== false;
     const vals = computeEffectiveValues(tpl, rawVals);
     const pages = Array.isArray(tpl.officialPages) ? tpl.officialPages : [];
     const loadedImgs = await Promise.all(
-      pages.map(
-        (pg) =>
-          new Promise((resolve, reject) => {
-            const im = new Image();
-            im.onload = () => resolve({ im, pg });
-            im.onerror = reject;
-            im.src = pg.src;
-          })
-      )
+      pages.map(async (pg) => {
+        const im = await loadImageCached(pg.src);
+        return { im, pg };
+      })
     );
+    const sigImg =
+      signatureState.mode !== "blank" && signatureState.dataUrl
+        ? await loadImageCached(signatureState.dataUrl).catch(() => null)
+        : null;
 
     const renderedPages = [];
     for (const { im, pg } of loadedImgs) {
+      if (!im) continue;
       const pw = im.naturalWidth || 1311;
       const ph = im.naturalHeight || 1853;
       const canvas = document.createElement("canvas");
@@ -10426,19 +11250,65 @@ function setupSmartFormsEngine(readFormProfileFn) {
       ctx.fillStyle = "#0f172a";
 
       for (const b of pg.boxes || []) {
-        const val = String(vals[b.key] ?? "").trim();
-        if (!val) continue;
         const bx = (b.x / 100) * pw;
         const by = (b.y / 100) * ph;
         const bw = (b.w / 100) * pw;
         const bh = (b.h / 100) * ph;
-        const fontPx = b.multiline
-          ? Math.max(13, Math.min(18, Math.round(pw * 0.0118)))
-          : Math.max(13, Math.min(19, Math.round( Math.min(pw * 0.0125, bh * 0.72) )));
-        ctx.font = `700 ${fontPx}px Arial, Helvetica, sans-serif`;
-        ctx.textBaseline = "middle";
+
+        if (b.isSignature) {
+          if (sigImg) {
+            const pad = 4;
+            const availW = Math.max(12, bw - pad * 2);
+            const availH = Math.max(10, bh - pad * 2);
+            const natW = sigImg.naturalWidth || sigImg.width || 300;
+            const natH = sigImg.naturalHeight || sigImg.height || 100;
+            const scale = Math.min(availW / Math.max(1, natW), availH / Math.max(1, natH));
+            const dw = natW * scale;
+            const dh = natH * scale;
+            ctx.drawImage(sigImg, bx + (bw - dw) / 2, by + (bh - dh) / 2, dw, dh);
+          }
+          continue;
+        }
+
+        if (b.isCheck) {
+          const isChecked =
+            vals[b.key] === true || vals[b.key] === "true" || vals[b.key] === "X" || vals[b.key] === "✓";
+          if (!isChecked) continue;
+          ctx.save();
+          if (b.checkSymbol === "X") {
+            const fPx = Math.max(12, Math.min(20, Math.round(bh * 0.78)));
+            ctx.font = `800 ${fPx}px Arial, Helvetica, sans-serif`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#1e293b";
+            ctx.fillText("X", bx + bw / 2, by + bh / 2);
+          } else {
+            ctx.strokeStyle = b.checkColor || "#1e293b";
+            ctx.lineWidth = Math.max(2.6, Math.min(4.2, bh * 0.16));
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
+            ctx.beginPath();
+            ctx.moveTo(bx + bw * 0.2, by + bh * 0.54);
+            ctx.lineTo(bx + bw * 0.43, by + bh * 0.78);
+            ctx.lineTo(bx + bw * 0.82, by + bh * 0.24);
+            ctx.stroke();
+          }
+          ctx.restore();
+          continue;
+        }
+
+        const val = String(vals[b.key] ?? "").trim();
+        if (!val) continue;
 
         if (!b.multiline) {
+          let fontPx = Math.max(10, Math.min(18, Math.round(Math.min(pw * 0.0122, bh * 0.7))));
+          ctx.font = `700 ${fontPx}px Arial, Helvetica, sans-serif`;
+          const maxW = Math.max(10, bw - 6);
+          while (fontPx > 9 && ctx.measureText(val).width > maxW) {
+            fontPx -= 1;
+            ctx.font = `700 ${fontPx}px Arial, Helvetica, sans-serif`;
+          }
+          ctx.textBaseline = "middle";
           let tx = bx + 3;
           if (b.align === "center") {
             tx = bx + Math.max(2, (bw - Math.min(bw - 4, ctx.measureText(val).width)) / 2);
@@ -10446,25 +11316,34 @@ function setupSmartFormsEngine(readFormProfileFn) {
           ctx.fillText(val, tx, by + bh / 2, bw - 4);
         } else {
           ctx.textBaseline = "top";
-          const rawLines = val.split(/\r?\n/);
-          const wrapped = [];
-          for (const rl of rawLines) {
-            const words = rl.split(/\s+/);
-            let line = "";
-            for (const w of words) {
-              const test = line ? `${line} ${w}` : w;
-              if (ctx.measureText(test).width > bw - 8 && line) {
-                wrapped.push(line);
-                line = w;
-              } else {
-                line = test;
+          const wrapText = (fSize) => {
+            ctx.font = `700 ${fSize}px Arial, Helvetica, sans-serif`;
+            const lines = [];
+            for (const rl of val.split(/\r?\n/)) {
+              const words = rl.split(/\s+/);
+              let line = "";
+              for (const w of words) {
+                const test = line ? `${line} ${w}` : w;
+                if (ctx.measureText(test).width > bw - 8 && line) {
+                  lines.push(line);
+                  line = w;
+                } else {
+                  line = test;
+                }
               }
+              if (line) lines.push(line);
             }
-            if (line) wrapped.push(line);
+            return lines;
+          };
+          let fontPx = Math.max(10, Math.min(16, Math.round(pw * 0.0112)));
+          let wrapped = wrapText(fontPx);
+          while (fontPx > 9 && wrapped.length * (fontPx * 1.2) > bh - 2) {
+            fontPx -= 1;
+            wrapped = wrapText(fontPx);
           }
-          const maxLines = Math.max(1, Math.floor(bh / (fontPx * 1.22)));
+          const maxLines = Math.max(1, Math.floor(bh / (fontPx * 1.2)));
           for (let li = 0; li < Math.min(wrapped.length, maxLines); li++) {
-            ctx.fillText(wrapped[li], bx + 4, by + 2 + li * (fontPx * 1.22), bw - 6);
+            ctx.fillText(wrapped[li], bx + 4, by + 2 + li * (fontPx * 1.2), bw - 6);
           }
         }
       }
@@ -10473,7 +11352,7 @@ function setupSmartFormsEngine(readFormProfileFn) {
         canvas,
         width: pw,
         height: ph,
-        jpegDataUrl: canvas.toDataURL("image/jpeg", 0.95)
+        jpegDataUrl: forExport ? canvas.toDataURL("image/jpeg", 0.95) : "",
       });
     }
     return renderedPages;
@@ -10596,9 +11475,190 @@ function setupSmartFormsEngine(readFormProfileFn) {
     });
   }
 
+  // Controlador de Firma Digital Opcional (#btSignatureControl)
+  const sigControl = document.getElementById("btSignatureControl");
+  if (sigControl) {
+    const modeBtns = Array.from(sigControl.querySelectorAll("[data-sig-mode]"));
+    const drawWrap = document.getElementById("btSigDrawWrap");
+    const uploadWrap = document.getElementById("btSigUploadWrap");
+    const padCanvas = document.getElementById("btSigPadCanvas");
+    const padClearBtn = document.getElementById("btSigClearBtn");
+    const padSaveBtn = document.getElementById("btSigSavePadBtn");
+    const uploadInput = document.getElementById("btSigUploadInput");
+    const uploadPreviewWrap = document.getElementById("btSigUploadPreviewWrap");
+    const uploadPreviewImg = document.getElementById("btSigUploadPreviewImg");
+    const uploadRemoveBtn = document.getElementById("btSigRemoveUploadBtn");
+    const sigStatusEl = document.getElementById("btSigStatusText");
+
+    const syncSigUi = () => {
+      const m = signatureState.mode || "blank";
+      modeBtns.forEach((b) => {
+        const act = b.getAttribute("data-sig-mode") === m;
+        b.classList.toggle("is-active", act);
+        b.setAttribute("aria-pressed", String(act));
+      });
+      if (drawWrap) drawWrap.classList.toggle("hidden", m !== "draw");
+      if (uploadWrap) uploadWrap.classList.toggle("hidden", m !== "upload");
+      if (sigStatusEl) {
+        const isEn = document.documentElement.dataset.btLang === "en";
+        if (m === "blank") sigStatusEl.textContent = isEn ? "Blank for handwritten signature" : "En blanco para firmar en físico";
+        else if (m === "draw") sigStatusEl.textContent = signatureState.dataUrl ? (isEn ? "Drawn signature active" : "Trazo guardado y activo en PDF") : (isEn ? "Draw below" : "Dibuja tu firma abajo");
+        else sigStatusEl.textContent = signatureState.dataUrl ? (isEn ? "Uploaded signature active" : "Imagen de firma activa en PDF") : (isEn ? "Choose an image" : "Selecciona PNG/JPG/WEBP");
+      }
+      if (uploadPreviewWrap && uploadPreviewImg) {
+        const hasUp = m === "upload" && Boolean(signatureState.dataUrl);
+        uploadPreviewWrap.classList.toggle("hidden", !hasUp);
+        if (hasUp) uploadPreviewImg.src = signatureState.dataUrl;
+      }
+    };
+
+    modeBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const m = btn.getAttribute("data-sig-mode") || "blank";
+        signatureState = { mode: m, dataUrl: signatureState.dataUrl || "" };
+        saveSignatureState(signatureState);
+        syncSigUi();
+        updatePreviewSheet();
+        if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+      });
+    });
+
+    if (padCanvas) {
+      const pCtx = padCanvas.getContext("2d");
+      let drawing = false;
+      let hasStroke = false;
+      const getPos = (e) => {
+        const rect = padCanvas.getBoundingClientRect();
+        return {
+          x: ((e.clientX - rect.left) * padCanvas.width) / Math.max(1, rect.width),
+          y: ((e.clientY - rect.top) * padCanvas.height) / Math.max(1, rect.height),
+        };
+      };
+      padCanvas.addEventListener("pointerdown", (e) => {
+        drawing = true;
+        hasStroke = true;
+        try { padCanvas.setPointerCapture(e.pointerId); } catch (_) {}
+        const pos = getPos(e);
+        pCtx.strokeStyle = "#0f172a";
+        pCtx.lineWidth = 2.8;
+        pCtx.lineCap = "round";
+        pCtx.lineJoin = "round";
+        pCtx.beginPath();
+        pCtx.moveTo(pos.x, pos.y);
+      });
+      padCanvas.addEventListener("pointermove", (e) => {
+        if (!drawing) return;
+        const pos = getPos(e);
+        pCtx.lineTo(pos.x, pos.y);
+        pCtx.stroke();
+      });
+      const finishStroke = () => {
+        if (!drawing) return;
+        drawing = false;
+        if (hasStroke) {
+          const png = padCanvas.toDataURL("image/png");
+          signatureState = { mode: "draw", dataUrl: png };
+          saveSignatureState(signatureState);
+          syncSigUi();
+          updatePreviewSheet();
+        }
+      };
+      padCanvas.addEventListener("pointerup", finishStroke);
+      padCanvas.addEventListener("pointercancel", finishStroke);
+
+      if (padClearBtn) {
+        padClearBtn.addEventListener("click", () => {
+          pCtx.clearRect(0, 0, padCanvas.width, padCanvas.height);
+          hasStroke = false;
+          signatureState = { mode: "draw", dataUrl: "" };
+          saveSignatureState(signatureState);
+          syncSigUi();
+          updatePreviewSheet();
+        });
+      }
+      if (padSaveBtn) {
+        padSaveBtn.addEventListener("click", () => {
+          const png = hasStroke ? padCanvas.toDataURL("image/png") : signatureState.dataUrl;
+          signatureState = { mode: "draw", dataUrl: png || "" };
+          saveSignatureState(signatureState);
+          syncSigUi();
+          updatePreviewSheet();
+          showWebToast("Firma digital aplicada a las hojas con espacio de firma.");
+        });
+      }
+      if (signatureState.mode === "draw" && signatureState.dataUrl) {
+        loadImageCached(signatureState.dataUrl).then((im) => {
+          if (im) pCtx.drawImage(im, 0, 0, padCanvas.width, padCanvas.height);
+        }).catch(() => {});
+      }
+    }
+
+    if (uploadInput) {
+      uploadInput.addEventListener("change", () => {
+        const f = uploadInput.files && uploadInput.files[0];
+        if (!f) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          const tmpImg = new Image();
+          tmpImg.onload = () => {
+            const maxW = 540;
+            const scale = Math.min(1, maxW / Math.max(1, tmpImg.naturalWidth));
+            const cw = Math.max(10, Math.round(tmpImg.naturalWidth * scale));
+            const ch = Math.max(10, Math.round(tmpImg.naturalHeight * scale));
+            const oc = document.createElement("canvas");
+            oc.width = cw;
+            oc.height = ch;
+            const octx = oc.getContext("2d");
+            octx.drawImage(tmpImg, 0, 0, cw, ch);
+            const imgData = octx.getImageData(0, 0, cw, ch);
+            const d = imgData.data;
+            for (let i = 0; i < d.length; i += 4) {
+              const lum = (d[i] + d[i + 1] + d[i + 2]) / 3;
+              if (lum > 225) d[i + 3] = 0;
+              else if (lum > 185) d[i + 3] = Math.round(((225 - lum) / 40) * d[i + 3]);
+            }
+            octx.putImageData(imgData, 0, 0);
+            const cleanPng = oc.toDataURL("image/png");
+            signatureState = { mode: "upload", dataUrl: cleanPng };
+            saveSignatureState(signatureState);
+            syncSigUi();
+            updatePreviewSheet();
+            showWebToast("Firma cargada con fondo transparente.");
+          };
+          tmpImg.src = String(reader.result || "");
+        };
+        reader.readAsDataURL(f);
+      });
+    }
+
+    if (uploadRemoveBtn) {
+      uploadRemoveBtn.addEventListener("click", () => {
+        signatureState = { mode: "blank", dataUrl: "" };
+        saveSignatureState(signatureState);
+        if (uploadInput) uploadInput.value = "";
+        syncSigUi();
+        updatePreviewSheet();
+      });
+    }
+
+    syncSigUi();
+  }
+
   renderNamedDrafts();
   loadTemplate("salud", false);
-  window.__btSelectSmartTemplate = (tplId, scroll = true) => loadTemplate(tplId, Boolean(scroll));
+  window.__btSelectSmartTemplate = (tplId, scroll = true, prefillMap = null) => {
+    loadTemplate(tplId, Boolean(scroll));
+    if (prefillMap && typeof prefillMap === "object") {
+      Object.entries(prefillMap).forEach(([k, val]) => {
+        if (val !== undefined && val !== null && String(val).trim() !== "") {
+          currentValues[k] = String(val);
+        }
+      });
+      writeActiveStorage(currentTemplateId, currentValues);
+      renderFields();
+      updatePreviewSheet(true);
+    }
+  };
 }
 
 // ============================================================================
@@ -12312,7 +13372,36 @@ const BT_UI_I18N = {
     langSub: "Traduce menús, controles y encabezados principales entre Español e Inglés (documentos oficiales conservan su idioma original).",
     welcomeLabel: "Guía de bienvenida y QR",
     welcomeSub: "Abre la introducción de 3 páginas sobre funciones, uso sin señal y código QR para compartir.",
-    welcomeOpenBtn: "Abrir bienvenida"
+    welcomeOpenBtn: "Abrir bienvenida",
+    fontScaleLabel: "Tamaño de letra de lectura",
+    fontScaleSub: "Aumenta el tamaño base en respuestas y textos largos.",
+    fontBtns: ["Normal", "Grande", "Extra"],
+    ansSpeak: "Escuchar",
+    ansShare: "Compartir enlace",
+    ansPrint: "Imprimir / PDF",
+    wizTitle: "Asistente Rápido de Trámites (En 3 clics)",
+    wizSub: "Elige tu sección y lo que quieres tramitar; te damos la lista exacta de documentos y el enlace directo para llenar.",
+    wizReset: "Limpiar selección",
+    progTitle: "Checklist de Progresión e Insignia Final por Sección",
+    progSub: "Marca tus avances, registra fechas reales y pásalos en 1 clic a tu solicitud oficial de Insignia Terminal (P9.1 a P9.4).",
+    progReset: "Reiniciar sección",
+    sigTitle: "Firma opcional en documento",
+    sigModes: ["Dejar en blanco", "Dibujar firma", "Subir imagen"],
+    sigClear: "Limpiar trazo",
+    sigApply: "Aplicar firma",
+    sfApplyProfile: "Rellenar con mi Perfil Local",
+    sfSaveDraft: "Guardar borrador",
+    sfReset: "Limpiar campos",
+    sfDownloadPdf: "Descargar PDF Oficial (.pdf)",
+    sfDownloadPng: "Descargar Imagen (.png)",
+    sfPrint: "Imprimir",
+    sfPreviewBar: "Documento oficial de base con tus datos",
+    btnQrProfile: "Compartir con QR",
+    btnSettingsQr: "QR de perfil",
+    qrModalKicker: "Transferencia 100% offline",
+    qrModalTitle: "Código QR de tu Perfil Local",
+    qrModalDesc: "Escanea este código con la cámara de otro dispositivo para importar tu nombre, CUM, Grupo, Provincia, emergencia y Scouter sin internet.",
+    qrCopyBtn: "Copiar enlace"
   },
   en: {
     navHome: "Home",
@@ -12350,7 +13439,36 @@ const BT_UI_I18N = {
     langSub: "Translates main navigation, controls and headings between Spanish and English (official ASMAC files stay in their original language).",
     welcomeLabel: "Welcome guide & QR",
     welcomeSub: "Open the 3-page introduction on features, offline usage and shareable QR code.",
-    welcomeOpenBtn: "Open guide"
+    welcomeOpenBtn: "Open guide",
+    fontScaleLabel: "Reading text size",
+    fontScaleSub: "Scales answer text and long-form documents across the app.",
+    fontBtns: ["Normal", "Large", "Extra"],
+    ansSpeak: "Listen",
+    ansShare: "Share link",
+    ansPrint: "Print / PDF",
+    wizTitle: "Quick Procedure Wizard (3 Clicks)",
+    wizSub: "Pick your Scout section and procedure goal to get the exact official files and one-click editable templates.",
+    wizReset: "Reset selection",
+    progTitle: "Section Progression & Terminal Badge Checklist",
+    progSub: "Track your milestones, log dates and send them in 1 click to the official P9.1–P9.4 application form.",
+    progReset: "Reset section",
+    sigTitle: "Optional document signature",
+    sigModes: ["Leave blank", "Draw signature", "Upload image"],
+    sigClear: "Clear stroke",
+    sigApply: "Apply signature",
+    sfApplyProfile: "Fill with Local Profile",
+    sfSaveDraft: "Save draft",
+    sfReset: "Clear fields",
+    sfDownloadPdf: "Download Official PDF (.pdf)",
+    sfDownloadPng: "Download Image (.png)",
+    sfPrint: "Print",
+    sfPreviewBar: "Official base document filled with your data",
+    btnQrProfile: "Share via QR",
+    btnSettingsQr: "Profile QR",
+    qrModalKicker: "100% offline transfer",
+    qrModalTitle: "Your Local Profile QR Code",
+    qrModalDesc: "Scan with another device's camera to import your name, CUM, Group, Province, emergency contact and Scouter completely offline.",
+    qrCopyBtn: "Copy link"
   }
 };
 
@@ -12421,6 +13539,44 @@ function applyUiLanguage(lang = "es", persist = true) {
   setText("#settingsWelcomeLabel", dict.welcomeLabel);
   setText("#settingsWelcomeSub", dict.welcomeSub);
   setText("#btnSettingsOpenWelcome", dict.welcomeOpenBtn);
+  setText("#settingsFontScaleLabel", dict.fontScaleLabel);
+  setText("#settingsFontScaleSub", dict.fontScaleSub);
+  document.querySelectorAll("[data-font-scale]").forEach((fb, idx) => {
+    if (dict.fontBtns[idx]) fb.textContent = dict.fontBtns[idx];
+  });
+
+  setText("#btnSpeakAnswer", dict.ansSpeak);
+  setText("#btnShareAnswerLink", dict.ansShare);
+  setText("#btnPrintAnswerPdf", dict.ansPrint);
+  setText("#btWizardTitle", dict.wizTitle);
+  setText("#btWizardSub", dict.wizSub);
+  setText("#btWizardResetBtn", dict.wizReset);
+  setText("#btProgTitle", dict.progTitle);
+  setText("#btProgSubtitle", dict.progSub);
+  setText("#btProgResetBtn", dict.progReset);
+  setText("#btSigTitle", dict.sigTitle);
+  document.querySelectorAll("[data-sig-mode]").forEach((sb, idx) => {
+    if (dict.sigModes[idx]) sb.textContent = dict.sigModes[idx];
+  });
+  setText("#btSigClearBtn", dict.sigClear);
+  setText("#btSigSavePadBtn", dict.sigApply);
+  setText("#btnSfApplyProfile span", dict.sfApplyProfile);
+  setText("#btnSfSaveNamedDraft span", dict.sfSaveDraft);
+  setText("#btnSfResetForm", dict.sfReset);
+  setText("#btnSfPrintPdf span", dict.sfDownloadPdf);
+  setText("#btnSfDownloadOfficialPng span", dict.sfDownloadPng);
+  setText("#btnSfDownloadDoc span", dict.sfPrint);
+  setText(".bt-sf-preview-label", dict.sfPreviewBar);
+  setText("#btnQrAutofillProfile", dict.btnQrProfile);
+  setText("#btnSettingsQrAutofill", dict.btnSettingsQr);
+  setText("#btAutofillQrKicker", dict.qrModalKicker);
+  setText("#btAutofillQrTitle", dict.qrModalTitle);
+  setText("#btAutofillQrDesc", dict.qrModalDesc);
+  setText("#btnCopyAutofillQrUrl", dict.qrCopyBtn);
+
+  if (typeof window.__btRefreshProgressionUi === "function") {
+    window.__btRefreshProgressionUi();
+  }
 
   document.querySelectorAll("[data-lang-choice]").forEach((btn) => {
     btn.classList.toggle("active", btn.getAttribute("data-lang-choice") === safeLang);
@@ -12626,14 +13782,85 @@ function setupAnswerQuickActions() {
   }
 }
 
+function decodeAutofillShareToken(token) {
+  try {
+    let b64 = String(token || "").replace(/-/g, "+").replace(/_/g, "/");
+    while (b64.length % 4) b64 += "=";
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const parsed = JSON.parse(new TextDecoder().decode(bytes));
+    if (!parsed || typeof parsed !== "object") return null;
+    const clean = {
+      name: String(parsed.n || parsed.name || "").trim().slice(0, 120),
+      cum: String(parsed.c || parsed.cum || "").trim().toUpperCase().slice(0, 32),
+      age: String(parsed.a || parsed.age || "").trim().slice(0, 40),
+      section: String(parsed.s || parsed.section || "").trim().slice(0, 60),
+      group: String(parsed.g || parsed.group || "").trim().slice(0, 80),
+      province: String(parsed.p || parsed.province || "").trim().slice(0, 80),
+      blood: String(parsed.b || parsed.blood || "").trim().slice(0, 20),
+      emergency: String(parsed.e || parsed.emergency || "").trim().slice(0, 140),
+      scouter: String(parsed.r || parsed.scouter || "").trim().slice(0, 120),
+    };
+    return Object.values(clean).some(Boolean) ? clean : null;
+  } catch (_) {
+    return null;
+  }
+}
+
 function handleStartupDeepLinks() {
   try {
     const rawSearch = window.location.search || "";
     const rawHash = window.location.hash || "";
     let sp = new URLSearchParams(rawSearch);
-    if (!sp.get("q") && !sp.get("doc") && rawHash.includes("=")) {
+    if (!sp.get("q") && !sp.get("doc") && !sp.get("af") && rawHash.includes("=")) {
       sp = new URLSearchParams(rawHash.replace(/^#/, ""));
     }
+    const afParam = (sp.get("af") || "").trim();
+    if (afParam) {
+      const imported = decodeAutofillShareToken(afParam);
+      if (imported) {
+        try {
+          localStorage.setItem(BT_AUTOFILL_PROFILE_KEY, JSON.stringify(imported));
+        } catch (_) {}
+        try {
+          const cleanUrl = `${window.location.pathname}${window.location.hash || ""}`;
+          window.history.replaceState(null, "", cleanUrl);
+        } catch (_) {}
+        setTimeout(() => {
+          const idMap = {
+            afName: imported.name,
+            afCum: imported.cum,
+            afAge: imported.age,
+            afSection: imported.section,
+            afGroup: imported.group,
+            afProvince: imported.province,
+            afBlood: imported.blood,
+            afEmergency: imported.emergency,
+            afScouter: imported.scouter,
+          };
+          Object.entries(idMap).forEach(([id, v]) => {
+            const el = document.getElementById(id);
+            if (el) el.value = v;
+          });
+          const badge = document.getElementById("autofillStatusBadge");
+          if (badge) {
+            badge.classList.add("is-ready");
+            badge.textContent = `Perfil activo${imported.name ? ` · ${imported.name.split(/\s+/)[0]}` : ""}`;
+          }
+          if (typeof window.__btSyncSmartFormFromProfile === "function") {
+            window.__btSyncSmartFormFromProfile(imported, false);
+          }
+          if (typeof window.__btRefreshSettingsDataPane === "function") {
+            window.__btRefreshSettingsDataPane();
+          }
+          btSwitchView("formatos", { scrollToId: "autofillProfileForm" });
+          showWebToast("Perfil de Autollenado importado desde código QR.");
+        }, 160);
+        return;
+      }
+    }
+
     const qParam = (sp.get("q") || "").trim();
     const docParam = (sp.get("doc") || "").trim();
     const pageParam = parseInt(sp.get("page") || "0", 10);
@@ -12673,7 +13900,7 @@ function setupProcedureWizard() {
         steps: [
           { code: "P2.1", docId: "doc-0683", desc: "Cédula Auxiliar de Evaluación Manada al día", tpl: "p2" },
           { code: "Acta", docId: "doc-0704", desc: "Acta de Consejo de Sección y Consejo de Grupo (`P6.4`)", tpl: "acta" },
-          { code: "P9.1", docId: "doc-0711", desc: "Formato Solicitud Insignia Final Alfa (`P9.1`)", tpl: null }
+          { code: "P9.1", docId: "doc-0711", desc: "Formato Solicitud Insignia Final Alfa (`P9.1`)", tpl: "p9_alfa" }
         ],
         tip: "Verifica evidencias en CDC conforme a `ASMAC/DNME/CNPJ/26.011`."
       },
@@ -12691,7 +13918,7 @@ function setupProcedureWizard() {
         steps: [
           { code: "P2.3", docId: "doc-0685", desc: "Cédula Auxiliar de Evaluación Comunidad", tpl: null },
           { code: "Acta", docId: "doc-0704", desc: "Aval de Congreso / Asamblea y Consejo (`P6.4`)", tpl: "acta" },
-          { code: "P9.3", docId: "doc-0713", desc: "Formato Solicitud Insignia Everest (`P9.3`)", tpl: null }
+          { code: "P9.3", docId: "doc-0713", desc: "Formato Solicitud Insignia Everest (`P9.3`)", tpl: "p9_everest" }
         ],
         tip: "Incluye acreditación PJOS vigente o en proceso (`DNME 26.007`)."
       },
@@ -12700,7 +13927,7 @@ function setupProcedureWizard() {
         steps: [
           { code: "P2.4", docId: "doc-0686", desc: "Cédula Auxiliar de Evaluación Clan", tpl: null },
           { code: "Acta", docId: "doc-0704", desc: "Aval de Asamblea/Consejo de Clan y Consejo de Grupo", tpl: "acta" },
-          { code: "P9.4", docId: "doc-0714", desc: "Formato Solicitud Horquilla Baden Powell (`P9.4`)", tpl: null }
+          { code: "P9.4", docId: "doc-0714", desc: "Formato Solicitud Horquilla Baden Powell (`P9.4`)", tpl: "p9_bp" }
         ],
         tip: "Adjunta evidencias de proyecto SMART e iniciativas ejecutadas."
       },
@@ -12836,7 +14063,565 @@ function setupProcedureWizard() {
   });
 }
 
+// ============================================================================
+// CHECKLIST DE PROGRESIÓN POR SECCIÓN (P9.1 - P9.4)
+// ============================================================================
+const BT_PROGRESSION_TRACKER_KEY = "bt_progression_tracker_v1";
+
+function setupProgressionChecker() {
+  const root = document.getElementById("btProgressionChecker");
+  if (!root) return;
+  const secBtns = Array.from(root.querySelectorAll("[data-prog-sec]"));
+  const badgeEl = document.getElementById("btProgProgressBadge");
+  const listEl = document.getElementById("btProgChecklistBody");
+  const openBtn = document.getElementById("btProgOpenFormBtn");
+  const resetBtn = document.getElementById("btProgResetBtn");
+  if (!listEl || !secBtns.length) return;
+
+  const SECTIONS = {
+    manada: {
+      tplId: "p9_alfa",
+      ctaEs: "Pasar fechas a solicitud P9.1",
+      ctaEn: "Send dates to P9.1 form",
+      items: [
+        { id: "pata", formKey: "stage1Term", labelEs: "Etapa Pata Tierna (o Primera Estrella)", labelEn: "Tenderpad Stage (Pata Tierna)" },
+        { id: "saltador", formKey: "stage2Term", labelEs: "Etapa Saltador", labelEn: "Leaper Stage (Saltador)" },
+        { id: "rastreador", formKey: "stage3Term", labelEs: "Etapa Rastreador", labelEn: "Tracker Stage (Rastreador)" },
+        { id: "cazador", formKey: "stage4Term", labelEs: "Etapa Cazador", labelEn: "Hunter Stage (Cazador)" },
+        { id: "compromiso", formKey: "compromisoFecha", labelEs: "Compromiso y Promesa de Manada", labelEn: "Cub Scout Promise & Commitment" },
+        { id: "iniciativa", formKey: "mopTerm", labelEs: "Iniciativa Mundial / Especialidades FES", labelEn: "World Initiative / FES Badges" }
+      ]
+    },
+    tropa: {
+      tplId: "p9",
+      ctaEs: "Pasar fechas a solicitud P9.2",
+      ctaEn: "Send dates to P9.2 form",
+      items: [
+        { id: "pistas", formKey: "stage1Term", labelEs: "Etapa Pistas", labelEn: "Pistas Stage" },
+        { id: "sendas", formKey: "stage2Term", labelEs: "Etapa Sendas", labelEn: "Sendas Stage" },
+        { id: "rumbos", formKey: "stage3Term", labelEs: "Etapa Rumbos", labelEn: "Rumbos Stage" },
+        { id: "travesias", formKey: "stage4Term", labelEs: "Etapa Travesías", labelEn: "Travesías Stage" },
+        { id: "flecha", formKey: "flechaFecha", labelEs: "Curso Flecha de Madera / Liderazgo", labelEn: "Wood Badge Youth Course" },
+        { id: "iniciativa", formKey: "mopTerm", labelEs: "Iniciativa Mundial (MoP / Tribu Tierra)", labelEn: "World Initiative (MoP / Earth Tribe)" }
+      ]
+    },
+    comunidad: {
+      tplId: "p9_everest",
+      ctaEs: "Pasar fechas a solicitud P9.3",
+      ctaEn: "Send dates to P9.3 form",
+      items: [
+        { id: "e1", formKey: "stage1Term", labelEs: "Etapa 1 / Búsqueda", labelEn: "Stage 1" },
+        { id: "e2", formKey: "stage2Term", labelEs: "Etapa 2 / Encuentro", labelEn: "Stage 2" },
+        { id: "e3", formKey: "stage3Term", labelEs: "Etapa 3 / Desafío", labelEn: "Stage 3" },
+        { id: "e4", formKey: "stage4Term", labelEs: "Etapa 4 / Horizonte", labelEn: "Stage 4" },
+        { id: "punta", formKey: "puntaFecha", labelEs: "Curso Punta de Flecha", labelEn: "Arrowhead Leadership Course" },
+        { id: "iniciativa", formKey: "mopTerm", labelEs: "Iniciativa Mundial / Proyecto Comunitario", labelEn: "World Initiative / Project" }
+      ]
+    },
+    clan: {
+      tplId: "p9_bp",
+      ctaEs: "Pasar fechas a solicitud P9.4",
+      ctaEn: "Send dates to P9.4 form",
+      items: [
+        { id: "e1", formKey: "stage1Term", labelEs: "Etapa 1 de Clan", labelEn: "Rover Stage 1" },
+        { id: "e2", formKey: "stage2Term", labelEs: "Etapa 2 de Clan", labelEn: "Rover Stage 2" },
+        { id: "e3", formKey: "stage3Term", labelEs: "Etapa 3 de Clan", labelEn: "Rover Stage 3" },
+        { id: "e4", formKey: "stage4Term", labelEs: "Etapa 4 / Proyecto de Vida", labelEn: "Rover Stage 4 / Life Project" },
+        { id: "viaje", formKey: "viajeFecha", labelEs: "Viaje Rover / Curso", labelEn: "Rover Journey / Course" },
+        { id: "iniciativa", formKey: "mopTerm", labelEs: "Iniciativa Mundial / Servicio", labelEn: "World Initiative / Service" }
+      ]
+    }
+  };
+
+  let curSec = "manada";
+  const loadState = () => {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(BT_PROGRESSION_TRACKER_KEY) || "{}");
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (_) {
+      return {};
+    }
+  };
+  const saveState = (st) => {
+    try {
+      localStorage.setItem(BT_PROGRESSION_TRACKER_KEY, JSON.stringify(st));
+    } catch (_) {}
+  };
+  let state = loadState();
+
+  const renderChecklist = () => {
+    const cfg = SECTIONS[curSec] || SECTIONS.manada;
+    const secData = state[curSec] || {};
+    const isEn = document.documentElement.dataset.btLang === "en";
+    secBtns.forEach((b) => {
+      const act = b.getAttribute("data-prog-sec") === curSec;
+      b.classList.toggle("active", act);
+      b.setAttribute("aria-selected", String(act));
+    });
+    const doneCount = cfg.items.filter((it) => Boolean(secData[it.id] && secData[it.id].done)).length;
+    const pct = Math.round((doneCount / cfg.items.length) * 100);
+    if (badgeEl) badgeEl.textContent = `${doneCount} / ${cfg.items.length} · ${pct}%`;
+    if (openBtn) openBtn.textContent = isEn ? cfg.ctaEn : cfg.ctaEs;
+
+    listEl.innerHTML = cfg.items
+      .map((it) => {
+        const entry = secData[it.id] || { done: false, date: "" };
+        const lbl = isEn ? it.labelEn : it.labelEs;
+        return `
+          <div class="bt-prog-item${entry.done ? " is-done" : ""}">
+            <label class="bt-prog-check-label">
+              <input type="checkbox" data-prog-check="${escapeHtml(it.id)}"${entry.done ? " checked" : ""} />
+              <span>${escapeHtml(lbl)}</span>
+            </label>
+            <input type="text" class="bt-prog-date-input" data-prog-date="${escapeHtml(it.id)}" value="${escapeHtml(entry.date || "")}" placeholder="DD/MM/AA" aria-label="Fecha ${escapeHtml(lbl)}" />
+          </div>`;
+      })
+      .join("");
+  };
+
+  secBtns.forEach((b) => {
+    b.addEventListener("click", () => {
+      curSec = b.getAttribute("data-prog-sec") || "manada";
+      renderChecklist();
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+    });
+  });
+
+  listEl.addEventListener("change", (e) => {
+    const chk = e.target.closest("[data-prog-check]");
+    if (!chk) return;
+    const id = chk.getAttribute("data-prog-check");
+    if (!state[curSec]) state[curSec] = {};
+    const prev = state[curSec][id] || { done: false, date: "" };
+    const nowDone = Boolean(chk.checked);
+    const today = new Date().toLocaleDateString("es-MX", { day: "2-digit", month: "2-digit", year: "2-digit" });
+    state[curSec][id] = { done: nowDone, date: prev.date || (nowDone ? today : "") };
+    saveState(state);
+    renderChecklist();
+  });
+
+  listEl.addEventListener("input", (e) => {
+    const inp = e.target.closest("[data-prog-date]");
+    if (!inp) return;
+    const id = inp.getAttribute("data-prog-date");
+    if (!state[curSec]) state[curSec] = {};
+    const prev = state[curSec][id] || { done: false, date: "" };
+    state[curSec][id] = { done: prev.done, date: inp.value };
+    saveState(state);
+  });
+
+  if (openBtn) {
+    openBtn.addEventListener("click", () => {
+      const cfg = SECTIONS[curSec] || SECTIONS.manada;
+      const secData = state[curSec] || {};
+      const prefill = {};
+      cfg.items.forEach((it) => {
+        const entry = secData[it.id];
+        if (entry && entry.date && it.formKey) {
+          prefill[it.formKey] = entry.date;
+        }
+      });
+      if (typeof window.__btSelectSmartTemplate === "function") {
+        window.__btSelectSmartTemplate(cfg.tplId, true, prefill);
+        showWebToast("Fechas de tu checklist transferidas al formato oficial P9.");
+      }
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      delete state[curSec];
+      saveState(state);
+      renderChecklist();
+      showWebToast("Checklist de sección reiniciado.");
+    });
+  }
+
+  window.__btRefreshProgressionUi = renderChecklist;
+  renderChecklist();
+}
+
+// ============================================================================
+// GENERADOR DE CÓDIGO QR 100% OFFLINE (ISO/IEC 18004 BYTE MODE + RS GF256)
+// ============================================================================
+function generateQrSvg(text, sizePx = 220) {
+  const bytes = Array.from(new TextEncoder().encode(String(text || "")));
+  // [ver, totalDataCodewords_L, ecPerBlock_L, b1Count, b1Data, b2Count, b2Data]
+  const SPECS = [
+    null,
+    [1, 19, 7, 1, 19, 0, 0],
+    [2, 34, 10, 1, 34, 0, 0],
+    [3, 55, 15, 1, 55, 0, 0],
+    [4, 80, 20, 1, 80, 0, 0],
+    [5, 108, 26, 1, 108, 0, 0],
+    [6, 136, 18, 2, 68, 0, 0],
+    [7, 156, 20, 2, 78, 0, 0],
+    [8, 194, 24, 2, 97, 0, 0],
+    [9, 232, 30, 2, 116, 0, 0],
+    [10, 274, 18, 2, 68, 2, 69],
+    [11, 324, 20, 4, 81, 0, 0],
+    [12, 370, 24, 2, 92, 2, 93],
+    [13, 428, 26, 4, 107, 0, 0],
+    [14, 461, 30, 3, 115, 1, 116],
+    [15, 523, 22, 5, 87, 1, 88],
+    [16, 589, 24, 5, 98, 1, 99]
+  ];
+  const ALIGN = [
+    [], [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34],
+    [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50], [6, 30, 54],
+    [6, 32, 58], [6, 34, 62], [6, 26, 46, 66], [6, 26, 48, 70], [6, 26, 50, 74]
+  ];
+
+  let spec = null;
+  for (let v = 1; v < SPECS.length; v++) {
+    const ccBits = v < 10 ? 8 : 16;
+    const bitLen = 4 + ccBits + bytes.length * 8;
+    if (Math.ceil((bitLen + 4) / 8) <= SPECS[v][1]) {
+      spec = SPECS[v];
+      break;
+    }
+  }
+  if (!spec) spec = SPECS[SPECS.length - 1];
+  const ver = spec[0];
+  const totalData = spec[1];
+  const ecPerBlock = spec[2];
+  const b1Cnt = spec[3], b1Len = spec[4], b2Cnt = spec[5], b2Len = spec[6];
+
+  // Bitstream Byte Mode (0100)
+  const bits = [];
+  const pushBits = (val, n) => {
+    for (let i = n - 1; i >= 0; i--) bits.push((val >> i) & 1);
+  };
+  pushBits(4, 4);
+  pushBits(Math.min(bytes.length, totalData - 3), ver < 10 ? 8 : 16);
+  const maxBytes = Math.min(bytes.length, totalData - (ver < 10 ? 2 : 3));
+  for (let i = 0; i < maxBytes; i++) pushBits(bytes[i], 8);
+  const maxBits = totalData * 8;
+  for (let i = 0; i < 4 && bits.length < maxBits; i++) bits.push(0);
+  while (bits.length % 8 !== 0) bits.push(0);
+  const codewords = [];
+  for (let i = 0; i < bits.length; i += 8) {
+    let b = 0;
+    for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j];
+    codewords.push(b);
+  }
+  const padBytes = [0xec, 0x11];
+  let pi = 0;
+  while (codewords.length < totalData) {
+    codewords.push(padBytes[pi % 2]);
+    pi++;
+  }
+
+  // GF(256) Reed-Solomon
+  const EXP = new Uint8Array(512);
+  const LOG = new Uint8Array(256);
+  let x = 1;
+  for (let i = 0; i < 255; i++) {
+    EXP[i] = x;
+    LOG[x] = i;
+    x <<= 1;
+    if (x & 256) x ^= 0x11d;
+  }
+  for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+  const gfMul = (a, b) => (a === 0 || b === 0 ? 0 : EXP[LOG[a] + LOG[b]]);
+  const rsPoly = (deg) => {
+    let g = [1];
+    for (let i = 0; i < deg; i++) {
+      const ng = new Array(g.length + 1).fill(0);
+      for (let j = 0; j < g.length; j++) {
+        ng[j] ^= g[j];
+        ng[j + 1] ^= gfMul(g[j], EXP[i]);
+      }
+      g = ng;
+    }
+    return g;
+  };
+  const rsEncode = (data, ecLen) => {
+    const gen = rsPoly(ecLen);
+    const res = new Array(data.length + ecLen).fill(0);
+    for (let i = 0; i < data.length; i++) res[i] = data[i];
+    for (let i = 0; i < data.length; i++) {
+      const c = res[i];
+      if (c === 0) continue;
+      for (let j = 1; j < gen.length; j++) res[i + j] ^= gfMul(gen[j], c);
+    }
+    return res.slice(data.length);
+  };
+
+  const blocks = [];
+  const ecBlocks = [];
+  let off = 0;
+  for (let i = 0; i < b1Cnt; i++) {
+    const sl = codewords.slice(off, off + b1Len);
+    off += b1Len;
+    blocks.push(sl);
+    ecBlocks.push(rsEncode(sl, ecPerBlock));
+  }
+  for (let i = 0; i < b2Cnt; i++) {
+    const sl = codewords.slice(off, off + b2Len);
+    off += b2Len;
+    blocks.push(sl);
+    ecBlocks.push(rsEncode(sl, ecPerBlock));
+  }
+
+  const finalBytes = [];
+  const maxD = Math.max(b1Len, b2Len);
+  for (let i = 0; i < maxD; i++) {
+    for (const bl of blocks) if (i < bl.length) finalBytes.push(bl[i]);
+  }
+  for (let i = 0; i < ecPerBlock; i++) {
+    for (const ec of ecBlocks) if (i < ec.length) finalBytes.push(ec[i]);
+  }
+
+  const N = ver * 4 + 17;
+  const mat = Array.from({ length: N }, () => new Int8Array(N)); // 0 empty, 1 light, 2 dark
+  const isFn = Array.from({ length: N }, () => new Uint8Array(N));
+
+  const setFn = (r, c, dark) => {
+    if (r >= 0 && r < N && c >= 0 && c < N) {
+      mat[r][c] = dark ? 2 : 1;
+      isFn[r][c] = 1;
+    }
+  };
+  const drawFinder = (r0, c0) => {
+    for (let dr = -1; dr <= 7; dr++) {
+      for (let dc = -1; dc <= 7; dc++) {
+        const dark =
+          dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6 &&
+          (dr === 0 || dr === 6 || dc === 0 || dc === 6 || (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4));
+        setFn(r0 + dr, c0 + dc, dark);
+      }
+    }
+  };
+  drawFinder(0, 0);
+  drawFinder(0, N - 7);
+  drawFinder(N - 7, 0);
+
+  for (let i = 8; i < N - 8; i++) {
+    setFn(6, i, i % 2 === 0);
+    setFn(i, 6, i % 2 === 0);
+  }
+  setFn(N - 8, 8, true);
+
+  const centers = ALIGN[ver] || [];
+  for (const cy of centers) {
+    for (const cx of centers) {
+      if ((cy === 6 && cx === 6) || (cy === 6 && cx === N - 7) || (cy === N - 7 && cx === 6)) continue;
+      for (let dr = -2; dr <= 2; dr++) {
+        for (let dc = -2; dc <= 2; dc++) {
+          setFn(cy + dr, cx + dc, Math.abs(dr) === 2 || Math.abs(dc) === 2 || (dr === 0 && dc === 0));
+        }
+      }
+    }
+  }
+
+  // Reserve format & version bits
+  for (let i = 0; i < 9; i++) {
+    if (i !== 6) {
+      isFn[8][i] = 1;
+      isFn[i][8] = 1;
+    }
+  }
+  for (let i = 0; i < 8; i++) {
+    isFn[8][N - 1 - i] = 1;
+    isFn[N - 1 - i][8] = 1;
+  }
+  if (ver >= 7) {
+    let vInfo = ver << 12;
+    let rem = vInfo;
+    for (let b = 17; b >= 12; b--) {
+      if (rem & (1 << b)) rem ^= 0x1f25 << (b - 12);
+    }
+    vInfo |= rem;
+    for (let i = 0; i < 18; i++) {
+      const bit = Boolean((vInfo >> i) & 1);
+      const r = Math.floor(i / 3);
+      const c = N - 11 + (i % 3);
+      setFn(r, c, bit);
+      setFn(c, r, bit);
+    }
+  }
+
+  // Place data bits zig-zag
+  const allBits = [];
+  for (const by of finalBytes) {
+    for (let i = 7; i >= 0; i--) allBits.push((by >> i) & 1);
+  }
+  let bi = 0;
+  let up = true;
+  for (let col = N - 1; col > 0; col -= 2) {
+    if (col === 6) col--;
+    for (let i = 0; i < N; i++) {
+      const r = up ? N - 1 - i : i;
+      for (let dc = 0; dc < 2; dc++) {
+        const c = col - dc;
+        if (!isFn[r][c]) {
+          const bit = bi < allBits.length ? allBits[bi++] : 0;
+          mat[r][c] = bit ? 2 : 1;
+        }
+      }
+    }
+    up = !up;
+  }
+
+  const MASK_FNS = [
+    (r, c) => (r + c) % 2 === 0,
+    (r) => r % 2 === 0,
+    (_, c) => c % 3 === 0,
+    (r, c) => (r + c) % 3 === 0,
+    (r, c) => (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0,
+    (r, c) => ((r * c) % 2) + ((r * c) % 3) === 0,
+    (r, c) => (((r * c) % 2) + ((r * c) % 3)) % 2 === 0,
+    (r, c) => (((r + c) % 2) + ((r * c) % 3)) % 2 === 0
+  ];
+
+  const writeFormat = (grid, maskIdx) => {
+    const data5 = (1 << 3) | maskIdx; // ECL L = 01
+    let rem = data5 << 10;
+    for (let b = 14; b >= 10; b--) {
+      if (rem & (1 << b)) rem ^= 0x537 << (b - 10);
+    }
+    const fmt = ((data5 << 10) | rem) ^ 0x5412;
+    for (let i = 0; i < 6; i++) grid[8][i] = ((fmt >> (14 - i)) & 1) ? 2 : 1;
+    grid[8][7] = ((fmt >> 8) & 1) ? 2 : 1;
+    grid[8][8] = ((fmt >> 7) & 1) ? 2 : 1;
+    grid[7][8] = ((fmt >> 6) & 1) ? 2 : 1;
+    for (let i = 0; i < 6; i++) grid[5 - i][8] = ((fmt >> (5 - i)) & 1) ? 2 : 1;
+    for (let i = 0; i < 7; i++) grid[N - 1 - i][8] = ((fmt >> (14 - i)) & 1) ? 2 : 1;
+    for (let i = 0; i < 8; i++) grid[8][N - 8 + i] = ((fmt >> (7 - i)) & 1) ? 2 : 1;
+  };
+
+  let bestMask = 0;
+  let bestScore = Infinity;
+  let bestGrid = null;
+  for (let m = 0; m < 8; m++) {
+    const g = mat.map((row) => row.slice());
+    const fn = MASK_FNS[m];
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        if (!isFn[r][c] && fn(r, c)) g[r][c] = g[r][c] === 2 ? 1 : 2;
+      }
+    }
+    writeFormat(g, m);
+    let score = 0;
+    for (let r = 0; r < N; r++) {
+      let runC = 1, runR = 1;
+      for (let c = 1; c < N; c++) {
+        runC = g[r][c] === g[r][c - 1] ? runC + 1 : 1;
+        if (runC === 5) score += 3;
+        else if (runC > 5) score += 1;
+        runR = g[c][r] === g[c - 1][r] ? runR + 1 : 1;
+        if (runR === 5) score += 3;
+        else if (runR > 5) score += 1;
+      }
+    }
+    if (score < bestScore) {
+      bestScore = score;
+      bestMask = m;
+      bestGrid = g;
+    }
+  }
+
+  const q = 4;
+  const vb = N + q * 2;
+  const rects = [];
+  for (let r = 0; r < N; r++) {
+    for (let c = 0; c < N; c++) {
+      if (bestGrid[r][c] === 2) rects.push(`<rect x="${c + q}" y="${r + q}" width="1" height="1"/>`);
+    }
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vb} ${vb}" width="${sizePx}" height="${sizePx}" shape-rendering="crispEdges" role="img" aria-label="Código QR de perfil Scout"><rect width="${vb}" height="${vb}" fill="#ffffff"/><g fill="#0f172a">${rects.join("")}</g></svg>`;
+}
+
+function setupAutofillQrSharing() {
+  const btnMain = document.getElementById("btnQrAutofillProfile");
+  const btnSettings = document.getElementById("btnSettingsQrAutofill");
+  const modal = document.getElementById("btAutofillQrModal");
+  const backdrop = document.getElementById("btAutofillQrBackdrop");
+  const closeBtn = document.getElementById("btnCloseAutofillQrModal");
+  const svgWrap = document.getElementById("btAutofillQrSvgWrap");
+  const urlInput = document.getElementById("btAutofillQrUrlInput");
+  const copyBtn = document.getElementById("btnCopyAutofillQrUrl");
+  if (!modal || !svgWrap) return;
+
+  const openQrModal = () => {
+    let prof = getAutofillProfile();
+    const afName = document.getElementById("afName");
+    if (afName && afName.value.trim() && !prof.name) {
+      prof = {
+        name: afName.value.trim(),
+        cum: (document.getElementById("afCum")?.value || "").trim().toUpperCase(),
+        age: (document.getElementById("afAge")?.value || "").trim(),
+        section: (document.getElementById("afSection")?.value || "").trim(),
+        group: (document.getElementById("afGroup")?.value || "").trim(),
+        province: (document.getElementById("afProvince")?.value || "").trim(),
+        blood: (document.getElementById("afBlood")?.value || "").trim(),
+        emergency: (document.getElementById("afEmergency")?.value || "").trim(),
+        scouter: (document.getElementById("afScouter")?.value || "").trim(),
+      };
+    }
+    if (!Object.values(prof).some(Boolean)) {
+      showWebToast("Primero guarda o escribe al menos un dato en «Mi Perfil Local» para generar tu QR.");
+      return;
+    }
+    const compact = {};
+    if (prof.name) compact.n = prof.name;
+    if (prof.cum) compact.c = prof.cum;
+    if (prof.age) compact.a = prof.age;
+    if (prof.section) compact.s = prof.section;
+    if (prof.group) compact.g = prof.group;
+    if (prof.province) compact.p = prof.province;
+    if (prof.blood) compact.b = prof.blood;
+    if (prof.emergency) compact.e = prof.emergency;
+    if (prof.scouter) compact.r = prof.scouter;
+    const rawBytes = new TextEncoder().encode(JSON.stringify(compact));
+    let binStr = "";
+    rawBytes.forEach((b) => { binStr += String.fromCharCode(b); });
+    const b64url = btoa(binStr).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    const base = window.location.protocol.startsWith("http")
+      ? `${window.location.origin}${window.location.pathname}`
+      : "https://ey-liam.github.io/bibliotech-scouts/";
+    const shareUrl = `${base}?af=${b64url}`;
+    svgWrap.innerHTML = generateQrSvg(shareUrl, 232);
+    if (urlInput) urlInput.value = shareUrl;
+    if (typeof window.__btCloseSettingsModal === "function") window.__btCloseSettingsModal();
+    modal.classList.remove("hidden");
+    document.documentElement.classList.add("modal-open");
+    if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("open");
+    activateDialogFocusTrap(modal, "#btnCloseAutofillQrModal");
+  };
+
+  const closeQrModal = () => {
+    modal.classList.add("hidden");
+    if (!document.querySelector(".modal-overlay:not(.hidden)") && !document.querySelector(".bt-settings-modal:not(.hidden)")) {
+      document.documentElement.classList.remove("modal-open");
+    }
+    releaseDialogFocusTrap(modal);
+  };
+
+  if (btnMain) btnMain.addEventListener("click", openQrModal);
+  if (btnSettings) btnSettings.addEventListener("click", openQrModal);
+  if (closeBtn) closeBtn.addEventListener("click", closeQrModal);
+  if (backdrop) backdrop.addEventListener("click", closeQrModal);
+  if (copyBtn && urlInput) {
+    copyBtn.addEventListener("click", () => {
+      copyOrShareDeepLink(urlInput.value, "Perfil Scout BiblioTech", "Enlace de perfil QR copiado.");
+    });
+  }
+  window.generateQrSvg = generateQrSvg;
+}
+
 const BT_RELEASE_NOTES = [
+  {
+    version: "Web v9.9.3 / APK v3.9.3",
+    date: "22/11/2026",
+    items: [
+      "Cobertura documental del 100%: los 1,035 documentos oficiales ahora cuentan con texto real extraído (>= 400 caracteres en cada libro histórico, organigrama, comunicado y formato contable) más respuestas nuevas verificadas.",
+      "Editor de Archivos mejorado al 100%: vista previa en vivo idéntica al PDF/PNG final con autoajuste de texto, casillas interactivas (Ejes Temáticos y 17 ODS), firma opcional (dejar en blanco, dibujar a dedo o subir imagen) y 16 plantillas oficiales completas (incluidas P8.3, P8.7, P9.1 Manada, P9.2 2 hojas, P9.3 Comunidad y P9.4 Clan).",
+      "Checklist interactivo de Progresión e Insignia Terminal por sección (Manada, Tropa, Comunidad y Clan) con paso en 1 clic al formato P9, saltos -10/+10 y marcadores por página en el visor PDF.",
+      "Código QR 100% offline para compartir tu perfil de Autollenado entre celulares, JSON compacto e indexación asíncrona no bloqueante y traducción completa al inglés (EN)."
+    ]
+  },
   {
     version: "Web v9.9.2 / APK v3.9.2",
     date: "22/11/2026",
@@ -13028,7 +14813,8 @@ function setupSettingsHub() {
 
     const allDocIds = getSavedAndNotedDocIds();
     const savedDocs = (STATE.documents || []).filter((d) => allDocIds.includes(d.id));
-    if (savedCountEl) savedCountEl.textContent = String(savedDocs.length);
+    const bmkCount = getPageBookmarks().length;
+    if (savedCountEl) savedCountEl.textContent = String(savedDocs.length + (bmkCount ? ` (+${bmkCount} pág.)` : ""));
     if (btnClearAllSaved) btnClearAllSaved.disabled = savedDocs.length === 0;
 
     if (savedListEl) {

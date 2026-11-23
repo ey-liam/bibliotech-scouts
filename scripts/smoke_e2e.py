@@ -14,8 +14,8 @@ EMOJI_RE = re.compile(r"[\U0001F000-\U0001FAFF\u2600-\u27BF\u2B50\u2728\u2705\u2
 
 def start_server(port: int = 18775):
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(ROOT))
-    socketserver.TCPServer.allow_reuse_address = True
-    httpd = socketserver.TCPServer(("127.0.0.1", port), handler)
+    socketserver.ThreadingTCPServer.allow_reuse_address = True
+    httpd = socketserver.ThreadingTCPServer(("127.0.0.1", port), handler)
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     return httpd
 
@@ -245,7 +245,13 @@ def run_e2e(test_webkit: bool = False):
             page.wait_for_selector("#autofillDemoPreview:not(.hidden)", timeout=3000)
             assert "Liam Durán Prueba" in page.locator("#autofillDemoPreview").inner_text(), "Demo autofill sin datos"
             assert page.locator("#sfDocumentSheet .bt-sf-official-page").count() >= 1, "No se renderizó la página oficial de base en el Editor"
-            assert "Liam Durán Prueba" in page.locator("#sfDocumentSheet .bt-sf-official-overlays").first.inner_text(), "Los datos no se superpusieron sobre la página oficial de base"
+            page.wait_for_selector("#sfDocumentSheet canvas.bt-sf-preview-canvas", timeout=4000)
+            canvas_ready = page.wait_for_function(
+                "() => { const c = document.querySelector('#sfDocumentSheet canvas.bt-sf-preview-canvas'); return Boolean(c && c.width > 200 && c.height > 200); }",
+                timeout=5000,
+            )
+            assert canvas_ready, "Canvas en vivo del Editor no pintó la hoja oficial"
+            assert page.locator("#sfDocumentSheet .bt-sf-hitbox").count() >= 1, "Faltan áreas clicables interactivas sobre la vista previa"
 
             # Navegar al espacio La Fogata (#foro) y probar flujo completo
             page.click('.desktop-quick-nav [data-bt-go-view="fogata"]')
@@ -348,7 +354,7 @@ def run_e2e(test_webkit: bool = False):
             mpage.click('#unifiedBottomDock [data-bt-go-view="formatos"]')
             assert mpage.locator("#editor-formatos").is_visible(), "Dock móvil no abrió Formatos"
             assert mpage.locator("#smartFormWorkspace").is_visible(), "Editor Inteligente de Formatos no visible"
-            assert mpage.locator("#sfTemplateSelect option").count() == 11, "Se esperaban 11 plantillas en sfTemplateSelect"
+            assert mpage.locator("#sfTemplateSelect option").count() == 16, "Se esperaban 16 plantillas en sfTemplateSelect"
 
             # Probar Asistente en 3 pasos y apertura directa de plantilla P9.2
             mpage.click('[data-wiz-sec="tropa"]')
@@ -357,19 +363,57 @@ def run_e2e(test_webkit: bool = False):
             mpage.click('[data-wiz-open-tpl="p9"]')
             assert mpage.locator("#sfTemplateSelect").input_value() == "p9", "Wizard no seleccionó plantilla p9"
 
+            # Probar Checklist de Progresión + paso en 1 clic
+            assert mpage.locator("#btProgressionChecker").is_visible(), "Falta Checklist de Progresión"
+            mpage.click('[data-prog-sec="tropa"]')
+            first_prog_chk = mpage.locator('#btProgChecklistBody [data-prog-check]').first
+            if not first_prog_chk.is_checked():
+                first_prog_chk.check()
+            mpage.click("#btProgOpenFormBtn")
+            assert mpage.locator("#sfTemplateSelect").input_value() == "p9", "Checklist no abrió P9"
+
+            # Probar vista previa live <canvas>, checkbox interactivo y firma digital
+            mpage.select_option("#sfTemplateSelect", "p1")
+            mpage.click('[data-sf-mob-pane="preview"]')
+            mpage.wait_for_selector("#sfDocumentSheet canvas.bt-sf-preview-canvas", timeout=4000)
+            mpage.click('[data-sf-mob-pane="edit"]')
+            p1_chk = mpage.locator('#sfFormFieldsContainer [data-sf-check="apoyo_si"]')
+            p1_chk.check()
+            assert p1_chk.is_checked(), "Checkbox de P1.0.1 no se marcó"
+            mpage.click('[data-sig-mode="draw"]')
+            assert mpage.locator("#btSigPadCanvas").is_visible(), "Lienzo de firma táctil no se mostró"
+            mpage.click('[data-sig-mode="blank"]')
+
+            # Probar QR Offline de Autollenado y su enlace ?af=
+            mpage.fill("#afName", "Scout Prueba QR")
+            mpage.fill("#afGroup", "Grupo 15")
+            mpage.click("#btnQrAutofillProfile")
+            mpage.wait_for_selector("#btAutofillQrModal:not(.hidden)", timeout=3000)
+            assert mpage.locator("#btAutofillQrSvgWrap svg").count() == 1, "QR SVG no se generó"
+            qr_url = mpage.locator("#btAutofillQrUrlInput").input_value()
+            assert "?af=" in qr_url, "URL QR de perfil no contiene ?af="
+            mpage.click("#btnCloseAutofillQrModal")
+            mpage.locator("#btAutofillQrModal").wait_for(state="hidden", timeout=3000)
+
             mpage.select_option("#sfTemplateSelect", "jl304")
             mpage.click("#btnSfApplyProfile")
-            assert "ASMAC/DNGDI/CNAR/JL306" in mpage.locator("#sfDocumentSheet").inner_text(), "Hoja JL304 no renderizó en el Editor"
+            mpage.click('[data-sf-mob-pane="preview"]')
+            mpage.wait_for_timeout(180)
+            assert mpage.locator("#sfDocumentSheet canvas.bt-sf-preview-canvas").count() == 2, "Hoja JL304 debe renderizar 2 canvas en vivo"
+            assert mpage.locator("#sfDocumentSheet canvas.bt-sf-preview-canvas").first.is_visible(), "Canvas JL304 no visible en pestaña Vista previa móvil"
             editor_fit = mpage.evaluate(
                 "() => Array.from(document.querySelectorAll('#editor-formatos .editor-format-card')).every(el => el.getBoundingClientRect().right <= window.innerWidth + 1)"
             )
             assert editor_fit, "Tarjetas de editor exceden el ancho móvil"
 
-            # Probar escala tipográfica, detector Eagle Scout, folio fuera de rango P8.8 y enlaces rápidos
+            # Probar traducción EN completa y escala tipográfica
             mpage.click("#dockBtnSettings")
             mpage.wait_for_selector("#btSettingsModal:not(.hidden)", timeout=3000)
             mpage.click('[data-font-scale="115"]')
             assert mpage.evaluate("document.documentElement.getAttribute('data-bt-font-scale')") == "115", "Escala 115 no aplicada"
+            mpage.click('[data-lang-choice="en"]')
+            assert "Ask now" in mpage.locator(".btn-hero-primary").inner_text(), "Traducción EN no se aplicó en Hero"
+            mpage.click('[data-lang-choice="es"]')
             mpage.click("#closeSettingsModalBtn")
             mpage.locator("#btSettingsModal").wait_for(state="hidden", timeout=3000)
 
@@ -401,14 +445,19 @@ def run_e2e(test_webkit: bool = False):
                 )
                 wpage = wctx.new_page()
                 wpage.on("pageerror", lambda err: errors.append(f"webkit pageerror: {err}"))
-                wpage.goto("http://127.0.0.1:18775/#app", wait_until="networkidle")
+                wpage.goto("http://127.0.0.1:18775/#app", wait_until="load")
+                wpage.wait_for_selector("#appDetectedOsBadge", timeout=6000)
                 dismiss_consent(wpage)
                 badge = wpage.locator("#appDetectedOsBadge").inner_text()
                 assert "iPhone / iPad" in badge, f"iOS detection failed: {badge}"
                 assert wpage.locator("#iosOfflineCard").is_visible(), "iOS offline card no visible"
-                wpage.goto("http://127.0.0.1:18775/?q=Eagle+Scout", wait_until="networkidle")
+                wpage.goto("http://127.0.0.1:18775/?q=Eagle+Scout", wait_until="load")
                 dismiss_consent(wpage)
-                wpage.wait_for_selector("#answerContainer:not(.hidden)", timeout=6000)
+                wpage.wait_for_selector("#answerContainer:not(.hidden)", timeout=8000)
+                wpage.wait_for_function(
+                    "() => { const el = document.getElementById('answerBody'); return Boolean(el && (el.innerText.includes('Águila Real') || el.innerText.includes('Baden Powell'))); }",
+                    timeout=12000,
+                )
                 wans = wpage.locator("#answerBody").inner_text()
                 assert "Águila Real" in wans or "Baden Powell" in wans, "Deep link ?q=Eagle+Scout falló en WebKit"
                 wctx.close()

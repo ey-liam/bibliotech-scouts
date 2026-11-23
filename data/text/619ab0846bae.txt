@@ -1,2 +1,10 @@
---- Página 1 ---
-Documento oficial Scout: NO 7 RECIBO DE EVENTOS DE PROVINCIA SIMPLIFICADO (NO_7_RECIBO DE EVENTOS DE PROVINCIA SIMPLIFICADO.pdf). Disponible para visualización y descarga directa en BiblioTech.
+FORMATO CONTABLE OFICIAL NO. 7: RECIBO DE EVENTOS DE PROVINCIA SIMPLIFICADO
+
+Talonario/recibo doble oficial (dos tantos idénticos por hoja) de la Asociación de Scouts de México, A.C. (Córdoba 57, Col. Roma, C.P. 06700, México, D.F.) para comprobar cuotas de inscripción en eventos de Provincia.
+
+Campos que integran cada tanto del recibo (serie "MEX N°"):
+1. Evento y "Recibimos de": Nombre(s), Apellidos (paterno y materno), C.U.M., Provincia, Distrito, Grupo y Sección.
+2. Importe recibido: "La cantidad de: $" y "Cantidad con letra".
+3. Desglose de asistentes ("Inscripción de ____ personas"): distribución por sección (Manada, Tropa, Comunidad, Clan) y por rol (Scouters, Dirigentes, Papás, Otros), seguido de tarifas por categoría (Scouters/Dirigentes x $, Muchachas/(os) x $, Papás/otros x $) y "Total: $".
+4. Forma de pago: casillas para Efectivo, Depósito (Cta. y Fecha), Transferencia (Cta., Fecha y Autorización) o Cheque (Banco y Cta.).
+5. Acuse de recepción: Fecha, leyenda "recibió" y línea de "nombre, firma y cargo".
