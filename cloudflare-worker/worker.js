@@ -1,5 +1,5 @@
 // ============================================================================
-// BiblioTech Scout — Cloudflare Worker v2.1 (Telemetría, La Fogata y Streaming PDF)
+// BiblioTech Scout — Cloudflare Worker v2.2 (Telemetría por Dispositivo, La Fogata y Streaming PDF)
 // - Worker en Cloudflare: bibliotech-telemetry
 // - Binding KV: FORUM_KV -> bibliotech_fogata_kv
 // - Opcional para moderación remota: Variable secreta ADMIN_TOKEN
@@ -7,7 +7,7 @@
 // - Streaming PDF por rangos (HTTP 206) estrictamente limitado a releases oficiales
 // ============================================================================
 
-const WORKER_VERSION = "2.1";
+const WORKER_VERSION = "2.2";
 const GITHUB_RELEASE_PDF_BASE =
   "https://github.com/ey-liam/bibliotech-scouts/releases/download/v1.0/";
 const FORUM_CACHE_KEY = "https://bibliotech-forum-cache.internal/v1/posts.json";
@@ -17,6 +17,7 @@ const KV_REPORTS_KEY = "fogata_reports_v1";
 const KV_AUDIT_KEY = "fogata_audit_v1";
 const KV_QUESTIONS_KEY = "bt_questions_log_v1";
 const KV_BUGS_KEY = "bt_bugs_log_v1";
+const KV_USERS_KEY = "bt_users_index_v1";
 const MAX_BODY_BYTES = 48 * 1024;
 const RATE_WINDOW_MS = 60 * 1000;
 const RATE_MAX_WRITES = 12;
@@ -197,7 +198,7 @@ async function writeStoredPosts(env, posts) {
   } catch (_) {}
 }
 
-function extractQuestionsFromActivity(activityText, platform, nowIso) {
+function extractQuestionsFromActivity(activityText, platform, nowIso, deviceId = "") {
   if (!activityText || typeof activityText !== "string") return [];
   const lines = activityText.split(/\r?\n/);
   const extracted = [];
@@ -218,6 +219,7 @@ function extractQuestionsFromActivity(activityText, platform, nowIso) {
     const mode = lowerMeta.includes("(manual") ? "manual" : "sugerencia";
     extracted.push({
       at: nowIso,
+      uid: deviceId || undefined,
       q: q.slice(0, 280),
       matched,
       mode,
@@ -228,11 +230,18 @@ function extractQuestionsFromActivity(activityText, platform, nowIso) {
   return extracted;
 }
 
+function sanitizeDeviceId(raw) {
+  const clean = String(raw || "").trim().toUpperCase();
+  if (/^BT-[A-Z0-9]{6,10}$/.test(clean)) return clean;
+  return "";
+}
+
 async function recordPrivateAudit(env, payload, ip) {
   if (!env || !env.FORUM_KV || !payload || payload.actionType === "foro_like") return;
   try {
     const nowIso = new Date().toISOString();
     const ipHash = await hashShort(ip);
+    const deviceId = sanitizeDeviceId(payload.deviceId || payload.codigo_dispositivo);
     const subject = String(payload._subject || "").slice(0, 160);
     const platform = String(payload.plataforma || "").slice(0, 80);
     const alerts = String(payload.alertas_bugs_o_sin_coincidencia || "").slice(0, 800);
@@ -241,6 +250,7 @@ async function recordPrivateAudit(env, payload, ip) {
 
     const entry = {
       at: nowIso,
+      deviceId: deviceId || undefined,
       actionType: String(payload.actionType || "evento").slice(0, 40),
       subject,
       platform,
@@ -252,16 +262,16 @@ async function recordPrivateAudit(env, payload, ip) {
 
     const audits = await readKvArray(env, KV_AUDIT_KEY);
     audits.unshift(entry);
-    await writeKvArray(env, KV_AUDIT_KEY, audits, 400);
+    await writeKvArray(env, KV_AUDIT_KEY, audits, 500);
 
     // Log persistente de preguntas reales (evita pérdida al expirar logs de 7 días)
-    const parsedQs = extractQuestionsFromActivity(activity, platform, nowIso);
+    const parsedQs = extractQuestionsFromActivity(activity, platform, nowIso, deviceId);
     if (parsedQs.length) {
       const qLog = await readKvArray(env, KV_QUESTIONS_KEY);
       for (let i = parsedQs.length - 1; i >= 0; i--) {
         qLog.unshift(parsedQs[i]);
       }
-      await writeKvArray(env, KV_QUESTIONS_KEY, qLog, 600);
+      await writeKvArray(env, KV_QUESTIONS_KEY, qLog, 800);
     }
 
     // Log persistente de alertas, bugs JS y consultas sin coincidencia
@@ -275,6 +285,7 @@ async function recordPrivateAudit(env, payload, ip) {
       const bugs = await readKvArray(env, KV_BUGS_KEY);
       bugs.unshift({
         at: nowIso,
+        deviceId: deviceId || undefined,
         subject,
         platform,
         alerts,
@@ -291,6 +302,51 @@ async function recordPrivateAudit(env, payload, ip) {
       const reports = await readKvArray(env, KV_REPORTS_KEY);
       reports.unshift(entry);
       await writeKvArray(env, KV_REPORTS_KEY, reports, 250);
+    }
+
+    // Índice anónimo por dispositivo (BT-XXXXXX o respaldo ipHash) para diferenciar usuarios recurrentes
+    const userKey = deviceId || (ipHash ? `ip_${ipHash}` : "");
+    if (userKey) {
+      const users = await readKvArray(env, KV_USERS_KEY);
+      const uIdx = users.findIndex((u) => u && (u.uid === userKey || (!deviceId && u.ipHash === ipHash)));
+      const docsOpenedInBatch = (activity.match(/DOC ABIERTO/g) || []).length;
+      if (uIdx >= 0) {
+        const cur = users[uIdx];
+        if (deviceId && String(cur.uid || "").startsWith("ip_")) {
+          cur.uid = deviceId;
+          cur.hasDeviceCode = true;
+        }
+        cur.lastSeen = nowIso;
+        cur.batches = Number(cur.batches || 0) + 1;
+        cur.questionsCount = Number(cur.questionsCount || 0) + parsedQs.length;
+        cur.docsOpened = Number(cur.docsOpened || 0) + docsOpenedInBatch;
+        if (isAlertOrBug) cur.bugsCount = Number(cur.bugsCount || 0) + 1;
+        if (platform) {
+          const prevPlats = Array.isArray(cur.platforms) ? cur.platforms : [];
+          if (!prevPlats.includes(platform)) cur.platforms = [platform, ...prevPlats].slice(0, 5);
+        }
+        if (parsedQs.length) {
+          const prevQs = Array.isArray(cur.recentQuestions) ? cur.recentQuestions : [];
+          cur.recentQuestions = [...parsedQs.map((x) => x.q), ...prevQs].slice(0, 8);
+        }
+        users.splice(uIdx, 1);
+        users.unshift(cur);
+      } else {
+        users.unshift({
+          uid: userKey,
+          hasDeviceCode: Boolean(deviceId),
+          ipHash: ipHash || "",
+          firstSeen: nowIso,
+          lastSeen: nowIso,
+          batches: 1,
+          questionsCount: parsedQs.length,
+          docsOpened: docsOpenedInBatch,
+          bugsCount: isAlertOrBug ? 1 : 0,
+          platforms: platform ? [platform] : [],
+          recentQuestions: parsedQs.map((x) => x.q).slice(0, 8),
+        });
+      }
+      await writeKvArray(env, KV_USERS_KEY, users, 1000);
     }
   } catch (_) {}
 }
@@ -513,11 +569,12 @@ export default {
       }
 
       if (channel === "stats") {
-        const [posts, qLog, bugs, reports] = await Promise.all([
+        const [posts, qLog, bugs, reports, users] = await Promise.all([
           readStoredPosts(env),
           readKvArray(env, KV_QUESTIONS_KEY),
           readKvArray(env, KV_BUGS_KEY),
           readKvArray(env, KV_REPORTS_KEY),
+          readKvArray(env, KV_USERS_KEY),
         ]);
         const commentCount = posts.reduce((acc, p) => acc + (Array.isArray(p.comments) ? p.comments.length : 0), 0);
         return jsonResponse(
@@ -531,6 +588,9 @@ export default {
             questionsLogged: qLog.length,
             bugsLogged: bugs.length,
             reportsLogged: reports.length,
+            uniqueDevicesTracked: users.length,
+            uniqueWithDeviceCode: users.filter((u) => u && u.hasDeviceCode).length,
+            returningDevices: users.filter((u) => u && (u.batches || 0) >= 2).length,
           },
           200,
           { "Cache-Control": "public, max-age=15" }
@@ -538,13 +598,14 @@ export default {
       }
 
       if (channel === "admin" && isAdmin) {
-        const [reports, bugs, questions, audits] = await Promise.all([
+        const [reports, bugs, questions, audits, users] = await Promise.all([
           readKvArray(env, KV_REPORTS_KEY),
           readKvArray(env, KV_BUGS_KEY),
           readKvArray(env, KV_QUESTIONS_KEY),
           readKvArray(env, KV_AUDIT_KEY),
+          readKvArray(env, KV_USERS_KEY),
         ]);
-        return jsonResponse({ ok: true, version: WORKER_VERSION, reports, bugs, questions, audits });
+        return jsonResponse({ ok: true, version: WORKER_VERSION, reports, bugs, questions, audits, users });
       }
 
       return jsonResponse({

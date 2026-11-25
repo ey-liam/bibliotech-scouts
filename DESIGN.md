@@ -61,10 +61,11 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
 
 ---
 
-## 4. Arquitectura de los 7 Espacios y Navegación
+## 4. Arquitectura de los 8 Espacios y Navegación
 
-- **Espacios (`data-bt-view`):** `inicio`, `biblioteca`, `guia`, `agentes`, `fogata`, `formatos`, `acerca`.
-- **Barra superior escritorio (`.desktop-quick-nav`):** 8 accesos en 1 sola línea (`Inicio`, `Biblioteca`, `Guía Scout`, `Agentes de Cambio.MX`, `La Fogata`, `Editor de Archivos`, `¿Qué es BiblioTech?`, `App / Offline`) + modo oscuro + `Menú`.
+- **Espacios (`data-bt-view`):** `inicio`, `biblioteca`, `ejes`, `guia`, `agentes`, `fogata`, `formatos`, `acerca`.
+- **Espacio `ejes` (`#ejes-pjos` — Los 4 Ejes Temáticos del PJOS):** sub-pestañas horizontales limpias (`1. Guía de los 4 Ejes y Actividades`, `2. Salud: A Salvo y Salida Segura`, `3. Ambiente: Misión Planeta`, `4. Paz: Bitácora MoP y Emergencias`, `5. Habilidades: Constructor SMART`) con acentos semánticos por eje (`salud` carmesí `#e11d48`, `habilidades` azul `#0284c7`, `ambiente` verde `#16a34a`, `paz` violeta `#7c3aed`) y máximo 2 niveles de superficie tanto en claro como en `html[data-camp-mode="true"]`.
+- **Barra superior escritorio (`.desktop-quick-nav`):** accesos en 1 sola línea (`Inicio`, `Biblioteca`, `4 Ejes PJOS`, `Guía Scout`, `Agentes de Cambio.MX`, `La Fogata`, `Editor de Archivos`, `¿Qué es BiblioTech?`, `App / Offline`) + modo oscuro + `Menú`.
 - **Dock inferior móvil (`#unifiedBottomDock`):** exactamente 5 botones equilibrados (`Inicio`, `Biblioteca`, `Fogata`, `Archivos`, `Guardados`) con `flex: 1 1 0; min-width: 0`.
 - **Controles de sub-vista:**
   - Biblioteca (`#btLibraryModeBar`): segmented control corto (`Estantes (883)` / `Catálogo y Filtros`) + botón `Mis Guardados y Notas`. Paginación uniforme de **12 archivos por defecto** y carga progresiva de `+12` con botón `Cargar más archivos`. Subcategorías contraídas en `Destacados`/`Todas` y abiertas automáticamente al entrar en un estante/categoría específica (`FAES`, `Especialidades FES`, etc.).

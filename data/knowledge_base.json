@@ -1,6 +1,106 @@
 {
   "topics": [
     {
+      "id": "politica_a_salvo_del_peligro_4_pasos",
+      "patterns": [
+        "\\ba\\s+salvo\\s+del\\s+peligro\\b",
+        "\\bsafe\\s+from\\s+harm\\b",
+        "\\breconocer\\s+responder\\s+comunicar\\s+confiar\\b",
+        "\\bentornos?\\s+seguros?\\b"
+      ],
+      "keywords": [
+        "a salvo del peligro",
+        "safe from harm",
+        "entorno seguro",
+        "reconocer",
+        "responder",
+        "comunicar",
+        "confiar",
+        "conecta"
+      ],
+      "source_files": [
+        "El desafio de ser Caminante 2024.pdf",
+        "CodigoConducta_2025.pdf",
+        "REGLAMENTO 2023.pdf",
+        "Guia de Scouter de Comunidad 2024.pdf"
+      ],
+      "content": "### Política «A Salvo del Peligro» (*Safe from Harm*) y los 4 Pasos de Entornos Seguros en ASMAC\n\nDentro del eje de **Salud y Bienestar**, toda actividad presencial o digital en Scouts de México debe garantizar un entorno libre de violencia, acoso o riesgo físico y emocional (`El Desafío de ser Caminante 2024`, pág. 66, y `Código de Conducta 2025`):\n\n1. **Reconocer:** Identificar señales de riesgo físico, trato inadecuado, bullying, ciberacoso o incumplimiento de reglas de seguridad (como entrevistas individuales en lugares cerrados; toda atención debe realizarse en espacio abierto y a la vista de otro adulto, regla de dos adultos).\n2. **Responder:** Priorizar de inmediato la integridad de niñas, niños, adolescentes y jóvenes, deteniendo cualquier actividad insegura.\n3. **Comunicar:** Reportar de inmediato a través de los canales institucionales confidenciales, incluyendo la plataforma oficial **`conecta.scouts.org.mx`** y las instancias de Corte de Honor / Justicia Asociativa.\n4. **Confiar:** Escuchar siempre con respeto, seriedad y acompañamiento seguro a quien expresa una inquietud o situación de riesgo."
+    },
+    {
+      "id": "como_sacar_una_especialidad_fes",
+      "patterns": [
+        "\\bcomo\\s+(?:sacar|obtener|hacer|acreditar|tramitar)\\s+(?:una\\s+|las\\s+|mis\\s+)?especialidad(?:es)?\\b",
+        "\\bproceso.*especialidad(?:es)?\\s*(?:fes|scout)?\\b",
+        "\\bfases\\s+de\\s+(?:una\\s+|la\\s+)?especialidad\\b"
+      ],
+      "keywords": [
+        "sacar especialidad",
+        "obtener especialidad",
+        "como hacer una especialidad",
+        "fes",
+        "p5.1",
+        "conozco aplico comparto",
+        "sinodal"
+      ],
+      "source_files": [
+        "P5.1_FichaEspecialidadScoutEditable_v1.1.pdf",
+        "Catalogo_Especialidades_FES_Comunidad_y_Manada.html",
+        "El desafio de ser Caminante 2024.pdf",
+        "Guia de Scouter de Tropa de Scouts 2024.pdf",
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf"
+      ],
+      "content": "### ¿Cómo sacar y acreditar una Especialidad Scout (`FES`) en cualquier sección (`PJOS 2026` y Plantilla `P5.1`)?\n\nEn el **Programa de Jóvenes Orientado a la Sustentabilidad (PJOS)**, las **Especialidades Scouts (`FES`)** se organizan en los **4 Ejes Temáticos** (*Salud y Bienestar, Habilidades para la Vida, Medio Ambiente y Sustentabilidad, y Paz y Participación Comunitaria*) y siguen **4 momentos prácticos** documentados en la plantilla **`P5.1`**:\n\n1. **Descubro (Elección personal):** Eliges un tema del catálogo oficial de **82 Especialidades RECME** (o propones una nueva especialidad libre en `P5.1`) y acuerdas el reto con tu Scouter / Consejo de Sección y, si lo requieres, un asesor o experto.\n2. **1. Conozco (Investigación y bases):** Aprendes los conceptos esenciales, reglas técnicas y **medidas de seguridad** de la especialidad.\n3. **2. Aplico (Práctica y evidencias):** Llevas a la práctica lo aprendido mediante actividades, creaciones, salidas o entrenamientos concretos.\n4. **3. Comparto y Reflexiono (Servicio a los demás):** Compartes tu habilidad enseñando un taller, apoyando a tu Seisena/Patrulla/Equipo/Clan o sirviendo a tu comunidad, y reflexionas sobre lo logrado.\n\n*Puedes consultar las **82 fichas FES oficiales** en el estante **Especialidades FES** de la Biblioteca y llenar tu formato **`P5.1`** en el **Editor de Archivos**.*"
+    },
+    {
+      "id": "requisitos_insignia_aguila_real_tropa",
+      "patterns": [
+        "\\baguila\\s+real\\b",
+        "\\binsignia\\s+final\\s+tropa\\b",
+        "\\bsolicitud\\s+aguila\\s+real\\b"
+      ],
+      "keywords": [
+        "aguila real",
+        "p9.2",
+        "insignia final tropa",
+        "obsidiana",
+        "jade",
+        "corte de honor"
+      ],
+      "source_files": [
+        "P9.2_SolicitudAguilaReal.pdf",
+        "Proceso de solicitud de Insignia Final y Terminal Jade-Obsidiana.pdf",
+        "Pistas de Aventura 2024.pdf",
+        "Guia de Scouter de Tropa de Scouts 2024.pdf",
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf"
+      ],
+      "content": "### Requisitos y Trámite de la Insignia Final «Águila Real» en Tropa de Scouts (`P9.2_SolicitudAguilaReal.pdf` y `DNME-CNPJ 26.011`)\n\nLa **Insignia Final Águila Real** (en sus modalidades **Obsidiana** o **Jade**) es el máximo reconocimiento de la **Tropa de Scouts** (`10 a <14 años`):\n\n1. **Vida en la Tropa y Progresión Personal:** Contar con Compromiso Scout, Bienvenida a la Sección y avance acreditado en las etapas y los **4 Rumbos** (*Tortuga Lora, Ocelote, Venado Cola Blanca y Quetzal*).\n2. **Aventuras en la Naturaleza:** Acreditar las competencias del *Carnet de Aventuras en la Naturaleza para Tropa* (*Ajolote de Xochimilco, Jaguar, Mapache de Cozumel y Águila Solitaria*).\n3. **Especialidades Scouts (`FES`):** Completar las Especialidades requeridas abarcando los **4 Ejes Temáticos del PJOS**.\n4. **Iniciativas Mundiales y Liderazgo:** Contar con participación acreditada en iniciativas del Marco **Mundo Mejor** (*Mensajeros de la Paz, Tribu de la Tierra, Health Allies o Life Leaders*), registro de **Punta de Flecha** (cuando aplique) y eventos significativos.\n5. **Solicitud Oficial `P9.2` (2 hojas):** La **Corte de Honor** propone la entrega y el **Consejo de Grupo** aprueba la gestión antes de cumplir la edad límite de pase a Comunidad. Puedes llenar las 2 hojas oficiales de **`P9.2`** y pasar tus fechas en 1 clic desde el **Editor de Archivos** de BiblioTech Scout."
+    },
+    {
+      "id": "insignia_go_solar_obtencion",
+      "patterns": [
+        "\\bgo\\s*solar\\b",
+        "\\bscouts\\s+go\\s+solar\\b",
+        "\\binsignia.*solar\\b",
+        "\\benergia\\s+solar\\b.*\\binsignia\\b"
+      ],
+      "keywords": [
+        "go solar",
+        "scouts go solar",
+        "insignia solar",
+        "p8.7",
+        "energia solar",
+        "horno solar",
+        "tribu de la tierra"
+      ],
+      "source_files": [
+        "Guia Nacional para la Obtención de la Insignia Go Solar.pdf",
+        "P8.7_ScoutsGoSolar.pdf",
+        "Cuadernillos de Tribu de la Tierra y procedimiento de obtención de insignias.pdf",
+        "01 Manual del Uniforme Actualizado Junio 2026.pdf"
+      ],
+      "content": "### ¿Cómo obtener la Insignia Mundial «Scouts Go Solar» en México (`Guia Nacional para la Obtención de la Insignia Go Solar.pdf` y Formato `P8.7`)?\n\n**Scouts Go Solar** forma parte de la iniciativa mundial **Tribu de la Tierra (Earth Tribe)** dentro del eje temático de **Medio Ambiente y Sustentabilidad** del PJOS:\n\n1. **Conoce y explora (`Infórmate`):** Revisa en la *Guía Nacional para la Obtención de la Insignia Go Solar* (`80 págs.`) los principios de la energía solar, radiación UV segura, energías renovables y su relación con los **ODS 7 (Energía asequible y no contaminante)** y **ODS 13 (Acción por el clima)**.\n2. **Realiza los experimentos y talleres solares (`Actúa en equipo`):** Completa las actividades prácticas acordes a tu sección (Manada, Tropa, Comunidad o Clan), tales como reloj solar, deshidratador o cocina/horno solar, calentador solar de agua, linterna solar o auditoría de ahorro energético en tu local o casa.\n3. **Desarrolla tu proyecto o acción comunitaria (`Comparte`):** Implementa una acción de concientización o solución solar/energética en tu comunidad y regístrala en la plataforma mundial **`sdgs.scout.org`**.\n4. **Tramita la solicitud digital oficial (`RECME P8.7`):** Llena digitalmente (sin imprimir) el formato **`P8.7_ScoutsGoSolar.pdf`** con tu CUM, descripción de actividades, enlace de `sdgs.scout.org`, carpeta de evidencias en Drive y fechas de aval del **Consejo de Sección** y **Consejo de Grupo**. Puedes llenarlo directamente en el **Editor de Archivos** de BiblioTech Scout."
+    },
+    {
       "id": "insignia_mundial_no_llega_errores_y_seguimiento",
       "patterns": [
         "\\bque no debo hacer\\b.*\\binsignia",

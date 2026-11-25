@@ -131,6 +131,87 @@ def run_e2e(test_webkit: bool = False):
             ans_ic = page.locator("#answerBody").inner_text()
             assert "17 de octubre" in ans_ic or "Embajador" in ans_ic, "Respuesta Intercultural Challenge 2026 incompleta"
 
+            # Probar v10.0.0: código anónimo BT-XXXXXX, respuestas específicas de Aventura/FES/Go Solar y espacio 4 Ejes PJOS
+            dev_uid = page.evaluate("window.__btGetDeviceUid && window.__btGetDeviceUid()")
+            assert dev_uid and re.match(r"^BT-[A-Z0-9]{6,10}$", dev_uid), f"Código de dispositivo inválido: {dev_uid}"
+
+            page.fill("#askInput", "¿Qué es «Aventura Agua (Protección y cuidado)» en Clan de Rovers y cómo se acredita?")
+            page.click("#askSubmitBtn")
+            page.wait_for_timeout(350)
+            ans_agua = page.locator("#answerBody").inner_text()
+            assert "Carnet Aventuras en la Naturaleza" in ans_agua and "cuarta competencia" in ans_agua, f"Aventura Agua devolvió respuesta inesperada: {ans_agua[:160]}"
+
+            page.fill("#askInput", "¿Qué es y para qué sirve «Especialidad Scout (Comunidad): Cocina en campamento»?")
+            page.click("#askSubmitBtn")
+            page.wait_for_timeout(350)
+            ans_fes = page.locator("#answerBody").inner_text()
+            assert "Conozco" in ans_fes and "Aplico" in ans_fes and "Texto16" not in ans_fes, f"Especialidad FES no mostró fases reales limpias: {ans_fes[:180]}"
+
+            page.fill("#askInput", "Go Solar")
+            page.click("#askSubmitBtn")
+            page.wait_for_timeout(300)
+            ans_solar = page.locator("#answerBody").inner_text()
+            assert "Scouts Go Solar" in ans_solar and "P8.7" in ans_solar, "Go Solar no mostró P8.7"
+
+            # Navegar al nuevo espacio Los 4 Ejes del PJOS (#ejes-pjos) y probar los 5 paneles interactivos
+            page.click('.desktop-quick-nav [data-bt-go-view="ejes"]')
+            assert page.locator("#ejes-pjos").is_visible(), "Espacio #ejes-pjos no visible"
+            assert "Salud y Bienestar" in page.locator("#btAxisDetailPanel").inner_text(), "Detalle inicial de Salud no visible"
+            page.click('[data-axis-pick="ambiente"]')
+            assert "Tribu de la Tierra" in page.locator("#btAxisDetailPanel").inner_text(), "Cambio de eje a Ambiente falló"
+            assert page.locator("#btPickerResultsGrid .bt-picker-doc-card").count() >= 1, "Armador de actividades no sugirió fichas"
+            page.click("#btSuggestAxisDocsBtn")
+            assert page.locator("#btPickerResultsGrid .bt-picker-doc-card").count() >= 1, "Recarga de fichas por eje falló"
+
+            # Pestaña 2: Salud (Escudo A Salvo + Semáforo Salida Segura)
+            page.click('[data-ejes-tab="salud"]')
+            page.click('[data-sfh-step="comunicar"]')
+            assert "CONECTA" in page.locator("#btSfhStepDetail").inner_text(), "Paso Comunicar de A Salvo no actualizó"
+            page.locator('#btSafeTripChecklist [data-safe-trip-chk="jl304"]').check()
+            assert "1 / 8" in page.locator("#btSafeTripBadge").inner_text(), "Semáforo de salida segura no sumó check"
+
+            # Pestaña 3: Ambiente (Impacto Cero Papel + Misión Planeta)
+            page.click('[data-ejes-tab="ambiente"]')
+            sheets_before = int(page.locator("#btEcoTotalSheets").inner_text().strip() or "0")
+            page.click("#btEcoAddPaperlessSessionBtn")
+            sheets_after = int(page.locator("#btEcoTotalSheets").inner_text().strip() or "0")
+            assert sheets_after >= sheets_before + 5, "Contador Cero Papel no incrementó +5 hojas"
+            page.click('[data-eco-mission="plasticos"]')
+            assert "Plastic Tide Turners" in page.locator("#btEcoMissionBody").inner_text(), "Misión Cero Plásticos no cargó"
+
+            # Pestaña 4: Paz (Bitácora Mensajeros de la Paz -> Solicitud P8.3)
+            page.click('[data-ejes-tab="paz"]')
+            page.fill("#btMopProjectInput", "Colecta Invernal Patrulla E2E")
+            page.fill("#btMopHoursInput", "12")
+            page.click('#btMopLogForm button[type="submit"]')
+            assert "12 h" in page.locator("#btMopTotalHoursBadge").inner_text(), "Bitácora MoP no registró 12 horas"
+            page.click("#btMopSendToP8Btn")
+            assert page.locator("#editor-formatos").is_visible(), "Botón MoP P8.3 no llevó al Editor de Archivos"
+            assert page.locator("#sfTemplateSelect").input_value() == "p8_mop", "MoP no seleccionó plantilla p8_mop"
+
+            # Pestaña 5: Habilidades (Constructor Guiado SMART -> Cédula Oficial P6.2)
+            page.click('.desktop-quick-nav [data-bt-go-view="ejes"]')
+            page.click('[data-ejes-tab="habilidades"]')
+            page.click('[data-smart-example="s"]')
+            page.click('[data-smart-example="m"]')
+            page.click('[data-smart-example="a"]')
+            page.click('[data-smart-example="r"]')
+            page.click('[data-smart-example="t"]')
+            assert "5 / 5 bloques SMART" in page.locator("#btSmartScoreBadge").inner_text(), "Constructor SMART no marcó 5/5"
+            ejes_text = page.locator("#ejes-pjos").inner_text()
+            bad_ejes_emojis = [ch for ch in EMOJI_RE.findall(ejes_text) if ch not in ("✓", "✕", "✔", "→", "←", "↗", "–", "—", "•", "·")]
+            assert not bad_ejes_emojis, f"Emojis detectados en #ejes-pjos: {set(bad_ejes_emojis)}"
+            page.click("#btSmartTransferBtn")
+            assert page.locator("#editor-formatos").is_visible(), "Constructor SMART no abrió Editor de Archivos"
+            assert page.locator("#sfTemplateSelect").input_value() == "smart", "Constructor SMART no seleccionó plantilla smart"
+            page.select_option("#sfTemplateSelect", "salud")
+
+            # Verificar filtro por Eje Temático en Biblioteca
+            page.click('.desktop-quick-nav [data-bt-go-view="biblioteca"]')
+            page.select_option("#libraryAxisFilter", "ambiente")
+            assert page.locator("#libraryBookshelfGrid .book-card").count() >= 1, "Filtro #libraryAxisFilter=ambiente quedó vacío"
+            page.click("#resetLibraryFiltersBtn")
+
             # Navegar al espacio Biblioteca y Catálogo unificados, verificar 12 archivos por defecto y carga progresiva (+12)
             page.click('.desktop-quick-nav [data-bt-go-view="biblioteca"]')
             assert page.locator("#btLibraryModeBar").is_visible(), "Barra de modos de Biblioteca no visible"
@@ -363,9 +444,12 @@ def run_e2e(test_webkit: bool = False):
             mpage.click('[data-wiz-open-tpl="p9"]')
             assert mpage.locator("#sfTemplateSelect").input_value() == "p9", "Wizard no seleccionó plantilla p9"
 
-            # Probar Checklist de Progresión + paso en 1 clic
+            # Probar Checklist de Progresión + balance de 4 Ejes PJOS + paso en 1 clic
             assert mpage.locator("#btProgressionChecker").is_visible(), "Falta Checklist de Progresión"
             mpage.click('[data-prog-sec="tropa"]')
+            assert "Rumbo Tortuga Lora" in mpage.locator("#btProgAxisBalance").inner_text(), "Balance de 4 Ejes en Tropa no mostró Rumbo Tortuga Lora"
+            mpage.click('#btProgAxisBalance [data-prog-axis-toggle="salud"]')
+            assert "1 / 4 Ejes PJOS" in mpage.locator("#btProgAxisBalance").inner_text(), "Toggle de eje en Progresión no actualizó estado"
             first_prog_chk = mpage.locator('#btProgChecklistBody [data-prog-check]').first
             if not first_prog_chk.is_checked():
                 first_prog_chk.check()

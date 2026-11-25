@@ -118,6 +118,7 @@ const STATE = {
   activeShelf: "featured",
   libraryQuery: "",
   librarySection: "all",
+  libraryAxis: "all",
   librarySubcategory: "all",
   librarySubcatOpen: false,
   libraryScope: "shelf",
@@ -538,6 +539,7 @@ async function initApp() {
   initFontScaleSetting();
   setupProcedureWizard();
   if (typeof setupProgressionChecker === "function") setupProgressionChecker();
+  if (typeof setupPjosAxesHub === "function") setupPjosAxesHub();
   if (typeof setupAutofillQrSharing === "function") setupAutofillQrSharing();
   setupAnswerQuickActions();
   BtSoundEngine.init();
@@ -581,6 +583,7 @@ async function initApp() {
     }
 
     populateCategoryDropdown();
+    if (typeof window.__btRefreshPjosPicker === "function") window.__btRefreshPjosPicker();
 
     if (kbRes && kbRes.ok) {
       const kbData = await kbRes.json().catch(() => null);
@@ -752,6 +755,8 @@ const BT_SECTION_VIEW_MAP = {
   btWorkspaceHub: { view: "inicio" },
   biblioteca: { view: "biblioteca", libMode: "shelves" },
   explorar: { view: "biblioteca", libMode: "catalog" },
+  "ejes-pjos": { view: "ejes" },
+  ejes: { view: "ejes" },
   "guia-inicio": { view: "guia", guideTab: "guia-inicio" },
   acerca: { view: "acerca" },
   agentes: { view: "agentes" },
@@ -800,7 +805,7 @@ function btSetGuideTab(tab = "all") {
 }
 
 function btSwitchView(viewName, options = {}) {
-  const validViews = new Set(["inicio", "biblioteca", "guia", "agentes", "fogata", "formatos", "acerca"]);
+  const validViews = new Set(["inicio", "biblioteca", "ejes", "guia", "agentes", "fogata", "formatos", "acerca"]);
   const nextView = validViews.has(viewName) ? viewName : "inicio";
   STATE.activeWorkspaceView = nextView;
 
@@ -817,6 +822,12 @@ function btSwitchView(viewName, options = {}) {
     if (typeof btEnsureLibraryRendered === "function") btEnsureLibraryRendered();
     if (typeof btEnsureCatalogRendered === "function") btEnsureCatalogRendered();
     btSetLibraryMode(options.libMode || STATE.activeLibraryMode || "shelves");
+  }
+  if (nextView === "ejes") {
+    if (typeof window.__btRefreshPjosPicker === "function") window.__btRefreshPjosPicker();
+    if (options.ejesTab && typeof window.__btSelectEjesTab === "function") {
+      window.__btSelectEjesTab(options.ejesTab);
+    }
   }
   if (nextView === "guia") {
     if (typeof btEnsureVersionChainsRendered === "function") btEnsureVersionChainsRendered();
@@ -990,7 +1001,7 @@ function setupWorkspaceViews() {
     if (hashId && BT_SECTION_VIEW_MAP[hashId]) {
       btNavigateToSection(hashId, { instant: true });
       initialApplied = true;
-    } else if (vParam && ["inicio", "biblioteca", "guia", "agentes", "fogata", "formatos", "acerca"].includes(vParam)) {
+    } else if (vParam && ["inicio", "biblioteca", "ejes", "guia", "agentes", "fogata", "formatos", "acerca"].includes(vParam)) {
       btSwitchView(vParam, { instant: true, updateUrl: false });
       initialApplied = true;
     }
@@ -1656,15 +1667,61 @@ function scoreDocSearchRelevance(doc, q, tokens) {
   return score;
 }
 
+function docMatchesPjosAxis(doc, axisKey) {
+  if (!axisKey || axisKey === "all") return true;
+  if (!doc) return false;
+  const subN = normalizeStr(doc.subcategory || "");
+  const codeN = normalizeStr(doc.code || "");
+  const fileN = normalizeStr(doc.filename || "");
+  const hay = normalizeStr(
+    `${doc.title || ""} ${doc.subcategory || ""} ${doc.code || ""} ${doc.filename || ""} ${(doc.tags || []).join(" ")}`
+  );
+  if (axisKey === "salud") {
+    return (
+      subN.includes("salud y bienestar") ||
+      /\bsyb\b|_syb_|faes-\w+-syb|fes_\w+_syb/.test(`${codeN} ${fileN}`) ||
+      /(a salvo del peligro|ficha salud|ficha medica|primeros auxilios|salud mental|nutricion|riesgos en areas|deportes|higiene)/.test(hay)
+    );
+  }
+  if (axisKey === "habilidades") {
+    return (
+      subN.includes("habilidades para la vida") ||
+      /\bhpv\b|_hpv_|faes-\w+-hpv|fes_\w+_hpv/.test(`${codeN} ${fileN}`) ||
+      /(plantillaproyecto|p6\.1|p6\.2|smart|campismo|pionerismo|orientacion|finanzas|liderazgo|ciencia|tecnologia|cocina en campamento|fotografia|musica)/.test(hay)
+    );
+  }
+  if (axisKey === "ambiente") {
+    return (
+      subN.includes("medio ambiente") ||
+      subN.includes("sustentabilidad") ||
+      /\bmays\b|_mays_|faes-\w+-mays|fes_\w+_mays/.test(`${codeN} ${fileN}`) ||
+      /(tribu de la tierra|earth tribe|champions for nature|go solar|tide turners|p8\.1|p8\.7|biodiversidad|cambio climatico|huella ecologica|reciclaje|no dejar rastro|energia solar)/.test(hay)
+    );
+  }
+  if (axisKey === "paz") {
+    return (
+      subN.includes("paz y participacion") ||
+      subN.includes("cultura de paz") ||
+      /\bpypc\b|_pypc_|faes-\w+-pypc|fes_\w+_pypc/.test(`${codeN} ${fileN}`) ||
+      /(mensajeros de la paz|messengers of peace|p8\.3|dialogo por la paz|patrimonio|diversidad e inclusion|accion humanitaria|centro de acopio|centros de acopio|derechos humanos|masc|mediacion)/.test(hay)
+    );
+  }
+  return true;
+}
+
 function getDocsForShelf(shelf, filterText = "") {
   const { q, tokens } = extractDocSearchTokens(filterText);
   const secFilter = STATE.librarySection || "all";
+  const axisFilter = STATE.libraryAxis || "all";
   const scope = STATE.libraryScope || "shelf";
 
   const readable = STATE.documents.filter((d) => {
     if (secFilter !== "all") {
       const secs = d.applicable_sections || [d.section];
       if (!secs.includes(secFilter)) return false;
+    }
+    if (axisFilter !== "all" && !docMatchesPjosAxis(d, axisFilter)) {
+      return false;
     }
     if (tokens.length) {
       const tagsStr = Array.isArray(d.tags) ? d.tags.join(" ") : "";
@@ -1679,7 +1736,7 @@ function getDocsForShelf(shelf, filterText = "") {
     return true;
   });
 
-  let baseDocs = scope === "all" ? readable : filterDocsByShelfName(readable, shelf);
+  let baseDocs = scope === "all" || axisFilter !== "all" ? readable : filterDocsByShelfName(readable, shelf);
   if (scope !== "all" && tokens.length && !baseDocs.length && readable.length) {
     baseDocs = readable;
   }
@@ -1844,6 +1901,7 @@ function renderLibraryShelf() {
     const hasFilter =
       STATE.libraryQuery.trim() !== "" ||
       STATE.librarySection !== "all" ||
+      STATE.libraryAxis !== "all" ||
       STATE.librarySubcategory !== "all" ||
       STATE.libraryScope !== "shelf" ||
       STATE.activeShelf !== "featured";
@@ -2200,6 +2258,9 @@ function expandTokenSet(text) {
 
 function isGenericDocQuestion(question) {
   const normalized = normalizeQuestionKey(question);
+  if (/(especialidad scout|ficha faes|cazadero |rumbo |sendero |ruta |aventura )/.test(normalized)) {
+    return false;
+  }
   return /^(de que trata|que informacion oficial publica|que requisitos fechas|que especifica la pagina|que informacion contiene|que dice la pagina|que requisitos, fechas)/.test(normalized) ||
     (/«/.test(question) && /(de que trata|informacion oficial|que especifica|que requisitos)/.test(normalized));
 }
@@ -4188,6 +4249,9 @@ async function openDocumentModal(docId, shelfIndex = -1, targetPage = null) {
   if (!doc) return;
 
   recordDocOpenTelemetry(doc);
+  if (typeof window.__btRecordPaperlessImpact === "function") {
+    window.__btRecordPaperlessImpact(Math.min(10, Math.max(1, Number(doc.page_count || 2))), `doc:${doc.id}`);
+  }
   STATE.currentOpenDocId = docId;
   STATE.currentReadingIndex = shelfIndex;
   STATE.requestedDocPage = targetPage && Number(targetPage) > 0 ? Number(targetPage) : null;
@@ -5614,15 +5678,18 @@ function bindEvents() {
       STATE.activeShelf = "featured";
       STATE.libraryQuery = "";
       STATE.librarySection = "all";
+      STATE.libraryAxis = "all";
       STATE.librarySubcategory = "all";
       STATE.librarySubcatOpen = false;
       STATE.libraryScope = "shelf";
       STATE.libraryVisibleCount = 12;
       const lIn = document.getElementById("libraryFilterInput");
       const lSec = document.getElementById("librarySectionFilter");
+      const lAx = document.getElementById("libraryAxisFilter");
       const lScp = document.getElementById("libraryScopeSelect");
       if (lIn) lIn.value = "";
       if (lSec) lSec.value = "all";
+      if (lAx) lAx.value = "all";
       if (lScp) lScp.value = "shelf";
       document.querySelectorAll(".shelf-tab").forEach((t) => {
         t.classList.toggle("active", t.dataset.shelf === "featured");
@@ -5648,6 +5715,15 @@ function bindEvents() {
   if (libSecSelect) {
     libSecSelect.addEventListener("change", () => {
       STATE.librarySection = libSecSelect.value || "all";
+      STATE.libraryVisibleCount = resolveDefaultLibraryCount();
+      renderLibraryShelf();
+    });
+  }
+
+  const libAxisSelect = document.getElementById("libraryAxisFilter");
+  if (libAxisSelect) {
+    libAxisSelect.addEventListener("change", () => {
+      STATE.libraryAxis = libAxisSelect.value || "all";
       STATE.libraryVisibleCount = resolveDefaultLibraryCount();
       renderLibraryShelf();
     });
@@ -7150,13 +7226,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "9.9.3";
-const APP_MOBILE_VERSION = "3.9.3";
+const APP_WEB_VERSION = "10.0.0";
+const APP_MOBILE_VERSION = "4.0.0";
 const APP_COOKIE_SCHEMA = "9.7";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v60";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v61";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -7827,20 +7903,23 @@ function setupBugReportModal() {
     setStatus(isModeration ? "Enviando reporte de moderación..." : "Enviando reporte anónimo...");
 
     const ctx = detectClientContext();
+    const devUid = getOrCreateAnonDeviceId();
     const payloadBody = JSON.stringify({
       _subject: isModeration
-        ? `[MODERACIÓN LA FOGATA] ${sec} (${plat})`
-        : `[REPORTE USUARIO / BUG] ${sec} (${plat})`,
+        ? `[MODERACIÓN LA FOGATA] ${sec} (${plat}) [${devUid}]`
+        : `[REPORTE USUARIO / BUG] ${sec} (${plat}) [${devUid}]`,
       _template: "table",
       _captcha: "false",
+      deviceId: devUid,
       plataforma: `${plat} · Real: ${ctx.plat} · ${ctx.vista}`,
       navegador_y_tema: `${ctx.browser} (${ctx.os}) · Tema ${ctx.tema}`,
       alertas_bugs_o_sin_coincidencia: checked.join(" | ") || "Reporte manual",
-      resumen_mas_usado: `Apartado: ${sec}${targetDoc ? ` · Ref: ${targetDoc}` : ""}`,
+      resumen_mas_usado: `Dispositivo: ${devUid} · Apartado: ${sec}${targetDoc ? ` · Ref: ${targetDoc}` : ""}`,
       actividad_completa: [
         isModeration
-          ? `REPORTE DE MODERACIÓN EN LA FOGATA (${BT_SESSION_ID})`
-          : `REPORTE EXPLÍCITO DEL USUARIO (${BT_SESSION_ID})`,
+          ? `REPORTE DE MODERACIÓN EN LA FOGATA (${devUid} · ${BT_SESSION_ID})`
+          : `REPORTE EXPLÍCITO DEL USUARIO (${devUid} · ${BT_SESSION_ID})`,
+        `Código anónimo de dispositivo: ${devUid}`,
         `Usa BiblioTech en: ${plat}`,
         `Apartado: ${sec}`,
         `Motivos marcados: ${checked.join(", ") || "Ninguno"}`,
@@ -7900,12 +7979,49 @@ const BT_TELEMETRY_CONFIG = {
 };
 
 const BT_CONSENT_KEY = "bt_consent_v1";
+const BT_DEVICE_UID_KEY = "bt_device_uid_v1";
 const BT_RECENT_QUERIES_KEY = "bt_recent_queries_v1";
 const BT_ANON_QUEUE_KEY = "bt_anon_queue_v1";
 const BT_ANON_STATS_KEY = "bt_anon_stats_v1";
 const BT_SENT_HASHES_KEY = "bt_sent_hashes_v1";
 const BT_LAST_SENT_KEY = "bt_last_telemetry_sent_v1";
 const BT_SESSION_ID = "ses_" + Math.random().toString(36).slice(2, 8);
+
+function getOrCreateAnonDeviceId() {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let uid = "";
+  try {
+    uid = String(localStorage.getItem(BT_DEVICE_UID_KEY) || "").trim().toUpperCase();
+  } catch (_) {}
+  if (!/^BT-[A-Z0-9]{6,10}$/.test(uid)) {
+    try {
+      const m = String(document.cookie || "").match(/(?:^|;\s*)bt_uid=(BT-[A-Z0-9]{6,10})/i);
+      if (m && m[1]) uid = m[1].toUpperCase();
+    } catch (_) {}
+  }
+  if (!/^BT-[A-Z0-9]{6,10}$/.test(uid)) {
+    const bytes = new Uint8Array(6);
+    if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+      window.crypto.getRandomValues(bytes);
+    } else {
+      for (let i = 0; i < 6; i++) bytes[i] = Math.floor(Math.random() * 256);
+    }
+    let code = "";
+    for (let i = 0; i < 6; i++) {
+      code += alphabet[bytes[i] % alphabet.length];
+    }
+    uid = `BT-${code}`;
+  }
+  try {
+    localStorage.setItem(BT_DEVICE_UID_KEY, uid);
+  } catch (_) {}
+  try {
+    document.cookie = `bt_uid=${uid}; path=/; max-age=31536000; SameSite=Lax`;
+  } catch (_) {}
+  return uid;
+}
+const BT_DEVICE_UID = getOrCreateAnonDeviceId();
+window.__btGetDeviceUid = getOrCreateAnonDeviceId;
 
 function hasTelemetryConsent() {
   try {
@@ -8299,6 +8415,8 @@ function formatTelemetryEventLine(ev, idx) {
       return `${head} SECCIÓN / MENÚ: ${ev.sec} (${ev.via || "scroll"})`;
     case "enlace_externo":
       return `${head} ENLACE EXTERNO: ${ev.label || ""} -> ${ev.url || ""}`;
+    case "ui_accion":
+      return `${head} ACCIÓN UI [${ev.accion || "interaccion"}]: ${ev.detalle || ev.valor || ev.tpl || ""}`;
     case "error_js":
       return `${head} [BUG / ERROR JS]: ${ev.msg} (${ev.src || ""})`;
     default:
@@ -8376,16 +8494,18 @@ async function flushAnonymousTelemetry(forceImmediate = false) {
       .filter((ev) => isCritical(ev) || (ev.t === "pregunta" && ev.ok === "sin_coincidencia"))
       .map((ev) => `- [${ev.t}] ${ev.q || ev.msg || ""}`);
 
+    const devUid = getOrCreateAnonDeviceId();
     const payloadBody = JSON.stringify({
       _subject: issueLines.length
-        ? `[ALERTA/BUG] BiblioTech [${ctx.plat}] — ${batch.length} eventos (${BT_SESSION_ID})`
-        : `BiblioTech Scout [${ctx.plat}] — ${questionCount} preg / ${meaningfulEvents.length} acciones`,
+        ? `[ALERTA/BUG] BiblioTech [${ctx.plat} · ${devUid}] — ${batch.length} eventos (${BT_SESSION_ID})`
+        : `BiblioTech Scout [${ctx.plat} · ${devUid}] — ${questionCount} preg / ${meaningfulEvents.length} acciones`,
       _template: "table",
       _captcha: "false",
+      deviceId: devUid,
       plataforma: `${ctx.plat} · ${ctx.vista}`,
       navegador_y_tema: `${ctx.browser} (${ctx.os}) · Tema ${ctx.tema}`,
       alertas_bugs_o_sin_coincidencia: issueLines.length ? issueLines.join("\n") : "Ninguna falla ni pregunta sin respuesta en este lote",
-      resumen_mas_usado: statsBlock || "Primeros eventos acumulados",
+      resumen_mas_usado: `Dispositivo: ${devUid}\n${statsBlock || "Primeros eventos acumulados"}`,
       actividad_completa: lines.join("\n\n")
     });
 
@@ -8603,6 +8723,7 @@ function setupFullActivityObservers() {
     if (!el || !el.id) return;
     const trackedIds = {
       librarySectionFilter: "bib_seccion",
+      libraryAxisFilter: "bib_eje",
       libraryScopeSelect: "bib_alcance",
       filterCategory: "cat_categoria",
       filterSubcategory: "cat_subcategoria",
@@ -8618,10 +8739,12 @@ function setupFullActivityObservers() {
     }
   });
 
-  // 4. Despliegue de tarjetas/acordeones informativos
+  // 4. Despliegue de tarjetas/acordeones informativos (ignorando apertura inicial del DOM)
+  const btAccordionReadyAt = Date.now() + 1800;
   document.addEventListener(
     "toggle",
     (e) => {
+      if (Date.now() < btAccordionReadyAt) return;
       const det = e.target;
       if (det && det.matches && det.matches("details.bt-acc-card") && det.open) {
         const title = (det.querySelector("h3") || {}).textContent || "";
@@ -8632,7 +8755,7 @@ function setupFullActivityObservers() {
     true
   );
 
-  // 5. Captura anónima de errores JS / bugs reales de ejecución (filtrando ruido benigno de ciclo de vida iOS/WebKit)
+  // 5. Captura anónima de errores JS / bugs reales de ejecución (filtrando ruido benigno de ciclo de vida iOS/WebKit y Android WebView)
   const isBenignBrowserNoise = (rawMsg, rawFile = "") => {
     const m = String(rawMsg || "").trim();
     if (!m) return true;
@@ -8640,7 +8763,7 @@ function setupFullActivityObservers() {
     if (/ResizeObserver loop/i.test(m)) return true;
     if (/AbortError|The operation was aborted|signal is aborted|cancelled|canceled/i.test(m)) return true;
     if (/Worker was terminated|RenderingCancelledException/i.test(m)) return true;
-    if (/Java object is gone|navigation_performance_logger|webkit\.messageHandlers/i.test(m) || /navigation_performance_logger/i.test(String(rawFile || ""))) return true;
+    if (/Java object is gone|NPObject|postMessage|navigation_performance_logger|webkit\.messageHandlers/i.test(m) || /navigation_performance_logger/i.test(String(rawFile || ""))) return true;
     if ((/Load failed|Failed to fetch|NetworkError/i.test(m)) && (document.visibilityState === "hidden" || navigator.onLine === false)) return true;
     return false;
   };
@@ -11647,16 +11770,22 @@ function setupSmartFormsEngine(readFormProfileFn) {
   renderNamedDrafts();
   loadTemplate("salud", false);
   window.__btSelectSmartTemplate = (tplId, scroll = true, prefillMap = null) => {
+    if (STATE.activeWorkspaceView !== "formatos") {
+      btSwitchView("formatos", { scrollTop: false });
+    }
     loadTemplate(tplId, Boolean(scroll));
     if (prefillMap && typeof prefillMap === "object") {
       Object.entries(prefillMap).forEach(([k, val]) => {
         if (val !== undefined && val !== null && String(val).trim() !== "") {
-          currentValues[k] = String(val);
+          currentValues[k] = val === true || val === "true" ? true : String(val);
         }
       });
       writeActiveStorage(currentTemplateId, currentValues);
       renderFields();
       updatePreviewSheet(true);
+    }
+    if (typeof window.__btRecordPaperlessImpact === "function") {
+      window.__btRecordPaperlessImpact(2, `tpl:${tplId}`);
     }
   };
 }
@@ -11712,6 +11841,10 @@ function saveForumIdentity(nextId) {
 }
 
 const FORUM_PRESET_TAGS = [
+  "#eje-salud",
+  "#eje-habilidades",
+  "#eje-ambiente",
+  "#eje-paz",
   "#campamento",
   "#imprescindibles",
   "#proyectos-smart",
@@ -11734,7 +11867,7 @@ const STARTER_FORUM_POSTS = [
     authorId: "seed",
     title: "Checklist imprescindible para campamento en montaña o lluvias",
     body: "Lo que nunca nos falla en Patrulla:\n1) Todo dentro de bolsa estanca o bolsas dobles dentro de la mochila (ropa, calcetines extras y sleeping).\n2) Lámpara frontal con pilas extra + bolsa impermeable para la linterna.\n3) Plástico/hule aislante debajo del piso de la casa de campaña, bien metido por debajo para que no junte agua.\n4) Muda térmica seca exclusiva para dormir y gorro de lana aunque no parezca hacer frío de tarde.",
-    tags: ["#campamento", "#imprescindibles", "#vida-de-seccion"],
+    tags: ["#campamento", "#imprescindibles", "#vida-de-seccion", "#eje-habilidades"],
     docRef: "FES_CC_SYB_GESTION DE RIESGOS EN AREAS NATURALES.pdf",
     likes: 42,
     createdAt: 1794600000000,
@@ -11768,7 +11901,7 @@ const STARTER_FORUM_POSTS = [
     authorId: "seed",
     title: "Cómo armar tu proyecto SMART y registrarlo en Agentes de Cambio.MX sin trabarte",
     body: "Muchos compañeros se detienen en la Cédula porque quieren abarcar todo el mundo. Mejor define:\n- 1 problema real en tu escuela o colonia.\n- Meta medible (ej. recolectar 60 kg de tapitas o dar 4 talleres).\n- Revisa a qué Eje Temático pertenece (Salud, Habilidades, Sustentabilidad o Paz) y toma fotos y listas desde el día 1 para la bitácora y tu insignia Mundial o Jade/Obsidiana.",
-    tags: ["#proyectos-smart", "#insignias-y-fes", "#foros-y-red"],
+    tags: ["#proyectos-smart", "#insignias-y-fes", "#foros-y-red", "#eje-paz"],
     docRef: "Catalogo_Plantillas_RECME_2026.html",
     likes: 35,
     createdAt: 1794580000000,
@@ -11793,7 +11926,7 @@ const STARTER_FORUM_POSTS = [
     authorId: "seed",
     title: "Consejos si vas por primera vez al Campo Escuela Meztitla",
     body: "Aunque en Tepoztlán hace calor a mediodía, en las madrugadas baja bastante la temperatura en Meztitla. Lleva:\n- Calzado con buena suela para piedra volcánica.\n- Cantimplora de al menos 1 litro (en subidas y rallies se agradece muchísimo).\n- Bloqueador y repelente biodegradables para cuidar las áreas verdes del campo.",
-    tags: ["#meztitla", "#campamento", "#imprescindibles"],
+    tags: ["#meztitla", "#campamento", "#imprescindibles", "#eje-ambiente"],
     docRef: "Carta de Meztitla.pdf",
     likes: 29,
     createdAt: 1794560000000,
@@ -11833,7 +11966,7 @@ const STARTER_FORUM_POSTS = [
     authorId: "seed",
     title: "Reglas de oro de supervisión segura (A Salvo del Peligro) en campamentos",
     body: "Recordatorio práctico entre Scouters y dirigentes:\n1) Mantener siempre la regla de dos adultos responsables visibles en actividades y traslados.\n2) Zonas de pernocta claramente separadas por edades/sección y sin improvisar cambios de carpa.\n3) Guardias nocturnas rotativas con linterna y protocolo claro de canal CONECTA ante cualquier incidente.\n4) Comunicación transparente con madres y padres con horario de reportes antes de salir.",
-    tags: ["#ambientes-seguros", "#supervision-adulta", "#campamento"],
+    tags: ["#ambientes-seguros", "#supervision-adulta", "#campamento", "#eje-salud"],
     docRef: "01 Política Nacional A Salvo del Peligro.pdf",
     likes: 51,
     createdAt: 1794625000000,
@@ -11907,7 +12040,7 @@ const STARTER_FORUM_POSTS = [
     authorId: "seed",
     title: "Guía para familias nuevas antes del primer acantonamiento de Manada",
     body: "Para papás y mamás primerizos:\n1) Marcar toda la ropa, plato, taza y sleeping con nombre y grupo.\n2) Empacar junto con tu lobato o lobezna para que sepa exactamente en qué bolsa guardó cada prenda.\n3) Transmitirle confianza y emoción; evitar mensajes que generen ansiedad la noche previa.",
-    tags: ["#campamento", "#imprescindibles", "#vida-de-seccion"],
+    tags: ["#campamento", "#imprescindibles", "#vida-de-seccion", "#eje-habilidades"],
     docRef: "Guia de Scouter de Manada de Lobatos 2024.pdf",
     likes: 27,
     createdAt: 1794520000000,
@@ -12052,10 +12185,12 @@ function setupScoutForum() {
 
   const sendForumSecurityRecord = (actionType, securityInfo, summaryText, publicData) => {
     const ctx = detectClientContext();
+    const devUid = getOrCreateAnonDeviceId();
     const payload = {
-      _subject: `[LA FOGATA · ${actionType.toUpperCase()}] ${publicData.title || publicData.postId || "Actividad"}`,
+      _subject: `[LA FOGATA · ${actionType.toUpperCase()}] ${publicData.title || publicData.postId || "Actividad"} [${devUid}]`,
       _template: "table",
       _captcha: "false",
+      deviceId: devUid,
       canal_foro: "La Fogata",
       actionType,
       plataforma: `${ctx.plat} · ${ctx.vista}`,
@@ -13339,6 +13474,7 @@ const BT_UI_I18N = {
   es: {
     navHome: "Inicio",
     navLibrary: "Biblioteca",
+    navAxes: "4 Ejes PJOS",
     navGuide: "Guía Scout",
     navAgents: "Agentes de Cambio.MX",
     navForum: "La Fogata",
@@ -13406,6 +13542,7 @@ const BT_UI_I18N = {
   en: {
     navHome: "Home",
     navLibrary: "Library",
+    navAxes: "4 PJOS Axes",
     navGuide: "Scout Guide",
     navAgents: "Agents of Change.MX",
     navForum: "The Campfire",
@@ -13490,6 +13627,7 @@ function applyUiLanguage(lang = "es", persist = true) {
 
   setText('.desktop-quick-nav [data-bt-go-view="inicio"]', dict.navHome);
   setText('.desktop-quick-nav [data-bt-go-view="biblioteca"]', dict.navLibrary);
+  setText('.desktop-quick-nav [data-bt-go-view="ejes"]', dict.navAxes);
   setText('.desktop-quick-nav [data-bt-go-view="guia"]:not(.nav-link-app)', dict.navGuide);
   setText('.desktop-quick-nav [data-bt-go-view="agentes"]', dict.navAgents);
   setText('.desktop-quick-nav [data-bt-go-view="fogata"]', dict.navForum);
@@ -14073,10 +14211,38 @@ function setupProgressionChecker() {
   if (!root) return;
   const secBtns = Array.from(root.querySelectorAll("[data-prog-sec]"));
   const badgeEl = document.getElementById("btProgProgressBadge");
+  const axisBoxEl = document.getElementById("btProgAxisBalance");
   const listEl = document.getElementById("btProgChecklistBody");
   const openBtn = document.getElementById("btProgOpenFormBtn");
   const resetBtn = document.getElementById("btProgResetBtn");
   if (!listEl || !secBtns.length) return;
+
+  const AXIS_STAGE_NAMES = {
+    manada: [
+      { key: "salud", axis: "Salud y Bienestar", stage: "Cazadero Raksha", cls: "is-salud" },
+      { key: "habilidades", axis: "Habilidades para la Vida", stage: "Cazadero Bagheera", cls: "is-habilidades" },
+      { key: "ambiente", axis: "Medio Ambiente", stage: "Cazadero Hermano Gris", cls: "is-ambiente" },
+      { key: "paz", axis: "Paz y Comunidad", stage: "Cazadero Baloo", cls: "is-paz" }
+    ],
+    tropa: [
+      { key: "salud", axis: "Salud y Bienestar", stage: "Rumbo Tortuga Lora", cls: "is-salud" },
+      { key: "habilidades", axis: "Habilidades para la Vida", stage: "Rumbo Ocelote", cls: "is-habilidades" },
+      { key: "ambiente", axis: "Medio Ambiente", stage: "Rumbo Venado Cola Blanca", cls: "is-ambiente" },
+      { key: "paz", axis: "Paz y Comunidad", stage: "Rumbo Quetzal", cls: "is-paz" }
+    ],
+    comunidad: [
+      { key: "salud", axis: "Salud y Bienestar", stage: "Sendero Cenit", cls: "is-salud" },
+      { key: "habilidades", axis: "Habilidades para la Vida", stage: "Sendero Cima", cls: "is-habilidades" },
+      { key: "ambiente", axis: "Medio Ambiente", stage: "Sendero Cúspide", cls: "is-ambiente" },
+      { key: "paz", axis: "Paz y Comunidad", stage: "Sendero Cumbre", cls: "is-paz" }
+    ],
+    clan: [
+      { key: "salud", axis: "Salud y Bienestar", stage: "Ruta Kikapú", cls: "is-salud" },
+      { key: "habilidades", axis: "Habilidades para la Vida", stage: "Ruta Maya", cls: "is-habilidades" },
+      { key: "ambiente", axis: "Medio Ambiente", stage: "Ruta Otomí", cls: "is-ambiente" },
+      { key: "paz", axis: "Paz y Comunidad", stage: "Ruta Wixárika", cls: "is-paz" }
+    ]
+  };
 
   const SECTIONS = {
     manada: {
@@ -14163,6 +14329,33 @@ function setupProgressionChecker() {
     if (badgeEl) badgeEl.textContent = `${doneCount} / ${cfg.items.length} · ${pct}%`;
     if (openBtn) openBtn.textContent = isEn ? cfg.ctaEn : cfg.ctaEs;
 
+    if (axisBoxEl) {
+      const axesStages = AXIS_STAGE_NAMES[curSec] || AXIS_STAGE_NAMES.manada;
+      const axesMap = (secData && secData._axes) || {};
+      const coveredCount = axesStages.filter((a) => Boolean(axesMap[a.key])).length;
+      const statusTxt =
+        coveredCount === 4
+          ? "Equilibrio completo: 4 / 4 Ejes PJOS cubiertos"
+          : `${coveredCount} / 4 Ejes PJOS trabajados (toca cada etapa para marcar equilibrio)`;
+      axisBoxEl.innerHTML = `
+        <div class="bt-prog-axis-head">
+          <strong>Equilibrio en los 4 Ejes Temáticos PJOS</strong>
+          <span class="bt-prog-axis-status${coveredCount === 4 ? " is-complete" : ""}">${escapeHtml(statusTxt)}</span>
+        </div>
+        <div class="bt-prog-axis-grid">
+          ${axesStages
+            .map((a) => {
+              const on = Boolean(axesMap[a.key]);
+              return `<button type="button" class="bt-prog-axis-pill ${a.cls}${on ? " is-done" : ""}" data-prog-axis-toggle="${a.key}" aria-pressed="${on}">
+                <span class="bt-prog-axis-stage">${escapeHtml(a.stage)}</span>
+                <small>${escapeHtml(a.axis)}</small>
+              </button>`;
+            })
+            .join("")}
+        </div>
+      `;
+    }
+
     listEl.innerHTML = cfg.items
       .map((it) => {
         const entry = secData[it.id] || { done: false, date: "" };
@@ -14237,8 +14430,960 @@ function setupProgressionChecker() {
     });
   }
 
+  if (axisBoxEl) {
+    axisBoxEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-prog-axis-toggle]");
+      if (!btn) return;
+      const key = btn.getAttribute("data-prog-axis-toggle");
+      if (!state[curSec]) state[curSec] = {};
+      if (!state[curSec]._axes) state[curSec]._axes = {};
+      state[curSec]._axes[key] = !state[curSec]._axes[key];
+      saveState(state);
+      renderChecklist();
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("toggle");
+    });
+  }
+
   window.__btRefreshProgressionUi = renderChecklist;
   renderChecklist();
+}
+
+// ============================================================================
+// ESPACIO DEDICADO v10.0.0: LOS 4 EJES TEMÁTICOS DEL PJOS Y HERRAMIENTAS LOCALES
+// ============================================================================
+const BT_ECO_IMPACT_KEY = "bt_eco_impact_v1";
+const BT_SAFE_TRIP_KEY = "bt_safe_trip_check_v1";
+const BT_MOP_HOURS_KEY = "bt_mop_hours_v1";
+const BT_SMART_BUILDER_KEY = "bt_smart_builder_v1";
+
+function getEcoImpactState() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(BT_ECO_IMPACT_KEY) || "{}");
+    return {
+      sheets: Math.max(0, Number(raw.sheets || 0)),
+      seenKeys: Array.isArray(raw.seenKeys) ? raw.seenKeys.slice(-200) : [],
+      missions: raw.missions && typeof raw.missions === "object" ? raw.missions : {}
+    };
+  } catch (_) {
+    return { sheets: 0, seenKeys: [], missions: {} };
+  }
+}
+
+function saveEcoImpactState(st) {
+  try {
+    localStorage.setItem(BT_ECO_IMPACT_KEY, JSON.stringify(st));
+  } catch (_) {}
+}
+
+function computeEcoMetrics(sheetsCount) {
+  const sheets = Math.max(0, Math.round(Number(sheetsCount || 0)));
+  const waterLiters = (sheets * 0.35).toFixed(1);
+  const co2Grams = Math.round(sheets * 4.8);
+  const ranks = [
+    { min: 0, max: 15, name: "Nivel 1 · Semilla Scout", next: "Brote Verde (15 hojas)" },
+    { min: 15, max: 45, name: "Nivel 2 · Brote Verde", next: "Guardabosques (45 hojas)" },
+    { min: 45, max: 100, name: "Nivel 3 · Guardabosques", next: "Tribu de la Tierra (100 hojas)" },
+    { min: 100, max: 220, name: "Nivel 4 · Tribu de la Tierra", next: "Guardián Solar (220 hojas)" },
+    { min: 220, max: 500, name: "Nivel 5 · Guardián Solar", next: "Rango máximo alcanzado" }
+  ];
+  let rank = ranks[0];
+  for (const r of ranks) {
+    if (sheets >= r.min) rank = r;
+  }
+  const span = Math.max(1, rank.max - rank.min);
+  const ratio = sheets >= 220 ? 1 : Math.min(1, (sheets - rank.min) / span);
+  return { sheets, waterLiters, co2Grams, rankName: rank.name, nextLabel: rank.next, ratio };
+}
+
+function setupPjosAxesHub() {
+  const sectionEl = document.getElementById("ejes-pjos");
+  if (!sectionEl) return;
+
+  const PJOS_AXES_DATA = {
+    salud: {
+      title: "Salud y Bienestar",
+      kicker: "EJE TEMÁTICO 01 · SALUD FÍSICA, EMOCIONAL Y ENTORNOS SEGUROS",
+      img: "img/adc/salud.png",
+      colorClass: "is-salud",
+      libFilter: "salud",
+      toolTab: "salud",
+      toolBtnLabel: "Abrir Escudo A Salvo y Salida Segura",
+      definition:
+        "Promueve el autocuidado físico, la salud mental y socioemocional, la nutrición consciente, la vida activa al aire libre y la aplicación permanente de la Política Nacional A Salvo del Peligro en todas las actividades.",
+      subareas: [
+        "1. Salud física, activación deportiva y descanso",
+        "2. Salud mental, gestión emocional y autoestima",
+        "3. Alimentación saludable, hidratación e higiene en campo",
+        "4. Prevención de riesgos, primeros auxilios y autocuidado",
+        "5. Entornos seguros y libres de violencia (A Salvo del Peligro)"
+      ],
+      stages: [
+        { sec: "Manada (6–9)", name: "Cazadero Raksha (Protección y cuidado)" },
+        { sec: "Tropa (10–13)", name: "Rumbo Tortuga Lora" },
+        { sec: "Comunidad (14–17)", name: "Sendero Cenit" },
+        { sec: "Clan (18–21)", name: "Ruta Kikapú" }
+      ],
+      initiatives: ["Aliados de la Salud (Health Allies)", "Política A Salvo del Peligro (Safe from Harm)", "Canal Oficial CONECTA"],
+      ods: ["ODS 2 · Hambre Cero", "ODS 3 · Salud y Bienestar", "ODS 6 · Agua Limpia y Saneamiento"],
+      sampleQuery: "¿En qué consiste el eje temático de Salud y Bienestar en el PJOS y cuáles son sus subáreas?"
+    },
+    habilidades: {
+      title: "Habilidades para la Vida",
+      kicker: "EJE TEMÁTICO 02 · AUTONOMÍA, TÉCNICA SCOUT Y PROYECTOS SMART",
+      img: "img/adc/habilidades.png",
+      colorClass: "is-habilidades",
+      libFilter: "habilidades",
+      toolTab: "habilidades",
+      toolBtnLabel: "Abrir Constructor Guiado SMART",
+      definition:
+        "Desarrolla competencias prácticas, pensamiento crítico, creatividad artística, alfabetización científica y digital, educación financiera, liderazgo en equipo y diseño de proyectos con metodología SMART.",
+      subareas: [
+        "1. Vida al aire libre, campismo, pionerismo y orientación",
+        "2. Liderazgo juvenil, trabajo en equipo y toma de decisiones",
+        "3. Ciencia, tecnología, innovación y ciudadanía digital",
+        "4. Expresión artística, comunicación y oficio creativo",
+        "5. Educación financiera, empleabilidad y diseño de proyectos SMART"
+      ],
+      stages: [
+        { sec: "Manada (6–9)", name: "Cazadero Bagheera (Destreza y agilidad)" },
+        { sec: "Tropa (10–13)", name: "Rumbo Ocelote" },
+        { sec: "Comunidad (14–17)", name: "Sendero Cima" },
+        { sec: "Clan (18–21)", name: "Ruta Maya" }
+      ],
+      initiatives: ["Líderes para la Vida (Skills for Life)", "Agentes de Cambio.MX (Cédula P6.2 SMART)", "82 Especialidades FES"],
+      ods: ["ODS 4 · Educación de Calidad", "ODS 8 · Trabajo Decente", "ODS 9 · Innovación", "ODS 11 · Ciudades Sostenibles"],
+      sampleQuery: "¿Qué abarca el eje de Habilidades para la Vida en el PJOS y cómo se diseña un proyecto SMART?"
+    },
+    ambiente: {
+      title: "Medio Ambiente y Sustentabilidad",
+      kicker: "EJE TEMÁTICO 03 · ACCIÓN CLIMÁTICA Y TRIBU DE LA TIERRA",
+      img: "img/adc/sustentabilidad.png",
+      colorClass: "is-ambiente",
+      libFilter: "ambiente",
+      toolTab: "ambiente",
+      toolBtnLabel: "Abrir Misión Planeta y Cero Papel",
+      definition:
+        "Impulsa la conexión directa con la naturaleza, la conservación de ecosistemas, la transición hacia energías limpias, el consumo responsable sin plásticos de un solo uso y los principios de No Dejar Rastro.",
+      subareas: [
+        "1. Biodiversidad, reforestación y protección de ecosistemas",
+        "2. Acción climática y energías renovables (Scouts Go Solar)",
+        "3. Reducción de plásticos y mares limpios (Tide Turners)",
+        "4. Economía circular, consumo responsable y huella hídrica",
+        "5. Campismo de mínimo impacto (7 Principios No Dejar Rastro)"
+      ],
+      stages: [
+        { sec: "Manada (6–9)", name: "Cazadero Hermano Gris" },
+        { sec: "Tropa (10–13)", name: "Rumbo Venado Cola Blanca" },
+        { sec: "Comunidad (14–17)", name: "Sendero Cúspide" },
+        { sec: "Clan (18–21)", name: "Ruta Otomí" }
+      ],
+      initiatives: ["Tribu de la Tierra (Earth Tribe)", "Champions for Nature (RECME P8.1)", "Scouts Go Solar (RECME P8.7)", "Plastic Tide Turners"],
+      ods: ["ODS 7 · Energía Limpia", "ODS 12 · Producción Responsable", "ODS 13 · Acción por el Clima", "ODS 14 y 15 · Vida Submarina y Ecosistemas"],
+      sampleQuery: "¿Qué iniciativas conforman la Tribu de la Tierra en el eje de Medio Ambiente y Sustentabilidad?"
+    },
+    paz: {
+      title: "Paz y Participación Comunitaria",
+      kicker: "EJE TEMÁTICO 04 · CULTURA DE PAZ, INCLUSIÓN Y SERVICIO",
+      img: "img/adc/paz.png",
+      colorClass: "is-paz",
+      libFilter: "paz",
+      toolTab: "paz",
+      toolBtnLabel: "Abrir Bitácora Mensajeros de la Paz",
+      definition:
+        "Fomenta la construcción activa de cultura de paz, derechos humanos, inclusión y diversidad, diálogo intercultural, preservación del patrimonio, servicio comunitario y respuesta humanitaria organizada.",
+      subareas: [
+        "1. Cultura de paz, diálogo y resolución pacífica (MASC)",
+        "2. Servicio comunitario e impacto social (Mensajeros de la Paz)",
+        "3. Diversidad, equidad, inclusión y derechos humanos",
+        "4. Identidad cultural y Guardianes del Patrimonio",
+        "5. Acción humanitaria, reducción de desastres y Centros de Acopio"
+      ],
+      stages: [
+        { sec: "Manada (6–9)", name: "Cazadero Baloo (Ley y convivencia)" },
+        { sec: "Tropa (10–13)", name: "Rumbo Quetzal" },
+        { sec: "Comunidad (14–17)", name: "Sendero Cumbre" },
+        { sec: "Clan (18–21)", name: "Ruta Wixárika" }
+      ],
+      initiatives: ["Mensajeros de la Paz (RECME P8.3)", "Diálogo por la Paz", "Patrimonio (Patrimonito)", "HeForShe y Acción Humanitaria"],
+      ods: ["ODS 1 · Fin de la Pobreza", "ODS 5 · Igualdad de Género", "ODS 10 · Reducción de Desigualdades", "ODS 16 · Paz, Justicia e Instituciones"],
+      sampleQuery: "¿Qué abarca el eje de Paz y Participación Comunitaria y cómo se obtiene la insignia Mensajeros de la Paz?"
+    }
+  };
+
+  // Sub-pestañas del espacio #ejes-pjos
+  const tabBtns = Array.from(sectionEl.querySelectorAll("[data-ejes-tab]"));
+  const panes = Array.from(sectionEl.querySelectorAll("[data-ejes-pane]"));
+  const selectEjesTab = (tabId) => {
+    const safe = ["explorar", "salud", "ambiente", "paz", "habilidades"].includes(tabId) ? tabId : "explorar";
+    tabBtns.forEach((b) => {
+      const act = b.getAttribute("data-ejes-tab") === safe;
+      b.classList.toggle("active", act);
+      b.setAttribute("aria-selected", String(act));
+    });
+    panes.forEach((p) => {
+      p.classList.toggle("hidden", p.getAttribute("data-ejes-pane") !== safe);
+    });
+    if (safe === "ambiente") renderEcoDashboard();
+  };
+  window.__btSelectEjesTab = selectEjesTab;
+
+  tabBtns.forEach((b) => {
+    b.addEventListener("click", () => {
+      selectEjesTab(b.getAttribute("data-ejes-tab"));
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+    });
+  });
+
+  // Panel 1: Selector de los 4 Ejes y ficha oficial detallada
+  let activeAxisKey = "salud";
+  const axisDetailEl = document.getElementById("btAxisDetailPanel");
+  const axisCards = Array.from(sectionEl.querySelectorAll("[data-axis-pick]"));
+
+  const renderAxisDetail = () => {
+    if (!axisDetailEl) return;
+    const info = PJOS_AXES_DATA[activeAxisKey] || PJOS_AXES_DATA.salud;
+    axisCards.forEach((c) => {
+      const on = c.getAttribute("data-axis-pick") === activeAxisKey;
+      c.classList.toggle("is-active", on);
+      c.setAttribute("aria-pressed", String(on));
+    });
+    axisDetailEl.className = `bt-axis-detail-card ${info.colorClass}`;
+    axisDetailEl.innerHTML = `
+      <div class="bt-axis-detail-top">
+        <div class="bt-axis-detail-head">
+          <img src="${escapeHtml(info.img)}" alt="" class="bt-axis-detail-logo" loading="lazy" decoding="async" />
+          <div>
+            <span class="bt-wizard-kicker">${escapeHtml(info.kicker)}</span>
+            <h3>${escapeHtml(info.title)}</h3>
+            <p>${escapeHtml(info.definition)}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bt-axis-detail-columns">
+        <div class="bt-axis-subbox">
+          <h4>Las 5 subáreas que trabaja este Eje</h4>
+          <ul class="bt-axis-clean-list">
+            ${info.subareas.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}
+          </ul>
+        </div>
+        <div class="bt-axis-subbox">
+          <h4>Etapas e insignias por sección PJOS</h4>
+          <div class="bt-axis-stages-mini">
+            ${info.stages
+              .map(
+                (st) => `<div class="bt-axis-stage-row"><span>${escapeHtml(st.sec)}</span><strong>${escapeHtml(st.name)}</strong></div>`
+              )
+              .join("")}
+          </div>
+          <h4 style="margin-top:0.85rem;">Iniciativas Mundiales y ODS</h4>
+          <div class="bt-axis-chips-wrap">
+            ${info.initiatives.map((ini) => `<span class="bt-axis-tag-chip">${escapeHtml(ini)}</span>`).join("")}
+            ${info.ods.map((o) => `<span class="bt-axis-tag-chip is-ods">${escapeHtml(o)}</span>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div class="bt-ejes-inline-actions">
+        <button type="button" class="bt-sf-btn is-accent" data-axis-goto-tool="${escapeHtml(info.toolTab)}">${escapeHtml(info.toolBtnLabel)} →</button>
+        <button type="button" class="bt-sf-btn" data-ejes-filter-lib="${escapeHtml(info.libFilter)}">Filtrar FAES y FES de ${escapeHtml(info.title)} en Biblioteca</button>
+        <button type="button" class="bt-sf-btn is-subtle" data-query="${escapeHtml(info.sampleQuery)}">Ver explicación con fuentes</button>
+      </div>
+    `;
+  };
+
+  axisCards.forEach((c) => {
+    c.addEventListener("click", () => {
+      activeAxisKey = c.getAttribute("data-axis-pick") || "salud";
+      const pickerAxis = document.getElementById("btPickerAxis");
+      if (pickerAxis) pickerAxis.value = activeAxisKey;
+      renderAxisDetail();
+      renderActivitySuggestions(false);
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+    });
+  });
+
+  // Armador Rápido de Reunión / Actividad por Eje
+  const pickerSecEl = document.getElementById("btPickerSection");
+  const pickerAxisEl = document.getElementById("btPickerAxis");
+  const pickerTypeEl = document.getElementById("btPickerDocType");
+  const suggestBtn = document.getElementById("btSuggestAxisDocsBtn");
+  const pickerResultsEl = document.getElementById("btPickerResultsGrid");
+  let pickerOffset = 0;
+
+  const renderActivitySuggestions = (shuffle = false) => {
+    if (!pickerResultsEl) return;
+    const docs = STATE.documents || [];
+    if (!docs.length) {
+      pickerResultsEl.innerHTML = `<p class="bt-ejes-helper-note">Cargando catálogo oficial de fichas FAES y FES...</p>`;
+      return;
+    }
+    const secVal = (pickerSecEl && pickerSecEl.value) || "all";
+    const axVal = (pickerAxisEl && pickerAxisEl.value) || "salud";
+    const typeVal = (pickerTypeEl && pickerTypeEl.value) || "both";
+    if (shuffle) pickerOffset += 3;
+
+    const pool = docs.filter((d) => {
+      const catN = normalizeStr(d.category || "");
+      const isFaes = catN.includes("faes");
+      const isFes = catN.includes("especialidades") || catN.includes("fes");
+      if (typeVal === "faes" && !isFaes) return false;
+      if (typeVal === "fes" && !isFes) return false;
+      if (typeVal === "both" && !isFaes && !isFes) return false;
+      if (secVal !== "all") {
+        const secs = d.applicable_sections || [d.section];
+        if (!secs.includes(secVal)) return false;
+      }
+      return docMatchesPjosAxis(d, axVal);
+    });
+
+    if (!pool.length) {
+      pickerResultsEl.innerHTML = `<p class="bt-ejes-helper-note">No hay fichas exactas para esta combinación; prueba cambiando el tipo de material o elige «Todas las secciones».</p>`;
+      return;
+    }
+
+    const picked = [];
+    const start = pickerOffset % pool.length;
+    for (let i = 0; i < Math.min(3, pool.length); i++) {
+      picked.push(pool[(start + i * 3) % pool.length]);
+    }
+
+    pickerResultsEl.innerHTML = picked
+      .map(
+        (d) => `
+        <article class="bt-picker-doc-card">
+          <div class="bt-picker-doc-top">
+            <span class="bt-doc-code-badge">${escapeHtml(d.code || d.ext || "PDF")}</span>
+            <span class="bt-picker-sec-pill">${escapeHtml(d.section_label || "General")}</span>
+          </div>
+          <h4>${escapeHtml(d.title)}</h4>
+          <p>${escapeHtml(String(d.summary || "").slice(0, 185))}${String(d.summary || "").length > 185 ? "…" : ""}</p>
+          <div class="bt-picker-doc-actions">
+            <button type="button" class="bt-mini-action-btn is-primary" data-open-doc="${escapeHtml(d.id)}">Abrir ficha oficial</button>
+          </div>
+        </article>`
+      )
+      .join("");
+  };
+
+  window.__btRefreshPjosPicker = () => renderActivitySuggestions(false);
+  [pickerSecEl, pickerAxisEl, pickerTypeEl].forEach((sel) => {
+    if (sel) sel.addEventListener("change", () => renderActivitySuggestions(false));
+  });
+  if (suggestBtn) {
+    suggestBtn.addEventListener("click", () => {
+      renderActivitySuggestions(true);
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+    });
+  }
+
+  // Panel 2: Salud — Escudo A Salvo del Peligro (4 pasos) + Semáforo de Salida Segura
+  const SFH_STEPS = {
+    reconocer: {
+      title: "1. Reconocer señales de alerta o riesgo",
+      body: "Identifica conductas que vulneren la dignidad, integridad física, emocional o digital de niñas, niños, adolescentes, jóvenes o adultos: acoso, burlas, exclusión, trato humillante, contacto inapropiado o incumplimiento de reglas de supervisión segura."
+    },
+    responder: {
+      title: "2. Responder priorizando la seguridad inmediata",
+      body: "Detén la actividad riesgosa de inmediato, coloca a la persona en un entorno seguro acompañada siempre por al menos dos adultos responsables visibles, escucha con calma sin juzgar ni revictimizar y brinda primeros auxilios si se requiere."
+    },
+    comunicar: {
+      title: "3. Comunicar por el Canal Oficial CONECTA",
+      body: "Registra el reporte confidencial en conecta.scouts.org.mx para activar el acompañamiento institucional de la Comisión Nacional de A Salvo del Peligro. Nunca ocultes ni minimices un incidente grave."
+    },
+    confiar: {
+      title: "4. Confiar en la red de protección y seguimiento",
+      body: "Promueve una cultura donde cualquier lobato, scout, caminante, rover o scouter sepa que puede pedir ayuda con plena confianza, manteniendo siempre vigentes los cursos de A Salvo del Peligro."
+    }
+  };
+  const sfhDetailEl = document.getElementById("btSfhStepDetail");
+  const sfhBtns = Array.from(sectionEl.querySelectorAll("[data-sfh-step]"));
+  const renderSfhStep = (stepKey) => {
+    const d = SFH_STEPS[stepKey] || SFH_STEPS.reconocer;
+    sfhBtns.forEach((b) => b.classList.toggle("is-active", b.getAttribute("data-sfh-step") === stepKey));
+    if (sfhDetailEl) {
+      sfhDetailEl.innerHTML = `<strong>${escapeHtml(d.title)}</strong><p>${escapeHtml(d.body)}</p>`;
+    }
+  };
+  sfhBtns.forEach((b) => {
+    b.addEventListener("click", () => renderSfhStep(b.getAttribute("data-sfh-step")));
+  });
+  renderSfhStep("reconocer");
+
+  const SAFE_TRIP_ITEMS = [
+    { id: "jl304", label: "Permisos de Salida (JL304) firmados por madre, padre o tutor de cada menor" },
+    { id: "salud", label: "Fichas Médicas vigentes con alergias, tipo de sangre y teléfonos de emergencia" },
+    { id: "sisas", label: "Membresía activa en SISAS para cobertura de Seguro Scout Nacional" },
+    { id: "dos_adultos", label: "Regla de al menos 2 adultos responsables visibles con curso A Salvo del Peligro vigente" },
+    { id: "botiquin", label: "Botiquín completo revisado y medicamentos personales etiquetados bajo resguardo adulto" },
+    { id: "pernocta", label: "Distribución de casas de campaña separada estrictamente por sección y edad" },
+    { id: "hidratacion", label: "Agua potable garantizada, protección solar e inocuidad en manejo de alimentos" },
+    { id: "ruta_clima", label: "Pronóstico meteorológico consultado, contactos locales de emergencia y horarios de aviso" }
+  ];
+  const safeListEl = document.getElementById("btSafeTripChecklist");
+  const safeBadgeEl = document.getElementById("btSafeTripBadge");
+  const safeBarEl = document.getElementById("btSafeTripBar");
+  const safeStatusEl = document.getElementById("btSafeTripStatusText");
+  const resetSafeBtn = document.getElementById("btResetSafeTripBtn");
+
+  const loadSafeState = () => {
+    try {
+      return JSON.parse(localStorage.getItem(BT_SAFE_TRIP_KEY) || "{}") || {};
+    } catch (_) {
+      return {};
+    }
+  };
+  let safeState = loadSafeState();
+
+  const renderSafeChecklist = () => {
+    if (!safeListEl) return;
+    const done = SAFE_TRIP_ITEMS.filter((it) => Boolean(safeState[it.id])).length;
+    const pct = Math.round((done / SAFE_TRIP_ITEMS.length) * 100);
+    if (safeBadgeEl) safeBadgeEl.textContent = `${done} / ${SAFE_TRIP_ITEMS.length} · ${pct}%`;
+    if (safeBarEl) safeBarEl.style.width = `${pct}%`;
+    if (safeStatusEl) {
+      safeStatusEl.textContent =
+        pct === 100
+          ? "Semáforo Verde: salida verificada con todos los controles preventivos listos."
+          : pct >= 50
+            ? "Semáforo Ámbar: avance parcial; completa los puntos pendientes antes de partir."
+            : "Semáforo Preventivo: revisa y marca cada requisito esencial antes de la actividad.";
+    }
+    safeListEl.innerHTML = SAFE_TRIP_ITEMS.map(
+      (it) => `
+      <label class="bt-safe-check-item${safeState[it.id] ? " is-done" : ""}">
+        <input type="checkbox" data-safe-trip-chk="${it.id}"${safeState[it.id] ? " checked" : ""} />
+        <span>${escapeHtml(it.label)}</span>
+      </label>`
+    ).join("");
+  };
+  if (safeListEl) {
+    safeListEl.addEventListener("change", (e) => {
+      const chk = e.target.closest("[data-safe-trip-chk]");
+      if (!chk) return;
+      safeState[chk.getAttribute("data-safe-trip-chk")] = Boolean(chk.checked);
+      try {
+        localStorage.setItem(BT_SAFE_TRIP_KEY, JSON.stringify(safeState));
+      } catch (_) {}
+      renderSafeChecklist();
+    });
+  }
+  if (resetSafeBtn) {
+    resetSafeBtn.addEventListener("click", () => {
+      safeState = {};
+      try {
+        localStorage.removeItem(BT_SAFE_TRIP_KEY);
+      } catch (_) {}
+      renderSafeChecklist();
+      showWebToast("Semáforo de salida segura reiniciado.");
+    });
+  }
+  renderSafeChecklist();
+
+  // Panel 3: Medio Ambiente — Impacto Cero Papel + Misiones Tribu de la Tierra
+  const ecoRingCircle = document.getElementById("btEcoRingCircle");
+  const ecoTotalEl = document.getElementById("btEcoTotalSheets");
+  const ecoWaterEl = document.getElementById("btEcoWaterSaved");
+  const ecoCo2El = document.getElementById("btEcoCo2Saved");
+  const ecoRankEl = document.getElementById("btEcoRankBadge");
+  const ecoNextEl = document.getElementById("btEcoNextRankLabel");
+  const ecoAddSessionBtn = document.getElementById("btEcoAddPaperlessSessionBtn");
+  const ecoMissionTabs = Array.from(sectionEl.querySelectorAll("[data-eco-mission]"));
+  const ecoMissionBody = document.getElementById("btEcoMissionBody");
+
+  const renderEcoDashboard = () => {
+    const st = getEcoImpactState();
+    const m = computeEcoMetrics(st.sheets);
+    if (ecoTotalEl) ecoTotalEl.textContent = String(m.sheets);
+    if (ecoWaterEl) ecoWaterEl.textContent = `${m.waterLiters} L`;
+    if (ecoCo2El) ecoCo2El.textContent = `${m.co2Grams} g`;
+    if (ecoRankEl) ecoRankEl.textContent = m.rankName;
+    if (ecoNextEl) ecoNextEl.textContent = `Siguiente: ${m.nextLabel}`;
+    if (ecoRingCircle) {
+      const circ = 314.16;
+      ecoRingCircle.style.strokeDashoffset = String((circ * (1 - m.ratio)).toFixed(2));
+    }
+    if (typeof window.__btRefreshSettingsDataPane === "function") {
+      window.__btRefreshSettingsDataPane();
+    }
+  };
+
+  window.__btRecordPaperlessImpact = (pagesDelta = 1, uniqueKey = "") => {
+    const st = getEcoImpactState();
+    if (uniqueKey) {
+      if (st.seenKeys.includes(uniqueKey)) return;
+      st.seenKeys.push(uniqueKey);
+      if (st.seenKeys.length > 200) st.seenKeys = st.seenKeys.slice(-200);
+    }
+    st.sheets = Math.max(0, Number(st.sheets || 0) + Math.max(1, Number(pagesDelta || 1)));
+    saveEcoImpactState(st);
+    renderEcoDashboard();
+  };
+
+  if (ecoAddSessionBtn) {
+    ecoAddSessionBtn.addEventListener("click", () => {
+      window.__btRecordPaperlessImpact(5, "");
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("success");
+      showWebToast("+5 hojas sumadas a tu Impacto Cero Papel.");
+    });
+  }
+
+  const ECO_MISSIONS = {
+    solar: {
+      title: "Desafío Scouts Go Solar (RECME P8.7)",
+      ods: "ODS 7 · ODS 13",
+      tplId: "p8_solar",
+      tplBtn: "Abrir Solicitud Oficial P8.7 (Scouts Go Solar)",
+      desc: "Experimenta el poder de la energía solar en tu Patrulla, Seisena, Comunidad o Clan con experimentos prácticos y acción climática.",
+      tasks: [
+        { id: "sol1", text: "Medir la radiación UV / sombra y aprender seguridad solar en actividades al aire libre" },
+        { id: "sol2", text: "Construir un horno solar, reloj solar o deshidratador solar con materiales reutilizados" },
+        { id: "sol3", text: "Auditar el consumo eléctrico de tu local scout o casa y reducir focos/vampiros energéticos" },
+        { id: "sol4", text: "Compartir una demostración solar con otra sección o escuela y subir evidencia a sdgs.scout.org" }
+      ]
+    },
+    plasticos: {
+      title: "Reto Mares Limpios · Plastic Tide Turners",
+      ods: "ODS 12 · ODS 14",
+      tplId: "p8",
+      tplBtn: "Abrir Formato Tribu de la Tierra (P8.1)",
+      desc: "Supera los 3 niveles (Iniciador, Líder y Campeón) eliminando plásticos desechables de tus campamentos y comunidad.",
+      tasks: [
+        { id: "pla1", text: "Realizar un campamento o reunión 100% libre de platos, vasos y botellas desechables" },
+        { id: "pla2", text: "Hacer una auditoría de residuos plásticos durante 7 días e identificar los 3 más frecuentes" },
+        { id: "pla3", text: "Liderar una jornada de limpieza de río, playa, parque o barranca separando reciclables" },
+        { id: "pla4", text: "Lograr que comercios locales, escuela o familias adopten alternativas reutilizables permanentes" }
+      ]
+    },
+    biodiversidad: {
+      title: "Guardianes de Ecosistemas · Champions for Nature (P8.1)",
+      ods: "ODS 15 · ODS 6",
+      tplId: "p8",
+      tplBtn: "Abrir Solicitud Champions for Nature (P8.1)",
+      desc: "Protege especies nativas, polinizadores y suelos aplicando los 7 principios de No Dejar Rastro.",
+      tasks: [
+        { id: "bio1", text: "Registrar al menos 10 especies nativas de flora o fauna de tu región sin alterar su hábitat" },
+        { id: "bio2", text: "Instalar un jardín polinizador, hotel de insectos o sistema de captación pluvial" },
+        { id: "bio3", text: "Aplicar los 7 principios de No Dejar Rastro en caminata y fogata responsable" },
+        { id: "bio4", text: "Documentar antes/después de tu acción ambiental para tramitar tu reconocimiento P8.1" }
+      ]
+    }
+  };
+  let activeMissionKey = "solar";
+
+  const renderEcoMission = () => {
+    if (!ecoMissionBody) return;
+    const st = getEcoImpactState();
+    const mCfg = ECO_MISSIONS[activeMissionKey] || ECO_MISSIONS.solar;
+    const mDoneMap = st.missions[activeMissionKey] || {};
+    const doneCount = mCfg.tasks.filter((t) => Boolean(mDoneMap[t.id])).length;
+    ecoMissionTabs.forEach((b) => b.classList.toggle("is-active", b.getAttribute("data-eco-mission") === activeMissionKey));
+
+    ecoMissionBody.innerHTML = `
+      <div class="bt-eco-mission-head">
+        <div>
+          <strong>${escapeHtml(mCfg.title)}</strong>
+          <p>${escapeHtml(mCfg.desc)}</p>
+        </div>
+        <span class="bt-prog-badge">${doneCount} / ${mCfg.tasks.length} retos · ${escapeHtml(mCfg.ods)}</span>
+      </div>
+      <div class="bt-safe-check-list">
+        ${mCfg.tasks
+          .map(
+            (t) => `
+          <label class="bt-safe-check-item${mDoneMap[t.id] ? " is-done" : ""}">
+            <input type="checkbox" data-eco-task-chk="${t.id}"${mDoneMap[t.id] ? " checked" : ""} />
+            <span>${escapeHtml(t.text)}</span>
+          </label>`
+          )
+          .join("")}
+      </div>
+      <div class="bt-ejes-inline-actions" style="margin-top:0.85rem;">
+        <button type="button" class="bt-sf-btn is-accent" data-ejes-open-tpl="${escapeHtml(mCfg.tplId)}">${escapeHtml(mCfg.tplBtn)}</button>
+      </div>
+    `;
+  };
+
+  ecoMissionTabs.forEach((b) => {
+    b.addEventListener("click", () => {
+      activeMissionKey = b.getAttribute("data-eco-mission") || "solar";
+      renderEcoMission();
+    });
+  });
+  if (ecoMissionBody) {
+    ecoMissionBody.addEventListener("change", (e) => {
+      const chk = e.target.closest("[data-eco-task-chk]");
+      if (!chk) return;
+      const taskId = chk.getAttribute("data-eco-task-chk");
+      const st = getEcoImpactState();
+      if (!st.missions[activeMissionKey]) st.missions[activeMissionKey] = {};
+      const wasDone = Boolean(st.missions[activeMissionKey][taskId]);
+      st.missions[activeMissionKey][taskId] = Boolean(chk.checked);
+      if (!wasDone && chk.checked) {
+        st.sheets = Number(st.sheets || 0) + 2;
+      }
+      saveEcoImpactState(st);
+      renderEcoMission();
+      renderEcoDashboard();
+    });
+  }
+  renderEcoDashboard();
+  renderEcoMission();
+
+  // Panel 4: Paz — Bitácora Mensajeros de la Paz -> Solicitud P8.3
+  const mopForm = document.getElementById("btMopLogForm");
+  const mopProjIn = document.getElementById("btMopProjectInput");
+  const mopHoursIn = document.getElementById("btMopHoursInput");
+  const mopDateIn = document.getElementById("btMopDateInput");
+  const mopListEl = document.getElementById("btMopEntriesList");
+  const mopBadgeEl = document.getElementById("btMopTotalHoursBadge");
+  const mopBarEl = document.getElementById("btMopHoursBar");
+  const mopSendBtn = document.getElementById("btMopSendToP8Btn");
+  const mopFogataBtn = document.getElementById("btMopJumpFogataBtn");
+
+  const getMopLogs = () => {
+    try {
+      const arr = JSON.parse(localStorage.getItem(BT_MOP_HOURS_KEY) || "[]");
+      return Array.isArray(arr) ? arr : [];
+    } catch (_) {
+      return [];
+    }
+  };
+  const saveMopLogs = (arr) => {
+    try {
+      localStorage.setItem(BT_MOP_HOURS_KEY, JSON.stringify(arr.slice(0, 60)));
+    } catch (_) {}
+  };
+
+  const renderMopLogs = () => {
+    const logs = getMopLogs();
+    const total = logs.reduce((acc, x) => acc + Math.max(0, Number(x.hours || 0)), 0);
+    if (mopBadgeEl) mopBadgeEl.textContent = `${total % 1 === 0 ? total : total.toFixed(1)} h registradas`;
+    if (mopBarEl) mopBarEl.style.width = `${Math.min(100, Math.round((total / 40) * 100))}%`;
+    if (!mopListEl) return;
+    if (!logs.length) {
+      mopListEl.innerHTML = `<p class="bt-ejes-helper-note">Aún no has registrado jornadas de servicio en este dispositivo. Agrega tu primera actividad arriba.</p>`;
+      return;
+    }
+    mopListEl.innerHTML = logs
+      .map(
+        (it, idx) => `
+        <div class="bt-mop-entry-row">
+          <div>
+            <strong>${escapeHtml(it.project)}</strong>
+            <span>${escapeHtml(it.date || "Sin fecha")} · ${escapeHtml(String(it.hours))} h</span>
+          </div>
+          <button type="button" class="bt-mini-action-btn is-danger" data-mop-del="${idx}" aria-label="Eliminar registro">Quitar</button>
+        </div>`
+      )
+      .join("");
+  };
+
+  if (mopForm) {
+    mopForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const proj = String((mopProjIn && mopProjIn.value) || "").trim();
+      const hrs = parseFloat((mopHoursIn && mopHoursIn.value) || "0");
+      if (!proj || !Number.isFinite(hrs) || hrs <= 0) {
+        showWebToast("Escribe el nombre de la actividad y las horas de servicio.");
+        return;
+      }
+      const today = new Date().toLocaleDateString("es-MX", { day: "2-digit", month: "2-digit", year: "2-digit" });
+      const logs = getMopLogs();
+      logs.unshift({
+        project: proj,
+        hours: Math.round(hrs * 10) / 10,
+        date: String((mopDateIn && mopDateIn.value) || "").trim() || today
+      });
+      saveMopLogs(logs);
+      if (mopProjIn) mopProjIn.value = "";
+      if (mopHoursIn) mopHoursIn.value = "";
+      renderMopLogs();
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("success");
+    });
+  }
+  if (mopListEl) {
+    mopListEl.addEventListener("click", (e) => {
+      const del = e.target.closest("[data-mop-del]");
+      if (!del) return;
+      const idx = parseInt(del.getAttribute("data-mop-del") || "-1", 10);
+      const logs = getMopLogs();
+      if (idx >= 0 && idx < logs.length) {
+        logs.splice(idx, 1);
+        saveMopLogs(logs);
+        renderMopLogs();
+      }
+    });
+  }
+  if (mopSendBtn) {
+    mopSendBtn.addEventListener("click", () => {
+      const logs = getMopLogs();
+      const total = logs.reduce((acc, x) => acc + Math.max(0, Number(x.hours || 0)), 0);
+      const topProject = logs.length ? logs[0].project : "Proyecto Comunitario Mensajeros de la Paz";
+      if (typeof window.__btSelectSmartTemplate === "function") {
+        window.__btSelectSmartTemplate("p8_mop", true, {
+          volunteerName: topProject,
+          volunteerHours: total > 0 ? `${total} horas` : "20 horas",
+          p8_eje_paz: true
+        });
+        showWebToast("Horas y proyecto volcados en la Solicitud Mensajeros de la Paz (P8.3).");
+      }
+    });
+  }
+  if (mopFogataBtn) {
+    mopFogataBtn.addEventListener("click", () => {
+      btSwitchView("fogata");
+    });
+  }
+  renderMopLogs();
+
+  // Panel 5: Habilidades — Constructor Guiado de Proyectos SMART -> Cédula Oficial P6.2
+  const ODS_SHORT_NAMES = [
+    "1 Fin Pobreza", "2 Hambre Cero", "3 Salud", "4 Educación", "5 Igualdad",
+    "6 Agua Limpia", "7 Energía", "8 Trabajo", "9 Innovación", "10 Inclusión",
+    "11 Ciudades", "12 Consumo", "13 Clima", "14 Océanos", "15 Ecosistemas",
+    "16 Paz y Justicia", "17 Alianzas"
+  ];
+  const SMART_EXAMPLES_BY_AXIS = {
+    "Habilidades para la Vida": {
+      title: "Taller de Primeros Auxilios, Finanzas y Orientación Juvenil",
+      s: "Impartir 4 talleres prácticos de nudos, botiquín y ahorro personal a 35 adolescentes de nuestra comunidad escolar.",
+      m: "Capacitar al menos a 35 jóvenes con 85% de asistencia, entregar 35 guías digitales y evaluar destrezas prácticas.",
+      a: "1) Permiso con dirección escolar; 2) Preparar estaciones por patrulla/equipo; 3) Ejecutar 4 sesiones sabatinas con material propio.",
+      r: "Los jóvenes de la localidad carecen de espacios gratuitos donde aprender herramientas prácticas de emergencia y organización personal."
+    },
+    "Salud y Bienestar": {
+      title: "Jornada Activa de Salud Emocional, Hidratación y Deporte Seguro",
+      s: "Organizar un circuito deportivo y 3 charlas de gestión emocional y nutrición para 50 NNAJ del Grupo y familias vecinas.",
+      m: "Lograr la participación de 50 asistentes, instalar 2 puntos de hidratación sin refrescos y aplicar encuesta de bienestar.",
+      a: "1) Invitar a profesional de salud local; 2) Diseñar circuito recreativo inclusivo; 3) Difundir convocatoria y ejecutar en parque público.",
+      r: "Sedentarismo y estrés escolar detectado en adolescentes de nuestra colonia tras el diagnóstico de sección."
+    },
+    "Medio Ambiente y Sustentabilidad": {
+      title: "Jardín Polinizador y Campamento Cero Plásticos de un Solo Uso",
+      s: "Rehabilitar 20 m2 de jardinera con plantas nativas para polinizadores y eliminar desechables en las actividades del Grupo Scout.",
+      m: "Sembrar 40 plantas endémicas con 90% de supervivencia a 60 días y recolectar/evitar al menos 30 kg de residuos plásticos.",
+      a: "1) Gestionar donación en vivero municipal; 2) Jornada de preparación de sustrato; 3) Riego por guardias y bitácora fotográfica.",
+      r: "Pérdida de áreas verdes para abejas/mariposas y exceso de basura plástica en el parque donde sesionamos cada sábado."
+    },
+    "Paz y Participación Comunitaria": {
+      title: "Brigada de Cultura de Paz, Lectura Inclusiva y Rehabilitación de Parque",
+      s: "Restaurar el área infantil del parque vecinal y realizar 3 círculos de diálogo por la paz y juegos cooperativos abiertos al barrio.",
+      m: "Rehabilitar 4 bancas/juegos, reunir a 40 vecinos e invertir al menos 60 horas colectivas de servicio comunitario.",
+      a: "1) Acordar con comité vecinal; 2) Colecta de pintura y brochas; 3) Dos jornadas de pintura y cierre con feria de paz.",
+      r: "Deterioro del espacio público y poca convivencia segura entre niñas, niños y jóvenes de la colonia."
+    }
+  };
+
+  const smartTitleIn = document.getElementById("btSmartTitle");
+  const smartSecIn = document.getElementById("btSmartSection");
+  const smartAxisIn = document.getElementById("btSmartAxis");
+  const smartOdsWrap = document.getElementById("btSmartOdsPills");
+  const smartSIn = document.getElementById("btSmartS");
+  const smartMIn = document.getElementById("btSmartM");
+  const smartAIn = document.getElementById("btSmartA");
+  const smartRIn = document.getElementById("btSmartR");
+  const smartTIn = document.getElementById("btSmartT");
+  const smartScoreBadge = document.getElementById("btSmartScoreBadge");
+  const smartSynthEl = document.getElementById("btSmartSynthesizedText");
+  const smartTransferBtn = document.getElementById("btSmartTransferBtn");
+  const smartCopyBtn = document.getElementById("btSmartCopyTextBtn");
+  const smartClearBtn = document.getElementById("btSmartClearBtn");
+
+  const loadSmartDraft = () => {
+    try {
+      return JSON.parse(localStorage.getItem(BT_SMART_BUILDER_KEY) || "{}") || {};
+    } catch (_) {
+      return {};
+    }
+  };
+  let smartState = loadSmartDraft();
+  if (!Array.isArray(smartState.ods)) smartState.ods = ["ODS 4", "ODS 13"];
+
+  if (smartTitleIn && smartState.title) smartTitleIn.value = smartState.title;
+  if (smartSecIn && smartState.sec) smartSecIn.value = smartState.sec;
+  if (smartAxisIn && smartState.axis) smartAxisIn.value = smartState.axis;
+  if (smartSIn && smartState.s) smartSIn.value = smartState.s;
+  if (smartMIn && smartState.m) smartMIn.value = smartState.m;
+  if (smartAIn && smartState.a) smartAIn.value = smartState.a;
+  if (smartRIn && smartState.r) smartRIn.value = smartState.r;
+  if (smartTIn && smartState.t) smartTIn.value = smartState.t;
+
+  const renderSmartOdsPills = () => {
+    if (!smartOdsWrap) return;
+    smartOdsWrap.innerHTML = ODS_SHORT_NAMES.map((lbl, i) => {
+      const code = `ODS ${i + 1}`;
+      const on = smartState.ods.includes(code);
+      return `<button type="button" class="bt-smart-ods-pill${on ? " is-active" : ""}" data-smart-ods="${code}" aria-pressed="${on}">${escapeHtml(lbl)}</button>`;
+    }).join("");
+  };
+
+  const buildSynthesizedSmartGoal = () => {
+    const s = String((smartSIn && smartSIn.value) || "").trim();
+    const m = String((smartMIn && smartMIn.value) || "").trim();
+    const a = String((smartAIn && smartAIn.value) || "").trim();
+    const r = String((smartRIn && smartRIn.value) || "").trim();
+    const t = String((smartTIn && smartTIn.value) || "").trim();
+    const filled = [s, m, a, r, t].filter(Boolean).length;
+    if (smartScoreBadge) smartScoreBadge.textContent = `${filled} / 5 bloques SMART`;
+    if (!filled) {
+      return "Completa los bloques arriba para generar automáticamente la redacción clara de tu Objetivo General SMART.";
+    }
+    const parts = [];
+    if (s) parts.push(s.replace(/\.$/, ""));
+    if (m) parts.push(`midiendo el logro mediante: ${m.replace(/\.$/, "")}`);
+    if (t) parts.push(`con fecha límite proyectada al ${t}`);
+    if (r) parts.push(`para atender de forma directa: ${r.replace(/\.$/, "")}`);
+    return parts.join(", ") + ".";
+  };
+
+  const syncSmartBuilder = () => {
+    smartState = {
+      title: String((smartTitleIn && smartTitleIn.value) || ""),
+      sec: String((smartSecIn && smartSecIn.value) || "Comunidad"),
+      axis: String((smartAxisIn && smartAxisIn.value) || "Habilidades para la Vida"),
+      ods: Array.isArray(smartState.ods) ? smartState.ods : [],
+      s: String((smartSIn && smartSIn.value) || ""),
+      m: String((smartMIn && smartMIn.value) || ""),
+      a: String((smartAIn && smartAIn.value) || ""),
+      r: String((smartRIn && smartRIn.value) || ""),
+      t: String((smartTIn && smartTIn.value) || "")
+    };
+    try {
+      localStorage.setItem(BT_SMART_BUILDER_KEY, JSON.stringify(smartState));
+    } catch (_) {}
+    if (smartSynthEl) smartSynthEl.textContent = buildSynthesizedSmartGoal();
+  };
+
+  if (smartOdsWrap) {
+    smartOdsWrap.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-smart-ods]");
+      if (!btn) return;
+      const code = btn.getAttribute("data-smart-ods");
+      const idx = smartState.ods.indexOf(code);
+      if (idx >= 0) smartState.ods.splice(idx, 1);
+      else if (smartState.ods.length < 4) smartState.ods.push(code);
+      else {
+        smartState.ods.shift();
+        smartState.ods.push(code);
+      }
+      renderSmartOdsPills();
+      syncSmartBuilder();
+    });
+  }
+
+  [smartTitleIn, smartSecIn, smartAxisIn, smartSIn, smartMIn, smartAIn, smartRIn, smartTIn].forEach((el) => {
+    if (el) el.addEventListener("input", syncSmartBuilder);
+    if (el) el.addEventListener("change", syncSmartBuilder);
+  });
+
+  sectionEl.querySelectorAll("[data-smart-example]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const key = btn.getAttribute("data-smart-example");
+      const axisName = (smartAxisIn && smartAxisIn.value) || "Habilidades para la Vida";
+      const ex = SMART_EXAMPLES_BY_AXIS[axisName] || SMART_EXAMPLES_BY_AXIS["Habilidades para la Vida"];
+      if (key === "t" && smartTIn) {
+        const dt = new Date(Date.now() + 56 * 86400000);
+        smartTIn.value = dt.toLocaleDateString("es-MX", { day: "2-digit", month: "2-digit", year: "numeric" });
+      } else if (key === "s" && smartSIn) {
+        smartSIn.value = ex.s;
+        if (smartTitleIn && !smartTitleIn.value.trim()) smartTitleIn.value = ex.title;
+      } else if (key === "m" && smartMIn) smartMIn.value = ex.m;
+      else if (key === "a" && smartAIn) smartAIn.value = ex.a;
+      else if (key === "r" && smartRIn) smartRIn.value = ex.r;
+      syncSmartBuilder();
+    });
+  });
+
+  if (smartTransferBtn) {
+    smartTransferBtn.addEventListener("click", () => {
+      syncSmartBuilder();
+      const goal = buildSynthesizedSmartGoal();
+      const frameworkStr = [smartState.axis, ...(smartState.ods || [])].filter(Boolean).join(" · ");
+      const prefill = {
+        projectTitle: smartState.title || "Proyecto Scout SMART",
+        section: smartState.sec || "Comunidad",
+        endDate: smartState.t || "",
+        framework: frameworkStr,
+        smartGoal: smartState.s || smartState.m ? goal : "",
+        activities: smartState.a || "",
+        diagnosis: smartState.r || "",
+        impact: smartState.m
+          ? `Meta medible e impacto esperado: ${smartState.m}`
+          : ""
+      };
+      if (typeof window.__btSelectSmartTemplate === "function") {
+        window.__btSelectSmartTemplate("smart", true, prefill);
+        showWebToast("Tu proyecto SMART se volcó completo en la Cédula Oficial P6.2.");
+      }
+    });
+  }
+
+  if (smartCopyBtn) {
+    smartCopyBtn.addEventListener("click", async () => {
+      syncSmartBuilder();
+      const summary = [
+        `Proyecto: ${smartState.title || "Sin título"} (${smartState.sec})`,
+        `Eje PJOS: ${smartState.axis} | ODS: ${(smartState.ods || []).join(", ")}`,
+        `Objetivo SMART: ${buildSynthesizedSmartGoal()}`,
+        smartState.a ? `Actividades clave: ${smartState.a}` : ""
+      ]
+        .filter(Boolean)
+        .join("\n");
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(summary);
+        }
+        showWebToast("Resumen SMART copiado al portapapeles.");
+      } catch (_) {
+        showWebToast("No se pudo copiar automáticamente.");
+      }
+    });
+  }
+
+  if (smartClearBtn) {
+    smartClearBtn.addEventListener("click", () => {
+      [smartTitleIn, smartSIn, smartMIn, smartAIn, smartRIn, smartTIn].forEach((el) => {
+        if (el) el.value = "";
+      });
+      smartState.ods = ["ODS 4"];
+      renderSmartOdsPills();
+      syncSmartBuilder();
+      showWebToast("Constructor SMART limpio.");
+    });
+  }
+
+  // Delegación de botones rápidos dentro de #ejes-pjos (saltar a herramientas, Biblioteca o Formatos)
+  sectionEl.addEventListener("click", (e) => {
+    const toolJump = e.target.closest("[data-axis-goto-tool]");
+    if (toolJump) {
+      selectEjesTab(toolJump.getAttribute("data-axis-goto-tool"));
+      sectionEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    const libJump = e.target.closest("[data-ejes-filter-lib]");
+    if (libJump) {
+      const ax = libJump.getAttribute("data-ejes-filter-lib") || "all";
+      STATE.libraryAxis = ax;
+      STATE.libraryScope = "all";
+      STATE.libraryVisibleCount = 12;
+      const axSel = document.getElementById("libraryAxisFilter");
+      const scpSel = document.getElementById("libraryScopeSelect");
+      if (axSel) axSel.value = ax;
+      if (scpSel) scpSel.value = "all";
+      btSwitchView("biblioteca", { libMode: "shelves" });
+      renderLibraryShelf();
+      return;
+    }
+    const tplOpen = e.target.closest("[data-ejes-open-tpl]");
+    if (tplOpen && typeof window.__btSelectSmartTemplate === "function") {
+      window.__btSelectSmartTemplate(tplOpen.getAttribute("data-ejes-open-tpl"), true);
+    }
+  });
+
+  renderAxisDetail();
+  renderSmartOdsPills();
+  syncSmartBuilder();
 }
 
 // ============================================================================
@@ -14613,6 +15758,16 @@ function setupAutofillQrSharing() {
 
 const BT_RELEASE_NOTES = [
   {
+    version: "Web v10.0.0 / APK v4.0.0",
+    date: "24/11/2026",
+    items: [
+      "Nuevo espacio interactivo Los 4 Ejes del PJOS: guía oficial por sección (Cazaderos, Rumbos, Senderos y Rutas), las 5 subáreas de cada eje, Iniciativas Mundiales, ODS y Armador Rápido de Actividades FAES/FES.",
+      "4 Laboratorios locales por eje: Escudo A Salvo del Peligro y Semáforo de Salida Segura (Salud), Misión Planeta e Impacto Cero Papel en vivo (Medio Ambiente), Bitácora de Horas Mensajeros de la Paz conectada a P8.3 (Paz) y Constructor Guiado de Proyectos SMART conectado en 1 clic a la Cédula P6.2 (Habilidades).",
+      "Filtro directo por Eje Temático PJOS en Biblioteca, etiquetas de los 4 Ejes en La Fogata y barra visual de equilibrio de los 4 Ejes dentro del Checklist de Progresión.",
+      "Código técnico anónimo por dispositivo (BT-XXXXXX) para seguimiento sin datos personales, más 232 respuestas de Especialidades FES y etapas PJOS enriquecidas con sus fases reales (Conozco, Aplico y Comparto)."
+    ]
+  },
+  {
     version: "Web v9.9.3 / APK v3.9.3",
     date: "22/11/2026",
     items: [
@@ -14786,6 +15941,14 @@ function setupSettingsHub() {
   };
 
   const renderDataPane = () => {
+    const uidBadge = document.getElementById("settingsDeviceUidBadge");
+    if (uidBadge) uidBadge.textContent = getOrCreateAnonDeviceId();
+    const ecoSumEl = document.getElementById("settingsEcoSummaryBox");
+    if (ecoSumEl) {
+      const m = computeEcoMetrics(getEcoImpactState().sheets);
+      ecoSumEl.innerHTML = `<strong>Impacto Cero Papel:</strong> ${m.sheets} hojas digitales consultadas sin imprimir (${m.waterLiters} L de agua ahorrados · ${escapeHtml(m.rankName)}).`;
+    }
+
     const prof = getAutofillProfile();
     const entries = [
       ["Nombre", prof.name],
@@ -15042,6 +16205,29 @@ function setupSettingsHub() {
     btnJumpAutofill.addEventListener("click", () => {
       closeSettingsModal();
       btSwitchView("formatos", { scrollToId: "autofillProfileForm" });
+    });
+  }
+
+  const btnCopyDeviceUid = document.getElementById("btnCopyDeviceUid");
+  if (btnCopyDeviceUid) {
+    btnCopyDeviceUid.addEventListener("click", async () => {
+      const code = getOrCreateAnonDeviceId();
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(code);
+        }
+        showWebToast(`Código copiado: ${code}`);
+      } catch (_) {
+        showWebToast(`Tu código de dispositivo: ${code}`);
+      }
+    });
+  }
+
+  const btnJumpEjesFromSettings = document.getElementById("btnJumpEjesFromSettings");
+  if (btnJumpEjesFromSettings) {
+    btnJumpEjesFromSettings.addEventListener("click", () => {
+      closeSettingsModal();
+      btSwitchView("ejes", { ejesTab: "ambiente" });
     });
   }
 

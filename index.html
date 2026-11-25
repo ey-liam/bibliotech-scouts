@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>BiblioTech Scout: By Liam</title>
-  <meta name="description" content="Biblioteca digital y buscador documental scout: 883 documentos oficiales accesibles ASMAC y WOSM (incluyendo 220 FAES y 82 FES), 120 temas y 21,195 preguntas y respuestas con fuentes." />
+  <meta name="description" content="Biblioteca digital y buscador documental scout: 883 documentos oficiales accesibles ASMAC y WOSM (incluyendo 220 FAES y 82 FES), los 4 Ejes del PJOS, 124 temas y 21,230 preguntas y respuestas con fuentes." />
   <meta name="author" content="Liam Durán - Provincia TLXH" />
   <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0a0616" media="(prefers-color-scheme: dark)" />
@@ -25,7 +25,7 @@
   <meta property="og:site_name" content="BiblioTech Scout" />
   <meta property="og:locale" content="es_MX" />
   <meta property="og:title" content="BiblioTech Scout: By Liam" />
-  <meta property="og:description" content="Consulta 883 documentos oficiales ASMAC y WOSM, 220 FAES, 82 especialidades FES, plantillas RECME, guías SISAS y 21,195 preguntas con fuentes." />
+  <meta property="og:description" content="Consulta 883 documentos oficiales ASMAC y WOSM, 220 FAES, 82 especialidades FES, herramientas de los 4 Ejes del PJOS, plantillas RECME y 21,230 preguntas con fuentes." />
   <meta property="og:url" content="https://ey-liam.github.io/bibliotech-scouts/" />
   <meta property="og:image" content="https://ey-liam.github.io/bibliotech-scouts/img/photos/p01.jpg" />
   <meta property="og:image:alt" content="Comunidad de Caminantes en un evento scout" />
@@ -33,7 +33,7 @@
   <meta property="og:image:height" content="731" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="BiblioTech Scout: By Liam" />
-  <meta name="twitter:description" content="Consulta 883 documentos oficiales ASMAC y WOSM, 220 FAES, 82 especialidades FES, plantillas RECME, guías SISAS y 21,195 preguntas con fuentes." />
+  <meta name="twitter:description" content="Consulta 883 documentos oficiales ASMAC y WOSM, 220 FAES, 82 especialidades FES, herramientas de los 4 Ejes del PJOS, plantillas RECME y 21,230 preguntas con fuentes." />
   <meta name="twitter:image" content="https://ey-liam.github.io/bibliotech-scouts/img/photos/p01.jpg" />
 
   <script type="application/ld+json">
@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=47" />
+  <link rel="stylesheet" href="styles.css?v=48" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -121,6 +121,7 @@
       <nav class="desktop-quick-nav" aria-label="Espacios principales">
         <a href="#inicio" class="nav-link active" data-bt-go-view="inicio">Inicio</a>
         <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca">Biblioteca</a>
+        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">4 Ejes PJOS</a>
         <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia">Guía Scout</a>
         <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio.MX</a>
         <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
@@ -132,6 +133,7 @@
       <nav class="main-nav" id="navegacion-principal" aria-label="Todos los apartados">
         <a href="#inicio" class="nav-link active" data-bt-go-view="inicio">Inicio y Buscador</a>
         <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca" data-bt-lib-jump="shelves">Biblioteca y Catálogo</a>
+        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">Los 4 Ejes del PJOS</a>
         <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="guia-inicio">Guía de Uso</a>
         <a href="#acerca" class="nav-link" data-bt-go-view="acerca">¿Qué es BiblioTech?</a>
         <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio.MX</a>
@@ -508,6 +510,15 @@
           <span class="bt-workspace-cta">Abrir Biblioteca →</span>
         </button>
 
+        <button type="button" class="bt-workspace-card" data-bt-go-view="ejes">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20"></path><path d="M2 12h20"></path></svg>
+          </span>
+          <span class="bt-workspace-title">Los 4 Ejes del PJOS</span>
+          <span class="bt-workspace-desc">Explora Salud, Habilidades, Medio Ambiente y Paz con armador de reuniones, Salida Segura, Misión Planeta, horas MoP y Constructor SMART.</span>
+          <span class="bt-workspace-cta">Explorar los 4 Ejes →</span>
+        </button>
+
         <button type="button" class="bt-workspace-card" data-bt-go-view="guia">
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
@@ -614,6 +625,13 @@
             <option value="general">General / Nacional (ASMAC)</option>
             <option value="internacional">World Scouting (WOSM)</option>
           </select>
+          <select id="libraryAxisFilter" class="lib-filter-select" aria-label="Filtrar por Eje Temático PJOS">
+            <option value="all">Todos los Ejes PJOS</option>
+            <option value="salud">Eje: Salud y Bienestar</option>
+            <option value="habilidades">Eje: Habilidades para la Vida</option>
+            <option value="ambiente">Eje: Medio Ambiente y Sustentabilidad</option>
+            <option value="paz">Eje: Paz y Participación Comunitaria</option>
+          </select>
           <select id="libraryScopeSelect" class="lib-filter-select" aria-label="Alcance de búsqueda en biblioteca">
             <option value="shelf">Estante actual</option>
             <option value="all">Todos los estantes (883)</option>
@@ -683,6 +701,7 @@
         <button type="button" class="bt-guide-pill" data-guide-tab="servicios" role="tab" aria-selected="false">Servicios y Trámites</button>
         <button type="button" class="bt-guide-pill" data-guide-tab="cambios" role="tab" aria-selected="false">Cambios en Esquemas</button>
         <button type="button" class="bt-guide-pill" data-guide-tab="app" role="tab" aria-selected="false">App y Offline</button>
+        <button type="button" class="bt-guide-pill" data-bt-go-view="ejes">Los 4 Ejes PJOS →</button>
       </div>
     </div>
   </div>
@@ -1088,6 +1107,12 @@
               <span class="adc-eje-label">Paz y Participación Comunitaria</span>
             </div>
           </div>
+          <div style="margin-top:1.25rem;display:flex;justify-content:center;">
+            <button type="button" class="adc-btn-register-action" data-bt-go-view="ejes">
+              <span>Abrir espacio interactivo de los 4 Ejes del PJOS y Constructor SMART</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1106,6 +1131,387 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ESPACIO DEDICADO INTERACTIVO: LOS 4 EJES TEMÁTICOS DEL PJOS Y HERRAMIENTAS PRÁCTICAS -->
+  <section id="ejes-pjos" class="bt-ejes-section bt-view-hidden" data-bt-view="ejes" aria-labelledby="ejesPjosTitle">
+    <div class="container">
+      <div class="bt-ejes-hero-head">
+        <div>
+          <span class="section-eyebrow">PROGRAMA DE JÓVENES ASMAC · MARCO MUNDO MEJOR</span>
+          <h2 id="ejesPjosTitle" class="section-title">Los 4 Ejes Temáticos del PJOS</h2>
+          <p class="section-subtitle">
+            En el Programa de Jóvenes (PJOS), los 4 Ejes Temáticos orientan todas las actividades, especialidades FES, insignias de progresión e iniciativas comunitarias para aprender a ser, saber, hacer y convivir. Explora cada eje y usa sus herramientas interactivas locales.
+          </p>
+        </div>
+      </div>
+
+      <div id="btEjesSubtabs" class="bt-ejes-tabs" role="tablist" aria-label="Herramientas de los 4 Ejes del PJOS">
+        <button type="button" class="bt-ejes-tab active" data-ejes-tab="explorar" role="tab" aria-selected="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M2 12h20"></path></svg>
+          <span>1. Guía de los 4 Ejes y Actividades</span>
+        </button>
+        <button type="button" class="bt-ejes-tab" data-ejes-tab="salud" role="tab" aria-selected="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          <span>2. Salud: A Salvo y Salida Segura</span>
+        </button>
+        <button type="button" class="bt-ejes-tab" data-ejes-tab="ambiente" role="tab" aria-selected="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          <span>3. Ambiente: Misión Planeta</span>
+        </button>
+        <button type="button" class="bt-ejes-tab" data-ejes-tab="paz" role="tab" aria-selected="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>4. Paz: Bitácora MoP y Emergencias</span>
+        </button>
+        <button type="button" class="bt-ejes-tab" data-ejes-tab="habilidades" role="tab" aria-selected="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>5. Habilidades: Constructor SMART</span>
+        </button>
+      </div>
+
+      <!-- PANEL 1: EXPLORADOR OFICIAL DE LOS 4 EJES + ARMADOR DE ACTIVIDADES -->
+      <div class="bt-ejes-pane" data-ejes-pane="explorar">
+        <div class="bt-axis-selector-grid" id="btAxisSelectorGrid" role="group" aria-label="Seleccionar Eje Temático">
+          <button type="button" class="bt-axis-card is-salud is-active" data-axis-pick="salud" aria-pressed="true">
+            <img src="img/adc/salud.png" alt="" class="bt-axis-card-img" loading="lazy" decoding="async" />
+            <div class="bt-axis-card-copy">
+              <span class="bt-axis-kicker">EJE 01 · BIENESTAR INTEGRAL</span>
+              <h3>Salud y Bienestar</h3>
+              <p>Salud física, mental, nutricional, prevención de riesgos y Política A Salvo del Peligro.</p>
+            </div>
+          </button>
+
+          <button type="button" class="bt-axis-card is-habilidades" data-axis-pick="habilidades" aria-pressed="false">
+            <img src="img/adc/habilidades.png" alt="" class="bt-axis-card-img" loading="lazy" decoding="async" />
+            <div class="bt-axis-card-copy">
+              <span class="bt-axis-kicker">EJE 02 · AUTONOMÍA Y LIDERAZGO</span>
+              <h3>Habilidades para la Vida</h3>
+              <p>Campismo, ciencia, tecnología, arte, finanzas, liderazgo y proyectos con método SMART.</p>
+            </div>
+          </button>
+
+          <button type="button" class="bt-axis-card is-ambiente" data-axis-pick="ambiente" aria-pressed="false">
+            <img src="img/adc/sustentabilidad.png" alt="" class="bt-axis-card-img" loading="lazy" decoding="async" />
+            <div class="bt-axis-card-copy">
+              <span class="bt-axis-kicker">EJE 03 · TRIBU DE LA TIERRA</span>
+              <h3>Medio Ambiente y Sustentabilidad</h3>
+              <p>Biodiversidad, energía limpia, reducción de huella ecológica, océanos y acción climática.</p>
+            </div>
+          </button>
+
+          <button type="button" class="bt-axis-card is-paz" data-axis-pick="paz" aria-pressed="false">
+            <img src="img/adc/paz.png" alt="" class="bt-axis-card-img" loading="lazy" decoding="async" />
+            <div class="bt-axis-card-copy">
+              <span class="bt-axis-kicker">EJE 04 · CULTURA DE PAZ</span>
+              <h3>Paz y Participación Comunitaria</h3>
+              <p>Derechos humanos, diversidad e inclusión, diálogo, servicio comunitario y acción humanitaria.</p>
+            </div>
+          </button>
+        </div>
+
+        <div id="btAxisDetailPanel" class="bt-axis-detail-card" aria-live="polite"></div>
+
+        <!-- ARMADOR RÁPIDO DE ACTIVIDADES Y REUNIONES POR EJE Y SECCIÓN -->
+        <div class="bt-ejes-tool-card" id="btAxisActivityPicker">
+          <div class="bt-ejes-tool-head">
+            <div>
+              <span class="bt-wizard-kicker">RECOMENDADOR DE FICHAS OFICIALES</span>
+              <h3>Armador Rápido de Reunión o Reto por Eje</h3>
+              <p>Elige tu sección y un Eje Temático para descubrir al instante 3 fichas FAES o Especialidades FES oficiales listas para abrir en PDF.</p>
+            </div>
+            <button type="button" id="btSuggestAxisDocsBtn" class="bt-sf-btn is-accent">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+              <span>Sugerir 3 fichas al azar</span>
+            </button>
+          </div>
+          <div class="bt-axis-picker-controls">
+            <label class="bt-bug-field">
+              <span>Sección</span>
+              <select id="btPickerSection">
+                <option value="all">Todas las secciones</option>
+                <option value="manada">Manada de Lobatos</option>
+                <option value="tropa">Tropa de Scouts</option>
+                <option value="comunidad">Comunidad de Caminantes</option>
+                <option value="clan">Clan de Rovers</option>
+              </select>
+            </label>
+            <label class="bt-bug-field">
+              <span>Eje Temático PJOS</span>
+              <select id="btPickerAxis">
+                <option value="salud">Salud y Bienestar</option>
+                <option value="habilidades">Habilidades para la Vida</option>
+                <option value="ambiente">Medio Ambiente y Sustentabilidad</option>
+                <option value="paz">Paz y Participación Comunitaria</option>
+              </select>
+            </label>
+            <label class="bt-bug-field">
+              <span>Tipo de material</span>
+              <select id="btPickerDocType">
+                <option value="both">FAES y Especialidades FES</option>
+                <option value="faes">Solo Fichas FAES (Actividades)</option>
+                <option value="fes">Solo Especialidades FES</option>
+              </select>
+            </label>
+          </div>
+          <div id="btPickerResultsGrid" class="bt-axis-picker-results" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <!-- PANEL 2: SALUD Y BIENESTAR (ESCUDO A SALVO DEL PELIGRO + SEMÁFORO DE SALIDA SEGURA) -->
+      <div class="bt-ejes-pane hidden" data-ejes-pane="salud">
+        <div class="bt-ejes-split-grid">
+          <div class="bt-ejes-tool-card">
+            <span class="bt-wizard-kicker">POLÍTICA NACIONAL A SALVO DEL PELIGRO</span>
+            <h3>Escudo de Protección en 4 Pasos</h3>
+            <p>Toca cada paso oficial para ver cómo actuar ante cualquier situación de riesgo físico, emocional o digital en actividades scouts.</p>
+            <div class="bt-sfh-steps-row" id="btSfhStepsRow" role="tablist">
+              <button type="button" class="bt-sfh-step-btn is-active" data-sfh-step="reconocer">1. Reconocer</button>
+              <button type="button" class="bt-sfh-step-btn" data-sfh-step="responder">2. Responder</button>
+              <button type="button" class="bt-sfh-step-btn" data-sfh-step="comunicar">3. Comunicar</button>
+              <button type="button" class="bt-sfh-step-btn" data-sfh-step="confiar">4. Confiar</button>
+            </div>
+            <div id="btSfhStepDetail" class="bt-sfh-detail-box" aria-live="polite"></div>
+            <div class="bt-ejes-inline-actions">
+              <a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener noreferrer" class="bt-sf-btn is-accent">Abrir Canal Oficial CONECTA ↗</a>
+              <button type="button" class="bt-sf-btn" data-query="¿Cuáles son los 4 pasos de la Política Nacional A Salvo del Peligro y cómo funciona el canal CONECTA?">Ver respaldo documental</button>
+            </div>
+          </div>
+
+          <div class="bt-ejes-tool-card">
+            <div class="bt-ejes-tool-head">
+              <div>
+                <span class="bt-wizard-kicker">LISTA PREVENTIVA LOCAL (100% EN TU DISPOSITIVO)</span>
+                <h3>Semáforo de Salida y Campamento Seguro</h3>
+              </div>
+              <span id="btSafeTripBadge" class="bt-prog-badge">0 / 8 · 0%</span>
+            </div>
+            <div class="bt-meter-track" aria-hidden="true">
+              <div id="btSafeTripBar" class="bt-meter-fill is-salud" style="width:0%"></div>
+            </div>
+            <p id="btSafeTripStatusText" class="bt-ejes-helper-note">Marca cada punto de seguridad antes de iniciar el traslado o actividad al aire libre.</p>
+            <div id="btSafeTripChecklist" class="bt-safe-check-list"></div>
+            <div class="bt-ejes-inline-actions">
+              <button type="button" class="bt-sf-btn is-accent" data-ejes-open-tpl="salud">Llenar Ficha Médica</button>
+              <button type="button" class="bt-sf-btn" data-ejes-open-tpl="jl304">Llenar Permiso JL304</button>
+              <button type="button" id="btResetSafeTripBtn" class="bt-sf-btn is-subtle">Reiniciar lista</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 3: MEDIO AMBIENTE Y SUSTENTABILIDAD (MISIÓN PLANETA INTERACTIVA + IMPACTO CERO PAPEL) -->
+      <div class="bt-ejes-pane hidden" data-ejes-pane="ambiente">
+        <div class="bt-ejes-split-grid">
+          <div class="bt-ejes-tool-card bt-eco-dashboard-card" id="btEcoImpactCard">
+            <div class="bt-ejes-tool-head">
+              <div>
+                <span class="bt-wizard-kicker">HUELLA POSITIVA EN ESTE DISPOSITIVO</span>
+                <h3>Tu Impacto Scout Cero Papel</h3>
+                <p>Cada manual leído y formato digital que llenas aquí sin gastar papel suma hojas salvadas y sube tu rango ambiental.</p>
+              </div>
+              <span id="btEcoRankBadge" class="bt-eco-rank-pill">Nivel 1 · Semilla Scout</span>
+            </div>
+
+            <div class="bt-eco-ring-row">
+              <div class="bt-eco-ring-wrap">
+                <svg viewBox="0 0 120 120" class="bt-eco-ring-svg" aria-hidden="true">
+                  <circle cx="60" cy="60" r="50" class="bt-eco-ring-bg"></circle>
+                  <circle cx="60" cy="60" r="50" id="btEcoRingCircle" class="bt-eco-ring-fg" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
+                </svg>
+                <div class="bt-eco-ring-center">
+                  <strong id="btEcoTotalSheets">0</strong>
+                  <span>hojas salvadas</span>
+                </div>
+              </div>
+
+              <div class="bt-eco-metrics-col">
+                <div class="bt-eco-stat-box">
+                  <strong id="btEcoWaterSaved">0.0 L</strong>
+                  <span>Agua ahorrada estimada</span>
+                </div>
+                <div class="bt-eco-stat-box">
+                  <strong id="btEcoCo2Saved">0 g</strong>
+                  <span>Emisiones CO2 evitadas</span>
+                </div>
+                <div class="bt-eco-stat-box">
+                  <strong id="btEcoNextRankLabel">Siguiente: Brote Verde (15 hojas)</strong>
+                  <span>Avance automático al leer PDFs o usar formatos</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bt-ejes-inline-actions">
+              <button type="button" id="btEcoAddPaperlessSessionBtn" class="bt-sf-btn is-accent">+ Registrar reunión scout sin papel (+5 hojas)</button>
+              <button type="button" class="bt-sf-btn" data-ejes-filter-lib="ambiente">Ver FAES y FES Ambientales</button>
+            </div>
+          </div>
+
+          <div class="bt-ejes-tool-card" id="btEcoMissionsBox">
+            <span class="bt-wizard-kicker">RETOS PRÁCTICOS · TRIBU DE LA TIERRA</span>
+            <h3>Elige tu Misión Planeta</h3>
+            <p>Selecciona una ruta oficial de World Scouting, completa sus 4 micro-retos de campo y abre directo su solicitud RECME.</p>
+
+            <div class="bt-eco-mission-tabs" id="btEcoMissionTabs" role="tablist">
+              <button type="button" class="bt-eco-mission-tab is-active" data-eco-mission="solar">Energía · Scouts Go Solar</button>
+              <button type="button" class="bt-eco-mission-tab" data-eco-mission="plasticos">Océanos · Cero Plásticos</button>
+              <button type="button" class="bt-eco-mission-tab" data-eco-mission="biodiversidad">Vida · Champions for Nature</button>
+            </div>
+
+            <div id="btEcoMissionBody" class="bt-eco-mission-body" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 4: PAZ Y PARTICIPACIÓN COMUNITARIA (BITÁCORA MENSAJEROS DE LA PAZ + EMERGENCIAS) -->
+      <div class="bt-ejes-pane hidden" data-ejes-pane="paz">
+        <div class="bt-ejes-split-grid">
+          <div class="bt-ejes-tool-card" id="btMopTrackerCard">
+            <div class="bt-ejes-tool-head">
+              <div>
+                <span class="bt-wizard-kicker">REGISTRO LOCAL · MENSAJEROS DE LA PAZ</span>
+                <h3>Bitácora de Horas de Servicio Comunitario</h3>
+                <p>Acumula tus jornadas de servicio y transfiere el total en 1 clic al formato oficial <code>RECME P8.3</code>.</p>
+              </div>
+              <span id="btMopTotalHoursBadge" class="bt-prog-badge">0 h registradas</span>
+            </div>
+
+            <div class="bt-meter-track" aria-hidden="true">
+              <div id="btMopHoursBar" class="bt-meter-fill is-paz" style="width:0%"></div>
+            </div>
+
+            <form id="btMopLogForm" class="bt-mop-form" novalidate>
+              <div class="bt-mop-form-grid">
+                <input type="text" id="btMopProjectInput" maxlength="90" placeholder="Actividad o proyecto (ej. Colecta invernal)" aria-label="Nombre de la actividad de servicio" required />
+                <input type="number" id="btMopHoursInput" min="0.5" max="500" step="0.5" placeholder="Horas" aria-label="Horas de servicio" required />
+                <input type="text" id="btMopDateInput" maxlength="20" placeholder="DD/MM/AA" aria-label="Fecha de servicio" />
+                <button type="submit" class="bt-sf-btn is-accent">Sumar horas</button>
+              </div>
+            </form>
+
+            <div id="btMopEntriesList" class="bt-mop-entries-list"></div>
+
+            <div class="bt-ejes-inline-actions">
+              <button type="button" id="btMopSendToP8Btn" class="bt-sf-btn is-accent">Pasar horas y proyecto a Solicitud P8.3</button>
+              <button type="button" id="btMopJumpFogataBtn" class="bt-sf-btn">Compartir ideas en La Fogata</button>
+            </div>
+          </div>
+
+          <div class="bt-ejes-tool-card">
+            <span class="bt-wizard-kicker">ACCIÓN HUMANITARIA Y CENTROS DE ACOPIO ASMAC</span>
+            <h3>Las 5 Fases ante Emergencias</h3>
+            <p>Guía rápida basada en los lineamientos oficiales de Acción Humanitaria y Centros de Acopio de Scouts de México:</p>
+            <div class="bt-peace-phases-list">
+              <div class="bt-peace-phase-item"><strong>1. Prevención y Mitigación:</strong> Identificar riesgos locales, capacitarse en primeros auxilios y nunca actuar en zonas de desastre sin coordinación oficial.</div>
+              <div class="bt-peace-phase-item"><strong>2. Preparación:</strong> Organizar directorios de Protección Civil, logística de clasificación y roles por edad (NNAJ solo en tareas seguras fuera de zona cero).</div>
+              <div class="bt-peace-phase-item"><strong>3. Respuesta (Centro de Acopio):</strong> Recibir, revisar caducidad, clasificar por categoría (alimentos, higiene, curación), empaquetar, rotular e inventariar con transparencia.</div>
+              <div class="bt-peace-phase-item"><strong>4. Recuperación y Reconstrucción:</strong> Proyectos comunitarios de mediano plazo para rehabilitar espacios educativos, parques y tejido social.</div>
+              <div class="bt-peace-phase-item"><strong>5. Cultura de Paz y MASC:</strong> Resolver desacuerdos mediante Diálogo Directo y Mediación respetando la Política de Diversidad e Inclusión.</div>
+            </div>
+            <div class="bt-ejes-inline-actions">
+              <button type="button" class="bt-sf-btn is-accent" data-query="¿Cómo se organiza un Centro de Acopio Scout y cuáles son las etapas de Acción Humanitaria en ASMAC?">Consultar Guía de Centros de Acopio</button>
+              <button type="button" class="bt-sf-btn" data-ejes-open-tpl="acta">Abrir Acta / Acuerdo MASC</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 5: HABILIDADES PARA LA VIDA (CONSTRUCTOR GUIADO DE PROYECTOS SMART -> CÉDULA P6.2) -->
+      <div class="bt-ejes-pane hidden" data-ejes-pane="habilidades">
+        <div class="bt-ejes-tool-card bt-smart-builder-shell" id="btSmartBuilder">
+          <div class="bt-ejes-tool-head">
+            <div>
+              <span class="bt-wizard-kicker">DISEÑADOR PASO A PASO · PLANTILLA OFICIAL P6.2</span>
+              <h3>Constructor Guiado de Proyectos SMART</h3>
+              <p>Responde las 5 preguntas clave, elige tu Eje y tus ODS, y vuelca todo en 1 clic dentro de la Cédula Oficial de Proyecto Scout lista para exportar en PDF.</p>
+            </div>
+            <span id="btSmartScoreBadge" class="bt-prog-badge">0 / 5 bloques SMART</span>
+          </div>
+
+          <div class="bt-smart-top-meta">
+            <label class="bt-bug-field">
+              <span>Nombre de tu proyecto</span>
+              <input type="text" id="btSmartTitle" maxlength="100" placeholder="Ej. Huerto Escolar y Captación Pluvial Patrulla Lobos" />
+            </label>
+            <label class="bt-bug-field">
+              <span>Sección</span>
+              <select id="btSmartSection">
+                <option value="Comunidad">Comunidad de Caminantes</option>
+                <option value="Tropa">Tropa de Scouts</option>
+                <option value="Clan">Clan de Rovers</option>
+                <option value="Manada">Manada de Lobatos</option>
+              </select>
+            </label>
+            <label class="bt-bug-field">
+              <span>Eje Temático principal</span>
+              <select id="btSmartAxis">
+                <option value="Habilidades para la Vida">Habilidades para la Vida</option>
+                <option value="Salud y Bienestar">Salud y Bienestar</option>
+                <option value="Medio Ambiente y Sustentabilidad">Medio Ambiente y Sustentabilidad</option>
+                <option value="Paz y Participación Comunitaria">Paz y Participación Comunitaria</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="bt-smart-ods-block">
+            <span class="bt-smart-label">Objetivos de Desarrollo Sostenible (ODS) a los que abona (toca hasta 4):</span>
+            <div id="btSmartOdsPills" class="bt-smart-ods-grid" role="group" aria-label="Seleccionar ODS"></div>
+          </div>
+
+          <div class="bt-smart-steps-grid">
+            <div class="bt-smart-step-box">
+              <div class="bt-smart-step-head">
+                <strong>S · Específico (¿Qué harás y para quiénes?)</strong>
+                <button type="button" class="bt-smart-example-btn" data-smart-example="s">Usar ejemplo</button>
+              </div>
+              <textarea id="btSmartS" rows="2" maxlength="320" placeholder="Ej. Instalar 3 camas de cultivo y dar talleres prácticos a 45 estudiantes de la primaria local."></textarea>
+            </div>
+
+            <div class="bt-smart-step-box">
+              <div class="bt-smart-step-head">
+                <strong>M · Medible (¿Con qué números sabrás que se logró?)</strong>
+                <button type="button" class="bt-smart-example-btn" data-smart-example="m">Usar ejemplo</button>
+              </div>
+              <textarea id="btSmartM" rows="2" maxlength="280" placeholder="Ej. Producir 25 kg de hortalizas, capacitar al menos al 80% del grupo y registrar asistencia fotográfica."></textarea>
+            </div>
+
+            <div class="bt-smart-step-box">
+              <div class="bt-smart-step-head">
+                <strong>A · Alcanzable (¿Qué actividades y recursos usarán?)</strong>
+                <button type="button" class="bt-smart-example-btn" data-smart-example="a">Usar ejemplo</button>
+              </div>
+              <textarea id="btSmartA" rows="2" maxlength="340" placeholder="Ej. 1) Diagnóstico y permiso escolar; 2) Colecta de madera reciclada y semillas; 3) 4 sábados de construcción y riego."></textarea>
+            </div>
+
+            <div class="bt-smart-step-box">
+              <div class="bt-smart-step-head">
+                <strong>R · Relevante (¿Qué problemática real atiende?)</strong>
+                <button type="button" class="bt-smart-example-btn" data-smart-example="r">Usar ejemplo</button>
+              </div>
+              <textarea id="btSmartR" rows="2" maxlength="320" placeholder="Ej. Falta de áreas verdes educativas y educación nutricional práctica en niñas y niños de la colonia."></textarea>
+            </div>
+
+            <div class="bt-smart-step-box bt-smart-step-wide">
+              <div class="bt-smart-step-head">
+                <strong>T · Temporal (¿Cuál es la fecha proyectada de término?)</strong>
+                <button type="button" class="bt-smart-example-btn" data-smart-example="t">Poner a 8 semanas</button>
+              </div>
+              <input type="text" id="btSmartT" maxlength="40" placeholder="DD / MM / AAAA (ej. 30 / 01 / 2027)" />
+            </div>
+          </div>
+
+          <div class="bt-smart-preview-box">
+            <span class="bt-smart-label">Vista previa redactada de tu Objetivo General SMART:</span>
+            <p id="btSmartSynthesizedText" class="bt-smart-synth-p">Completa los bloques arriba para generar automáticamente la redacción clara de tu Objetivo General SMART.</p>
+          </div>
+
+          <div class="bt-ejes-inline-actions">
+            <button type="button" id="btSmartTransferBtn" class="bt-sf-btn is-accent">Volcar todo en Cédula Oficial SMART (P6.2)</button>
+            <button type="button" id="btSmartCopyTextBtn" class="bt-sf-btn">Copiar resumen del proyecto</button>
+            <button type="button" id="btSmartClearBtn" class="bt-sf-btn is-subtle">Limpiar constructor</button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1793,6 +2199,7 @@
           <button type="button" class="bt-prog-sec-btn" data-prog-sec="comunidad" role="tab" aria-selected="false">Comunidad (Everest P9.3)</button>
           <button type="button" class="bt-prog-sec-btn" data-prog-sec="clan" role="tab" aria-selected="false">Clan (Baden-Powell P9.4)</button>
         </div>
+        <div id="btProgAxisBalance" class="bt-prog-axis-balance" aria-label="Equilibrio en los 4 Ejes Temáticos PJOS"></div>
         <div id="btProgChecklistBody" class="bt-prog-list"></div>
         <div class="bt-prog-actions">
           <button type="button" id="btProgOpenFormBtn" class="bt-sf-btn is-accent">Pasar fechas a solicitud P9.1</button>
@@ -2306,10 +2713,10 @@
     <div class="container">
       <div class="app-download-shell">
         <div class="app-download-copy">
-          <span class="app-download-eyebrow">App Android · Web App iOS · 3.9.1 Mobile · Web 9.9.1</span>
+          <span class="app-download-eyebrow">App Android · Web App iOS · 4.0.0 Mobile · Web 10.0.0</span>
           <h2 class="app-download-title">Lleva BiblioTech Scout contigo</h2>
           <p class="app-download-subtitle">
-            <strong>No es necesario descargar nada:</strong> puedes disfrutar de todas las herramientas, el buscador de 21,195 preguntas, los 883 documentos (incluyendo 220 FAES y 82 FES) y el Editor de Archivos directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
+            <strong>No es necesario descargar nada:</strong> puedes disfrutar de todas las herramientas, el buscador de 21,230 preguntas, los 883 documentos (incluyendo 220 FAES y 82 FES), los 4 Ejes del PJOS y el Editor de Archivos directamente desde tu navegador. Si quieres consultar archivos <strong>sin conexión (offline)</strong>, elige la opción para tu teléfono:
           </p>
           <p id="appDetectedOsBadge" class="app-detected-os-pill hidden" aria-live="polite"></p>
 
@@ -2671,7 +3078,7 @@
 
       <div class="footer-legal-disclaimer">
         <p class="footer-db-cutoff">
-          Base de datos: 22/11/2026 (883 documentos · 21,195 preguntas) · BETA 9.9.1 - 3.9.1 Mobile (22/11/2026) ·
+          Base de datos: 24/11/2026 (883 documentos · 21,230 preguntas) · v10.0.0 Web - 4.0.0 Mobile (24/11/2026) ·
           <button type="button" id="openConsentModalBtn" class="footer-privacy-btn">Privacidad y cookies</button> ·
           <button type="button" id="openSettingsFooterBtn" class="footer-privacy-btn" data-action-open-settings="1">Ajustes y versión</button>
         </p>
@@ -2806,6 +3213,7 @@
             <span>Apartado donde pasó</span>
             <select id="bugReportSection">
               <option value="Buscador de preguntas">Buscador y respuestas</option>
+              <option value="Los 4 Ejes del PJOS">Los 4 Ejes del PJOS y Herramientas</option>
               <option value="Editor de Formatos">Editor de Archivos (llenado de formatos)</option>
               <option value="La Fogata">La Fogata (publicaciones y comentarios)</option>
               <option value="Biblioteca Scout">Biblioteca, FAES, FES y documentos</option>
@@ -3160,6 +3568,10 @@
             <label class="bt-bug-chip"><input type="checkbox" value="#salud-y-permisos" /><span>#salud-y-permisos</span></label>
             <label class="bt-bug-chip"><input type="checkbox" value="#foros-y-red" /><span>#foros-y-red</span></label>
             <label class="bt-bug-chip"><input type="checkbox" value="#vida-de-seccion" /><span>#vida-de-seccion</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#eje-salud" /><span>#eje-salud</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#eje-habilidades" /><span>#eje-habilidades</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#eje-ambiente" /><span>#eje-ambiente</span></label>
+            <label class="bt-bug-chip"><input type="checkbox" value="#eje-paz" /><span>#eje-paz</span></label>
           </div>
         </fieldset>
 
@@ -3358,6 +3770,21 @@
           <div class="bt-setting-block">
             <div class="bt-setting-block-head">
               <div>
+                <h4>Código anónimo de este dispositivo</h4>
+                <p>Identificador aleatorio local sin datos personales. Sirve únicamente para distinguir sesiones técnicas o dar seguimiento a tus reportes desde este mismo equipo.</p>
+              </div>
+              <code id="settingsDeviceUidBadge" class="bt-device-uid-pill">BT-000000</code>
+            </div>
+            <div id="settingsEcoSummaryBox" class="bt-settings-summary-box" style="margin-bottom:0.55rem;"></div>
+            <div class="bt-settings-inline-actions">
+              <button type="button" id="btnCopyDeviceUid" class="bt-mini-action-btn is-primary">Copiar mi código</button>
+              <button type="button" id="btnJumpEjesFromSettings" class="bt-mini-action-btn">Ver mi Impacto Cero Papel</button>
+            </div>
+          </div>
+
+          <div class="bt-setting-block">
+            <div class="bt-setting-block-head">
+              <div>
                 <h4>Mis Datos de Autollenado (Bóveda Local)</h4>
                 <p>Información guardada solo en este dispositivo para rellenar formatos oficiales en 1 clic.</p>
               </div>
@@ -3407,7 +3834,7 @@
           <div class="bt-setting-block bt-settings-update-card">
             <div class="bt-setting-block-head">
               <div>
-                <span id="settingsPlatformPill" class="bt-setting-pill">Web · v9.9.3</span>
+                <span id="settingsPlatformPill" class="bt-setting-pill">Web · v10.0.0</span>
                 <h4 style="margin-top:0.4rem;">Recargar y Buscar Actualización</h4>
                 <p id="settingsPlatformDesc">Si no te apareció el aviso automático de nueva versión, limpia la caché local y recarga el sitio desde aquí.</p>
               </div>

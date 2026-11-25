@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 19/11/2026 • **Versión:** `9.8.0` (Web) • `3.8.0` Mobile  
+**Base de datos:** 24/11/2026 • **Versión:** `10.0.0` (Web) • `4.0.0` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -11,12 +11,12 @@
 
 ## 1. Qué es BiblioTech Scout y cómo funciona
 
-**BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, acciones educativas FAES, plantillas RECME, reglamentos, libros históricos, avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta y nomenclatura oficial de donde proviene cada dato.
+**BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, acciones educativas FAES, plantillas RECME, reglamentos, libros históricos, los **4 Ejes Temáticos del PJOS** con herramientas prácticas locales, avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta y nomenclatura oficial de donde proviene cada dato.
 
-- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`21,134` preguntas y respuestas verificadas con enlaces cruzados entre documentos), el catálogo oficial (`883` documentos oficiales visibles, `1,035` entradas indexadas y `664` con nomenclatura oficial ASMAC/WOSM), el modo oscuro, el visor PDF por página con streaming inteligente para archivos pesados (`50 MB` a `300+ MB`), el Editor de Archivos y La Fogata funcionan directamente desde cualquier navegador de escritorio, tablet o celular (optimizados incluso para dispositivos de baja gama).
+- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`21,230` preguntas y respuestas verificadas con enlaces cruzados entre documentos), el catálogo oficial (`883` documentos oficiales visibles, `1,035` entradas indexadas y `664` con nomenclatura oficial ASMAC/WOSM), el espacio interactivo **Los 4 Ejes del PJOS** (*Armador de Actividades, Escudo A Salvo del Peligro y Salida Segura, Misión Planeta Cero Papel, Bitácora Mensajeros de la Paz y Constructor Guiado de Proyectos SMART*), el modo oscuro, el visor PDF por página con streaming inteligente para archivos pesados (`50 MB` a `300+ MB`), el Editor de Archivos (16 plantillas oficiales en vivo) y La Fogata funcionan directamente desde cualquier navegador de escritorio, tablet o celular.
 - **Uso sin conexión (Offline):**
-  - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS (`img/apple-touch-icon.png`) y caché PWA (`sw.js`).
-  - En **Android (APK oficial):** la app nativa empaca las `21,134` preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de los `883` documentos oficiales.
+  - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS (`img/apple-touch-icon.png`) y caché PWA (`sw.js` `v61`).
+  - En **Android (APK oficial `v4.0.0`):** la app nativa empaca las `21,230` preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de los `883` documentos oficiales.
 
 ---
 

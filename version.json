@@ -1,8 +1,8 @@
 {
-  "version": "9.9.3",
-  "mobileVersion": "3.9.3",
-  "cache": "bibliotech-scout-v60",
-  "releasedAt": "2026-11-22",
+  "version": "10.0.0",
+  "mobileVersion": "4.0.0",
+  "cache": "bibliotech-scout-v61",
+  "releasedAt": "2026-11-24",
   "schemaCookieVersion": "9.7",
-  "notes": "Versión 9.9.3 / Mobile 3.9.3: Cobertura textual completa (<400 chars = 0 en los 1,035 documentos), vista previa de formatos en vivo idéntica al PDF (16 plantillas oficiales incluyendo P8.3, P8.7, P9.1, P9.2 2 págs., P9.3 y P9.4), firmas digitales opcionales en blanco/trazo/imagen, checklist de progresión e insignia terminal por sección, saltos -10/+10 y marcadores por página en PDF, código QR offline para compartir perfil de autollenado, JSON compacto + indexación asíncrona e idioma inglés integral."
+  "notes": "Versión 10.0.0 / Mobile 4.0.0: Nuevo espacio interactivo de Los 4 Ejes del PJOS con guía oficial por sección, Armador Rápido de Actividades FAES/FES, Escudo A Salvo del Peligro y Semáforo de Salida Segura, Misión Planeta e Impacto Cero Papel en vivo, Bitácora Mensajeros de la Paz conectada a P8.3, Constructor Guiado de Proyectos SMART conectado a P6.2, filtro directo por Eje PJOS en Biblioteca, balance de 4 Ejes en Progresión, código técnico anónimo por dispositivo (BT-XXXXXX) y 232 respuestas FES enriquecidas con Conozco/Aplico/Comparto."
 }
