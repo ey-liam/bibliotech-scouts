@@ -402,6 +402,140 @@ def run_e2e(test_webkit: bool = False):
             page.wait_for_selector("#bugReportStatus.is-ok", state="attached", timeout=4000)
             page.locator("#bugReportModal").wait_for(state="hidden", timeout=6000)
 
+            # Probar espacio interactivo Skills (#skills): Claves, Nudos, Tu Mochila, Pistas, Botiquín, Fogatas, Silbato y Reto
+            page.click('.desktop-quick-nav [data-bt-go-view="skills"]')
+            assert page.locator("#skills").is_visible(), "Espacio #skills no visible"
+            skills_text = page.locator("#skills").inner_text()
+            bad_skills_emojis = [ch for ch in EMOJI_RE.findall(skills_text) if ch not in ("✓", "✕", "✔", "→", "←", "↗", "–", "—", "•", "·", "↔")]
+            assert not bad_skills_emojis, f"Emojis detectados en #skills: {set(bad_skills_emojis)}"
+            assert page.locator("#btCipherOutputArea .bt-cipher-glyph-card svg").count() >= 5, "Semáforo SVG no se renderizó"
+            page.click('#btCipherTypePills [data-cipher-kind="morse"]')
+            assert "-" in page.locator("#btCipherOutputArea").inner_text() or "." in page.locator("#btCipherOutputArea").inner_text(), "Morse no tradujo"
+            page.click('#btCipherTypePills [data-cipher-kind="murcielago"]')
+            murc_out = page.locator("#btCipherOutputArea").inner_text()
+            assert "450" in murc_out and "64" in murc_out, f"Murciélago SIEMPRE LISTOS inesperado: {murc_out}"
+
+            page.click('#btSkillsTabs [data-skills-tab="nudos"]')
+            assert page.locator("#btKnotsGrid .bt-knot-card").count() >= 10, "Faltan nudos en #skills"
+            page.locator('#btKnotsGrid [data-knot-step="rizo:1"]').click()
+            assert page.locator('#btKnotsGrid [data-knot-step="rizo:1"]').evaluate("el => el.classList.contains('is-active')"), "Paso 2 de nudo no quedó activo"
+
+            page.click('#btSkillsTabs [data-skills-tab="mochila"]')
+            page.fill("#btUserWeightKg", "60")
+            assert "9.0 – 12.0 kg" in page.locator("#btPackMaxWeightLabel").inner_text(), "Cálculo de carga segura 60kg falló"
+            page.locator("#btPackChecklist input[type='checkbox']").first.check()
+            assert page.locator("#btPackCountBadge").inner_text().startswith("1 /"), "Checklist Tu Mochila no actualizó contador"
+
+            page.click('#btSkillsTabs [data-skills-tab="pistas"]')
+            assert page.locator("#btTracksGrid .bt-track-card").count() == 12, "Faltan 12 señales de pista"
+            assert "225°" in page.locator("#btCompassBackText").inner_text(), "Contra-azimut inicial incorrecto"
+
+            page.click('#btSkillsTabs [data-skills-tab="botiquin"]')
+            assert page.locator("#btFirstAidGrid .bt-firstaid-card").count() >= 5, "Faltan tarjetas de primeros auxilios"
+
+            page.click('#btSkillsTabs [data-skills-tab="fogatas"]')
+            assert page.locator("#btFiresGrid .bt-knot-card").count() == 5, "Faltan 5 tipos de fogata"
+
+            page.click('#btSkillsTabs [data-skills-tab="silbato"]')
+            wh_txt = page.locator("#btWhistlesList").inner_text()
+            assert "CC" in wh_txt and "QQ" in wh_txt and "RR" in wh_txt, "Faltan toques oficiales ASMAC en Silbato"
+            assert page.locator("#btFormationDiagram svg").count() == 1, "Falta diagrama de formación"
+
+            page.click('#btSkillsTabs [data-skills-tab="reto"]')
+            page.locator("#btQuizArea [data-quiz-pick]").first.click()
+            assert page.locator("#btQuizArea .bt-quiz-exp").count() == 1, "Reto no mostró retroalimentación al responder"
+
+            # Probar salto directo desde Buscador hacia Skills
+            page.click('.desktop-quick-nav [data-bt-go-view="inicio"]')
+            page.fill("#askInput", "clave murcielago")
+            page.click("#askSubmitBtn")
+            page.wait_for_selector("#answerContainer:not(.hidden)", timeout=5000)
+            jump_btn = page.locator("#answerBody [data-bt-jump-skill]")
+            assert jump_btn.is_visible(), "Falta botón directo Abrir en Skills en respuesta de buscador"
+            jump_btn.click()
+            assert page.locator("#skills").is_visible(), "Botón del buscador no abrió Skills"
+
+            # Verificar contraste real en Modo oscuro (esperando >=350ms tras activar transiciones CSS)
+            page.emulate_media(color_scheme="dark")
+            page.wait_for_function("() => document.documentElement.getAttribute('data-camp-mode') === 'true'", timeout=3000)
+            page.wait_for_timeout(380)
+
+            dark_check_js = """(selList) => {
+              const parseRgbAll = (str) => {
+                const out = [];
+                const re = /rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)(?:,\\s*([\\d.]+))?\\)/g;
+                let m;
+                while ((m = re.exec(String(str || '')))) {
+                  out.push({ r: Number(m[1]), g: Number(m[2]), b: Number(m[3]), a: m[4] === undefined ? 1 : Number(m[4]) });
+                }
+                return out;
+              };
+              const over = (fg, bg) => {
+                const a = fg.a === undefined ? 1 : fg.a;
+                return {
+                  r: Math.round(fg.r * a + bg.r * (1 - a)),
+                  g: Math.round(fg.g * a + bg.g * (1 - a)),
+                  b: Math.round(fg.b * a + bg.b * (1 - a)),
+                  a: 1
+                };
+              };
+              const lum = (c) => {
+                const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+                return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b);
+              };
+              const effectiveBg = (node) => {
+                const base = { r: 10, g: 12, b: 28, a: 1 };
+                const layers = [];
+                let cur = node;
+                while (cur && cur.nodeType === 1) {
+                  const st = getComputedStyle(cur);
+                  const sol = parseRgbAll(st.backgroundColor)[0];
+                  if (sol && sol.a > 0.02) layers.unshift(sol);
+                  if (st.backgroundImage && st.backgroundImage !== 'none') {
+                    const stops = parseRgbAll(st.backgroundImage);
+                    if (stops.length) layers.unshift(stops[0]);
+                  }
+                  cur = cur.parentElement;
+                }
+                let acc = base;
+                for (const l of layers) acc = over(l, acc);
+                return acc;
+              };
+              return selList.map((sel) => {
+                const el = document.querySelector(sel);
+                if (!el) return { sel, missing: true };
+                const st = getComputedStyle(el);
+                const bgCol = effectiveBg(el);
+                const fg = parseRgbAll(st.color)[0] || { r: 248, g: 250, b: 252, a: 1 };
+                const bgLum = lum(bgCol);
+                const fgLum = lum(fg);
+                const ratio = (Math.max(bgLum, fgLum) + 0.05) / (Math.min(bgLum, fgLum) + 0.05);
+                return { sel, bgComp: bgCol, color: st.color, bgLum: Number(bgLum.toFixed(3)), ratio: Number(ratio.toFixed(2)) };
+              });
+            }"""
+
+            page.click('.desktop-quick-nav [data-bt-go-view="formatos"]')
+            page.click('#btWizardSecPills [data-wiz-sec="manada"]')
+            page.wait_for_timeout(380)
+            wiz_check = page.evaluate(dark_check_js, ["#btProcedureWizard", "#btProcedureWizard h3", "#btProcedureWizard .bt-wiz-pill", "#btProcedureWizard .bt-wiz-pill.is-active"])
+            for item in wiz_check:
+                assert not item.get("missing"), f"Falta {item['sel']}"
+                assert item["ratio"] >= 4.5, f"Bajo contraste oscuro en {item['sel']}: {item}"
+            assert wiz_check[0]["bgLum"] < 0.2, f"#btProcedureWizard no tiene fondo oscuro en camp-mode: {wiz_check[0]}"
+
+            page.click('.desktop-quick-nav [data-bt-go-view="ejes"]')
+            page.click('[data-ejes-tab="explorar"]')
+            page.click('[data-axis-pick="salud"]')
+            page.wait_for_timeout(380)
+            axis_check = page.evaluate(dark_check_js, [".bt-axis-card.is-salud.is-active", ".bt-axis-card.is-salud.is-active h3", ".bt-axis-card.is-salud.is-active p"])
+            for item in axis_check:
+                assert not item.get("missing"), f"Falta {item['sel']}"
+                assert item["ratio"] >= 4.5, f"Bajo contraste oscuro en {item['sel']}: {item}"
+            assert axis_check[0]["bgLum"] < 0.25, f".bt-axis-card.is-active quedó blanca en modo oscuro: {axis_check[0]}"
+
+            page.emulate_media(color_scheme="light")
+            page.wait_for_function("() => document.documentElement.getAttribute('data-camp-mode') === 'false'", timeout=3000)
+
             # Vista 1200px sin desborde
             page.set_viewport_size({"width": 1200, "height": 820})
             page.wait_for_timeout(150)

@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=48" />
+  <link rel="stylesheet" href="styles.css?v=49" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -121,27 +121,29 @@
       <nav class="desktop-quick-nav" aria-label="Espacios principales">
         <a href="#inicio" class="nav-link active" data-bt-go-view="inicio">Inicio</a>
         <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca">Biblioteca</a>
-        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">4 Ejes PJOS</a>
-        <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia">Guía Scout</a>
-        <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio.MX</a>
+        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">4 Ejes</a>
+        <a href="#skills" class="nav-link" data-bt-go-view="skills">Skills</a>
+        <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia">Guía</a>
+        <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes</a>
         <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
-        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor de Archivos</a>
-        <a href="#acerca" class="nav-link" data-bt-go-view="acerca">¿Qué es BiblioTech?</a>
-        <a href="#app" class="nav-link nav-link-app" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">App / Offline</a>
+        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Archivos</a>
+        <a href="#acerca" class="nav-link" data-bt-go-view="acerca">Acerca de</a>
+        <a href="#app" class="nav-link nav-link-app" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">App</a>
       </nav>
 
       <nav class="main-nav" id="navegacion-principal" aria-label="Todos los apartados">
         <a href="#inicio" class="nav-link active" data-bt-go-view="inicio">Inicio y Buscador</a>
-        <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca" data-bt-lib-jump="shelves">Biblioteca y Catálogo</a>
-        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">Los 4 Ejes del PJOS</a>
+        <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca" data-bt-lib-jump="shelves">Biblioteca</a>
+        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">4 Ejes PJOS</a>
+        <a href="#skills" class="nav-link" data-bt-go-view="skills">Skills</a>
         <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="guia-inicio">Guía de Uso</a>
         <a href="#acerca" class="nav-link" data-bt-go-view="acerca">¿Qué es BiblioTech?</a>
         <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio.MX</a>
         <a href="#secciones" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="secciones">Secciones</a>
-        <a href="#servicios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="servicios">Servicios y Trámites</a>
-        <a href="#cambios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="cambios">Cambios en Esquemas</a>
+        <a href="#servicios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="servicios">Trámites</a>
+        <a href="#cambios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="cambios">Cambios</a>
         <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
-        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor de Archivos</a>
+        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Archivos</a>
         <button type="button" id="openBugReportMenuBtn" class="nav-link nav-link-report">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
@@ -496,36 +498,45 @@
   <section id="btWorkspaceHub" class="bt-workspace-hub" data-bt-view="inicio" aria-label="Explorar espacios de BiblioTech Scout">
     <div class="container">
       <div class="bt-workspace-hub-head">
-        <span class="section-eyebrow">ESPACIOS DEDICADOS</span>
-        <h2 class="section-title">¿A dónde quieres ir ahora?</h2>
-        <p class="section-subtitle">Cada herramienta tiene su propio espacio limpio para consultar sin distracciones y conservar tus datos locales.</p>
+        <span class="section-eyebrow">APARTADOS</span>
+        <h2 class="section-title">¿A dónde quieres ir?</h2>
+        <p class="section-subtitle">Elige un apartado.</p>
       </div>
       <div class="bt-workspace-grid">
         <button type="button" class="bt-workspace-card" data-bt-go-view="biblioteca">
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
           </span>
-          <span class="bt-workspace-title">Biblioteca y Catálogo</span>
-          <span class="bt-workspace-desc">883 libros, manuales, 220 FAES, 82 especialidades FES, RECME, PDFs y hojas Excel con filtros por sección y eje.</span>
-          <span class="bt-workspace-cta">Abrir Biblioteca →</span>
+          <span class="bt-workspace-title">Biblioteca</span>
+          <span class="bt-workspace-desc">Manuales, libros, FAES y especialidades FES.</span>
+          <span class="bt-workspace-cta">Abrir →</span>
         </button>
 
         <button type="button" class="bt-workspace-card" data-bt-go-view="ejes">
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20"></path><path d="M2 12h20"></path></svg>
           </span>
-          <span class="bt-workspace-title">Los 4 Ejes del PJOS</span>
-          <span class="bt-workspace-desc">Explora Salud, Habilidades, Medio Ambiente y Paz con armador de reuniones, Salida Segura, Misión Planeta, horas MoP y Constructor SMART.</span>
-          <span class="bt-workspace-cta">Explorar los 4 Ejes →</span>
+          <span class="bt-workspace-title">4 Ejes PJOS</span>
+          <span class="bt-workspace-desc">Salud, Habilidades, Ambiente y Paz con herramientas.</span>
+          <span class="bt-workspace-cta">Explorar →</span>
+        </button>
+
+        <button type="button" class="bt-workspace-card" data-bt-go-view="skills">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          </span>
+          <span class="bt-workspace-title">Skills</span>
+          <span class="bt-workspace-desc">Claves, nudos, tu mochila, pistas, fogatas y silbato.</span>
+          <span class="bt-workspace-cta">Abrir →</span>
         </button>
 
         <button type="button" class="bt-workspace-card" data-bt-go-view="guia">
           <span class="bt-workspace-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
           </span>
-          <span class="bt-workspace-title">Guía y Movimiento Scout</span>
-          <span class="bt-workspace-desc">Accesos directos desplegados por tema, Secciones PJOS, Servicios, Trámites y Cambios en Esquemas.</span>
-          <span class="bt-workspace-cta">Explorar Guía →</span>
+          <span class="bt-workspace-title">Guía Scout</span>
+          <span class="bt-workspace-desc">Secciones, trámites, SISAS y cambios PJOS.</span>
+          <span class="bt-workspace-cta">Abrir →</span>
         </button>
 
         <button type="button" class="bt-workspace-card" data-bt-go-view="agentes">
@@ -533,8 +544,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
           </span>
           <span class="bt-workspace-title">Agentes de Cambio.MX</span>
-          <span class="bt-workspace-desc">Plataforma del CNRC y Red de Caminantes: convocatoria, registro de proyectos, 4 Ejes Temáticos y comité.</span>
-          <span class="bt-workspace-cta">Ir a Agentes de Cambio →</span>
+          <span class="bt-workspace-desc">Proyectos y Red de Caminantes (CNRC).</span>
+          <span class="bt-workspace-cta">Abrir →</span>
         </button>
 
         <button type="button" class="bt-workspace-card" data-bt-go-view="fogata">
@@ -542,17 +553,17 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           </span>
           <span class="bt-workspace-title">La Fogata</span>
-          <span class="bt-workspace-desc">Foro comunitario de recomendaciones entre jóvenes y Scouters con respaldo offline.</span>
-          <span class="bt-workspace-cta">Entrar a La Fogata →</span>
+          <span class="bt-workspace-desc">Consejos y dudas entre scouts y dirigentes.</span>
+          <span class="bt-workspace-cta">Abrir →</span>
         </button>
 
         <button type="button" class="bt-workspace-card" data-bt-go-view="formatos">
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
           </span>
-          <span class="bt-workspace-title">Editor de Archivos</span>
-          <span class="bt-workspace-desc">Llena sobre los documentos oficiales (Ficha Médica, JL304, FES, proyectos) y descarga tu PDF oficial.</span>
-          <span class="bt-workspace-cta">Abrir Editor →</span>
+          <span class="bt-workspace-title">Archivos</span>
+          <span class="bt-workspace-desc">Llena Ficha Médica, JL304, FES, P8 y P9 en PDF.</span>
+          <span class="bt-workspace-cta">Abrir →</span>
         </button>
 
         <button type="button" class="bt-workspace-card" data-bt-go-view="acerca">
@@ -560,17 +571,17 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
           </span>
           <span class="bt-workspace-title">¿Qué es BiblioTech?</span>
-          <span class="bt-workspace-desc">Conoce el propósito del proyecto, cómo funciona la biblioteca, el creador y los canales de contacto.</span>
-          <span class="bt-workspace-cta">Conocer el proyecto →</span>
+          <span class="bt-workspace-desc">Sobre el proyecto, autor y contacto.</span>
+          <span class="bt-workspace-cta">Abrir →</span>
         </button>
 
         <button type="button" class="bt-workspace-card is-accent" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-web-only="1">
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
           </span>
-          <span class="bt-workspace-title">App Android y Modo Offline</span>
-          <span class="bt-workspace-desc">Instala el APK oficial o descarga las 21,195 preguntas para usar sin señal en iOS o campamento.</span>
-          <span class="bt-workspace-cta">Configurar Offline →</span>
+          <span class="bt-workspace-title">App y Offline</span>
+          <span class="bt-workspace-desc">APK Android y uso sin señal en campamento.</span>
+          <span class="bt-workspace-cta">Configurar →</span>
         </button>
       </div>
     </div>
@@ -1139,10 +1150,10 @@
     <div class="container">
       <div class="bt-ejes-hero-head">
         <div>
-          <span class="section-eyebrow">PROGRAMA DE JÓVENES ASMAC · MARCO MUNDO MEJOR</span>
-          <h2 id="ejesPjosTitle" class="section-title">Los 4 Ejes Temáticos del PJOS</h2>
+          <span class="section-eyebrow">PJOS ASMAC</span>
+          <h2 id="ejesPjosTitle" class="section-title">4 Ejes PJOS</h2>
           <p class="section-subtitle">
-            En el Programa de Jóvenes (PJOS), los 4 Ejes Temáticos orientan todas las actividades, especialidades FES, insignias de progresión e iniciativas comunitarias para aprender a ser, saber, hacer y convivir. Explora cada eje y usa sus herramientas interactivas locales.
+            Guía práctica de los 4 Ejes Temáticos y sus herramientas locales.
           </p>
         </div>
       </div>
@@ -1150,23 +1161,27 @@
       <div id="btEjesSubtabs" class="bt-ejes-tabs" role="tablist" aria-label="Herramientas de los 4 Ejes del PJOS">
         <button type="button" class="bt-ejes-tab active" data-ejes-tab="explorar" role="tab" aria-selected="true">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M2 12h20"></path></svg>
-          <span>1. Guía de los 4 Ejes y Actividades</span>
+          <span>4 Ejes</span>
         </button>
         <button type="button" class="bt-ejes-tab" data-ejes-tab="salud" role="tab" aria-selected="false">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-          <span>2. Salud: A Salvo y Salida Segura</span>
+          <span>Salud</span>
         </button>
         <button type="button" class="bt-ejes-tab" data-ejes-tab="ambiente" role="tab" aria-selected="false">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
-          <span>3. Ambiente: Misión Planeta</span>
+          <span>Ambiente</span>
         </button>
         <button type="button" class="bt-ejes-tab" data-ejes-tab="paz" role="tab" aria-selected="false">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          <span>4. Paz: Bitácora MoP y Emergencias</span>
+          <span>Paz</span>
         </button>
         <button type="button" class="bt-ejes-tab" data-ejes-tab="habilidades" role="tab" aria-selected="false">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-          <span>5. Habilidades: Constructor SMART</span>
+          <span>Proyectos</span>
+        </button>
+        <button type="button" class="bt-ejes-tab" data-bt-go-view="skills">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+          <span>Skills →</span>
         </button>
       </div>
 
@@ -1510,6 +1525,259 @@
             <button type="button" id="btSmartCopyTextBtn" class="bt-sf-btn">Copiar resumen del proyecto</button>
             <button type="button" id="btSmartClearBtn" class="bt-sf-btn is-subtle">Limpiar constructor</button>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESPACIO DEDICADO: SKILLS (CLAVES, NUDOS, TU MOCHILA, PISTAS, BOTIQUÍN, FOGATAS, SILBATO Y RETO) -->
+  <section id="skills" class="bt-skills-section bt-view-hidden" data-bt-view="skills" aria-labelledby="skillsSectionTitle">
+    <div class="container">
+      <div class="bt-skills-head">
+        <span class="section-eyebrow">CAMPO Y TÉCNICA SCOUT</span>
+        <h2 id="skillsSectionTitle" class="section-title">Skills</h2>
+        <p class="section-subtitle">Guías visuales y herramientas prácticas sin conexión.</p>
+      </div>
+
+      <div id="btSkillsTabs" class="bt-skills-tabs" role="tablist" aria-label="Herramientas de Skills">
+        <button type="button" class="bt-skills-tab active" data-skills-tab="claves" role="tab" aria-selected="true">Claves</button>
+        <button type="button" class="bt-skills-tab" data-skills-tab="nudos" role="tab" aria-selected="false">Nudos</button>
+        <button type="button" class="bt-skills-tab" data-skills-tab="mochila" role="tab" aria-selected="false">Tu Mochila</button>
+        <button type="button" class="bt-skills-tab" data-skills-tab="pistas" role="tab" aria-selected="false">Pistas</button>
+        <button type="button" class="bt-skills-tab" data-skills-tab="botiquin" role="tab" aria-selected="false">Botiquín</button>
+        <button type="button" class="bt-skills-tab" data-skills-tab="fogatas" role="tab" aria-selected="false">Fogatas</button>
+        <button type="button" class="bt-skills-tab" data-skills-tab="silbato" role="tab" aria-selected="false">Silbato</button>
+        <button type="button" class="bt-skills-tab" data-skills-tab="reto" role="tab" aria-selected="false">Reto</button>
+      </div>
+
+      <!-- 1. CLAVES -->
+      <div class="bt-skills-pane" data-skills-pane="claves">
+        <div class="bt-skill-card">
+          <div class="bt-skill-card-head">
+            <div>
+              <span class="bt-wizard-kicker">EJE · HABILIDADES</span>
+              <h3>Traductor de Claves</h3>
+              <p>Escribe un mensaje para verlo al instante en Semáforo, Morse, Murciélago, Cenit-Polar o Cajón.</p>
+            </div>
+            <div class="bt-ejes-inline-actions" style="margin-top:0;">
+              <button type="button" id="btCipherCopyBtn" class="bt-sf-btn bt-skills-no-print">Copiar</button>
+              <button type="button" id="btCipherPrintBtn" class="bt-sf-btn bt-skills-no-print">Imprimir hoja</button>
+            </div>
+          </div>
+
+          <div id="btCipherTypePills" class="bt-skill-pill-row bt-skills-no-print" role="tablist" aria-label="Tipo de clave">
+            <button type="button" class="bt-skill-pill is-active" data-cipher-kind="semaforo">Semáforo</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="morse">Morse</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="murcielago">Murciélago</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="cenit">Cenit-Polar</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="sufamelico">Sufamelico</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="dametupico">Dametupico</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="cajon">Cajón</button>
+          </div>
+
+          <div class="bt-cipher-input-row bt-skills-no-print">
+            <input type="text" id="btCipherTextInput" class="bt-cipher-input" maxlength="80" value="SIEMPRE LISTOS" placeholder="Escribe tu mensaje aquí..." aria-label="Mensaje a convertir" />
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center;">
+              <button type="button" id="btCipherDirToggle" class="bt-sf-btn">Texto → Clave</button>
+              <button type="button" id="btMorsePlayBtn" class="bt-sf-btn is-accent hidden">Escuchar</button>
+              <button type="button" id="btMorseSpeedBtn" class="bt-sf-btn hidden">Normal</button>
+              <span id="btMorseLamp" class="bt-morse-lamp hidden"><span class="bt-morse-lamp-dot" aria-hidden="true"></span><span>Señal</span></span>
+            </div>
+          </div>
+
+          <div id="btCipherOutputArea" class="bt-cipher-output" aria-live="polite"></div>
+          <div id="btCipherRefArea" class="bt-cipher-ref-strip"></div>
+        </div>
+      </div>
+
+      <!-- 2. NUDOS -->
+      <div class="bt-skills-pane hidden" data-skills-pane="nudos">
+        <div class="bt-skill-card">
+          <div class="bt-skill-card-head">
+            <div>
+              <span class="bt-wizard-kicker">EJES · HABILIDADES Y AMBIENTE</span>
+              <h3>Nudos y Amarres</h3>
+              <p>Toca Paso 1, Paso 2 o Listo para ver cada trazo.</p>
+            </div>
+            <button type="button" class="bt-sf-btn" data-open-doc="doc-0883">Ver ficha FAES Cabuyería</button>
+          </div>
+          <div id="btKnotFilterPills" class="bt-skill-pill-row" role="group" aria-label="Filtrar nudos por uso">
+            <button type="button" class="bt-skill-pill is-active" data-knot-cat="all">Todos</button>
+            <button type="button" class="bt-skill-pill" data-knot-cat="unir">Unir</button>
+            <button type="button" class="bt-skill-pill" data-knot-cat="anclar">Anclar</button>
+            <button type="button" class="bt-skill-pill" data-knot-cat="tensar">Tensar / Rescate</button>
+            <button type="button" class="bt-skill-pill" data-knot-cat="amarre">Amarres</button>
+          </div>
+          <div id="btKnotsGrid" class="bt-skill-grid-cards"></div>
+        </div>
+      </div>
+
+      <!-- 3. TU MOCHILA -->
+      <div class="bt-skills-pane hidden" data-skills-pane="mochila">
+        <div class="bt-skill-card">
+          <div class="bt-skill-card-head">
+            <div>
+              <span class="bt-wizard-kicker">EJES · SALUD Y HABILIDADES</span>
+              <h3>Tu Mochila</h3>
+              <p>Elige tu salida y marca lo que ya empacaste (se guarda en tu dispositivo).</p>
+            </div>
+            <span id="btPackCountBadge" class="bt-prog-badge">0 / 0</span>
+          </div>
+
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:0.65rem;margin-bottom:0.85rem;">
+            <div id="btPackTypePills" class="bt-skill-pill-row" style="margin-bottom:0;" role="tablist">
+              <button type="button" class="bt-skill-pill is-active" data-pack-type="campamento">Campamento</button>
+              <button type="button" class="bt-skill-pill" data-pack-type="ataque">Ataque (1 día)</button>
+              <button type="button" class="bt-skill-pill" data-pack-type="bolsillo">De Bolsillo</button>
+            </div>
+            <div id="btPackClimatePills" class="bt-skill-pill-row" style="margin-bottom:0;" role="group" aria-label="Clima">
+              <button type="button" class="bt-skill-pill is-active" data-pack-climate="templado">Templado</button>
+              <button type="button" class="bt-skill-pill" data-pack-climate="lluvia">Lluvia</button>
+              <button type="button" class="bt-skill-pill" data-pack-climate="frio">Frío</button>
+            </div>
+          </div>
+
+          <div class="bt-skill-split">
+            <div class="bt-skill-subbox">
+              <h4>Cómo acomodar tu mochila</h4>
+              <div id="btPackDiagramWrap" class="bt-pack-svg-stage"></div>
+              <p id="btPackZoneInfo" class="bt-ejes-helper-note" style="margin-bottom:0;"></p>
+              <div class="bt-pack-weight-row">
+                <label for="btUserWeightKg"><strong>Tu peso (kg):</strong></label>
+                <input type="number" id="btUserWeightKg" min="15" max="150" value="55" />
+                <span id="btPackMaxWeightLabel">Carga ideal: 8.3 – 11.0 kg</span>
+              </div>
+            </div>
+
+            <div class="bt-skill-subbox">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;margin-bottom:0.6rem;">
+                <h4 id="btPackListTitle" style="margin:0;">Lista de equipo</h4>
+                <button type="button" id="btPackResetBtn" class="bt-sf-btn is-subtle">Limpiar marcas</button>
+              </div>
+              <div id="btPackChecklist" class="bt-safe-check-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. PISTAS -->
+      <div class="bt-skills-pane hidden" data-skills-pane="pistas">
+        <div class="bt-skill-card">
+          <div class="bt-skill-card-head">
+            <div>
+              <span class="bt-wizard-kicker">EJES · HABILIDADES Y AMBIENTE</span>
+              <h3>Pistas y Brújula</h3>
+              <p>Señales de pista sin dañar plantas y cálculo rápido de rumbo y regreso.</p>
+            </div>
+            <button type="button" class="bt-sf-btn" data-open-doc="doc-0942">Manual de Brújula</button>
+          </div>
+          <div class="bt-skill-split">
+            <div class="bt-skill-subbox">
+              <h4>Brújula y Contra-azimut</h4>
+              <div id="btCompassStage" class="bt-compass-svg-stage"></div>
+              <div style="display:grid;gap:0.5rem;">
+                <input type="range" id="btCompassDegRange" min="0" max="359" value="45" aria-label="Rumbo en grados" />
+                <div style="display:flex;justify-content:space-between;font-size:0.86rem;font-weight:800;">
+                  <span id="btCompassAzimuthText">Rumbo: 45° (NE)</span>
+                  <span id="btCompassBackText">Regreso: 225° (SO)</span>
+                </div>
+              </div>
+            </div>
+            <div class="bt-skill-subbox">
+              <h4>Señales de Pista</h4>
+              <div id="btTracksGrid" class="bt-skill-grid-cards" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.55rem;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. BOTIQUÍN -->
+      <div class="bt-skills-pane hidden" data-skills-pane="botiquin">
+        <div class="bt-skill-card">
+          <div class="bt-skill-card-head">
+            <div>
+              <span class="bt-wizard-kicker">EJE · SALUD</span>
+              <h3>Botiquín y Primeros Auxilios</h3>
+              <p>Revisa qué llevar y consulta pasos rápidos ante emergencias leves.</p>
+            </div>
+            <button type="button" class="bt-sf-btn" data-open-doc="doc-0593">Manual de Primeros Auxilios</button>
+          </div>
+          <div class="bt-skill-split">
+            <div class="bt-skill-subbox">
+              <div id="btKitTabs" class="bt-skill-pill-row" role="tablist">
+                <button type="button" class="bt-skill-pill is-active" data-kit-kind="personal">Personal</button>
+                <button type="button" class="bt-skill-pill" data-kit-kind="patrulla">De Sección</button>
+              </div>
+              <div id="btKitChecklist" class="bt-safe-check-list"></div>
+            </div>
+            <div class="bt-skill-subbox">
+              <h4>Guía Rápida (PAS)</h4>
+              <div id="btFirstAidGrid" style="display:grid;gap:0.55rem;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. FOGATAS -->
+      <div class="bt-skills-pane hidden" data-skills-pane="fogatas">
+        <div class="bt-skill-card">
+          <div class="bt-skill-card-head">
+            <div>
+              <span class="bt-wizard-kicker">EJE · MEDIO AMBIENTE</span>
+              <h3>Fogatas y No Dejar Rastro</h3>
+              <p>Elige la fogata adecuada, cuida el entorno y apaga al 100%.</p>
+            </div>
+            <button type="button" class="bt-sf-btn" data-open-doc="doc-0651">FES Cocina en Campamento</button>
+          </div>
+          <div id="btFiresGrid" class="bt-skill-grid-cards"></div>
+          <div class="bt-skill-subbox" style="margin-top:0.95rem;">
+            <h4>Los 7 Principios No Dejar Rastro</h4>
+            <div id="btLntList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.45rem;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. SILBATO -->
+      <div class="bt-skills-pane hidden" data-skills-pane="silbato">
+        <div class="bt-skill-card">
+          <div class="bt-skill-card-head">
+            <div>
+              <span class="bt-wizard-kicker">EJE · PAZ Y PARTICIPACIÓN</span>
+              <h3>Silbato y Formaciones</h3>
+              <p>Toques oficiales ASMAC en Morse y formaciones de sección.</p>
+            </div>
+            <button type="button" class="bt-sf-btn" data-open-doc="doc-0412">Manual Pistas de Aventura</button>
+          </div>
+          <div class="bt-skill-split">
+            <div class="bt-skill-subbox">
+              <h4>Toques Oficiales ASMAC</h4>
+              <div id="btWhistlesList" style="display:grid;gap:0.48rem;"></div>
+            </div>
+            <div class="bt-skill-subbox">
+              <h4>Formaciones</h4>
+              <div id="btFormationPills" class="bt-skill-pill-row" role="tablist"></div>
+              <div id="btFormationDiagram" class="bt-knot-svg-stage"></div>
+              <p id="btFormationDesc" class="bt-ejes-helper-note" style="margin:0;"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. RETO -->
+      <div class="bt-skills-pane hidden" data-skills-pane="reto">
+        <div class="bt-skill-card">
+          <div class="bt-skill-card-head">
+            <div>
+              <span class="bt-wizard-kicker">PRÁCTICA RÁPIDA</span>
+              <h3>Reto Scout</h3>
+              <p>5 preguntas aleatorias para repasar antes de salir a campo.</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+              <span id="btQuizScoreBadge" class="bt-prog-badge">0 / 5</span>
+              <button type="button" id="btQuizRestartBtn" class="bt-sf-btn is-accent">Nuevo reto</button>
+            </div>
+          </div>
+          <div id="btQuizArea"></div>
         </div>
       </div>
     </div>
@@ -3213,8 +3481,9 @@
             <span>Apartado donde pasó</span>
             <select id="bugReportSection">
               <option value="Buscador de preguntas">Buscador y respuestas</option>
-              <option value="Los 4 Ejes del PJOS">Los 4 Ejes del PJOS y Herramientas</option>
-              <option value="Editor de Formatos">Editor de Archivos (llenado de formatos)</option>
+              <option value="Los 4 Ejes del PJOS">4 Ejes PJOS</option>
+              <option value="Skills">Skills (Claves, Nudos, Tu Mochila...)</option>
+              <option value="Editor de Formatos">Archivos (llenado de formatos)</option>
               <option value="La Fogata">La Fogata (publicaciones y comentarios)</option>
               <option value="Biblioteca Scout">Biblioteca, FAES, FES y documentos</option>
               <option value="Lector / Visor PDF o Excel">Lector / Visor PDF o Excel</option>
@@ -3891,6 +4160,6 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=49"></script>
 </body>
 </html>

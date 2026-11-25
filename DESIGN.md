@@ -38,6 +38,7 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
 - **Bordes:** `rgba(139, 92, 246, 0.36)` (sutiles, sin marcos blancos chillones)
 - **Texto principal / secundario:** `#f8fafc` / `#cbd5e1`
 - **Estado activo:** `linear-gradient(135deg, #7928ca, #0284c7)` con borde `#38bdf8` y texto `#ffffff`
+- **Regla anti-regresión de especificidad CSS:** todo selector claro con estado compuesto (`.bt-axis-card.is-salud.is-active`, `.bt-wizard-pill.is-active`, etc.) debe tener su contraparte `html[data-camp-mode="true"]` con especificidad igual o mayor para que ningún fondo quede blanco con texto claro. Nunca usar `[data-theme="dark"]`; siempre usar `html[data-camp-mode="true"]`.
 
 ---
 
@@ -61,11 +62,12 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
 
 ---
 
-## 4. Arquitectura de los 8 Espacios y Navegación
+## 4. Arquitectura de los 9 Espacios y Navegación
 
-- **Espacios (`data-bt-view`):** `inicio`, `biblioteca`, `ejes`, `guia`, `agentes`, `fogata`, `formatos`, `acerca`.
-- **Espacio `ejes` (`#ejes-pjos` — Los 4 Ejes Temáticos del PJOS):** sub-pestañas horizontales limpias (`1. Guía de los 4 Ejes y Actividades`, `2. Salud: A Salvo y Salida Segura`, `3. Ambiente: Misión Planeta`, `4. Paz: Bitácora MoP y Emergencias`, `5. Habilidades: Constructor SMART`) con acentos semánticos por eje (`salud` carmesí `#e11d48`, `habilidades` azul `#0284c7`, `ambiente` verde `#16a34a`, `paz` violeta `#7c3aed`) y máximo 2 niveles de superficie tanto en claro como en `html[data-camp-mode="true"]`.
-- **Barra superior escritorio (`.desktop-quick-nav`):** accesos en 1 sola línea (`Inicio`, `Biblioteca`, `4 Ejes PJOS`, `Guía Scout`, `Agentes de Cambio.MX`, `La Fogata`, `Editor de Archivos`, `¿Qué es BiblioTech?`, `App / Offline`) + modo oscuro + `Menú`.
+- **Espacios (`data-bt-view`):** `inicio`, `biblioteca`, `ejes`, `skills`, `guia`, `agentes`, `fogata`, `formatos`, `acerca`.
+- **Espacio `ejes` (`#ejes-pjos` — 4 Ejes PJOS):** sub-pestañas horizontales cortas (`4 Ejes`, `Salud`, `Ambiente`, `Paz`, `Proyectos`, `Skills →`) con acentos semánticos por eje (`salud` carmesí `#e11d48`, `habilidades` azul `#0284c7`, `ambiente` verde `#16a34a`, `paz` violeta `#7c3aed`) y máximo 2 niveles de superficie tanto en claro como en `html[data-camp-mode="true"]`.
+- **Espacio `skills` (`#skills` — Skills):** 8 pestañas prácticas 100% offline (`Claves`, `Nudos`, `Tu Mochila`, `Pistas`, `Botiquín`, `Fogatas`, `Silbato`, `Reto`) con SVG limpio, síntesis Web Audio local y paridad Claro / Modo oscuro.
+- **Barra superior escritorio (`.desktop-quick-nav`):** accesos cortos en 1 sola línea (`Inicio`, `Biblioteca`, `4 Ejes`, `Skills`, `Guía`, `Agentes`, `La Fogata`, `Archivos`, `Acerca de`, `App`) + modo oscuro + `Menú`.
 - **Dock inferior móvil (`#unifiedBottomDock`):** exactamente 5 botones equilibrados (`Inicio`, `Biblioteca`, `Fogata`, `Archivos`, `Guardados`) con `flex: 1 1 0; min-width: 0`.
 - **Controles de sub-vista:**
   - Biblioteca (`#btLibraryModeBar`): segmented control corto (`Estantes (883)` / `Catálogo y Filtros`) + botón `Mis Guardados y Notas`. Paginación uniforme de **12 archivos por defecto** y carga progresiva de `+12` con botón `Cargar más archivos`. Subcategorías contraídas en `Destacados`/`Todas` y abiertas automáticamente al entrar en un estante/categoría específica (`FAES`, `Especialidades FES`, etc.).

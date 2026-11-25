@@ -540,6 +540,7 @@ async function initApp() {
   setupProcedureWizard();
   if (typeof setupProgressionChecker === "function") setupProgressionChecker();
   if (typeof setupPjosAxesHub === "function") setupPjosAxesHub();
+  if (typeof setupScoutSkillsHub === "function") setupScoutSkillsHub();
   if (typeof setupAutofillQrSharing === "function") setupAutofillQrSharing();
   setupAnswerQuickActions();
   BtSoundEngine.init();
@@ -757,6 +758,14 @@ const BT_SECTION_VIEW_MAP = {
   explorar: { view: "biblioteca", libMode: "catalog" },
   "ejes-pjos": { view: "ejes" },
   ejes: { view: "ejes" },
+  skills: { view: "skills" },
+  claves: { view: "skills", skillsTab: "claves" },
+  nudos: { view: "skills", skillsTab: "nudos" },
+  mochila: { view: "skills", skillsTab: "mochila" },
+  pistas: { view: "skills", skillsTab: "pistas" },
+  botiquin: { view: "skills", skillsTab: "botiquin" },
+  fogatas: { view: "skills", skillsTab: "fogatas" },
+  silbato: { view: "skills", skillsTab: "silbato" },
   "guia-inicio": { view: "guia", guideTab: "guia-inicio" },
   acerca: { view: "acerca" },
   agentes: { view: "agentes" },
@@ -805,9 +814,13 @@ function btSetGuideTab(tab = "all") {
 }
 
 function btSwitchView(viewName, options = {}) {
-  const validViews = new Set(["inicio", "biblioteca", "ejes", "guia", "agentes", "fogata", "formatos", "acerca"]);
+  const validViews = new Set(["inicio", "biblioteca", "ejes", "skills", "guia", "agentes", "fogata", "formatos", "acerca"]);
   const nextView = validViews.has(viewName) ? viewName : "inicio";
   STATE.activeWorkspaceView = nextView;
+
+  if (nextView !== "skills" && typeof window.__btStopSkillAudio === "function") {
+    window.__btStopSkillAudio();
+  }
 
   document.documentElement.setAttribute("data-bt-active-view", nextView);
   document.querySelectorAll("[data-bt-view]").forEach((el) => {
@@ -827,6 +840,13 @@ function btSwitchView(viewName, options = {}) {
     if (typeof window.__btRefreshPjosPicker === "function") window.__btRefreshPjosPicker();
     if (options.ejesTab && typeof window.__btSelectEjesTab === "function") {
       window.__btSelectEjesTab(options.ejesTab);
+    }
+  }
+  if (nextView === "skills") {
+    if (options.skillsTab) STATE.activeSkillsTab = options.skillsTab;
+    const targetSkillTab = options.skillsTab || STATE.activeSkillsTab || "claves";
+    if (typeof window.__btSelectSkillsTab === "function") {
+      window.__btSelectSkillsTab(targetSkillTab);
     }
   }
   if (nextView === "guia") {
@@ -892,6 +912,7 @@ function btNavigateToSection(sectionId, options = {}) {
     btSwitchView(mapping.view, {
       libMode: options.libMode || mapping.libMode,
       guideTab: options.guideTab !== undefined ? options.guideTab : mapping.guideTab,
+      skillsTab: options.skillsTab || mapping.skillsTab,
       scrollToId: cleanId === "inicio" ? "" : cleanId,
       scrollTop: cleanId === "inicio",
       instant: Boolean(options.instant)
@@ -926,18 +947,28 @@ function setupWorkspaceViews() {
       return;
     }
 
+    const skillJumpBtn = e.target.closest("[data-bt-jump-skill]");
+    if (skillJumpBtn) {
+      e.preventDefault();
+      const skillTab = skillJumpBtn.getAttribute("data-bt-jump-skill") || "claves";
+      btSwitchView("skills", { skillsTab: skillTab });
+      return;
+    }
+
     const viewTrigger = e.target.closest("[data-bt-go-view]");
     if (viewTrigger) {
       e.preventDefault();
       const targetView = viewTrigger.getAttribute("data-bt-go-view");
       const libJump = viewTrigger.getAttribute("data-bt-lib-jump");
       const guideJump = viewTrigger.getAttribute("data-bt-guide-jump");
+      const skillsJump = viewTrigger.getAttribute("data-bt-skills-tab");
       const href = viewTrigger.getAttribute("href") || "";
       const hashId = href.startsWith("#") ? href.slice(1) : "";
 
       const opts = {
         libMode: libJump || undefined,
         guideTab: guideJump !== null ? guideJump : (targetView === "guia" ? "all" : undefined),
+        skillsTab: skillsJump || undefined,
         scrollToId: hashId === "buscador" ? "buscador" : ""
       };
       if (guideJump === "app" && (window.Capacitor || window.innerWidth <= 920)) {
@@ -997,12 +1028,13 @@ function setupWorkspaceViews() {
   try {
     const params = new URLSearchParams(window.location.search);
     const vParam = (params.get("vista") || "").toLowerCase();
+    const skillParam = (params.get("skill") || "").toLowerCase();
     const hashId = (window.location.hash || "").replace(/^#/, "");
     if (hashId && BT_SECTION_VIEW_MAP[hashId]) {
       btNavigateToSection(hashId, { instant: true });
       initialApplied = true;
-    } else if (vParam && ["inicio", "biblioteca", "ejes", "guia", "agentes", "fogata", "formatos", "acerca"].includes(vParam)) {
-      btSwitchView(vParam, { instant: true, updateUrl: false });
+    } else if (vParam && ["inicio", "biblioteca", "ejes", "skills", "guia", "agentes", "fogata", "formatos", "acerca"].includes(vParam)) {
+      btSwitchView(vParam, { instant: true, updateUrl: false, skillsTab: skillParam || undefined });
       initialApplied = true;
     }
   } catch (_) {}
@@ -3699,7 +3731,24 @@ function displayAnswer(data, queryText = "") {
     data && data.correctedQuery
       ? `<div class="bt-typo-banner" role="status">Mostrando resultados para <strong>«${escapeHtml(data.correctedQuery)}»</strong> <span class="bt-typo-sub">(consulta corregida automáticamente)</span></div>`
       : "";
-  bodyEl.innerHTML = typoBanner + renderMarkdown((data && data.answer_markdown) || "");
+  let skillCtaHtml = "";
+  const qNormSkill = normalizeStr(queryText || "");
+  if (qNormSkill) {
+    const skillRules = [
+      { re: /\b(semaforo|banderin|banderas|morse|murcielago|cenit|polar|sufamelico|dametupico|cajon|clave|claves|cifrado)\b/, tab: "claves", label: "Claves" },
+      { re: /\b(nudo|nudos|amarre|amarres|ballestrinque|as de guia|rizo|pescador|margarita|escota|cabuyeria|pionerismo)\b/, tab: "nudos", label: "Nudos" },
+      { re: /\b(mochila|empacar|equipo de bolsillo|mochila de ataque|mochila de campamento)\b/, tab: "mochila", label: "Tu Mochila" },
+      { re: /\b(pista|pistas|senales de pista|brujula|azimut|contra-azimut|orientacion|rumbo)\b/, tab: "pistas", label: "Pistas" },
+      { re: /\b(botiquin|primeros auxilios|quemadura|esguince|insolacion|golpe de calor|regla pas)\b/, tab: "botiquin", label: "Botiquín" },
+      { re: /\b(fogata|fogatas|no dejar rastro|piramide|pagoda|estrella|zanja|reflector)\b/, tab: "fogatas", label: "Fogatas" },
+      { re: /\b(silbato|toque|toques|formacion|formaciones|herradura|rectangulo|filas|columnas)\b/, tab: "silbato", label: "Silbato" }
+    ];
+    const hit = skillRules.find((r) => r.re.test(qNormSkill));
+    if (hit) {
+      skillCtaHtml = `<div class="bt-ejes-inline-actions" style="margin-top:0.85rem;"><button type="button" class="bt-sf-btn is-accent" data-bt-jump-skill="${hit.tab}">Abrir en Skills: ${hit.label} →</button></div>`;
+    }
+  }
+  bodyEl.innerHTML = typoBanner + renderMarkdown((data && data.answer_markdown) || "") + skillCtaHtml;
 
   const sources = data.sources || [];
   updateAnswerFeedbackUI(queryText, data, sources.length);
@@ -7226,13 +7275,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "10.0.0";
-const APP_MOBILE_VERSION = "4.0.0";
+const APP_WEB_VERSION = "10.1.0";
+const APP_MOBILE_VERSION = "4.1.0";
 const APP_COOKIE_SCHEMA = "9.7";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v61";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v62";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -13474,13 +13523,14 @@ const BT_UI_I18N = {
   es: {
     navHome: "Inicio",
     navLibrary: "Biblioteca",
-    navAxes: "4 Ejes PJOS",
-    navGuide: "Guía Scout",
-    navAgents: "Agentes de Cambio.MX",
+    navAxes: "4 Ejes",
+    navSkills: "Skills",
+    navGuide: "Guía",
+    navAgents: "Agentes",
     navForum: "La Fogata",
-    navEditor: "Editor de Archivos",
-    navAbout: "¿Qué es BiblioTech?",
-    navApp: "App / Offline",
+    navEditor: "Archivos",
+    navAbout: "Acerca de",
+    navApp: "App",
     dockLabels: ["Inicio", "Biblioteca", "Fogata", "Archivos", "Guardados", "Ajustes"],
     heroTitle: "Consulta dudas Scout en documentos oficiales",
     heroDesc:
@@ -13542,13 +13592,14 @@ const BT_UI_I18N = {
   en: {
     navHome: "Home",
     navLibrary: "Library",
-    navAxes: "4 PJOS Axes",
-    navGuide: "Scout Guide",
-    navAgents: "Agents of Change.MX",
-    navForum: "The Campfire",
-    navEditor: "File Editor",
-    navAbout: "About BiblioTech",
-    navApp: "App / Offline",
+    navAxes: "4 Axes",
+    navSkills: "Skills",
+    navGuide: "Guide",
+    navAgents: "Agents",
+    navForum: "Campfire",
+    navEditor: "Files",
+    navAbout: "About",
+    navApp: "App",
     dockLabels: ["Home", "Library", "Campfire", "Files", "Saved", "Settings"],
     heroTitle: "Search Scout questions in official documents",
     heroDesc:
@@ -13628,6 +13679,7 @@ function applyUiLanguage(lang = "es", persist = true) {
   setText('.desktop-quick-nav [data-bt-go-view="inicio"]', dict.navHome);
   setText('.desktop-quick-nav [data-bt-go-view="biblioteca"]', dict.navLibrary);
   setText('.desktop-quick-nav [data-bt-go-view="ejes"]', dict.navAxes);
+  setText('.desktop-quick-nav [data-bt-go-view="skills"]', dict.navSkills);
   setText('.desktop-quick-nav [data-bt-go-view="guia"]:not(.nav-link-app)', dict.navGuide);
   setText('.desktop-quick-nav [data-bt-go-view="agentes"]', dict.navAgents);
   setText('.desktop-quick-nav [data-bt-go-view="fogata"]', dict.navForum);
@@ -14508,6 +14560,8 @@ function setupPjosAxesHub() {
       libFilter: "salud",
       toolTab: "salud",
       toolBtnLabel: "Abrir Escudo A Salvo y Salida Segura",
+      skillTab: "botiquin",
+      skillLabel: "Skills: Botiquín",
       definition:
         "Promueve el autocuidado físico, la salud mental y socioemocional, la nutrición consciente, la vida activa al aire libre y la aplicación permanente de la Política Nacional A Salvo del Peligro en todas las actividades.",
       subareas: [
@@ -14535,6 +14589,8 @@ function setupPjosAxesHub() {
       libFilter: "habilidades",
       toolTab: "habilidades",
       toolBtnLabel: "Abrir Constructor Guiado SMART",
+      skillTab: "claves",
+      skillLabel: "Skills: Claves y Nudos",
       definition:
         "Desarrolla competencias prácticas, pensamiento crítico, creatividad artística, alfabetización científica y digital, educación financiera, liderazgo en equipo y diseño de proyectos con metodología SMART.",
       subareas: [
@@ -14562,6 +14618,8 @@ function setupPjosAxesHub() {
       libFilter: "ambiente",
       toolTab: "ambiente",
       toolBtnLabel: "Abrir Misión Planeta y Cero Papel",
+      skillTab: "fogatas",
+      skillLabel: "Skills: Fogatas",
       definition:
         "Impulsa la conexión directa con la naturaleza, la conservación de ecosistemas, la transición hacia energías limpias, el consumo responsable sin plásticos de un solo uso y los principios de No Dejar Rastro.",
       subareas: [
@@ -14589,6 +14647,8 @@ function setupPjosAxesHub() {
       libFilter: "paz",
       toolTab: "paz",
       toolBtnLabel: "Abrir Bitácora Mensajeros de la Paz",
+      skillTab: "silbato",
+      skillLabel: "Skills: Silbato",
       definition:
         "Fomenta la construcción activa de cultura de paz, derechos humanos, inclusión y diversidad, diálogo intercultural, preservación del patrimonio, servicio comunitario y respuesta humanitaria organizada.",
       subareas: [
@@ -14686,6 +14746,7 @@ function setupPjosAxesHub() {
 
       <div class="bt-ejes-inline-actions">
         <button type="button" class="bt-sf-btn is-accent" data-axis-goto-tool="${escapeHtml(info.toolTab)}">${escapeHtml(info.toolBtnLabel)} →</button>
+        <button type="button" class="bt-sf-btn" data-bt-jump-skill="${escapeHtml(info.skillTab)}">${escapeHtml(info.skillLabel)} →</button>
         <button type="button" class="bt-sf-btn" data-ejes-filter-lib="${escapeHtml(info.libFilter)}">Filtrar FAES y FES de ${escapeHtml(info.title)} en Biblioteca</button>
         <button type="button" class="bt-sf-btn is-subtle" data-query="${escapeHtml(info.sampleQuery)}">Ver explicación con fuentes</button>
       </div>
@@ -15387,6 +15448,1310 @@ function setupPjosAxesHub() {
 }
 
 // ============================================================================
+// ESPACIO OFFLINE: SKILLS (CLAVES, NUDOS, TU MOCHILA, PISTAS, BOTIQUÍN, FOGATAS, SILBATO, RETO)
+// ============================================================================
+function setupScoutSkillsHub() {
+  const sectionEl = document.getElementById("skills");
+  if (!sectionEl) return;
+
+  const SKILL_TABS = ["claves", "nudos", "mochila", "pistas", "botiquin", "fogatas", "silbato", "reto"];
+  const tabBtns = Array.from(sectionEl.querySelectorAll("#btSkillsTabs [data-skills-tab]"));
+  const panes = Array.from(sectionEl.querySelectorAll("[data-skills-pane]"));
+
+  let audioTimers = [];
+  let audioNodes = [];
+  let activeWhistleBtn = null;
+
+  const stopSkillAudio = () => {
+    audioTimers.forEach((id) => clearTimeout(id));
+    audioTimers = [];
+    audioNodes.forEach((node) => {
+      try {
+        if (typeof node.stop === "function") node.stop();
+        if (typeof node.disconnect === "function") node.disconnect();
+      } catch (_) {}
+    });
+    audioNodes = [];
+    const lampEl = document.getElementById("btMorseLamp");
+    if (lampEl) lampEl.classList.remove("is-lit");
+    const morseBtn = document.getElementById("btMorsePlayBtn");
+    if (morseBtn) {
+      morseBtn.dataset.playing = "0";
+      morseBtn.textContent = "Escuchar";
+    }
+    if (activeWhistleBtn) {
+      activeWhistleBtn.textContent = "Escuchar";
+      activeWhistleBtn = null;
+    }
+  };
+  window.__btStopSkillAudio = stopSkillAudio;
+
+  const playToneSequence = (codeStr, mode = "morse", options = {}) => {
+    stopSkillAudio();
+    const cleaned = String(codeStr || "").trim();
+    if (!cleaned) return;
+
+    const unit = mode === "whistle" ? 115 : (options.slow ? 160 : 90);
+    const events = [];
+    let cursor = 0;
+
+    for (let i = 0; i < cleaned.length; i++) {
+      const ch = cleaned[i];
+      if (ch === ".") {
+        events.push({ start: cursor, dur: unit });
+        cursor += unit * 2;
+      } else if (ch === "-") {
+        events.push({ start: cursor, dur: unit * 3 });
+        cursor += unit * 4;
+      } else if (ch === "/") {
+        cursor += unit * 4;
+      } else if (ch === " ") {
+        cursor += unit * 2;
+      }
+    }
+    if (!events.length) return;
+
+    let ctx = null;
+    try {
+      if (typeof BtSoundEngine !== "undefined" && typeof BtSoundEngine.ensureContext === "function") {
+        ctx = BtSoundEngine.ensureContext();
+      } else {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (Ctx) ctx = new Ctx();
+      }
+      if (ctx && ctx.state === "suspended" && typeof ctx.resume === "function") {
+        ctx.resume().catch(() => {});
+      }
+    } catch (_) {
+      ctx = null;
+    }
+
+    const lampEl = mode === "morse" ? document.getElementById("btMorseLamp") : null;
+    const morseBtn = mode === "morse" ? document.getElementById("btMorsePlayBtn") : null;
+    if (morseBtn) {
+      morseBtn.dataset.playing = "1";
+      morseBtn.textContent = "Detener";
+    }
+    if (mode === "whistle" && options.btn) {
+      activeWhistleBtn = options.btn;
+      activeWhistleBtn.textContent = "Sonando...";
+    }
+
+    events.forEach((ev) => {
+      audioTimers.push(
+        setTimeout(() => {
+          if (lampEl) lampEl.classList.add("is-lit");
+          if (ctx) {
+            try {
+              const now = ctx.currentTime;
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              if (mode === "whistle") {
+                osc.type = "triangle";
+                osc.frequency.setValueAtTime(2620, now);
+                const lfo = ctx.createOscillator();
+                const lfoGain = ctx.createGain();
+                lfo.frequency.setValueAtTime(28, now);
+                lfoGain.gain.setValueAtTime(48, now);
+                lfo.connect(lfoGain);
+                lfoGain.connect(osc.frequency);
+                lfo.start(now);
+                lfo.stop(now + ev.dur / 1000 + 0.03);
+                audioNodes.push(lfo, lfoGain);
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.14, now + 0.015);
+                gain.gain.setValueAtTime(0.14, now + Math.max(0.02, ev.dur / 1000 - 0.02));
+                gain.gain.exponentialRampToValueAtTime(0.001, now + ev.dur / 1000);
+              } else {
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(680, now);
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.16, now + 0.012);
+                gain.gain.setValueAtTime(0.16, now + Math.max(0.02, ev.dur / 1000 - 0.015));
+                gain.gain.exponentialRampToValueAtTime(0.001, now + ev.dur / 1000);
+              }
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start(now);
+              osc.stop(now + ev.dur / 1000 + 0.025);
+              audioNodes.push(osc, gain);
+            } catch (_) {}
+          }
+        }, ev.start)
+      );
+      audioTimers.push(
+        setTimeout(() => {
+          if (lampEl) lampEl.classList.remove("is-lit");
+        }, ev.start + ev.dur)
+      );
+    });
+
+    audioTimers.push(
+      setTimeout(() => {
+        stopSkillAudio();
+      }, cursor + 80)
+    );
+  };
+
+  const selectSkillsTab = (tabId) => {
+    const safe = SKILL_TABS.includes(tabId) ? tabId : "claves";
+    stopSkillAudio();
+    tabBtns.forEach((b) => {
+      const act = b.getAttribute("data-skills-tab") === safe;
+      b.classList.toggle("active", act);
+      b.setAttribute("aria-selected", String(act));
+    });
+    panes.forEach((p) => {
+      p.classList.toggle("hidden", p.getAttribute("data-skills-pane") !== safe);
+    });
+  };
+  window.__btSelectSkillsTab = selectSkillsTab;
+
+  tabBtns.forEach((b) => {
+    b.addEventListener("click", () => {
+      selectSkillsTab(b.getAttribute("data-skills-tab"));
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+    });
+  });
+
+  // --------------------------------------------------------------------------
+  // 1. CLAVES (Semáforo, Morse, Murciélago, Cenit-Polar, Sufamelico, Dametupico, Cajón)
+  // --------------------------------------------------------------------------
+  const cleanAccentUpper = (str) =>
+    String(str || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toUpperCase();
+
+  const SEMAPHORE_MAP = {
+    A: [0, 1], B: [0, 2], C: [0, 3], D: [0, 4], E: [0, 5], F: [0, 6], G: [0, 7],
+    H: [1, 2], I: [1, 3], K: [1, 4], L: [1, 5], M: [1, 6], N: [1, 7],
+    O: [2, 3], P: [2, 4], Q: [2, 5], R: [2, 6], S: [2, 7],
+    T: [3, 4], U: [3, 5], Y: [3, 6],
+    J: [4, 6], V: [4, 7],
+    W: [5, 6], X: [5, 7],
+    Z: [6, 7],
+    " ": [0, 0]
+  };
+
+  const MORSE_MAP = {
+    A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.", G: "--.", H: "....",
+    I: "..", J: ".---", K: "-.-", L: ".-..", M: "--", N: "-.", "Ñ": "--.--", O: "---",
+    P: ".--.", Q: "--.-", R: ".-.", S: "...", T: "-", U: "..-", V: "...-", W: ".--",
+    X: "-..-", Y: "-.--", Z: "--..",
+    "0": "-----", "1": ".----", "2": "..---", "3": "...--", "4": "....-",
+    "5": ".....", "6": "-....", "7": "--...", "8": "---..", "9": "----."
+  };
+  const MORSE_REV = Object.fromEntries(Object.entries(MORSE_MAP).map(([k, v]) => [v, k]));
+
+  const pairTable = (pairs) => {
+    const map = {};
+    for (const [a, b] of pairs) {
+      map[a] = b;
+      map[b] = a;
+    }
+    return map;
+  };
+  const MURCIELAGO_EN = { M: "0", U: "1", R: "2", C: "3", I: "4", E: "5", L: "6", A: "7", G: "8", O: "9" };
+  const MURCIELAGO_DE = Object.fromEntries(Object.entries(MURCIELAGO_EN).map(([k, v]) => [v, k]));
+  const PAIR_CIPHERS = {
+    cenit: pairTable([["C", "P"], ["E", "O"], ["N", "L"], ["I", "A"], ["T", "R"]]),
+    sufamelico: pairTable([["S", "U"], ["F", "A"], ["M", "E"], ["L", "I"], ["C", "O"]]),
+    dametupico: pairTable([["D", "A"], ["M", "E"], ["T", "U"], ["P", "I"], ["C", "O"]])
+  };
+
+  // Posiciones 0..7 vista del receptor: 0=6:00 abajo, 1=7:30, 2=9:00 izq, 3=10:30, 4=12:00 arriba, 5=1:30, 6=3:00 der, 7=4:30
+  const semaArmVector = (pos) => {
+    const rad = (pos * 45 * Math.PI) / 180;
+    return { dx: -Math.sin(rad), dy: Math.cos(rad) };
+  };
+
+  const buildSemaphoreSvg = (letter, size = 64) => {
+    const ch = letter === "Ñ" ? "N" : letter;
+    const pair = SEMAPHORE_MAP[ch] || [0, 0];
+    const [p1, p2] = pair;
+    const len = 20;
+    const cx = 40;
+    const cy = 34;
+
+    const drawArm = (pos, anchorX) => {
+      const { dx, dy } = semaArmVector(pos);
+      const hx = anchorX + dx * 13;
+      const hy = cy + dy * 13;
+      const tx = anchorX + dx * len;
+      const ty = cy + dy * len;
+      const px = -dy * 6;
+      const py = dx * 6;
+      const fx = tx - dx * 9 + px;
+      const fy = ty - dy * 9 + py;
+      const gx = tx + px;
+      const gy = ty + py;
+      return `
+        <line x1="${anchorX}" y1="${cy}" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+        <line x1="${hx.toFixed(1)}" y1="${hy.toFixed(1)}" x2="${tx.toFixed(1)}" y2="${ty.toFixed(1)}" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
+        <polygon points="${(tx - dx * 9).toFixed(1)},${(ty - dy * 9).toFixed(1)} ${tx.toFixed(1)},${ty.toFixed(1)} ${gx.toFixed(1)},${gy.toFixed(1)}" fill="#ef4444" />
+        <polygon points="${(tx - dx * 9).toFixed(1)},${(ty - dy * 9).toFixed(1)} ${fx.toFixed(1)},${fy.toFixed(1)} ${gx.toFixed(1)},${gy.toFixed(1)}" fill="#facc15" />
+      `;
+    };
+
+    const leftAnchor = cx - 4;
+    const rightAnchor = cx + 4;
+    return `<svg width="${size}" height="${size}" viewBox="0 0 80 72" fill="none" aria-hidden="true">
+      <circle cx="${cx}" cy="17" r="6" fill="currentColor" opacity="0.9"/>
+      <rect x="33" y="25" width="14" height="22" rx="4" fill="currentColor" opacity="0.85"/>
+      <line x1="36" y1="47" x2="35" y2="63" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+      <line x1="44" y1="47" x2="45" y2="63" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+      ${drawArm(p1, leftAnchor)}
+      ${drawArm(p2, rightAnchor)}
+    </svg>`;
+  };
+
+  // Cajón (Rejilla Scout): 3x3 A-I / J-R + X S-V / W-Z
+  const CAJON_GRID = {
+    A: { t: "box", walls: ["B", "R"], dot: false },
+    B: { t: "box", walls: ["L", "B", "R"], dot: false },
+    C: { t: "box", walls: ["L", "B"], dot: false },
+    D: { t: "box", walls: ["T", "R", "B"], dot: false },
+    E: { t: "box", walls: ["T", "R", "B", "L"], dot: false },
+    F: { t: "box", walls: ["T", "L", "B"], dot: false },
+    G: { t: "box", walls: ["T", "R"], dot: false },
+    H: { t: "box", walls: ["L", "T", "R"], dot: false },
+    I: { t: "box", walls: ["L", "T"], dot: false },
+    J: { t: "box", walls: ["B", "R"], dot: true },
+    K: { t: "box", walls: ["L", "B", "R"], dot: true },
+    L: { t: "box", walls: ["L", "B"], dot: true },
+    M: { t: "box", walls: ["T", "R", "B"], dot: true },
+    N: { t: "box", walls: ["T", "R", "B", "L"], dot: true },
+    O: { t: "box", walls: ["T", "L", "B"], dot: true },
+    P: { t: "box", walls: ["T", "R"], dot: true },
+    Q: { t: "box", walls: ["L", "T", "R"], dot: true },
+    R: { t: "box", walls: ["L", "T"], dot: true },
+    S: { t: "x", dir: "T", dot: false },
+    T: { t: "x", dir: "L", dot: false },
+    U: { t: "x", dir: "R", dot: false },
+    V: { t: "x", dir: "B", dot: false },
+    W: { t: "x", dir: "T", dot: true },
+    X: { t: "x", dir: "L", dot: true },
+    Y: { t: "x", dir: "R", dot: true },
+    Z: { t: "x", dir: "B", dot: true }
+  };
+
+  const buildCajonSvg = (ch, size = 50) => {
+    const spec = CAJON_GRID[ch === "Ñ" ? "N" : ch];
+    if (!spec) return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" aria-hidden="true"></svg>`;
+    const parts = [];
+    if (spec.t === "box") {
+      if (spec.walls.includes("T")) parts.push(`<line x1="12" y1="12" x2="48" y2="12"/>`);
+      if (spec.walls.includes("B")) parts.push(`<line x1="12" y1="48" x2="48" y2="48"/>`);
+      if (spec.walls.includes("L")) parts.push(`<line x1="12" y1="12" x2="12" y2="48"/>`);
+      if (spec.walls.includes("R")) parts.push(`<line x1="48" y1="12" x2="48" y2="48"/>`);
+      if (spec.dot) parts.push(`<circle cx="30" cy="30" r="4" fill="currentColor" stroke="none"/>`);
+    } else {
+      if (spec.dir === "T") parts.push(`<polyline points="12,14 30,34 48,14"/>`);
+      if (spec.dir === "B") parts.push(`<polyline points="12,46 30,26 48,46"/>`);
+      if (spec.dir === "L") parts.push(`<polyline points="14,12 34,30 14,48"/>`);
+      if (spec.dir === "R") parts.push(`<polyline points="46,12 26,30 46,48"/>`);
+      if (spec.dot) {
+        const dx = spec.dir === "L" ? 20 : spec.dir === "R" ? 40 : 30;
+        const dy = spec.dir === "T" ? 20 : spec.dir === "B" ? 40 : 30;
+        parts.push(`<circle cx="${dx}" cy="${dy}" r="3.8" fill="currentColor" stroke="none"/>`);
+      }
+    }
+    return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${parts.join("")}</svg>`;
+  };
+
+  let cipherKind = "semaforo";
+  let cipherDecodeMode = false;
+  let morseSlow = false;
+  let lastCipherCopyStr = "";
+
+  const cipherInputEl = document.getElementById("btCipherTextInput");
+  const cipherOutEl = document.getElementById("btCipherOutputArea");
+  const cipherRefEl = document.getElementById("btCipherRefArea");
+  const cipherDirBtn = document.getElementById("btCipherDirToggle");
+  const morsePlayBtn = document.getElementById("btMorsePlayBtn");
+  const morseSpeedBtn = document.getElementById("btMorseSpeedBtn");
+  const morseLampEl = document.getElementById("btMorseLamp");
+
+  const renderCipher = () => {
+    if (!cipherInputEl || !cipherOutEl || !cipherRefEl) return;
+    const raw = cipherInputEl.value || "";
+    const upper = cleanAccentUpper(raw);
+    const upperKeepN = String(raw || "")
+      .toUpperCase()
+      .replace(/[ÁÀÄ]/g, "A")
+      .replace(/[ÉÈË]/g, "E")
+      .replace(/[ÍÌÏ]/g, "I")
+      .replace(/[ÓÒÖ]/g, "O")
+      .replace(/[ÚÙÜ]/g, "U");
+
+    const showMorseControls = cipherKind === "morse";
+    if (morsePlayBtn) morsePlayBtn.classList.toggle("hidden", !showMorseControls);
+    if (morseSpeedBtn) morseSpeedBtn.classList.toggle("hidden", !showMorseControls);
+    if (morseLampEl) morseLampEl.classList.toggle("hidden", !showMorseControls);
+
+    if (cipherDirBtn) {
+      if (cipherKind === "semaforo" || cipherKind === "cajon") {
+        cipherDirBtn.classList.add("hidden");
+      } else {
+        cipherDirBtn.classList.remove("hidden");
+        cipherDirBtn.textContent = cipherDecodeMode ? "Clave → Texto" : "Texto → Clave";
+      }
+    }
+
+    if (cipherKind === "semaforo") {
+      const chars = Array.from(upper).filter((c) => SEMAPHORE_MAP[c] || c === "Ñ");
+      if (!chars.length) {
+        cipherOutEl.innerHTML = `<span class="bt-cipher-empty">Escribe letras A–Z para mostrar las posiciones de banderines.</span>`;
+        lastCipherCopyStr = "";
+      } else {
+        lastCipherCopyStr = chars.join("");
+        cipherOutEl.innerHTML = `<div class="bt-cipher-svg-grid">${chars
+          .map((ch) => {
+            if (ch === " ") return `<div class="bt-cipher-space-sep" aria-hidden="true"></div>`;
+            return `<div class="bt-cipher-glyph-card">${buildSemaphoreSvg(ch)}<span>${escapeHtml(ch)}</span></div>`;
+          })
+          .join("")}</div>`;
+      }
+      cipherRefEl.innerHTML = `<div class="bt-cipher-svg-grid">${Object.keys(SEMAPHORE_MAP)
+        .filter((k) => k !== " ")
+        .map((k) => `<button type="button" class="bt-cipher-glyph-card" data-cipher-append="${k}" title="Insertar ${k}">${buildSemaphoreSvg(k, 40)}<span>${k}</span></button>`)
+        .join("")}</div>`;
+      return;
+    }
+
+    if (cipherKind === "cajon") {
+      const chars = Array.from(upper).filter((c) => CAJON_GRID[c] || c === " " || c === "Ñ");
+      if (!chars.length) {
+        cipherOutEl.innerHTML = `<span class="bt-cipher-empty">Escribe letras A–Z para ver su símbolo en clave Cajón.</span>`;
+        lastCipherCopyStr = "";
+      } else {
+        lastCipherCopyStr = chars.join("");
+        cipherOutEl.innerHTML = `<div class="bt-cipher-svg-grid">${chars
+          .map((ch) =>
+            ch === " "
+              ? `<div class="bt-cipher-space-sep" aria-hidden="true"></div>`
+              : `<div class="bt-cipher-glyph-card">${buildCajonSvg(ch)}<span>${escapeHtml(ch)}</span></div>`
+          )
+          .join("")}</div>`;
+      }
+      cipherRefEl.innerHTML = `<div class="bt-cipher-svg-grid">${Object.keys(CAJON_GRID)
+        .map((k) => `<button type="button" class="bt-cipher-glyph-card" data-cipher-append="${k}" title="Insertar ${k}">${buildCajonSvg(k, 36)}<span>${k}</span></button>`)
+        .join("")}</div>`;
+      return;
+    }
+
+    if (cipherKind === "morse") {
+      let out = "";
+      let morsePlayStr = "";
+      if (!cipherDecodeMode) {
+        const tokens = Array.from(upperKeepN).map((ch) => {
+          if (ch === " ") return "/";
+          return MORSE_MAP[ch] || "";
+        }).filter(Boolean);
+        out = tokens.join(" ");
+        morsePlayStr = out;
+      } else {
+        const words = String(raw || "").trim().split(/\s*\/\s*/);
+        out = words
+          .map((w) =>
+            w
+              .trim()
+              .split(/\s+/)
+              .map((code) => MORSE_REV[code] || "?")
+              .join("")
+          )
+          .join(" ");
+        morsePlayStr = String(raw || "");
+      }
+      lastCipherCopyStr = out;
+      if (morsePlayBtn) morsePlayBtn.dataset.morseSeq = morsePlayStr;
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Escribe texto (o puntos "." y rayas "-" separados por espacio en modo Clave → Texto).</span>`;
+      cipherRefEl.innerHTML = Object.entries(MORSE_MAP)
+        .map(([k, v]) => `<span class="bt-cipher-ref-chip"><strong>${escapeHtml(k)}</strong> <code>${escapeHtml(v)}</code></span>`)
+        .join("");
+      return;
+    }
+
+    if (cipherKind === "murcielago") {
+      const table = cipherDecodeMode ? MURCIELAGO_DE : MURCIELAGO_EN;
+      const srcChars = Array.from(upper);
+      const out = srcChars.map((ch) => table[ch] || ch).join("");
+      lastCipherCopyStr = out;
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Escribe un mensaje para convertir con M-U-R-C-I-E-L-A-G-O (0–9).</span>`;
+      cipherRefEl.innerHTML = Object.entries(MURCIELAGO_EN)
+        .map(([k, v]) => `<span class="bt-cipher-ref-chip"><strong>${k}</strong> <code>${v}</code></span>`)
+        .join("");
+      return;
+    }
+
+    const pairMap = PAIR_CIPHERS[cipherKind] || PAIR_CIPHERS.cenit;
+    const out = Array.from(upper).map((ch) => pairMap[ch] || ch).join("");
+    lastCipherCopyStr = out;
+    const shownPairs = [];
+    const seen = new Set();
+    Object.entries(pairMap).forEach(([a, b]) => {
+      if (!seen.has(a) && !seen.has(b)) {
+        seen.add(a);
+        seen.add(b);
+        shownPairs.push([a, b]);
+      }
+    });
+    cipherOutEl.innerHTML = out
+      ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+      : `<span class="bt-cipher-empty">Escribe un mensaje para cifrar o descifrar (esta clave es simétrica).</span>`;
+    cipherRefEl.innerHTML = shownPairs
+      .map(([a, b]) => `<span class="bt-cipher-ref-chip"><strong>${a}</strong> <code>↔ ${b}</code></span>`)
+      .join("");
+  };
+
+  const cipherPillsEl = document.getElementById("btCipherTypePills");
+  if (cipherPillsEl) {
+    cipherPillsEl.addEventListener("click", (e) => {
+      const pill = e.target.closest("[data-cipher-kind]");
+      if (!pill) return;
+      stopSkillAudio();
+      cipherKind = pill.getAttribute("data-cipher-kind") || "semaforo";
+      cipherPillsEl.querySelectorAll("[data-cipher-kind]").forEach((p) => {
+        p.classList.toggle("is-active", p === pill);
+      });
+      renderCipher();
+    });
+  }
+  if (cipherInputEl) cipherInputEl.addEventListener("input", renderCipher);
+  if (cipherRefEl) {
+    cipherRefEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-cipher-append]");
+      if (!btn || !cipherInputEl) return;
+      cipherInputEl.value = (cipherInputEl.value || "") + btn.getAttribute("data-cipher-append");
+      renderCipher();
+    });
+  }
+  if (cipherDirBtn) {
+    cipherDirBtn.addEventListener("click", () => {
+      cipherDecodeMode = !cipherDecodeMode;
+      renderCipher();
+    });
+  }
+  if (morsePlayBtn) {
+    morsePlayBtn.addEventListener("click", () => {
+      if (morsePlayBtn.dataset.playing === "1") {
+        stopSkillAudio();
+        return;
+      }
+      playToneSequence(morsePlayBtn.dataset.morseSeq || "", "morse", { slow: morseSlow });
+    });
+  }
+  if (morseSpeedBtn) {
+    morseSpeedBtn.addEventListener("click", () => {
+      morseSlow = !morseSlow;
+      morseSpeedBtn.textContent = morseSlow ? "Lento" : "Normal";
+    });
+  }
+  const cipherCopyBtn = document.getElementById("btCipherCopyBtn");
+  if (cipherCopyBtn) {
+    cipherCopyBtn.addEventListener("click", async () => {
+      if (!lastCipherCopyStr) return;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(lastCipherCopyStr);
+          showWebToast("Resultado copiado.");
+        }
+      } catch (_) {
+        showWebToast("No se pudo copiar.");
+      }
+    });
+  }
+  const cipherPrintBtn = document.getElementById("btCipherPrintBtn");
+  if (cipherPrintBtn) {
+    cipherPrintBtn.addEventListener("click", () => {
+      document.documentElement.classList.add("bt-print-rally-mode");
+      const cleanup = () => document.documentElement.classList.remove("bt-print-rally-mode");
+      window.addEventListener("afterprint", cleanup, { once: true });
+      setTimeout(cleanup, 2000);
+      window.print();
+    });
+  }
+  renderCipher();
+
+  // --------------------------------------------------------------------------
+  // 2. NUDOS Y AMARRES (10 guías visuales por pasos SVG)
+  // --------------------------------------------------------------------------
+  const KNOTS_DATA = [
+    {
+      id: "rizo",
+      name: "Nudo Rizo (Llano)",
+      cat: "unir",
+      catLabel: "Unir",
+      use: "Unir dos cabos del mismo grosor (termina plano y es fácil de desatar).",
+      steps: [
+        { tip: "Cruza el cabo derecho sobre el izquierdo haciendo un medio nudo.", svg: `<path d="M16 56 C48 56 54 32 76 32 C98 32 108 54 144 54" stroke="#7c3aed" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M144 28 C108 28 98 54 76 54 C54 54 48 28 16 28" stroke="#f59e0b" stroke-width="7" fill="none" stroke-linecap="round"/>` },
+        { tip: "Ahora cruza el izquierdo sobre el derecho en sentido contrario.", svg: `<path d="M16 56 C45 56 52 24 80 24 C108 24 115 56 144 56" stroke="#7c3aed" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M144 26 C115 26 105 56 80 56 C55 56 45 26 16 26" stroke="#f59e0b" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="62" cy="40" r="6" fill="#0f172a" opacity="0.22"/>` },
+        { tip: "Azoca jalando ambos lados parejos: los dos senos quedan simétricos.", svg: `<path d="M12 36 H56 C70 36 74 52 86 52 C98 52 100 32 86 32 C72 32 70 48 56 48 H12" stroke="#7c3aed" stroke-width="6.5" fill="none" stroke-linecap="round"/><path d="M148 36 H104 C90 36 86 20 74 20 C62 20 60 40 74 40 C88 40 90 48 104 48 H148" stroke="#f59e0b" stroke-width="6.5" fill="none" stroke-linecap="round"/>` }
+      ]
+    },
+    {
+      id: "escota",
+      name: "Vuelta de Escota",
+      cat: "unir",
+      catLabel: "Unir",
+      use: "Unir dos cuerdas de diferente grosor o que estarán húmedas.",
+      steps: [
+        { tip: "Forma un seno (U) abierto con el cabo más grueso.", svg: `<path d="M22 28 H72 C90 28 90 54 72 54 H22" stroke="#7c3aed" stroke-width="8" fill="none" stroke-linecap="round"/>` },
+        { tip: "Pasa el cabo delgado por dentro del seno y rodea ambas ramas por detrás.", svg: `<path d="M22 28 H72 C90 28 90 54 72 54 H22" stroke="#7c3aed" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M140 56 C108 56 96 42 74 42 C60 42 64 20 82 22 L100 44" stroke="#f59e0b" stroke-width="5.5" fill="none" stroke-linecap="round"/>` },
+        { tip: "Mete la punta del cabo delgado debajo de sí mismo y ajusta.", svg: `<path d="M20 28 H72 C90 28 90 54 72 54 H20" stroke="#7c3aed" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M142 52 H96 C78 52 62 26 78 20 C94 14 96 44 80 42 H58" stroke="#f59e0b" stroke-width="5.5" fill="none" stroke-linecap="round"/>` }
+      ]
+    },
+    {
+      id: "pescador",
+      name: "Nudo Pescador",
+      cat: "unir",
+      catLabel: "Unir",
+      use: "Unir cabos resbaladizos, delgados o de nylon mediante dos topes.",
+      steps: [
+        { tip: "Coloca ambos cabos paralelos en direcciones opuestas.", svg: `<line x1="16" y1="34" x2="120" y2="34" stroke="#7c3aed" stroke-width="6.5" stroke-linecap="round"/><line x1="40" y1="48" x2="144" y2="48" stroke="#f59e0b" stroke-width="6.5" stroke-linecap="round"/>` },
+        { tip: "Haz un nudo simple con cada punta abrazando el cuerpo de la otra cuerda.", svg: `<line x1="14" y1="34" x2="144" y2="34" stroke="#7c3aed" stroke-width="6.5" stroke-linecap="round"/><line x1="16" y1="48" x2="146" y2="48" stroke="#f59e0b" stroke-width="6.5" stroke-linecap="round"/><circle cx="48" cy="41" r="11" stroke="#f59e0b" stroke-width="5.5" fill="none"/><circle cx="112" cy="41" r="11" stroke="#7c3aed" stroke-width="5.5" fill="none"/>` },
+        { tip: "Jala los extremos principales hasta que ambos topes choquen firmes al centro.", svg: `<line x1="14" y1="41" x2="146" y2="41" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/><line x1="14" y1="41" x2="146" y2="41" stroke="#f59e0b" stroke-width="6" stroke-dasharray="10 10" stroke-linecap="round"/><rect x="58" y="29" width="20" height="24" rx="8" fill="#f59e0b"/><rect x="82" y="29" width="20" height="24" rx="8" fill="#7c3aed"/>` }
+      ]
+    },
+    {
+      id: "ballestrinque",
+      name: "Ballestrinque",
+      cat: "anclar",
+      catLabel: "Anclar",
+      use: "Amarrar a un poste o bordón; indispensable para iniciar amarres.",
+      steps: [
+        { tip: "Da una vuelta completa alrededor del poste dejando la punta cruzada.", svg: `<rect x="22" y="34" width="116" height="16" rx="7" fill="#92400e"/><path d="M56 64 C56 46 56 26 70 26 C82 26 84 48 80 62" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/>` },
+        { tip: "Cruza la punta por encima haciendo una segunda vuelta formando una X.", svg: `<rect x="22" y="34" width="116" height="16" rx="7" fill="#92400e"/><path d="M54 64 L96 24 M62 24 L104 64" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/>` },
+        { tip: "Pasa la punta por debajo del cruce central y tensa ambos lados.", svg: `<rect x="18" y="34" width="124" height="16" rx="7" fill="#92400e"/><rect x="64" y="29" width="12" height="26" rx="4" fill="#7c3aed"/><rect x="84" y="29" width="12" height="26" rx="4" fill="#7c3aed"/><path d="M58 64 L98 22" stroke="#f59e0b" stroke-width="5.5" fill="none" stroke-linecap="round"/>` }
+      ]
+    },
+    {
+      id: "as_guia",
+      name: "As de Guía",
+      cat: "tensar",
+      catLabel: "Tensar",
+      use: "Crea una gaza fija muy segura que no se corre ni se aprieta de más.",
+      steps: [
+        { tip: "Haz un pequeño bucle (el pozo) en la parte firme de la cuerda.", svg: `<path d="M22 62 C52 62 66 28 54 24 C42 20 38 48 64 52" stroke="#7c3aed" stroke-width="6.5" fill="none" stroke-linecap="round"/>` },
+        { tip: "La serpiente (punta) sale del pozo, rodea el tronco firme y vuelve a entrar.", svg: `<path d="M22 62 C52 62 66 28 54 24 C42 20 38 48 64 52" stroke="#7c3aed" stroke-width="6.5" fill="none" stroke-linecap="round"/><path d="M98 62 C128 62 128 24 92 26 C72 28 58 32 54 34" stroke="#f59e0b" stroke-width="6" fill="none" stroke-linecap="round"/>` },
+        { tip: "Sostén punta + lazo y jala la línea principal para cerrar el cuello.", svg: `<ellipse cx="106" cy="42" rx="28" ry="18" stroke="#7c3aed" stroke-width="6.5" fill="none"/><circle cx="72" cy="42" r="10" stroke="#f59e0b" stroke-width="6" fill="none"/><line x1="18" y1="42" x2="64" y2="42" stroke="#7c3aed" stroke-width="6.5" stroke-linecap="round"/>` }
+      ]
+    },
+    {
+      id: "margarita",
+      name: "Nudo Margarita",
+      cat: "tensar",
+      catLabel: "Tensar",
+      use: "Acortar temporalmente una cuerda sin cortarla o aislar una zona dañada.",
+      steps: [
+        { tip: "Dobla la cuerda en forma de S formando tres partes paralelas.", svg: `<path d="M16 28 H114 C126 28 126 42 114 42 H46 C34 42 34 56 46 56 H144" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/>` },
+        { tip: "Bloquea cada extremo de la S pasando un cote o medio nudo externo.", svg: `<path d="M16 28 H114 C126 28 126 42 114 42 H46 C34 42 34 56 46 56 H144" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="42" cy="42" rx="9" ry="18" stroke="#f59e0b" stroke-width="5" fill="none"/><ellipse cx="118" cy="42" rx="9" ry="18" stroke="#f59e0b" stroke-width="5" fill="none"/>` },
+        { tip: "Mantén tensión continua: así los dos cotes mantienen fijo el tramo doble.", svg: `<line x1="12" y1="42" x2="148" y2="42" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/><rect x="34" y="24" width="14" height="36" rx="7" stroke="#f59e0b" stroke-width="5" fill="none"/><rect x="112" y="24" width="14" height="36" rx="7" stroke="#f59e0b" stroke-width="5" fill="none"/><line x1="48" y1="30" x2="112" y2="30" stroke="#7c3aed" stroke-width="5"/><line x1="48" y1="54" x2="112" y2="54" stroke="#7c3aed" stroke-width="5"/>` }
+      ]
+    },
+    {
+      id: "tensor",
+      name: "Tensor de Viento",
+      cat: "tensar",
+      catLabel: "Tensar",
+      use: "Ajustar la tensión de los vientos de la casa de campaña sobre estacas.",
+      steps: [
+        { tip: "Rodea la estaca y vuelve paralelamente por la cuerda principal.", svg: `<rect x="122" y="24" width="14" height="36" rx="5" fill="#92400e"/><path d="M18 34 H122 C136 34 136 52 122 52 H74" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/>` },
+        { tip: "Da dos vueltas hacia el interior alrededor de la línea tensa.", svg: `<path d="M18 34 H122 C136 34 136 52 122 52 H60" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="66" cy="42" rx="8" ry="14" stroke="#f59e0b" stroke-width="5" fill="none"/><ellipse cx="82" cy="42" rx="8" ry="14" stroke="#f59e0b" stroke-width="5" fill="none"/>` },
+        { tip: "Haz un cote afuera bloqueando y desliza el nudo para tensar o aflojar.", svg: `<path d="M16 40 H126 C138 40 138 54 126 54 H54" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/><rect x="52" y="28" width="42" height="24" rx="10" stroke="#f59e0b" stroke-width="5.5" fill="none"/>` }
+      ]
+    },
+    {
+      id: "amarre_cuadrado",
+      name: "Amarre Cuadrado",
+      cat: "amarre",
+      catLabel: "Amarres",
+      use: "Unir dos troncos en escuadra de 90° que soportarán peso en construcciones.",
+      steps: [
+        { tip: "Inicia con un ballestrinque en el tronco vertical justo debajo del cruce.", svg: `<rect x="72" y="10" width="16" height="64" rx="5" fill="#92400e"/><rect x="26" y="32" width="108" height="16" rx="5" fill="#b45309"/><rect x="70" y="50" width="20" height="8" rx="3" fill="#7c3aed"/>` },
+        { tip: "Envuelve arriba y abajo alternando 3 vueltas ordenadas sin montar cabos.", svg: `<rect x="72" y="10" width="16" height="64" rx="5" fill="#92400e"/><rect x="26" y="32" width="108" height="16" rx="5" fill="#b45309"/><path d="M62 24 L98 56 M66 56 L94 24 M58 40 H102" stroke="#7c3aed" stroke-width="5" stroke-linecap="round"/>` },
+        { tip: "Ahorca dando 2–3 vueltas apretadas entre troncos y cierra con ballestrinque.", svg: `<rect x="72" y="10" width="16" height="64" rx="5" fill="#92400e"/><rect x="26" y="32" width="108" height="16" rx="5" fill="#b45309"/><rect x="64" y="26" width="32" height="28" rx="7" stroke="#f59e0b" stroke-width="5" fill="none"/><path d="M64 26 L96 54 M96 26 L64 54" stroke="#7c3aed" stroke-width="4.5" stroke-linecap="round"/>` }
+      ]
+    },
+    {
+      id: "amarre_diagonal",
+      name: "Amarre Diagonal",
+      cat: "amarre",
+      catLabel: "Amarres",
+      use: "Juntar dos troncos cruzados en X que tienden a separarse bajo carga.",
+      steps: [
+        { tip: "Inicia con un leñador o vuelta que abrace el ángulo abierto de los troncos.", svg: `<line x1="36" y1="16" x2="124" y2="68" stroke="#92400e" stroke-width="14" stroke-linecap="round"/><line x1="124" y1="16" x2="36" y2="68" stroke="#b45309" stroke-width="14" stroke-linecap="round"/><circle cx="80" cy="42" r="16" stroke="#7c3aed" stroke-width="5.5" fill="none"/>` },
+        { tip: "Da 3 vueltas siguiendo una diagonal de la X y luego 3 en la otra diagonal.", svg: `<line x1="36" y1="16" x2="124" y2="68" stroke="#92400e" stroke-width="14" stroke-linecap="round"/><line x1="124" y1="16" x2="36" y2="68" stroke="#b45309" stroke-width="14" stroke-linecap="round"/><path d="M58 22 L102 62 M102 22 L58 62" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/>` },
+        { tip: "Ahorca firme en el centro entre ambos troncos y remata con ballestrinque.", svg: `<line x1="36" y1="16" x2="124" y2="68" stroke="#92400e" stroke-width="14" stroke-linecap="round"/><line x1="124" y1="16" x2="36" y2="68" stroke="#b45309" stroke-width="14" stroke-linecap="round"/><rect x="64" y="28" width="32" height="28" rx="9" stroke="#f59e0b" stroke-width="5.5" fill="none"/>` }
+      ]
+    },
+    {
+      id: "amarre_tripode",
+      name: "Amarre Trípode",
+      cat: "amarre",
+      catLabel: "Amarres",
+      use: "Levantar trípodes para fogata colgante, filtro de agua o mesa de campamento.",
+      steps: [
+        { tip: "Alinea tres troncos en el suelo con puntas parejas y comienza con ballestrinque.", svg: `<rect x="24" y="22" width="112" height="10" rx="4" fill="#92400e"/><rect x="24" y="37" width="112" height="10" rx="4" fill="#b45309"/><rect x="24" y="52" width="112" height="10" rx="4" fill="#92400e"/><rect x="46" y="18" width="8" height="18" rx="3" fill="#7c3aed"/>` },
+        { tip: "Teje en zigzag (en forma de 8) alternando arriba y abajo 4–6 pasadas.", svg: `<rect x="24" y="22" width="112" height="10" rx="4" fill="#92400e"/><rect x="24" y="37" width="112" height="10" rx="4" fill="#b45309"/><rect x="24" y="52" width="112" height="10" rx="4" fill="#92400e"/><path d="M56 18 C72 18 72 66 86 66 C100 66 100 18 114 18" stroke="#7c3aed" stroke-width="5.5" fill="none" stroke-linecap="round"/>` },
+        { tip: "Ahorca entre cada par de troncos, cierra con ballestrinque y abre las 3 patas.", svg: `<line x1="80" y1="14" x2="34" y2="72" stroke="#92400e" stroke-width="10" stroke-linecap="round"/><line x1="80" y1="14" x2="80" y2="74" stroke="#b45309" stroke-width="10" stroke-linecap="round"/><line x1="80" y1="14" x2="126" y2="72" stroke="#92400e" stroke-width="10" stroke-linecap="round"/><ellipse cx="80" cy="24" rx="16" ry="7" fill="#f59e0b"/>` }
+      ]
+    }
+  ];
+
+  let activeKnotCat = "all";
+  const knotStepsState = {};
+  const knotsGridEl = document.getElementById("btKnotsGrid");
+  const knotFilterPillsEl = document.getElementById("btKnotFilterPills");
+
+  const renderKnots = () => {
+    if (!knotsGridEl) return;
+    const filtered = activeKnotCat === "all" ? KNOTS_DATA : KNOTS_DATA.filter((k) => k.cat === activeKnotCat);
+    knotsGridEl.innerHTML = filtered
+      .map((k) => {
+        const stIdx = Number(knotStepsState[k.id] || 0);
+        const st = k.steps[stIdx] || k.steps[0];
+        return `
+          <article class="bt-knot-card" data-knot-id="${k.id}">
+            <div class="bt-knot-top">
+              <h4>${escapeHtml(k.name)}</h4>
+              <span class="bt-knot-cat-badge">${escapeHtml(k.catLabel)}</span>
+            </div>
+            <div class="bt-knot-svg-stage">
+              <svg viewBox="0 0 160 84" width="160" height="84" aria-hidden="true">${st.svg}</svg>
+            </div>
+            <div class="bt-knot-steps-row" role="group" aria-label="Pasos de ${escapeHtml(k.name)}">
+              ${["Paso 1", "Paso 2", "Listo"]
+                .map(
+                  (lbl, i) =>
+                    `<button type="button" class="bt-knot-step-btn ${stIdx === i ? "is-active" : ""}" data-knot-step="${k.id}:${i}">${lbl}</button>`
+                )
+                .join("")}
+            </div>
+            <p class="bt-knot-tip"><strong>Uso:</strong> ${escapeHtml(k.use)}<br/><span>${escapeHtml(st.tip)}</span></p>
+          </article>
+        `;
+      })
+      .join("");
+  };
+
+  if (knotFilterPillsEl) {
+    knotFilterPillsEl.addEventListener("click", (e) => {
+      const pill = e.target.closest("[data-knot-cat]");
+      if (!pill) return;
+      activeKnotCat = pill.getAttribute("data-knot-cat") || "all";
+      knotFilterPillsEl.querySelectorAll("[data-knot-cat]").forEach((p) => p.classList.toggle("is-active", p === pill));
+      renderKnots();
+    });
+  }
+  if (knotsGridEl) {
+    knotsGridEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-knot-step]");
+      if (!btn) return;
+      const [id, idx] = (btn.getAttribute("data-knot-step") || "").split(":");
+      knotStepsState[id] = Number(idx || 0);
+      renderKnots();
+    });
+  }
+  renderKnots();
+
+  // --------------------------------------------------------------------------
+  // 3. TU MOCHILA (Zonas SVG + Calculador de peso + Checklist persistente)
+  // --------------------------------------------------------------------------
+  const PACK_KEY = "bt_skills_pack_v1";
+  let packState = { type: "campamento", climate: "templado", zone: "media", userKg: 55, checked: {} };
+  try {
+    const rawPack = localStorage.getItem(PACK_KEY);
+    if (rawPack) {
+      const parsed = JSON.parse(rawPack);
+      if (parsed && typeof parsed === "object") packState = Object.assign(packState, parsed);
+    }
+  } catch (_) {}
+  const savePack = () => {
+    try {
+      localStorage.setItem(PACK_KEY, JSON.stringify(packState));
+    } catch (_) {}
+  };
+
+  const PACK_ZONES = {
+    cabezal: {
+      label: "Cabezal (arriba)",
+      tip: "Cabezal: linterna frontal, mapa, silbato, bloqueador solar, pañuelos y snacks de acceso rápido."
+    },
+    media: {
+      label: "Zona media (espalda)",
+      tip: "Centro pegado a tu espalda: lo más pesado (agua, comida, estufa, casa compartida) para equilibrar tu postura."
+    },
+    exterior: {
+      label: "Bolsillos exteriores",
+      tip: "Exterior y laterales: cantimplora, impermeable doblado, bastones o gorra para sacarlos sin desarmar."
+    },
+    fondo: {
+      label: "Fondo (abajo)",
+      tip: "Fondo: sleeping bag y ropa de dormir protegida dentro de bolsa hermética hasta llegar al campamento."
+    }
+  };
+
+  const PACK_LISTS = {
+    campamento: [
+      { id: "c_dormir", text: "Sleeping bag y colchoneta aislante (en bolsa impermeable)" },
+      { id: "c_muda", text: "Mudas de ropa completas (playera, pantalón, calcetines extras)" },
+      { id: "c_platos", text: "Vaso, plato hondo, cuchara/tenedor reutilizables y servilleta" },
+      { id: "c_cantimplora", text: "Cantimplora o termo mínimo 1 litro" },
+      { id: "c_linterna", text: "Linterna frontal o de mano con pilas de repuesto" },
+      { id: "c_higiene", text: "Kit de higiene personal biodegradable, cepillo, jabón y toalla" },
+      { id: "c_uniforme", text: "Uniforme Scout completo, pañoleta y placa / credencial SISAS" },
+      { id: "c_cuerda", text: "3 metros de piola o paracord y bolsa para ropa sucia / basura" }
+    ],
+    ataque: [
+      { id: "a_agua", text: "Agua potable suficiente (1.5 a 2 litros para el recorrido)" },
+      { id: "a_snack", text: "Alimento energético de marcha (fruta seca, barras, sándwich)" },
+      { id: "a_capa", text: "Chamarra ligera o rompevientos compacto" },
+      { id: "a_sol", text: "Gorra o sombrero, bloqueador solar y lentes si aplica" },
+      { id: "a_silbato", text: "Silbato, linterna pequeña y mini botiquín personal" },
+      { id: "a_bolsa", text: "Bolsa reutilizable para regresar el 100% de tu basura" }
+    ],
+    bolsillo: [
+      { id: "b_panoleta", text: "Pañoleta y nudo Scout en orden" },
+      { id: "b_silbato", text: "Silbato y linterna compacta" },
+      { id: "b_libreta", text: "Libreta pequeña de bolsillo y lápiz o pluma" },
+      { id: "b_piola", text: "1.5 metros de piola para prácticas de nudos" },
+      { id: "b_emergencia", text: "Tarjeta de contacto de emergencia y dinero de reserva" },
+      { id: "b_curitas", text: "3 curitas, toallitas limpiadoras y cubrebocas" }
+    ]
+  };
+  const CLIMATE_EXTRAS = {
+    templado: [],
+    lluvia: [
+      { id: "cl_impermeable", text: "Poncho o chamarra impermeable con capucha" },
+      { id: "cl_funda", text: "Funda impermeable o bolsa grande para cubrir la mochila" },
+      { id: "cl_calceta", text: "2 pares extra de calcetines secos en bolsa sellada" }
+    ],
+    frio: [
+      { id: "cf_termica", text: "Primera capa térmica + chamarra polar abrigadora" },
+      { id: "cf_gorro", text: "Gorro tejido, guantes y bufanda / cuello térmico" },
+      { id: "cf_manta", text: "Manta térmica de emergencia compacta" }
+    ]
+  };
+
+  const packDiagEl = document.getElementById("btPackDiagramWrap");
+  const packZoneInfoEl = document.getElementById("btPackZoneInfo");
+  const packListEl = document.getElementById("btPackChecklist");
+  const packBadgeEl = document.getElementById("btPackCountBadge");
+  const packWeightIn = document.getElementById("btUserWeightKg");
+  const packWeightLbl = document.getElementById("btPackMaxWeightLabel");
+  const packListTitleEl = document.getElementById("btPackListTitle");
+
+  const renderPackDiagram = () => {
+    if (!packDiagEl) return;
+    const z = packState.zone || "media";
+    const fillZone = (id, col) => (z === id ? col : "rgba(148,163,184,0.16)");
+    const strokeZone = (id, col) => (z === id ? col : "rgba(148,163,184,0.45)");
+    packDiagEl.innerHTML = `
+      <svg viewBox="0 0 220 220" width="205" height="205" role="img" aria-label="Zonas de acomodo en tu mochila">
+        <path d="M84 18 C84 8 136 8 136 18" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <g data-pack-zone="cabezal" style="cursor:pointer;">
+          <rect x="64" y="20" width="92" height="34" rx="14" fill="${fillZone("cabezal", "rgba(14,165,233,0.28)")}" stroke="${strokeZone("cabezal", "#0ea5e9")}" stroke-width="2.4"/>
+          <text x="110" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="800">1. Cabezal</text>
+        </g>
+        <g data-pack-zone="media" style="cursor:pointer;">
+          <rect x="54" y="58" width="112" height="84" rx="14" fill="${fillZone("media", "rgba(109,40,217,0.3)")}" stroke="${strokeZone("media", "#8b5cf6")}" stroke-width="2.6"/>
+          <text x="110" y="96" text-anchor="middle" fill="currentColor" font-size="12" font-weight="800">2. Peso medio</text>
+          <text x="110" y="113" text-anchor="middle" fill="currentColor" font-size="10" opacity="0.82">(Pegado a la espalda)</text>
+        </g>
+        <g data-pack-zone="exterior" style="cursor:pointer;">
+          <rect x="26" y="74" width="24" height="68" rx="9" fill="${fillZone("exterior", "rgba(22,163,74,0.28)")}" stroke="${strokeZone("exterior", "#16a34a")}" stroke-width="2.2"/>
+          <rect x="170" y="74" width="24" height="68" rx="9" fill="${fillZone("exterior", "rgba(22,163,74,0.28)")}" stroke="${strokeZone("exterior", "#16a34a")}" stroke-width="2.2"/>
+          <text x="110" y="210" text-anchor="middle" fill="currentColor" font-size="10.5" font-weight="700">Toca cualquier zona para ver dónde va cada cosa</text>
+        </g>
+        <g data-pack-zone="fondo" style="cursor:pointer;">
+          <rect x="60" y="146" width="100" height="44" rx="14" fill="${fillZone("fondo", "rgba(245,158,11,0.28)")}" stroke="${strokeZone("fondo", "#f59e0b")}" stroke-width="2.4"/>
+          <text x="110" y="173" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="800">3. Fondo ligero</text>
+        </g>
+      </svg>
+    `;
+    if (packZoneInfoEl) {
+      packZoneInfoEl.textContent = (PACK_ZONES[z] || PACK_ZONES.media).tip;
+    }
+  };
+
+  const renderPackWeight = () => {
+    const kg = Math.max(15, Math.min(150, Number(packWeightIn ? packWeightIn.value : packState.userKg) || 55));
+    packState.userKg = kg;
+    if (!packWeightLbl) return;
+    if (packState.type === "bolsillo") {
+      packWeightLbl.textContent = "Ideal de bolsillo: < 0.5 kg";
+    } else if (packState.type === "ataque") {
+      packWeightLbl.textContent = `Carga ideal: ${(kg * 0.08).toFixed(1)} – ${(kg * 0.12).toFixed(1)} kg (8–12%)`;
+    } else {
+      packWeightLbl.textContent = `Carga ideal: ${(kg * 0.15).toFixed(1)} – ${(kg * 0.2).toFixed(1)} kg (15–20%)`;
+    }
+  };
+
+  const renderPackChecklist = () => {
+    if (!packListEl) return;
+    const base = PACK_LISTS[packState.type] || PACK_LISTS.campamento;
+    const extra = packState.type === "bolsillo" ? [] : CLIMATE_EXTRAS[packState.climate] || [];
+    const items = [...base, ...extra];
+    const typeTitleMap = { campamento: "Campamento", ataque: "Ataque (1 día)", bolsillo: "De Bolsillo" };
+    if (packListTitleEl) packListTitleEl.textContent = `Lista · ${typeTitleMap[packState.type] || "Tu Mochila"}`;
+
+    let done = 0;
+    packListEl.innerHTML = items
+      .map((it) => {
+        const key = `${packState.type}:${it.id}`;
+        const on = Boolean(packState.checked && packState.checked[key]);
+        if (on) done++;
+        return `<label class="bt-safe-check-item ${on ? "is-checked" : ""}"><input type="checkbox" data-pack-item="${escapeHtml(key)}" ${on ? "checked" : ""}/><span>${escapeHtml(it.text)}</span></label>`;
+      })
+      .join("");
+    if (packBadgeEl) packBadgeEl.textContent = `${done} / ${items.length}`;
+    renderPackWeight();
+    renderPackDiagram();
+  };
+
+  if (packWeightIn) {
+    packWeightIn.value = String(packState.userKg || 55);
+    packWeightIn.addEventListener("input", () => {
+      renderPackWeight();
+      savePack();
+    });
+  }
+  const packTypePillsEl = document.getElementById("btPackTypePills");
+  if (packTypePillsEl) {
+    packTypePillsEl.querySelectorAll("[data-pack-type]").forEach((p) => {
+      p.classList.toggle("is-active", p.getAttribute("data-pack-type") === packState.type);
+    });
+    packTypePillsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-pack-type]");
+      if (!btn) return;
+      packState.type = btn.getAttribute("data-pack-type") || "campamento";
+      packTypePillsEl.querySelectorAll("[data-pack-type]").forEach((p) => p.classList.toggle("is-active", p === btn));
+      savePack();
+      renderPackChecklist();
+    });
+  }
+  const packClimatePillsEl = document.getElementById("btPackClimatePills");
+  if (packClimatePillsEl) {
+    packClimatePillsEl.querySelectorAll("[data-pack-climate]").forEach((p) => {
+      p.classList.toggle("is-active", p.getAttribute("data-pack-climate") === packState.climate);
+    });
+    packClimatePillsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-pack-climate]");
+      if (!btn) return;
+      packState.climate = btn.getAttribute("data-pack-climate") || "templado";
+      packClimatePillsEl.querySelectorAll("[data-pack-climate]").forEach((p) => p.classList.toggle("is-active", p === btn));
+      savePack();
+      renderPackChecklist();
+    });
+  }
+  if (packDiagEl) {
+    packDiagEl.addEventListener("click", (e) => {
+      const zEl = e.target.closest("[data-pack-zone]");
+      if (!zEl) return;
+      packState.zone = zEl.getAttribute("data-pack-zone") || "media";
+      savePack();
+      renderPackDiagram();
+    });
+  }
+  if (packListEl) {
+    packListEl.addEventListener("change", (e) => {
+      const chk = e.target.closest("[data-pack-item]");
+      if (!chk) return;
+      if (!packState.checked) packState.checked = {};
+      packState.checked[chk.getAttribute("data-pack-item")] = chk.checked;
+      savePack();
+      renderPackChecklist();
+    });
+  }
+  const packResetBtn = document.getElementById("btPackResetBtn");
+  if (packResetBtn) {
+    packResetBtn.addEventListener("click", () => {
+      if (packState.checked) {
+        Object.keys(packState.checked).forEach((k) => {
+          if (k.startsWith(`${packState.type}:`)) delete packState.checked[k];
+        });
+      }
+      savePack();
+      renderPackChecklist();
+    });
+  }
+  renderPackChecklist();
+
+  // --------------------------------------------------------------------------
+  // 4. PISTAS Y BRÚJULA (Rosa interactiva + 12 Señales de Pista SVG)
+  // --------------------------------------------------------------------------
+  const compassStageEl = document.getElementById("btCompassStage");
+  const compassRangeEl = document.getElementById("btCompassDegRange");
+  const compassAzEl = document.getElementById("btCompassAzimuthText");
+  const compassBackEl = document.getElementById("btCompassBackText");
+
+  const degToCardinal = (d) => {
+    const dirs = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSO", "SO", "OSO", "O", "ONO", "NO", "NNO"];
+    return dirs[Math.round(((d % 360) + 360) % 360 / 22.5) % 16];
+  };
+
+  const renderCompass = (degVal = 45) => {
+    const deg = Math.max(0, Math.min(359, Number(degVal) || 0));
+    const back = (deg + 180) % 360;
+    if (compassAzEl) compassAzEl.textContent = `Rumbo: ${deg}° (${degToCardinal(deg)})`;
+    if (compassBackEl) compassBackEl.textContent = `Regreso: ${back}° (${degToCardinal(back)})`;
+    if (!compassStageEl) return;
+    compassStageEl.innerHTML = `
+      <svg viewBox="0 0 180 180" width="180" height="180" aria-hidden="true">
+        <circle cx="90" cy="90" r="76" fill="none" stroke="currentColor" stroke-opacity="0.22" stroke-width="2"/>
+        <circle cx="90" cy="90" r="62" fill="none" stroke="currentColor" stroke-opacity="0.14" stroke-width="1.2" stroke-dasharray="3 4"/>
+        <text x="90" y="25" text-anchor="middle" font-size="12" font-weight="900" fill="#ef4444">N</text>
+        <text x="158" y="94" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor" opacity="0.8">E</text>
+        <text x="90" y="164" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor" opacity="0.8">S</text>
+        <text x="22" y="94" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor" opacity="0.8">O</text>
+        <g transform="rotate(${back} 90 90)">
+          <line x1="90" y1="90" x2="90" y2="34" stroke="#0284c7" stroke-width="2.4" stroke-dasharray="4 3" stroke-linecap="round"/>
+        </g>
+        <g transform="rotate(${deg} 90 90)">
+          <polygon points="90,26 98,90 82,90" fill="#ef4444"/>
+          <polygon points="90,154 98,90 82,90" fill="currentColor" opacity="0.32"/>
+        </g>
+        <circle cx="90" cy="90" r="6" fill="currentColor"/>
+      </svg>
+    `;
+  };
+  if (compassRangeEl) {
+    compassRangeEl.addEventListener("input", () => renderCompass(compassRangeEl.value));
+    renderCompass(compassRangeEl.value);
+  }
+
+  const TRACKS = [
+    { name: "Inicio de pista", svg: `<circle cx="24" cy="24" r="6" fill="currentColor"/><line x1="30" y1="24" x2="64" y2="24" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><polyline points="56,16 66,24 56,32" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: "Seguir adelante", svg: `<line x1="14" y1="24" x2="64" y2="24" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><polyline points="55,15 65,24 55,33" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: "Girar a la derecha", svg: `<polyline points="18,36 46,36 46,12" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="38,20 46,11 54,20" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: "Girar a la izquierda", svg: `<polyline points="18,14 46,14 46,38" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="38,30 46,39 54,30" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: "Camino obstruido", svg: `<line x1="22" y1="12" x2="58" y2="36" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/><line x1="58" y1="12" x2="22" y2="36" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>` },
+    { name: "Peligro", svg: `<polygon points="40,8 62,40 18,40" fill="none" stroke="#ef4444" stroke-width="3.5" stroke-linejoin="round"/><line x1="40" y1="19" x2="40" y2="29" stroke="#ef4444" stroke-width="3.2" stroke-linecap="round"/><circle cx="40" cy="34" r="2" fill="#ef4444"/>` },
+    { name: "Agua potable", svg: `<path d="M16 20 Q28 13 40 20 T64 20" fill="none" stroke="#0ea5e9" stroke-width="3.2" stroke-linecap="round"/><path d="M16 32 Q28 25 40 32 T64 32" fill="none" stroke="#0ea5e9" stroke-width="3.2" stroke-linecap="round"/>` },
+    { name: "Agua no potable", svg: `<path d="M16 20 Q28 13 40 20 T64 20" fill="none" stroke="#f59e0b" stroke-width="3.2" stroke-linecap="round"/><line x1="26" y1="10" x2="54" y2="38" stroke="#ef4444" stroke-width="3.2" stroke-linecap="round"/>` },
+    { name: "Mensaje a 5 pasos", svg: `<rect x="20" y="14" width="24" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="3"/><polyline points="20,14 32,25 44,14" fill="none" stroke="currentColor" stroke-width="2.6"/><text x="58" y="30" font-size="14" font-weight="900" fill="currentColor">5</text>` },
+    { name: "Ir rápido", svg: `<polyline points="18,14 32,24 18,34" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="36,14 50,24 36,34" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="54,14 68,24 54,34" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: "Campamento cerca", svg: `<polygon points="40,10 62,38 18,38" fill="none" stroke="#16a34a" stroke-width="3.5" stroke-linejoin="round"/><line x1="40" y1="24" x2="40" y2="38" stroke="#16a34a" stroke-width="3"/>` },
+    { name: "Fin de pista", svg: `<circle cx="40" cy="24" r="14" fill="none" stroke="currentColor" stroke-width="3.4"/><circle cx="40" cy="24" r="4.5" fill="currentColor"/>` }
+  ];
+  const tracksGridEl = document.getElementById("btTracksGrid");
+  if (tracksGridEl) {
+    tracksGridEl.innerHTML = TRACKS.map(
+      (t) => `<div class="bt-track-card"><svg viewBox="0 0 80 48" width="72" height="44" aria-hidden="true">${t.svg}</svg><span>${escapeHtml(t.name)}</span></div>`
+    ).join("");
+  }
+
+  // --------------------------------------------------------------------------
+  // 5. BOTIQUÍN Y PRIMEROS AUXILIOS
+  // --------------------------------------------------------------------------
+  const KIT_KEY = "bt_skills_kit_v1";
+  let kitState = { kind: "personal", checked: {} };
+  try {
+    const rawKit = localStorage.getItem(KIT_KEY);
+    if (rawKit) {
+      const p = JSON.parse(rawKit);
+      if (p && typeof p === "object") kitState = Object.assign(kitState, p);
+    }
+  } catch (_) {}
+  const saveKit = () => {
+    try {
+      localStorage.setItem(KIT_KEY, JSON.stringify(kitState));
+    } catch (_) {}
+  };
+  const KIT_ITEMS = {
+    personal: [
+      "Gasas estériles individuales (4–6 sobres)",
+      "Vendas elásticas de 5 cm y curitas variadas",
+      "Cinta micropore o tela adhesiva",
+      "Solución antiséptica pequeña (jabón neutro o clorhexidina)",
+      "2 pares de guantes de nitrilo o látex desechables",
+      "Suero oral en sobre y tarjeta con teléfono de emergencia"
+    ],
+    patrulla: [
+      "Gasas de varios tamaños + apósitos estériles",
+      "Vendas de 5 cm, 10 cm y venda triangular para cabestrillo",
+      "Tijeras punta roma, pinzas limpias y termómetro digital",
+      "Suero fisiológico o agua estéril para lavar heridas",
+      "Manta térmica aluminizada + compresa fría instantánea",
+      "Guantes suficientes para todo el equipo + bitácora (sin automedicar)"
+    ]
+  };
+  const FIRST_AID_CARDS = [
+    { t: "Regla PAS (Primero siempre)", d: "1. Proteger la zona para evitar otro accidente. 2. Avisar al Scouter responsable o al 911. 3. Socorrer manteniendo la calma." },
+    { t: "Cortadas y raspaduras", d: "Lava con agua limpia y jabón neutro, seca con gasa estéril dando toques suaves y cubre sin usar algodón suelto." },
+    { t: "Quemaduras leves", d: "Enfría con agua fresca corriente durante 10–15 minutos. No apliques hielo directo, pasta de dientes ni pomadas caseras." },
+    { t: "Golpe de calor / Insolación", d: "Lleva a la sombra, afloja ropa, refresca cuello y axilas con paños húmedos y ofrece sorbos pequeños si está consciente." },
+    { t: "Esguinces y torceduras", d: "Reposo sin apoyar el pie o brazo, frío local envuelto en tela 15 minutos y elevación suave mientras revisa personal capacitado." },
+    { t: "Nota de medicamentos", d: "Ningún medicamento (ni analgésicos) se administra sin autorización expresa en la Ficha Médica y por el adulto responsable." }
+  ];
+  const kitListEl = document.getElementById("btKitChecklist");
+  const kitTabsEl = document.getElementById("btKitTabs");
+  const firstAidGridEl = document.getElementById("btFirstAidGrid");
+
+  const renderKit = () => {
+    if (!kitListEl) return;
+    const list = KIT_ITEMS[kitState.kind] || KIT_ITEMS.personal;
+    kitListEl.innerHTML =
+      list
+        .map((txt, idx) => {
+          const key = `${kitState.kind}:${idx}`;
+          const on = Boolean(kitState.checked && kitState.checked[key]);
+          return `<label class="bt-safe-check-item ${on ? "is-checked" : ""}"><input type="checkbox" data-kit-item="${key}" ${on ? "checked" : ""}/><span>${escapeHtml(txt)}</span></label>`;
+        })
+        .join("") +
+      `<p class="bt-ejes-helper-note" style="margin-top:0.55rem;margin-bottom:0;">Los medicamentos personales solo se portan y administran conforme a tu Ficha Médica.</p>`;
+  };
+  if (kitTabsEl) {
+    kitTabsEl.querySelectorAll("[data-kit-kind]").forEach((p) => {
+      p.classList.toggle("is-active", p.getAttribute("data-kit-kind") === kitState.kind);
+    });
+    kitTabsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-kit-kind]");
+      if (!btn) return;
+      kitState.kind = btn.getAttribute("data-kit-kind") || "personal";
+      kitTabsEl.querySelectorAll("[data-kit-kind]").forEach((p) => p.classList.toggle("is-active", p === btn));
+      saveKit();
+      renderKit();
+    });
+  }
+  if (kitListEl) {
+    kitListEl.addEventListener("change", (e) => {
+      const chk = e.target.closest("[data-kit-item]");
+      if (!chk) return;
+      if (!kitState.checked) kitState.checked = {};
+      kitState.checked[chk.getAttribute("data-kit-item")] = chk.checked;
+      saveKit();
+      renderKit();
+    });
+  }
+  renderKit();
+  if (firstAidGridEl) {
+    firstAidGridEl.innerHTML = FIRST_AID_CARDS.map(
+      (c) => `<div class="bt-firstaid-card"><strong>${escapeHtml(c.t)}</strong><p>${escapeHtml(c.d)}</p></div>`
+    ).join("");
+  }
+
+  // --------------------------------------------------------------------------
+  // 6. FOGATAS Y NO DEJAR RASTRO
+  // --------------------------------------------------------------------------
+  const FIRES_DATA = [
+    { name: "Pirámide", tag: "Encendido rápido", tip: "Ideal para prender rápido o hervir agua pronto; leña delgada inclinada hacia un punto central.", svg: `<path d="M80 14 L52 64 M80 14 L108 64 M80 14 L80 64 M64 26 L96 64 M96 26 L64 64" stroke="#92400e" stroke-width="5" stroke-linecap="round"/><path d="M80 28 C72 40 72 52 80 56 C88 52 88 40 80 28Z" fill="#f97316"/>` },
+    { name: "Consejo / Pagoda", tag: "Velada y brasa larga", tip: "Acomodo en cuadro de grueso a delgado; genera mucha luz, calor constante y buenas brasas.", svg: `<rect x="42" y="54" width="76" height="8" rx="3" fill="#78350f"/><rect x="48" y="42" width="64" height="8" rx="3" fill="#92400e"/><rect x="54" y="30" width="52" height="8" rx="3" fill="#b45309"/><path d="M80 18 C73 28 74 44 80 48 C86 44 87 28 80 18Z" fill="#f97316"/>` },
+    { name: "Estrella", tag: "Ahorro de leña", tip: "5–6 troncos en círculo que se empujan hacia el centro conforme se consumen sin cortarlos.", svg: `<line x1="80" y1="42" x2="80" y2="12" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><line x1="80" y1="42" x2="112" y2="30" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><line x1="80" y1="42" x2="104" y2="66" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><line x1="80" y1="42" x2="56" y2="66" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><line x1="80" y1="42" x2="48" y2="30" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><circle cx="80" cy="42" r="10" fill="#f97316"/>` },
+    { name: "Corredor / Zanja", tag: "Cocina y viento fuerte", tip: "Entre dos troncos paralelos o zanja angosta orientados al viento; sostiene ollas o parrilla.", svg: `<rect x="34" y="46" width="92" height="12" rx="4" fill="#78350f"/><rect x="40" y="30" width="80" height="10" rx="4" fill="#b45309"/><circle cx="66" cy="44" r="7" fill="#f97316"/><circle cx="94" cy="44" r="7" fill="#ef4444"/>` },
+    { name: "Reflector", tag: "Dirige el calor", tip: "Pared de troncos detrás del fuego que refleja el calor hacia un refugio abierto.", svg: `<rect x="108" y="16" width="12" height="50" rx="4" fill="#78350f"/><rect x="96" y="22" width="10" height="44" rx="4" fill="#92400e"/><path d="M62 30 C52 44 54 58 62 62 C70 58 72 44 62 30Z" fill="#f97316"/><path d="M52 42 L30 42" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 3"/>` }
+  ];
+  const firesGridEl = document.getElementById("btFiresGrid");
+  if (firesGridEl) {
+    firesGridEl.innerHTML = FIRES_DATA.map(
+      (f) => `
+      <article class="bt-knot-card">
+        <div class="bt-knot-top">
+          <h4>${escapeHtml(f.name)}</h4>
+          <span class="bt-knot-cat-badge">${escapeHtml(f.tag)}</span>
+        </div>
+        <div class="bt-knot-svg-stage"><svg viewBox="0 0 160 76" width="150" height="72" aria-hidden="true">${f.svg}</svg></div>
+        <p class="bt-knot-tip">${escapeHtml(f.tip)}</p>
+      </article>`
+    ).join("");
+  }
+
+  const LNT_ITEMS = [
+    "1. Planifica y prepárate con anticipación.",
+    "2. Viaja y acampa sobre superficies resistentes.",
+    "3. Dispón adecuadamente de los desperdicios (regresa tu basura).",
+    "4. Deja lo que encuentres intacto (rocas, flores y objetos).",
+    "5. Minimiza el impacto de las fogatas y apaga al 100%.",
+    "6. Respeta la fauna y flora silvestres a distancia.",
+    "7. Sé considerado con otros visitantes y comunidades locales."
+  ];
+  const lntListEl = document.getElementById("btLntList");
+  if (lntListEl) {
+    lntListEl.innerHTML =
+      LNT_ITEMS.map((txt) => `<div class="bt-lnt-pill">${escapeHtml(txt)}</div>`).join("") +
+      `<div class="bt-lnt-pill" style="border-color:rgba(239,68,68,0.45);"><strong>Apagado total:</strong> moja con agua, remueve cenizas, vuelve a mojar hasta sentir frío al dorso de la mano y limpia el área.</div>`;
+  }
+
+  // --------------------------------------------------------------------------
+  // 7. SILBATO Y FORMACIONES OFICIALES ASMAC
+  // --------------------------------------------------------------------------
+  const WHISTLES = [
+    { name: "Atención / Alto", sec: "Todas", code: "T", morse: "-", desc: "1 toque largo" },
+    { name: "Formarse (Tropa)", sec: "Tropa", code: "CC", morse: "-.-. -.-.", desc: "Largo-corto-largo-corto (2x)" },
+    { name: "Guías de Patrulla", sec: "Tropa", code: "V", morse: "...-", desc: "3 cortos y 1 largo" },
+    { name: "Subguías", sec: "Tropa", code: "U", morse: "..-", desc: "2 cortos y 1 largo" },
+    { name: "Comunidad", sec: "Comunidad", code: "QQ", morse: "--.- --.-", desc: "Largo-largo-corto-largo (2x)" },
+    { name: "Coordinadores de Equipo", sec: "Comunidad", code: "B", morse: "-...", desc: "1 largo y 3 cortos" },
+    { name: "Clan de Rovers", sec: "Clan", code: "RR", morse: ".-. .-.", desc: "Corto-largo-corto (2x)" },
+    { name: "Scouters", sec: "Dirigentes", code: "J", morse: ".---", desc: "1 corto y 3 largos" },
+    { name: "Auxilio / Alerta", sec: "Emergencia", code: "S", morse: "...", desc: "3 toques cortos repetidos" },
+    { name: "Peligro (SOS)", sec: "Emergencia", code: "SOS", morse: "... --- ...", desc: "3 cortos, 3 largos, 3 cortos" }
+  ];
+  const whistlesListEl = document.getElementById("btWhistlesList");
+  if (whistlesListEl) {
+    whistlesListEl.innerHTML = WHISTLES.map(
+      (w, idx) => `
+      <div class="bt-whistle-row">
+        <div>
+          <strong>${escapeHtml(w.name)}</strong>
+          <small>${escapeHtml(w.sec)} · ${escapeHtml(w.desc)}</small>
+        </div>
+        <span class="bt-whistle-code">${escapeHtml(w.code)} (${escapeHtml(w.morse)})</span>
+        <button type="button" class="bt-sf-btn bt-whistle-play" data-whistle-idx="${idx}">Escuchar</button>
+      </div>`
+    ).join("");
+    whistlesListEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-whistle-idx]");
+      if (!btn) return;
+      const w = WHISTLES[Number(btn.getAttribute("data-whistle-idx"))];
+      if (w) playToneSequence(w.morse, "whistle", { btn });
+    });
+  }
+
+  const FORMATIONS = [
+    { id: "herradura", name: "Herradura", desc: "Ceremonias y mensajes: las patrullas rodean en U abierta frente al Scouter.", pts: [[26, 28, "G"], [24, 46, "s"], [28, 64, "s"], [44, 78, "s"], [64, 84, "s"], [84, 84, "s"], [104, 78, "s"], [122, 64, "s"], [126, 46, "s"], [124, 28, "G"]], scouter: [75, 22] },
+    { id: "rectangulo", name: "Rectángulo", desc: "Formación general de Tropa o Grupo para asambleas e izamiento de bandera.", pts: [[26, 36, "G"], [26, 54, "s"], [26, 72, "s"], [52, 82, "s"], [75, 82, "s"], [98, 82, "s"], [124, 72, "s"], [124, 54, "s"], [124, 36, "G"]], scouter: [75, 20] },
+    { id: "filas", name: "Filas", desc: "Cada patrulla o equipo forma en línea horizontal una detrás de otra frente al dirigente.", pts: [[34, 46, "G"], [54, 46, "s"], [74, 46, "s"], [94, 46, "s"], [114, 46, "s"], [34, 68, "G"], [54, 68, "s"], [74, 68, "s"], [94, 68, "s"], [114, 68, "s"]], scouter: [75, 20] },
+    { id: "linea", name: "Línea", desc: "Todos hombro con hombro en una sola línea para revisión rápida o conteo.", pts: [[20, 62, "G"], [38, 62, "s"], [56, 62, "s"], [74, 62, "s"], [92, 62, "s"], [110, 62, "s"], [128, 62, "G"]], scouter: [75, 24] },
+    { id: "col_abiertas", name: "Columnas abiertas", desc: "Equipos en hileras paralelas con espacio amplio entre patrullas para relevos.", pts: [[36, 40, "G"], [36, 56, "s"], [36, 72, "s"], [75, 40, "G"], [75, 56, "s"], [75, 72, "s"], [114, 40, "G"], [114, 56, "s"], [114, 72, "s"]], scouter: [75, 18] },
+    { id: "col_cerradas", name: "Columnas cerradas", desc: "Hileras juntas hombro con hombro para espacios reducidos o salidas.", pts: [[56, 40, "G"], [56, 56, "s"], [56, 72, "s"], [75, 40, "G"], [75, 56, "s"], [75, 72, "s"], [94, 40, "G"], [94, 56, "s"], [94, 72, "s"]], scouter: [75, 18] },
+    { id: "estrella", name: "Estrella", desc: "Patrullas apuntando radialmente hacia el centro donde se ubica el dirigente.", pts: [[75, 20, "G"], [75, 32, "s"], [34, 40, "G"], [46, 46, "s"], [116, 40, "G"], [104, 46, "s"], [48, 82, "G"], [58, 72, "s"], [102, 82, "G"], [92, 72, "s"]], scouter: [75, 54] },
+    { id: "semicirculo", name: "Semicírculo", desc: "Arco abierto frente al dirigente o caminantes para charlas, fogata o instrucción.", pts: [[24, 58, "G"], [34, 72, "s"], [50, 82, "s"], [75, 86, "s"], [100, 82, "s"], [116, 72, "s"], [126, 58, "G"]], scouter: [75, 26] },
+    { id: "estatura", name: "Por estatura", desc: "Orden creciente o decreciente frente al dirigente para juegos y organización.", pts: [[28, 66, "s"], [44, 64, "s"], [60, 62, "s"], [76, 60, "s"], [92, 58, "s"], [108, 56, "s"], [124, 54, "G"]], scouter: [75, 24] }
+  ];
+  let activeFormation = "herradura";
+  const formPillsEl = document.getElementById("btFormationPills");
+  const formDiagEl = document.getElementById("btFormationDiagram");
+  const formDescEl = document.getElementById("btFormationDesc");
+
+  const renderFormations = () => {
+    const f = FORMATIONS.find((x) => x.id === activeFormation) || FORMATIONS[0];
+    if (formPillsEl) {
+      formPillsEl.innerHTML = FORMATIONS.map(
+        (x) => `<button type="button" class="bt-skill-pill ${x.id === f.id ? "is-active" : ""}" data-form-id="${x.id}">${escapeHtml(x.name)}</button>`
+      ).join("");
+    }
+    if (formDiagEl) {
+      formDiagEl.innerHTML = `
+        <svg viewBox="0 0 150 96" width="210" height="120" aria-hidden="true">
+          <circle cx="${f.scouter[0]}" cy="${f.scouter[1]}" r="8" fill="#7c3aed"/>
+          <text x="${f.scouter[0]}" y="${f.scouter[1] + 3.5}" text-anchor="middle" font-size="9.5" font-weight="900" fill="#ffffff">S</text>
+          ${f.pts
+            .map(([x, y, kind]) =>
+              kind === "G"
+                ? `<circle cx="${x}" cy="${y}" r="6.5" fill="#f59e0b"/><text x="${x}" y="${y + 3}" text-anchor="middle" font-size="8" font-weight="900" fill="#1e293b">G</text>`
+                : `<circle cx="${x}" cy="${y}" r="4.5" fill="#0ea5e9"/>`
+            )
+            .join("")}
+        </svg>`;
+    }
+    if (formDescEl) formDescEl.textContent = `${f.desc} (S = Dirigente, G = Guía, azul = Scout).`;
+  };
+  if (formPillsEl) {
+    formPillsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-form-id]");
+      if (!btn) return;
+      activeFormation = btn.getAttribute("data-form-id") || "herradura";
+      renderFormations();
+    });
+  }
+  renderFormations();
+
+  // --------------------------------------------------------------------------
+  // 8. RETO SCOUT (Mini-quiz offline de 5 preguntas aleatorias)
+  // --------------------------------------------------------------------------
+  const QUIZ_BANK = [
+    { q: "¿Cuál es el toque oficial ASMAC para formar a la Tropa?", opts: ["CC (-.-. -.-.)", "V (...-)", "QQ (--.- --.-)", "RR (.-. .-.)"], ans: 0, exp: "Pistas de Aventura 2024: CC (-.-. -.-.) llama a formación de Tropa." },
+    { q: "En clave Murciélago (M-U-R-C-I-E-L-A-G-O = 0-9), ¿qué número corresponde a la letra A?", opts: ["5", "6", "7", "8"], ans: 2, exp: "M(0) U(1) R(2) C(3) I(4) E(5) L(6) A(7) G(8) O(9)." },
+    { q: "¿Qué nudo sirve para crear una gaza fija que NO se corre ni ahorca bajo tensión?", opts: ["Ballestrinque", "As de Guía", "Rizo", "Margarita"], ans: 1, exp: "El As de Guía forma una gaza segura que puede desatarse fácilmente tras recibir carga." },
+    { q: "Si tu rumbo con brújula es 45° (NE), ¿cuál es tu contra-azimut de regreso?", opts: ["135° (SE)", "180° (S)", "225° (SO)", "315° (NO)"], ans: 2, exp: "Contra-azimut: cuando es menor a 180° se suman 180° (45° + 180° = 225°)." },
+    { q: "¿Cuál es el peso máximo recomendado para cargar en tu mochila de campamento?", opts: ["5% de tu peso", "15% a 20% de tu peso", "35% de tu peso", "50% de tu peso"], ans: 1, exp: "Cuidar la postura exige no superar el 15–20% de tu peso corporal en campamento." },
+    { q: "¿En qué zona de la mochila deben ir los artículos más pesados (agua, comida)?", opts: ["Hasta abajo", "Pegados a tu espalda en la zona media", "Colgados por fuera", "En el cabezal superior"], ans: 1, exp: "Pegados a tu espalda en la zona media mantienen tu centro de gravedad estable." },
+    { q: "¿Qué indica la señal de pista de un círculo con un punto al centro?", opts: ["Peligro", "Agua potable", "Fin de pista", "Campamento cerca"], ans: 2, exp: "Un círculo con un punto en el centro indica fin de pista." },
+    { q: "¿Qué significa la regla PAS en primeros auxilios?", opts: ["Parar, Atender, Salir", "Proteger, Avisar, Socorrer", "Prevenir, Actuar, Seguir", "Pulso, Aire, Sangrado"], ans: 1, exp: "Primero Protege el área, luego Avisa al responsable o 911 y finalmente Socorre." },
+    { q: "¿Qué debes hacer ante una quemadura leve por fuego o sol reciente?", opts: ["Poner pasta de dientes", "Aplicar hielo directo", "Enfriar con agua fresca corriente 10–15 min", "Romper la ampolla"], ans: 2, exp: "Agua fresca limpia disminuye el daño térmico sin lastimar la piel." },
+    { q: "¿Qué tipo de fogata ahorra más leña porque los troncos se empujan poco a poco al centro?", opts: ["Pagoda", "Estrella", "Pirámide", "Reflector"], ans: 1, exp: "La fogata Estrella mantiene brasas en el centro empujando solo las puntas." },
+    { q: "¿Qué amarre une dos troncos en ángulo de 90 grados?", opts: ["Diagonal", "Trípode", "Cuadrado", "Pescador"], ans: 2, exp: "El amarre cuadrado sujeta dos troncos cruzados en escuadra de 90°." },
+    { q: "¿Con qué nudo se une mejor una cuerda gruesa con otra más delgada o húmeda?", opts: ["Rizo", "Vuelta de Escota", "Margarita", "Corredizo"], ans: 1, exp: "La Vuelta de Escota está diseñada para distinto grosor o cuerdas mojadas." },
+    { q: "¿Cuál letra se llama a la Comunidad de Caminantes con el silbato?", opts: ["V", "QQ (--.- --.-)", "CC", "J"], ans: 1, exp: "En El desafío de ser Caminante 2024, QQ llama a toda la Comunidad." },
+    { q: "¿Cuántos Principios conforman el código No Dejar Rastro?", opts: ["4 principios", "5 principios", "7 principios", "10 principios"], ans: 2, exp: "Son 7 Principios mundiales para disfrutar el aire libre con mínimo impacto." },
+    { q: "En Semáforo (círculo 1), ¿qué posición tiene la letra D?", opts: ["Uno arriba y otro abajo", "Los dos horizontales", "Uno arriba-izq y otro abajo-der", "Los dos abajo"], ans: 0, exp: "La D coloca un banderín recto hacia arriba (12:00) y el otro recto hacia abajo (6:00)." },
+    { q: "¿Cómo se comprueba que una fogata quedó realmente apagada al 100%?", opts: ["Solo tapándola con tierra seca", "Mojando, removiendo cenizas y probando frío al dorso de la mano", "Dejándola arder sola de noche", "Poniendo piedras encima"], ans: 1, exp: "Nunca tapes brasas sin apagarlas: agua, remover y verificar que esté frío al tacto." }
+  ];
+
+  let quizSet = [];
+  let quizScore = 0;
+  let quizAnswered = {};
+  const quizAreaEl = document.getElementById("btQuizArea");
+  const quizScoreBadge = document.getElementById("btQuizScoreBadge");
+  const quizRestartBtn = document.getElementById("btQuizRestartBtn");
+
+  const startQuiz = () => {
+    const pool = [...QUIZ_BANK];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    quizSet = pool.slice(0, 5);
+    quizScore = 0;
+    quizAnswered = {};
+    renderQuiz();
+  };
+
+  const renderQuiz = () => {
+    if (!quizAreaEl) return;
+    if (quizScoreBadge) quizScoreBadge.textContent = `${quizScore} / 5`;
+    quizAreaEl.innerHTML = `<div class="bt-quiz-stack">${quizSet
+      .map((item, qIdx) => {
+        const picked = quizAnswered[qIdx];
+        const done = picked !== undefined;
+        return `
+          <div class="bt-quiz-card">
+            <h4>${qIdx + 1}. ${escapeHtml(item.q)}</h4>
+            <div class="bt-quiz-opts">
+              ${item.opts
+                .map((opt, oIdx) => {
+                  let cls = "bt-quiz-opt";
+                  if (done) {
+                    if (oIdx === item.ans) cls += " is-right";
+                    else if (oIdx === picked) cls += " is-wrong";
+                  }
+                  return `<button type="button" class="${cls}" data-quiz-pick="${qIdx}:${oIdx}" ${done ? "disabled" : ""}>${escapeHtml(opt)}</button>`;
+                })
+                .join("")}
+            </div>
+            ${done ? `<p class="bt-quiz-exp">${escapeHtml(item.exp)}</p>` : ""}
+          </div>`;
+      })
+      .join("")}</div>`;
+  };
+
+  if (quizAreaEl) {
+    quizAreaEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-quiz-pick]");
+      if (!btn) return;
+      const [qStr, oStr] = (btn.getAttribute("data-quiz-pick") || "").split(":");
+      const qIdx = Number(qStr);
+      const oIdx = Number(oStr);
+      if (quizAnswered[qIdx] !== undefined) return;
+      quizAnswered[qIdx] = oIdx;
+      if (quizSet[qIdx] && oIdx === quizSet[qIdx].ans) quizScore++;
+      if (typeof BtSoundEngine !== "undefined") BtSoundEngine.play("click");
+      renderQuiz();
+    });
+  }
+  if (quizRestartBtn) quizRestartBtn.addEventListener("click", startQuiz);
+  startQuiz();
+  if (STATE.activeSkillsTab) selectSkillsTab(STATE.activeSkillsTab);
+}
+
+// ============================================================================
 // GENERADOR DE CÓDIGO QR 100% OFFLINE (ISO/IEC 18004 BYTE MODE + RS GF256)
 // ============================================================================
 function generateQrSvg(text, sizePx = 220) {
@@ -15757,6 +17122,15 @@ function setupAutofillQrSharing() {
 }
 
 const BT_RELEASE_NOTES = [
+  {
+    version: "Web v10.1.0 / APK v4.1.0",
+    date: "25/11/2026",
+    items: [
+      "Corrección total de contraste en Modo oscuro: tarjetas activas del Asistente en 3 pasos, 4 Ejes PJOS, listas de servicio y botones mantienen fondos oscuros legibles en todo momento.",
+      "Nuevo espacio interactivo offline Skills con 8 herramientas prácticas: Claves (Semáforo visual, Morse con audio y linterna, Murciélago, Cenit-Polar, Sufamelico, Dametupico y Cajón), Nudos y amarres SVG por pasos, Tu Mochila (campamento, ataque y bolsillo con acomodo por zonas y peso), Pistas y brújula, Botiquín y guía PAS, Fogatas y No Dejar Rastro, Toques oficiales ASMAC de silbato y formaciones, más Reto rápido de 5 preguntas.",
+      "Nombres cortos y directos en barra superior, apartados y enlaces directos desde las respuestas del buscador hacia la herramienta práctica correspondiente en Skills."
+    ]
+  },
   {
     version: "Web v10.0.0 / APK v4.0.0",
     date: "24/11/2026",
