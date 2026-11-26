@@ -3454,8 +3454,136 @@ function matchDocumentOrCodeOverview(query) {
   return null;
 }
 
+function detectMissingFesOrMembershipQuery(query) {
+  const qNorm = normalizeStr(query || "");
+  if (!qNorm) return null;
+
+  // A) Especialidades FES consultadas pero inexistentes en las 81 fichas oficiales (ej. matemáticas, números, física, robótica)
+  const asksFes = /\b(ficha|especialidad|especialidades|fes|p5)\b/.test(qNorm);
+  const nonExistentFesMatch = qNorm.match(
+    /\b(matematicas|matematica|numeros|numero|algebra|calculo|geometria|fisica|quimica|robotica|programacion|ajedrez|astronomia|biologia)\b/
+  );
+  if (asksFes && nonExistentFesMatch) {
+    const topicWord = nonExistentFesMatch[1];
+    const hasExactDoc = (STATE.documents || []).some(
+      (d) =>
+        normalizeStr(d.category || "").includes("especialidades scouts") &&
+        normalizeStr(d.title || "").includes(topicWord)
+    );
+    if (!hasExactDoc) {
+      const pickIds = ["doc-0695", "doc-0775", "doc-0799", "doc-0777", "doc-0654", "doc-0751"];
+      const sources = pickIds
+        .map((id) => STATE.docsById[id])
+        .filter(Boolean)
+        .map((d) => ({
+          doc_id: d.id,
+          title: d.title,
+          filename: d.filename,
+          ext: d.ext,
+          year: d.year,
+          page_start: 1
+        }));
+      const md = [
+        `### Especialidad de «${topicWord}» en el catálogo oficial FES (2026)`,
+        "",
+        `Entre las **81 Especialidades Scouts (\`FES\`) vigentes publicadas por la ASMAC**, **no existe actualmente una ficha específica de «${topicWord}»** ni de matemáticas puras.`,
+        "",
+        "**Alternativas oficiales ya publicadas que más se acercan:**",
+        "- **Guardián de la Moneda** (*Manada* `doc-0775` y *Tropa* `doc-0799`): finanzas, presupuesto y cálculo aplicado.",
+        "- **Organizo mi tiempo / Dueño de mi tiempo / Gestiono mi tiempo** (`doc-0779`, `doc-0801`, `doc-0654`): planeación cuantitativa y métricas.",
+        "- **Meteorólogo** (*Manada* `doc-0777`): medición de clima, lluvia y temperatura.",
+        "",
+        "**¿Puedo cursar una Especialidad personalizada de Matemáticas?**",
+        "- Sí: utiliza la **Plantilla oficial `P5.1 — Ficha de Especialidad Scout (FES Editable v1.1)`** junto con un **sinodal** calificado y preséntala a tu Consejo de Sección (puedes llenarla directamente en el **Editor de Archivos** de BiblioTech)."
+      ].join("\n");
+      return { query, answer_markdown: md, sources };
+    }
+  }
+
+  // B) Participar sin pertenecer a un Grupo Scout teniendo vigencia activa
+  const asksWithoutGroup =
+    /\bsin\s+(?:pertenecer\s+a\s+un\s+|tener\s+|estar\s+en\s+un\s+)?grupo\b/.test(qNorm) &&
+    /\b(participar|vigencia|activo|activa|actividad|actividades|evento|eventos|scout|membresia)\b/.test(qNorm);
+  if (asksWithoutGroup) {
+    const pickIds = ["doc-0438", "doc-0431", "doc-0730", "doc-0727", "doc-0225"];
+    const sources = pickIds
+      .map((id) => STATE.docsById[id])
+      .filter(Boolean)
+      .map((d) => ({
+        doc_id: d.id,
+        title: d.title,
+        filename: d.filename,
+        ext: d.ext,
+        year: d.year,
+        page_start: 1
+      }));
+    const md = [
+      "### Participar con vigencia activa sin pertenecer a un Grupo Scout (`Estatutos` y `Reglamento 2023`)",
+      "",
+      "De acuerdo con los **Estatutos 2023 (Art. 14)** y el **Reglamento 2023 (Art. 22, 23 y 28)** de la ASMAC:",
+      "",
+      "1. **Derechos de registro vigente (Art. 28):** mientras tu registro anual en **SISAS** esté pagado y tu credencial aparezca vigente (sin sanción activa), conservas el derecho de ostentarte como miembro y participar en actividades y eventos cubriendo su cuota.",
+      "2. **Requisito de Miembro Activo (Estatutos Art. 14):** formalmente los jóvenes participan en una sección de un **Grupo Scout** y los dirigentes con cargo en Grupo, Provincia o Nacional.",
+      "3. **Qué debes hacer si ya tienes vigencia pero te quedaste sin Grupo o cambiaste de residencia:**",
+      "   - Solicita un **Cambio de Grupo en SISAS** (`doc-0730`, se aprueba por 2 autoridades de tu grupo anterior y 2 del nuevo, hasta 30 días).",
+      "   - Si no tienes grupo receptor aún, comunícate con tu **Provincia Scout** o con la **Oficina Scout Nacional** (`(55) 5208 7122` / `soporte.scouts.org.mx`) para orientar tu adscripción o participación en eventos nacionales.",
+      "   - Para eventos en **SISAS → Mis eventos** (`doc-0727`), verifica que tu perfil esté validado al 100% y tu Ficha de Salud actualizada."
+    ].join("\n");
+    return { query, answer_markdown: md, sources };
+  }
+
+  const asksManadaProgressionWork =
+    /\bmanada\b/.test(qNorm) &&
+    /\b(progresion|progresiones|cazadero|cazaderos|etapa|etapas)\b/.test(qNorm) &&
+    /\b(como|trabajo|trabajar|trabajan|inicio|empiezo|funcionan|evaluo|evaluan|pasos|guia)\b/.test(qNorm);
+  if (asksManadaProgressionWork) {
+    const pickIds = ["doc-0408", "doc-0295", "doc-0672", "doc-0683"];
+    const sources = pickIds
+      .map((id) => STATE.docsById[id])
+      .filter(Boolean)
+      .map((d) => ({
+        doc_id: d.id,
+        title: d.title,
+        filename: d.filename,
+        ext: d.ext,
+        year: d.year,
+        page_start: 1
+      }));
+    const md = [
+      "### Cómo trabajar las progresiones en Manada de Lobatos (`PJOS`)",
+      "",
+      "De acuerdo con la **Guía de Scouter de Manada de Lobatos 2024** (`doc-0408`) y **Mis Rastros en la Selva** (`doc-0295` / `Manual del Uniforme 2026`), las progresiones en Manada (6 a 10 años) se trabajan por **Ciclos de Programa** llamados **Gran Cacería**:",
+      "",
+      "1. **Diagnóstico Inicial (`P1.0.1` y `P1.1`):** al ingresar o iniciar ciclo, el equipo de Viejos Lobos identifica las necesidades del lobato respecto a las competencias (**Presas**) y sus elementos (**Dentelladas**).",
+      "2. **Etapa Inicial — Mi Primer Rastro:** insignia en el cubil mientras conoce el Marco Simbólico de la Selva del Seeonee y formula su Promesa.",
+      "3. **Los 4 Cazaderos (Progresión por Eje Temático):**",
+      "   - **Cazadero Raksha:** *Salud y Bienestar*.",
+      "   - **Cazadero Bagheera:** *Habilidades para la Vida*.",
+      "   - **Cazadero Hermano Gris:** *Medio Ambiente y Sustentabilidad*.",
+      "   - **Cazadero Baloo:** *Paz y Participación Comunitaria*.",
+      "4. **Seguimiento y registro:** las actividades (**Rastros**) se registran en **Mi Libro del Seeonee** (`P3`) y el Scouter evalúa los avances en la **Cédula Auxiliar `P2.1`**.",
+      "5. **Complementos e Insignia Terminal:** **Especialidades** (Cuerpo de Kaa), **Aventuras en la Naturaleza** (`Mohwa`, `Dhak`, `Flor Roja`, `Tregua del agua`) y **Insignia Final Alfa (`P9.1`, Jade u Obsidiana)** antes de su enlace a Tropa."
+    ].join("\n");
+    return { query, answer_markdown: md, sources };
+  }
+
+  return null;
+}
+
 function answerLocallyInBrowser(query, _allowTypoRetry = true) {
+  const normalizedPhraseQuery = String(query || "").replace(
+    /\bcon trabajo\b(?=\s+(?:la|las|el|los|mi|mis)?\s*(?:progresion|progresiones|especialidad|especialidades|cazadero|cazaderos|rumbo|sendero|ruta|manada|tropa|comunidad|clan))/i,
+    "cómo trabajo"
+  );
+  if (_allowTypoRetry && normalizedPhraseQuery !== String(query || "")) {
+    const retry = answerLocallyInBrowser(normalizedPhraseQuery, false);
+    return { ...retry, query, correctedQuery: normalizedPhraseQuery };
+  }
   const qClean = normalizeQuestionKey(query);
+  const missingDetector = detectMissingFesOrMembershipQuery(query);
+  if (missingDetector) {
+    return missingDetector;
+  }
   const codeOverview = matchDocumentOrCodeOverview(query);
   if (codeOverview) {
     return codeOverview;
@@ -3735,7 +3863,7 @@ function displayAnswer(data, queryText = "") {
   const qNormSkill = normalizeStr(queryText || "");
   if (qNormSkill) {
     const skillRules = [
-      { re: /\b(semaforo|banderin|banderas|morse|murcielago|cenit|polar|sufamelico|dametupico|cajon|clave|claves|cifrado)\b/, tab: "claves", label: "Claves" },
+      { re: /\b(semaforo|banderin|banderas|morse|murcielago|agujerito|baden|powell|parelinofu|cenit|polar|sufamelico|dametupico|cajon|gato|pigpen|brujula|criptografo|reverso|alfabeto|bloque|caracol|clave|claves|cifrado)\b/, tab: "claves", label: "Claves" },
       { re: /\b(nudo|nudos|amarre|amarres|ballestrinque|as de guia|rizo|pescador|margarita|escota|cabuyeria|pionerismo)\b/, tab: "nudos", label: "Nudos" },
       { re: /\b(mochila|empacar|equipo de bolsillo|mochila de ataque|mochila de campamento)\b/, tab: "mochila", label: "Tu Mochila" },
       { re: /\b(pista|pistas|senales de pista|brujula|azimut|contra-azimut|orientacion|rumbo)\b/, tab: "pistas", label: "Pistas" },
@@ -7275,13 +7403,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "10.1.0";
-const APP_MOBILE_VERSION = "4.1.0";
+const APP_WEB_VERSION = "10.2.0";
+const APP_MOBILE_VERSION = "4.2.0";
 const APP_COOKIE_SCHEMA = "9.7";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v62";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v63";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -14877,7 +15005,7 @@ function setupPjosAxesHub() {
     { id: "sisas", label: "Membresía activa en SISAS para cobertura de Seguro Scout Nacional" },
     { id: "dos_adultos", label: "Regla de al menos 2 adultos responsables visibles con curso A Salvo del Peligro vigente" },
     { id: "botiquin", label: "Botiquín completo revisado y medicamentos personales etiquetados bajo resguardo adulto" },
-    { id: "pernocta", label: "Distribución de casas de campaña separada estrictamente por sección y edad" },
+    { id: "pernocta", label: "Pernocta y sanitarios: casas de campaña separadas por sección/edad y baños separados por género y entre jóvenes y adultos" },
     { id: "hidratacion", label: "Agua potable garantizada, protección solar e inocuidad en manejo de alimentos" },
     { id: "ruta_clima", label: "Pronóstico meteorológico consultado, contactos locales de emergencia y horarios de aviso" }
   ];
@@ -15448,7 +15576,7 @@ function setupPjosAxesHub() {
 }
 
 // ============================================================================
-// ESPACIO OFFLINE: SKILLS (CLAVES, NUDOS, TU MOCHILA, PISTAS, BOTIQUÍN, FOGATAS, SILBATO, RETO)
+// ESPACIO OFFLINE: SKILLS v10.2.0 (20 CLAVES, NUDOS 3D SVG, TU MOCHILA, PISTAS, BOTIQUÍN, FOGATAS, SILBATO, RETO)
 // ============================================================================
 function setupScoutSkillsHub() {
   const sectionEl = document.getElementById("skills");
@@ -15460,7 +15588,7 @@ function setupScoutSkillsHub() {
 
   let audioTimers = [];
   let audioNodes = [];
-  let activeWhistleBtn = null;
+  let activeWhistleRow = null;
 
   const stopSkillAudio = () => {
     audioTimers.forEach((id) => clearTimeout(id));
@@ -15479,9 +15607,11 @@ function setupScoutSkillsHub() {
       morseBtn.dataset.playing = "0";
       morseBtn.textContent = "Escuchar";
     }
-    if (activeWhistleBtn) {
-      activeWhistleBtn.textContent = "Escuchar";
-      activeWhistleBtn = null;
+    if (activeWhistleRow) {
+      activeWhistleRow.classList.remove("is-playing");
+      const btn = activeWhistleRow.querySelector(".bt-whistle-play");
+      if (btn) btn.textContent = "Escuchar";
+      activeWhistleRow = null;
     }
   };
   window.__btStopSkillAudio = stopSkillAudio;
@@ -15533,8 +15663,12 @@ function setupScoutSkillsHub() {
       morseBtn.textContent = "Detener";
     }
     if (mode === "whistle" && options.btn) {
-      activeWhistleBtn = options.btn;
-      activeWhistleBtn.textContent = "Sonando...";
+      const row = options.btn.closest(".bt-whistle-row");
+      if (row) {
+        activeWhistleRow = row;
+        row.classList.add("is-playing");
+      }
+      options.btn.textContent = "Sonando...";
     }
 
     events.forEach((ev) => {
@@ -15595,6 +15729,7 @@ function setupScoutSkillsHub() {
 
   const selectSkillsTab = (tabId) => {
     const safe = SKILL_TABS.includes(tabId) ? tabId : "claves";
+    STATE.activeSkillsTab = safe;
     stopSkillAudio();
     tabBtns.forEach((b) => {
       const act = b.getAttribute("data-skills-tab") === safe;
@@ -15615,13 +15750,33 @@ function setupScoutSkillsHub() {
   });
 
   // --------------------------------------------------------------------------
-  // 1. CLAVES (Semáforo, Morse, Murciélago, Cenit-Polar, Sufamelico, Dametupico, Cajón)
+  // 1. TRADUCTOR DE CLAVES SCOUT (20 CLAVES + DIAGRAMAS MAESTROS EXACTOS)
   // --------------------------------------------------------------------------
-  const cleanAccentUpper = (str) =>
+  const ALPH_27 = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
+  const ALPH_26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+  const upperNoAccentKeepN = (str) =>
     String(str || "")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toUpperCase();
+      .toUpperCase()
+      .replace(/[ÁÀÄÂ]/g, "A")
+      .replace(/[ÉÈËÊ]/g, "E")
+      .replace(/[ÍÌÏÎ]/g, "I")
+      .replace(/[ÓÒÖÔ]/g, "O")
+      .replace(/[ÚÙÜÛ]/g, "U");
+
+  const upperNoAccent = (str) =>
+    upperNoAccentKeepN(str).replace(/Ñ/g, "N");
+
+  const SEMA_POS_NAMES = [
+    "abajo (6:00)",
+    "abajo-izq (7:30)",
+    "izquierda (9:00)",
+    "arriba-izq (10:30)",
+    "arriba (12:00)",
+    "arriba-der (1:30)",
+    "derecha (3:00)",
+    "abajo-der (4:30)"
+  ];
 
   const SEMAPHORE_MAP = {
     A: [0, 1], B: [0, 2], C: [0, 3], D: [0, 4], E: [0, 5], F: [0, 6], G: [0, 7],
@@ -15634,6 +15789,100 @@ function setupScoutSkillsHub() {
     " ": [0, 0]
   };
 
+  let semaRedWhite = true; // Estandar ASMAC (rojo/blanco) con opción náutico (rojo/amarillo)
+  let selectedSemaLetter = "S";
+
+  const semaDirVec = (pos) => {
+    const rad = (pos * 45 * Math.PI) / 180;
+    return { dx: -Math.sin(rad), dy: Math.cos(rad) };
+  };
+
+  const assignSemaphoreShoulders = (p1, p2) => {
+    const isLeftSide = (p) => p === 1 || p === 2 || p === 3;
+    const isRightSide = (p) => p === 5 || p === 6 || p === 7;
+    if (p1 === p2) return [p1, p2];
+    if (isLeftSide(p1) && isRightSide(p2)) return [p1, p2];
+    if (isRightSide(p1) && isLeftSide(p2)) return [p2, p1];
+    if (isLeftSide(p1) && !isLeftSide(p2)) return [p1, p2];
+    if (isLeftSide(p2) && !isLeftSide(p1)) return [p2, p1];
+    if (isRightSide(p1) && !isRightSide(p2)) return [p2, p1];
+    if (isRightSide(p2) && !isRightSide(p1)) return [p1, p2];
+    // D:[0,4] -> arriba en derecho, abajo en izquierdo
+    if (p1 === 0 && p2 === 4) return [0, 4];
+    if (p1 === 4 && p2 === 0) return [0, 4];
+    return [p1, p2];
+  };
+
+  const buildSemaphoreSvg = (letter, size = 76) => {
+    const ch = letter === "Ñ" ? "N" : letter;
+    const pair = SEMAPHORE_MAP[ch] || [0, 0];
+    const [leftPos, rightPos] = assignSemaphoreShoulders(pair[0], pair[1]);
+    const colorB = semaRedWhite ? "#ffffff" : "#facc15";
+
+    // Cuerpo centrado en (55, 52), cabeza en (55, 31) para dejar espacio limpio arriba (pos 4) y abajo (pos 0)
+    const drawFlagArm = (pos, isLeftShoulder, armIdx) => {
+      const shX = isLeftShoulder ? 45 : 65;
+      const shY = 44;
+      let { dx, dy } = semaDirVec(pos);
+      // En cruce al mismo lado (ej. H, I, O, W, X, Z), dar ligera separacion al brazo que cruza
+      let reachArm = 18;
+      if (pos === 0) {
+        reachArm = 17;
+      } else if (pos === 4) {
+        reachArm = 22;
+      }
+      const handX = shX + dx * reachArm;
+      const handY = shY + dy * reachArm;
+      const tipX = shX + dx * (reachArm + 15);
+      const tipY = shY + dy * (reachArm + 15);
+      const basePoleX = shX + dx * (reachArm + 3);
+      const basePoleY = shY + dy * (reachArm + 3);
+      const flagSize = 14;
+      // Perpendicular hacia abajo/afuera para que la bandera cuelgue del asta con claridad
+      let px = -dy * flagSize;
+      let py = dx * flagSize;
+      if (pos === 0 || pos === 4) {
+        px = isLeftShoulder ? -flagSize : flagSize;
+        py = 0;
+      } else if (py < 0) {
+        px = -px;
+        py = -py;
+      }
+      const pTopX = tipX;
+      const pTopY = tipY;
+      const pInX = basePoleX;
+      const pInY = basePoleY;
+      const pOutBaseX = basePoleX + px;
+      const pOutBaseY = basePoleY + py;
+      const pOutTipX = tipX + px;
+      const pOutTipY = tipY + py;
+      const strokeArm = armIdx === 0 ? "#0284c7" : "#7c3aed";
+
+      return `
+        <line x1="${shX}" y1="${shY}" x2="${handX.toFixed(1)}" y2="${handY.toFixed(1)}" stroke="${strokeArm}" stroke-width="4.2" stroke-linecap="round"/>
+        <line x1="${handX.toFixed(1)}" y1="${handY.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="#64748b" stroke-width="2.2" stroke-linecap="round"/>
+        <polygon points="${pInX.toFixed(1)},${pInY.toFixed(1)} ${pTopX.toFixed(1)},${pTopY.toFixed(1)} ${pOutTipX.toFixed(1)},${pOutTipY.toFixed(1)}" fill="#ef4444" stroke="#0f172a" stroke-width="0.9" stroke-linejoin="round"/>
+        <polygon points="${pInX.toFixed(1)},${pInY.toFixed(1)} ${pOutBaseX.toFixed(1)},${pOutBaseY.toFixed(1)} ${pOutTipX.toFixed(1)},${pOutTipY.toFixed(1)}" fill="${colorB}" stroke="#0f172a" stroke-width="0.9" stroke-linejoin="round"/>
+        <circle cx="${handX.toFixed(1)}" cy="${handY.toFixed(1)}" r="2.2" fill="currentColor"/>
+      `;
+    };
+
+    const crossBothLeft = pair[0] >= 1 && pair[0] <= 3 && pair[1] >= 1 && pair[1] <= 3;
+    const crossBothRight = pair[0] >= 5 && pair[0] <= 7 && pair[1] >= 5 && pair[1] <= 7;
+    const arm1 = drawFlagArm(leftPos, !crossBothRight, 0);
+    const arm2 = drawFlagArm(rightPos, crossBothLeft, 1);
+
+    return `<svg width="${size}" height="${Math.round(size * 0.94)}" viewBox="0 0 110 104" fill="none" aria-hidden="true">
+      <circle cx="55" cy="31" r="7.5" fill="currentColor" opacity="0.92"/>
+      <rect x="46" y="42" width="18" height="27" rx="5" fill="currentColor" opacity="0.86"/>
+      <polygon points="48,42 62,42 55,52" fill="#0ea5e9"/>
+      <line x1="50" y1="69" x2="48" y2="94" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+      <line x1="60" y1="69" x2="62" y2="94" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/>
+      ${arm1}
+      ${arm2}
+    </svg>`;
+  };
+
   const MORSE_MAP = {
     A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.", G: "--.", H: "....",
     I: "..", J: ".---", K: "-.-", L: ".-..", M: "--", N: "-.", "Ñ": "--.--", O: "---",
@@ -15644,6 +15893,12 @@ function setupScoutSkillsHub() {
   };
   const MORSE_REV = Object.fromEntries(Object.entries(MORSE_MAP).map(([k, v]) => [v, k]));
 
+  const MURCIELAGO_EN = { M: "0", U: "1", R: "2", C: "3", I: "4", E: "5", L: "6", A: "7", G: "8", O: "9" };
+  const MURCIELAGO_DE = Object.fromEntries(Object.entries(MURCIELAGO_EN).map(([k, v]) => [v, k]));
+
+  const AGUJERITO_EN = { A: "1", G: "2", U: "3", J: "4", E: "5", R: "6", I: "7", T: "8", O: "9" };
+  const AGUJERITO_DE = Object.fromEntries(Object.entries(AGUJERITO_EN).map(([k, v]) => [v, k]));
+
   const pairTable = (pairs) => {
     const map = {};
     for (const [a, b] of pairs) {
@@ -15652,261 +15907,694 @@ function setupScoutSkillsHub() {
     }
     return map;
   };
-  const MURCIELAGO_EN = { M: "0", U: "1", R: "2", C: "3", I: "4", E: "5", L: "6", A: "7", G: "8", O: "9" };
-  const MURCIELAGO_DE = Object.fromEntries(Object.entries(MURCIELAGO_EN).map(([k, v]) => [v, k]));
   const PAIR_CIPHERS = {
-    cenit: pairTable([["C", "P"], ["E", "O"], ["N", "L"], ["I", "A"], ["T", "R"]]),
+    badenpowell: pairTable([["B", "P"], ["A", "O"], ["D", "W"], ["N", "L"]]),
     sufamelico: pairTable([["S", "U"], ["F", "A"], ["M", "E"], ["L", "I"], ["C", "O"]]),
+    parelinofu: pairTable([["P", "A"], ["R", "E"], ["L", "I"], ["N", "O"], ["F", "U"]]),
+    cenit: pairTable([["C", "P"], ["E", "O"], ["N", "L"], ["I", "A"], ["T", "R"]]),
     dametupico: pairTable([["D", "A"], ["M", "E"], ["T", "U"], ["P", "I"], ["C", "O"]])
   };
-
-  // Posiciones 0..7 vista del receptor: 0=6:00 abajo, 1=7:30, 2=9:00 izq, 3=10:30, 4=12:00 arriba, 5=1:30, 6=3:00 der, 7=4:30
-  const semaArmVector = (pos) => {
-    const rad = (pos * 45 * Math.PI) / 180;
-    return { dx: -Math.sin(rad), dy: Math.cos(rad) };
+  const PAIR_CHIPS = {
+    badenpowell: [["B", "P"], ["A", "O"], ["D", "W"], ["E", "E"], ["N", "L"]],
+    sufamelico: [["S", "U"], ["F", "A"], ["M", "E"], ["L", "I"], ["C", "O"]],
+    parelinofu: [["P", "A"], ["R", "E"], ["L", "I"], ["N", "O"], ["F", "U"]],
+    cenit: [["C", "P"], ["E", "O"], ["N", "L"], ["I", "A"], ["T", "R"]],
+    dametupico: [["D", "A"], ["M", "E"], ["T", "U"], ["P", "I"], ["C", "O"]]
   };
 
-  const buildSemaphoreSvg = (letter, size = 64) => {
-    const ch = letter === "Ñ" ? "N" : letter;
-    const pair = SEMAPHORE_MAP[ch] || [0, 0];
-    const [p1, p2] = pair;
-    const len = 20;
-    const cx = 40;
-    const cy = 34;
-
-    const drawArm = (pos, anchorX) => {
-      const { dx, dy } = semaArmVector(pos);
-      const hx = anchorX + dx * 13;
-      const hy = cy + dy * 13;
-      const tx = anchorX + dx * len;
-      const ty = cy + dy * len;
-      const px = -dy * 6;
-      const py = dx * 6;
-      const fx = tx - dx * 9 + px;
-      const fy = ty - dy * 9 + py;
-      const gx = tx + px;
-      const gy = ty + py;
-      return `
-        <line x1="${anchorX}" y1="${cy}" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-        <line x1="${hx.toFixed(1)}" y1="${hy.toFixed(1)}" x2="${tx.toFixed(1)}" y2="${ty.toFixed(1)}" stroke="#64748b" stroke-width="2" stroke-linecap="round" />
-        <polygon points="${(tx - dx * 9).toFixed(1)},${(ty - dy * 9).toFixed(1)} ${tx.toFixed(1)},${ty.toFixed(1)} ${gx.toFixed(1)},${gy.toFixed(1)}" fill="#ef4444" />
-        <polygon points="${(tx - dx * 9).toFixed(1)},${(ty - dy * 9).toFixed(1)} ${fx.toFixed(1)},${fy.toFixed(1)} ${gx.toFixed(1)},${gy.toFixed(1)}" fill="#facc15" />
-      `;
-    };
-
-    const leftAnchor = cx - 4;
-    const rightAnchor = cx + 4;
-    return `<svg width="${size}" height="${size}" viewBox="0 0 80 72" fill="none" aria-hidden="true">
-      <circle cx="${cx}" cy="17" r="6" fill="currentColor" opacity="0.9"/>
-      <rect x="33" y="25" width="14" height="22" rx="4" fill="currentColor" opacity="0.85"/>
-      <line x1="36" y1="47" x2="35" y2="63" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
-      <line x1="44" y1="47" x2="45" y2="63" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
-      ${drawArm(p1, leftAnchor)}
-      ${drawArm(p2, rightAnchor)}
-    </svg>`;
-  };
-
-  // Cajón (Rejilla Scout): 3x3 A-I / J-R + X S-V / W-Z
-  const CAJON_GRID = {
+  // PIGPEN (Imagen 6 exacta: # pares AB..QR + X pares ST, UV, WX, YZ)
+  const PIGPEN_MAP = {
     A: { t: "box", walls: ["B", "R"], dot: false },
-    B: { t: "box", walls: ["L", "B", "R"], dot: false },
-    C: { t: "box", walls: ["L", "B"], dot: false },
-    D: { t: "box", walls: ["T", "R", "B"], dot: false },
-    E: { t: "box", walls: ["T", "R", "B", "L"], dot: false },
-    F: { t: "box", walls: ["T", "L", "B"], dot: false },
-    G: { t: "box", walls: ["T", "R"], dot: false },
-    H: { t: "box", walls: ["L", "T", "R"], dot: false },
-    I: { t: "box", walls: ["L", "T"], dot: false },
-    J: { t: "box", walls: ["B", "R"], dot: true },
-    K: { t: "box", walls: ["L", "B", "R"], dot: true },
-    L: { t: "box", walls: ["L", "B"], dot: true },
-    M: { t: "box", walls: ["T", "R", "B"], dot: true },
-    N: { t: "box", walls: ["T", "R", "B", "L"], dot: true },
-    O: { t: "box", walls: ["T", "L", "B"], dot: true },
-    P: { t: "box", walls: ["T", "R"], dot: true },
-    Q: { t: "box", walls: ["L", "T", "R"], dot: true },
+    B: { t: "box", walls: ["B", "R"], dot: true },
+    C: { t: "box", walls: ["L", "B", "R"], dot: false },
+    D: { t: "box", walls: ["L", "B", "R"], dot: true },
+    E: { t: "box", walls: ["L", "B"], dot: false },
+    F: { t: "box", walls: ["L", "B"], dot: true },
+    G: { t: "box", walls: ["T", "R", "B"], dot: false },
+    H: { t: "box", walls: ["T", "R", "B"], dot: true },
+    I: { t: "box", walls: ["T", "R", "B", "L"], dot: false },
+    J: { t: "box", walls: ["T", "R", "B", "L"], dot: true },
+    K: { t: "box", walls: ["T", "L", "B"], dot: false },
+    L: { t: "box", walls: ["T", "L", "B"], dot: true },
+    M: { t: "box", walls: ["T", "R"], dot: false },
+    N: { t: "box", walls: ["T", "R"], dot: true },
+    O: { t: "box", walls: ["L", "T", "R"], dot: false },
+    P: { t: "box", walls: ["L", "T", "R"], dot: true },
+    Q: { t: "box", walls: ["L", "T"], dot: false },
     R: { t: "box", walls: ["L", "T"], dot: true },
     S: { t: "x", dir: "T", dot: false },
-    T: { t: "x", dir: "L", dot: false },
-    U: { t: "x", dir: "R", dot: false },
-    V: { t: "x", dir: "B", dot: false },
-    W: { t: "x", dir: "T", dot: true },
-    X: { t: "x", dir: "L", dot: true },
-    Y: { t: "x", dir: "R", dot: true },
+    T: { t: "x", dir: "T", dot: true },
+    U: { t: "x", dir: "L", dot: false },
+    V: { t: "x", dir: "L", dot: true },
+    W: { t: "x", dir: "R", dot: false },
+    X: { t: "x", dir: "R", dot: true },
+    Y: { t: "x", dir: "B", dot: false },
     Z: { t: "x", dir: "B", dot: true }
   };
 
-  const buildCajonSvg = (ch, size = 50) => {
-    const spec = CAJON_GRID[ch === "Ñ" ? "N" : ch];
-    if (!spec) return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" aria-hidden="true"></svg>`;
+  // GATO (Imagen 1: 3x3 #, 3 letras por casilla: ABC|DEF|GHI / JKL|MNÑ|OPQ / RST|UVW|XYZ)
+  const GATO_CELLS = [
+    ["A", "B", "C", ["B", "R"]],
+    ["D", "E", "F", ["L", "B", "R"]],
+    ["G", "H", "I", ["L", "B"]],
+    ["J", "K", "L", ["T", "R", "B"]],
+    ["M", "N", "Ñ", ["T", "R", "B", "L"]],
+    ["O", "P", "Q", ["T", "L", "B"]],
+    ["R", "S", "T", ["T", "R"]],
+    ["U", "V", "W", ["L", "T", "R"]],
+    ["X", "Y", "Z", ["L", "T"]]
+  ];
+  const GATO_MAP = {};
+  GATO_CELLS.forEach(([l0, l1, l2, walls]) => {
+    GATO_MAP[l0] = { walls, slot: 0 };
+    GATO_MAP[l1] = { walls, slot: 1 };
+    GATO_MAP[l2] = { walls, slot: 2 };
+  });
+
+  const drawWallsGlyph = (spec, dotCoords, size = 50) => {
     const parts = [];
-    if (spec.t === "box") {
-      if (spec.walls.includes("T")) parts.push(`<line x1="12" y1="12" x2="48" y2="12"/>`);
-      if (spec.walls.includes("B")) parts.push(`<line x1="12" y1="48" x2="48" y2="48"/>`);
-      if (spec.walls.includes("L")) parts.push(`<line x1="12" y1="12" x2="12" y2="48"/>`);
-      if (spec.walls.includes("R")) parts.push(`<line x1="48" y1="12" x2="48" y2="48"/>`);
-      if (spec.dot) parts.push(`<circle cx="30" cy="30" r="4" fill="currentColor" stroke="none"/>`);
-    } else {
+    if (spec.t === "x") {
       if (spec.dir === "T") parts.push(`<polyline points="12,14 30,34 48,14"/>`);
       if (spec.dir === "B") parts.push(`<polyline points="12,46 30,26 48,46"/>`);
       if (spec.dir === "L") parts.push(`<polyline points="14,12 34,30 14,48"/>`);
       if (spec.dir === "R") parts.push(`<polyline points="46,12 26,30 46,48"/>`);
-      if (spec.dot) {
-        const dx = spec.dir === "L" ? 20 : spec.dir === "R" ? 40 : 30;
-        const dy = spec.dir === "T" ? 20 : spec.dir === "B" ? 40 : 30;
-        parts.push(`<circle cx="${dx}" cy="${dy}" r="3.8" fill="currentColor" stroke="none"/>`);
-      }
+    } else {
+      if (spec.walls.includes("T")) parts.push(`<line x1="12" y1="12" x2="48" y2="12"/>`);
+      if (spec.walls.includes("B")) parts.push(`<line x1="12" y1="48" x2="48" y2="48"/>`);
+      if (spec.walls.includes("L")) parts.push(`<line x1="12" y1="12" x2="12" y2="48"/>`);
+      if (spec.walls.includes("R")) parts.push(`<line x1="48" y1="12" x2="48" y2="48"/>`);
     }
-    return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${parts.join("")}</svg>`;
+    if (dotCoords) {
+      parts.push(`<circle cx="${dotCoords[0]}" cy="${dotCoords[1]}" r="3.6" fill="#0284c7" stroke="none"/>`);
+    }
+    return `<svg width="${size}" height="${size}" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${parts.join("")}</svg>`;
+  };
+
+  const buildPigpenSvg = (ch, size = 48) => {
+    const k = ch === "Ñ" ? "N" : ch;
+    const sp = PIGPEN_MAP[k];
+    if (!sp) return "";
+    let dot = null;
+    if (sp.dot) {
+      if (sp.t === "box") dot = [30, 30];
+      else dot = sp.dir === "T" ? [30, 20] : sp.dir === "B" ? [30, 40] : sp.dir === "L" ? [20, 30] : [40, 30];
+    }
+    return drawWallsGlyph(sp, dot, size);
+  };
+
+  const buildGatoSvg = (ch, size = 48) => {
+    const sp = GATO_MAP[ch];
+    if (!sp) return "";
+    const xs = [21, 30, 39];
+    return drawWallsGlyph({ t: "box", walls: sp.walls }, [xs[sp.slot], 30], size);
+  };
+
+  const buildPigpenMasterSvg = () => `
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1.25rem;align-items:center;">
+      <svg width="165" height="165" viewBox="0 0 150 150" aria-label="Rejilla Pigpen">#
+        <g stroke="currentColor" stroke-width="2.5">
+          <line x1="50" y1="12" x2="50" y2="138"/><line x1="100" y1="12" x2="100" y2="138"/>
+          <line x1="12" y1="50" x2="138" y2="50"/><line x1="12" y1="100" x2="138" y2="100"/>
+        </g>
+        <g fill="currentColor" font-size="14" font-weight="800" text-anchor="middle">
+          <text x="31" y="36">A B</text><text x="75" y="36">C D</text><text x="119" y="36">E F</text>
+          <text x="31" y="80">G H</text><text x="75" y="80">I J</text><text x="119" y="80">K L</text>
+          <text x="31" y="124">M N</text><text x="75" y="124">O P</text><text x="119" y="124">Q R</text>
+        </g>
+      </svg>
+      <svg width="135" height="135" viewBox="0 0 120 120" aria-label="Equis Pigpen">
+        <g stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="18" x2="102" y2="102"/><line x1="102" y1="18" x2="18" y2="102"/>
+        </g>
+        <g fill="currentColor" font-size="13" font-weight="800" text-anchor="middle">
+          <text x="60" y="34">S T</text>
+          <text x="29" y="64">U V</text>
+          <text x="91" y="64">W X</text>
+          <text x="60" y="96">Y Z</text>
+        </g>
+      </svg>
+    </div>
+    <p class="bt-ejes-helper-note" style="margin:0;">1.ª letra de cada cuadro sin punto · 2.ª letra lleva punto al centro (Ñ se sustituye por N).</p>
+  `;
+
+  const buildGatoMasterSvg = () => `
+    <svg width="180" height="165" viewBox="0 0 165 150" aria-label="Cuadrícula Clave Gato">
+      <g stroke="currentColor" stroke-width="2.5">
+        <line x1="55" y1="10" x2="55" y2="140"/><line x1="110" y1="10" x2="110" y2="140"/>
+        <line x1="10" y1="53" x2="155" y2="53"/><line x1="10" y1="97" x2="155" y2="97"/>
+      </g>
+      <g fill="currentColor" font-size="13" font-weight="800" text-anchor="middle">
+        <text x="32" y="36">ABC</text><text x="82" y="36">DEF</text><text x="132" y="36">GHI</text>
+        <text x="32" y="80">JKL</text><text x="82" y="80">MNÑ</text><text x="132" y="80">OPQ</text>
+        <text x="32" y="124">RST</text><text x="82" y="124">UVW</text><text x="132" y="124">XYZ</text>
+      </g>
+    </svg>
+    <p class="bt-ejes-helper-note" style="margin:0;">1.ª letra: punto izquierda · 2.ª letra: punto centro · 3.ª letra: punto derecha.</p>
+  `;
+
+  // BRÚJULA (Imágenes 4 y 5 exactas: N1=A..N9=6, E1=B..E9=7, S1=C..S9=8, O1=D..O9=9)
+  const BRUJULA_EN = {};
+  const BRUJULA_DE = {};
+  const BRUJULA_CHARS = [...ALPH_27, "1", "2", "3", "4", "5", "6", "7", "8", "9"]; // 36 chars exactos
+  ["N", "E", "S", "O"].forEach((dir, dIdx) => {
+    for (let num = 1; num <= 9; num++) {
+      const ch = BRUJULA_CHARS[(num - 1) * 4 + dIdx];
+      const code = `${dir}${num}`;
+      BRUJULA_EN[ch] = code;
+      BRUJULA_DE[code] = ch;
+    }
+  });
+
+  const buildBrujulaMasterSvg = () => `
+    <svg width="290" height="190" viewBox="0 0 320 210" aria-label="Tabla cruz Clave Brújula">
+      <line x1="160" y1="26" x2="160" y2="184" stroke="currentColor" stroke-width="2.4"/>
+      <line x1="74" y1="105" x2="246" y2="105" stroke="currentColor" stroke-width="2.4"/>
+      <polygon points="160,18 155,28 165,28" fill="#ef4444"/>
+      <polygon points="160,192 155,182 165,182" fill="currentColor"/>
+      <polygon points="254,105 244,100 244,110" fill="currentColor"/>
+      <polygon points="66,105 76,100 76,110" fill="currentColor"/>
+      <g fill="currentColor" font-size="11" font-weight="800" text-anchor="middle">
+        <text x="160" y="14" fill="#ef4444">N · 1A 2E 3I 4M 5P 6T 7X 8(2) 9(6)</text>
+        <text x="160" y="205">S · 1C 2G 3K 4Ñ 5R 6V 7Z 8(4) 9(8)</text>
+      </g>
+      <g fill="currentColor" font-size="10.5" font-weight="800">
+        <text x="10" y="88">O (1–9):</text>
+        <text x="10" y="102">D H L O S W 1 5 9</text>
+        <text x="242" y="88">E (1–9):</text>
+        <text x="242" y="102">B F J N Q U Y 3 7</text>
+      </g>
+    </svg>
+  `;
+
+  const buildCriptografoWheelSvg = (shiftVal) => {
+    const cx = 125;
+    const cy = 125;
+    const outerR = 112;
+    const midR = 82;
+    const innerR = 54;
+    const stepDeg = 360 / ALPH_27.length;
+    const rotDeg = (-shiftVal * stepDeg).toFixed(2);
+    const outerLabels = ALPH_27.map((ch, i) => {
+      const rad = ((i * stepDeg - 90) * Math.PI) / 180;
+      const x = cx + Math.cos(rad) * ((outerR + midR) / 2);
+      const y = cy + Math.sin(rad) * ((outerR + midR) / 2) + 3.5;
+      return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" font-size="9.5" font-weight="900" fill="#0f172a">${ch}</text>`;
+    }).join("");
+    const innerLabels = ALPH_27.map((ch, i) => {
+      const idxOut = (i - shiftVal + ALPH_27.length) % ALPH_27.length;
+      const rad = ((idxOut * stepDeg - 90) * Math.PI) / 180;
+      const x = cx + Math.cos(rad) * ((midR + innerR) / 2);
+      const y = cy + Math.sin(rad) * ((midR + innerR) / 2) + 3.5;
+      return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" font-size="9" font-weight="800" fill="#ffffff">${ch}</text>`;
+    }).join("");
+    return `<svg width="240" height="240" viewBox="0 0 250 250" aria-label="Rueda Criptógrafo de 27 letras">
+      <circle cx="${cx}" cy="${cy}" r="${outerR}" fill="#fde047" stroke="#0f172a" stroke-width="2"/>
+      <circle cx="${cx}" cy="${cy}" r="${midR}" fill="#16a34a" stroke="#0f172a" stroke-width="2"/>
+      <circle cx="${cx}" cy="${cy}" r="${innerR}" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
+      ${outerLabels}
+      ${innerLabels}
+      <circle cx="${cx}" cy="${cy}" r="14" fill="#e2e8f0" stroke="#0f172a" stroke-width="1.5"/>
+      <text x="${cx}" y="${cy + 3.5}" text-anchor="middle" font-size="9" font-weight="900" fill="#0f172a">${shiftVal}</text>
+    </svg><p class="bt-ejes-helper-note" style="margin:0;">Exterior amarillo: letra normal · Interior verde (${rotDeg}°): clave (A → ${ALPH_27[shiftVal % 27]}).</p>`;
   };
 
   let cipherKind = "semaforo";
   let cipherDecodeMode = false;
   let morseSlow = false;
+  let criptoShift = 26; // A->Z, SCOUT->RBÑTS como Imagen 7
+  let keywordValue = "CLARINET"; // CLARINET como Imagen 4
   let lastCipherCopyStr = "";
 
   const cipherInputEl = document.getElementById("btCipherTextInput");
   const cipherOutEl = document.getElementById("btCipherOutputArea");
+  const cipherMasterEl = document.getElementById("btCipherMasterDiagram");
+  const cipherExtraEl = document.getElementById("btCipherExtraWrap");
   const cipherRefEl = document.getElementById("btCipherRefArea");
   const cipherDirBtn = document.getElementById("btCipherDirToggle");
+  const semaStyleBtn = document.getElementById("btSemaFlagStyleBtn");
   const morsePlayBtn = document.getElementById("btMorsePlayBtn");
   const morseSpeedBtn = document.getElementById("btMorseSpeedBtn");
   const morseLampEl = document.getElementById("btMorseLamp");
 
+  const buildKeywordAlphabet = (kw) => {
+    const clean = upperNoAccentKeepN(kw).replace(/[^A-ZÑ]/g, "");
+    const out = [];
+    const used = new Set();
+    for (const c of clean) {
+      if (ALPH_27.includes(c) && !used.has(c)) {
+        used.add(c);
+        out.push(c);
+      }
+    }
+    for (const c of ALPH_27) {
+      if (!used.has(c)) {
+        used.add(c);
+        out.push(c);
+      }
+    }
+    return out;
+  };
+
+  const buildSpiralGrid = (cleanText) => {
+    const chars = Array.from(cleanText);
+    const n = chars.length;
+    if (!n) return { side: 1, rows: [[""]], centerR: 0, centerC: 0 };
+    let side = Math.ceil(Math.sqrt(n));
+    if (side % 2 === 0) side++;
+    const grid = Array.from({ length: side }, () => Array(side).fill(""));
+    const cr = Math.floor(side / 2);
+    const cc = Math.floor(side / 2);
+    let r = cr;
+    let c = cc;
+    let idx = 0;
+    grid[r][c] = chars[idx++];
+    const dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+    let d = 0;
+    let stepLen = 1;
+    while (idx < n) {
+      for (let repStep = 0; repStep < 2 && idx < n; repStep++) {
+        const [dr, dc] = dirs[d % 4];
+        for (let s = 0; s < stepLen && idx < n; s++) {
+          r += dr;
+          c += dc;
+          if (r >= 0 && r < side && c >= 0 && c < side) {
+            grid[r][c] = chars[idx++];
+          }
+        }
+        d++;
+      }
+      stepLen++;
+    }
+    return { side, rows: grid, centerR: cr, centerC: cc };
+  };
+
+  const renderMasterBox = (html) => {
+    if (!cipherMasterEl) return;
+    if (!html) {
+      cipherMasterEl.classList.add("hidden");
+      cipherMasterEl.innerHTML = "";
+    } else {
+      cipherMasterEl.innerHTML = html;
+      cipherMasterEl.classList.remove("hidden");
+    }
+  };
+
   const renderCipher = () => {
     if (!cipherInputEl || !cipherOutEl || !cipherRefEl) return;
     const raw = cipherInputEl.value || "";
-    const upper = cleanAccentUpper(raw);
-    const upperKeepN = String(raw || "")
-      .toUpperCase()
-      .replace(/[ÁÀÄ]/g, "A")
-      .replace(/[ÉÈË]/g, "E")
-      .replace(/[ÍÌÏ]/g, "I")
-      .replace(/[ÓÒÖ]/g, "O")
-      .replace(/[ÚÙÜ]/g, "U");
+    const upperN = upperNoAccentKeepN(raw);
+    const upperASCII = upperNoAccent(raw);
 
-    const showMorseControls = cipherKind === "morse";
-    if (morsePlayBtn) morsePlayBtn.classList.toggle("hidden", !showMorseControls);
-    if (morseSpeedBtn) morseSpeedBtn.classList.toggle("hidden", !showMorseControls);
-    if (morseLampEl) morseLampEl.classList.toggle("hidden", !showMorseControls);
+    const isMorse = cipherKind === "morse";
+    const isSema = cipherKind === "semaforo";
+    const noReverse = ["semaforo", "pigpen", "gato", "caracol"].includes(cipherKind);
 
+    if (morsePlayBtn) morsePlayBtn.classList.toggle("hidden", !isMorse);
+    if (morseSpeedBtn) morseSpeedBtn.classList.toggle("hidden", !isMorse);
+    if (morseLampEl) morseLampEl.classList.toggle("hidden", !isMorse);
+    if (semaStyleBtn) {
+      semaStyleBtn.classList.toggle("hidden", !isSema);
+      semaStyleBtn.textContent = semaRedWhite ? "Banderín: Rojo/Blanco" : "Banderín: Rojo/Amarillo";
+    }
     if (cipherDirBtn) {
-      if (cipherKind === "semaforo" || cipherKind === "cajon") {
-        cipherDirBtn.classList.add("hidden");
+      cipherDirBtn.classList.toggle("hidden", noReverse);
+      cipherDirBtn.textContent = cipherDecodeMode ? "Clave → Texto" : "Texto → Clave";
+    }
+
+    if (cipherExtraEl) {
+      if (cipherKind === "criptografo") {
+        cipherExtraEl.classList.remove("hidden");
+        cipherExtraEl.innerHTML = `
+          <span>Desplazamiento (A → ${ALPH_27[criptoShift % 27]}):</span>
+          <button type="button" class="bt-sf-btn" id="btCriptoPrevBtn">-1</button>
+          <input type="range" id="btCriptoRange" min="0" max="26" value="${criptoShift}" aria-label="Desplazamiento del criptógrafo" style="flex:1;min-width:120px;" />
+          <button type="button" class="bt-sf-btn" id="btCriptoNextBtn">+1</button>
+        `;
+      } else if (cipherKind === "palabra_clave") {
+        cipherExtraEl.classList.remove("hidden");
+        cipherExtraEl.innerHTML = `
+          <label for="btKeywordInput">Palabra clave:</label>
+          <input type="text" id="btKeywordInput" class="bt-cipher-input" style="max-width:220px;min-height:36px;" maxlength="27" value="${escapeHtml(keywordValue)}" />
+        `;
       } else {
-        cipherDirBtn.classList.remove("hidden");
-        cipherDirBtn.textContent = cipherDecodeMode ? "Clave → Texto" : "Texto → Clave";
+        cipherExtraEl.classList.add("hidden");
+        cipherExtraEl.innerHTML = "";
       }
     }
 
     if (cipherKind === "semaforo") {
-      const chars = Array.from(upper).filter((c) => SEMAPHORE_MAP[c] || c === "Ñ");
+      const chars = Array.from(upperASCII).filter((c) => SEMAPHORE_MAP[c]);
       if (!chars.length) {
-        cipherOutEl.innerHTML = `<span class="bt-cipher-empty">Escribe letras A–Z para mostrar las posiciones de banderines.</span>`;
+        cipherOutEl.innerHTML = `<span class="bt-cipher-empty">Escribe letras A–Z para ver los banderines Semáforo.</span>`;
         lastCipherCopyStr = "";
       } else {
         lastCipherCopyStr = chars.join("");
-        cipherOutEl.innerHTML = `<div class="bt-cipher-svg-grid">${chars
-          .map((ch) => {
-            if (ch === " ") return `<div class="bt-cipher-space-sep" aria-hidden="true"></div>`;
-            return `<div class="bt-cipher-glyph-card">${buildSemaphoreSvg(ch)}<span>${escapeHtml(ch)}</span></div>`;
-          })
-          .join("")}</div>`;
-      }
-      cipherRefEl.innerHTML = `<div class="bt-cipher-svg-grid">${Object.keys(SEMAPHORE_MAP)
-        .filter((k) => k !== " ")
-        .map((k) => `<button type="button" class="bt-cipher-glyph-card" data-cipher-append="${k}" title="Insertar ${k}">${buildSemaphoreSvg(k, 40)}<span>${k}</span></button>`)
-        .join("")}</div>`;
-      return;
-    }
-
-    if (cipherKind === "cajon") {
-      const chars = Array.from(upper).filter((c) => CAJON_GRID[c] || c === " " || c === "Ñ");
-      if (!chars.length) {
-        cipherOutEl.innerHTML = `<span class="bt-cipher-empty">Escribe letras A–Z para ver su símbolo en clave Cajón.</span>`;
-        lastCipherCopyStr = "";
-      } else {
-        lastCipherCopyStr = chars.join("");
+        if (!SEMAPHORE_MAP[selectedSemaLetter]) {
+          selectedSemaLetter = chars.find((c) => c !== " ") || "A";
+        }
         cipherOutEl.innerHTML = `<div class="bt-cipher-svg-grid">${chars
           .map((ch) =>
             ch === " "
               ? `<div class="bt-cipher-space-sep" aria-hidden="true"></div>`
-              : `<div class="bt-cipher-glyph-card">${buildCajonSvg(ch)}<span>${escapeHtml(ch)}</span></div>`
+              : `<button type="button" class="bt-cipher-glyph-card ${ch === selectedSemaLetter ? "is-selected" : ""}" data-sema-focus="${ch}">${buildSemaphoreSvg(ch, 78)}<span>${ch}</span></button>`
           )
           .join("")}</div>`;
       }
-      cipherRefEl.innerHTML = `<div class="bt-cipher-svg-grid">${Object.keys(CAJON_GRID)
-        .map((k) => `<button type="button" class="bt-cipher-glyph-card" data-cipher-append="${k}" title="Insertar ${k}">${buildCajonSvg(k, 36)}<span>${k}</span></button>`)
+      const pair = SEMAPHORE_MAP[selectedSemaLetter] || [0, 1];
+      renderMasterBox(
+        `<h4>Detalle Semáforo · Letra ${selectedSemaLetter}</h4><div style="color:inherit;">${buildSemaphoreSvg(selectedSemaLetter, 136)}</div><p class="bt-ejes-helper-note" style="margin:0;">Posiciones vista del receptor: <strong>${SEMA_POS_NAMES[pair[0]]}</strong> y <strong>${SEMA_POS_NAMES[pair[1]]}</strong>. Toca cualquier letra para inspeccionarla.</p>`
+      );
+      cipherRefEl.innerHTML = `<div class="bt-cipher-svg-grid">${Object.keys(SEMAPHORE_MAP)
+        .filter((k) => k !== " ")
+        .map((k) => `<button type="button" class="bt-cipher-glyph-card ${k === selectedSemaLetter ? "is-selected" : ""}" data-cipher-append="${k}" data-sema-focus="${k}" title="Insertar ${k}">${buildSemaphoreSvg(k, 56)}<span>${k}</span></button>`)
         .join("")}</div>`;
+      return;
+    }
+
+    if (cipherKind === "pigpen") {
+      const chars = Array.from(upperASCII).filter((c) => PIGPEN_MAP[c] || c === " ");
+      lastCipherCopyStr = chars.join("");
+      cipherOutEl.innerHTML = chars.length
+        ? `<div class="bt-cipher-svg-grid">${chars
+            .map((c) => (c === " " ? `<div class="bt-cipher-space-sep" aria-hidden="true"></div>` : `<div class="bt-cipher-glyph-card">${buildPigpenSvg(c)}<span>${c}</span></div>`))
+            .join("")}</div>`
+        : `<span class="bt-cipher-empty">Escribe letras A–Z para ver su símbolo Pigpen.</span>`;
+      renderMasterBox(`<h4>Clave Pigpen (# y X)</h4>${buildPigpenMasterSvg()}`);
+      cipherRefEl.innerHTML = `<div class="bt-cipher-svg-grid">${Object.keys(PIGPEN_MAP)
+        .map((k) => `<button type="button" class="bt-cipher-glyph-card" data-cipher-append="${k}" title="Insertar ${k}">${buildPigpenSvg(k, 40)}<span>${k}</span></button>`)
+        .join("")}</div>`;
+      return;
+    }
+
+    if (cipherKind === "gato") {
+      const chars = Array.from(upperN).filter((c) => GATO_MAP[c] || c === " ");
+      lastCipherCopyStr = chars.join("");
+      cipherOutEl.innerHTML = chars.length
+        ? `<div class="bt-cipher-svg-grid">${chars
+            .map((c) => (c === " " ? `<div class="bt-cipher-space-sep" aria-hidden="true"></div>` : `<div class="bt-cipher-glyph-card">${buildGatoSvg(c)}<span>${c}</span></div>`))
+            .join("")}</div>`
+        : `<span class="bt-cipher-empty">Escribe letras A–Z (incluye Ñ) para ver la Clave Gato.</span>`;
+      renderMasterBox(`<h4>Clave Gato (3 letras por casilla)</h4>${buildGatoMasterSvg()}`);
+      cipherRefEl.innerHTML = `<div class="bt-cipher-svg-grid">${ALPH_27.map(
+        (k) => `<button type="button" class="bt-cipher-glyph-card" data-cipher-append="${k}" title="Insertar ${k}">${buildGatoSvg(k, 40)}<span>${k}</span></button>`
+      ).join("")}</div>`;
       return;
     }
 
     if (cipherKind === "morse") {
       let out = "";
-      let morsePlayStr = "";
+      let seq = "";
       if (!cipherDecodeMode) {
-        const tokens = Array.from(upperKeepN).map((ch) => {
-          if (ch === " ") return "/";
-          return MORSE_MAP[ch] || "";
-        }).filter(Boolean);
-        out = tokens.join(" ");
-        morsePlayStr = out;
-      } else {
-        const words = String(raw || "").trim().split(/\s*\/\s*/);
-        out = words
-          .map((w) =>
-            w
-              .trim()
-              .split(/\s+/)
-              .map((code) => MORSE_REV[code] || "?")
-              .join("")
-          )
+        out = Array.from(upperN)
+          .map((c) => (c === " " ? "/" : MORSE_MAP[c] || ""))
+          .filter(Boolean)
           .join(" ");
-        morsePlayStr = String(raw || "");
+        seq = out;
+      } else {
+        out = String(raw || "")
+          .trim()
+          .split(/\s*\/\s*/)
+          .map((w) => w.trim().split(/\s+/).map((m) => MORSE_REV[m] || "?").join(""))
+          .join(" ");
+        seq = String(raw || "");
       }
       lastCipherCopyStr = out;
-      if (morsePlayBtn) morsePlayBtn.dataset.morseSeq = morsePlayStr;
+      if (morsePlayBtn) morsePlayBtn.dataset.morseSeq = seq;
+      renderMasterBox("");
       cipherOutEl.innerHTML = out
         ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
-        : `<span class="bt-cipher-empty">Escribe texto (o puntos "." y rayas "-" separados por espacio en modo Clave → Texto).</span>`;
+        : `<span class="bt-cipher-empty">Escribe texto (o puntos y rayas separados por espacio).</span>`;
       cipherRefEl.innerHTML = Object.entries(MORSE_MAP)
-        .map(([k, v]) => `<span class="bt-cipher-ref-chip"><strong>${escapeHtml(k)}</strong> <code>${escapeHtml(v)}</code></span>`)
-        .join("");
-      return;
-    }
-
-    if (cipherKind === "murcielago") {
-      const table = cipherDecodeMode ? MURCIELAGO_DE : MURCIELAGO_EN;
-      const srcChars = Array.from(upper);
-      const out = srcChars.map((ch) => table[ch] || ch).join("");
-      lastCipherCopyStr = out;
-      cipherOutEl.innerHTML = out
-        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
-        : `<span class="bt-cipher-empty">Escribe un mensaje para convertir con M-U-R-C-I-E-L-A-G-O (0–9).</span>`;
-      cipherRefEl.innerHTML = Object.entries(MURCIELAGO_EN)
         .map(([k, v]) => `<span class="bt-cipher-ref-chip"><strong>${k}</strong> <code>${v}</code></span>`)
         .join("");
       return;
     }
 
-    const pairMap = PAIR_CIPHERS[cipherKind] || PAIR_CIPHERS.cenit;
-    const out = Array.from(upper).map((ch) => pairMap[ch] || ch).join("");
-    lastCipherCopyStr = out;
-    const shownPairs = [];
-    const seen = new Set();
-    Object.entries(pairMap).forEach(([a, b]) => {
-      if (!seen.has(a) && !seen.has(b)) {
-        seen.add(a);
-        seen.add(b);
-        shownPairs.push([a, b]);
+    if (cipherKind === "murcielago" || cipherKind === "agujerito") {
+      const en = cipherKind === "murcielago" ? MURCIELAGO_EN : AGUJERITO_EN;
+      const de = cipherKind === "murcielago" ? MURCIELAGO_DE : AGUJERITO_DE;
+      const table = cipherDecodeMode ? de : en;
+      const out = Array.from(upperN).map((c) => table[c] || c).join("");
+      lastCipherCopyStr = out;
+      renderMasterBox("");
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Escribe un mensaje para convertir.</span>`;
+      cipherRefEl.innerHTML = Object.entries(en)
+        .map(([k, v]) => `<span class="bt-cipher-ref-chip"><strong>${k}</strong> <code>${v}</code></span>`)
+        .join("");
+      return;
+    }
+
+    if (PAIR_CIPHERS[cipherKind]) {
+      const table = PAIR_CIPHERS[cipherKind];
+      const out = Array.from(upperN).map((c) => table[c] || c).join("");
+      lastCipherCopyStr = out;
+      renderMasterBox("");
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Escribe texto (clave simétrica: funciona igual de ida y vuelta).</span>`;
+      cipherRefEl.innerHTML = (PAIR_CHIPS[cipherKind] || [])
+        .map(([a, b]) => `<span class="bt-cipher-ref-chip"><strong>${a}</strong> <code>↔ ${b}</code></span>`)
+        .join("");
+      return;
+    }
+
+    if (cipherKind === "brujula") {
+      let out = "";
+      if (!cipherDecodeMode) {
+        out = Array.from(upperN)
+          .map((c) => (c === " " ? "/" : BRUJULA_EN[c] || c))
+          .join(" ");
+      } else {
+        out = String(upperN || "")
+          .trim()
+          .split(/\s*\/\s*/)
+          .map((w) => w.trim().split(/\s+/).map((tok) => BRUJULA_DE[tok] || tok).join(""))
+          .join(" ");
       }
-    });
-    cipherOutEl.innerHTML = out
-      ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
-      : `<span class="bt-cipher-empty">Escribe un mensaje para cifrar o descifrar (esta clave es simétrica).</span>`;
-    cipherRefEl.innerHTML = shownPairs
-      .map(([a, b]) => `<span class="bt-cipher-ref-chip"><strong>${a}</strong> <code>↔ ${b}</code></span>`)
-      .join("");
+      lastCipherCopyStr = out;
+      renderMasterBox(`<h4>Clave Brújula (N · E · S · O con números 1–9)</h4>${buildBrujulaMasterSvg()}`);
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Escribe texto o códigos como O5 S1 O4 E6 N6.</span>`;
+      cipherRefEl.innerHTML = Object.entries(BRUJULA_EN)
+        .map(([k, v]) => `<span class="bt-cipher-ref-chip"><strong>${k}</strong> <code>${v}</code></span>`)
+        .join("");
+      return;
+    }
+
+    if (cipherKind === "criptografo") {
+      const dir = cipherDecodeMode ? -criptoShift : criptoShift;
+      const out = Array.from(upperN)
+        .map((c) => {
+          const i = ALPH_27.indexOf(c);
+          if (i < 0) return c;
+          return ALPH_27[(i + dir + ALPH_27.length * 4) % ALPH_27.length];
+        })
+        .join("");
+      lastCipherCopyStr = out;
+      renderMasterBox(`<h4>Rueda Criptográfica Giratoria</h4>${buildCriptografoWheelSvg(criptoShift)}`);
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Escribe un mensaje para rotar sobre el alfabeto de 27 letras.</span>`;
+      cipherRefEl.innerHTML = ALPH_27.map(
+        (c, i) => `<span class="bt-cipher-ref-chip"><strong>${c}</strong> <code>${ALPH_27[(i + criptoShift) % 27]}</code></span>`
+      ).join("");
+      return;
+    }
+
+    if (cipherKind === "reverso") {
+      const out = String(raw || "")
+        .split(/\s+/)
+        .map((w) => Array.from(w).reverse().join(""))
+        .join(" ");
+      lastCipherCopyStr = out;
+      renderMasterBox("");
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Invierte el orden de las letras en cada palabra.</span>`;
+      cipherRefEl.innerHTML = `<span class="bt-cipher-ref-chip">Ejemplo: <strong>SIEMPRE LISTO</strong> <code>ERPMEIS OTSIL</code></span>`;
+      return;
+    }
+
+    if (cipherKind === "alfabeto_rev") {
+      const rev27 = [...ALPH_27].reverse();
+      const out = Array.from(upperN)
+        .map((c) => {
+          const i = ALPH_27.indexOf(c);
+          return i >= 0 ? rev27[i] : c;
+        })
+        .join("");
+      lastCipherCopyStr = out;
+      renderMasterBox("");
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Alfabeto espejo A↔Z hasta N↔N y O↔M (con Ñ central).</span>`;
+      cipherRefEl.innerHTML = ALPH_27.map(
+        (c, i) => `<span class="bt-cipher-ref-chip"><strong>${c}</strong> <code>${rev27[i]}</code></span>`
+      ).join("");
+      return;
+    }
+
+    if (cipherKind === "alfabeto_med") {
+      const out = Array.from(upperASCII)
+        .map((c) => {
+          const i = ALPH_26.indexOf(c);
+          return i >= 0 ? ALPH_26[(i + 13) % 26] : c;
+        })
+        .join("");
+      lastCipherCopyStr = out;
+      renderMasterBox("");
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Divide A–M sobre N–Z (sin Ñ) de forma simétrica.</span>`;
+      cipherRefEl.innerHTML = ALPH_26.slice(0, 13)
+        .map((c, i) => `<span class="bt-cipher-ref-chip"><strong>${c}</strong> <code>↔ ${ALPH_26[i + 13]}</code></span>`)
+        .join("");
+      return;
+    }
+
+    if (cipherKind === "numeros") {
+      let out = "";
+      if (!cipherDecodeMode) {
+        out = Array.from(upperN)
+          .map((c) => {
+            if (c === " ") return "/";
+            const i = ALPH_27.indexOf(c);
+            return i >= 0 ? String(i + 1) : c;
+          })
+          .join(" ");
+      } else {
+        out = String(raw || "")
+          .trim()
+          .split(/\s*\/\s*/)
+          .map((w) =>
+            w
+              .trim()
+              .split(/[\s,-]+/)
+              .map((numStr) => {
+                const n = Number(numStr);
+                return n >= 1 && n <= 27 ? ALPH_27[n - 1] : numStr;
+              })
+              .join("")
+          )
+          .join(" ");
+      }
+      lastCipherCopyStr = out;
+      renderMasterBox("");
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Convierte A=1 hasta Z=27 (con Ñ=15).</span>`;
+      cipherRefEl.innerHTML = ALPH_27.map(
+        (c, i) => `<span class="bt-cipher-ref-chip"><strong>${c}</strong> <code>${i + 1}</code></span>`
+      ).join("");
+      return;
+    }
+
+    if (cipherKind === "palabra_clave") {
+      const codeAlph = buildKeywordAlphabet(keywordValue || "CLARINET");
+      const out = Array.from(upperN)
+        .map((c) => {
+          if (!cipherDecodeMode) {
+            const i = ALPH_27.indexOf(c);
+            return i >= 0 ? codeAlph[i] : c;
+          } else {
+            const i = codeAlph.indexOf(c);
+            return i >= 0 ? ALPH_27[i] : c;
+          }
+        })
+        .join("");
+      lastCipherCopyStr = out;
+      renderMasterBox("");
+      cipherOutEl.innerHTML = out
+        ? `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`
+        : `<span class="bt-cipher-empty">Escribe una palabra clave arriba (sin repetir) para armar el código.</span>`;
+      cipherRefEl.innerHTML = ALPH_27.map(
+        (c, i) => `<span class="bt-cipher-ref-chip"><strong>${c}</strong> <code>${codeAlph[i]}</code></span>`
+      ).join("");
+      return;
+    }
+
+    if (cipherKind === "bloque") {
+      const clean = upperN.replace(/[^A-ZÑ0-9]/g, "");
+      if (!clean.length) {
+        lastCipherCopyStr = "";
+        renderMasterBox("");
+        cipherOutEl.innerHTML = `<span class="bt-cipher-empty">Escribe al menos 3 letras para formar el bloque de 3 filas.</span>`;
+        cipherRefEl.innerHTML = "";
+        return;
+      }
+      const rowsCount = 3;
+      const cols = Math.ceil(clean.length / rowsCount);
+      let out = "";
+      let matrixRows = [];
+      if (!cipherDecodeMode) {
+        matrixRows = [
+          clean.slice(0, cols).split(""),
+          clean.slice(cols, cols * 2).split(""),
+          clean.slice(cols * 2).split("")
+        ];
+        const colChunks = [];
+        for (let c = 0; c < cols; c++) {
+          let tok = "";
+          for (let r = 0; r < rowsCount; r++) {
+            if (matrixRows[r][c]) tok += matrixRows[r][c];
+          }
+          if (tok) colChunks.push(tok);
+        }
+        out = colChunks.join(" ");
+      } else {
+        matrixRows = [[], [], []];
+        const rem = clean.length % rowsCount;
+        const rowLens = [0, 1, 2].map((r) => Math.floor(clean.length / rowsCount) + (r < rem ? 1 : 0));
+        let ptr = 0;
+        for (let c = 0; c < cols; c++) {
+          for (let r = 0; r < rowsCount; r++) {
+            if (c < rowLens[r] && ptr < clean.length) matrixRows[r][c] = clean[ptr++];
+          }
+        }
+        out = matrixRows.map((r) => r.join("")).join("");
+      }
+      lastCipherCopyStr = out;
+      const matrixHtml = `<div class="bt-bloque-matrix" style="grid-template-columns:repeat(${cols}, 30px);">${matrixRows
+        .flatMap((row) =>
+          Array.from({ length: cols }, (_, ci) => `<span class="bt-spiral-cell">${escapeHtml(row[ci] || "·")}</span>`)
+        )
+        .join("")}</div>`;
+      renderMasterBox(`<h4>Bloque rectangular (${rowsCount} filas × ${cols} columnas)</h4>${matrixHtml}`);
+      cipherOutEl.innerHTML = `<div class="bt-cipher-text-result">${escapeHtml(out)}</div>`;
+      cipherRefEl.innerHTML = `<span class="bt-cipher-ref-chip">Regla: <strong>escribe en 3 filas horizontales y lee en columnas verticales.</strong></span>`;
+      return;
+    }
+
+    // CARACOL (Espiral desde el centro hacia afuera)
+    const cleanCaracol = upperN.replace(/[^A-ZÑ0-9]/g, "");
+    if (!cleanCaracol) {
+      lastCipherCopyStr = "";
+      renderMasterBox("");
+      cipherOutEl.innerHTML = `<span class="bt-cipher-empty">Escribe un mensaje para dibujarlo en espiral Caracol desde el centro.</span>`;
+      cipherRefEl.innerHTML = "";
+      return;
+    }
+    const spiral = buildSpiralGrid(cleanCaracol);
+    lastCipherCopyStr = spiral.rows.map((r) => r.map((x) => x || "·").join(" ")).join("\n");
+    renderMasterBox("");
+    cipherOutEl.innerHTML = `
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.45rem;">
+        <div class="bt-spiral-grid" style="grid-template-columns:repeat(${spiral.side}, 30px);">
+          ${spiral.rows
+            .flatMap((row, r) =>
+              row.map((cell, c) => {
+                const isC = r === spiral.centerR && c === spiral.centerC;
+                return `<span class="bt-spiral-cell ${isC ? "is-center" : ""}">${escapeHtml(cell || "·")}</span>`;
+              })
+            )
+            .join("")}
+        </div>
+        <span class="bt-ejes-helper-note" style="margin:0;">Comienza en la casilla resaltada del centro y sigue en espiral de derecha a izquierda en sentido horario.</span>
+      </div>`;
+    cipherRefEl.innerHTML = `<span class="bt-cipher-ref-chip">Longitud: <strong>${cleanCaracol.length}</strong> caracteres en rejilla <code>${spiral.side}×${spiral.side}</code></span>`;
   };
 
   const cipherPillsEl = document.getElementById("btCipherTypePills");
@@ -15923,11 +16611,47 @@ function setupScoutSkillsHub() {
     });
   }
   if (cipherInputEl) cipherInputEl.addEventListener("input", renderCipher);
+  if (cipherOutEl) {
+    cipherOutEl.addEventListener("click", (e) => {
+      const fBtn = e.target.closest("[data-sema-focus]");
+      if (!fBtn) return;
+      selectedSemaLetter = fBtn.getAttribute("data-sema-focus") || "S";
+      renderCipher();
+    });
+  }
   if (cipherRefEl) {
     cipherRefEl.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-cipher-append]");
       if (!btn || !cipherInputEl) return;
-      cipherInputEl.value = (cipherInputEl.value || "") + btn.getAttribute("data-cipher-append");
+      const ch = btn.getAttribute("data-cipher-append");
+      if (btn.hasAttribute("data-sema-focus")) selectedSemaLetter = btn.getAttribute("data-sema-focus");
+      cipherInputEl.value = (cipherInputEl.value || "") + ch;
+      renderCipher();
+    });
+  }
+  if (cipherExtraEl) {
+    cipherExtraEl.addEventListener("click", (e) => {
+      if (e.target.id === "btCriptoPrevBtn") {
+        criptoShift = (criptoShift + 26) % 27;
+        renderCipher();
+      } else if (e.target.id === "btCriptoNextBtn") {
+        criptoShift = (criptoShift + 1) % 27;
+        renderCipher();
+      }
+    });
+    cipherExtraEl.addEventListener("input", (e) => {
+      if (e.target.id === "btCriptoRange") {
+        criptoShift = Number(e.target.value || 0);
+        renderCipher();
+      } else if (e.target.id === "btKeywordInput") {
+        keywordValue = e.target.value || "CLARINET";
+        renderCipher();
+      }
+    });
+  }
+  if (semaStyleBtn) {
+    semaStyleBtn.addEventListener("click", () => {
+      semaRedWhite = !semaRedWhite;
       renderCipher();
     });
   }
@@ -15979,8 +16703,20 @@ function setupScoutSkillsHub() {
   renderCipher();
 
   // --------------------------------------------------------------------------
-  // 2. NUDOS Y AMARRES (10 guías visuales por pasos SVG)
+  // 2. NUDOS Y AMARRES SVG CON CRUCES 3D ARRIBA / ABAJO REALES
   // --------------------------------------------------------------------------
+  const rope = (d, col, w = 7) =>
+    `<path d="${d}" stroke="var(--bt-stage-bg, #ffffff)" stroke-width="${w + 5}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
+    `<path d="${d}" stroke="${col}" stroke-width="${w}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
+    `<path d="${d}" stroke="rgba(255,255,255,0.28)" stroke-width="${Math.max(1.8, w - 4.4)}" stroke-dasharray="2 5.5" fill="none" stroke-linecap="round"/>`;
+
+  const timber = (x1, y1, x2, y2, w = 16) =>
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#78350f" stroke-width="${w}" stroke-linecap="round"/>` +
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#b45309" stroke-width="${w - 5}" stroke-linecap="round"/>`;
+
+  const ROPE_A = "#7c3aed";
+  const ROPE_B = "#f59e0b";
+
   const KNOTS_DATA = [
     {
       id: "rizo",
@@ -15989,9 +16725,9 @@ function setupScoutSkillsHub() {
       catLabel: "Unir",
       use: "Unir dos cabos del mismo grosor (termina plano y es fácil de desatar).",
       steps: [
-        { tip: "Cruza el cabo derecho sobre el izquierdo haciendo un medio nudo.", svg: `<path d="M16 56 C48 56 54 32 76 32 C98 32 108 54 144 54" stroke="#7c3aed" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M144 28 C108 28 98 54 76 54 C54 54 48 28 16 28" stroke="#f59e0b" stroke-width="7" fill="none" stroke-linecap="round"/>` },
-        { tip: "Ahora cruza el izquierdo sobre el derecho en sentido contrario.", svg: `<path d="M16 56 C45 56 52 24 80 24 C108 24 115 56 144 56" stroke="#7c3aed" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M144 26 C115 26 105 56 80 56 C55 56 45 26 16 26" stroke="#f59e0b" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="62" cy="40" r="6" fill="#0f172a" opacity="0.22"/>` },
-        { tip: "Azoca jalando ambos lados parejos: los dos senos quedan simétricos.", svg: `<path d="M12 36 H56 C70 36 74 52 86 52 C98 52 100 32 86 32 C72 32 70 48 56 48 H12" stroke="#7c3aed" stroke-width="6.5" fill="none" stroke-linecap="round"/><path d="M148 36 H104 C90 36 86 20 74 20 C62 20 60 40 74 40 C88 40 90 48 104 48 H148" stroke="#f59e0b" stroke-width="6.5" fill="none" stroke-linecap="round"/>` }
+        { tip: "Cruza el cabo derecho (dorado) sobre el izquierdo (morado) formando el primer medio nudo.", svg: rope("M20 76 C58 76 74 34 100 34 C126 34 142 76 180 76", ROPE_A) + rope("M180 34 C142 34 126 76 100 76 C74 76 58 34 20 34", ROPE_B) },
+        { tip: "Vuelve a cruzar ahora el izquierdo arriba del derecho para que ambos salgan por el mismo lado.", svg: rope("M20 74 C60 74 70 28 100 28 C126 28 134 74 176 74", ROPE_A) + rope("M180 32 C142 32 130 78 100 78 C70 78 62 32 24 32", ROPE_B) + rope("M74 28 C94 46 106 46 126 28", ROPE_A, 6) },
+        { tip: "Ajusta parejo: ambos senos se abrazan en espejo con las dos puntas del mismo lado de su firme.", svg: rope("M14 40 H64 C84 40 90 72 110 72 C132 72 134 38 110 38 C90 38 82 68 62 68 H14", ROPE_A) + rope("M186 40 H136 C116 40 110 18 90 18 C68 18 66 56 90 56", ROPE_B) + rope("M90 56 C110 56 118 68 138 68 H186", ROPE_B) }
       ]
     },
     {
@@ -15999,11 +16735,11 @@ function setupScoutSkillsHub() {
       name: "Vuelta de Escota",
       cat: "unir",
       catLabel: "Unir",
-      use: "Unir dos cuerdas de diferente grosor o que estarán húmedas.",
+      use: "Unir dos cabos de diferente grosor o cuerdas húmedas bajo tensión.",
       steps: [
-        { tip: "Forma un seno (U) abierto con el cabo más grueso.", svg: `<path d="M22 28 H72 C90 28 90 54 72 54 H22" stroke="#7c3aed" stroke-width="8" fill="none" stroke-linecap="round"/>` },
-        { tip: "Pasa el cabo delgado por dentro del seno y rodea ambas ramas por detrás.", svg: `<path d="M22 28 H72 C90 28 90 54 72 54 H22" stroke="#7c3aed" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M140 56 C108 56 96 42 74 42 C60 42 64 20 82 22 L100 44" stroke="#f59e0b" stroke-width="5.5" fill="none" stroke-linecap="round"/>` },
-        { tip: "Mete la punta del cabo delgado debajo de sí mismo y ajusta.", svg: `<path d="M20 28 H72 C90 28 90 54 72 54 H20" stroke="#7c3aed" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M142 52 H96 C78 52 62 26 78 20 C94 14 96 44 80 42 H58" stroke="#f59e0b" stroke-width="5.5" fill="none" stroke-linecap="round"/>` }
+        { tip: "Forma un seno abierto (U) con la cuerda más gruesa (morada).", svg: rope("M24 34 H86 C116 34 116 74 86 74 H24", ROPE_A, 8.5) },
+        { tip: "Mete el cabo delgado por dentro del seno desde atrás y rodea ambas ramas del grueso.", svg: rope("M164 82 C134 82 114 70 92 60 C72 52 72 22 98 22 C116 22 122 36 122 54", ROPE_B, 6) + rope("M24 34 H86 C116 34 116 74 86 74 H24", ROPE_A, 8.5) + rope("M90 22 C116 22 120 56 96 58", ROPE_B, 6) },
+        { tip: "Pasa la punta delgada debajo de su propio cuerpo y tensa ambos lados.", svg: rope("M176 80 H120 C96 80 80 56 98 30", ROPE_B, 6) + rope("M22 34 H86 C116 34 116 74 86 74 H22", ROPE_A, 8.5) + rope("M98 30 C110 14 128 52 104 54 H58", ROPE_B, 6) }
       ]
     },
     {
@@ -16011,11 +16747,11 @@ function setupScoutSkillsHub() {
       name: "Nudo Pescador",
       cat: "unir",
       catLabel: "Unir",
-      use: "Unir cabos resbaladizos, delgados o de nylon mediante dos topes.",
+      use: "Unir líneas resbaladizas o sintéticas mediante dos nudos simples corredizos.",
       steps: [
-        { tip: "Coloca ambos cabos paralelos en direcciones opuestas.", svg: `<line x1="16" y1="34" x2="120" y2="34" stroke="#7c3aed" stroke-width="6.5" stroke-linecap="round"/><line x1="40" y1="48" x2="144" y2="48" stroke="#f59e0b" stroke-width="6.5" stroke-linecap="round"/>` },
-        { tip: "Haz un nudo simple con cada punta abrazando el cuerpo de la otra cuerda.", svg: `<line x1="14" y1="34" x2="144" y2="34" stroke="#7c3aed" stroke-width="6.5" stroke-linecap="round"/><line x1="16" y1="48" x2="146" y2="48" stroke="#f59e0b" stroke-width="6.5" stroke-linecap="round"/><circle cx="48" cy="41" r="11" stroke="#f59e0b" stroke-width="5.5" fill="none"/><circle cx="112" cy="41" r="11" stroke="#7c3aed" stroke-width="5.5" fill="none"/>` },
-        { tip: "Jala los extremos principales hasta que ambos topes choquen firmes al centro.", svg: `<line x1="14" y1="41" x2="146" y2="41" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/><line x1="14" y1="41" x2="146" y2="41" stroke="#f59e0b" stroke-width="6" stroke-dasharray="10 10" stroke-linecap="round"/><rect x="58" y="29" width="20" height="24" rx="8" fill="#f59e0b"/><rect x="82" y="29" width="20" height="24" rx="8" fill="#7c3aed"/>` }
+        { tip: "Alinea ambos cabos paralelos apuntando en direcciones opuestas.", svg: rope("M18 44 H142", ROPE_A) + rope("M58 66 H182", ROPE_B) },
+        { tip: "Ata un nudo simple alrededor del otro cabo con cada una de las puntas.", svg: rope("M16 44 H144", ROPE_A) + rope("M56 66 H184", ROPE_B) + rope("M52 30 C66 30 68 80 52 80 C38 80 38 30 52 30", ROPE_B, 6) + rope("M148 30 C162 30 162 80 148 80 C134 80 134 30 148 30", ROPE_A, 6) },
+        { tip: "Jala ambos extremos largos hasta juntar los dos topes firmemente en el centro.", svg: rope("M16 55 H100", ROPE_A) + rope("M100 55 H184", ROPE_B) + rope("M74 36 C86 36 86 74 74 74 C62 74 62 36 74 36", ROPE_B, 6.5) + rope("M126 36 C138 36 138 74 126 74 C114 74 114 36 126 36", ROPE_A, 6.5) }
       ]
     },
     {
@@ -16023,11 +16759,11 @@ function setupScoutSkillsHub() {
       name: "Ballestrinque",
       cat: "anclar",
       catLabel: "Anclar",
-      use: "Amarrar a un poste o bordón; indispensable para iniciar amarres.",
+      use: "Anclar cuerda a un poste o bordón e iniciar y cerrar todo amarre Scout.",
       steps: [
-        { tip: "Da una vuelta completa alrededor del poste dejando la punta cruzada.", svg: `<rect x="22" y="34" width="116" height="16" rx="7" fill="#92400e"/><path d="M56 64 C56 46 56 26 70 26 C82 26 84 48 80 62" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/>` },
-        { tip: "Cruza la punta por encima haciendo una segunda vuelta formando una X.", svg: `<rect x="22" y="34" width="116" height="16" rx="7" fill="#92400e"/><path d="M54 64 L96 24 M62 24 L104 64" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/>` },
-        { tip: "Pasa la punta por debajo del cruce central y tensa ambos lados.", svg: `<rect x="18" y="34" width="124" height="16" rx="7" fill="#92400e"/><rect x="64" y="29" width="12" height="26" rx="4" fill="#7c3aed"/><rect x="84" y="29" width="12" height="26" rx="4" fill="#7c3aed"/><path d="M58 64 L98 22" stroke="#f59e0b" stroke-width="5.5" fill="none" stroke-linecap="round"/>` }
+        { tip: "Rodea el tronco con una vuelta llevando el cabo en diagonal encima de sí mismo.", svg: rope("M72 30 C72 86 88 88 90 54", ROPE_A) + timber(24, 54, 176, 54) + rope("M60 88 C62 56 76 26 92 26", ROPE_A) },
+        { tip: "Da una segunda vuelta paralela cruzando la diagonal por encima del primer giro.", svg: timber(24, 54, 176, 54) + rope("M64 88 C66 56 80 32 94 32", ROPE_A) + rope("M116 32 C130 32 132 76 116 76", ROPE_A) + rope("M76 34 L122 74", ROPE_B) },
+        { tip: "Mete la punta por debajo del cruce paralelo central y azoca sobre el tronco.", svg: timber(22, 54, 178, 54) + rope("M66 32 L66 78 M86 32 L86 78 M112 32 L112 78", ROPE_A) + rope("M52 74 C80 54 108 54 148 30", ROPE_B, 6) }
       ]
     },
     {
@@ -16035,11 +16771,11 @@ function setupScoutSkillsHub() {
       name: "As de Guía",
       cat: "tensar",
       catLabel: "Tensar",
-      use: "Crea una gaza fija muy segura que no se corre ni se aprieta de más.",
+      use: "Gaza fija de rescate o sujeción que nunca se ahorca bajo carga pesada.",
       steps: [
-        { tip: "Haz un pequeño bucle (el pozo) en la parte firme de la cuerda.", svg: `<path d="M22 62 C52 62 66 28 54 24 C42 20 38 48 64 52" stroke="#7c3aed" stroke-width="6.5" fill="none" stroke-linecap="round"/>` },
-        { tip: "La serpiente (punta) sale del pozo, rodea el tronco firme y vuelve a entrar.", svg: `<path d="M22 62 C52 62 66 28 54 24 C42 20 38 48 64 52" stroke="#7c3aed" stroke-width="6.5" fill="none" stroke-linecap="round"/><path d="M98 62 C128 62 128 24 92 26 C72 28 58 32 54 34" stroke="#f59e0b" stroke-width="6" fill="none" stroke-linecap="round"/>` },
-        { tip: "Sostén punta + lazo y jala la línea principal para cerrar el cuello.", svg: `<ellipse cx="106" cy="42" rx="28" ry="18" stroke="#7c3aed" stroke-width="6.5" fill="none"/><circle cx="72" cy="42" r="10" stroke="#f59e0b" stroke-width="6" fill="none"/><line x1="18" y1="42" x2="64" y2="42" stroke="#7c3aed" stroke-width="6.5" stroke-linecap="round"/>` }
+        { tip: "Forma un pequeño bucle («el pozo») en el firme dejando que cruce por encima.", svg: rope("M20 74 H68", ROPE_A) + rope("M68 74 C92 74 92 34 72 34 C54 34 54 74 80 74 H140", ROPE_A) },
+        { tip: "La punta («serpiente») sale del pozo por abajo, rodea el firme y vuelve a entrar al pozo.", svg: rope("M134 86 C174 86 174 28 130 28 C98 28 84 42 74 44", ROPE_B) + rope("M20 74 H68 C90 74 90 36 72 36 C56 36 56 74 82 74", ROPE_A) + rope("M74 44 C70 58 86 64 96 64", ROPE_B) },
+        { tip: "Sostén punta y lazo juntos y jala del firme para apretar el cuello fijo.", svg: rope("M110 24 C166 24 166 88 110 88 C86 88 78 68 78 55", ROPE_A) + rope("M18 55 H84 C98 55 98 34 84 34 C72 34 72 74 90 74", ROPE_B) }
       ]
     },
     {
@@ -16047,11 +16783,11 @@ function setupScoutSkillsHub() {
       name: "Nudo Margarita",
       cat: "tensar",
       catLabel: "Tensar",
-      use: "Acortar temporalmente una cuerda sin cortarla o aislar una zona dañada.",
+      use: "Acortar una cuerda tensa sin cortarla o aislar una zona dañada en el tramo doble.",
       steps: [
-        { tip: "Dobla la cuerda en forma de S formando tres partes paralelas.", svg: `<path d="M16 28 H114 C126 28 126 42 114 42 H46 C34 42 34 56 46 56 H144" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/>` },
-        { tip: "Bloquea cada extremo de la S pasando un cote o medio nudo externo.", svg: `<path d="M16 28 H114 C126 28 126 42 114 42 H46 C34 42 34 56 46 56 H144" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="42" cy="42" rx="9" ry="18" stroke="#f59e0b" stroke-width="5" fill="none"/><ellipse cx="118" cy="42" rx="9" ry="18" stroke="#f59e0b" stroke-width="5" fill="none"/>` },
-        { tip: "Mantén tensión continua: así los dos cotes mantienen fijo el tramo doble.", svg: `<line x1="12" y1="42" x2="148" y2="42" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/><rect x="34" y="24" width="14" height="36" rx="7" stroke="#f59e0b" stroke-width="5" fill="none"/><rect x="112" y="24" width="14" height="36" rx="7" stroke="#f59e0b" stroke-width="5" fill="none"/><line x1="48" y1="30" x2="112" y2="30" stroke="#7c3aed" stroke-width="5"/><line x1="48" y1="54" x2="112" y2="54" stroke="#7c3aed" stroke-width="5"/>` }
+        { tip: "Pliega la cuerda en una «S» larga formando tres tramos paralelos.", svg: rope("M18 32 H146 C164 32 164 55 146 55 H54 C36 55 36 78 54 78 H182", ROPE_A) },
+        { tip: "Pasa cada bucle de los extremos dentro de un cote exterior formado con los firmes.", svg: rope("M18 32 H146 C164 32 164 55 146 55 H54 C36 55 36 78 54 78 H182", ROPE_A) + rope("M46 22 C60 22 60 88 46 88 C32 88 32 22 46 22", ROPE_B, 5.5) + rope("M154 22 C168 22 168 88 154 88 C140 88 140 22 154 22", ROPE_B, 5.5) },
+        { tip: "Mantén tensión continua: los dos cotes bloquean las orejas y el centro queda acortado.", svg: rope("M14 55 H54 M146 55 H186", ROPE_A) + rope("M60 36 H140 M60 55 H140 M60 74 H140", ROPE_A, 5.5) + rope("M52 24 C66 24 66 86 52 86 C38 86 38 24 52 24", ROPE_B, 6) + rope("M148 24 C162 24 162 86 148 86 C134 86 134 24 148 24", ROPE_B, 6) }
       ]
     },
     {
@@ -16059,11 +16795,11 @@ function setupScoutSkillsHub() {
       name: "Tensor de Viento",
       cat: "tensar",
       catLabel: "Tensar",
-      use: "Ajustar la tensión de los vientos de la casa de campaña sobre estacas.",
+      use: "Ajustar vientos de casa de campaña o lona deslizándolo a lo largo de la cuerda.",
       steps: [
-        { tip: "Rodea la estaca y vuelve paralelamente por la cuerda principal.", svg: `<rect x="122" y="24" width="14" height="36" rx="5" fill="#92400e"/><path d="M18 34 H122 C136 34 136 52 122 52 H74" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/>` },
-        { tip: "Da dos vueltas hacia el interior alrededor de la línea tensa.", svg: `<path d="M18 34 H122 C136 34 136 52 122 52 H60" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="66" cy="42" rx="8" ry="14" stroke="#f59e0b" stroke-width="5" fill="none"/><ellipse cx="82" cy="42" rx="8" ry="14" stroke="#f59e0b" stroke-width="5" fill="none"/>` },
-        { tip: "Haz un cote afuera bloqueando y desliza el nudo para tensar o aflojar.", svg: `<path d="M16 40 H126 C138 40 138 54 126 54 H54" stroke="#7c3aed" stroke-width="6" fill="none" stroke-linecap="round"/><rect x="52" y="28" width="42" height="24" rx="10" stroke="#f59e0b" stroke-width="5.5" fill="none"/>` }
+        { tip: "Rodea la estaca y vuelve paralelo sobre la línea principal tensa.", svg: timber(154, 24, 154, 86, 12) + rope("M16 42 H154 C172 42 172 68 154 68 H78", ROPE_A) },
+        { tip: "Enrolla dos vueltas apretadas hacia adentro abrazando el cabo principal.", svg: timber(154, 24, 154, 86, 12) + rope("M16 42 H154 C172 42 172 68 154 68 H64", ROPE_A) + rope("M88 32 C98 32 98 68 88 68", ROPE_B, 6) + rope("M104 32 C114 32 114 68 104 68", ROPE_B, 6) },
+        { tip: "Cierra con un medio cote exterior y desliza para dar tensión al viento.", svg: timber(154, 24, 154, 86, 12) + rope("M16 46 H154 C172 46 172 72 154 72 H52", ROPE_A) + rope("M64 34 C76 34 76 74 64 74", ROPE_B, 6) + rope("M82 34 C94 34 94 74 82 74", ROPE_B, 6) + rope("M100 34 C112 34 112 74 100 74", ROPE_B, 6) }
       ]
     },
     {
@@ -16071,11 +16807,11 @@ function setupScoutSkillsHub() {
       name: "Amarre Cuadrado",
       cat: "amarre",
       catLabel: "Amarres",
-      use: "Unir dos troncos en escuadra de 90° que soportarán peso en construcciones.",
+      use: "Unir dos troncos a 90° que soportan peso vertical en torres, mesas y pórticos.",
       steps: [
-        { tip: "Inicia con un ballestrinque en el tronco vertical justo debajo del cruce.", svg: `<rect x="72" y="10" width="16" height="64" rx="5" fill="#92400e"/><rect x="26" y="32" width="108" height="16" rx="5" fill="#b45309"/><rect x="70" y="50" width="20" height="8" rx="3" fill="#7c3aed"/>` },
-        { tip: "Envuelve arriba y abajo alternando 3 vueltas ordenadas sin montar cabos.", svg: `<rect x="72" y="10" width="16" height="64" rx="5" fill="#92400e"/><rect x="26" y="32" width="108" height="16" rx="5" fill="#b45309"/><path d="M62 24 L98 56 M66 56 L94 24 M58 40 H102" stroke="#7c3aed" stroke-width="5" stroke-linecap="round"/>` },
-        { tip: "Ahorca dando 2–3 vueltas apretadas entre troncos y cierra con ballestrinque.", svg: `<rect x="72" y="10" width="16" height="64" rx="5" fill="#92400e"/><rect x="26" y="32" width="108" height="16" rx="5" fill="#b45309"/><rect x="64" y="26" width="32" height="28" rx="7" stroke="#f59e0b" stroke-width="5" fill="none"/><path d="M64 26 L96 54 M96 26 L64 54" stroke="#7c3aed" stroke-width="4.5" stroke-linecap="round"/>` }
+        { tip: "Inicia con ballestrinque en el tronco vertical justo por debajo del cruce.", svg: timber(100, 10, 100, 100, 18) + timber(30, 52, 170, 52, 16) + rope("M86 70 H114 M88 78 H112", ROPE_A, 6) },
+        { tip: "Envuelve por detrás del vertical y por delante del horizontal 3 vueltas ordenadas hacia afuera.", svg: timber(100, 10, 100, 100, 18) + timber(30, 52, 170, 52, 16) + rope("M76 30 L124 76 M76 76 L124 30 M70 52 H130", ROPE_A, 5.5) },
+        { tip: "Ahorca dando 2–3 vueltas firmes entre los troncos y remata con ballestrinque.", svg: timber(100, 10, 100, 100, 18) + timber(30, 52, 170, 52, 16) + rope("M74 28 L126 76 M126 28 L74 76", ROPE_A, 5.5) + rope("M78 34 H122 V70 H78 Z", ROPE_B, 5.5) }
       ]
     },
     {
@@ -16083,11 +16819,11 @@ function setupScoutSkillsHub() {
       name: "Amarre Diagonal",
       cat: "amarre",
       catLabel: "Amarres",
-      use: "Juntar dos troncos cruzados en X que tienden a separarse bajo carga.",
+      use: "Fijar dos troncos cruzados en X que tienden a separarse bajo carga.",
       steps: [
-        { tip: "Inicia con un leñador o vuelta que abrace el ángulo abierto de los troncos.", svg: `<line x1="36" y1="16" x2="124" y2="68" stroke="#92400e" stroke-width="14" stroke-linecap="round"/><line x1="124" y1="16" x2="36" y2="68" stroke="#b45309" stroke-width="14" stroke-linecap="round"/><circle cx="80" cy="42" r="16" stroke="#7c3aed" stroke-width="5.5" fill="none"/>` },
-        { tip: "Da 3 vueltas siguiendo una diagonal de la X y luego 3 en la otra diagonal.", svg: `<line x1="36" y1="16" x2="124" y2="68" stroke="#92400e" stroke-width="14" stroke-linecap="round"/><line x1="124" y1="16" x2="36" y2="68" stroke="#b45309" stroke-width="14" stroke-linecap="round"/><path d="M58 22 L102 62 M102 22 L58 62" stroke="#7c3aed" stroke-width="6" stroke-linecap="round"/>` },
-        { tip: "Ahorca firme en el centro entre ambos troncos y remata con ballestrinque.", svg: `<line x1="36" y1="16" x2="124" y2="68" stroke="#92400e" stroke-width="14" stroke-linecap="round"/><line x1="124" y1="16" x2="36" y2="68" stroke="#b45309" stroke-width="14" stroke-linecap="round"/><rect x="64" y="28" width="32" height="28" rx="9" stroke="#f59e0b" stroke-width="5.5" fill="none"/>` }
+        { tip: "Comienza con un leñador abrazando ambos troncos en el ángulo abierto de la X.", svg: timber(42, 18, 158, 92, 16) + timber(158, 18, 42, 92, 16) + rope("M82 36 C100 22 100 88 82 74", ROPE_A, 6) },
+        { tip: "Da 3 vueltas siguiendo un eje de la X y luego 3 vueltas por el eje opuesto.", svg: timber(42, 18, 158, 92, 16) + timber(158, 18, 42, 92, 16) + rope("M70 28 L130 82 M130 28 L70 82", ROPE_A, 6) },
+        { tip: "Ahorca en el centro entre ambos troncos y cierra con ballestrinque firme.", svg: timber(42, 18, 158, 92, 16) + timber(158, 18, 42, 92, 16) + rope("M72 30 L128 80 M128 30 L72 80", ROPE_A, 5.5) + rope("M82 36 H118 V74 H82 Z", ROPE_B, 5.5) }
       ]
     },
     {
@@ -16095,11 +16831,11 @@ function setupScoutSkillsHub() {
       name: "Amarre Trípode",
       cat: "amarre",
       catLabel: "Amarres",
-      use: "Levantar trípodes para fogata colgante, filtro de agua o mesa de campamento.",
+      use: "Armar trípodes estables para fogata elevada, filtro o astabandera.",
       steps: [
-        { tip: "Alinea tres troncos en el suelo con puntas parejas y comienza con ballestrinque.", svg: `<rect x="24" y="22" width="112" height="10" rx="4" fill="#92400e"/><rect x="24" y="37" width="112" height="10" rx="4" fill="#b45309"/><rect x="24" y="52" width="112" height="10" rx="4" fill="#92400e"/><rect x="46" y="18" width="8" height="18" rx="3" fill="#7c3aed"/>` },
-        { tip: "Teje en zigzag (en forma de 8) alternando arriba y abajo 4–6 pasadas.", svg: `<rect x="24" y="22" width="112" height="10" rx="4" fill="#92400e"/><rect x="24" y="37" width="112" height="10" rx="4" fill="#b45309"/><rect x="24" y="52" width="112" height="10" rx="4" fill="#92400e"/><path d="M56 18 C72 18 72 66 86 66 C100 66 100 18 114 18" stroke="#7c3aed" stroke-width="5.5" fill="none" stroke-linecap="round"/>` },
-        { tip: "Ahorca entre cada par de troncos, cierra con ballestrinque y abre las 3 patas.", svg: `<line x1="80" y1="14" x2="34" y2="72" stroke="#92400e" stroke-width="10" stroke-linecap="round"/><line x1="80" y1="14" x2="80" y2="74" stroke="#b45309" stroke-width="10" stroke-linecap="round"/><line x1="80" y1="14" x2="126" y2="72" stroke="#92400e" stroke-width="10" stroke-linecap="round"/><ellipse cx="80" cy="24" rx="16" ry="7" fill="#f59e0b"/>` }
+        { tip: "Coloca los 3 troncos paralelos alternando puntas y ata un ballestrinque en un extremo.", svg: timber(28, 28, 172, 28, 11) + timber(28, 54, 172, 54, 11) + timber(28, 80, 172, 80, 11) + rope("M60 18 V38", ROPE_A, 6) },
+        { tip: "Teje en zigzag («en 8») alternando arriba y abajo 5 pasadas sin apretar de más.", svg: timber(28, 28, 172, 28, 11) + timber(28, 54, 172, 54, 11) + timber(28, 80, 172, 80, 11) + rope("M72 18 C92 18 92 90 110 90 C128 90 128 18 148 18", ROPE_A, 5.5) },
+        { tip: "Ahorca entre cada par de troncos, cierra con ballestrinque y abre las 3 patas.", svg: timber(100, 16, 40, 96, 11) + timber(100, 16, 100, 98, 11) + timber(100, 16, 160, 96, 11) + rope("M76 28 Q100 38 124 28", ROPE_B, 7) }
       ]
     }
   ];
@@ -16123,7 +16859,7 @@ function setupScoutSkillsHub() {
               <span class="bt-knot-cat-badge">${escapeHtml(k.catLabel)}</span>
             </div>
             <div class="bt-knot-svg-stage">
-              <svg viewBox="0 0 160 84" width="160" height="84" aria-hidden="true">${st.svg}</svg>
+              <svg viewBox="0 0 200 110" width="200" height="106" aria-hidden="true">${st.svg}</svg>
             </div>
             <div class="bt-knot-steps-row" role="group" aria-label="Pasos de ${escapeHtml(k.name)}">
               ${["Paso 1", "Paso 2", "Listo"]
@@ -16161,7 +16897,7 @@ function setupScoutSkillsHub() {
   renderKnots();
 
   // --------------------------------------------------------------------------
-  // 3. TU MOCHILA (Zonas SVG + Calculador de peso + Checklist persistente)
+  // 3. TU MOCHILA (Mochila anatómica SVG + Zone Pills + Peso real de ítems)
   // --------------------------------------------------------------------------
   const PACK_KEY = "bt_skills_pack_v1";
   let packState = { type: "campamento", climate: "templado", zone: "media", userKg: 55, checked: {} };
@@ -16180,124 +16916,176 @@ function setupScoutSkillsHub() {
 
   const PACK_ZONES = {
     cabezal: {
-      label: "Cabezal (arriba)",
-      tip: "Cabezal: linterna frontal, mapa, silbato, bloqueador solar, pañuelos y snacks de acceso rápido."
+      tip: "1. Cabezal (arriba): linterna frontal, mapa, silbato, bloqueador solar, pañuelos y snacks a la mano."
     },
     media: {
-      label: "Zona media (espalda)",
-      tip: "Centro pegado a tu espalda: lo más pesado (agua, comida, estufa, casa compartida) para equilibrar tu postura."
-    },
-    exterior: {
-      label: "Bolsillos exteriores",
-      tip: "Exterior y laterales: cantimplora, impermeable doblado, bastones o gorra para sacarlos sin desarmar."
+      tip: "2. Espalda / Peso medio: lo más pesado (agua, comida, estufa, casa) pegado a tu columna para mantener el equilibrio."
     },
     fondo: {
-      label: "Fondo (abajo)",
-      tip: "Fondo: sleeping bag y ropa de dormir protegida dentro de bolsa hermética hasta llegar al campamento."
+      tip: "3. Fondo (abajo): sleeping bag, colchoneta y pijama térmica dentro de bolsa seca hasta montar el campamento."
+    },
+    exterior: {
+      tip: "4. Exterior y laterales: cantimplora, impermeable doblado, bastones o silbato para sacarlos sin desarmar todo."
     }
   };
 
   const PACK_LISTS = {
     campamento: [
-      { id: "c_dormir", text: "Sleeping bag y colchoneta aislante (en bolsa impermeable)" },
-      { id: "c_muda", text: "Mudas de ropa completas (playera, pantalón, calcetines extras)" },
-      { id: "c_platos", text: "Vaso, plato hondo, cuchara/tenedor reutilizables y servilleta" },
-      { id: "c_cantimplora", text: "Cantimplora o termo mínimo 1 litro" },
-      { id: "c_linterna", text: "Linterna frontal o de mano con pilas de repuesto" },
-      { id: "c_higiene", text: "Kit de higiene personal biodegradable, cepillo, jabón y toalla" },
-      { id: "c_uniforme", text: "Uniforme Scout completo, pañoleta y placa / credencial SISAS" },
-      { id: "c_cuerda", text: "3 metros de piola o paracord y bolsa para ropa sucia / basura" }
+      { id: "c_dormir", kg: 2.1, text: "Sleeping bag y colchoneta aislante en bolsa seca (2.1 kg)" },
+      { id: "c_muda", kg: 1.8, text: "Mudas de ropa completas + calcetines extra (1.8 kg)" },
+      { id: "c_platos", kg: 0.4, text: "Vaso, plato hondo, cubiertos reutilizables y servilleta (0.4 kg)" },
+      { id: "c_cantimplora", kg: 1.2, text: "Cantimplora o termo con mínimo 1 L de agua (1.2 kg)" },
+      { id: "c_linterna", kg: 0.2, text: "Linterna frontal/mano con pilas de repuesto (0.2 kg)" },
+      { id: "c_higiene", kg: 0.5, text: "Kit de higiene biodegradable y toalla de secado rápido (0.5 kg)" },
+      { id: "c_uniforme", kg: 0.6, text: "Uniforme Scout completo, pañoleta y credencial SISAS (0.6 kg)" },
+      { id: "c_cuerda", kg: 0.3, text: "3 m de piola/paracord y bolsas para residuos/ropa (0.3 kg)" }
     ],
     ataque: [
-      { id: "a_agua", text: "Agua potable suficiente (1.5 a 2 litros para el recorrido)" },
-      { id: "a_snack", text: "Alimento energético de marcha (fruta seca, barras, sándwich)" },
-      { id: "a_capa", text: "Chamarra ligera o rompevientos compacto" },
-      { id: "a_sol", text: "Gorra o sombrero, bloqueador solar y lentes si aplica" },
-      { id: "a_silbato", text: "Silbato, linterna pequeña y mini botiquín personal" },
-      { id: "a_bolsa", text: "Bolsa reutilizable para regresar el 100% de tu basura" }
+      { id: "a_agua", kg: 1.8, text: "Agua potable suficiente para marcha (1.5–2 L · 1.8 kg)" },
+      { id: "a_snack", kg: 0.6, text: "Alimento energético de recorrido y fruta seca (0.6 kg)" },
+      { id: "a_capa", kg: 0.5, text: "Chamarra ligera o rompevientos compacto (0.5 kg)" },
+      { id: "a_sol", kg: 0.2, text: "Gorra, bloqueador solar y lentes (0.2 kg)" },
+      { id: "a_silbato", kg: 0.3, text: "Silbato, linterna pequeña y mini botiquín personal (0.3 kg)" },
+      { id: "a_bolsa", kg: 0.1, text: "Bolsa reutilizable para regresar el 100% de tu basura (0.1 kg)" }
     ],
     bolsillo: [
-      { id: "b_panoleta", text: "Pañoleta y nudo Scout en orden" },
-      { id: "b_silbato", text: "Silbato y linterna compacta" },
-      { id: "b_libreta", text: "Libreta pequeña de bolsillo y lápiz o pluma" },
-      { id: "b_piola", text: "1.5 metros de piola para prácticas de nudos" },
-      { id: "b_emergencia", text: "Tarjeta de contacto de emergencia y dinero de reserva" },
-      { id: "b_curitas", text: "3 curitas, toallitas limpiadoras y cubrebocas" }
+      { id: "b_panoleta", kg: 0.08, text: "Pañoleta y nudo Scout en orden" },
+      { id: "b_silbato", kg: 0.08, text: "Silbato y linterna compacta" },
+      { id: "b_libreta", kg: 0.08, text: "Libreta pequeña de bolsillo y lápiz" },
+      { id: "b_piola", kg: 0.06, text: "1.5 m de piola para prácticas" },
+      { id: "b_emergencia", kg: 0.04, text: "Tarjeta de contacto de emergencia y efectivo" },
+      { id: "b_curitas", kg: 0.04, text: "3 curitas, toallitas limpiadoras y cubrebocas" }
     ]
   };
   const CLIMATE_EXTRAS = {
     templado: [],
     lluvia: [
-      { id: "cl_impermeable", text: "Poncho o chamarra impermeable con capucha" },
-      { id: "cl_funda", text: "Funda impermeable o bolsa grande para cubrir la mochila" },
-      { id: "cl_calceta", text: "2 pares extra de calcetines secos en bolsa sellada" }
+      { id: "cl_impermeable", kg: 0.45, text: "Poncho o chamarra impermeable con capucha (0.45 kg)" },
+      { id: "cl_funda", kg: 0.25, text: "Funda impermeable o bolsa grande para cubrir mochila (0.25 kg)" },
+      { id: "cl_calceta", kg: 0.2, text: "2 pares extra de calcetines en bolsa sellada (0.2 kg)" }
     ],
     frio: [
-      { id: "cf_termica", text: "Primera capa térmica + chamarra polar abrigadora" },
-      { id: "cf_gorro", text: "Gorro tejido, guantes y bufanda / cuello térmico" },
-      { id: "cf_manta", text: "Manta térmica de emergencia compacta" }
+      { id: "cf_termica", kg: 0.65, text: "Primera capa térmica + chamarra polar (0.65 kg)" },
+      { id: "cf_gorro", kg: 0.25, text: "Gorro tejido, guantes y cuello térmico (0.25 kg)" },
+      { id: "cf_manta", kg: 0.1, text: "Manta térmica de emergencia (0.1 kg)" }
     ]
   };
 
   const packDiagEl = document.getElementById("btPackDiagramWrap");
+  const packZonePillsEl = document.getElementById("btPackZonePills");
   const packZoneInfoEl = document.getElementById("btPackZoneInfo");
   const packListEl = document.getElementById("btPackChecklist");
   const packBadgeEl = document.getElementById("btPackCountBadge");
   const packWeightIn = document.getElementById("btUserWeightKg");
   const packWeightLbl = document.getElementById("btPackMaxWeightLabel");
   const packListTitleEl = document.getElementById("btPackListTitle");
+  const packLoadBarEl = document.getElementById("btPackLoadBar");
+  const packLoadStatusEl = document.getElementById("btPackLoadStatus");
 
   const renderPackDiagram = () => {
     if (!packDiagEl) return;
     const z = packState.zone || "media";
-    const fillZone = (id, col) => (z === id ? col : "rgba(148,163,184,0.16)");
-    const strokeZone = (id, col) => (z === id ? col : "rgba(148,163,184,0.45)");
+    const fCol = (id, col) => (z === id ? col : "rgba(148,163,184,0.18)");
+    const sCol = (id, col) => (z === id ? col : "rgba(148,163,184,0.52)");
+
     packDiagEl.innerHTML = `
-      <svg viewBox="0 0 220 220" width="205" height="205" role="img" aria-label="Zonas de acomodo en tu mochila">
-        <path d="M84 18 C84 8 136 8 136 18" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-        <g data-pack-zone="cabezal" style="cursor:pointer;">
-          <rect x="64" y="20" width="92" height="34" rx="14" fill="${fillZone("cabezal", "rgba(14,165,233,0.28)")}" stroke="${strokeZone("cabezal", "#0ea5e9")}" stroke-width="2.4"/>
-          <text x="110" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="800">1. Cabezal</text>
-        </g>
-        <g data-pack-zone="media" style="cursor:pointer;">
-          <rect x="54" y="58" width="112" height="84" rx="14" fill="${fillZone("media", "rgba(109,40,217,0.3)")}" stroke="${strokeZone("media", "#8b5cf6")}" stroke-width="2.6"/>
-          <text x="110" y="96" text-anchor="middle" fill="currentColor" font-size="12" font-weight="800">2. Peso medio</text>
-          <text x="110" y="113" text-anchor="middle" fill="currentColor" font-size="10" opacity="0.82">(Pegado a la espalda)</text>
-        </g>
+      <svg viewBox="0 0 280 265" width="248" height="232" role="img" aria-label="Anatomía interactiva de Tu Mochila">
+        <!-- Asas superiores -->
+        <path d="M112 24 C112 10 168 10 168 24" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/>
+        <!-- Tirantes y espalda sugeridos detrás -->
+        <path d="M90 36 C74 44 74 110 82 174" fill="none" stroke="currentColor" stroke-opacity="0.28" stroke-width="8" stroke-linecap="round"/>
+        <path d="M190 36 C206 44 206 110 198 174" fill="none" stroke="currentColor" stroke-opacity="0.28" stroke-width="8" stroke-linecap="round"/>
+
+        <!-- ZONA 4: BOLSILLOS EXTERIORES + CANTIMPLORA -->
         <g data-pack-zone="exterior" style="cursor:pointer;">
-          <rect x="26" y="74" width="24" height="68" rx="9" fill="${fillZone("exterior", "rgba(22,163,74,0.28)")}" stroke="${strokeZone("exterior", "#16a34a")}" stroke-width="2.2"/>
-          <rect x="170" y="74" width="24" height="68" rx="9" fill="${fillZone("exterior", "rgba(22,163,74,0.28)")}" stroke="${strokeZone("exterior", "#16a34a")}" stroke-width="2.2"/>
-          <text x="110" y="210" text-anchor="middle" fill="currentColor" font-size="10.5" font-weight="700">Toca cualquier zona para ver dónde va cada cosa</text>
+          <rect x="44" y="108" width="28" height="82" rx="11" fill="${fCol("exterior", "rgba(22,163,74,0.3)")}" stroke="${sCol("exterior", "#16a34a")}" stroke-width="2.6"/>
+          <rect x="49" y="88" width="18" height="22" rx="5" fill="#0ea5e9" opacity="0.88"/>
+          <rect x="53" y="82" width="10" height="7" rx="2" fill="#0369a1"/>
+          <rect x="208" y="108" width="28" height="82" rx="11" fill="${fCol("exterior", "rgba(22,163,74,0.3)")}" stroke="${sCol("exterior", "#16a34a")}" stroke-width="2.6"/>
+          <text x="58" y="152" text-anchor="middle" fill="currentColor" font-size="11" font-weight="900">4</text>
+          <text x="222" y="152" text-anchor="middle" fill="currentColor" font-size="11" font-weight="900">4</text>
         </g>
+
+        <!-- ZONA 2: ESPALDA / PESO MEDIO -->
+        <g data-pack-zone="media" style="cursor:pointer;">
+          <path d="M74 62 Q140 54 206 62 L206 164 Q140 172 74 164 Z" fill="${fCol("media", "rgba(109,40,217,0.32)")}" stroke="${sCol("media", "#8b5cf6")}" stroke-width="2.8"/>
+          <rect x="98" y="122" width="84" height="30" rx="9" fill="rgba(148,163,184,0.14)" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.5"/>
+          <text x="140" y="108" text-anchor="middle" fill="currentColor" font-size="13" font-weight="900">2. Peso medio</text>
+          <text x="140" y="141" text-anchor="middle" fill="currentColor" font-size="10.5" font-weight="700" opacity="0.88">Agua y comida</text>
+        </g>
+
+        <!-- ZONA 1: CABEZAL SUPERIOR CON CORREA Y HEBILLA -->
+        <g data-pack-zone="cabezal" style="cursor:pointer;">
+          <path d="M78 58 C78 24 202 24 202 58 L196 74 Q140 82 84 74 Z" fill="${fCol("cabezal", "rgba(14,165,233,0.3)")}" stroke="${sCol("cabezal", "#0ea5e9")}" stroke-width="2.8"/>
+          <rect x="98" y="64" width="8" height="24" rx="3" fill="#475569"/>
+          <rect x="174" y="64" width="8" height="24" rx="3" fill="#475569"/>
+          <rect x="96" y="74" width="12" height="8" rx="2" fill="#f59e0b"/>
+          <rect x="172" y="74" width="12" height="8" rx="2" fill="#f59e0b"/>
+          <text x="140" y="53" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="900">1. Cabezal</text>
+        </g>
+
+        <!-- ZONA 3: FONDO + AISLANTE/SLEEPING ENROLLADO -->
         <g data-pack-zone="fondo" style="cursor:pointer;">
-          <rect x="60" y="146" width="100" height="44" rx="14" fill="${fillZone("fondo", "rgba(245,158,11,0.28)")}" stroke="${strokeZone("fondo", "#f59e0b")}" stroke-width="2.4"/>
-          <text x="110" y="173" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="800">3. Fondo ligero</text>
+          <path d="M76 168 Q140 176 204 168 L200 202 C200 218 80 218 80 202 Z" fill="${fCol("fondo", "rgba(245,158,11,0.3)")}" stroke="${sCol("fondo", "#f59e0b")}" stroke-width="2.8"/>
+          <text x="140" y="196" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="900">3. Fondo ligero</text>
+          <!-- Sleeping / colchoneta inferior con correas -->
+          <rect x="84" y="218" width="112" height="24" rx="12" fill="rgba(245,158,11,0.22)" stroke="#f59e0b" stroke-width="2"/>
+          <ellipse cx="90" cy="230" rx="6" ry="12" fill="#d97706" opacity="0.55"/>
+          <rect x="108" y="215" width="7" height="30" rx="2" fill="#475569"/>
+          <rect x="165" y="215" width="7" height="30" rx="2" fill="#475569"/>
+          <text x="140" y="234" text-anchor="middle" fill="currentColor" font-size="10.5" font-weight="800">Sleeping / Aislante</text>
         </g>
       </svg>
     `;
     if (packZoneInfoEl) {
       packZoneInfoEl.textContent = (PACK_ZONES[z] || PACK_ZONES.media).tip;
     }
+    if (packZonePillsEl) {
+      packZonePillsEl.querySelectorAll("[data-pack-zone-btn]").forEach((btn) => {
+        btn.classList.toggle("is-active", btn.getAttribute("data-pack-zone-btn") === z);
+      });
+    }
+  };
+
+  const getCurrentPackItems = () => {
+    const base = PACK_LISTS[packState.type] || PACK_LISTS.campamento;
+    const extra = packState.type === "bolsillo" ? [] : CLIMATE_EXTRAS[packState.climate] || [];
+    return [...base, ...extra];
   };
 
   const renderPackWeight = () => {
     const kg = Math.max(15, Math.min(150, Number(packWeightIn ? packWeightIn.value : packState.userKg) || 55));
     packState.userKg = kg;
-    if (!packWeightLbl) return;
-    if (packState.type === "bolsillo") {
-      packWeightLbl.textContent = "Ideal de bolsillo: < 0.5 kg";
-    } else if (packState.type === "ataque") {
-      packWeightLbl.textContent = `Carga ideal: ${(kg * 0.08).toFixed(1)} – ${(kg * 0.12).toFixed(1)} kg (8–12%)`;
-    } else {
-      packWeightLbl.textContent = `Carga ideal: ${(kg * 0.15).toFixed(1)} – ${(kg * 0.2).toFixed(1)} kg (15–20%)`;
+    const basePackWeight = packState.type === "campamento" ? 1.4 : packState.type === "ataque" ? 0.45 : 0;
+    const checkedKg = getCurrentPackItems().reduce(
+      (acc, it) => (packState.checked && packState.checked[`${packState.type}:${it.id}`] ? acc + Number(it.kg || 0) : acc),
+      0
+    );
+    const totalLoaded = checkedKg > 0 ? checkedKg + basePackWeight : 0;
+    const maxSafe = packState.type === "bolsillo" ? 0.5 : packState.type === "ataque" ? kg * 0.12 : kg * 0.2;
+
+    if (packWeightLbl) {
+      if (packState.type === "bolsillo") {
+        packWeightLbl.textContent = "Ideal de bolsillo: < 0.5 kg";
+      } else if (packState.type === "ataque") {
+        packWeightLbl.textContent = `Carga ideal: ${(kg * 0.08).toFixed(1)} – ${maxSafe.toFixed(1)} kg (8–12%)`;
+      } else {
+        packWeightLbl.textContent = `Carga ideal: ${(kg * 0.15).toFixed(1)} – ${maxSafe.toFixed(1)} kg (15–20%)`;
+      }
+    }
+    if (packLoadBarEl && packLoadStatusEl) {
+      const ratio = maxSafe > 0 ? Math.min(110, Math.round((totalLoaded / maxSafe) * 100)) : 0;
+      packLoadBarEl.style.width = `${Math.min(100, ratio)}%`;
+      packLoadBarEl.classList.toggle("is-over", totalLoaded > maxSafe * 1.02);
+      packLoadBarEl.classList.toggle("is-warn", totalLoaded >= maxSafe * 0.85 && totalLoaded <= maxSafe * 1.02);
+      const tareNote = checkedKg > 0 && basePackWeight > 0 ? ` (incl. ${basePackWeight} kg mochila)` : "";
+      packLoadStatusEl.textContent = `Peso empacado: ${totalLoaded.toFixed(1)} kg de ${maxSafe.toFixed(1)} kg límite${tareNote}`;
     }
   };
 
   const renderPackChecklist = () => {
     if (!packListEl) return;
-    const base = PACK_LISTS[packState.type] || PACK_LISTS.campamento;
-    const extra = packState.type === "bolsillo" ? [] : CLIMATE_EXTRAS[packState.climate] || [];
-    const items = [...base, ...extra];
+    const items = getCurrentPackItems();
     const typeTitleMap = { campamento: "Campamento", ataque: "Ataque (1 día)", bolsillo: "De Bolsillo" };
     if (packListTitleEl) packListTitleEl.textContent = `Lista · ${typeTitleMap[packState.type] || "Tu Mochila"}`;
 
@@ -16359,6 +17147,15 @@ function setupScoutSkillsHub() {
       renderPackDiagram();
     });
   }
+  if (packZonePillsEl) {
+    packZonePillsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-pack-zone-btn]");
+      if (!btn) return;
+      packState.zone = btn.getAttribute("data-pack-zone-btn") || "media";
+      savePack();
+      renderPackDiagram();
+    });
+  }
   if (packListEl) {
     packListEl.addEventListener("change", (e) => {
       const chk = e.target.closest("[data-pack-item]");
@@ -16384,10 +17181,11 @@ function setupScoutSkillsHub() {
   renderPackChecklist();
 
   // --------------------------------------------------------------------------
-  // 4. PISTAS Y BRÚJULA (Rosa interactiva + 12 Señales de Pista SVG)
+  // 4. PISTAS Y BRÚJULA (Rosa graduada + Botones cardinales + 12 Señales)
   // --------------------------------------------------------------------------
   const compassStageEl = document.getElementById("btCompassStage");
   const compassRangeEl = document.getElementById("btCompassDegRange");
+  const compassPresetsEl = document.getElementById("btCompassPresets");
   const compassAzEl = document.getElementById("btCompassAzimuthText");
   const compassBackEl = document.getElementById("btCompassBackText");
 
@@ -16401,29 +17199,54 @@ function setupScoutSkillsHub() {
     const back = (deg + 180) % 360;
     if (compassAzEl) compassAzEl.textContent = `Rumbo: ${deg}° (${degToCardinal(deg)})`;
     if (compassBackEl) compassBackEl.textContent = `Regreso: ${back}° (${degToCardinal(back)})`;
+    if (compassRangeEl && Number(compassRangeEl.value) !== deg) compassRangeEl.value = String(deg);
     if (!compassStageEl) return;
+
+    const ticks = [];
+    for (let a = 0; a < 360; a += 15) {
+      const r1 = a % 45 === 0 ? 64 : 69;
+      const r2 = 76;
+      const rad = ((a - 90) * Math.PI) / 180;
+      ticks.push(
+        `<line x1="${(95 + Math.cos(rad) * r1).toFixed(1)}" y1="${(95 + Math.sin(rad) * r1).toFixed(1)}" x2="${(95 + Math.cos(rad) * r2).toFixed(1)}" y2="${(95 + Math.sin(rad) * r2).toFixed(1)}" stroke="currentColor" stroke-opacity="${a % 45 === 0 ? "0.5" : "0.24"}" stroke-width="${a % 90 === 0 ? "2" : "1.2"}"/>`
+      );
+    }
+
     compassStageEl.innerHTML = `
-      <svg viewBox="0 0 180 180" width="180" height="180" aria-hidden="true">
-        <circle cx="90" cy="90" r="76" fill="none" stroke="currentColor" stroke-opacity="0.22" stroke-width="2"/>
-        <circle cx="90" cy="90" r="62" fill="none" stroke="currentColor" stroke-opacity="0.14" stroke-width="1.2" stroke-dasharray="3 4"/>
-        <text x="90" y="25" text-anchor="middle" font-size="12" font-weight="900" fill="#ef4444">N</text>
-        <text x="158" y="94" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor" opacity="0.8">E</text>
-        <text x="90" y="164" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor" opacity="0.8">S</text>
-        <text x="22" y="94" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor" opacity="0.8">O</text>
-        <g transform="rotate(${back} 90 90)">
-          <line x1="90" y1="90" x2="90" y2="34" stroke="#0284c7" stroke-width="2.4" stroke-dasharray="4 3" stroke-linecap="round"/>
+      <svg viewBox="0 0 190 190" width="190" height="190" aria-hidden="true">
+        <circle cx="95" cy="95" r="78" fill="none" stroke="currentColor" stroke-opacity="0.24" stroke-width="2.2"/>
+        <circle cx="95" cy="95" r="56" fill="none" stroke="currentColor" stroke-opacity="0.14" stroke-width="1.2" stroke-dasharray="3 4"/>
+        ${ticks.join("")}
+        <text x="95" y="25" text-anchor="middle" font-size="12" font-weight="900" fill="#ef4444">N</text>
+        <text x="167" y="99" text-anchor="middle" font-size="11.5" font-weight="800" fill="currentColor">E</text>
+        <text x="95" y="172" text-anchor="middle" font-size="11.5" font-weight="800" fill="currentColor">S</text>
+        <text x="23" y="99" text-anchor="middle" font-size="11.5" font-weight="800" fill="currentColor">O</text>
+        <text x="145" y="47" text-anchor="middle" font-size="8.5" font-weight="700" fill="currentColor" opacity="0.65">NE</text>
+        <text x="145" y="149" text-anchor="middle" font-size="8.5" font-weight="700" fill="currentColor" opacity="0.65">SE</text>
+        <text x="45" y="149" text-anchor="middle" font-size="8.5" font-weight="700" fill="currentColor" opacity="0.65">SO</text>
+        <text x="45" y="47" text-anchor="middle" font-size="8.5" font-weight="700" fill="currentColor" opacity="0.65">NO</text>
+        <g transform="rotate(${back} 95 95)">
+          <line x1="95" y1="95" x2="95" y2="34" stroke="#0284c7" stroke-width="2.8" stroke-dasharray="4 3" stroke-linecap="round"/>
+          <circle cx="95" cy="34" r="3.5" fill="#0284c7"/>
         </g>
-        <g transform="rotate(${deg} 90 90)">
-          <polygon points="90,26 98,90 82,90" fill="#ef4444"/>
-          <polygon points="90,154 98,90 82,90" fill="currentColor" opacity="0.32"/>
+        <g transform="rotate(${deg} 95 95)">
+          <polygon points="95,26 103,95 87,95" fill="#ef4444"/>
+          <polygon points="95,164 103,95 87,95" fill="currentColor" opacity="0.32"/>
         </g>
-        <circle cx="90" cy="90" r="6" fill="currentColor"/>
+        <circle cx="95" cy="95" r="6.5" fill="currentColor"/>
       </svg>
     `;
   };
   if (compassRangeEl) {
     compassRangeEl.addEventListener("input", () => renderCompass(compassRangeEl.value));
     renderCompass(compassRangeEl.value);
+  }
+  if (compassPresetsEl) {
+    compassPresetsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-compass-deg]");
+      if (!btn) return;
+      renderCompass(btn.getAttribute("data-compass-deg"));
+    });
   }
 
   const TRACKS = [
@@ -16538,14 +17361,54 @@ function setupScoutSkillsHub() {
   }
 
   // --------------------------------------------------------------------------
-  // 6. FOGATAS Y NO DEJAR RASTRO
+  // 6. FOGATAS DETALLADAS Y NO DEJAR RASTRO
   // --------------------------------------------------------------------------
+  const stoneRing = (cx = 100, cy = 84) => `
+    <ellipse cx="${cx}" cy="${cy + 4}" rx="64" ry="11" fill="rgba(148,163,184,0.16)"/>
+    <circle cx="${cx - 56}" cy="${cy}" r="7" fill="#64748b"/>
+    <circle cx="${cx - 34}" cy="${cy + 6}" r="7.5" fill="#94a3b8"/>
+    <circle cx="${cx - 10}" cy="${cy + 8}" r="7" fill="#64748b"/>
+    <circle cx="${cx + 14}" cy="${cy + 8}" r="7.5" fill="#94a3b8"/>
+    <circle cx="${cx + 38}" cy="${cy + 6}" r="7" fill="#64748b"/>
+    <circle cx="${cx + 58}" cy="${cy}" r="7" fill="#94a3b8"/>
+  `;
+  const flamePair = (cx = 100, cy = 72, h = 44) => `
+    <ellipse cx="${cx}" cy="${cy + 6}" rx="20" ry="6" fill="#dc2626" opacity="0.55"/>
+    <path d="M${cx} ${cy - h} C${cx - 16} ${cy - h * 0.45} ${cx - 16} ${cy} ${cx} ${cy + 4} C${cx + 16} ${cy} ${cx + 16} ${cy - h * 0.45} ${cx} ${cy - h}Z" fill="#f97316"/>
+    <path d="M${cx} ${cy - h * 0.65} C${cx - 8} ${cy - h * 0.25} ${cx - 8} ${cy} ${cx} ${cy + 2} C${cx + 8} ${cy} ${cx + 8} ${cy - h * 0.25} ${cx} ${cy - h * 0.65}Z" fill="#facc15"/>
+  `;
+
   const FIRES_DATA = [
-    { name: "Pirámide", tag: "Encendido rápido", tip: "Ideal para prender rápido o hervir agua pronto; leña delgada inclinada hacia un punto central.", svg: `<path d="M80 14 L52 64 M80 14 L108 64 M80 14 L80 64 M64 26 L96 64 M96 26 L64 64" stroke="#92400e" stroke-width="5" stroke-linecap="round"/><path d="M80 28 C72 40 72 52 80 56 C88 52 88 40 80 28Z" fill="#f97316"/>` },
-    { name: "Consejo / Pagoda", tag: "Velada y brasa larga", tip: "Acomodo en cuadro de grueso a delgado; genera mucha luz, calor constante y buenas brasas.", svg: `<rect x="42" y="54" width="76" height="8" rx="3" fill="#78350f"/><rect x="48" y="42" width="64" height="8" rx="3" fill="#92400e"/><rect x="54" y="30" width="52" height="8" rx="3" fill="#b45309"/><path d="M80 18 C73 28 74 44 80 48 C86 44 87 28 80 18Z" fill="#f97316"/>` },
-    { name: "Estrella", tag: "Ahorro de leña", tip: "5–6 troncos en círculo que se empujan hacia el centro conforme se consumen sin cortarlos.", svg: `<line x1="80" y1="42" x2="80" y2="12" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><line x1="80" y1="42" x2="112" y2="30" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><line x1="80" y1="42" x2="104" y2="66" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><line x1="80" y1="42" x2="56" y2="66" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><line x1="80" y1="42" x2="48" y2="30" stroke="#92400e" stroke-width="6" stroke-linecap="round"/><circle cx="80" cy="42" r="10" fill="#f97316"/>` },
-    { name: "Corredor / Zanja", tag: "Cocina y viento fuerte", tip: "Entre dos troncos paralelos o zanja angosta orientados al viento; sostiene ollas o parrilla.", svg: `<rect x="34" y="46" width="92" height="12" rx="4" fill="#78350f"/><rect x="40" y="30" width="80" height="10" rx="4" fill="#b45309"/><circle cx="66" cy="44" r="7" fill="#f97316"/><circle cx="94" cy="44" r="7" fill="#ef4444"/>` },
-    { name: "Reflector", tag: "Dirige el calor", tip: "Pared de troncos detrás del fuego que refleja el calor hacia un refugio abierto.", svg: `<rect x="108" y="16" width="12" height="50" rx="4" fill="#78350f"/><rect x="96" y="22" width="10" height="44" rx="4" fill="#92400e"/><path d="M62 30 C52 44 54 58 62 62 C70 58 72 44 62 30Z" fill="#f97316"/><path d="M52 42 L30 42" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 3"/>` }
+    {
+      name: "Pirámide",
+      tag: "Encendido rápido",
+      tip: "Ideal para prender rápido o hervir agua; varas delgadas inclinadas hacia un punto central.",
+      svg: stoneRing() + flamePair(100, 74, 46) + timber(100, 22, 62, 80, 9) + timber(100, 22, 138, 80, 9) + timber(100, 20, 100, 82, 8)
+    },
+    {
+      name: "Consejo / Pagoda",
+      tag: "Velada y brasa larga",
+      tip: "Acomodo cruzado en cuadro de grueso abajo a delgado arriba; genera luz y brasas estables.",
+      svg: stoneRing() + flamePair(100, 62, 42) + timber(52, 74, 148, 74, 10) + timber(58, 60, 142, 60, 9) + timber(66, 48, 134, 48, 8)
+    },
+    {
+      name: "Estrella",
+      tag: "Ahorro de leña",
+      tip: "5–6 troncos en círculo que se empujan hacia el centro poco a poco sin tener que cortarlos.",
+      svg: `<circle cx="100" cy="54" r="44" fill="none" stroke="#64748b" stroke-width="5" stroke-dasharray="10 8"/>` + timber(100, 54, 100, 14, 10) + timber(100, 54, 142, 38, 10) + timber(100, 54, 130, 90, 10) + timber(100, 54, 70, 90, 10) + timber(100, 54, 58, 38, 10) + flamePair(100, 58, 28)
+    },
+    {
+      name: "Corredor / Zanja",
+      tag: "Cocina y viento fuerte",
+      tip: "Entre dos troncos paralelos o zanja angosta orientados al viento; sostiene ollas o parrilla.",
+      svg: stoneRing() + timber(44, 62, 156, 62, 12) + flamePair(82, 68, 30) + flamePair(118, 68, 30) + timber(52, 46, 148, 46, 10) + `<path d="M22 54 H38 M32 49 L38 54 L32 59" stroke="#38bdf8" stroke-width="2.4" fill="none" stroke-linecap="round"/>`
+    },
+    {
+      name: "Reflector",
+      tag: "Dirige el calor",
+      tip: "Pared de troncos detrás del fuego que refleja el calor directo hacia un refugio abierto.",
+      svg: stoneRing() + timber(140, 18, 140, 82, 12) + timber(126, 26, 126, 82, 11) + flamePair(86, 74, 42) + `<path d="M72 48 H42 M48 43 L42 48 L48 53" stroke="#facc15" stroke-width="2.6" stroke-dasharray="3 3" fill="none" stroke-linecap="round"/>`
+    }
   ];
   const firesGridEl = document.getElementById("btFiresGrid");
   if (firesGridEl) {
@@ -16556,7 +17419,7 @@ function setupScoutSkillsHub() {
           <h4>${escapeHtml(f.name)}</h4>
           <span class="bt-knot-cat-badge">${escapeHtml(f.tag)}</span>
         </div>
-        <div class="bt-knot-svg-stage"><svg viewBox="0 0 160 76" width="150" height="72" aria-hidden="true">${f.svg}</svg></div>
+        <div class="bt-knot-svg-stage"><svg viewBox="0 0 200 104" width="196" height="98" aria-hidden="true">${f.svg}</svg></div>
         <p class="bt-knot-tip">${escapeHtml(f.tip)}</p>
       </article>`
     ).join("");
@@ -16639,14 +17502,14 @@ function setupScoutSkillsHub() {
     }
     if (formDiagEl) {
       formDiagEl.innerHTML = `
-        <svg viewBox="0 0 150 96" width="210" height="120" aria-hidden="true">
-          <circle cx="${f.scouter[0]}" cy="${f.scouter[1]}" r="8" fill="#7c3aed"/>
+        <svg viewBox="0 0 150 96" width="224" height="128" aria-hidden="true">
+          <circle cx="${f.scouter[0]}" cy="${f.scouter[1]}" r="8.5" fill="#7c3aed"/>
           <text x="${f.scouter[0]}" y="${f.scouter[1] + 3.5}" text-anchor="middle" font-size="9.5" font-weight="900" fill="#ffffff">S</text>
           ${f.pts
             .map(([x, y, kind]) =>
               kind === "G"
-                ? `<circle cx="${x}" cy="${y}" r="6.5" fill="#f59e0b"/><text x="${x}" y="${y + 3}" text-anchor="middle" font-size="8" font-weight="900" fill="#1e293b">G</text>`
-                : `<circle cx="${x}" cy="${y}" r="4.5" fill="#0ea5e9"/>`
+                ? `<circle cx="${x}" cy="${y}" r="6.8" fill="#f59e0b"/><text x="${x}" y="${y + 3}" text-anchor="middle" font-size="8" font-weight="900" fill="#0f172a">G</text>`
+                : `<circle cx="${x}" cy="${y}" r="4.6" fill="#0ea5e9"/>`
             )
             .join("")}
         </svg>`;
@@ -16669,6 +17532,7 @@ function setupScoutSkillsHub() {
   const QUIZ_BANK = [
     { q: "¿Cuál es el toque oficial ASMAC para formar a la Tropa?", opts: ["CC (-.-. -.-.)", "V (...-)", "QQ (--.- --.-)", "RR (.-. .-.)"], ans: 0, exp: "Pistas de Aventura 2024: CC (-.-. -.-.) llama a formación de Tropa." },
     { q: "En clave Murciélago (M-U-R-C-I-E-L-A-G-O = 0-9), ¿qué número corresponde a la letra A?", opts: ["5", "6", "7", "8"], ans: 2, exp: "M(0) U(1) R(2) C(3) I(4) E(5) L(6) A(7) G(8) O(9)." },
+    { q: "¿Cómo se representa la palabra SCOUT en clave Baden Powell?", opts: ["HXLFG", "SC938", "S391T", "SB92T"], ans: 1, exp: "En Agujerito SCOUT es SC938; en Murciélago es S391T; en Baden Powell B↔P, A↔O, D↔W, E↔E, N↔L." },
     { q: "¿Qué nudo sirve para crear una gaza fija que NO se corre ni ahorca bajo tensión?", opts: ["Ballestrinque", "As de Guía", "Rizo", "Margarita"], ans: 1, exp: "El As de Guía forma una gaza segura que puede desatarse fácilmente tras recibir carga." },
     { q: "Si tu rumbo con brújula es 45° (NE), ¿cuál es tu contra-azimut de regreso?", opts: ["135° (SE)", "180° (S)", "225° (SO)", "315° (NO)"], ans: 2, exp: "Contra-azimut: cuando es menor a 180° se suman 180° (45° + 180° = 225°)." },
     { q: "¿Cuál es el peso máximo recomendado para cargar en tu mochila de campamento?", opts: ["5% de tu peso", "15% a 20% de tu peso", "35% de tu peso", "50% de tu peso"], ans: 1, exp: "Cuidar la postura exige no superar el 15–20% de tu peso corporal en campamento." },
@@ -16679,9 +17543,8 @@ function setupScoutSkillsHub() {
     { q: "¿Qué tipo de fogata ahorra más leña porque los troncos se empujan poco a poco al centro?", opts: ["Pagoda", "Estrella", "Pirámide", "Reflector"], ans: 1, exp: "La fogata Estrella mantiene brasas en el centro empujando solo las puntas." },
     { q: "¿Qué amarre une dos troncos en ángulo de 90 grados?", opts: ["Diagonal", "Trípode", "Cuadrado", "Pescador"], ans: 2, exp: "El amarre cuadrado sujeta dos troncos cruzados en escuadra de 90°." },
     { q: "¿Con qué nudo se une mejor una cuerda gruesa con otra más delgada o húmeda?", opts: ["Rizo", "Vuelta de Escota", "Margarita", "Corredizo"], ans: 1, exp: "La Vuelta de Escota está diseñada para distinto grosor o cuerdas mojadas." },
-    { q: "¿Cuál letra se llama a la Comunidad de Caminantes con el silbato?", opts: ["V", "QQ (--.- --.-)", "CC", "J"], ans: 1, exp: "En El desafío de ser Caminante 2024, QQ llama a toda la Comunidad." },
-    { q: "¿Cuántos Principios conforman el código No Dejar Rastro?", opts: ["4 principios", "5 principios", "7 principios", "10 principios"], ans: 2, exp: "Son 7 Principios mundiales para disfrutar el aire libre con mínimo impacto." },
-    { q: "En Semáforo (círculo 1), ¿qué posición tiene la letra D?", opts: ["Uno arriba y otro abajo", "Los dos horizontales", "Uno arriba-izq y otro abajo-der", "Los dos abajo"], ans: 0, exp: "La D coloca un banderín recto hacia arriba (12:00) y el otro recto hacia abajo (6:00)." },
+    { q: "¿Con qué toque se llama a la Comunidad de Caminantes?", opts: ["V", "QQ (--.- --.-)", "CC", "J"], ans: 1, exp: "En El desafío de ser Caminante 2024, QQ llama a toda la Comunidad." },
+    { q: "¿Cuántas letras por casilla lleva la clave Gato tradicional (#)?", opts: ["2 letras", "3 letras (punto izq/centro/der)", "1 letra", "4 letras"], ans: 1, exp: "La clave Gato acomoda 3 letras por casilla (ABC..XYZ) usando punto izquierdo, central o derecho." },
     { q: "¿Cómo se comprueba que una fogata quedó realmente apagada al 100%?", opts: ["Solo tapándola con tierra seca", "Mojando, removiendo cenizas y probando frío al dorso de la mano", "Dejándola arder sola de noche", "Poniendo piedras encima"], ans: 1, exp: "Nunca tapes brasas sin apagarlas: agua, remover y verificar que esté frío al tacto." }
   ];
 
@@ -17122,6 +17985,15 @@ function setupAutofillQrSharing() {
 }
 
 const BT_RELEASE_NOTES = [
+  {
+    version: "Web v10.2.0 / APK v4.2.0",
+    date: "25/11/2026",
+    items: [
+      "Rediseño completo de Claves en Skills: 20 claves interactivas exactas (Semáforo corregido con anatomía real y banderines Rojo/Blanco o Rojo/Amarillo, Morse con audio, Murciélago, Agujerito, Baden Powell, Sufamelico, Parelinofu, Cenit-Polar, Dametupico, Gato, Pigpen, Brújula N/E/S/O, Criptógrafo giratorio, Reverso, Alfabeto al revés, Alfabeto medio, Letras a números, Palabra clave, El bloque y Caracol) con diagramas maestros SVG.",
+      "Dibujos vectoriales 3D en Nudos y Amarres (cruces arriba/abajo reales de soga y textura en troncos), nueva silueta anatómica para Tu Mochila con selector por zonas y medidor de carga en vivo, brújula graduada cada 15°, y fogatas con anillo de piedras y brasas.",
+      "Correcciones del buscador a partir de reportes reales: aviso honesto cuando una especialidad FES solicitada (ej. matemáticas o robótica) no existe en el catálogo junto con enlace a P5.1, respuesta oficial sobre participación con vigencia sin Grupo (Estatutos Art. 14 / Reglamento Art. 22 y 28 / SISAS), progresión de Manada (Cazaderos PJOS), baños separados en Salida Segura y filtrado de dispositivos del desarrollador en telemetría."
+    ]
+  },
   {
     version: "Web v10.1.0 / APK v4.1.0",
     date: "25/11/2026",

@@ -66,7 +66,7 @@ Memoria viva del sistema visual y de interacción de **BiblioTech Scout** (Web/P
 
 - **Espacios (`data-bt-view`):** `inicio`, `biblioteca`, `ejes`, `skills`, `guia`, `agentes`, `fogata`, `formatos`, `acerca`.
 - **Espacio `ejes` (`#ejes-pjos` — 4 Ejes PJOS):** sub-pestañas horizontales cortas (`4 Ejes`, `Salud`, `Ambiente`, `Paz`, `Proyectos`, `Skills →`) con acentos semánticos por eje (`salud` carmesí `#e11d48`, `habilidades` azul `#0284c7`, `ambiente` verde `#16a34a`, `paz` violeta `#7c3aed`) y máximo 2 niveles de superficie tanto en claro como en `html[data-camp-mode="true"]`.
-- **Espacio `skills` (`#skills` — Skills):** 8 pestañas prácticas 100% offline (`Claves`, `Nudos`, `Tu Mochila`, `Pistas`, `Botiquín`, `Fogatas`, `Silbato`, `Reto`) con SVG limpio, síntesis Web Audio local y paridad Claro / Modo oscuro.
+- **Espacio `skills` (`#skills` — Skills):** 8 pestañas prácticas 100% offline (`Claves`, `Nudos`, `Tu Mochila`, `Pistas`, `Botiquín`, `Fogatas`, `Silbato`, `Reto`) con 20 claves interactivas y diagramas maestros SVG, nudos con cruces 3D (`--bt-stage-bg`), mochila anatómica SVG con medidor de carga, síntesis Web Audio local y paridad Claro / Modo oscuro.
 - **Barra superior escritorio (`.desktop-quick-nav`):** accesos cortos en 1 sola línea (`Inicio`, `Biblioteca`, `4 Ejes`, `Skills`, `Guía`, `Agentes`, `La Fogata`, `Archivos`, `Acerca de`, `App`) + modo oscuro + `Menú`.
 - **Dock inferior móvil (`#unifiedBottomDock`):** exactamente 5 botones equilibrados (`Inicio`, `Biblioteca`, `Fogata`, `Archivos`, `Guardados`) con `flex: 1 1 0; min-width: 0`.
 - **Controles de sub-vista:**

@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 25/11/2026 • **Versión:** `10.1.0` (Web) • `4.1.0` Mobile  
+**Base de datos:** 25/11/2026 • **Versión:** `10.2.0` (Web) • `4.2.0` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -11,12 +11,12 @@
 
 ## 1. Qué es BiblioTech Scout y cómo funciona
 
-**BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, acciones educativas FAES, plantillas RECME, reglamentos, libros históricos, los **4 Ejes Temáticos del PJOS**, herramientas interactivas de **Skills** (*Claves Semáforo/Morse/Murciélago/Cenit-Polar/Cajón, Nudos y Amarres, Tu Mochila, Pistas y Brújula, Botiquín, Fogatas, Silbato y Reto*), avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta y nomenclatura oficial de donde proviene cada dato.
+**BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, acciones educativas FAES, plantillas RECME, reglamentos, libros históricos, los **4 Ejes Temáticos del PJOS**, herramientas interactivas de **Skills** (*20 Claves interactivas + Semáforo ASMAC, Nudos y Amarres 3D, Tu Mochila con carga en vivo, Pistas y Brújula, Botiquín, Fogatas, Silbato y Reto*), avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta y nomenclatura oficial de donde proviene cada dato.
 
-- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`21,252` preguntas y respuestas verificadas con enlaces cruzados entre documentos), el catálogo oficial (`883` documentos oficiales visibles, `1,035` entradas indexadas y `664` con nomenclatura oficial ASMAC/WOSM), los espacios interactivos **4 Ejes** y **Skills**, el modo oscuro, el visor PDF por página con streaming inteligente para archivos pesados (`50 MB` a `300+ MB`), el Editor de Archivos (16 plantillas oficiales en vivo) y La Fogata funcionan directamente desde cualquier navegador de escritorio, tablet o celular.
+- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`21,258` preguntas y respuestas verificadas con enlaces cruzados entre documentos), el catálogo oficial (`883` documentos oficiales visibles, `1,035` entradas indexadas y `664` con nomenclatura oficial ASMAC/WOSM), los espacios interactivos **4 Ejes** y **Skills**, el modo oscuro, el visor PDF por página con streaming inteligente para archivos pesados (`50 MB` a `300+ MB`), el Editor de Archivos (16 plantillas oficiales en vivo) y La Fogata funcionan directamente desde cualquier navegador de escritorio, tablet o celular.
 - **Uso sin conexión (Offline):**
-  - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS (`img/apple-touch-icon.png`) y caché PWA (`sw.js` `v62`).
-  - En **Android (APK oficial `v4.1.0`):** la app nativa empaca las `21,252` preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de los `883` documentos oficiales.
+  - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS (`img/apple-touch-icon.png`) y caché PWA (`sw.js` `v63`).
+  - En **Android (APK oficial `v4.2.0`):** la app nativa empaca las `21,258` preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de los `883` documentos oficiales.
 
 ---
 

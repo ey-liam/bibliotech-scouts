@@ -1,8 +1,8 @@
 {
-  "version": "10.1.0",
-  "mobileVersion": "4.1.0",
-  "cache": "bibliotech-scout-v62",
+  "version": "10.2.0",
+  "mobileVersion": "4.2.0",
+  "cache": "bibliotech-scout-v63",
   "releasedAt": "2026-11-25",
   "schemaCookieVersion": "9.7",
-  "notes": "Versión 10.1.0 / Mobile 4.1.0: Corrección total de contraste en Modo oscuro (Editor de Archivos, 4 Ejes, Guía y selecciones activas), nuevo apartado interactivo offline Skills (Claves Semáforo/Morse/Murciélago/Cenit/Sufamelico/Dametupico/Cajón, Nudos y amarres SVG por pasos, Tu Mochila con zonas y carga segura, Pistas y brújula, Botiquín/PAS, Fogatas/No Dejar Rastro, Toques oficiales ASMAC de silbato y formaciones, más Reto rápido de 5 preguntas) y navegación con nombres cortos."
+  "notes": "Versión 10.2.0 / Mobile 4.2.0: Rediseño completo de Claves en Skills (20 claves interactivas con Semáforo ASMAC Rojo/Blanco y Rojo/Amarillo, Pigpen, Gato, Brújula N/E/S/O, Criptógrafo giratorio, Baden Powell, Agujerito, Parelinofu, El Bloque, Palabra Clave y Caracol), Nudos SVG con cruces 3D reales, nueva silueta anatómica para Tu Mochila con peso empacado en vivo, mejoras visuales y animaciones fluidas en todo el sitio, respuestas corregidas para especialidades no publicadas (FES) y participación sin Grupo, y exclusión de dispositivos del desarrollador en telemetría."
 }

@@ -1,5 +1,5 @@
 // ============================================================================
-// BiblioTech Scout — Cloudflare Worker v2.2 (Telemetría por Dispositivo, La Fogata y Streaming PDF)
+// BiblioTech Scout — Cloudflare Worker v2.3 (Exclusión de dispositivos propios, Telemetría, La Fogata y Streaming PDF)
 // - Worker en Cloudflare: bibliotech-telemetry
 // - Binding KV: FORUM_KV -> bibliotech_fogata_kv
 // - Opcional para moderación remota: Variable secreta ADMIN_TOKEN
@@ -7,7 +7,9 @@
 // - Streaming PDF por rangos (HTTP 206) estrictamente limitado a releases oficiales
 // ============================================================================
 
-const WORKER_VERSION = "2.2";
+const WORKER_VERSION = "2.3";
+const OWNER_DEVICE_IDS = new Set(["BT-DWUMYA", "BT-P2FK6W"]);
+const OWNER_IP_HASHES = new Set(["08e022360927", "1fcd354a0d8f", "ffb7bcf3cd1e", "8beadd087d76"]);
 const GITHUB_RELEASE_PDF_BASE =
   "https://github.com/ey-liam/bibliotech-scouts/releases/download/v1.0/";
 const FORUM_CACHE_KEY = "https://bibliotech-forum-cache.internal/v1/posts.json";
@@ -306,6 +308,7 @@ async function recordPrivateAudit(env, payload, ip) {
 
     // Índice anónimo por dispositivo (BT-XXXXXX o respaldo ipHash) para diferenciar usuarios recurrentes
     const userKey = deviceId || (ipHash ? `ip_${ipHash}` : "");
+    const isOwnerDev = OWNER_DEVICE_IDS.has(deviceId) || OWNER_IP_HASHES.has(ipHash);
     if (userKey) {
       const users = await readKvArray(env, KV_USERS_KEY);
       const uIdx = users.findIndex((u) => u && (u.uid === userKey || (!deviceId && u.ipHash === ipHash)));
@@ -316,6 +319,7 @@ async function recordPrivateAudit(env, payload, ip) {
           cur.uid = deviceId;
           cur.hasDeviceCode = true;
         }
+        if (isOwnerDev) cur.isOwner = true;
         cur.lastSeen = nowIso;
         cur.batches = Number(cur.batches || 0) + 1;
         cur.questionsCount = Number(cur.questionsCount || 0) + parsedQs.length;
@@ -335,6 +339,7 @@ async function recordPrivateAudit(env, payload, ip) {
         users.unshift({
           uid: userKey,
           hasDeviceCode: Boolean(deviceId),
+          isOwner: isOwnerDev || undefined,
           ipHash: ipHash || "",
           firstSeen: nowIso,
           lastSeen: nowIso,
@@ -577,6 +582,8 @@ export default {
           readKvArray(env, KV_USERS_KEY),
         ]);
         const commentCount = posts.reduce((acc, p) => acc + (Array.isArray(p.comments) ? p.comments.length : 0), 0);
+        const isOwnerEntry = (u) => Boolean(u && (u.isOwner || OWNER_DEVICE_IDS.has(u.uid) || OWNER_IP_HASHES.has(u.ipHash)));
+        const externalUsers = users.filter((u) => u && !isOwnerEntry(u));
         return jsonResponse(
           {
             ok: true,
@@ -589,8 +596,11 @@ export default {
             bugsLogged: bugs.length,
             reportsLogged: reports.length,
             uniqueDevicesTracked: users.length,
+            externalDevicesTracked: externalUsers.length,
+            externalWithDeviceCode: externalUsers.filter((u) => u.hasDeviceCode).length,
+            ownerDevicesExcluded: users.length - externalUsers.length,
             uniqueWithDeviceCode: users.filter((u) => u && u.hasDeviceCode).length,
-            returningDevices: users.filter((u) => u && (u.batches || 0) >= 2).length,
+            returningDevices: externalUsers.filter((u) => (u.batches || 0) >= 2).length,
           },
           200,
           { "Cache-Control": "public, max-age=15" }

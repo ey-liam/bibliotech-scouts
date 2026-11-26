@@ -402,18 +402,46 @@ def run_e2e(test_webkit: bool = False):
             page.wait_for_selector("#bugReportStatus.is-ok", state="attached", timeout=4000)
             page.locator("#bugReportModal").wait_for(state="hidden", timeout=6000)
 
-            # Probar espacio interactivo Skills (#skills): Claves, Nudos, Tu Mochila, Pistas, Botiquín, Fogatas, Silbato y Reto
+            # Probar espacio interactivo Skills (#skills): 20 Claves, Nudos 3D, Tu Mochila, Pistas, Botiquín, Fogatas, Silbato y Reto
             page.click('.desktop-quick-nav [data-bt-go-view="skills"]')
             assert page.locator("#skills").is_visible(), "Espacio #skills no visible"
             skills_text = page.locator("#skills").inner_text()
             bad_skills_emojis = [ch for ch in EMOJI_RE.findall(skills_text) if ch not in ("✓", "✕", "✔", "→", "←", "↗", "–", "—", "•", "·", "↔")]
             assert not bad_skills_emojis, f"Emojis detectados en #skills: {set(bad_skills_emojis)}"
             assert page.locator("#btCipherOutputArea .bt-cipher-glyph-card svg").count() >= 5, "Semáforo SVG no se renderizó"
+            page.click("#btSemaFlagStyleBtn")
+            assert "Rojo/Amarillo" in page.locator("#btSemaFlagStyleBtn").inner_text(), "Toggle de banderines Semáforo falló"
+            page.click("#btSemaFlagStyleBtn")
+
             page.click('#btCipherTypePills [data-cipher-kind="morse"]')
             assert "-" in page.locator("#btCipherOutputArea").inner_text() or "." in page.locator("#btCipherOutputArea").inner_text(), "Morse no tradujo"
             page.click('#btCipherTypePills [data-cipher-kind="murcielago"]')
             murc_out = page.locator("#btCipherOutputArea").inner_text()
             assert "450" in murc_out and "64" in murc_out, f"Murciélago SIEMPRE LISTOS inesperado: {murc_out}"
+
+            page.fill("#btCipherTextInput", "MANADA SEEONEE")
+            page.click('#btCipherTypePills [data-cipher-kind="badenpowell"]')
+            assert "MOLOWO SEEALEE" in page.locator("#btCipherOutputArea").inner_text(), "Baden Powell falló"
+
+            page.fill("#btCipherTextInput", "SCOUT")
+            page.click('#btCipherTypePills [data-cipher-kind="agujerito"]')
+            assert "SC938" in page.locator("#btCipherOutputArea").inner_text(), "Agujerito SCOUT falló"
+            page.click('#btCipherTypePills [data-cipher-kind="alfabeto_rev"]')
+            assert "HXLFG" in page.locator("#btCipherOutputArea").inner_text(), "Alfabeto al revés SCOUT falló"
+            page.click('#btCipherTypePills [data-cipher-kind="alfabeto_med"]')
+            assert "FPBHG" in page.locator("#btCipherOutputArea").inner_text(), "Alfabeto medio SCOUT falló"
+            page.click('#btCipherTypePills [data-cipher-kind="palabra_clave"]')
+            assert "QAMUS" in page.locator("#btCipherOutputArea").inner_text(), "Palabra clave CLARINET falló"
+            page.click('#btCipherTypePills [data-cipher-kind="criptografo"]')
+            assert "RBÑTS" in page.locator("#btCipherOutputArea").inner_text(), "Criptógrafo SCOUT falló"
+            page.click('#btCipherTypePills [data-cipher-kind="brujula"]')
+            assert "O5 S1 O4 E6 N6" in page.locator("#btCipherOutputArea").inner_text(), "Brújula SCOUT falló"
+            page.click('#btCipherTypePills [data-cipher-kind="pigpen"]')
+            assert page.locator("#btCipherMasterDiagram svg").count() >= 2, "Faltan diagramas maestros Pigpen (# y X)"
+            page.click('#btCipherTypePills [data-cipher-kind="gato"]')
+            assert page.locator("#btCipherMasterDiagram svg").count() == 1, "Falta cuadrícula Gato 3x3"
+            page.click('#btCipherTypePills [data-cipher-kind="caracol"]')
+            assert page.locator("#btCipherOutputArea .bt-spiral-cell.is-center").count() == 1, "Falta celda central de Caracol"
 
             page.click('#btSkillsTabs [data-skills-tab="nudos"]')
             assert page.locator("#btKnotsGrid .bt-knot-card").count() >= 10, "Faltan nudos en #skills"
@@ -421,14 +449,20 @@ def run_e2e(test_webkit: bool = False):
             assert page.locator('#btKnotsGrid [data-knot-step="rizo:1"]').evaluate("el => el.classList.contains('is-active')"), "Paso 2 de nudo no quedó activo"
 
             page.click('#btSkillsTabs [data-skills-tab="mochila"]')
+            assert page.locator('#btPackZonePills [data-pack-zone-btn]').count() == 4, "Faltan botones de zona en Tu Mochila"
+            page.click('#btPackZonePills [data-pack-zone-btn="cabezal"]')
+            assert "1. Cabezal" in page.locator("#btPackZoneInfo").inner_text(), "Cambio de zona en Tu Mochila falló"
             page.fill("#btUserWeightKg", "60")
             assert "9.0 – 12.0 kg" in page.locator("#btPackMaxWeightLabel").inner_text(), "Cálculo de carga segura 60kg falló"
             page.locator("#btPackChecklist input[type='checkbox']").first.check()
             assert page.locator("#btPackCountBadge").inner_text().startswith("1 /"), "Checklist Tu Mochila no actualizó contador"
+            assert "Peso empacado:" in page.locator("#btPackLoadStatus").inner_text() and "0.0 kg" not in page.locator("#btPackLoadStatus").inner_text(), "Medidor de carga no sumó peso empacado"
 
             page.click('#btSkillsTabs [data-skills-tab="pistas"]')
             assert page.locator("#btTracksGrid .bt-track-card").count() == 12, "Faltan 12 señales de pista"
             assert "225°" in page.locator("#btCompassBackText").inner_text(), "Contra-azimut inicial incorrecto"
+            page.click('#btCompassPresets [data-compass-deg="90"]')
+            assert "270°" in page.locator("#btCompassBackText").inner_text(), "Botón rápido E 90° no calculó regreso 270°"
 
             page.click('#btSkillsTabs [data-skills-tab="botiquin"]')
             assert page.locator("#btFirstAidGrid .bt-firstaid-card").count() >= 5, "Faltan tarjetas de primeros auxilios"
@@ -445,7 +479,7 @@ def run_e2e(test_webkit: bool = False):
             page.locator("#btQuizArea [data-quiz-pick]").first.click()
             assert page.locator("#btQuizArea .bt-quiz-exp").count() == 1, "Reto no mostró retroalimentación al responder"
 
-            # Probar salto directo desde Buscador hacia Skills
+            # Probar salto directo desde Buscador hacia Skills + consultas reales corregidas
             page.click('.desktop-quick-nav [data-bt-go-view="inicio"]')
             page.fill("#askInput", "clave murcielago")
             page.click("#askSubmitBtn")
@@ -454,6 +488,25 @@ def run_e2e(test_webkit: bool = False):
             assert jump_btn.is_visible(), "Falta botón directo Abrir en Skills en respuesta de buscador"
             jump_btn.click()
             assert page.locator("#skills").is_visible(), "Botón del buscador no abrió Skills"
+
+            page.click('.desktop-quick-nav [data-bt-go-view="inicio"]')
+            page.fill("#askInput", "Ficha especialidad en matemáticas")
+            page.click("#askSubmitBtn")
+            page.wait_for_selector("#answerContainer:not(.hidden)", timeout=5000)
+            ans_math = page.locator("#answerBody").inner_text()
+            assert "P5.1" in ans_math and "no existe actualmente" in ans_math, f"Detector FES matemáticas falló: {ans_math}"
+
+            page.fill("#askInput", "Puedo participar sin pertenecer a un grupo pero con vigencia activa")
+            page.click("#askSubmitBtn")
+            page.wait_for_selector("#answerContainer:not(.hidden)", timeout=5000)
+            ans_nogrp = page.locator("#answerBody").inner_text()
+            assert "Estatutos 2023" in ans_nogrp and "Cambio de Grupo" in ans_nogrp and "$750" not in ans_nogrp, f"Detector sin grupo falló: {ans_nogrp}"
+
+            page.fill("#askInput", "Con trabajo las progresiones en manada")
+            page.click("#askSubmitBtn")
+            page.wait_for_selector("#answerContainer:not(.hidden)", timeout=5000)
+            ans_manada = page.locator("#answerBody").inner_text()
+            assert "Cazaderos" in ans_manada and "P2.1" in ans_manada, f"Consulta Manada con typo falló: {ans_manada}"
 
             # Verificar contraste real en Modo oscuro (esperando >=350ms tras activar transiciones CSS)
             page.emulate_media(color_scheme="dark")

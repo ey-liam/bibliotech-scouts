@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=49" />
+  <link rel="stylesheet" href="styles.css?v=50" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -1557,7 +1557,7 @@
             <div>
               <span class="bt-wizard-kicker">EJE · HABILIDADES</span>
               <h3>Traductor de Claves</h3>
-              <p>Escribe un mensaje para verlo al instante en Semáforo, Morse, Murciélago, Cenit-Polar o Cajón.</p>
+              <p>Traduce al instante en 20 claves Scout: Semáforo, Morse, Murciélago, Gato, Pigpen, Criptógrafo y más.</p>
             </div>
             <div class="bt-ejes-inline-actions" style="margin-top:0;">
               <button type="button" id="btCipherCopyBtn" class="bt-sf-btn bt-skills-no-print">Copiar</button>
@@ -1569,23 +1569,39 @@
             <button type="button" class="bt-skill-pill is-active" data-cipher-kind="semaforo">Semáforo</button>
             <button type="button" class="bt-skill-pill" data-cipher-kind="morse">Morse</button>
             <button type="button" class="bt-skill-pill" data-cipher-kind="murcielago">Murciélago</button>
-            <button type="button" class="bt-skill-pill" data-cipher-kind="cenit">Cenit-Polar</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="agujerito">Agujerito</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="badenpowell">Baden Powell</button>
             <button type="button" class="bt-skill-pill" data-cipher-kind="sufamelico">Sufamelico</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="parelinofu">Parelinofu</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="cenit">Cenit-Polar</button>
             <button type="button" class="bt-skill-pill" data-cipher-kind="dametupico">Dametupico</button>
-            <button type="button" class="bt-skill-pill" data-cipher-kind="cajon">Cajón</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="gato">Gato</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="pigpen">Pigpen</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="brujula">Brújula</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="criptografo">Criptógrafo</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="reverso">Reverso</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="alfabeto_rev">Alfabeto al revés</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="alfabeto_med">Alfabeto medio</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="numeros">Letras a números</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="palabra_clave">Palabra clave</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="bloque">El bloque</button>
+            <button type="button" class="bt-skill-pill" data-cipher-kind="caracol">Caracol</button>
           </div>
 
           <div class="bt-cipher-input-row bt-skills-no-print">
             <input type="text" id="btCipherTextInput" class="bt-cipher-input" maxlength="80" value="SIEMPRE LISTOS" placeholder="Escribe tu mensaje aquí..." aria-label="Mensaje a convertir" />
             <div style="display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center;">
               <button type="button" id="btCipherDirToggle" class="bt-sf-btn">Texto → Clave</button>
+              <button type="button" id="btSemaFlagStyleBtn" class="bt-sf-btn">Banderín: Rojo/Blanco</button>
               <button type="button" id="btMorsePlayBtn" class="bt-sf-btn is-accent hidden">Escuchar</button>
               <button type="button" id="btMorseSpeedBtn" class="bt-sf-btn hidden">Normal</button>
               <span id="btMorseLamp" class="bt-morse-lamp hidden"><span class="bt-morse-lamp-dot" aria-hidden="true"></span><span>Señal</span></span>
             </div>
           </div>
 
+          <div id="btCipherExtraWrap" class="bt-cipher-extra-row hidden bt-skills-no-print"></div>
           <div id="btCipherOutputArea" class="bt-cipher-output" aria-live="polite"></div>
+          <div id="btCipherMasterDiagram" class="bt-cipher-master-box hidden"></div>
           <div id="btCipherRefArea" class="bt-cipher-ref-strip"></div>
         </div>
       </div>
@@ -1641,11 +1657,21 @@
             <div class="bt-skill-subbox">
               <h4>Cómo acomodar tu mochila</h4>
               <div id="btPackDiagramWrap" class="bt-pack-svg-stage"></div>
+              <div id="btPackZonePills" class="bt-skill-pill-row bt-pack-zone-pills" role="group" aria-label="Zonas de acomodo">
+                <button type="button" class="bt-skill-pill" data-pack-zone-btn="cabezal">1. Cabezal</button>
+                <button type="button" class="bt-skill-pill is-active" data-pack-zone-btn="media">2. Espalda / Peso</button>
+                <button type="button" class="bt-skill-pill" data-pack-zone-btn="fondo">3. Fondo</button>
+                <button type="button" class="bt-skill-pill" data-pack-zone-btn="exterior">4. Exterior</button>
+              </div>
               <p id="btPackZoneInfo" class="bt-ejes-helper-note" style="margin-bottom:0;"></p>
               <div class="bt-pack-weight-row">
                 <label for="btUserWeightKg"><strong>Tu peso (kg):</strong></label>
                 <input type="number" id="btUserWeightKg" min="15" max="150" value="55" />
                 <span id="btPackMaxWeightLabel">Carga ideal: 8.3 – 11.0 kg</span>
+              </div>
+              <div id="btPackLoadMeter" class="bt-pack-load-meter">
+                <div class="bt-pack-load-track"><div id="btPackLoadBar" class="bt-pack-load-bar"></div></div>
+                <span id="btPackLoadStatus" class="bt-ejes-helper-note" style="margin:0;">Peso empacado: 0.0 kg</span>
               </div>
             </div>
 
@@ -1677,6 +1703,12 @@
               <div id="btCompassStage" class="bt-compass-svg-stage"></div>
               <div style="display:grid;gap:0.5rem;">
                 <input type="range" id="btCompassDegRange" min="0" max="359" value="45" aria-label="Rumbo en grados" />
+                <div id="btCompassPresets" class="bt-compass-presets" role="group" aria-label="Rumbos cardinales rápidos">
+                  <button type="button" class="bt-knot-step-btn" data-compass-deg="0">N 0°</button>
+                  <button type="button" class="bt-knot-step-btn" data-compass-deg="90">E 90°</button>
+                  <button type="button" class="bt-knot-step-btn" data-compass-deg="180">S 180°</button>
+                  <button type="button" class="bt-knot-step-btn" data-compass-deg="270">O 270°</button>
+                </div>
                 <div style="display:flex;justify-content:space-between;font-size:0.86rem;font-weight:800;">
                   <span id="btCompassAzimuthText">Rumbo: 45° (NE)</span>
                   <span id="btCompassBackText">Regreso: 225° (SO)</span>
@@ -4160,6 +4192,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=49"></script>
+  <script src="app.js?v=50"></script>
 </body>
 </html>
