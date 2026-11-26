@@ -529,6 +529,7 @@ async function initApp() {
   initPrivacyAndTelemetry();
   setupVersionAndUpdateChecker();
   setupWelcomeModal();
+  if (typeof setupWhatsNewModal === "function") setupWhatsNewModal();
   setupIosExperience();
   setupBugReportModal();
   setupAutofillVault();
@@ -3859,24 +3860,7 @@ function displayAnswer(data, queryText = "") {
     data && data.correctedQuery
       ? `<div class="bt-typo-banner" role="status">Mostrando resultados para <strong>«${escapeHtml(data.correctedQuery)}»</strong> <span class="bt-typo-sub">(consulta corregida automáticamente)</span></div>`
       : "";
-  let skillCtaHtml = "";
-  const qNormSkill = normalizeStr(queryText || "");
-  if (qNormSkill) {
-    const skillRules = [
-      { re: /\b(semaforo|banderin|banderas|morse|murcielago|agujerito|baden|powell|parelinofu|cenit|polar|sufamelico|dametupico|cajon|gato|pigpen|brujula|criptografo|reverso|alfabeto|bloque|caracol|clave|claves|cifrado)\b/, tab: "claves", label: "Claves" },
-      { re: /\b(nudo|nudos|amarre|amarres|ballestrinque|as de guia|rizo|pescador|margarita|escota|cabuyeria|pionerismo)\b/, tab: "nudos", label: "Nudos" },
-      { re: /\b(mochila|empacar|equipo de bolsillo|mochila de ataque|mochila de campamento)\b/, tab: "mochila", label: "Tu Mochila" },
-      { re: /\b(pista|pistas|senales de pista|brujula|azimut|contra-azimut|orientacion|rumbo)\b/, tab: "pistas", label: "Pistas" },
-      { re: /\b(botiquin|primeros auxilios|quemadura|esguince|insolacion|golpe de calor|regla pas)\b/, tab: "botiquin", label: "Botiquín" },
-      { re: /\b(fogata|fogatas|no dejar rastro|piramide|pagoda|estrella|zanja|reflector)\b/, tab: "fogatas", label: "Fogatas" },
-      { re: /\b(silbato|toque|toques|formacion|formaciones|herradura|rectangulo|filas|columnas)\b/, tab: "silbato", label: "Silbato" }
-    ];
-    const hit = skillRules.find((r) => r.re.test(qNormSkill));
-    if (hit) {
-      skillCtaHtml = `<div class="bt-ejes-inline-actions" style="margin-top:0.85rem;"><button type="button" class="bt-sf-btn is-accent" data-bt-jump-skill="${hit.tab}">Abrir en Skills: ${hit.label} →</button></div>`;
-    }
-  }
-  bodyEl.innerHTML = typoBanner + renderMarkdown((data && data.answer_markdown) || "") + skillCtaHtml;
+  bodyEl.innerHTML = typoBanner + renderMarkdown((data && data.answer_markdown) || "");
 
   const sources = data.sources || [];
   updateAnswerFeedbackUI(queryText, data, sources.length);
@@ -7403,13 +7387,13 @@ function setupIosExperience() {
   setupGlobalShortcuts();
 }
 
-const APP_WEB_VERSION = "10.2.0";
-const APP_MOBILE_VERSION = "4.2.0";
+const APP_WEB_VERSION = "10.3.0";
+const APP_MOBILE_VERSION = "4.3.0";
 const APP_COOKIE_SCHEMA = "9.7";
 const BT_SEEN_VERSION_KEY = "bt_seen_app_version_v1";
 const BT_COOKIE_SCHEMA_KEY = "bt_cookie_schema_v1";
 const BT_ACK_REMOTE_VER_KEY = "bt_ack_remote_version_v1";
-const WEB_OFFLINE_CACHE = "bibliotech-scout-v63";
+const WEB_OFFLINE_CACHE = "bibliotech-scout-v64";
 const WEB_OFFLINE_META_KEY = "bt_web_offline_meta_v1";
 
 function setupVersionAndUpdateChecker() {
@@ -7750,6 +7734,7 @@ function setupWebOfflineManager() {
 }
 
 const BT_WELCOME_SEEN_KEY = "bt_welcome_seen_v1";
+const BT_LAST_SEEN_VERSION_KEY = "bt_last_seen_version_v1";
 
 function setupWelcomeModal() {
   const modal = document.getElementById("welcomeModal");
@@ -7835,6 +7820,7 @@ function setupWelcomeModal() {
   const dismissWelcome = (acceptConsentIfUnset = true) => {
     try {
       localStorage.setItem(BT_WELCOME_SEEN_KEY, "1");
+      localStorage.setItem(BT_LAST_SEEN_VERSION_KEY, APP_WEB_VERSION);
       if (acceptConsentIfUnset && !localStorage.getItem(BT_CONSENT_KEY)) {
         localStorage.setItem(BT_CONSENT_KEY, "accepted");
         renderRecentQueriesUI();
@@ -7891,7 +7877,7 @@ function setupWelcomeModal() {
       const shareUrl = "https://ey-liam.github.io/bibliotech-scouts/";
       const shareData = {
         title: "BiblioTech Scout — Biblioteca e Inteligencia Documental Scout",
-        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 21,195 respuestas scouts en BiblioTech Scout:",
+        text: "Explora 883 documentos oficiales (incluyendo 220 FAES y 82 FES) y 21,290+ respuestas scouts en BiblioTech Scout:",
         url: shareUrl
       };
       enqueueAnonTelemetry({ t: "enlace_externo", label: "Compartir QR / Sitio Bienvenida", url: shareUrl }, false);
@@ -7925,6 +7911,102 @@ function setupWelcomeModal() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !modal.classList.contains("hidden")) dismissWelcome(true);
   });
+}
+
+function setupWhatsNewModal() {
+  const modal = document.getElementById("whatsNewModal");
+  if (!modal) return;
+
+  const closeBtn = document.getElementById("closeWhatsNewModalBtn");
+  const acceptBtn = document.getElementById("whatsNewAcceptBtn");
+  const historyBtn = document.getElementById("whatsNewOpenHistoryBtn");
+  const versionBadge = document.getElementById("whatsNewVersionBadge");
+  const dateLabel = document.getElementById("whatsNewDateLabel");
+  const bodyEl = document.getElementById("whatsNewBody");
+
+  const SECTION_META = [
+    { key: "added", label: "Añadido", cls: "is-added" },
+    { key: "improved", label: "Mejorado", cls: "is-improved" },
+    { key: "changed", label: "Cambiado", cls: "is-changed" },
+    { key: "removed", label: "Eliminado", cls: "is-removed" }
+  ];
+
+  const renderLatestRelease = () => {
+    const latest = Array.isArray(BT_RELEASE_NOTES) && BT_RELEASE_NOTES[0] ? BT_RELEASE_NOTES[0] : null;
+    if (!latest || !bodyEl) return;
+    if (versionBadge) versionBadge.textContent = window.Capacitor ? `App APK v${APP_MOBILE_VERSION}` : `Web v${APP_WEB_VERSION}`;
+    if (dateLabel) dateLabel.textContent = latest.date || "";
+
+    const sec = latest.sections || {};
+    const groupsHtml = SECTION_META.map((m) => {
+      const arr = Array.isArray(sec[m.key]) ? sec[m.key] : [];
+      if (!arr.length) return "";
+      return `
+        <section class="bt-whatsnew-group">
+          <div class="bt-whatsnew-group-head">
+            <span class="bt-wn-badge ${m.cls}">${escapeHtml(m.label)}</span>
+          </div>
+          <ul class="bt-whatsnew-list">
+            ${arr.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
+          </ul>
+        </section>
+      `;
+    }).join("");
+
+    bodyEl.innerHTML =
+      groupsHtml ||
+      `<section class="bt-whatsnew-group"><ul class="bt-whatsnew-list">${(latest.items || []).map((it) => `<li>${escapeHtml(it)}</li>`).join("")}</ul></section>`;
+  };
+
+  const openWhatsNew = () => {
+    renderLatestRelease();
+    modal.classList.remove("hidden");
+    document.documentElement.classList.add("modal-open");
+    activateDialogFocusTrap(modal, "#whatsNewAcceptBtn");
+  };
+
+  const dismissWhatsNew = () => {
+    try {
+      localStorage.setItem(BT_LAST_SEEN_VERSION_KEY, APP_WEB_VERSION);
+    } catch (_) {}
+    modal.classList.add("hidden");
+    if (!document.querySelector(".modal-overlay:not(.hidden)") && !document.querySelector("#savedPanel:not(.hidden)")) {
+      document.documentElement.classList.remove("modal-open");
+    }
+    releaseDialogFocusTrap(modal);
+  };
+
+  window.__btOpenWhatsNewModal = openWhatsNew;
+
+  if (closeBtn) closeBtn.addEventListener("click", dismissWhatsNew);
+  if (acceptBtn) acceptBtn.addEventListener("click", dismissWhatsNew);
+  if (historyBtn) {
+    historyBtn.addEventListener("click", () => {
+      dismissWhatsNew();
+      if (typeof window.__btOpenSettingsModal === "function") {
+        window.__btOpenSettingsModal("version");
+      }
+    });
+  }
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) dismissWhatsNew();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) dismissWhatsNew();
+  });
+
+  // Mostrar automáticamente solo cuando alguien ya vio la bienvenida y actualizó a una versión nueva
+  try {
+    const welcomeSeen = localStorage.getItem(BT_WELCOME_SEEN_KEY) === "1";
+    const lastVersion = localStorage.getItem(BT_LAST_SEEN_VERSION_KEY);
+    if (welcomeSeen && lastVersion !== APP_WEB_VERSION) {
+      setTimeout(() => {
+        const welcomeEl = document.getElementById("welcomeModal");
+        if (welcomeEl && !welcomeEl.classList.contains("hidden")) return;
+        openWhatsNew();
+      }, 450);
+    }
+  } catch (_) {}
 }
 
 function setupBugReportModal() {
@@ -12695,11 +12777,25 @@ function setupScoutForum() {
     "Padre / Madre / Tutor"
   ];
 
+  const expandedIdentityPosts = new Set();
+
   const renderForum = () => {
     updateChannelCounts();
     renderTagBar();
     const posts = getFilteredPosts();
     const savedId = getForumIdentity();
+    const statsStripEl = document.getElementById("forumStatsStrip");
+    if (statsStripEl) {
+      const totalPosts = forumState.posts.length;
+      const totalReplies = forumState.posts.reduce((acc, p) => acc + (Array.isArray(p.comments) ? p.comments.length : 0), 0);
+      const uniqueTopics = new Set();
+      forumState.posts.forEach((p) => (p.tags || []).forEach((tg) => uniqueTopics.add(tg)));
+      statsStripEl.innerHTML = [
+        `<span class="forum-stat-chip">${totalPosts} temas activos</span>`,
+        `<span class="forum-stat-chip">${totalReplies} respuestas</span>`,
+        `<span class="forum-stat-chip">${uniqueTopics.size} etiquetas comunitarias</span>`
+      ].join("");
+    }
 
     if (countLabel) {
       countLabel.textContent =
@@ -12801,18 +12897,26 @@ function setupScoutForum() {
                 }
               </div>
               <form class="forum-comment-form" data-add-comment-form="${escapeHtml(post.id)}" novalidate>
-                <div class="forum-comment-identity-bar" style="grid-column:1/-1;">
-                  <p class="forum-comment-identity-hint">Registro obligatorio por seguridad (elige abajo si sales con tu nombre o Anónimo):</p>
-                  <input type="text" class="fc-real-name" maxlength="70" placeholder="Nombre completo real *" value="${escapeHtml(savedId.realName)}" required aria-label="Nombre completo real obligatorio para responder" />
-                  <select class="fc-role" aria-label="Sección o rol">${roleSelectOpts}</select>
-                  <input type="text" class="fc-group" maxlength="50" placeholder="Grupo Scout *" value="${escapeHtml(savedId.group)}" required aria-label="Grupo Scout obligatorio" />
-                  <input type="text" class="fc-province" maxlength="60" placeholder="Provincia Scout *" value="${escapeHtml(savedId.province)}" required aria-label="Provincia Scout obligatoria" />
-                  <select class="fc-visibility" style="grid-column:1/-1;" aria-label="Cómo mostrarte en el comentario">
-                    <option value="full"${savedId.visibility === "full" ? " selected" : ""}>Mostrar mi nombre, sección, grupo y provincia</option>
-                    <option value="group_only"${savedId.visibility === "group_only" ? " selected" : ""}>Anónimo, mostrando solo mi sección, grupo y provincia</option>
-                    <option value="anonymous"${savedId.visibility === "anonymous" ? " selected" : ""}>100 % Anónimo (ocultar nombre, grupo y provincia)</option>
-                  </select>
-                </div>
+                ${(() => {
+                  const hasSavedProfile = Boolean(savedId.realName && savedId.group && savedId.province);
+                  const showFullIdentityBar = !hasSavedProfile || expandedIdentityPosts.has(post.id);
+                  const visLabel = savedId.visibility === "anonymous" ? "100% Anónimo" : savedId.visibility === "group_only" ? `Anónimo (${savedId.group})` : `${savedId.realName} (${savedId.group})`;
+                  return `
+                    ${hasSavedProfile ? `<div class="forum-identity-summary-bar" style="grid-column:1/-1;"><span>Respondiendo como <strong>${escapeHtml(visLabel)}</strong> · ${escapeHtml(savedId.province)}</span><button type="button" class="forum-identity-toggle-btn" data-toggle-comment-id="${escapeHtml(post.id)}">${showFullIdentityBar ? "Ocultar datos" : "Cambiar perfil"}</button></div>` : ""}
+                    <div class="forum-comment-identity-bar${showFullIdentityBar ? "" : " hidden"}" style="grid-column:1/-1;">
+                      <p class="forum-comment-identity-hint">Registro obligatorio por seguridad (elige abajo si sales con tu nombre o Anónimo):</p>
+                      <input type="text" class="fc-real-name" maxlength="70" placeholder="Nombre completo real *" value="${escapeHtml(savedId.realName)}" required aria-label="Nombre completo real obligatorio para responder" />
+                      <select class="fc-role" aria-label="Sección o rol">${roleSelectOpts}</select>
+                      <input type="text" class="fc-group" maxlength="50" placeholder="Grupo Scout *" value="${escapeHtml(savedId.group)}" required aria-label="Grupo Scout obligatorio" />
+                      <input type="text" class="fc-province" maxlength="60" placeholder="Provincia Scout *" value="${escapeHtml(savedId.province)}" required aria-label="Provincia Scout obligatoria" />
+                      <select class="fc-visibility" style="grid-column:1/-1;" aria-label="Cómo mostrarte en el comentario">
+                        <option value="full"${savedId.visibility === "full" ? " selected" : ""}>Mostrar mi nombre, sección, grupo y provincia</option>
+                        <option value="group_only"${savedId.visibility === "group_only" ? " selected" : ""}>Anónimo, mostrando solo mi sección, grupo y provincia</option>
+                        <option value="anonymous"${savedId.visibility === "anonymous" ? " selected" : ""}>100 % Anónimo (ocultar nombre, grupo y provincia)</option>
+                      </select>
+                    </div>
+                  `;
+                })()}
                 <input type="text" class="forum-comment-input" maxlength="500" placeholder="Escribe un consejo o respuesta con respeto..." aria-label="Escribir respuesta en La Fogata" required />
                 <button type="submit" class="forum-comment-submit">Responder</button>
               </form>
@@ -13168,6 +13272,17 @@ function setupScoutForum() {
   }
 
   grid.addEventListener("click", (e) => {
+    const toggleIdBtn = e.target.closest("[data-toggle-comment-id]");
+    if (toggleIdBtn) {
+      const pid = toggleIdBtn.getAttribute("data-toggle-comment-id");
+      if (pid) {
+        if (expandedIdentityPosts.has(pid)) expandedIdentityPosts.delete(pid);
+        else expandedIdentityPosts.add(pid);
+        renderForum();
+      }
+      return;
+    }
+
     const tagJump = e.target.closest("[data-forum-tag-jump]");
     if (tagJump) {
       viewState.tag = tagJump.getAttribute("data-forum-tag-jump") || "all";
@@ -13182,10 +13297,7 @@ function setupScoutForum() {
       if (matchedDoc && typeof openDocumentModal === "function") {
         openDocumentModal(matchedDoc.id);
       } else {
-        const askInput = document.getElementById("askInput");
-        if (askInput) {
-          submitQuestion(ref, { syncInput: true });
-        }
+        showWebToast(`Documento disponible en Biblioteca: ${ref}`);
       }
       return;
     }
@@ -13651,14 +13763,14 @@ const BT_UI_I18N = {
   es: {
     navHome: "Inicio",
     navLibrary: "Biblioteca",
-    navAxes: "4 Ejes",
+    navAxes: "Ejes Temáticos",
     navSkills: "Skills",
     navGuide: "Guía",
-    navAgents: "Agentes",
+    navAgents: "Agentes de Cambio",
     navForum: "La Fogata",
-    navEditor: "Archivos",
+    navEditor: "Editor de archivos",
     navAbout: "Acerca de",
-    navApp: "App",
+    navApp: "Descarga",
     dockLabels: ["Inicio", "Biblioteca", "Fogata", "Archivos", "Guardados", "Ajustes"],
     heroTitle: "Consulta dudas Scout en documentos oficiales",
     heroDesc:
@@ -13720,14 +13832,14 @@ const BT_UI_I18N = {
   en: {
     navHome: "Home",
     navLibrary: "Library",
-    navAxes: "4 Axes",
+    navAxes: "Thematic Axes",
     navSkills: "Skills",
     navGuide: "Guide",
-    navAgents: "Agents",
+    navAgents: "Change Agents",
     navForum: "Campfire",
-    navEditor: "Files",
+    navEditor: "File Editor",
     navAbout: "About",
-    navApp: "App",
+    navApp: "Download",
     dockLabels: ["Home", "Library", "Campfire", "Files", "Saved", "Settings"],
     heroTitle: "Search Scout questions in official documents",
     heroDesc:
@@ -14874,9 +14986,6 @@ function setupPjosAxesHub() {
 
       <div class="bt-ejes-inline-actions">
         <button type="button" class="bt-sf-btn is-accent" data-axis-goto-tool="${escapeHtml(info.toolTab)}">${escapeHtml(info.toolBtnLabel)} →</button>
-        <button type="button" class="bt-sf-btn" data-bt-jump-skill="${escapeHtml(info.skillTab)}">${escapeHtml(info.skillLabel)} →</button>
-        <button type="button" class="bt-sf-btn" data-ejes-filter-lib="${escapeHtml(info.libFilter)}">Filtrar FAES y FES de ${escapeHtml(info.title)} en Biblioteca</button>
-        <button type="button" class="bt-sf-btn is-subtle" data-query="${escapeHtml(info.sampleQuery)}">Ver explicación con fuentes</button>
       </div>
     `;
   };
@@ -15187,9 +15296,7 @@ function setupPjosAxesHub() {
           )
           .join("")}
       </div>
-      <div class="bt-ejes-inline-actions" style="margin-top:0.85rem;">
-        <button type="button" class="bt-sf-btn is-accent" data-ejes-open-tpl="${escapeHtml(mCfg.tplId)}">${escapeHtml(mCfg.tplBtn)}</button>
-      </div>
+      <p class="bt-ejes-helper-note" style="margin:0.8rem 0 0;">Documento relacionado disponible para llenado offline en el apartado <strong>Editor de archivos</strong>.</p>
     `;
   };
 
@@ -15227,8 +15334,7 @@ function setupPjosAxesHub() {
   const mopListEl = document.getElementById("btMopEntriesList");
   const mopBadgeEl = document.getElementById("btMopTotalHoursBadge");
   const mopBarEl = document.getElementById("btMopHoursBar");
-  const mopSendBtn = document.getElementById("btMopSendToP8Btn");
-  const mopFogataBtn = document.getElementById("btMopJumpFogataBtn");
+  const mopCopyBtn = document.getElementById("btMopCopySummaryBtn");
 
   const getMopLogs = () => {
     try {
@@ -15304,24 +15410,20 @@ function setupPjosAxesHub() {
       }
     });
   }
-  if (mopSendBtn) {
-    mopSendBtn.addEventListener("click", () => {
+  if (mopCopyBtn) {
+    mopCopyBtn.addEventListener("click", async () => {
       const logs = getMopLogs();
       const total = logs.reduce((acc, x) => acc + Math.max(0, Number(x.hours || 0)), 0);
-      const topProject = logs.length ? logs[0].project : "Proyecto Comunitario Mensajeros de la Paz";
-      if (typeof window.__btSelectSmartTemplate === "function") {
-        window.__btSelectSmartTemplate("p8_mop", true, {
-          volunteerName: topProject,
-          volunteerHours: total > 0 ? `${total} horas` : "20 horas",
-          p8_eje_paz: true
-        });
-        showWebToast("Horas y proyecto volcados en la Solicitud Mensajeros de la Paz (P8.3).");
+      const lines = logs.map((x) => `- ${x.project}: ${x.hours} h (${x.date || "sin fecha"})`);
+      const summary = [`Bitácora Mensajeros de la Paz — Total: ${total} horas`, ...lines].join("\n");
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(summary);
+        }
+        showWebToast("Resumen de horas Mensajeros de la Paz copiado al portapapeles.");
+      } catch (_) {
+        showWebToast("Total acumulado: " + total + " h registradas localmente.");
       }
-    });
-  }
-  if (mopFogataBtn) {
-    mopFogataBtn.addEventListener("click", () => {
-      btSwitchView("fogata");
     });
   }
   renderMopLogs();
@@ -15375,7 +15477,6 @@ function setupPjosAxesHub() {
   const smartTIn = document.getElementById("btSmartT");
   const smartScoreBadge = document.getElementById("btSmartScoreBadge");
   const smartSynthEl = document.getElementById("btSmartSynthesizedText");
-  const smartTransferBtn = document.getElementById("btSmartTransferBtn");
   const smartCopyBtn = document.getElementById("btSmartCopyTextBtn");
   const smartClearBtn = document.getElementById("btSmartClearBtn");
 
@@ -15484,29 +15585,7 @@ function setupPjosAxesHub() {
     });
   });
 
-  if (smartTransferBtn) {
-    smartTransferBtn.addEventListener("click", () => {
-      syncSmartBuilder();
-      const goal = buildSynthesizedSmartGoal();
-      const frameworkStr = [smartState.axis, ...(smartState.ods || [])].filter(Boolean).join(" · ");
-      const prefill = {
-        projectTitle: smartState.title || "Proyecto Scout SMART",
-        section: smartState.sec || "Comunidad",
-        endDate: smartState.t || "",
-        framework: frameworkStr,
-        smartGoal: smartState.s || smartState.m ? goal : "",
-        activities: smartState.a || "",
-        diagnosis: smartState.r || "",
-        impact: smartState.m
-          ? `Meta medible e impacto esperado: ${smartState.m}`
-          : ""
-      };
-      if (typeof window.__btSelectSmartTemplate === "function") {
-        window.__btSelectSmartTemplate("smart", true, prefill);
-        showWebToast("Tu proyecto SMART se volcó completo en la Cédula Oficial P6.2.");
-      }
-    });
-  }
+
 
   if (smartCopyBtn) {
     smartCopyBtn.addEventListener("click", async () => {
@@ -15542,31 +15621,12 @@ function setupPjosAxesHub() {
     });
   }
 
-  // Delegación de botones rápidos dentro de #ejes-pjos (saltar a herramientas, Biblioteca o Formatos)
+  // Delegación de pestañas internas dentro de #ejes-pjos
   sectionEl.addEventListener("click", (e) => {
     const toolJump = e.target.closest("[data-axis-goto-tool]");
     if (toolJump) {
       selectEjesTab(toolJump.getAttribute("data-axis-goto-tool"));
       sectionEl.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
-    const libJump = e.target.closest("[data-ejes-filter-lib]");
-    if (libJump) {
-      const ax = libJump.getAttribute("data-ejes-filter-lib") || "all";
-      STATE.libraryAxis = ax;
-      STATE.libraryScope = "all";
-      STATE.libraryVisibleCount = 12;
-      const axSel = document.getElementById("libraryAxisFilter");
-      const scpSel = document.getElementById("libraryScopeSelect");
-      if (axSel) axSel.value = ax;
-      if (scpSel) scpSel.value = "all";
-      btSwitchView("biblioteca", { libMode: "shelves" });
-      renderLibraryShelf();
-      return;
-    }
-    const tplOpen = e.target.closest("[data-ejes-open-tpl]");
-    if (tplOpen && typeof window.__btSelectSmartTemplate === "function") {
-      window.__btSelectSmartTemplate(tplOpen.getAttribute("data-ejes-open-tpl"), true);
     }
   });
 
@@ -16703,16 +16763,23 @@ function setupScoutSkillsHub() {
   renderCipher();
 
   // --------------------------------------------------------------------------
-  // 2. NUDOS Y AMARRES SVG CON CRUCES 3D ARRIBA / ABAJO REALES
+  // 2. NUDOS Y AMARRES SVG 3D FIELES A LA CABUYERÍA SCOUT (viewBox 280x150)
   // --------------------------------------------------------------------------
-  const rope = (d, col, w = 7) =>
-    `<path d="${d}" stroke="var(--bt-stage-bg, #ffffff)" stroke-width="${w + 5}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
+  const rope = (d, col, w = 8) =>
+    `<path d="${d}" stroke="var(--bt-stage-bg, #ffffff)" stroke-width="${w + 5.2}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
     `<path d="${d}" stroke="${col}" stroke-width="${w}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` +
-    `<path d="${d}" stroke="rgba(255,255,255,0.28)" stroke-width="${Math.max(1.8, w - 4.4)}" stroke-dasharray="2 5.5" fill="none" stroke-linecap="round"/>`;
+    `<path d="${d}" stroke="rgba(255,255,255,0.32)" stroke-width="${Math.max(1.8, w - 5)}" stroke-dasharray="2.2 6" fill="none" stroke-linecap="round"/>`;
 
-  const timber = (x1, y1, x2, y2, w = 16) =>
-    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#78350f" stroke-width="${w}" stroke-linecap="round"/>` +
-    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#b45309" stroke-width="${w - 5}" stroke-linecap="round"/>`;
+  const arrowPath = (d, col = "#38bdf8") =>
+    `<path d="${d}" stroke="${col}" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-dasharray="4 3" marker-end="url(#btKnotArrow)"/>`;
+
+  const timber = (x1, y1, x2, y2, w = 20) =>
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#6c2e0c" stroke-width="${w}" stroke-linecap="round"/>` +
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#a1551c" stroke-width="${w - 4}" stroke-linecap="round"/>` +
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#c27834" stroke-opacity="0.45" stroke-width="${Math.max(2, w - 11)}" stroke-linecap="round"/>`;
+
+  const labelTag = (x, y, txt) =>
+    `<text x="${x}" y="${y}" text-anchor="middle" font-size="10" font-weight="800" fill="currentColor" opacity="0.82">${txt}</text>`;
 
   const ROPE_A = "#7c3aed";
   const ROPE_B = "#f59e0b";
@@ -16723,11 +16790,35 @@ function setupScoutSkillsHub() {
       name: "Nudo Rizo (Llano)",
       cat: "unir",
       catLabel: "Unir",
-      use: "Unir dos cabos del mismo grosor (termina plano y es fácil de desatar).",
+      use: "Unir dos cabos del mismo grosor y material; queda plano y se desata fácil.",
       steps: [
-        { tip: "Cruza el cabo derecho (dorado) sobre el izquierdo (morado) formando el primer medio nudo.", svg: rope("M20 76 C58 76 74 34 100 34 C126 34 142 76 180 76", ROPE_A) + rope("M180 34 C142 34 126 76 100 76 C74 76 58 34 20 34", ROPE_B) },
-        { tip: "Vuelve a cruzar ahora el izquierdo arriba del derecho para que ambos salgan por el mismo lado.", svg: rope("M20 74 C60 74 70 28 100 28 C126 28 134 74 176 74", ROPE_A) + rope("M180 32 C142 32 130 78 100 78 C70 78 62 32 24 32", ROPE_B) + rope("M74 28 C94 46 106 46 126 28", ROPE_A, 6) },
-        { tip: "Ajusta parejo: ambos senos se abrazan en espejo con las dos puntas del mismo lado de su firme.", svg: rope("M14 40 H64 C84 40 90 72 110 72 C132 72 134 38 110 38 C90 38 82 68 62 68 H14", ROPE_A) + rope("M186 40 H136 C116 40 110 18 90 18 C68 18 66 56 90 56", ROPE_B) + rope("M90 56 C110 56 118 68 138 68 H186", ROPE_B) }
+        {
+          tip: "Cruza el cabo derecho (dorado) por encima del izquierdo (morado) y mételo por debajo para el primer medio nudo.",
+          svg:
+            rope("M26 50 C76 50 96 100 132 100 C166 100 184 52 246 52", ROPE_A) +
+            rope("M254 100 C200 100 182 52 134 52 C98 52 80 100 32 100", ROPE_B) +
+            arrowPath("M188 36 C168 24 146 24 128 38", ROPE_B) +
+            labelTag(46, 36, "Izq.") +
+            labelTag(234, 118, "Der.")
+        },
+        {
+          tip: "Ahora cruza el chicote izquierdo (dorado arriba) por encima del derecho y pásalo hacia arriba por el bucle.",
+          svg:
+            rope("M26 102 C78 102 98 52 136 52 C172 52 190 98 250 98", ROPE_B) +
+            rope("M250 48 C196 48 176 96 136 96 C100 96 76 48 26 48", ROPE_A) +
+            rope("M108 42 C132 62 150 62 172 42", ROPE_B, 7.5) +
+            arrowPath("M140 24 C140 34 140 52 140 66", "#38bdf8")
+        },
+        {
+          tip: "Jala parejo: cada seno abraza al otro en espejo y las puntas salen paralelas a su propio firme.",
+          svg:
+            rope("M256 64 H150", ROPE_B) +
+            rope("M150 86 H256", ROPE_B) +
+            rope("M24 46 H154 C188 46 188 104 154 104 H24", ROPE_A) +
+            rope("M152 64 C132 64 134 34 114 34 C94 34 94 116 114 116 C134 116 132 86 152 86", ROPE_B) +
+            labelTag(56, 32, "Firme + punta") +
+            labelTag(224, 32, "Firme + punta")
+        }
       ]
     },
     {
@@ -16735,11 +16826,37 @@ function setupScoutSkillsHub() {
       name: "Vuelta de Escota",
       cat: "unir",
       catLabel: "Unir",
-      use: "Unir dos cabos de diferente grosor o cuerdas húmedas bajo tensión.",
+      use: "Unir dos cuerdas de diferente grosor o cuerdas húmedas que van a soportar tensión.",
       steps: [
-        { tip: "Forma un seno abierto (U) con la cuerda más gruesa (morada).", svg: rope("M24 34 H86 C116 34 116 74 86 74 H24", ROPE_A, 8.5) },
-        { tip: "Mete el cabo delgado por dentro del seno desde atrás y rodea ambas ramas del grueso.", svg: rope("M164 82 C134 82 114 70 92 60 C72 52 72 22 98 22 C116 22 122 36 122 54", ROPE_B, 6) + rope("M24 34 H86 C116 34 116 74 86 74 H24", ROPE_A, 8.5) + rope("M90 22 C116 22 120 56 96 58", ROPE_B, 6) },
-        { tip: "Pasa la punta delgada debajo de su propio cuerpo y tensa ambos lados.", svg: rope("M176 80 H120 C96 80 80 56 98 30", ROPE_B, 6) + rope("M22 34 H86 C116 34 116 74 86 74 H22", ROPE_A, 8.5) + rope("M98 30 C110 14 128 52 104 54 H58", ROPE_B, 6) }
+        {
+          tip: "Haz un seno en U con la cuerda más gruesa (morada) y sube la punta delgada (dorada) desde abajo por dentro del seno.",
+          svg:
+            rope("M150 132 C150 112 150 88 150 72", ROPE_B, 6) +
+            rope("M26 46 H154 C194 46 194 104 154 104 H26", ROPE_A, 10) +
+            arrowPath("M150 66 L132 34", ROPE_B) +
+            labelTag(72, 32, "Cabo grueso") +
+            labelTag(196, 134, "Cabo delgado")
+        },
+        {
+          tip: "Rodea por completo las dos ramas de la U (por arriba y por detrás hacia abajo).",
+          svg:
+            rope("M148 134 V74", ROPE_B, 6) +
+            rope("M110 38 C98 58 98 94 112 114", ROPE_B, 6) +
+            rope("M26 46 H154 C194 46 194 104 154 104 H26", ROPE_A, 10) +
+            rope("M148 74 C144 40 122 26 110 38", ROPE_B, 6) +
+            arrowPath("M114 118 L156 96", ROPE_B)
+        },
+        {
+          tip: "Mete el chicote delgado por debajo de su propio cuerpo frente a la U y tensa ambos firmes.",
+          svg:
+            rope("M148 136 V74", ROPE_B, 6) +
+            rope("M110 38 C96 58 96 92 110 114", ROPE_B, 6) +
+            rope("M24 46 H154 C196 46 196 104 154 104 H24", ROPE_A, 10) +
+            rope("M148 74 C144 40 122 26 110 38", ROPE_B, 6) +
+            rope("M110 114 C122 122 138 112 140 88", ROPE_B, 6) +
+            rope("M148 74 V136", ROPE_B, 6) +
+            rope("M140 88 C134 74 96 74 58 75", ROPE_B, 6)
+        }
       ]
     },
     {
@@ -16747,11 +16864,33 @@ function setupScoutSkillsHub() {
       name: "Nudo Pescador",
       cat: "unir",
       catLabel: "Unir",
-      use: "Unir líneas resbaladizas o sintéticas mediante dos nudos simples corredizos.",
+      use: "Unir cabos resbaladizos o delgados con dos nudos simples corredizos que chocan entre sí.",
       steps: [
-        { tip: "Alinea ambos cabos paralelos apuntando en direcciones opuestas.", svg: rope("M18 44 H142", ROPE_A) + rope("M58 66 H182", ROPE_B) },
-        { tip: "Ata un nudo simple alrededor del otro cabo con cada una de las puntas.", svg: rope("M16 44 H144", ROPE_A) + rope("M56 66 H184", ROPE_B) + rope("M52 30 C66 30 68 80 52 80 C38 80 38 30 52 30", ROPE_B, 6) + rope("M148 30 C162 30 162 80 148 80 C134 80 134 30 148 30", ROPE_A, 6) },
-        { tip: "Jala ambos extremos largos hasta juntar los dos topes firmemente en el centro.", svg: rope("M16 55 H100", ROPE_A) + rope("M100 55 H184", ROPE_B) + rope("M74 36 C86 36 86 74 74 74 C62 74 62 36 74 36", ROPE_B, 6.5) + rope("M126 36 C138 36 138 74 126 74 C114 74 114 36 126 36", ROPE_A, 6.5) }
+        {
+          tip: "Superpone ambas puntas en sentidos opuestos paralelas entre sí.",
+          svg:
+            rope("M22 54 H216", ROPE_A) +
+            rope("M64 96 H258", ROPE_B) +
+            arrowPath("M82 114 L58 74", ROPE_B) +
+            arrowPath("M198 36 L222 76", ROPE_A)
+        },
+        {
+          tip: "Con cada punta ata un nudo simple (medio nudo) abrazando el cuerpo largo de la otra cuerda.",
+          svg:
+            rope("M20 56 H224", ROPE_A) +
+            rope("M56 94 H260", ROPE_B) +
+            rope("M100 38 C80 38 76 112 96 112 C110 112 114 48 96 42", ROPE_B, 6.5) +
+            rope("M184 112 C204 112 208 38 188 38 C174 38 170 102 188 108", ROPE_A, 6.5)
+        },
+        {
+          tip: "Jala ambos firmes hacia los lados hasta que los dos nudos simples queden juntos y bloqueados en el centro.",
+          svg:
+            rope("M18 75 H150", ROPE_A) +
+            rope("M130 75 H262", ROPE_B) +
+            rope("M126 44 C108 44 106 106 124 106 C138 106 138 56 120 48", ROPE_B, 7) +
+            rope("M154 106 C172 106 174 44 156 44 C142 44 142 94 160 102", ROPE_A, 7) +
+            labelTag(140, 26, "Se juntan al tensar")
+        }
       ]
     },
     {
@@ -16759,11 +16898,38 @@ function setupScoutSkillsHub() {
       name: "Ballestrinque",
       cat: "anclar",
       catLabel: "Anclar",
-      use: "Anclar cuerda a un poste o bordón e iniciar y cerrar todo amarre Scout.",
+      use: "Anclar rápidamente a un bordón o tronco y para iniciar y cerrar casi todos los amarres.",
       steps: [
-        { tip: "Rodea el tronco con una vuelta llevando el cabo en diagonal encima de sí mismo.", svg: rope("M72 30 C72 86 88 88 90 54", ROPE_A) + timber(24, 54, 176, 54) + rope("M60 88 C62 56 76 26 92 26", ROPE_A) },
-        { tip: "Da una segunda vuelta paralela cruzando la diagonal por encima del primer giro.", svg: timber(24, 54, 176, 54) + rope("M64 88 C66 56 80 32 94 32", ROPE_A) + rope("M116 32 C130 32 132 76 116 76", ROPE_A) + rope("M76 34 L122 74", ROPE_B) },
-        { tip: "Mete la punta por debajo del cruce paralelo central y azoca sobre el tronco.", svg: timber(22, 54, 178, 54) + rope("M66 32 L66 78 M86 32 L86 78 M112 32 L112 78", ROPE_A) + rope("M52 74 C80 54 108 54 148 30", ROPE_B, 6) }
+        {
+          tip: "Da una vuelta al poste con el firme abajo, subiendo por detrás y cruzando en diagonal por encima hacia la derecha.",
+          svg:
+            rope("M116 54 V98", ROPE_A) +
+            timber(26, 76, 254, 76, 24) +
+            rope("M82 132 L116 98", ROPE_A) +
+            rope("M104 98 L174 52", ROPE_A) +
+            arrowPath("M176 48 C194 60 194 94 176 106", "#38bdf8")
+        },
+        {
+          tip: "Rodea el tronco por detrás con la segunda vuelta paralela y pasa el chicote por el frente rumbo al puente diagonal.",
+          svg:
+            rope("M112 52 V98", ROPE_A) +
+            rope("M174 52 V98", ROPE_A) +
+            timber(26, 76, 254, 76, 24) +
+            rope("M82 132 L112 98", ROPE_A) +
+            rope("M102 98 L174 52", ROPE_A) +
+            arrowPath("M172 110 C154 100 144 88 136 74", ROPE_B)
+        },
+        {
+          tip: "Mete la punta por debajo del puente diagonal central y azoca jalando ambos extremos en sentido contrario.",
+          svg:
+            rope("M110 52 L118 98", ROPE_A) +
+            rope("M174 52 V98", ROPE_A) +
+            rope("M174 98 C162 88 144 74 142 22", ROPE_B) +
+            timber(26, 76, 254, 76, 24) +
+            rope("M78 130 L110 96", ROPE_A) +
+            rope("M100 96 L176 54", ROPE_A) +
+            labelTag(140, 128, "Dos vueltas paralelas + puente encima")
+        }
       ]
     },
     {
@@ -16771,11 +16937,34 @@ function setupScoutSkillsHub() {
       name: "As de Guía",
       cat: "tensar",
       catLabel: "Tensar",
-      use: "Gaza fija de rescate o sujeción que nunca se ahorca bajo carga pesada.",
+      use: "Formar una gaza fija muy resistente (rescate o sujeción) que nunca se ahorca ni se corre.",
       steps: [
-        { tip: "Forma un pequeño bucle («el pozo») en el firme dejando que cruce por encima.", svg: rope("M20 74 H68", ROPE_A) + rope("M68 74 C92 74 92 34 72 34 C54 34 54 74 80 74 H140", ROPE_A) },
-        { tip: "La punta («serpiente») sale del pozo por abajo, rodea el firme y vuelve a entrar al pozo.", svg: rope("M134 86 C174 86 174 28 130 28 C98 28 84 42 74 44", ROPE_B) + rope("M20 74 H68 C90 74 90 36 72 36 C56 36 56 74 82 74", ROPE_A) + rope("M74 44 C70 58 86 64 96 64", ROPE_B) },
-        { tip: "Sostén punta y lazo juntos y jala del firme para apretar el cuello fijo.", svg: rope("M110 24 C166 24 166 88 110 88 C86 88 78 68 78 55", ROPE_A) + rope("M18 55 H84 C98 55 98 34 84 34 C72 34 72 74 90 74", ROPE_B) }
+        {
+          tip: "Forma un pequeño aro («el pozo») en el firme dejando que la curva superior pase por encima del tramo izquierdo.",
+          svg:
+            rope("M24 76 H112", ROPE_A) +
+            rope("M112 76 C136 76 138 38 112 38 C88 38 88 76 116 76", ROPE_A) +
+            rope("M116 76 C158 76 184 114 234 114", ROPE_B) +
+            labelTag(60, 60, "El árbol (firme)") +
+            labelTag(114, 24, "El pozo") +
+            labelTag(224, 134, "La serpiente")
+        },
+        {
+          tip: "Sube la punta («la serpiente») por dentro del pozo, rodea por detrás al firme y vuelve a bajar por el mismo pozo.",
+          svg:
+            rope("M24 76 H96", ROPE_A) +
+            rope("M116 76 C138 76 138 40 114 40 C94 40 94 76 122 76 C192 76 238 118 202 126 C174 132 146 100 120 62", ROPE_A) +
+            rope("M120 62 C110 42 74 42 74 76 C74 104 108 104 118 78", ROPE_B, 7) +
+            arrowPath("M122 86 L146 106", ROPE_B)
+        },
+        {
+          tip: "Sujeta punta y brazo derecho juntos y jala el firme izquierdo hasta apretar el cuello de la gaza fija.",
+          svg:
+            rope("M126 30 C248 30 248 122 126 122", ROPE_A) +
+            rope("M24 76 H128 C148 76 148 40 126 40 C106 40 106 112 128 112 H174", ROPE_B) +
+            rope("M126 30 C106 30 98 58 104 76", ROPE_A) +
+            labelTag(214, 78, "Gaza fija")
+        }
       ]
     },
     {
@@ -16783,11 +16972,32 @@ function setupScoutSkillsHub() {
       name: "Nudo Margarita",
       cat: "tensar",
       catLabel: "Tensar",
-      use: "Acortar una cuerda tensa sin cortarla o aislar una zona dañada en el tramo doble.",
+      use: "Acortar temporalmente una cuerda tensa sin cortarla o proteger una zona desgastada.",
       steps: [
-        { tip: "Pliega la cuerda en una «S» larga formando tres tramos paralelos.", svg: rope("M18 32 H146 C164 32 164 55 146 55 H54 C36 55 36 78 54 78 H182", ROPE_A) },
-        { tip: "Pasa cada bucle de los extremos dentro de un cote exterior formado con los firmes.", svg: rope("M18 32 H146 C164 32 164 55 146 55 H54 C36 55 36 78 54 78 H182", ROPE_A) + rope("M46 22 C60 22 60 88 46 88 C32 88 32 22 46 22", ROPE_B, 5.5) + rope("M154 22 C168 22 168 88 154 88 C140 88 140 22 154 22", ROPE_B, 5.5) },
-        { tip: "Mantén tensión continua: los dos cotes bloquean las orejas y el centro queda acortado.", svg: rope("M14 55 H54 M146 55 H186", ROPE_A) + rope("M60 36 H140 M60 55 H140 M60 74 H140", ROPE_A, 5.5) + rope("M52 24 C66 24 66 86 52 86 C38 86 38 24 52 24", ROPE_B, 6) + rope("M148 24 C162 24 162 86 148 86 C134 86 134 24 148 24", ROPE_B, 6) }
+        {
+          tip: "Pliega la cuerda en tres tramos paralelos en forma de «S» alargada formando dos orejas.",
+          svg:
+            rope("M20 46 H204 C228 46 228 75 204 75 H76 C52 75 52 104 76 104 H260", ROPE_A) +
+            labelTag(46, 80, "Oreja") +
+            labelTag(234, 64, "Oreja")
+        },
+        {
+          tip: "Con cada extremo largo forma un cote (medio nudo abierto) y mételo abrazando cada oreja sin soltar la S.",
+          svg:
+            rope("M76 48 H200 C226 48 226 75 200 75 H80 C54 75 54 102 80 102 H202", ROPE_A) +
+            rope("M20 75 H62 C78 75 84 30 70 30 C56 30 56 120 70 120 C84 120 84 82 76 75", ROPE_B, 7) +
+            rope("M260 75 H218 C202 75 196 30 210 30 C224 30 224 120 210 120 C196 120 196 82 204 75", ROPE_B, 7) +
+            arrowPath("M48 36 L68 50", ROPE_B) +
+            arrowPath("M232 36 L212 50", ROPE_B)
+        },
+        {
+          tip: "Mantén tensión en ambos firmes: los cotes del propio cabo aprietan las dos orejas y el centro queda acortado.",
+          svg:
+            rope("M90 50 H190 M90 75 H190 M90 100 H190", ROPE_A, 7) +
+            rope("M22 75 H60 C82 75 88 34 74 34 C60 34 60 116 74 116 C88 116 86 80 90 100", ROPE_A) +
+            rope("M258 75 H220 C198 75 192 34 206 34 C220 34 220 116 206 116 C192 116 194 80 190 50", ROPE_A) +
+            rope("M62 75 C42 75 42 50 74 50 H90 M218 75 C238 75 238 100 206 100 H190", ROPE_A)
+        }
       ]
     },
     {
@@ -16795,11 +17005,34 @@ function setupScoutSkillsHub() {
       name: "Tensor de Viento",
       cat: "tensar",
       catLabel: "Tensar",
-      use: "Ajustar vientos de casa de campaña o lona deslizándolo a lo largo de la cuerda.",
+      use: "Ajustar la tensión de los vientos de la casa de campaña deslizándolo sin desatar.",
       steps: [
-        { tip: "Rodea la estaca y vuelve paralelo sobre la línea principal tensa.", svg: timber(154, 24, 154, 86, 12) + rope("M16 42 H154 C172 42 172 68 154 68 H78", ROPE_A) },
-        { tip: "Enrolla dos vueltas apretadas hacia adentro abrazando el cabo principal.", svg: timber(154, 24, 154, 86, 12) + rope("M16 42 H154 C172 42 172 68 154 68 H64", ROPE_A) + rope("M88 32 C98 32 98 68 88 68", ROPE_B, 6) + rope("M104 32 C114 32 114 68 104 68", ROPE_B, 6) },
-        { tip: "Cierra con un medio cote exterior y desliza para dar tensión al viento.", svg: timber(154, 24, 154, 86, 12) + rope("M16 46 H154 C172 46 172 72 154 72 H52", ROPE_A) + rope("M64 34 C76 34 76 74 64 74", ROPE_B, 6) + rope("M82 34 C94 34 94 74 82 74", ROPE_B, 6) + rope("M100 34 C112 34 112 74 100 74", ROPE_B, 6) }
+        {
+          tip: "Rodea la estaca y regresa paralelo por debajo del cabo principal tenso.",
+          svg:
+            timber(226, 36, 240, 126, 14) +
+            rope("M20 56 H226 C250 56 250 96 226 96 H94", ROPE_A) +
+            arrowPath("M94 96 L94 42", ROPE_B)
+        },
+        {
+          tip: "Da dos vueltas cerradas alrededor del cabo principal regresando dentro de la gaza hacia la casa de campaña.",
+          svg:
+            timber(226, 36, 240, 126, 14) +
+            rope("M20 56 H226 C250 56 250 96 226 96 H124", ROPE_A) +
+            rope("M126 42 C140 42 140 96 126 96", ROPE_B, 7) +
+            rope("M106 42 C120 42 120 96 106 96", ROPE_B, 7) +
+            arrowPath("M102 44 L76 44", ROPE_B)
+        },
+        {
+          tip: "Saca la punta hacia la izquierda por fuera de las dos vueltas y cierra con un cote bloqueador.",
+          svg:
+            timber(226, 36, 240, 126, 14) +
+            rope("M20 58 H226 C250 58 250 96 226 96 H138", ROPE_A) +
+            rope("M134 44 C146 44 146 98 134 98", ROPE_B, 7) +
+            rope("M116 44 C128 44 128 98 116 98", ROPE_B, 7) +
+            rope("M84 44 C98 44 98 98 84 98 L64 82", ROPE_B, 7) +
+            labelTag(110, 126, "2 vueltas dentro + 1 cote fuera")
+        }
       ]
     },
     {
@@ -16807,11 +17040,36 @@ function setupScoutSkillsHub() {
       name: "Amarre Cuadrado",
       cat: "amarre",
       catLabel: "Amarres",
-      use: "Unir dos troncos a 90° que soportan peso vertical en torres, mesas y pórticos.",
+      use: "Unir dos troncos en cruz (90 grados) para soportar peso vertical en mesas y torres.",
       steps: [
-        { tip: "Inicia con ballestrinque en el tronco vertical justo por debajo del cruce.", svg: timber(100, 10, 100, 100, 18) + timber(30, 52, 170, 52, 16) + rope("M86 70 H114 M88 78 H112", ROPE_A, 6) },
-        { tip: "Envuelve por detrás del vertical y por delante del horizontal 3 vueltas ordenadas hacia afuera.", svg: timber(100, 10, 100, 100, 18) + timber(30, 52, 170, 52, 16) + rope("M76 30 L124 76 M76 76 L124 30 M70 52 H130", ROPE_A, 5.5) },
-        { tip: "Ahorca dando 2–3 vueltas firmes entre los troncos y remata con ballestrinque.", svg: timber(100, 10, 100, 100, 18) + timber(30, 52, 170, 52, 16) + rope("M74 28 L126 76 M126 28 L74 76", ROPE_A, 5.5) + rope("M78 34 H122 V70 H78 Z", ROPE_B, 5.5) }
+        {
+          tip: "Inicia con un ballestrinque en el tronco vertical justo por debajo del cruce.",
+          svg:
+            timber(140, 12, 140, 138, 22) +
+            timber(30, 64, 250, 64, 20) +
+            rope("M124 88 H156 M124 98 H156", ROPE_A, 6.5) +
+            rope("M124 88 L156 104", ROPE_B, 6) +
+            labelTag(200, 102, "Ballestrinque inicial")
+        },
+        {
+          tip: "Pasa por delante del horizontal, por detrás del vertical y repite 3 vueltas paralelas ordenadas.",
+          svg:
+            timber(140, 12, 140, 138, 22) +
+            rope("M108 42 H172 M108 90 H172", ROPE_A, 6) +
+            timber(30, 64, 250, 64, 20) +
+            rope("M110 44 V88 M118 42 V90 M170 44 V88 M162 42 V90", ROPE_A, 5.5) +
+            labelTag(66, 114, "3 vueltas cuadradas")
+        },
+        {
+          tip: "Ahorca dando 2–3 vueltas firmes entre ambos troncos apretando las amarras y cierra con ballestrinque.",
+          svg:
+            timber(140, 12, 140, 138, 22) +
+            rope("M106 42 H174 M106 90 H174", ROPE_A, 5.5) +
+            timber(30, 64, 250, 64, 20) +
+            rope("M110 42 V90 M118 42 V90 M170 42 V90 M162 42 V90", ROPE_A, 5.5) +
+            rope("M124 44 L124 88 M156 44 L156 88", ROPE_B, 5.5) +
+            labelTag(206, 122, "Ahorcado en el centro")
+        }
       ]
     },
     {
@@ -16819,11 +17077,34 @@ function setupScoutSkillsHub() {
       name: "Amarre Diagonal",
       cat: "amarre",
       catLabel: "Amarres",
-      use: "Fijar dos troncos cruzados en X que tienden a separarse bajo carga.",
+      use: "Unir dos troncos cruzados en X que trabajan bajo tensión y tienden a abrirse.",
       steps: [
-        { tip: "Comienza con un leñador abrazando ambos troncos en el ángulo abierto de la X.", svg: timber(42, 18, 158, 92, 16) + timber(158, 18, 42, 92, 16) + rope("M82 36 C100 22 100 88 82 74", ROPE_A, 6) },
-        { tip: "Da 3 vueltas siguiendo un eje de la X y luego 3 vueltas por el eje opuesto.", svg: timber(42, 18, 158, 92, 16) + timber(158, 18, 42, 92, 16) + rope("M70 28 L130 82 M130 28 L70 82", ROPE_A, 6) },
-        { tip: "Ahorca en el centro entre ambos troncos y cierra con ballestrinque firme.", svg: timber(42, 18, 158, 92, 16) + timber(158, 18, 42, 92, 16) + rope("M72 30 L128 80 M128 30 L72 80", ROPE_A, 5.5) + rope("M82 36 H118 V74 H82 Z", ROPE_B, 5.5) }
+        {
+          tip: "Inicia con un nudo leñador abrazando ambos troncos justo en la horqueta abierta de la X.",
+          svg:
+            timber(48, 20, 232, 130, 20) +
+            timber(232, 20, 48, 130, 20) +
+            rope("M118 52 C140 36 140 114 118 98", ROPE_A, 6.5) +
+            rope("M120 62 L144 88", ROPE_B, 6) +
+            labelTag(206, 80, "Nudo leñador")
+        },
+        {
+          tip: "Da 3 vueltas paralelas abrazando el eje vertical de la X y luego 3 vueltas por el eje horizontal.",
+          svg:
+            timber(48, 20, 232, 130, 20) +
+            timber(232, 20, 48, 130, 20) +
+            rope("M126 38 V112 M140 34 V116 M154 38 V112", ROPE_A, 5.5) +
+            rope("M96 68 H184 M96 82 H184", ROPE_A, 5.5)
+        },
+        {
+          tip: "Ahorca en círculo entre ambos troncos (2 vueltas apretadas) y remata con ballestrinque.",
+          svg:
+            timber(48, 20, 232, 130, 20) +
+            timber(232, 20, 48, 130, 20) +
+            rope("M126 38 V112 M140 34 V116 M154 38 V112", ROPE_A, 5.2) +
+            rope("M98 68 H182 M98 82 H182", ROPE_A, 5.2) +
+            rope("M114 54 H166 V96 H114 Z", ROPE_B, 6)
+        }
       ]
     },
     {
@@ -16831,11 +17112,36 @@ function setupScoutSkillsHub() {
       name: "Amarre Trípode",
       cat: "amarre",
       catLabel: "Amarres",
-      use: "Armar trípodes estables para fogata elevada, filtro o astabandera.",
+      use: "Unir tres troncos paralelos para abrirlos luego en trípode estable (fogón, filtro o asta).",
       steps: [
-        { tip: "Coloca los 3 troncos paralelos alternando puntas y ata un ballestrinque en un extremo.", svg: timber(28, 28, 172, 28, 11) + timber(28, 54, 172, 54, 11) + timber(28, 80, 172, 80, 11) + rope("M60 18 V38", ROPE_A, 6) },
-        { tip: "Teje en zigzag («en 8») alternando arriba y abajo 5 pasadas sin apretar de más.", svg: timber(28, 28, 172, 28, 11) + timber(28, 54, 172, 54, 11) + timber(28, 80, 172, 80, 11) + rope("M72 18 C92 18 92 90 110 90 C128 90 128 18 148 18", ROPE_A, 5.5) },
-        { tip: "Ahorca entre cada par de troncos, cierra con ballestrinque y abre las 3 patas.", svg: timber(100, 16, 40, 96, 11) + timber(100, 16, 100, 98, 11) + timber(100, 16, 160, 96, 11) + rope("M76 28 Q100 38 124 28", ROPE_B, 7) }
+        {
+          tip: "Alinea los 3 troncos alternando sus extremos y amarra un ballestrinque en uno de los troncos exteriores.",
+          svg:
+            timber(30, 38, 250, 38, 14) +
+            timber(24, 75, 244, 75, 14) +
+            timber(34, 112, 254, 112, 14) +
+            rope("M100 28 V48 M112 28 V48", ROPE_A, 6) +
+            rope("M98 46 L116 30", ROPE_B, 5.5)
+        },
+        {
+          tip: "Teje en forma de «8» pasando alternadamente por arriba y por debajo de cada tronco unas 5 veces sin apretar.",
+          svg:
+            timber(30, 38, 250, 38, 14) +
+            timber(24, 75, 244, 75, 14) +
+            timber(34, 112, 254, 112, 14) +
+            rope("M108 26 C128 26 128 124 148 124 C168 124 168 26 188 26", ROPE_A, 6) +
+            rope("M108 124 C128 124 128 26 148 26 C168 26 168 124 188 124", ROPE_B, 5.5)
+        },
+        {
+          tip: "Ahorca entre cada par de troncos, cierra con ballestrinque en el tronco opuesto y abre las 3 patas.",
+          svg:
+            timber(140, 22, 62, 134, 14) +
+            timber(140, 22, 140, 138, 14) +
+            timber(140, 22, 218, 134, 14) +
+            rope("M112 42 Q140 54 168 42", ROPE_A, 7) +
+            rope("M118 32 V56 M162 32 V56", ROPE_B, 5.5) +
+            labelTag(212, 54, "Abrir en 3 patas")
+        }
       ]
     }
   ];
@@ -16859,7 +17165,14 @@ function setupScoutSkillsHub() {
               <span class="bt-knot-cat-badge">${escapeHtml(k.catLabel)}</span>
             </div>
             <div class="bt-knot-svg-stage">
-              <svg viewBox="0 0 200 110" width="200" height="106" aria-hidden="true">${st.svg}</svg>
+              <svg viewBox="0 0 280 150" width="280" height="150" aria-hidden="true">
+                <defs>
+                  <marker id="btKnotArrow_${k.id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+                  </marker>
+                </defs>
+                ${st.svg.replaceAll("url(#btKnotArrow)", `url(#btKnotArrow_${k.id})`)}
+              </svg>
             </div>
             <div class="bt-knot-steps-row" role="group" aria-label="Pasos de ${escapeHtml(k.name)}">
               ${["Paso 1", "Paso 2", "Listo"]
@@ -16931,43 +17244,35 @@ function setupScoutSkillsHub() {
 
   const PACK_LISTS = {
     campamento: [
-      { id: "c_dormir", kg: 2.1, text: "Sleeping bag y colchoneta aislante en bolsa seca (2.1 kg)" },
-      { id: "c_muda", kg: 1.8, text: "Mudas de ropa completas + calcetines extra (1.8 kg)" },
-      { id: "c_platos", kg: 0.4, text: "Vaso, plato hondo, cubiertos reutilizables y servilleta (0.4 kg)" },
-      { id: "c_cantimplora", kg: 1.2, text: "Cantimplora o termo con mínimo 1 L de agua (1.2 kg)" },
-      { id: "c_linterna", kg: 0.2, text: "Linterna frontal/mano con pilas de repuesto (0.2 kg)" },
-      { id: "c_higiene", kg: 0.5, text: "Kit de higiene biodegradable y toalla de secado rápido (0.5 kg)" },
-      { id: "c_uniforme", kg: 0.6, text: "Uniforme Scout completo, pañoleta y credencial SISAS (0.6 kg)" },
-      { id: "c_cuerda", kg: 0.3, text: "3 m de piola/paracord y bolsas para residuos/ropa (0.3 kg)" }
+      { id: "c_dormir", kg: 2.1, text: "Sleeping" },
+      { id: "c_muda", kg: 1.8, text: "Cambios de ropa extra" },
+      { id: "c_platos", kg: 0.4, text: "PVC (Plato, vaso y cuchara)" },
+      { id: "c_cantimplora", kg: 1.0, text: "Botella de agua (1L)" },
+      { id: "c_linterna", kg: 0.2, text: "Lámpara de cabeza/de mano" },
+      { id: "c_higiene", kg: 0.5, text: "Kit de Higiene personal" },
+      { id: "c_uniforme", kg: 0.6, text: "Uniforme completo" },
+      { id: "c_bolsillo", kg: 0.3, text: "Equipo de bolsillo" }
     ],
     ataque: [
-      { id: "a_agua", kg: 1.8, text: "Agua potable suficiente para marcha (1.5–2 L · 1.8 kg)" },
-      { id: "a_snack", kg: 0.6, text: "Alimento energético de recorrido y fruta seca (0.6 kg)" },
-      { id: "a_capa", kg: 0.5, text: "Chamarra ligera o rompevientos compacto (0.5 kg)" },
-      { id: "a_sol", kg: 0.2, text: "Gorra, bloqueador solar y lentes (0.2 kg)" },
-      { id: "a_silbato", kg: 0.3, text: "Silbato, linterna pequeña y mini botiquín personal (0.3 kg)" },
-      { id: "a_bolsa", kg: 0.1, text: "Bolsa reutilizable para regresar el 100% de tu basura (0.1 kg)" }
+      { id: "a_agua", kg: 1.0, text: "Botella de agua (1L)" },
+      { id: "a_snack", kg: 0.6, text: "Pequeño Lunch" },
+      { id: "a_capa", kg: 0.5, text: "Chamarra ligera o rompevientos" },
+      { id: "a_sol", kg: 0.2, text: "Gorra, bloqueador solar y lentes" },
+      { id: "a_bolsillo", kg: 0.3, text: "Equipo de bolsillo completo" },
+      { id: "a_bolsa", kg: 0.1, text: "Bolsa reutilizable para basura" }
     ],
     bolsillo: [
-      { id: "b_panoleta", kg: 0.08, text: "Pañoleta y nudo Scout en orden" },
-      { id: "b_silbato", kg: 0.08, text: "Silbato y linterna compacta" },
-      { id: "b_libreta", kg: 0.08, text: "Libreta pequeña de bolsillo y lápiz" },
-      { id: "b_piola", kg: 0.06, text: "1.5 m de piola para prácticas" },
-      { id: "b_emergencia", kg: 0.04, text: "Tarjeta de contacto de emergencia y efectivo" },
-      { id: "b_curitas", kg: 0.04, text: "3 curitas, toallitas limpiadoras y cubrebocas" }
+      { id: "b_equipo", kg: 0.2, text: "Equipo de bolsillo completo" },
+      { id: "b_docs", kg: 0.12, text: "Agenda, credencial y ficha de salud" }
     ]
   };
   const CLIMATE_EXTRAS = {
     templado: [],
     lluvia: [
-      { id: "cl_impermeable", kg: 0.45, text: "Poncho o chamarra impermeable con capucha (0.45 kg)" },
-      { id: "cl_funda", kg: 0.25, text: "Funda impermeable o bolsa grande para cubrir mochila (0.25 kg)" },
-      { id: "cl_calceta", kg: 0.2, text: "2 pares extra de calcetines en bolsa sellada (0.2 kg)" }
+      { id: "cl_impermeable", kg: 0.45, text: "Chamarra o impermeable" }
     ],
     frio: [
-      { id: "cf_termica", kg: 0.65, text: "Primera capa térmica + chamarra polar (0.65 kg)" },
-      { id: "cf_gorro", kg: 0.25, text: "Gorro tejido, guantes y cuello térmico (0.25 kg)" },
-      { id: "cf_manta", kg: 0.1, text: "Manta térmica de emergencia (0.1 kg)" }
+      { id: "cf_manta", kg: 0.1, text: "Manta térmica" }
     ]
   };
 
@@ -17049,8 +17354,11 @@ function setupScoutSkillsHub() {
 
   const getCurrentPackItems = () => {
     const base = PACK_LISTS[packState.type] || PACK_LISTS.campamento;
-    const extra = packState.type === "bolsillo" ? [] : CLIMATE_EXTRAS[packState.climate] || [];
-    return [...base, ...extra];
+    if (packState.type === "bolsillo") return base;
+    if (packState.type === "ataque") {
+      return packState.climate === "lluvia" ? [...base, ...CLIMATE_EXTRAS.lluvia] : base;
+    }
+    return [...base, ...(CLIMATE_EXTRAS[packState.climate] || [])];
   };
 
   const renderPackWeight = () => {
@@ -17090,14 +17398,19 @@ function setupScoutSkillsHub() {
     if (packListTitleEl) packListTitleEl.textContent = `Lista · ${typeTitleMap[packState.type] || "Tu Mochila"}`;
 
     let done = 0;
-    packListEl.innerHTML = items
-      .map((it) => {
-        const key = `${packState.type}:${it.id}`;
-        const on = Boolean(packState.checked && packState.checked[key]);
-        if (on) done++;
-        return `<label class="bt-safe-check-item ${on ? "is-checked" : ""}"><input type="checkbox" data-pack-item="${escapeHtml(key)}" ${on ? "checked" : ""}/><span>${escapeHtml(it.text)}</span></label>`;
-      })
-      .join("");
+    const extraNoteHtml =
+      packState.type === "bolsillo"
+        ? `<div class="bt-whistle-meta-note" style="margin-top:0.55rem;"><strong>Referencia Equipo de Bolsillo ASMAC (Pistas de Aventura p. 36–37):</strong> 1 a 2 m de piola/cordón, navaja autorizada (según sección), gis, lápiz/pluma, libreta pequeña, pañuelo o paliacate, cambio para emergencia, curitas, seguros/imperdibles, ligas, cerillos impermeabilizados (bajo supervisión) y aguja con hilo.</div>`
+        : "";
+    packListEl.innerHTML =
+      items
+        .map((it) => {
+          const key = `${packState.type}:${it.id}`;
+          const on = Boolean(packState.checked && packState.checked[key]);
+          if (on) done++;
+          return `<label class="bt-safe-check-item ${on ? "is-checked" : ""}"><input type="checkbox" data-pack-item="${escapeHtml(key)}" ${on ? "checked" : ""}/><span>${escapeHtml(it.text)}</span></label>`;
+        })
+        .join("") + extraNoteHtml;
     if (packBadgeEl) packBadgeEl.textContent = `${done} / ${items.length}`;
     renderPackWeight();
     renderPackDiagram();
@@ -17442,33 +17755,35 @@ function setupScoutSkillsHub() {
   }
 
   // --------------------------------------------------------------------------
-  // 7. SILBATO Y FORMACIONES OFICIALES ASMAC
+  // 7. SILBATO Y FORMACIONES OFICIALES ASMAC (CON FUENTES DIRECTAS DE MANUAL)
   // --------------------------------------------------------------------------
   const WHISTLES = [
-    { name: "Atención / Alto", sec: "Todas", code: "T", morse: "-", desc: "1 toque largo" },
-    { name: "Formarse (Tropa)", sec: "Tropa", code: "CC", morse: "-.-. -.-.", desc: "Largo-corto-largo-corto (2x)" },
-    { name: "Guías de Patrulla", sec: "Tropa", code: "V", morse: "...-", desc: "3 cortos y 1 largo" },
-    { name: "Subguías", sec: "Tropa", code: "U", morse: "..-", desc: "2 cortos y 1 largo" },
-    { name: "Comunidad", sec: "Comunidad", code: "QQ", morse: "--.- --.-", desc: "Largo-largo-corto-largo (2x)" },
-    { name: "Coordinadores de Equipo", sec: "Comunidad", code: "B", morse: "-...", desc: "1 largo y 3 cortos" },
-    { name: "Clan de Rovers", sec: "Clan", code: "RR", morse: ".-. .-.", desc: "Corto-largo-corto (2x)" },
-    { name: "Scouters", sec: "Dirigentes", code: "J", morse: ".---", desc: "1 corto y 3 largos" },
-    { name: "Auxilio / Alerta", sec: "Emergencia", code: "S", morse: "...", desc: "3 toques cortos repetidos" },
-    { name: "Peligro (SOS)", sec: "Emergencia", code: "SOS", morse: "... --- ...", desc: "3 cortos, 3 largos, 3 cortos" }
+    { name: "Atención / Alto", sec: "Todas", code: "T", morse: "-", desc: "1 toque largo", src: "Pistas de Aventura p. 66" },
+    { name: "Formarse (Tropa)", sec: "Tropa", code: "CC", morse: "-.-. -.-.", desc: "Largo-corto-largo-corto (2x)", src: "Pistas de Aventura p. 66" },
+    { name: "Guías de Patrulla", sec: "Tropa", code: "V", morse: "...-", desc: "3 cortos y 1 largo", src: "Pistas de Aventura p. 66" },
+    { name: "Subguías de Patrulla", sec: "Tropa", code: "U", morse: "..-", desc: "2 cortos y 1 largo", src: "Pistas de Aventura p. 66" },
+    { name: "Comunidad", sec: "Comunidad", code: "QQ", morse: "--.- --.-", desc: "Largo-largo-corto-largo (2x)", src: "El Desafío de ser Caminante p. 37" },
+    { name: "Coordinadores de Equipo", sec: "Comunidad", code: "B", morse: "-...", desc: "1 largo y 3 cortos", src: "El Desafío de ser Caminante p. 37" },
+    { name: "Clan de Rovers", sec: "Clan", code: "RR", morse: ".-. .-.", desc: "Corto-largo-corto (2x)", src: "Las Rutas Rover p. 25" },
+    { name: "Scouters", sec: "Dirigentes", code: "J", morse: ".---", desc: "1 corto y 3 largos", src: "Pistas de Aventura p. 66" },
+    { name: "Auxilio", sec: "Emergencia", code: "S", morse: "...", desc: "3 cortos (Tropa/Comunidad)", src: "Pistas p. 66 (Clan: Peligro)" },
+    { name: "Peligro (SOS)", sec: "Emergencia", code: "SOS", morse: "... --- ...", desc: "3 cortos, 3 largos, 3 cortos", src: "Pistas p. 66 / Rutas Rover p. 25" }
   ];
   const whistlesListEl = document.getElementById("btWhistlesList");
   if (whistlesListEl) {
-    whistlesListEl.innerHTML = WHISTLES.map(
-      (w, idx) => `
+    whistlesListEl.innerHTML =
+      WHISTLES.map(
+        (w, idx) => `
       <div class="bt-whistle-row">
         <div>
           <strong>${escapeHtml(w.name)}</strong>
-          <small>${escapeHtml(w.sec)} · ${escapeHtml(w.desc)}</small>
+          <small>${escapeHtml(w.sec)} · ${escapeHtml(w.desc)} · <em>${escapeHtml(w.src)}</em></small>
         </div>
         <span class="bt-whistle-code">${escapeHtml(w.code)} (${escapeHtml(w.morse)})</span>
         <button type="button" class="bt-sf-btn bt-whistle-play" data-whistle-idx="${idx}">Escuchar</button>
       </div>`
-    ).join("");
+      ).join("") +
+      `<div class="bt-whistle-meta-note"><strong>Aclaración oficial ASMAC:</strong> En <strong>Manada</strong> se usa el llamado vocal <em>«¡Manada, Manada, Manada!»</em> (Carnet de Aventuras en la Naturaleza para Manada 2024, p. 27) y atención al silbato Scout. En Tropa y Comunidad, <code>S (...)</code> es Auxilio y <code>SOS (... --- ...)</code> es Peligro; en el manual de Clan (Las Rutas Rover, p. 25) aparecen listados a la inversa (<code>S = Peligro</code> y <code>SOS = Auxilio</code>).</div>`;
     whistlesListEl.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-whistle-idx]");
       if (!btn) return;
@@ -17532,7 +17847,8 @@ function setupScoutSkillsHub() {
   const QUIZ_BANK = [
     { q: "¿Cuál es el toque oficial ASMAC para formar a la Tropa?", opts: ["CC (-.-. -.-.)", "V (...-)", "QQ (--.- --.-)", "RR (.-. .-.)"], ans: 0, exp: "Pistas de Aventura 2024: CC (-.-. -.-.) llama a formación de Tropa." },
     { q: "En clave Murciélago (M-U-R-C-I-E-L-A-G-O = 0-9), ¿qué número corresponde a la letra A?", opts: ["5", "6", "7", "8"], ans: 2, exp: "M(0) U(1) R(2) C(3) I(4) E(5) L(6) A(7) G(8) O(9)." },
-    { q: "¿Cómo se representa la palabra SCOUT en clave Baden Powell?", opts: ["HXLFG", "SC938", "S391T", "SB92T"], ans: 1, exp: "En Agujerito SCOUT es SC938; en Murciélago es S391T; en Baden Powell B↔P, A↔O, D↔W, E↔E, N↔L." },
+    { q: "¿Cómo se representa la palabra SCOUT en clave Agujerito (A=1..O=9)?", opts: ["HXLFG", "SC938", "S391T", "SB92T"], ans: 1, exp: "En Agujerito: A(1) G(2) U(3) J(4) E(5) R(6) I(7) T(8) O(9), así que SCOUT queda SC938." },
+    { q: "En Tu Mochila de Ataque (1 día), ¿qué es correcto empacar según las recomendaciones?", opts: ["Sleeping bag de invierno", "Botella de agua (1L), Pequeño Lunch y Equipo de bolsillo", "Colchoneta doble para acampar", "Tres mudas completas"], ans: 1, exp: "La mochila de ataque es ligera para caminata de un día: agua, pequeño lunch, protección solar/rompevientos y equipo de bolsillo." },
     { q: "¿Qué nudo sirve para crear una gaza fija que NO se corre ni ahorca bajo tensión?", opts: ["Ballestrinque", "As de Guía", "Rizo", "Margarita"], ans: 1, exp: "El As de Guía forma una gaza segura que puede desatarse fácilmente tras recibir carga." },
     { q: "Si tu rumbo con brújula es 45° (NE), ¿cuál es tu contra-azimut de regreso?", opts: ["135° (SE)", "180° (S)", "225° (SO)", "315° (NO)"], ans: 2, exp: "Contra-azimut: cuando es menor a 180° se suman 180° (45° + 180° = 225°)." },
     { q: "¿Cuál es el peso máximo recomendado para cargar en tu mochila de campamento?", opts: ["5% de tu peso", "15% a 20% de tu peso", "35% de tu peso", "50% de tu peso"], ans: 1, exp: "Cuidar la postura exige no superar el 15–20% de tu peso corporal en campamento." },
@@ -17986,6 +18302,36 @@ function setupAutofillQrSharing() {
 
 const BT_RELEASE_NOTES = [
   {
+    version: "Web v10.3.0 / APK v4.3.0",
+    date: "26/11/2026",
+    sections: {
+      added: [
+        "Modal automático de novedades al actualizar a una versión nueva, agrupado por Añadido, Mejorado, Cambiado y Eliminado.",
+        "Más de 35 preguntas y respuestas nuevas sobre Claves, Nudos, Amarres, Tu Mochila, Pistas, Botiquín, Fogatas, Silbato ASMAC, Ejes Temáticos, La Fogata, Editor de archivos y Descarga.",
+        "Citas oficiales de manual (Pistas de Aventura p. 66, El Desafío de ser Caminante p. 37, Las Rutas Rover p. 25 y Carnet Manada p. 27) directamente en cada toque de Silbato y referencia del Equipo de Bolsillo."
+      ],
+      improved: [
+        "Rediseño completo de los 10 diagramas de Nudos y Amarres en formato 280x150 con flechas de dirección, cruces reales arriba/abajo y pasos fieles a la cabuyería Scout (Rizo, Vuelta de Escota, Pescador, Ballestrinque, As de Guía, Margarita, Tensor, Cuadrado, Diagonal y Trípode).",
+        "Renovación visual de La Fogata con barra de estadísticas comunitarias, paleta cálida Scout y ficha de perfil plegable en comentarios ya registrados.",
+        "Estandarización de márgenes, tipografía, botones, radios y tarjetas en todos los espacios, además de explicación actualizada en el modal de Bienvenida."
+      ],
+      changed: [
+        "Corrección de colores de los 4 Ejes Temáticos al seleccionarlos: Salud en azul/cian, Habilidades en naranja, Medio Ambiente en verde y Paz en rosa/magenta.",
+        "Listas renovadas de Tu Mochila (Campamento, Ataque de 1 día y De Bolsillo) con nombres claros y reglas limpias por clima.",
+        "Navegación simplificada y ordenada: Guía en segundo lugar y nombres exactos (Ejes Temáticos, Agentes de Cambio, Editor de archivos y Descarga), sin botones cruzados que cambien de apartado inesperadamente."
+      ],
+      removed: [
+        "Se quitaron de Tu Mochila: funda impermeable de mochila, pares extra repetidos de calcetines, capas térmicas pesadas de dormir en mochila de ataque y artículos redundantes fuera del equipo de bolsillo.",
+        "Se eliminaron los botones de salto entre secciones en Buscador, Ejes Temáticos, Agentes de Cambio y Skills para mantener cada espacio independiente y sin confusiones."
+      ]
+    },
+    items: [
+      "Colores corregidos en los 4 Ejes Temáticos (Salud azul, Habilidades naranja, Ambiente verde, Paz rosa).",
+      "Tu Mochila actualizada con listas claras en Campamento, Ataque y De Bolsillo, sin equipamiento invernal pesado en caminatas de 1 día.",
+      "Rediseño completo de los 10 Nudos y Amarres SVG reales, citas oficiales ASMAC en Silbato, mejoras visuales en La Fogata, nombres/orden estandarizados y Modal automático de Novedades."
+    ]
+  },
+  {
     version: "Web v10.2.0 / APK v4.2.0",
     date: "25/11/2026",
     items: [
@@ -18141,6 +18487,7 @@ function setupSettingsHub() {
   const updateStatusEl = document.getElementById("settingsUpdateStatus");
   const changelogBox = document.getElementById("settingsChangelogContainer");
   const btnOpenWelcome = document.getElementById("btnSettingsOpenWelcome");
+  const btnOpenWhatsNew = document.getElementById("btnSettingsOpenWhatsNew");
   const btnSettingsDownloadOffline = document.getElementById("btnSettingsDownloadOffline");
   const btnSettingsCopyIosUrl = document.getElementById("btnSettingsCopyIosUrl");
   const btnSettingsJumpAppSection = document.getElementById("btnSettingsJumpAppSection");
@@ -18271,19 +18618,31 @@ function setupSettingsHub() {
           : plat.key === "ios"
             ? "Adaptado para iOS App Web"
             : "Sitio Web Oficial";
-      changelogBox.innerHTML = BT_RELEASE_NOTES.map(
-        (rel, idx) => `
+      const GROUP_LABELS = [
+        ["added", "Añadido", "is-added"],
+        ["improved", "Mejorado", "is-improved"],
+        ["changed", "Cambiado", "is-changed"],
+        ["removed", "Eliminado", "is-removed"]
+      ];
+      changelogBox.innerHTML = BT_RELEASE_NOTES.map((rel, idx) => {
+        const sec = rel.sections || null;
+        const bodyHtml = sec
+          ? GROUP_LABELS.map(([k, lbl, cls]) => {
+              const arr = Array.isArray(sec[k]) ? sec[k] : [];
+              if (!arr.length) return "";
+              return `<div style="margin-top:0.5rem;"><span class="bt-wn-badge ${cls}">${lbl}</span><ul>${arr.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}</ul></div>`;
+            }).join("")
+          : `<ul>${(rel.items || []).map((it) => `<li>${escapeHtml(it)}</li>`).join("")}</ul>`;
+        return `
           <article class="bt-changelog-item">
             <div class="bt-changelog-item-head">
               <strong>${escapeHtml(rel.version)}${idx === 0 ? ` · ${escapeHtml(platTag)}` : ""}</strong>
               <span class="bt-changelog-item-date">${escapeHtml(rel.date)}</span>
             </div>
-            <ul>
-              ${rel.items.map((it) => `<li>${escapeHtml(it)}</li>`).join("")}
-            </ul>
+            ${bodyHtml}
           </article>
-        `
-      ).join("");
+        `;
+      }).join("");
     }
   };
 
@@ -18356,6 +18715,14 @@ function setupSettingsHub() {
       closeSettingsModal();
       if (typeof window.__btOpenWelcomeModal === "function") {
         window.__btOpenWelcomeModal(1);
+      }
+    });
+  }
+  if (btnOpenWhatsNew) {
+    btnOpenWhatsNew.addEventListener("click", () => {
+      closeSettingsModal();
+      if (typeof window.__btOpenWhatsNewModal === "function") {
+        window.__btOpenWhatsNewModal();
       }
     });
   }

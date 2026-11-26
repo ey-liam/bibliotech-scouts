@@ -1,8 +1,8 @@
 {
-  "version": "10.2.0",
-  "mobileVersion": "4.2.0",
-  "cache": "bibliotech-scout-v63",
-  "releasedAt": "2026-11-25",
+  "version": "10.3.0",
+  "mobileVersion": "4.3.0",
+  "cache": "bibliotech-scout-v64",
+  "releasedAt": "2026-11-26",
   "schemaCookieVersion": "9.7",
-  "notes": "Versión 10.2.0 / Mobile 4.2.0: Rediseño completo de Claves en Skills (20 claves interactivas con Semáforo ASMAC Rojo/Blanco y Rojo/Amarillo, Pigpen, Gato, Brújula N/E/S/O, Criptógrafo giratorio, Baden Powell, Agujerito, Parelinofu, El Bloque, Palabra Clave y Caracol), Nudos SVG con cruces 3D reales, nueva silueta anatómica para Tu Mochila con peso empacado en vivo, mejoras visuales y animaciones fluidas en todo el sitio, respuestas corregidas para especialidades no publicadas (FES) y participación sin Grupo, y exclusión de dispositivos del desarrollador en telemetría."
+  "notes": "Versión 10.3.0 / Mobile 4.3.0: Colores corregidos en los 4 Ejes Temáticos (Salud azul, Habilidades naranja, Ambiente verde, Paz rosa); listas renovadas de Tu Mochila (Campamento, Ataque de 1 día sin equipo pesado de dormir y De Bolsillo con referencia ASMAC); rediseño completo de los 10 Nudos y Amarres SVG reales; citas oficiales ASMAC en Silbato; renovación visual de La Fogata; barra ordenada con Guía en 2.º lugar y nombres exactos sin botones cruzados; 35+ nuevas preguntas en FAQ; explicación ampliada en Bienvenida y Modal automático de Novedades."
 }

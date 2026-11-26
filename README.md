@@ -3,7 +3,7 @@
 **Proyecto sin fines de lucro · Creador:** Liam Durán · Comunidad de Caminantes · Provincia Tláhuac-Xochimilco  
 **Contacto:** `rdc.tlxh@gmail.com`  
 **Fuentes documentales:** Documentos oficiales de la Asociación de Scouts de México, A.C. (ASMAC) y World Scouting (WOSM)  
-**Base de datos:** 25/11/2026 • **Versión:** `10.2.0` (Web) • `4.2.0` Mobile  
+**Base de datos:** 26/11/2026 • **Versión:** `10.3.0` (Web) • `4.3.0` Mobile  
 **Sitio web público:** https://ey-liam.github.io/bibliotech-scouts/  
 **App Android oficial (APK):** https://github.com/ey-liam/bibliotech-scouts-app/releases
 
@@ -11,12 +11,12 @@
 
 ## 1. Qué es BiblioTech Scout y cómo funciona
 
-**BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, acciones educativas FAES, plantillas RECME, reglamentos, libros históricos, los **4 Ejes Temáticos del PJOS**, herramientas interactivas de **Skills** (*20 Claves interactivas + Semáforo ASMAC, Nudos y Amarres 3D, Tu Mochila con carga en vivo, Pistas y Brújula, Botiquín, Fogatas, Silbato y Reto*), avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta y nomenclatura oficial de donde proviene cada dato.
+**BiblioTech Scout** es una plataforma educativa, gratuita y de código abierto diseñada para consultar en segundos manuales, fichas FES, acciones educativas FAES, plantillas RECME, reglamentos, libros históricos, los **Ejes Temáticos del PJOS**, herramientas interactivas de **Skills** (*20 Claves interactivas + Semáforo ASMAC, Nudos y Amarres SVG reales 280x150, Tu Mochila con Campamento/Ataque/Bolsillo, Pistas y Brújula, Botiquín, Fogatas, Silbato ASMAC citado y Reto*), avisos vigentes y preguntas frecuentes oficiales del escultismo nacional e internacional, siempre mostrando la fuente exacta y nomenclatura oficial de donde proviene cada dato.
 
-- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`21,258` preguntas y respuestas verificadas con enlaces cruzados entre documentos), el catálogo oficial (`883` documentos oficiales visibles, `1,035` entradas indexadas y `664` con nomenclatura oficial ASMAC/WOSM), los espacios interactivos **4 Ejes** y **Skills**, el modo oscuro, el visor PDF por página con streaming inteligente para archivos pesados (`50 MB` a `300+ MB`), el Editor de Archivos (16 plantillas oficiales en vivo) y La Fogata funcionan directamente desde cualquier navegador de escritorio, tablet o celular.
+- **No requiere descarga obligatoria:** Todas las herramientas de búsqueda (`21,293` preguntas y respuestas verificadas con enlaces cruzados entre documentos), el catálogo oficial (`883` documentos oficiales visibles, `1,035` entradas indexadas y `664` con nomenclatura oficial ASMAC/WOSM), los espacios interactivos **Ejes Temáticos** y **Skills**, el modo oscuro, el visor PDF por página con streaming inteligente para archivos pesados (`50 MB` a `300+ MB`), el Editor de archivos (16 plantillas oficiales en vivo) y La Fogata funcionan directamente desde cualquier navegador de escritorio, tablet o celular.
 - **Uso sin conexión (Offline):**
-  - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS (`img/apple-touch-icon.png`) y caché PWA (`sw.js` `v63`).
-  - En **Android (APK oficial `v4.2.0`):** la app nativa empaca las `21,258` preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de los `883` documentos oficiales.
+  - En **iPhone / iPad (iOS Safari):** se instala gratis como Web App desde *Compartir → Agregar a inicio* con ícono compatible con iOS (`img/apple-touch-icon.png`) y caché PWA (`sw.js` `v64`).
+  - En **Android (APK oficial `v4.3.0`):** la app nativa empaca las `21,293` preguntas e interfaz para abrirlas sin internet y añade gestor de descargas offline de los `883` documentos oficiales.
 
 ---
 
@@ -74,7 +74,7 @@ El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **M
 | **Secciones Scouts (`#secciones`)** | Acceso directo unificado por rango de edad (*Manada de Lobatos*, *Tropa de Scouts*, *Comunidad de Caminantes*, *Clan de Rovers*, *Adultos y Dirigentes* y *World Scouting WOSM*) para filtrar al instante sus documentos, progresiones e insignias. | ![Tarjetas unificadas de Secciones Scouts](docs/screenshots/web-secciones-unificadas.png) |
 | **¿Qué es BiblioTech? (`#acerca`)** | Presentación transparente del proyecto sin fines de lucro, su objetivo educativo, resumen de capacidades, datos de autoría y correo/reporte para mejoras o fallas. | ![Sección Proyecto sin fines de lucro y autoría](docs/screenshots/web-acerca-proyecto.png) |
 
-*(Desde la barra superior accedes directamente a los espacios dedicados: **Inicio**, **Biblioteca**, **4 Ejes**, **Skills**, **Guía**, **Agentes**, **La Fogata**, **Archivos**, **Acerca de** y **App**).*
+*(Desde la barra superior accedes directamente a los espacios dedicados: **Inicio**, **Guía**, **Biblioteca**, **Ejes Temáticos**, **Skills**, **Agentes de Cambio**, **La Fogata**, **Editor de archivos**, **Acerca de** y **Descarga**).*
 
 ---
 
@@ -82,7 +82,7 @@ El sitio detecta preferencias del usuario y ofrece cambio instantáneo entre **M
 
 | Capacidad | Sitio Web (Escritorio / Móvil) | iOS Safari Web App (iPhone / iPad) | App Android (APK Oficial) |
 | :--- | :---: | :---: | :---: |
-| Buscador con `21,134` preguntas, nomenclaturas y fuentes cruzadas | En línea / Offline opcional | Descarga offline iOS Safari/PWA | 100% Offline nativo |
+| Buscador con `21,293` preguntas, nomenclaturas y fuentes cruzadas | En línea / Offline opcional | Descarga offline iOS Safari/PWA | 100% Offline nativo |
 | Biblioteca de `883` documentos oficiales con visores integrados | En línea (streaming HTTP 206) | En línea (streaming HTTP 206) | En línea + Descarga offline |
 | Favoritos (`Guardados`), historial reciente y notas locales | Cookies + `localStorage` | Cookies + `localStorage` | Guardados + Almacenamiento nativo |
 | Modo Claro y Modo Oscuro unificados | Incluido | Incluido | Incluido |
@@ -133,9 +133,9 @@ bibliotech-scouts/
 ├── index.html                  # Estructura semántica principal (12 apartados ordenados)
 ├── src/                        # Fuente editable: styles.css y app.js
 ├── styles.css / app.js         # Salida depurada y minificada generada con npm run build
-├── sw.js                       # Service Worker PWA (bibliotech-scout-v52)
+├── sw.js                       # Service Worker PWA (bibliotech-scout-v64)
 ├── manifest.webmanifest        # Manifiesto Web App / PWA (iconos maskable y shortcuts)
-├── data/                       # catalog.json (883 docs), questions_bank.json, faq_v3.json, faq_v4.json (21,134 preg), kb, chunks
+├── data/                       # catalog.json (883 docs), questions_bank.json, faq_v3.json, faq_v4.json (21,293 preg), kb, chunks
 ├── covers/                     # Carátulas optimizadas en JPG (883 documentos oficiales)
 ├── img/                        # Logotipos, fondos temáticos, galería, formatos y apple-touch-icon.png
 ├── assets/                     # Recursos gráficos esenciales de interfaz

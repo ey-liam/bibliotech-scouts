@@ -153,10 +153,41 @@ def run_e2e(test_webkit: bool = False):
             ans_solar = page.locator("#answerBody").inner_text()
             assert "Scouts Go Solar" in ans_solar and "P8.7" in ans_solar, "Go Solar no mostró P8.7"
 
-            # Navegar al nuevo espacio Los 4 Ejes del PJOS (#ejes-pjos) y probar los 5 paneles interactivos
+            # Verificar v10.3.0: orden y nombres exactos en barra superior (Guía en 2.º lugar, sin botones cruzados)
+            nav_items = page.evaluate(
+                "() => Array.from(document.querySelectorAll('.desktop-quick-nav a')).map(el => el.innerText.trim())"
+            )
+            assert nav_items[1] == "Guía", f"Guía debe estar en 2.º lugar en desktop-quick-nav: {nav_items}"
+            assert "Ejes Temáticos" in nav_items and "Agentes de Cambio" in nav_items and "Editor de archivos" in nav_items and "Descarga" in nav_items, f"Nombres de barra superior inesperados: {nav_items}"
+
+            # Navegar al espacio Ejes Temáticos (#ejes-pjos) y probar los 5 paneles interactivos + colores correctos + cero saltos cruzados
             page.click('.desktop-quick-nav [data-bt-go-view="ejes"]')
             assert page.locator("#ejes-pjos").is_visible(), "Espacio #ejes-pjos no visible"
+            assert page.locator("#ejes-pjos [data-bt-jump-skill], #ejes-pjos [data-ejes-filter-lib], #ejes-pjos [data-ejes-open-tpl]").count() == 0, "Quedaron botones de salto cruzado en #ejes-pjos"
             assert "Salud y Bienestar" in page.locator("#btAxisDetailPanel").inner_text(), "Detalle inicial de Salud no visible"
+
+            # Validar colores correctos de cada eje al seleccionarlo (Salud=azul/cian, Habilidades=naranja, Ambiente=verde, Paz=rosa)
+            def axis_border_rgb(axis_key):
+                page.click(f'[data-axis-pick="{axis_key}"]')
+                page.wait_for_timeout(260)
+                return page.evaluate(
+                    """(k) => {
+                      const st = getComputedStyle(document.querySelector(`.bt-axis-card.is-${k}.is-active`));
+                      const m = st.borderTopColor.match(/rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)/);
+                      return m ? [Number(m[1]), Number(m[2]), Number(m[3])] : [0,0,0];
+                    }""",
+                    axis_key,
+                )
+
+            rgb_salud = axis_border_rgb("salud")
+            assert rgb_salud[2] > rgb_salud[0], f"Salud debe ser azul/cian, salió {rgb_salud}"
+            rgb_hab = axis_border_rgb("habilidades")
+            assert rgb_hab[0] > rgb_hab[2], f"Habilidades debe ser naranja, salió {rgb_hab}"
+            rgb_amb = axis_border_rgb("ambiente")
+            assert rgb_amb[1] > rgb_amb[0] and rgb_amb[1] > rgb_amb[2], f"Ambiente debe ser verde, salió {rgb_amb}"
+            rgb_paz = axis_border_rgb("paz")
+            assert rgb_paz[0] > rgb_paz[1] and rgb_paz[2] > rgb_paz[1], f"Paz debe ser rosa/magenta, salió {rgb_paz}"
+            assert "Paz y Participación Comunitaria" in page.locator("#btAxisDetailPanel").inner_text(), "Cambio de eje a Paz falló"
             page.click('[data-axis-pick="ambiente"]')
             assert "Tribu de la Tierra" in page.locator("#btAxisDetailPanel").inner_text(), "Cambio de eje a Ambiente falló"
             assert page.locator("#btPickerResultsGrid .bt-picker-doc-card").count() >= 1, "Armador de actividades no sugirió fichas"
@@ -170,7 +201,7 @@ def run_e2e(test_webkit: bool = False):
             page.locator('#btSafeTripChecklist [data-safe-trip-chk="jl304"]').check()
             assert "1 / 8" in page.locator("#btSafeTripBadge").inner_text(), "Semáforo de salida segura no sumó check"
 
-            # Pestaña 3: Ambiente (Impacto Cero Papel + Misión Planeta)
+            # Pestaña 3: Ambiente (Impacto Cero Papel + Misión Planeta sin salto cruzado)
             page.click('[data-ejes-tab="ambiente"]')
             sheets_before = int(page.locator("#btEcoTotalSheets").inner_text().strip() or "0")
             page.click("#btEcoAddPaperlessSessionBtn")
@@ -179,18 +210,15 @@ def run_e2e(test_webkit: bool = False):
             page.click('[data-eco-mission="plasticos"]')
             assert "Plastic Tide Turners" in page.locator("#btEcoMissionBody").inner_text(), "Misión Cero Plásticos no cargó"
 
-            # Pestaña 4: Paz (Bitácora Mensajeros de la Paz -> Solicitud P8.3)
+            # Pestaña 4: Paz (Bitácora Mensajeros de la Paz con copia local sin salir de la sección)
             page.click('[data-ejes-tab="paz"]')
             page.fill("#btMopProjectInput", "Colecta Invernal Patrulla E2E")
             page.fill("#btMopHoursInput", "12")
             page.click('#btMopLogForm button[type="submit"]')
             assert "12 h" in page.locator("#btMopTotalHoursBadge").inner_text(), "Bitácora MoP no registró 12 horas"
-            page.click("#btMopSendToP8Btn")
-            assert page.locator("#editor-formatos").is_visible(), "Botón MoP P8.3 no llevó al Editor de Archivos"
-            assert page.locator("#sfTemplateSelect").input_value() == "p8_mop", "MoP no seleccionó plantilla p8_mop"
+            page.click("#btMopCopySummaryBtn")
 
-            # Pestaña 5: Habilidades (Constructor Guiado SMART -> Cédula Oficial P6.2)
-            page.click('.desktop-quick-nav [data-bt-go-view="ejes"]')
+            # Pestaña 5: Habilidades (Constructor Guiado SMART con copia local sin salir de la sección)
             page.click('[data-ejes-tab="habilidades"]')
             page.click('[data-smart-example="s"]')
             page.click('[data-smart-example="m"]')
@@ -201,10 +229,8 @@ def run_e2e(test_webkit: bool = False):
             ejes_text = page.locator("#ejes-pjos").inner_text()
             bad_ejes_emojis = [ch for ch in EMOJI_RE.findall(ejes_text) if ch not in ("✓", "✕", "✔", "→", "←", "↗", "–", "—", "•", "·")]
             assert not bad_ejes_emojis, f"Emojis detectados en #ejes-pjos: {set(bad_ejes_emojis)}"
-            page.click("#btSmartTransferBtn")
-            assert page.locator("#editor-formatos").is_visible(), "Constructor SMART no abrió Editor de Archivos"
-            assert page.locator("#sfTemplateSelect").input_value() == "smart", "Constructor SMART no seleccionó plantilla smart"
-            page.select_option("#sfTemplateSelect", "salud")
+            page.click("#btSmartCopyTextBtn")
+            assert page.locator("#btSmartTransferBtn").count() == 0, "#btSmartTransferBtn debe estar eliminado"
 
             # Verificar filtro por Eje Temático en Biblioteca
             page.click('.desktop-quick-nav [data-bt-go-view="biblioteca"]')
@@ -337,8 +363,8 @@ def run_e2e(test_webkit: bool = False):
             # Navegar al espacio La Fogata (#foro) y probar flujo completo
             page.click('.desktop-quick-nav [data-bt-go-view="fogata"]')
             assert page.locator("#foro").is_visible(), "Espacio La Fogata no visible"
-            assert "COMUNIDAD SCOUT" not in page.locator("#foro").inner_text(), "Leyenda COMUNIDAD SCOUT no se eliminó"
-            assert "La Fogata: Recomendaciones" in page.locator("#forumSectionTitle").inner_text(), "Título La Fogata incorrecto"
+            assert page.locator("#forumStatsStrip .forum-stat-chip").count() >= 2, "Faltan chips en #forumStatsStrip"
+            assert "La Fogata" in page.locator("#forumSectionTitle").inner_text(), "Título La Fogata incorrecto"
             assert "Todos" in page.locator('#forumChannelTabs [data-forum-channel="all"]').inner_text(), "Pestaña Todos faltante"
             page.click('#forumChannelTabs [data-forum-channel="adultos"]')
             adult_cards = page.locator("#forumPostsGrid .forum-post-card.is-adult").count()
@@ -444,7 +470,9 @@ def run_e2e(test_webkit: bool = False):
             assert page.locator("#btCipherOutputArea .bt-spiral-cell.is-center").count() == 1, "Falta celda central de Caracol"
 
             page.click('#btSkillsTabs [data-skills-tab="nudos"]')
+            assert page.locator("#skills [data-open-doc], #skills [data-bt-go-view]").count() == 0, "Quedaron botones de salto cruzado dentro de #skills"
             assert page.locator("#btKnotsGrid .bt-knot-card").count() >= 10, "Faltan nudos en #skills"
+            assert page.locator('#btKnotsGrid svg[viewBox="0 0 280 150"]').count() >= 10, "Los nudos deben renderizar en viewBox 280x150"
             page.locator('#btKnotsGrid [data-knot-step="rizo:1"]').click()
             assert page.locator('#btKnotsGrid [data-knot-step="rizo:1"]').evaluate("el => el.classList.contains('is-active')"), "Paso 2 de nudo no quedó activo"
 
@@ -454,6 +482,21 @@ def run_e2e(test_webkit: bool = False):
             assert "1. Cabezal" in page.locator("#btPackZoneInfo").inner_text(), "Cambio de zona en Tu Mochila falló"
             page.fill("#btUserWeightKg", "60")
             assert "9.0 – 12.0 kg" in page.locator("#btPackMaxWeightLabel").inner_text(), "Cálculo de carga segura 60kg falló"
+            camp_txt = page.locator("#btPackChecklist").inner_text()
+            for expected_camp in ("Sleeping", "PVC (Plato, vaso y cuchara)", "Botella de agua (1L)", "Uniforme completo", "Equipo de bolsillo"):
+                assert expected_camp in camp_txt, f"Falta '{expected_camp}' en Tu Mochila Campamento"
+            page.click('#btPackClimatePills [data-pack-climate="lluvia"]')
+            rain_txt = page.locator("#btPackChecklist").inner_text()
+            assert "Chamarra o impermeable" in rain_txt and "Funda impermeable" not in rain_txt and "calcetines en bolsa" not in rain_txt, f"Regla de lluvia incorrecta: {rain_txt}"
+            page.click('#btPackTypePills [data-pack-type="ataque"]')
+            page.click('#btPackClimatePills [data-pack-climate="frio"]')
+            ataque_frio_txt = page.locator("#btPackChecklist").inner_text()
+            assert "Pequeño Lunch" in ataque_frio_txt and "Manta térmica" not in ataque_frio_txt and "Primera capa" not in ataque_frio_txt, f"Ataque+Frío incluyó equipo pesado: {ataque_frio_txt}"
+            page.click('#btPackTypePills [data-pack-type="bolsillo"]')
+            bol_txt = page.locator("#btPackChecklist").inner_text()
+            assert "Equipo de bolsillo completo" in bol_txt and "Agenda, credencial y ficha de salud" in bol_txt and "3 curitas, toallitas" not in bol_txt, f"Lista De Bolsillo incorrecta: {bol_txt}"
+            page.click('#btPackTypePills [data-pack-type="campamento"]')
+            page.click('#btPackClimatePills [data-pack-climate="templado"]')
             page.locator("#btPackChecklist input[type='checkbox']").first.check()
             assert page.locator("#btPackCountBadge").inner_text().startswith("1 /"), "Checklist Tu Mochila no actualizó contador"
             assert "Peso empacado:" in page.locator("#btPackLoadStatus").inner_text() and "0.0 kg" not in page.locator("#btPackLoadStatus").inner_text(), "Medidor de carga no sumó peso empacado"
@@ -472,22 +515,34 @@ def run_e2e(test_webkit: bool = False):
 
             page.click('#btSkillsTabs [data-skills-tab="silbato"]')
             wh_txt = page.locator("#btWhistlesList").inner_text()
-            assert "CC" in wh_txt and "QQ" in wh_txt and "RR" in wh_txt, "Faltan toques oficiales ASMAC en Silbato"
+            assert "CC" in wh_txt and "QQ" in wh_txt and "RR" in wh_txt and "Pistas de Aventura" in wh_txt and "Carnet de Aventuras" in wh_txt, "Faltan toques o citas oficiales ASMAC en Silbato"
             assert page.locator("#btFormationDiagram svg").count() == 1, "Falta diagrama de formación"
 
             page.click('#btSkillsTabs [data-skills-tab="reto"]')
             page.locator("#btQuizArea [data-quiz-pick]").first.click()
             assert page.locator("#btQuizArea .bt-quiz-exp").count() == 1, "Reto no mostró retroalimentación al responder"
 
-            # Probar salto directo desde Buscador hacia Skills + consultas reales corregidas
+            # Comprobar que el Buscador ya no inserta botones de salto cruzado hacia otras secciones
             page.click('.desktop-quick-nav [data-bt-go-view="inicio"]')
             page.fill("#askInput", "clave murcielago")
             page.click("#askSubmitBtn")
             page.wait_for_selector("#answerContainer:not(.hidden)", timeout=5000)
-            jump_btn = page.locator("#answerBody [data-bt-jump-skill]")
-            assert jump_btn.is_visible(), "Falta botón directo Abrir en Skills en respuesta de buscador"
-            jump_btn.click()
-            assert page.locator("#skills").is_visible(), "Botón del buscador no abrió Skills"
+            assert page.locator("#answerBody [data-bt-jump-skill]").count() == 0, "El buscador no debe mostrar botones cruzados hacia Skills"
+
+            # Probar modal automático de Novedades cuando cambia la versión en usuario recurrente
+            wn_ctx = browser.new_context(viewport={"width": 1440, "height": 900})
+            wn_page = wn_ctx.new_page()
+            wn_page.add_init_script(
+                "localStorage.setItem('bt_welcome_seen_v1', '1'); localStorage.setItem('bt_last_seen_version_v1', '10.2.0'); localStorage.setItem('bt_cookie_consent_v1', 'accepted');"
+            )
+            wn_page.goto("http://127.0.0.1:18775/", wait_until="networkidle")
+            wn_page.wait_for_selector("#whatsNewModal:not(.hidden)", timeout=4000)
+            wn_txt = wn_page.locator("#whatsNewModal").inner_text()
+            assert "AÑADIDO" in wn_txt.upper() and "MEJORADO" in wn_txt.upper() and "CAMBIADO" in wn_txt.upper() and "ELIMINADO" in wn_txt.upper(), f"Faltan secciones en #whatsNewModal: {wn_txt[:220]}"
+            wn_page.click("#whatsNewAcceptBtn")
+            wn_page.locator("#whatsNewModal").wait_for(state="hidden", timeout=3000)
+            assert wn_page.evaluate("localStorage.getItem('bt_last_seen_version_v1')") == "10.3.0", "No guardó versión vista tras cerrar #whatsNewModal"
+            wn_ctx.close()
 
             page.click('.desktop-quick-nav [data-bt-go-view="inicio"]')
             page.fill("#askInput", "Ficha especialidad en matemáticas")
@@ -605,7 +660,7 @@ def run_e2e(test_webkit: bool = False):
             assert mpage.locator("#navegacion-principal #openSettingsMenuBtn").count() == 0, "Ajustes no debe duplicarse en el menú"
             assert mpage.locator("#navegacion-principal #openSavedMenuBtn").count() == 0, "Guardados no debe duplicarse en el menú"
             assert mpage.locator('#navegacion-principal a[href="#aportar"]').count() == 0, "Aportar y Contacto no debe estar en el menú"
-            assert mpage.locator('#navegacion-principal a[href="#app"]').count() == 0, "App / Offline no debe duplicarse en el menú"
+            assert (mpage.locator('#navegacion-principal a[href="#app"]').text_content() or "").strip() == "Descarga", "Enlace Descarga en el menú incorrecto"
             mpage.click("#dockBtnSettings")
             mpage.wait_for_selector("#btSettingsModal:not(.hidden)", timeout=3000)
             assert "Modo Estándar" in mpage.locator("#labelModeFull").inner_text(), "Falta etiqueta Modo Estándar"

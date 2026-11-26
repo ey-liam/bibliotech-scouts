@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=50" />
+  <link rel="stylesheet" href="styles.css?v=51" />
 </head>
 <body>
   <canvas id="btAmbientCanvas" aria-hidden="true"></canvas>
@@ -120,30 +120,31 @@
 
       <nav class="desktop-quick-nav" aria-label="Espacios principales">
         <a href="#inicio" class="nav-link active" data-bt-go-view="inicio">Inicio</a>
-        <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca">Biblioteca</a>
-        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">4 Ejes</a>
-        <a href="#skills" class="nav-link" data-bt-go-view="skills">Skills</a>
         <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia">Guía</a>
-        <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes</a>
+        <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca">Biblioteca</a>
+        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">Ejes Temáticos</a>
+        <a href="#skills" class="nav-link" data-bt-go-view="skills">Skills</a>
+        <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio</a>
         <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
-        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Archivos</a>
+        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor de archivos</a>
         <a href="#acerca" class="nav-link" data-bt-go-view="acerca">Acerca de</a>
-        <a href="#app" class="nav-link nav-link-app" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">App</a>
+        <a href="#app" class="nav-link nav-link-app" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">Descarga</a>
       </nav>
 
       <nav class="main-nav" id="navegacion-principal" aria-label="Todos los apartados">
         <a href="#inicio" class="nav-link active" data-bt-go-view="inicio">Inicio y Buscador</a>
-        <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca" data-bt-lib-jump="shelves">Biblioteca</a>
-        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">4 Ejes PJOS</a>
-        <a href="#skills" class="nav-link" data-bt-go-view="skills">Skills</a>
         <a href="#guia-inicio" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="guia-inicio">Guía de Uso</a>
-        <a href="#acerca" class="nav-link" data-bt-go-view="acerca">¿Qué es BiblioTech?</a>
-        <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio.MX</a>
         <a href="#secciones" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="secciones">Secciones</a>
         <a href="#servicios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="servicios">Trámites</a>
         <a href="#cambios" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="cambios">Cambios</a>
+        <a href="#biblioteca" class="nav-link" data-bt-go-view="biblioteca" data-bt-lib-jump="shelves">Biblioteca</a>
+        <a href="#ejes-pjos" class="nav-link" data-bt-go-view="ejes">Ejes Temáticos</a>
+        <a href="#skills" class="nav-link" data-bt-go-view="skills">Skills</a>
+        <a href="#agentes" class="nav-link" data-bt-go-view="agentes">Agentes de Cambio</a>
         <a href="#foro" class="nav-link" data-bt-go-view="fogata">La Fogata</a>
-        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Archivos</a>
+        <a href="#editor-formatos" class="nav-link" data-bt-go-view="formatos">Editor de archivos</a>
+        <a href="#acerca" class="nav-link" data-bt-go-view="acerca">¿Qué es BiblioTech?</a>
+        <a href="#app" class="nav-link" data-bt-go-view="guia" data-bt-guide-jump="app" data-bt-native-open-offline="1">Descarga</a>
         <button type="button" id="openBugReportMenuBtn" class="nav-link nav-link-report">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
@@ -503,6 +504,15 @@
         <p class="section-subtitle">Elige un apartado.</p>
       </div>
       <div class="bt-workspace-grid">
+        <button type="button" class="bt-workspace-card" data-bt-go-view="guia">
+          <span class="bt-workspace-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          </span>
+          <span class="bt-workspace-title">Guía</span>
+          <span class="bt-workspace-desc">Secciones, trámites, SISAS y cambios PJOS.</span>
+          <span class="bt-workspace-cta">Abrir →</span>
+        </button>
+
         <button type="button" class="bt-workspace-card" data-bt-go-view="biblioteca">
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
@@ -516,7 +526,7 @@
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20"></path><path d="M2 12h20"></path></svg>
           </span>
-          <span class="bt-workspace-title">4 Ejes PJOS</span>
+          <span class="bt-workspace-title">Ejes Temáticos</span>
           <span class="bt-workspace-desc">Salud, Habilidades, Ambiente y Paz con herramientas.</span>
           <span class="bt-workspace-cta">Explorar →</span>
         </button>
@@ -530,20 +540,11 @@
           <span class="bt-workspace-cta">Abrir →</span>
         </button>
 
-        <button type="button" class="bt-workspace-card" data-bt-go-view="guia">
-          <span class="bt-workspace-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-          </span>
-          <span class="bt-workspace-title">Guía Scout</span>
-          <span class="bt-workspace-desc">Secciones, trámites, SISAS y cambios PJOS.</span>
-          <span class="bt-workspace-cta">Abrir →</span>
-        </button>
-
         <button type="button" class="bt-workspace-card" data-bt-go-view="agentes">
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
           </span>
-          <span class="bt-workspace-title">Agentes de Cambio.MX</span>
+          <span class="bt-workspace-title">Agentes de Cambio</span>
           <span class="bt-workspace-desc">Proyectos y Red de Caminantes (CNRC).</span>
           <span class="bt-workspace-cta">Abrir →</span>
         </button>
@@ -561,7 +562,7 @@
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
           </span>
-          <span class="bt-workspace-title">Archivos</span>
+          <span class="bt-workspace-title">Editor de archivos</span>
           <span class="bt-workspace-desc">Llena Ficha Médica, JL304, FES, P8 y P9 en PDF.</span>
           <span class="bt-workspace-cta">Abrir →</span>
         </button>
@@ -579,7 +580,7 @@
           <span class="bt-workspace-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
           </span>
-          <span class="bt-workspace-title">App y Offline</span>
+          <span class="bt-workspace-title">Descarga</span>
           <span class="bt-workspace-desc">APK Android y uso sin señal en campamento.</span>
           <span class="bt-workspace-cta">Configurar →</span>
         </button>
@@ -712,7 +713,6 @@
         <button type="button" class="bt-guide-pill" data-guide-tab="servicios" role="tab" aria-selected="false">Servicios y Trámites</button>
         <button type="button" class="bt-guide-pill" data-guide-tab="cambios" role="tab" aria-selected="false">Cambios en Esquemas</button>
         <button type="button" class="bt-guide-pill" data-guide-tab="app" role="tab" aria-selected="false">App y Offline</button>
-        <button type="button" class="bt-guide-pill" data-bt-go-view="ejes">Los 4 Ejes PJOS →</button>
       </div>
     </div>
   </div>
@@ -1118,12 +1118,6 @@
               <span class="adc-eje-label">Paz y Participación Comunitaria</span>
             </div>
           </div>
-          <div style="margin-top:1.25rem;display:flex;justify-content:center;">
-            <button type="button" class="adc-btn-register-action" data-bt-go-view="ejes">
-              <span>Abrir espacio interactivo de los 4 Ejes del PJOS y Constructor SMART</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
         </div>
       </div>
 
@@ -1151,17 +1145,17 @@
       <div class="bt-ejes-hero-head">
         <div>
           <span class="section-eyebrow">PJOS ASMAC</span>
-          <h2 id="ejesPjosTitle" class="section-title">4 Ejes PJOS</h2>
+          <h2 id="ejesPjosTitle" class="section-title">Ejes Temáticos</h2>
           <p class="section-subtitle">
             Guía práctica de los 4 Ejes Temáticos y sus herramientas locales.
           </p>
         </div>
       </div>
 
-      <div id="btEjesSubtabs" class="bt-ejes-tabs" role="tablist" aria-label="Herramientas de los 4 Ejes del PJOS">
+      <div id="btEjesSubtabs" class="bt-ejes-tabs" role="tablist" aria-label="Herramientas de los Ejes Temáticos">
         <button type="button" class="bt-ejes-tab active" data-ejes-tab="explorar" role="tab" aria-selected="true">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20M2 12h20"></path></svg>
-          <span>4 Ejes</span>
+          <span>Ejes</span>
         </button>
         <button type="button" class="bt-ejes-tab" data-ejes-tab="salud" role="tab" aria-selected="false">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
@@ -1178,10 +1172,6 @@
         <button type="button" class="bt-ejes-tab" data-ejes-tab="habilidades" role="tab" aria-selected="false">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
           <span>Proyectos</span>
-        </button>
-        <button type="button" class="bt-ejes-tab" data-bt-go-view="skills">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
-          <span>Skills →</span>
         </button>
       </div>
 
@@ -1289,7 +1279,6 @@
             <div id="btSfhStepDetail" class="bt-sfh-detail-box" aria-live="polite"></div>
             <div class="bt-ejes-inline-actions">
               <a href="https://conecta.scouts.org.mx" target="_blank" rel="noopener noreferrer" class="bt-sf-btn is-accent">Abrir Canal Oficial CONECTA ↗</a>
-              <button type="button" class="bt-sf-btn" data-query="¿Cuáles son los 4 pasos de la Política Nacional A Salvo del Peligro y cómo funciona el canal CONECTA?">Ver respaldo documental</button>
             </div>
           </div>
 
@@ -1307,8 +1296,6 @@
             <p id="btSafeTripStatusText" class="bt-ejes-helper-note">Marca cada punto de seguridad antes de iniciar el traslado o actividad al aire libre.</p>
             <div id="btSafeTripChecklist" class="bt-safe-check-list"></div>
             <div class="bt-ejes-inline-actions">
-              <button type="button" class="bt-sf-btn is-accent" data-ejes-open-tpl="salud">Llenar Ficha Médica</button>
-              <button type="button" class="bt-sf-btn" data-ejes-open-tpl="jl304">Llenar Permiso JL304</button>
               <button type="button" id="btResetSafeTripBtn" class="bt-sf-btn is-subtle">Reiniciar lista</button>
             </div>
           </div>
@@ -1358,14 +1345,13 @@
 
             <div class="bt-ejes-inline-actions">
               <button type="button" id="btEcoAddPaperlessSessionBtn" class="bt-sf-btn is-accent">+ Registrar reunión scout sin papel (+5 hojas)</button>
-              <button type="button" class="bt-sf-btn" data-ejes-filter-lib="ambiente">Ver FAES y FES Ambientales</button>
             </div>
           </div>
 
           <div class="bt-ejes-tool-card" id="btEcoMissionsBox">
             <span class="bt-wizard-kicker">RETOS PRÁCTICOS · TRIBU DE LA TIERRA</span>
             <h3>Elige tu Misión Planeta</h3>
-            <p>Selecciona una ruta oficial de World Scouting, completa sus 4 micro-retos de campo y abre directo su solicitud RECME.</p>
+            <p>Selecciona una ruta oficial de World Scouting y completa sus 4 micro-retos de campo en tu dispositivo.</p>
 
             <div class="bt-eco-mission-tabs" id="btEcoMissionTabs" role="tablist">
               <button type="button" class="bt-eco-mission-tab is-active" data-eco-mission="solar">Energía · Scouts Go Solar</button>
@@ -1386,7 +1372,7 @@
               <div>
                 <span class="bt-wizard-kicker">REGISTRO LOCAL · MENSAJEROS DE LA PAZ</span>
                 <h3>Bitácora de Horas de Servicio Comunitario</h3>
-                <p>Acumula tus jornadas de servicio y transfiere el total en 1 clic al formato oficial <code>RECME P8.3</code>.</p>
+                <p>Acumula tus jornadas de servicio y copia el resumen para tu registro personal o solicitud <code>RECME P8.3</code>.</p>
               </div>
               <span id="btMopTotalHoursBadge" class="bt-prog-badge">0 h registradas</span>
             </div>
@@ -1407,8 +1393,7 @@
             <div id="btMopEntriesList" class="bt-mop-entries-list"></div>
 
             <div class="bt-ejes-inline-actions">
-              <button type="button" id="btMopSendToP8Btn" class="bt-sf-btn is-accent">Pasar horas y proyecto a Solicitud P8.3</button>
-              <button type="button" id="btMopJumpFogataBtn" class="bt-sf-btn">Compartir ideas en La Fogata</button>
+              <button type="button" id="btMopCopySummaryBtn" class="bt-sf-btn is-accent">Copiar resumen de horas</button>
             </div>
           </div>
 
@@ -1423,10 +1408,6 @@
               <div class="bt-peace-phase-item"><strong>4. Recuperación y Reconstrucción:</strong> Proyectos comunitarios de mediano plazo para rehabilitar espacios educativos, parques y tejido social.</div>
               <div class="bt-peace-phase-item"><strong>5. Cultura de Paz y MASC:</strong> Resolver desacuerdos mediante Diálogo Directo y Mediación respetando la Política de Diversidad e Inclusión.</div>
             </div>
-            <div class="bt-ejes-inline-actions">
-              <button type="button" class="bt-sf-btn is-accent" data-query="¿Cómo se organiza un Centro de Acopio Scout y cuáles son las etapas de Acción Humanitaria en ASMAC?">Consultar Guía de Centros de Acopio</button>
-              <button type="button" class="bt-sf-btn" data-ejes-open-tpl="acta">Abrir Acta / Acuerdo MASC</button>
-            </div>
           </div>
         </div>
       </div>
@@ -1436,9 +1417,9 @@
         <div class="bt-ejes-tool-card bt-smart-builder-shell" id="btSmartBuilder">
           <div class="bt-ejes-tool-head">
             <div>
-              <span class="bt-wizard-kicker">DISEÑADOR PASO A PASO · PLANTILLA OFICIAL P6.2</span>
+              <span class="bt-wizard-kicker">DISEÑADOR PASO A PASO · MÉTODO SMART</span>
               <h3>Constructor Guiado de Proyectos SMART</h3>
-              <p>Responde las 5 preguntas clave, elige tu Eje y tus ODS, y vuelca todo en 1 clic dentro de la Cédula Oficial de Proyecto Scout lista para exportar en PDF.</p>
+              <p>Responde las 5 preguntas clave, elige tu Eje y tus ODS, y genera o copia al instante tu Objetivo General SMART listo para trabajar con tu sección.</p>
             </div>
             <span id="btSmartScoreBadge" class="bt-prog-badge">0 / 5 bloques SMART</span>
           </div>
@@ -1521,8 +1502,7 @@
           </div>
 
           <div class="bt-ejes-inline-actions">
-            <button type="button" id="btSmartTransferBtn" class="bt-sf-btn is-accent">Volcar todo en Cédula Oficial SMART (P6.2)</button>
-            <button type="button" id="btSmartCopyTextBtn" class="bt-sf-btn">Copiar resumen del proyecto</button>
+            <button type="button" id="btSmartCopyTextBtn" class="bt-sf-btn is-accent">Copiar resumen del proyecto</button>
             <button type="button" id="btSmartClearBtn" class="bt-sf-btn is-subtle">Limpiar constructor</button>
           </div>
         </div>
@@ -1613,9 +1593,8 @@
             <div>
               <span class="bt-wizard-kicker">EJES · HABILIDADES Y AMBIENTE</span>
               <h3>Nudos y Amarres</h3>
-              <p>Toca Paso 1, Paso 2 o Listo para ver cada trazo.</p>
+              <p>Toca Paso 1, Paso 2 o Listo para ver la técnica real de cada trazo.</p>
             </div>
-            <button type="button" class="bt-sf-btn" data-open-doc="doc-0883">Ver ficha FAES Cabuyería</button>
           </div>
           <div id="btKnotFilterPills" class="bt-skill-pill-row" role="group" aria-label="Filtrar nudos por uso">
             <button type="button" class="bt-skill-pill is-active" data-knot-cat="all">Todos</button>
@@ -1695,7 +1674,6 @@
               <h3>Pistas y Brújula</h3>
               <p>Señales de pista sin dañar plantas y cálculo rápido de rumbo y regreso.</p>
             </div>
-            <button type="button" class="bt-sf-btn" data-open-doc="doc-0942">Manual de Brújula</button>
           </div>
           <div class="bt-skill-split">
             <div class="bt-skill-subbox">
@@ -1732,7 +1710,6 @@
               <h3>Botiquín y Primeros Auxilios</h3>
               <p>Revisa qué llevar y consulta pasos rápidos ante emergencias leves.</p>
             </div>
-            <button type="button" class="bt-sf-btn" data-open-doc="doc-0593">Manual de Primeros Auxilios</button>
           </div>
           <div class="bt-skill-split">
             <div class="bt-skill-subbox">
@@ -1759,7 +1736,6 @@
               <h3>Fogatas y No Dejar Rastro</h3>
               <p>Elige la fogata adecuada, cuida el entorno y apaga al 100%.</p>
             </div>
-            <button type="button" class="bt-sf-btn" data-open-doc="doc-0651">FES Cocina en Campamento</button>
           </div>
           <div id="btFiresGrid" class="bt-skill-grid-cards"></div>
           <div class="bt-skill-subbox" style="margin-top:0.95rem;">
@@ -1776,9 +1752,8 @@
             <div>
               <span class="bt-wizard-kicker">EJE · PAZ Y PARTICIPACIÓN</span>
               <h3>Silbato y Formaciones</h3>
-              <p>Toques oficiales ASMAC en Morse y formaciones de sección.</p>
+              <p>Toques oficiales ASMAC en Morse (con fuente de manual) y formaciones de sección.</p>
             </div>
-            <button type="button" class="bt-sf-btn" data-open-doc="doc-0412">Manual Pistas de Aventura</button>
           </div>
           <div class="bt-skill-split">
             <div class="bt-skill-subbox">
@@ -2349,22 +2324,31 @@
     <div class="container">
       <div class="forum-header-row">
         <div>
-          <h2 id="forumSectionTitle" class="section-title">La Fogata: Recomendaciones y Comunidad</h2>
+          <span class="section-eyebrow">COMUNIDAD SCOUT</span>
+          <h2 id="forumSectionTitle" class="section-title">La Fogata</h2>
           <p class="section-subtitle">
-            Comparte qué es imprescindible llevar a un campamento, consejos de vida de sección, ideas para proyectos SMART o experiencias entre Scouters sobre supervisión segura y acompañamiento juvenil.
+            Comparte qué llevar a campamento, consejos de sección, ideas para proyectos SMART o experiencias entre Scouters.
           </p>
+          <div id="forumStatsStrip" class="forum-stats-strip" aria-live="polite">
+            <span class="forum-stat-chip">Cargando comunidad...</span>
+          </div>
         </div>
         <button type="button" id="btnOpenForumComposer" class="btn-forum-compose">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          <span>Nueva recomendación o duda</span>
+          <span>Nueva recomendación</span>
         </button>
       </div>
 
       <div class="forum-respect-banner" role="note">
-        <strong>Respeto y Ley Scout:</strong> Comparte consejos útiles con respeto, empatía y lenguaje apropiado. Por seguridad (<em>A Salvo del Peligro</em>), <strong>tus datos reales son obligatorios</strong> para el registro interno del administrador, pero puedes elegir aparecer como <strong>Anónimo</strong> o mostrar solo tu sección, grupo y provincia.
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <div>
+          <strong>Respeto y A Salvo del Peligro:</strong> comenta con empatía y Ley Scout. Tus datos reales solo respaldan la seguridad comunitaria, y tú decides si sales con tu nombre o como <strong>Anónimo</strong>.
+        </div>
       </div>
 
       <!-- CANALES DEL FORO -->
@@ -3609,7 +3593,7 @@
       <!-- PÁGINA 1: QUÉ ES, PARA QUÉ SIRVE Y QUÉ CONTIENE -->
       <div class="bt-welcome-page" data-welcome-page="1">
         <p class="bt-welcome-lead">
-          BiblioTech Scout reúne en un solo lugar los documentos oficiales del Movimiento Scout para que jóvenes, padres de familia y Scouters encuentren todo fácil y rápido.
+          BiblioTech Scout reúne los documentos oficiales ASMAC y herramientas prácticas sin señal para jóvenes, familias y Scouters.
         </p>
 
         <div class="bt-welcome-grid">
@@ -3618,8 +3602,8 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </span>
             <div>
-              <strong>Respuestas directas a tus dudas</strong>
-              <p>Escribe cualquier pregunta sobre secciones, insignias, campamentos, uniformes o trámites y obtén una respuesta clara con el documento de respaldo.</p>
+              <strong>Buscador con 21,290+ respuestas</strong>
+              <p>Escribe dudas sobre secciones, insignias, claves, nudos, mochila, silbato o trámites y obtén respuesta con su documento oficial.</p>
             </div>
           </div>
 
@@ -3628,8 +3612,18 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
             </span>
             <div>
-              <strong>Biblioteca oficial completa</strong>
-              <p>883 documentos listos para leer o descargar: manuales por sección, 220 fichas de actividades, 82 especialidades, libros del Centenario, convocatorias y reglamentos.</p>
+              <strong>Biblioteca y Guía oficial</strong>
+              <p>883 documentos para leer o descargar: manuales por sección, 220 fichas FAES, especialidades FES, convocatorias, trámites y reglas vigentes.</p>
+            </div>
+          </div>
+
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+            </span>
+            <div>
+              <strong>Ejes Temáticos y Skills sin señal</strong>
+              <p>Explora los 4 Ejes del PJOS con laboratorios (A Salvo, Misión Planeta, MoP, SMART) y practica Claves, Nudos, Tu Mochila, Fogatas y Silbato.</p>
             </div>
           </div>
 
@@ -3638,18 +3632,8 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
             </span>
             <div>
-              <strong>Formatos listos para llenar</strong>
-              <p>Llena tu Ficha de Salud, permiso de salida, especialidades y hojas de proyecto guardando tus datos en tu dispositivo para reutilizarlos con un toque.</p>
-            </div>
-          </div>
-
-          <div class="bt-welcome-item">
-            <span class="bt-welcome-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            </span>
-            <div>
-              <strong>Útil incluso sin señal</strong>
-              <p>Guarda manuales, respuestas y notas en tu dispositivo para consultarlos durante excursiones, acantonamientos o campamentos.</p>
+              <strong>Editor de archivos y La Fogata</strong>
+              <p>Llena Ficha Médica, JL304, FES y P9 con autollenado local en PDF/PNG y comparte consejos útiles con otros scouts en La Fogata.</p>
             </div>
           </div>
         </div>
@@ -3658,7 +3642,7 @@
       <!-- PÁGINA 2: APARTADOS Y CÓMO UTILIZARLA -->
       <div class="bt-welcome-page hidden" data-welcome-page="2">
         <p class="bt-welcome-lead">
-          Todo está organizado en espacios claros para que encuentres lo que necesitas en segundos:
+          Cada apartado es independiente para que entres directo a lo que buscas sin perderte:
         </p>
 
         <div class="bt-welcome-grid">
@@ -3668,7 +3652,7 @@
             </span>
             <div>
               <strong>Inicio y Buscador</strong>
-              <p>Escribe tu duda en la barra principal o toca un tema sugerido. Puedes buscar texto, claves oficiales (como P8.6 o JL304) y abrir el archivo citado ahí mismo.</p>
+              <p>Pregunta con tus palabras o por clave oficial (P6.2, JL304, FES, SISAS) y escucha o imprime la respuesta al instante.</p>
             </div>
           </div>
 
@@ -3677,8 +3661,28 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
             </span>
             <div>
-              <strong>Biblioteca y Guía Scout</strong>
-              <p>Explora los estantes por categoría o sección (Manada, Tropa, Comunidad, Clan y Adultos). En el menú superior encontrarás las guías rápidas de secciones y trámites.</p>
+              <strong>Guía y Biblioteca</strong>
+              <p>En <strong>Guía</strong> ves secciones, edades, trámites y cambios PJOS. En <strong>Biblioteca</strong> filtras los 883 archivos por sección o Eje.</p>
+            </div>
+          </div>
+
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20"></path><path d="M2 12h20"></path></svg>
+            </span>
+            <div>
+              <strong>Ejes Temáticos</strong>
+              <p>Salud, Habilidades, Medio Ambiente y Paz con sus 5 subáreas, Armador de fichas, Semáforo de Salida, Impacto Cero Papel, MoP y Constructor SMART.</p>
+            </div>
+          </div>
+
+          <div class="bt-welcome-item">
+            <span class="bt-welcome-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+            </span>
+            <div>
+              <strong>Skills (100% sin señal)</strong>
+              <p>20 Claves con Semáforo y Criptógrafo, 10 Nudos y Amarres por pasos, Tu Mochila con peso real, Pistas y Brújula, Botiquín, Fogatas, Silbato y Reto.</p>
             </div>
           </div>
 
@@ -3687,18 +3691,18 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             </span>
             <div>
-              <strong>La Fogata y Editor de Archivos</strong>
-              <p>En La Fogata lees y compartes consejos prácticos entre scouts. En Archivos rellenas formatos oficiales para descargarlos o imprimirlos sin volver a capturar tus datos.</p>
+              <strong>Agentes de Cambio y La Fogata</strong>
+              <p>Consulta la Red de Caminantes en <strong>Agentes de Cambio</strong> y comparte tips reales de campamento (con nombre o anónimo) en <strong>La Fogata</strong>.</p>
             </div>
           </div>
 
           <div class="bt-welcome-item">
             <span class="bt-welcome-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
             </span>
             <div>
-              <strong>Guardados y Ajustes</strong>
-              <p>En Guardados conservas tus archivos favoritos y notas de lectura. En Ajustes cambias entre Modo Lite o Estándar, Modo oscuro, sonidos, idioma y modo sin conexión.</p>
+              <strong>Editor de archivos y Descarga</strong>
+              <p>Autollena formatos oficiales en PDF, exporta tu Perfil Local en QR y entra a <strong>Descarga</strong> o <strong>Ajustes</strong> para llevar el APK o caché offline.</p>
             </div>
           </div>
         </div>
@@ -3715,7 +3719,7 @@
         <div class="bt-welcome-plat-card" data-welcome-plat-pane="ios">
           <strong>App Web en iPhone y iPad (y modo sin conexión)</strong>
           <p>
-            Desde Safari toca <strong>Compartir</strong> y elige <strong>Agregar a pantalla de inicio</strong> (con «Abrir como app web» activo) para tener el icono de BiblioTech a pantalla completa. Luego entra a <strong>Ajustes → App y Modo Offline</strong> para descargar las preguntas y el catálogo antes de salir.
+            Desde Safari toca <strong>Compartir</strong> y elige <strong>Agregar a pantalla de inicio</strong> (con «Abrir como app web» activo). Luego entra a <strong>Descarga → App y Modo Offline</strong> o <strong>Ajustes</strong> para guardar las preguntas y el catálogo antes de salir.
           </p>
           <div class="bt-welcome-offline-tip">
             <strong>Importante al abrirla sin señal:</strong> si estás en un lugar sin internet real, <strong>desactiva el Wi-Fi y los Datos móviles</strong> (o activa el Modo Avión) antes de abrir la App Web. Si los dejas encendidos sin conexión estable, Safari intentará buscar la red y la página podría quedarse cargando; al apagarlos, abrirá al instante con los datos guardados.
@@ -3725,7 +3729,7 @@
         <div class="bt-welcome-plat-card hidden" data-welcome-plat-pane="apk">
           <strong>App Android (.apk) con descargas para campamento</strong>
           <p>
-            La aplicación para Android ya trae todas las preguntas y respuestas integradas para trabajar sin conexión desde el primer día.
+            La aplicación para Android (disponible en el apartado <strong>Descarga</strong>) ya trae todas las preguntas, Skills y respuestas integradas para trabajar sin conexión desde el primer día.
           </p>
           <div class="bt-welcome-offline-tip">
             <strong>Archivos y manuales offline:</strong> entra al botón de <strong>Ajustes</strong> en la barra inferior y abre la pestaña <strong>Descargar archivos</strong> para guardar en tu teléfono los manuales, fichas o reglamentos que necesites antes de ir a campo.
@@ -3735,7 +3739,7 @@
         <div class="bt-welcome-plat-card hidden" data-welcome-plat-pane="desktop">
           <strong>Versión de Escritorio (la experiencia más amplia y cómoda)</strong>
           <p>
-            En computadora disfrutas toda la pantalla para leer manuales, comparar reglamentos, organizar la biblioteca de tu grupo e imprimir formatos oficiales en tamaño completo sin instalar programas adicionales.
+            En computadora disfrutas toda la pantalla para leer manuales, practicar Claves y Nudos, organizar la biblioteca de tu grupo e imprimir formatos oficiales en tamaño completo sin instalar programas adicionales.
           </p>
         </div>
 
@@ -3747,7 +3751,7 @@
             <span class="bt-welcome-qr-badge">Comparte con tu Grupo o Provincia</span>
             <h4>Entre más scouts la usen, mejor será</h4>
             <p>
-              Comparte este código QR o enlace con tu Seisena, Patrulla, Comunidad, Clan o Scouters. Puedes volver a abrir esta guía en cualquier momento desde <strong>Ajustes</strong>.
+              Comparte este código QR o enlace con tu Seisena, Patrulla, Comunidad, Clan o Scouters. Puedes volver a abrir esta guía o ver las novedades en cualquier momento desde <strong>Ajustes</strong>.
             </p>
             <div class="bt-welcome-qr-actions">
               <button type="button" id="shareWelcomeQrBtn" class="bt-welcome-mini-btn is-primary">Compartir enlace</button>
@@ -3770,6 +3774,36 @@
           <button type="button" id="nextWelcomePageBtn" class="bt-consent-btn is-primary">Siguiente</button>
           <button type="button" id="startWelcomeModalBtn" class="bt-consent-btn is-primary">Explorar BiblioTech</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL AUTOMÁTICO DE NOVEDADES TRAS ACTUALIZAR VERSIÓN -->
+  <div id="whatsNewModal" class="bt-consent-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="whatsNewModalTitle">
+    <div class="bt-consent-card bt-whatsnew-card">
+      <div class="bt-bug-head bt-settings-head">
+        <div>
+          <span class="bt-consent-kicker">Actualización instalada</span>
+          <h3 id="whatsNewModalTitle">¿Qué cambió en BiblioTech Scout?</h3>
+        </div>
+        <button type="button" id="closeWhatsNewModalBtn" class="bt-bug-close" aria-label="Cerrar novedades">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="bt-whatsnew-meta-row">
+        <span id="whatsNewVersionBadge" class="bt-setting-pill">Web v10.3.0</span>
+        <span id="whatsNewDateLabel" class="bt-changelog-item-date">25/11/2026</span>
+      </div>
+
+      <div id="whatsNewBody" class="bt-whatsnew-body"></div>
+
+      <div class="bt-consent-actions">
+        <button type="button" id="whatsNewOpenHistoryBtn" class="bt-consent-btn is-secondary">Ver historial completo</button>
+        <button type="button" id="whatsNewAcceptBtn" class="bt-consent-btn is-primary">Entendido</button>
       </div>
     </div>
   </div>
@@ -4039,7 +4073,7 @@
             <div class="bt-setting-block-head">
               <div>
                 <h4>iPhone / iPad (App Web) y Modo sin conexión</h4>
-                <p>Descarga las 21,195 preguntas y el catálogo completo para abrir BiblioTech aunque no tengas cobertura.</p>
+                <p>Descarga las 21,290+ preguntas y el catálogo completo para abrir BiblioTech aunque no tengas cobertura.</p>
               </div>
               <span id="settingsOfflineStatusBadge" class="bt-setting-pill">Sin descargar</span>
             </div>
@@ -4144,6 +4178,9 @@
               <button type="button" id="btnSettingsCheckAndReload" class="bt-mini-action-btn is-primary">
                 Buscar actualización y recargar sitio
               </button>
+              <button type="button" id="btnSettingsOpenWhatsNew" class="bt-mini-action-btn">
+                Ver novedades de esta versión
+              </button>
               <button type="button" id="btnSettingsNativeApkUpdate" class="bt-mini-action-btn hidden">
                 Abrir gestor offline y OTA del APK
               </button>
@@ -4192,6 +4229,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=50"></script>
+  <script src="app.js?v=51"></script>
 </body>
 </html>
